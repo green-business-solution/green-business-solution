@@ -3,7 +3,7 @@
 The intended AWS structure mirrors the existing project-account pattern:
 
 - Management account: existing AWS Organizations management account.
-- Project account: a new Green Business Solution member account.
+- Project account: Green Business Solution member account `448016109714`.
 - Access: AWS IAM Identity Center users assigned directly to the project account.
 - Permission set: `AdministratorAccess`, scoped only to the project account.
 
@@ -13,10 +13,17 @@ Recommended local AWS CLI profile name:
 gbs
 ```
 
-Recommended account root email:
+Account root email:
 
 ```text
 neerkuchlous+greenbusiness@gmail.com
 ```
 
-Use the collaborator email `pmrajvansh@gmail.com` for the IAM Identity Center user, not as the account root email, unless intentionally making that email the root contact for the AWS account.
+Use the collaborator email `pmrajvansh@gmail.com` for the IAM Identity Center user, not as the account root email.
+
+## Current Identity Center assignments
+
+The following users are assigned `AdministratorAccess` on only account `448016109714`:
+
+- Neer Kuchlous, username `neer`
+- Rajvansh Gupta, username `rajvansh`

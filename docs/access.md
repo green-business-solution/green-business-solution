@@ -13,8 +13,17 @@
 - Human access should be granted through AWS IAM Identity Center.
 - Project collaborators should receive access only to the Green Business Solution account unless explicitly approved otherwise.
 
+## Current AWS account
+
+- Account name: `green-business-solution`
+- Account ID: `448016109714`
+- Root email: `neerkuchlous+greenbusiness@gmail.com`
+- Status: active
+
 ## Current intended collaborator
 
 - GitHub username: `SchrodingersCatLooks`
-- AWS Identity Center user: Rajvansh, `pmrajvansh@gmail.com`
-- Intended AWS permission set: `AdministratorAccess` on only the Green Business Solution AWS account
+- AWS Identity Center user: Rajvansh Gupta, `pmrajvansh@gmail.com`
+- AWS Identity Center username: `rajvansh`
+- AWS Identity Center user ID: `614b3520-a0d1-702d-d1ec-c7003d30b3f9`
+- AWS permission set: `AdministratorAccess` on only the Green Business Solution AWS account
