@@ -11,4 +11,5 @@
 - Created the Green Business Solution AWS Organizations member account.
 - Created Rajvansh Gupta as an AWS IAM Identity Center user.
 - Assigned `AdministratorAccess` on only the Green Business Solution AWS account to Neer Kuchlous and Rajvansh Gupta.
+- Configured the local AWS CLI profile `gbs` for the Green Business Solution account.
 - Documented the GitHub organization creation step required before pushing the private repository.

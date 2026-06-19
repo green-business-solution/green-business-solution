@@ -7,7 +7,7 @@ The intended AWS structure mirrors the existing project-account pattern:
 - Access: AWS IAM Identity Center users assigned directly to the project account.
 - Permission set: `AdministratorAccess`, scoped only to the project account.
 
-Recommended local AWS CLI profile name:
+Current local AWS CLI profile name:
 
 ```text
 gbs
