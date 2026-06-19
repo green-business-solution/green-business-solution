@@ -5,6 +5,8 @@
 - The GitHub repository is the canonical source of code and project history.
 - Collaborators who will use Codex or another LLM coding agent need write access so their agents can commit and push.
 - Agents must follow `AGENT_WORKFLOW.md` before and after making changes.
+- Repository: `https://github.com/green-business-solution/green-business-solution`
+- Visibility: private
 
 ## AWS
 
@@ -23,6 +25,7 @@
 ## Current intended collaborator
 
 - GitHub username: `SchrodingersCatLooks`
+- GitHub access: invited with write access
 - AWS Identity Center user: Rajvansh Gupta, `pmrajvansh@gmail.com`
 - AWS Identity Center username: `rajvansh`
 - AWS Identity Center user ID: `614b3520-a0d1-702d-d1ec-c7003d30b3f9`

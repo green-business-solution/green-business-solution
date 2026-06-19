@@ -1,31 +1,33 @@
 # GitHub Setup
 
-The repository should live in a private GitHub organization named:
+The repository lives in a private GitHub organization named:
 
 ```text
 green-business-solution
 ```
 
-## Create the organization
+Repository URL:
 
-GitHub organization creation must be completed in the GitHub web UI:
+```text
+https://github.com/green-business-solution/green-business-solution
+```
 
-1. Open `https://github.com/organizations/new`.
-2. Choose the organization plan.
-3. Set the organization name to `green-business-solution`.
-4. Use an owner email address controlled by the project owner.
-5. Complete the organization setup.
+## Organization creation
 
-After the organization exists, create and push the repository from this local checkout:
+The GitHub organization was created in the GitHub web UI.
+
+The repository was created and pushed from this local checkout with:
 
 ```sh
 gh repo create green-business-solution/green-business-solution --private --source . --remote origin --push
 ```
 
-Then invite the collaborator with write access:
+The collaborator was invited with write access:
 
 ```sh
 gh api repos/green-business-solution/green-business-solution/collaborators/SchrodingersCatLooks \
   -X PUT \
   -f permission=push
 ```
+
+The invitation remains pending until `SchrodingersCatLooks` accepts it in GitHub.

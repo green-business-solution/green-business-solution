@@ -13,3 +13,9 @@
 - Assigned `AdministratorAccess` on only the Green Business Solution AWS account to Neer Kuchlous and Rajvansh Gupta.
 - Configured the local AWS CLI profile `gbs` for the Green Business Solution account.
 - Documented the GitHub organization creation step required before pushing the private repository.
+
+## 2026-06-19 - Codex (GPT-5) GitHub setup
+
+- Created the private GitHub repository `green-business-solution/green-business-solution`.
+- Pushed the local `main` branch to GitHub and configured `origin`.
+- Invited `SchrodingersCatLooks` with write access to the repository.
