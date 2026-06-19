@@ -19,3 +19,7 @@
 - Created the private GitHub repository `green-business-solution/green-business-solution`.
 - Pushed the local `main` branch to GitHub and configured `origin`.
 - Invited `SchrodingersCatLooks` with write access to the repository.
+
+## 2026-06-19 - Codex (GPT-5) agent instructions
+
+- Added `AGENTS.md` so Codex automatically loads the project's GitHub source-of-truth and change-explanation requirements.
