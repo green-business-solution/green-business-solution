@@ -1,0 +1,275 @@
+:root {
+  color: #17211b;
+  background: #f6f7f4;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 6px;
+  background: #176b4c;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 0 16px;
+}
+
+button:hover {
+  background: #0f573c;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #17211b;
+  color: #f9fbf6;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 28px;
+}
+
+.brand-block {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #a9d36f;
+  border-radius: 8px;
+  color: #17211b;
+  display: flex;
+  font-size: 24px;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.brand-block h1,
+.topbar h2,
+.section-heading h2 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.brand-block h1 {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.eyebrow {
+  color: #6f7b74;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.sidebar .eyebrow {
+  color: #b5c2b9;
+}
+
+.nav-list {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-list a {
+  border-radius: 6px;
+  color: #dce7df;
+  padding: 10px 12px;
+  text-decoration: none;
+}
+
+.nav-list a[aria-current="page"],
+.nav-list a:hover {
+  background: #26352c;
+  color: #ffffff;
+}
+
+.main-panel {
+  display: grid;
+  gap: 28px;
+  padding: 32px;
+}
+
+.topbar {
+  align-items: start;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.topbar h2 {
+  color: #17211b;
+  font-size: 28px;
+  line-height: 1.18;
+  max-width: 720px;
+}
+
+.metric-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-card {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  min-height: 128px;
+  padding: 22px;
+}
+
+.metric-card span {
+  color: #59665e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.metric-card-green {
+  border-top: 4px solid #2d8a5f;
+}
+
+.metric-card-blue {
+  border-top: 4px solid #2f6fa3;
+}
+
+.metric-card-amber {
+  border-top: 4px solid #b7791f;
+}
+
+.work-section {
+  display: grid;
+  gap: 18px;
+}
+
+.section-heading {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-heading h2 {
+  font-size: 22px;
+}
+
+.secondary-button {
+  background: #ffffff;
+  border: 1px solid #c8d2cb;
+  color: #17211b;
+}
+
+.secondary-button:hover {
+  background: #edf2ee;
+}
+
+.initiative-table {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(180px, 1.5fr) minmax(120px, 0.8fr) minmax(120px, 0.8fr) minmax(160px, 1fr);
+  padding: 16px 18px;
+}
+
+.table-row + .table-row {
+  border-top: 1px solid #eef1ee;
+}
+
+.table-head {
+  background: #edf2ee;
+  color: #526058;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+mark {
+  background: #eaf4dc;
+  border-radius: 999px;
+  color: #24563b;
+  font-weight: 700;
+  padding: 4px 8px;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .nav-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .nav-list a {
+    text-align: center;
+  }
+
+  .main-panel {
+    padding: 22px;
+  }
+
+  .topbar,
+  .section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-row {
+    grid-template-columns: 1fr;
+  }
+
+  .table-head {
+    display: none;
+  }
+}
