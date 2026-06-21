@@ -11,9 +11,15 @@ All LLM-assisted work must follow [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), incl
 ## Development
 
 ```sh
+aws sso login --profile gbs
 npm install
 npm run dev
 ```
+
+The development command starts:
+
+- local API: `http://127.0.0.1:8787`
+- Vite app: first available port starting at `http://127.0.0.1:5173`
 
 ## Checks
 

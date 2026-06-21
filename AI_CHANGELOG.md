@@ -23,3 +23,11 @@
 ## 2026-06-19 - Codex (GPT-5) agent instructions
 
 - Added `AGENTS.md` so Codex automatically loads the project's GitHub source-of-truth and change-explanation requirements.
+
+## 2026-06-20 - Codex (GPT-5) DynamoDB intake prototype
+
+- Created DynamoDB tables `gbs-users` and `gbs-client-intake` in the Green Business Solution AWS account.
+- Seeded temporary admin users for Neer Kuchlous and Rajvansh Gupta.
+- Added a local Node API that writes intake form submissions to DynamoDB using the `gbs` AWS profile.
+- Reworked the React app into a version 1 banner page, required intake form, temporary-code user portal, and admin portal.
+- Documented the DynamoDB model and planned Google OAuth account-linking path.
