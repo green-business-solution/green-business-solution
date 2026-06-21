@@ -56,3 +56,25 @@ Before running the app, sign in with:
 ```sh
 aws sso login --profile gbs
 ```
+
+## Diagnostics
+
+Use this checklist when a temporary code works on one laptop but fails on another:
+
+```sh
+git pull --ff-only
+npm install
+aws sso login --profile gbs
+aws sts get-caller-identity --profile gbs
+npm run dev
+curl http://127.0.0.1:8787/api/diagnostics
+```
+
+Expected:
+
+- `aws sts get-caller-identity --profile gbs` shows account `448016109714`.
+- `npm run dev` starts both the API and Vite.
+- the API prints `Green Business Solution API running at http://127.0.0.1:8787`.
+- `/api/diagnostics` returns `"ok": true`.
+
+If only Vite is running, the browser can render the pages but form and code submission will fail because `/api` has nothing to talk to.

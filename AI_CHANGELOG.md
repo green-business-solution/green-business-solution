@@ -31,3 +31,9 @@
 - Added a local Node API that writes intake form submissions to DynamoDB using the `gbs` AWS profile.
 - Reworked the React app into a version 1 banner page, required intake form, temporary-code user portal, and admin portal.
 - Documented the DynamoDB model and planned Google OAuth account-linking path.
+
+## 2026-06-20 - Codex (GPT-5) local setup diagnostics
+
+- Verified Rajvansh Gupta's temporary admin code `768383` exists in DynamoDB and works through the local API.
+- Added clearer browser/API error messages for missing local API, expired AWS SSO credentials, and AWS profile access issues.
+- Added `/api/diagnostics` and documented the local troubleshooting checklist for collaborators.

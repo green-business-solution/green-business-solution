@@ -246,16 +246,73 @@ async function createClientUser(input) {
   throw error;
 }
 
+function classifyError(error) {
+  const rawMessage = error?.message || "Request failed.";
+  const name = error?.name || "";
+  const searchable = `${name} ${rawMessage}`;
+
+  if (
+    /CredentialsProviderError|TokenProviderError|UnauthorizedException|ExpiredToken|SSO|credential/i.test(searchable)
+  ) {
+    return {
+      status: 503,
+      message:
+        "AWS credentials are not ready for the local API. Run `aws sso login --profile gbs`, then restart `npm run dev`."
+    };
+  }
+
+  if (/AccessDenied|not authorized|is not authorized/i.test(searchable)) {
+    return {
+      status: 403,
+      message:
+        "The active AWS profile does not have access to the Green Business Solution DynamoDB tables. Confirm the `gbs` profile uses account 448016109714 with AdministratorAccess."
+    };
+  }
+
+  if (/Could not connect|ENOTFOUND|EAI_AGAIN|ECONNREFUSED|network/i.test(searchable)) {
+    return {
+      status: 503,
+      message:
+        "The local API could not reach AWS DynamoDB. Check internet access, then run `aws sts get-caller-identity --profile gbs`."
+    };
+  }
+
+  return {
+    status: error.status || 500,
+    message: rawMessage
+  };
+}
+
 function handleError(res, error) {
-  const status = error.status || 500;
+  const classified = classifyError(error);
+  const status = classified.status;
   if (status >= 500) {
     console.error(error);
   }
-  res.status(status).json({ error: error.message || "Request failed." });
+  res.status(status).json({ error: classified.message });
 }
 
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, region, usersTable, intakeTable });
+});
+
+app.get("/api/diagnostics", async (_req, res) => {
+  try {
+    const [neer, rajvansh] = await Promise.all([getUser("471140"), getUser("768383")]);
+    res.json({
+      ok: true,
+      region,
+      profile,
+      usersTable,
+      intakeTable,
+      adminsPresent: {
+        neer: Boolean(neer),
+        rajvansh: Boolean(rajvansh)
+      }
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
 });
 
 app.post("/api/intake", async (req, res) => {

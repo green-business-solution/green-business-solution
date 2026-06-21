@@ -112,17 +112,39 @@ function routeFromPath(): Route {
 }
 
 async function apiPost<T>(path: string, body: unknown): Promise<T> {
-  const response = await fetch(path, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
-  const payload = await response.json().catch(() => ({}));
+  let response: Response;
+
+  try {
+    response = await fetch(path, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+  } catch {
+    throw new Error(
+      "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
+    );
+  }
+
+  const text = await response.text();
+  let payload: { error?: string } = {};
+
+  if (text) {
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      payload = {};
+    }
+  }
 
   if (!response.ok) {
-    throw new Error(payload.error || "Request failed.");
+    const fallback =
+      response.status >= 500
+        ? "The local API returned an error. Check the terminal running `npm run dev`; if AWS credentials are mentioned, run `aws sso login --profile gbs` and restart the dev server."
+        : `Request failed with HTTP ${response.status}.`;
+    throw new Error(payload.error || fallback);
   }
 
   return payload as T;
