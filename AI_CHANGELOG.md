@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) sign-in page restyle
+
+- Restyled the sign-in page around a visible email/password form, account-mode toggle, divider, and Google sign-in option.
+- Hid the public footer from non-home public pages so the sign-in flow stays visually focused.
+
 ## 2026-06-22 - Codex (GPT-5) agent smoke-check clarification
 
 - Clarified that the fast-iteration workflow removes the need for human/user testing before GitHub/AWS sharing, not quick AI-agent verification.

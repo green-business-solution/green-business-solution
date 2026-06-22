@@ -539,6 +539,11 @@ function GoogleSignInButton<T>({
         }
       });
 
+      const buttonWidth = Math.min(
+        400,
+        Math.max(300, Math.floor(buttonRef.current.getBoundingClientRect().width || 400))
+      );
+
       buttonRef.current.innerHTML = "";
       window.google.accounts.id.renderButton(buttonRef.current, {
         logo_alignment: "left",
@@ -546,7 +551,7 @@ function GoogleSignInButton<T>({
         size: "large",
         text: "continue_with",
         theme: "outline",
-        width: 320
+        width: buttonWidth
       });
       setIsLoading(false);
     }
@@ -575,24 +580,27 @@ function PasswordAuthPanel({
   initialUsername?: string;
   onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
 }) {
-  const [mode, setMode] = useState<"signup" | "login" | null>(null);
+  const [mode, setMode] = useState<"signup" | "login">("login");
+  const isSignup = mode === "signup";
 
   return (
     <div className="password-auth-panel">
-      <button className="secondary-button auth-wide-button" onClick={() => setMode("signup")} type="button">
-        Create an account
-      </button>
-      <button className="link-button auth-text-button" onClick={() => setMode("login")} type="button">
-        Already have an account? Log in
-      </button>
-      {mode ? (
-        <PasswordAuthForm
-          initialUsername={initialUsername}
-          mode={mode}
-          onAuthSuccess={onAuthSuccess}
-          onModeChange={setMode}
-        />
-      ) : null}
+      <h1>{isSignup ? "Create account" : "Log in"}</h1>
+      <PasswordAuthForm
+        initialUsername={initialUsername}
+        mode={mode}
+        onAuthSuccess={onAuthSuccess}
+      />
+      <div className="auth-switch-row">
+        <span>{isSignup ? "Already have an account?" : "Don't have an account?"}</span>
+        <button
+          className="link-button auth-inline-link"
+          onClick={() => setMode(isSignup ? "login" : "signup")}
+          type="button"
+        >
+          {isSignup ? "Log in" : "Sign up"}
+        </button>
+      </div>
     </div>
   );
 }
@@ -600,13 +608,11 @@ function PasswordAuthPanel({
 function PasswordAuthForm({
   initialUsername,
   mode,
-  onAuthSuccess,
-  onModeChange
+  onAuthSuccess
 }: {
   initialUsername: string;
   mode: "signup" | "login";
   onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
-  onModeChange: (mode: "signup" | "login") => void;
 }) {
   const [username, setUsername] = useState(initialUsername);
   const [password, setPassword] = useState("");
@@ -638,17 +644,14 @@ function PasswordAuthForm({
 
   return (
     <form className="password-auth-form" onSubmit={submitPasswordAuth}>
-      <div>
-        <p className="eyebrow">{isSignup ? "Create account" : "Log in"}</p>
-        <h2>{isSignup ? "Use a username and password." : "Enter your account details."}</h2>
-      </div>
       <label className="field">
-        <span>Username or email</span>
+        <span>Email</span>
         <input
           autoComplete="username"
           onChange={(event) => setUsername(event.target.value)}
-          placeholder="name@example.com"
+          placeholder="Email"
           required
+          type="email"
           value={username}
         />
       </label>
@@ -666,13 +669,6 @@ function PasswordAuthForm({
       {error ? <p className="error-message">{error}</p> : null}
       <button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Submitting..." : isSignup ? "Create account" : "Log in"}
-      </button>
-      <button
-        className="link-button auth-text-button"
-        onClick={() => onModeChange(isSignup ? "login" : "signup")}
-        type="button"
-      >
-        {isSignup ? "Already have an account? Log in" : "Need an account? Create one"}
       </button>
     </form>
   );
@@ -1126,12 +1122,20 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function PublicShell({ children, navigate }: { children: ReactNode; navigate: (route: Route) => void }) {
+function PublicShell({
+  children,
+  navigate,
+  showFooter = false
+}: {
+  children: ReactNode;
+  navigate: (route: Route) => void;
+  showFooter?: boolean;
+}) {
   return (
     <main className="public-page">
       <PublicNav navigate={navigate} />
       {children}
-      <Footer navigate={navigate} />
+      {showFooter ? <Footer navigate={navigate} /> : null}
     </main>
   );
 }
@@ -1222,7 +1226,7 @@ function AboutHubCard({
 
 function HomePage({ navigate }: { navigate: (route: Route) => void }) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} showFooter>
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="eyebrow">Retrofit advisory for business facilities</p>
@@ -2084,15 +2088,14 @@ function SignInPage({
   onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
 }) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} showFooter={false}>
       <section className="sign-in-panel">
-        <div>
-          <p className="eyebrow">Sign in</p>
-          <h1>Access your Retrofi reports and project dashboard.</h1>
-          {message ? <p className="muted-message">{message}</p> : null}
+        {message ? <p className="muted-message">{message}</p> : null}
+        <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
+        <div className="auth-divider" role="presentation">
+          <span>Or</span>
         </div>
         <GoogleSignInButton<AuthPayload> endpoint="/api/auth/google" onSuccess={onAuthSuccess} />
-        <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
       </section>
     </PublicShell>
   );
