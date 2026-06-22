@@ -8,6 +8,9 @@ npm run gather:dsire
 
 The command runs `scripts/gather-dsire-opportunities.mjs`. It writes local JSON artifacts under `var/opportunity-ingestion/dsire/`, which is intentionally ignored by Git.
 
+This importer is registered in `docs/ingestion_process_registry.md`. Every written record must include
+the required source/origin metadata contract from that registry.
+
 ## Current Behavior
 
 The script supports three modes:

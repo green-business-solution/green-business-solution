@@ -65,11 +65,12 @@ Primary key:
 
 - `opportunityId` string, currently composed from the source, external ID type, and source external ID
 
-Current DSIRE and CEC fields include:
+Current DSIRE, CEC, and SDG&E fields include:
 
-- `sourceKey`: currently `SOURCE_DSIRE` or `SOURCE_CA_ENERGY_COMMISSION`
+- `sourceKey`: currently `SOURCE_DSIRE`, `SOURCE_CA_ENERGY_COMMISSION`, or `SOURCE_SDGE_BUSINESS`
 - `sourceName`
-- `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records; CEC solicitation number or URL hash for CEC records
+- `origin`: structured source metadata including source key, source name, source URL, base URL, and document type
+- `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records; CEC solicitation number or URL hash for CEC records; SDG&E program URL fingerprint or source section hash
 - `canonicalTitle`
 - `normalizedTitle`
 - `sourceUrl`
@@ -115,6 +116,10 @@ CEC records preserve source metadata under `cec`, including solicitation number,
 status, division, and program. CEC records also include `matchingParameters` for the four current
 business-profile matching dimensions: ZIP code, utility provider, business classification, and square
 footage. These are inferred from CEC detail-page text and should be reviewed before production use.
+
+SDG&E records preserve source metadata under `sdge`, including the SDG&E seed page, section heading,
+section category, contractor/delivery partner, and program URL. SDG&E records also include `origin`
+and `evidence` on every writable record so admins can see where each opportunity originated.
 
 ## Local API
 

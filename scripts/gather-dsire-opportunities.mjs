@@ -544,6 +544,22 @@ function validateNormalizedRecords(records, { checkedAt }) {
       criticalIssues.push("missing_source_key");
     }
 
+    if (!record.sourceName) {
+      criticalIssues.push("missing_source_name");
+    }
+
+    if (!record.sourceUrl) {
+      criticalIssues.push("missing_source_url");
+    }
+
+    if (!record.origin?.sourceKey || !record.origin?.sourceName || !record.origin?.sourceUrl) {
+      criticalIssues.push("missing_origin_metadata");
+    }
+
+    if (!Array.isArray(record.evidence) || record.evidence.length === 0) {
+      criticalIssues.push("missing_source_evidence");
+    }
+
     if (!record.externalId) {
       criticalIssues.push("missing_external_id");
     } else if (record.externalIdType !== "dsire_program_id" && String(record.externalId).trim().length < 3) {
@@ -767,6 +783,7 @@ function buildDynamodbOpportunityItem(record, metadata) {
     canonicalTitle: record.canonicalTitle,
     normalizedTitle: normalizeComparableText(record.canonicalTitle),
     sourceUrl: record.sourceUrl,
+    origin: record.origin,
     status: record.status,
     category: record.category,
     categoryId: record.categoryId,
@@ -920,6 +937,7 @@ function normalizeRssItem(item, context) {
           : "rss_guid_or_hash",
     canonicalTitle: titleParts.programName ?? item.title ?? "Untitled DSIRE update",
     sourceUrl,
+    origin: buildOrigin(sourceUrl, "rss_feed"),
     status: "unknown",
     programType: "unknown",
     state: inferStateFromProgramCode(titleParts.programCode),
@@ -1018,6 +1036,7 @@ function normalizeApiRecord(record, retrievedAt, options = {}) {
     externalIdType: externalId == null ? "content_hash" : "dsire_program_id",
     canonicalTitle,
     sourceUrl,
+    origin: buildOrigin(sourceUrl, options.sourceDocumentType ?? "api_record"),
     status: normalizeStatus(coalesce(readPath(record, "status"), readPath(record, "programStatus"))),
     category,
     categoryId,
@@ -1085,6 +1104,16 @@ function normalizeApiRecord(record, retrievedAt, options = {}) {
     ],
     contentHash,
     raw: record
+  };
+}
+
+function buildOrigin(sourceUrl, documentType) {
+  return {
+    sourceKey: SOURCE_KEY,
+    sourceName: SOURCE_NAME,
+    sourceUrl,
+    sourceBaseUrl: "https://www.dsireusa.org/",
+    documentType
   };
 }
 

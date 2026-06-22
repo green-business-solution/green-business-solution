@@ -9,6 +9,9 @@ npm run gather:cec
 The command runs `scripts/gather-cec-opportunities.mjs`. It writes local JSON artifacts under
 `var/opportunity-ingestion/cec/`, which is intentionally ignored by Git.
 
+This importer is registered in `docs/ingestion_process_registry.md`. Every written record must include
+the required source/origin metadata contract from that registry.
+
 ## Current Behavior
 
 The script uses CEC's official sitemap to discover solicitation detail pages under:

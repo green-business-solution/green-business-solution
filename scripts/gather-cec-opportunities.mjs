@@ -414,6 +414,7 @@ function normalizeCecRecord(record, retrievedAt) {
     externalIdType: record.solicitationNumber ? "cec_solicitation_number" : "cec_url_hash",
     canonicalTitle: record.title ?? "Untitled CEC solicitation",
     sourceUrl: record.sourceUrl,
+    origin: buildOrigin(record.sourceUrl, "solicitation_detail_page"),
     status: normalizedStatus,
     sourceStatus: record.status,
     category: "State Funding Solicitation",
@@ -479,6 +480,16 @@ function normalizeCecRecord(record, retrievedAt) {
       rawHash: record.rawHash
     },
     contentHash
+  };
+}
+
+function buildOrigin(sourceUrl, documentType) {
+  return {
+    sourceKey: SOURCE_KEY,
+    sourceName: SOURCE_NAME,
+    sourceUrl,
+    sourceBaseUrl: SOURCE_BASE_URL,
+    documentType
   };
 }
 
@@ -669,10 +680,17 @@ function validateNormalizedRecords(records, { checkedAt }) {
     const warnings = [];
 
     if (!record.sourceKey) criticalIssues.push("missing_source_key");
+    if (!record.sourceName) criticalIssues.push("missing_source_name");
     if (!record.externalId) criticalIssues.push("missing_external_id");
     if (!record.canonicalTitle || record.canonicalTitle.length < 4) criticalIssues.push("missing_or_short_title");
     if (!record.sourceUrl || !record.sourceUrl.startsWith("https://www.energy.ca.gov/solicitations/")) {
       criticalIssues.push("invalid_source_url");
+    }
+    if (!record.origin?.sourceKey || !record.origin?.sourceName || !record.origin?.sourceUrl) {
+      criticalIssues.push("missing_origin_metadata");
+    }
+    if (!Array.isArray(record.evidence) || record.evidence.length === 0) {
+      criticalIssues.push("missing_source_evidence");
     }
     if (!record.contentHash || record.contentHash.length !== 64) criticalIssues.push("missing_or_invalid_content_hash");
     if (!record.cec?.solicitationNumber) warnings.push("missing_solicitation_number");
@@ -777,6 +795,7 @@ async function writeDynamodbRecords(records, config, { runId, startedAt }) {
       canonicalTitle: record.canonicalTitle,
       normalizedTitle: normalizeComparableText(record.canonicalTitle),
       sourceUrl: record.sourceUrl,
+      origin: record.origin,
       status: record.status,
       sourceStatus: record.sourceStatus,
       category: record.category,

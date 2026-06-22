@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) SDG&E opportunity import and source metadata
+
+- Added a reusable SDG&E business-program importer for curated SDG&E seed pages, program tables, program tiles, demand-response sections, EV programs, and the Economic Development Rate page.
+- Required structured `origin` metadata and source evidence on DSIRE, CEC, and SDG&E opportunity writes.
+- Documented the ingestion process registry and SDG&E source workflow for later scheduled automation.
+- Imported 34 validated SDG&E records into `gbs-opportunity-candidates` and backfilled origin metadata across all existing opportunity records.
+
 ## 2026-06-21 - Codex (GPT-5) CEC opportunity import
 
 - Added a California Energy Commission sitemap/detail-page importer for solicitation opportunity candidates.
