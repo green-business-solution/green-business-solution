@@ -141,3 +141,8 @@
 
 - Moved the lock icon into a separate `Private & Secure` cue above the submit button.
 - Replaced the native title tooltip with a custom hover/focus tooltip for the privacy message.
+
+## 2026-06-21 - Codex (GPT-5) product vision documentation
+
+- Added `docs/product-vision.md` as the shared source of truth for website flow, intake decisions, post-submit opportunity direction, and agent coordination.
+- Linked the product vision document from the README.

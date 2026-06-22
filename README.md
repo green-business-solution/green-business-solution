@@ -2,6 +2,8 @@
 
 Green Business Solution is a React + Vite application for building operational tools around sustainable business workflows.
 
+For the current website direction, user flow, intake decisions, and long-term product goal, see [docs/product-vision.md](./docs/product-vision.md).
+
 ## Source of truth
 
 GitHub is the source of truth for this project. AWS is a deployment target and should not contain code changes that are missing from GitHub.
