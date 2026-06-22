@@ -12,6 +12,12 @@
 - Added password session support so admins can refresh and review opportunity records after non-Google login.
 - Compacted admin opportunity records returned from the API to avoid Lambda response-size failures during admin sign-in.
 
+## 2026-06-22 - Codex (GPT-5) Retrofi public site refinement
+
+- Split the About area into an overview hub plus Mission, Team, Trust & Data, and Contact subpages with matching routes and footer links.
+- Reworked the public navigation into a cleaner desktop layout with an About dropdown and a dedicated mobile menu/CTA pattern.
+- Tightened the public visual hierarchy with smaller secondary heroes, denser card spacing, real lightweight icons, aligned pricing/team/business grids, and a more compact footer.
+
 ## 2026-06-22 - Codex (GPT-5) Retrofi public website rebuild
 
 - Rebuilt the public Retrofi flow around `Create Free Scan` with Home, How It Works, Pricing, For Businesses, About, Scan, Scan Results, and Sign In routes.

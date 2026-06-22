@@ -29,6 +29,10 @@ type Route =
   | "pricing"
   | "for-businesses"
   | "about"
+  | "about-mission"
+  | "about-team"
+  | "about-trust"
+  | "about-contact"
   | "scan"
   | "scan-results"
   | "sign-in"
@@ -335,6 +339,13 @@ const improvementOptions = [
   "Not sure yet"
 ];
 
+const aboutLinks: Array<{ label: string; route: Route }> = [
+  { label: "Mission", route: "about-mission" },
+  { label: "Team", route: "about-team" },
+  { label: "Trust & Data", route: "about-trust" },
+  { label: "Contact", route: "about-contact" }
+];
+
 const staleSessionKeys = ["gbs-user-session", "gbs-admin-session"];
 const googleClientId =
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
@@ -380,6 +391,10 @@ function routeFromPath(): Route {
   if (window.location.pathname === "/pricing") return "pricing";
   if (window.location.pathname === "/for-businesses") return "for-businesses";
   if (window.location.pathname === "/about") return "about";
+  if (window.location.pathname === "/about/mission") return "about-mission";
+  if (window.location.pathname === "/about/team") return "about-team";
+  if (window.location.pathname === "/about/trust") return "about-trust";
+  if (window.location.pathname === "/about/contact") return "about-contact";
   if (window.location.pathname === "/scan" || window.location.pathname === "/get-started") return "scan";
   if (window.location.pathname === "/scan/results") return "scan-results";
   if (window.location.pathname === "/sign-in") return "sign-in";
@@ -390,6 +405,10 @@ function routeFromPath(): Route {
 
 function pathForRoute(route: Route) {
   if (route === "home") return "/";
+  if (route === "about-mission") return "/about/mission";
+  if (route === "about-team") return "/about/team";
+  if (route === "about-trust") return "/about/trust";
+  if (route === "about-contact") return "/about/contact";
   if (route === "scan-results") return "/scan/results";
   return `/${route}`;
 }
@@ -899,29 +918,91 @@ function Brand({ onClick }: { onClick: () => void }) {
   );
 }
 
+function FeatureIcon({
+  icon
+}: {
+  icon: "incentives" | "savings" | "roadmap" | "mission" | "team" | "trust" | "contact";
+}) {
+  const icons = {
+    incentives: (
+      <path
+        d="M12 4v16M7 9.5c0-1.9 1.8-3.5 4-3.5s4 1.6 4 3.5-1.6 2.8-4 3.4-4 1.5-4 3.6 1.8 3.5 4 3.5 4-1.6 4-3.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+    ),
+    savings: (
+      <>
+        <path d="M5 16l4-4 3 3 7-7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+        <path d="M14 8h5v5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      </>
+    ),
+    roadmap: (
+      <>
+        <path d="M5 7h6l2 3 2-3h4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+        <path d="M5 17h5l2-3 2 3h5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      </>
+    ),
+    mission: (
+      <>
+        <circle cx="12" cy="12" fill="none" r="7" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+      </>
+    ),
+    team: (
+      <>
+        <circle cx="9" cy="10" fill="none" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="16" cy="11" fill="none" r="2" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M5.5 18c.8-2.2 2.6-3.4 5-3.4 2.3 0 4.2 1.2 5 3.4" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
+      </>
+    ),
+    trust: (
+      <>
+        <path d="M12 4l6 2.5v5.7c0 3.8-2.3 6.2-6 7.8-3.7-1.6-6-4-6-7.8V6.5L12 4z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" />
+        <path d="M9.6 12.2l1.7 1.7 3.3-3.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      </>
+    ),
+    contact: (
+      <>
+        <rect fill="none" height="12" rx="2" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" width="16" x="4" y="6" />
+        <path d="M5.5 8l6.5 5 6.5-5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      </>
+    )
+  };
+
+  return (
+    <span aria-hidden="true" className="feature-icon">
+      <svg fill="none" viewBox="0 0 24 24">
+        {icons[icon]}
+      </svg>
+    </span>
+  );
+}
+
+function ArrowUpRightIcon() {
+  return (
+    <svg aria-hidden="true" className="arrow-icon" fill="none" viewBox="0 0 20 20">
+      <path d="M6 14L14 6M8 6h6v6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
 function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   function go(route: Route) {
-    setIsOpen(false);
+    setIsMenuOpen(false);
+    setIsAboutOpen(false);
     navigate(route);
   }
 
   return (
     <header className="site-header">
       <Brand onClick={() => go("home")} />
-      <button
-        aria-expanded={isOpen}
-        aria-label="Toggle navigation"
-        className="menu-button"
-        onClick={() => setIsOpen((current) => !current)}
-        type="button"
-      >
-        <span />
-        <span />
-        <span />
-      </button>
-      <nav aria-label="Primary" className={isOpen ? "site-nav open" : "site-nav"}>
+      <nav aria-label="Primary" className="site-nav">
         <button className="link-button" onClick={() => go("how-it-works")} type="button">
           How It Works
         </button>
@@ -931,9 +1012,28 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <button className="link-button" onClick={() => go("for-businesses")} type="button">
           For Businesses
         </button>
-        <button className="link-button" onClick={() => go("about")} type="button">
-          About
-        </button>
+        <div className="nav-dropdown" onMouseLeave={() => setIsAboutOpen(false)}>
+          <button
+            aria-expanded={isAboutOpen}
+            className="link-button dropdown-trigger"
+            onClick={() => setIsAboutOpen((current) => !current)}
+            type="button"
+          >
+            About
+            <span aria-hidden="true" className="dropdown-caret">
+              ▾
+            </span>
+          </button>
+          {isAboutOpen ? (
+            <div className="dropdown-panel" role="menu">
+              {aboutLinks.map((item) => (
+                <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </nav>
       <div className="nav-actions">
         <button className="link-button" onClick={() => go("sign-in")} type="button">
@@ -943,6 +1043,47 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           Create Free Scan
         </button>
       </div>
+      <button
+        aria-expanded={isMenuOpen}
+        aria-label="Toggle navigation"
+        className="menu-button"
+        onClick={() => setIsMenuOpen((current) => !current)}
+        type="button"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <button className="mobile-cta" onClick={() => go("scan")} type="button">
+        Create Free Scan
+      </button>
+      {isMenuOpen ? (
+        <div className="mobile-menu-panel">
+          <button className="link-button" onClick={() => go("how-it-works")} type="button">
+            How It Works
+          </button>
+          <button className="link-button" onClick={() => go("pricing")} type="button">
+            Pricing
+          </button>
+          <button className="link-button" onClick={() => go("for-businesses")} type="button">
+            For Businesses
+          </button>
+          <div className="mobile-about-group">
+            <span>About</span>
+            {aboutLinks.map((item) => (
+              <button className="mobile-sub-link" key={item.route} onClick={() => go(item.route)} type="button">
+                {item.label}
+              </button>
+            ))}
+          </div>
+          <button className="link-button" onClick={() => go("sign-in")} type="button">
+            Sign In
+          </button>
+          <button onClick={() => go("scan")} type="button">
+            Create Free Scan
+          </button>
+        </div>
+      ) : null}
     </header>
   );
 }
@@ -950,27 +1091,36 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
 function Footer({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <footer className="site-footer">
-      <div>
+      <div className="footer-brand">
         <Brand onClick={() => navigate("home")} />
         <p>Helping businesses identify, fund, and plan high-value sustainability retrofits.</p>
       </div>
-      <nav aria-label="Footer">
+      <nav aria-label="Site links" className="footer-links">
+        <span className="footer-heading">Site</span>
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
           ["For Businesses", "for-businesses"],
-          ["About", "about"],
           ["Create Free Scan", "scan"]
         ].map(([label, route]) => (
-          <button className="link-button" key={route} onClick={() => navigate(route as Route)} type="button">
+          <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
             {label}
           </button>
         ))}
       </nav>
+      <nav aria-label="Company links" className="footer-links">
+        <span className="footer-heading">Company</span>
+        {aboutLinks.map((item) => (
+          <button className="footer-link" key={item.route} onClick={() => navigate(item.route)} type="button">
+            {item.label}
+          </button>
+        ))}
+      </nav>
       <div className="footer-meta">
+        <span className="footer-heading">Contact</span>
+        <a href="mailto:hello@retrofi.org">hello@retrofi.org</a>
         <span>Privacy</span>
         <span>Terms</span>
-        <span>Contact: hello@retrofi.org</span>
       </div>
     </footer>
   );
@@ -1004,6 +1154,72 @@ function CTAButton({
   );
 }
 
+function SectionHeading({
+  eyebrow,
+  title,
+  copy,
+  align = "left"
+}: {
+  eyebrow: string;
+  title: string;
+  copy?: string;
+  align?: "left" | "center";
+}) {
+  return (
+    <div className={align === "center" ? "section-heading-block center" : "section-heading-block"}>
+      <p className="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      {copy ? <p>{copy}</p> : null}
+    </div>
+  );
+}
+
+function AboutSubnav({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <div className="about-subnav">
+      <button className="about-subnav-link" onClick={() => navigate("about")} type="button">
+        Overview
+      </button>
+      {aboutLinks.map((item) => (
+        <button className="about-subnav-link" key={item.route} onClick={() => navigate(item.route)} type="button">
+          {item.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function AboutHubCard({
+  copy,
+  icon,
+  label,
+  navigate,
+  route,
+  title
+}: {
+  copy: string;
+  icon: "mission" | "team" | "trust" | "contact";
+  label: string;
+  navigate: (route: Route) => void;
+  route: Route;
+  title: string;
+}) {
+  return (
+    <article className="hub-card">
+      <FeatureIcon icon={icon} />
+      <div>
+        <p className="eyebrow">{label}</p>
+        <h3>{title}</h3>
+        <p>{copy}</p>
+      </div>
+      <button className="text-link with-icon" onClick={() => navigate(route)} type="button">
+        Learn more
+        <ArrowUpRightIcon />
+      </button>
+    </article>
+  );
+}
+
 function HomePage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
@@ -1027,13 +1243,15 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
             <span>Free scan preview</span>
             <strong>Ready</strong>
           </div>
-          <div className="report-card">
-            <span>Site</span>
-            <strong>Ninth Street Market</strong>
-          </div>
-          <div className="opportunity-range">
-            <span>Estimated Opportunity Range</span>
-            <strong>$18k-$75k</strong>
+          <div className="preview-stack">
+            <div className="report-card">
+              <span>Site</span>
+              <strong>Ninth Street Market</strong>
+            </div>
+            <div className="opportunity-range">
+              <span>Estimated Opportunity Range</span>
+              <strong>$18k-$75k</strong>
+            </div>
           </div>
           <div className="category-pills">
             <span>HVAC</span>
@@ -1053,30 +1271,35 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
         </div>
       </section>
 
-      <section className="split-section">
+      <section className="split-section problem-section">
         <div>
           <p className="eyebrow">The problem</p>
           <h2>Retrofit incentives are valuable, but hard to navigate.</h2>
         </div>
         <p>
-          Programs are spread across utilities, government agencies, tax rules, and financing providers.
-          Retrofi turns scattered information into a clear business roadmap.
+          Programs are spread across utilities, government agencies, tax rules, and financing
+          providers. Retrofi turns scattered information into a clear business roadmap.
         </p>
       </section>
 
       <section className="content-section">
-        <div className="section-heading">
-          <p className="eyebrow">Platform focus</p>
-          <h2>What Retrofi helps with</h2>
-        </div>
+        <SectionHeading
+          copy="Retrofi connects program matching, savings context, and a decision-ready path forward."
+          eyebrow="Platform focus"
+          title="What Retrofi helps with"
+        />
         <div className="card-grid three">
           {[
-            ["Identify incentives", "Find rebates, tax incentives, grants, and financing options that may apply to your facility."],
-            ["Estimate savings", "Use business and utility data to estimate savings, ROI, and payback."],
-            ["Plan implementation", "Prioritize upgrades and understand the next steps to move forward."]
-          ].map(([title, copy]) => (
+            [
+              "Identify incentives",
+              "Find rebates, tax incentives, grants, and financing options that may apply to your facility.",
+              "incentives"
+            ],
+            ["Estimate savings", "Use business and utility data to estimate savings, ROI, and payback.", "savings"],
+            ["Plan implementation", "Prioritize upgrades and understand the next steps to move forward.", "roadmap"]
+          ].map(([title, copy, icon]) => (
             <article className="feature-card" key={title}>
-              <span className="card-icon" aria-hidden="true" />
+              <FeatureIcon icon={icon as "incentives" | "savings" | "roadmap"} />
               <h3>{title}</h3>
               <p>{copy}</p>
             </article>
@@ -1085,10 +1308,11 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
 
       <section className="content-section compact">
-        <div className="section-heading">
-          <p className="eyebrow">Process</p>
-          <h2>How Retrofi works</h2>
-        </div>
+        <SectionHeading
+          copy="The first step stays lightweight. The detailed work only starts when a site looks worth pursuing."
+          eyebrow="Process"
+          title="How Retrofi works"
+        />
         <div className="step-grid">
           {["Tell us about your business", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
             (step, index) => (
@@ -1099,17 +1323,15 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
             )
           )}
         </div>
-        <button className="text-link" onClick={() => navigate("how-it-works")} type="button">
-          View the full process
+        <button className="text-link with-icon" onClick={() => navigate("how-it-works")} type="button">
+          View full process
+          <ArrowUpRightIcon />
         </button>
       </section>
 
       <section className="content-section">
-        <div className="section-heading">
-          <p className="eyebrow">Best fit</p>
-          <h2>Built for businesses with real facility costs</h2>
-        </div>
-        <div className="business-chip-grid">
+        <SectionHeading eyebrow="Best fit" title="Built for businesses with real facility costs" />
+        <div className="card-grid three compact-cards">
           {[
             "Restaurants & commercial kitchens",
             "Grocery & convenience stores",
@@ -1118,9 +1340,13 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
             "Medical & dental offices",
             "Multi-location businesses"
           ].map((business) => (
-            <button className="business-chip" key={business} onClick={() => navigate("for-businesses")} type="button">
-              {business}
-            </button>
+            <article className="business-preview-card" key={business}>
+              <h3>{business}</h3>
+              <button className="text-link with-icon" onClick={() => navigate("for-businesses")} type="button">
+                See business types
+                <ArrowUpRightIcon />
+              </button>
+            </article>
           ))}
         </div>
       </section>
@@ -1138,6 +1364,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
 
       <section className="final-cta">
         <h2>See what opportunities your business may qualify for.</h2>
+        <p>Start with a free scan. Upgrade only if deeper analysis is worth it.</p>
         <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
       </section>
     </PublicShell>
@@ -1156,6 +1383,7 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
       <PageHero
+        compact
         eyebrow="Process"
         title="How Retrofi Works"
         copy="From a quick business scan to a detailed retrofit roadmap, Retrofi helps you move from opportunity discovery to implementation."
@@ -1172,7 +1400,7 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
         ))}
       </section>
       <section className="two-column-section">
-        <article className="feature-card">
+        <article className="feature-card list-card">
           <h2>What you need to start</h2>
           <ul>
             {[
@@ -1187,26 +1415,33 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
             ))}
           </ul>
         </article>
-        <article className="comparison-card">
+        <article className="comparison-card list-card">
           <h2>Free scan vs full report</h2>
           <div className="comparison-grid">
             <div>
               <h3>Free Scan</h3>
-              <p>Estimated value range, general opportunity categories, and basic eligibility preview.</p>
+              <ul>
+                <li>Estimated value range</li>
+                <li>General opportunity categories</li>
+                <li>Basic eligibility preview</li>
+              </ul>
             </div>
             <div>
               <h3>Opportunity Report</h3>
-              <p>Exact program details, ROI/payback estimates, document checklist, deadlines, and prioritized roadmap.</p>
+              <ul>
+                <li>Exact program details</li>
+                <li>ROI/payback estimates</li>
+                <li>Document checklist</li>
+                <li>Deadlines</li>
+                <li>Prioritized roadmap</li>
+              </ul>
             </div>
           </div>
         </article>
       </section>
       <section className="final-cta">
-        <h2>Start with a quick scan, then decide whether deeper analysis is worth it.</h2>
-        <div className="hero-actions">
-          <CTAButton navigate={navigate} route="pricing" variant="secondary">Compare pricing</CTAButton>
-          <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
-        </div>
+        <h2>Move from discovery to a practical retrofit decision path.</h2>
+        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
       </section>
     </PublicShell>
   );
@@ -1223,10 +1458,14 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
       <PageHero
+        compact
         eyebrow="Pricing"
         title="Simple project-based pricing"
         copy="Start with a free scan, then upgrade only if there is enough potential value to justify a deeper analysis."
       />
+      <section className="pricing-note">
+        <span>No subscription and no success fee initially.</span>
+      </section>
       <section className="pricing-grid">
         {cards.map(([name, price, bestFor, includes, cta], index) => (
           <article className={index === 1 ? "pricing-card recommended" : "pricing-card"} key={name as string}>
@@ -1239,13 +1478,13 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <button onClick={() => navigate(cta === "Contact Us" ? "about" : "scan")} type="button">
+            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
               {cta}
             </button>
           </article>
         ))}
       </section>
-      <section className="faq-grid">
+      <section className="faq-grid faq-section">
         {[
           ["Why is the scan free?", "The scan helps identify whether a deeper analysis is likely to be worth it."],
           ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
@@ -1277,11 +1516,12 @@ function ForBusinessesPage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
       <PageHero
+        compact
         eyebrow="For businesses"
         title="Built for businesses with real facility costs"
         copy="Retrofi is designed for businesses where energy, equipment, water, refrigeration, HVAC, lighting, or facility upgrades can meaningfully affect operating costs."
       />
-      <section className="card-grid two">
+      <section className="card-grid two business-type-grid">
         {businessTypes.map(([title, copy]) => (
           <article className="feature-card" key={title}>
             <h3>{title}</h3>
@@ -1290,7 +1530,7 @@ function ForBusinessesPage({ navigate }: { navigate: (route: Route) => void }) {
         ))}
       </section>
       <section className="two-column-section">
-        <article className="feature-card">
+        <article className="feature-card list-card">
           <h2>Retrofi is most useful if your business has:</h2>
           <ul>
             {["A physical location", "Monthly utility bills", "Equipment, HVAC, refrigeration, lighting, or water usage", "Interest in reducing operating costs", "Possible upgrade plans in the next 3-12 months"].map((item) => (
@@ -1298,7 +1538,7 @@ function ForBusinessesPage({ navigate }: { navigate: (route: Route) => void }) {
             ))}
           </ul>
         </article>
-        <article className="feature-card muted-card">
+        <article className="feature-card muted-card list-card">
           <h2>Retrofi may be less useful for:</h2>
           <ul>
             {["Homeowners", "Very small home-based businesses", "Businesses with no physical facility", "Businesses not considering upgrades", "Businesses outside supported regions"].map((item) => (
@@ -1319,44 +1559,307 @@ function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
       <PageHero
+        compact
         eyebrow="About Retrofi"
-        title="Making sustainability upgrades financially practical."
-        copy="Retrofi exists to help businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
+        title="About Retrofi"
+        copy="Retrofi helps businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
       />
+      <AboutSubnav navigate={navigate} />
+      <section className="card-grid two about-hub-grid">
+        <AboutHubCard
+          copy="Learn how we’re making sustainability upgrades financially practical for businesses."
+          icon="mission"
+          label="Mission"
+          navigate={navigate}
+          route="about-mission"
+          title="Why Retrofi exists"
+        />
+        <AboutHubCard
+          copy="See who is building Retrofi and the roles behind the product."
+          icon="team"
+          label="Team"
+          navigate={navigate}
+          route="about-team"
+          title="Meet the team"
+        />
+        <AboutHubCard
+          copy="Understand how Retrofi uses business information and utility bills to prepare recommendations."
+          icon="trust"
+          label="Trust & Data"
+          navigate={navigate}
+          route="about-trust"
+          title="How we handle business data"
+        />
+        <AboutHubCard
+          copy="Reach out before creating a scan or uploading business information."
+          icon="contact"
+          label="Contact"
+          navigate={navigate}
+          route="about-contact"
+          title="Questions before starting?"
+        />
+      </section>
+    </PublicShell>
+  );
+}
+
+function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        compact
+        eyebrow="Mission"
+        title="Making sustainability upgrades financially practical."
+        copy="Retrofi is building a cleaner path from incentive discovery to confident retrofit decisions."
+      />
+      <AboutSubnav navigate={navigate} />
       <section className="two-column-section">
         <article className="feature-card">
-          <h2>Why we built Retrofi</h2>
+          <h2>The problem</h2>
           <p>
-            Many businesses want to reduce costs and improve efficiency, but incentives are spread
-            across utilities, agencies, tax rules, and financing programs. Retrofi helps bring those
-            pieces into one roadmap.
+            Businesses often want to reduce operating costs and improve efficiency, but incentive
+            programs are fragmented across utilities, agencies, tax rules, and financing providers.
           </p>
         </article>
         <article className="feature-card">
-          <h2>How we use your information</h2>
+          <h2>Our mission</h2>
           <p>
-            We use business and utility information only to prepare recommendations, estimate savings,
-            and identify relevant opportunities. Your information is kept private and is not sold to
-            third parties.
+            Retrofi exists to help businesses identify relevant opportunities, estimate savings, and
+            move toward practical facility upgrades with more confidence.
           </p>
         </article>
       </section>
-      <section className="card-grid two">
+      <section className="content-section">
+        <SectionHeading eyebrow="What we believe" title="Retrofi should turn complexity into clear next steps" />
+        <div className="card-grid three">
+          {[
+            "Sustainability should be financially practical",
+            "Incentives should be easier to navigate",
+            "Businesses need clear next steps, not just links"
+          ].map((belief) => (
+            <article className="feature-card belief-card" key={belief}>
+              <FeatureIcon icon="mission" />
+              <h3>{belief}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="final-cta">
+        <h2>Start with a free scan and evaluate where a real project may exist.</h2>
+        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+      </section>
+    </PublicShell>
+  );
+}
+
+function TeamPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        compact
+        eyebrow="Team"
+        title="Meet the team"
+        copy="Retrofi is built by a small team focused on product, data systems, retrofit research, and customer workflow."
+      />
+      <AboutSubnav navigate={navigate} />
+      <section className="team-grid">
         {[
-          ["Neer Kuchlous", "Founder", "Business development, customer workflow, and market validation."],
-          ["Rajvansh Gupta", "Founder", "Product, data systems, and retrofit opportunity research."]
+          [
+            "Neer Kuchlous",
+            "Founder",
+            "Focuses on business development, customer workflow, and market validation."
+          ],
+          [
+            "Rajvansh Gupta",
+            "Founder",
+            "Leads product, data systems, and retrofit opportunity research."
+          ]
         ].map(([name, role, copy]) => (
           <article className="team-card" key={name}>
             <span>{name.split(" ").map((part) => part[0]).join("")}</span>
-            <h3>{name}</h3>
-            <strong>{role}</strong>
-            <p>{copy}</p>
+            <div className="team-copy">
+              <h3>{name}</h3>
+              <strong>{role}</strong>
+              <p>{copy}</p>
+            </div>
           </article>
         ))}
       </section>
+    </PublicShell>
+  );
+}
+
+function TrustPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        compact
+        eyebrow="Trust & Data"
+        title="Trust & Data"
+        copy="Retrofi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
+      />
+      <AboutSubnav navigate={navigate} />
+      <section className="card-grid two trust-grid">
+        <article className="feature-card list-card">
+          <h2>What we collect</h2>
+          <ul>
+            {[
+              "Business name and contact information",
+              "Site address",
+              "Utility provider",
+              "Organization and building type",
+              "Approximate square footage",
+              "Interested improvements",
+              "Utility bills if uploaded later"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="feature-card list-card">
+          <h2>Why we collect it</h2>
+          <ul>
+            {[
+              "To identify likely incentives",
+              "To estimate savings and ROI",
+              "To prioritize retrofit opportunities",
+              "To prepare reports and recommendations"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="feature-card list-card">
+          <h2>What we do not do</h2>
+          <ul>
+            {[
+              "Do not sell business information",
+              "Do not use utility bills for unrelated purposes",
+              "Do not share sensitive information without permission"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="feature-card utility-note-card">
+          <h2>Utility bill note</h2>
+          <p>
+            Utility bills are only needed for detailed savings, ROI, payback, and prioritization.
+            The free scan can be started without uploading bills.
+          </p>
+        </article>
+      </section>
       <section className="final-cta">
-        <h2>Have questions before starting?</h2>
-        <p>Contact us at hello@retrofi.org.</p>
+        <h2>Start with a free scan and share more only when deeper analysis is useful.</h2>
+        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+      </section>
+    </PublicShell>
+  );
+}
+
+function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: ""
+  });
+
+  function submitContactForm(event: FormEvent) {
+    event.preventDefault();
+
+    const subject = contactForm.company
+      ? `Retrofi inquiry from ${contactForm.company}`
+      : `Retrofi inquiry from ${contactForm.name || "website visitor"}`;
+    const body = [
+      `Name: ${contactForm.name}`,
+      `Email: ${contactForm.email}`,
+      `Company: ${contactForm.company}`,
+      "",
+      contactForm.message
+    ].join("\n");
+
+    window.location.href = `mailto:hello@retrofi.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        compact
+        eyebrow="Contact"
+        title="Contact Retrofi"
+        copy="Have questions before starting a scan or uploading business information? Reach out to us."
+      />
+      <AboutSubnav navigate={navigate} />
+      <section className="two-column-section contact-layout">
+        <article className="feature-card contact-card">
+          <h2>Contact email</h2>
+          <p>
+            <a href="mailto:hello@retrofi.org">hello@retrofi.org</a>
+          </p>
+          <p>Reach out before creating a scan or sending any business information.</p>
+        </article>
+        <form className="feature-card contact-form-card" onSubmit={submitContactForm}>
+          <h2>Contact form</h2>
+          <div className="field-grid">
+            <label className="field">
+              <span>
+                Name<b aria-label="required"> *</b>
+              </span>
+              <input
+                name="name"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, name: event.target.value }))
+                }
+                required
+                value={contactForm.name}
+              />
+            </label>
+            <label className="field">
+              <span>
+                Email<b aria-label="required"> *</b>
+              </span>
+              <input
+                name="email"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, email: event.target.value }))
+                }
+                required
+                type="email"
+                value={contactForm.email}
+              />
+            </label>
+            <label className="field">
+              <span>Company</span>
+              <input
+                name="company"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, company: event.target.value }))
+                }
+                value={contactForm.company}
+              />
+            </label>
+            <label className="field field-wide">
+              <span>
+                Message<b aria-label="required"> *</b>
+              </span>
+              <textarea
+                name="message"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, message: event.target.value }))
+                }
+                required
+                value={contactForm.message}
+              />
+            </label>
+          </div>
+          <div className="hero-actions">
+            <button type="submit">Email Retrofi</button>
+            <CTAButton navigate={navigate} route="scan" variant="secondary">
+              Create Free Scan
+            </CTAButton>
+          </div>
+        </form>
       </section>
     </PublicShell>
   );
@@ -1372,7 +1875,7 @@ function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
           Retrofi is reviewing your business and site information to identify likely incentive and
           retrofit opportunities.
         </p>
-        <div className="card-grid three">
+        <div className="card-grid three compact-cards">
           {[
             ["Estimated opportunity range", "Coming soon"],
             ["Likely categories", "Pending analysis"],
@@ -1393,9 +1896,19 @@ function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function PageHero({ copy, eyebrow, title }: { copy: string; eyebrow: string; title: string }) {
+function PageHero({
+  compact = false,
+  copy,
+  eyebrow,
+  title
+}: {
+  compact?: boolean;
+  copy: string;
+  eyebrow: string;
+  title: string;
+}) {
   return (
-    <section className="page-hero">
+    <section className={compact ? "page-hero compact" : "page-hero"}>
       <p className="eyebrow">{eyebrow}</p>
       <h1>{title}</h1>
       <p>{copy}</p>
@@ -2422,6 +2935,22 @@ export function App() {
 
   if (route === "about") {
     return <AboutPage navigate={navigate} />;
+  }
+
+  if (route === "about-mission") {
+    return <MissionPage navigate={navigate} />;
+  }
+
+  if (route === "about-team") {
+    return <TeamPage navigate={navigate} />;
+  }
+
+  if (route === "about-trust") {
+    return <TrustPage navigate={navigate} />;
+  }
+
+  if (route === "about-contact") {
+    return <ContactPage navigate={navigate} />;
   }
 
   if (route === "scan") {

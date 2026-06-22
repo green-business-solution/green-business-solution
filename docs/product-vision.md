@@ -48,7 +48,7 @@ Do not use `Request Demo` as the primary CTA.
 Final top navigation:
 
 - Left: Retrofi logo
-- Center: `How It Works`, `Pricing`, `For Businesses`, `About`
+- Center: `How It Works`, `Pricing`, `For Businesses`, `About` dropdown
 - Right: `Sign In`, `Create Free Scan`
 
 Current public URL structure:
@@ -57,10 +57,21 @@ Current public URL structure:
 - `/how-it-works` = full process explanation
 - `/pricing` = project-based pricing
 - `/for-businesses` = business type fit
-- `/about` = mission, founder trust, and data use
+- `/about` = about overview hub
+- `/about/mission` = mission
+- `/about/team` = team
+- `/about/trust` = trust and data
+- `/about/contact` = contact
 - `/scan` = free scan intake form
 - `/scan/results` = scan results placeholder
 - `/sign-in` = report/dashboard sign-in
+
+Current public page direction:
+
+- Home keeps the strongest gradient hero.
+- Secondary pages should use lighter, more compact hero sections rather than repeating the full homepage treatment.
+- Section spacing should stay spacious but tighter and more consistent than the first rebuild pass.
+- About content should be split into an overview hub plus focused subpages instead of one crammed page.
 
 ## Target User
 
@@ -182,6 +193,20 @@ Utility bill upload should be the next step after the preview:
 - Upload should support multiple files, starting with PDFs and images.
 
 The utility bill step should unlock deeper analysis rather than blocking the initial opportunity preview.
+
+## About Structure
+
+About should now work as a trust hub rather than a single long company page.
+
+Current About architecture:
+
+- `/about` = overview page with cards linking to the subpages
+- `/about/mission` = problem, mission, and beliefs
+- `/about/team` = founder/team cards
+- `/about/trust` = trust and data-use explanations
+- `/about/contact` = contact email and simple contact form
+
+Footer company links should point to these About subpages instead of repeating long company copy inline.
 
 ## Data Storage
 
