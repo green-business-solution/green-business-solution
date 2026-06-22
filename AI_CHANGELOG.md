@@ -85,3 +85,8 @@
 
 - Changed the intake subheader back to `your recommendations`.
 - Added a lock icon and privacy tooltip to the `Create My Plan` submit button.
+
+## 2026-06-21 - Codex (GPT-5) intake form layout
+
+- Centered and widened the intake form layout.
+- Moved the required-field note into the Contact Information header row.

@@ -517,13 +517,15 @@ function IntakePage({
         <div className="form-intro">
           <h1>Tell us about your business</h1>
           <p>We&apos;ll use this information to tailor your recommendations.</p>
-          <p className="required-note">
-            Required fields are marked with <span aria-hidden="true">*</span>
-          </p>
         </div>
 
         <form className="intake-form" onSubmit={submitForm}>
-          <h2>Contact Information</h2>
+          <div className="form-section-heading">
+            <h2>Contact Information</h2>
+            <p className="required-note">
+              Required fields are marked with <span aria-hidden="true">*</span>
+            </p>
+          </div>
           <div className="field-grid">
             <Field label="Full name" name="fullName" onChange={updateField} required value={form.fullName} />
             <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />

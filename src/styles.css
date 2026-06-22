@@ -296,27 +296,30 @@ mark {
 
 .form-shell {
   display: grid;
-  gap: 28px;
-  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 1040px;
 }
 
 .form-intro {
-  align-self: start;
   display: grid;
-  gap: 10px;
-  position: sticky;
-  top: 24px;
+  gap: 8px;
+  margin: 0 auto;
+  max-width: 680px;
+  text-align: center;
 }
 
 .form-intro h1 {
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.05;
   margin-bottom: 0;
 }
 
-.form-intro .required-note {
+.required-note {
   color: #6f7d74;
   font-size: 13px;
   line-height: 1.4;
-  margin-top: 2px;
+  margin: 0;
 }
 
 .required-note span {
@@ -334,6 +337,13 @@ mark {
   padding: 24px;
 }
 
+.form-section-heading {
+  align-items: baseline;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
 .intake-form h2 {
   border-top: 1px solid #eef2ef;
   font-size: 18px;
@@ -342,7 +352,8 @@ mark {
   padding-top: 20px;
 }
 
-.intake-form h2:first-child {
+.intake-form h2:first-child,
+.form-section-heading:first-child h2 {
   border-top: 0;
   padding-top: 0;
 }
@@ -651,6 +662,12 @@ dd {
 
   .form-intro {
     position: static;
+  }
+
+  .form-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .workspace-sidebar {
