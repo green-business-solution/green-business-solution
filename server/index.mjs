@@ -44,6 +44,7 @@ let activeServer = null;
 app.use(express.json({ limit: "128kb" }));
 
 const requiredFields = [
+  ["fullName", "Contact name"],
   ["email", "Email"],
   ["siteAddress", "Site address"],
   ["electricUtilityProvider", "Electric utility provider"],
@@ -261,7 +262,7 @@ function createIntakeRecord(userId, input, now) {
     userId,
     submissionId: `intake_${userId}`,
     contact: {
-      fullName: cleanOptional(input.fullName),
+      fullName: cleanText(input.fullName),
       email: cleanText(input.email).toLowerCase(),
       phone: cleanOptional(input.phone),
       roleTitle: cleanOptional(input.roleTitle),

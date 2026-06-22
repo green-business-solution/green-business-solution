@@ -23,7 +23,17 @@ const LockIcon = () => (
   </svg>
 );
 
-type Route = "home" | "get-started" | "portal" | "admin";
+type Route =
+  | "home"
+  | "how-it-works"
+  | "pricing"
+  | "for-businesses"
+  | "about"
+  | "scan"
+  | "scan-results"
+  | "sign-in"
+  | "portal"
+  | "admin";
 
 type UserRecord = {
   userId: string;
@@ -266,19 +276,15 @@ const initialFormState: IntakeFormState = {
   notes: ""
 };
 
-const metrics = [
-  { label: "Open initiatives", value: "12", tone: "green" },
-  { label: "Monthly savings tracked", value: "$8.4k", tone: "blue" },
-  { label: "CO2e avoided", value: "31.7t", tone: "amber" }
+const utilityProviderOptions = [
+  "PG&E",
+  "Southern California Edison",
+  "San Diego Gas & Electric",
+  "Silicon Valley Power",
+  "LADWP",
+  "SMUD",
+  "Other / Not sure"
 ];
-
-const initiatives = [
-  ["Energy efficiency audit", "18% utility reduction"],
-  ["Supplier sustainability scorecard", "42 vendors mapped"],
-  ["Waste diversion tracking", "63% diversion rate"]
-];
-
-const utilityProviderOptions = ["PG&E", "SCE", "SDG&E", "SVP", "Other"];
 const organizationTypeOptions = [
   "Commercial Business",
   "Industrial Facility",
@@ -288,28 +294,36 @@ const organizationTypeOptions = [
   "Government / Public Agency",
   "Other"
 ];
-const ownershipStatusOptions = ["Own", "Lease", "Manage"];
+const organizationSizeOptions = [
+  "1-10 employees",
+  "11-50 employees",
+  "51-250 employees",
+  "251-1,000 employees",
+  "1,000+ employees"
+];
+const ownershipStatusOptions = ["Own", "Lease", "Manage property", "Not sure"];
 const buildingTypeOptions = [
+  "Restaurant / Commercial Kitchen",
+  "Grocery / Convenience Store",
+  "Hotel / Hospitality",
+  "Warehouse / Industrial Space",
+  "Medical / Dental Office",
   "Office",
   "Retail",
-  "Restaurant",
-  "Warehouse",
-  "Manufacturing",
-  "Grocery",
-  "Hospitality",
-  "Healthcare",
-  "Education",
+  "Multifamily",
   "Other"
 ];
 const improvementOptions = [
-  "LED",
+  "LED lighting",
   "HVAC",
   "Refrigeration",
   "Solar",
-  "EV Charging",
-  "Water Efficiency",
-  "Building Controls",
-  "Show Me Everything"
+  "Battery storage",
+  "EV charging",
+  "Water efficiency",
+  "Building controls",
+  "Commercial kitchen equipment",
+  "Not sure yet"
 ];
 
 const staleSessionKeys = ["gbs-user-session", "gbs-admin-session"];
@@ -353,10 +367,22 @@ function loadGoogleIdentityScript() {
 }
 
 function routeFromPath(): Route {
-  if (window.location.pathname === "/get-started") return "get-started";
+  if (window.location.pathname === "/how-it-works") return "how-it-works";
+  if (window.location.pathname === "/pricing") return "pricing";
+  if (window.location.pathname === "/for-businesses") return "for-businesses";
+  if (window.location.pathname === "/about") return "about";
+  if (window.location.pathname === "/scan" || window.location.pathname === "/get-started") return "scan";
+  if (window.location.pathname === "/scan/results") return "scan-results";
+  if (window.location.pathname === "/sign-in") return "sign-in";
   if (window.location.pathname === "/portal") return "portal";
   if (window.location.pathname === "/admin") return "admin";
   return "home";
+}
+
+function pathForRoute(route: Route) {
+  if (route === "home") return "/";
+  if (route === "scan-results") return "/scan/results";
+  return `/${route}`;
 }
 
 async function apiPost<T>(path: string, body: unknown): Promise<T> {
@@ -719,99 +745,525 @@ function CheckboxGroup({
   );
 }
 
-function HomePage({ navigate }: { navigate: (route: Route) => void }) {
+function Brand({ onClick }: { onClick: () => void }) {
   return (
-    <main className="landing-page">
-      <header className="site-header">
-        <div className="brand-block">
-          <div className="brand-mark" aria-hidden="true">
-            G
-          </div>
-          <strong>Green Business Solution</strong>
-        </div>
-        <nav aria-label="Primary">
-          <button className="link-button" onClick={() => navigate("portal")} type="button">
-            Sign in
+    <button className="brand-link" onClick={onClick} type="button">
+      <span className="brand-mark" aria-hidden="true">
+        R
+      </span>
+      <span>Retrofi</span>
+    </button>
+  );
+}
+
+function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function go(route: Route) {
+    setIsOpen(false);
+    navigate(route);
+  }
+
+  return (
+    <header className="site-header">
+      <Brand onClick={() => go("home")} />
+      <button
+        aria-expanded={isOpen}
+        aria-label="Toggle navigation"
+        className="menu-button"
+        onClick={() => setIsOpen((current) => !current)}
+        type="button"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <nav aria-label="Primary" className={isOpen ? "site-nav open" : "site-nav"}>
+        <button className="link-button" onClick={() => go("how-it-works")} type="button">
+          How It Works
+        </button>
+        <button className="link-button" onClick={() => go("pricing")} type="button">
+          Pricing
+        </button>
+        <button className="link-button" onClick={() => go("for-businesses")} type="button">
+          For Businesses
+        </button>
+        <button className="link-button" onClick={() => go("about")} type="button">
+          About
+        </button>
+      </nav>
+      <div className="nav-actions">
+        <button className="link-button" onClick={() => go("sign-in")} type="button">
+          Sign In
+        </button>
+        <button onClick={() => go("scan")} type="button">
+          Create Free Scan
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function Footer({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <footer className="site-footer">
+      <div>
+        <Brand onClick={() => navigate("home")} />
+        <p>Helping businesses identify, fund, and plan high-value sustainability retrofits.</p>
+      </div>
+      <nav aria-label="Footer">
+        {[
+          ["How It Works", "how-it-works"],
+          ["Pricing", "pricing"],
+          ["For Businesses", "for-businesses"],
+          ["About", "about"],
+          ["Create Free Scan", "scan"]
+        ].map(([label, route]) => (
+          <button className="link-button" key={route} onClick={() => navigate(route as Route)} type="button">
+            {label}
           </button>
-        </nav>
-      </header>
+        ))}
+      </nav>
+      <div className="footer-meta">
+        <span>Privacy</span>
+        <span>Terms</span>
+        <span>Contact: hello@retrofi.org</span>
+      </div>
+    </footer>
+  );
+}
 
-      <section className="hero-band">
-        <div className="hero-copy">
-          <p className="eyebrow">Sustainability operations</p>
-          <h1>Turn green business ideas into tracked savings, supplier actions, and measurable impact.</h1>
-          <p>
-            Version 1 focuses on the workflow already sketched for this project: energy efficiency
-            audits, supplier sustainability scorecards, waste diversion tracking, monthly savings,
-            and CO2e avoided.
-          </p>
-          <div className="hero-actions">
-            <button onClick={() => navigate("get-started")} type="button">
-              Get started
-            </button>
-            <button className="secondary-button" onClick={() => navigate("portal")} type="button">
-              Sign in with Google
-            </button>
-          </div>
-        </div>
-
-        <div className="hero-visual" aria-label="Green Business Solution preview">
-          <div className="dashboard-preview">
-            <div className="preview-topline">
-              <span>Operating dashboard</span>
-              <strong>Active</strong>
-            </div>
-            <div className="preview-metrics">
-              {metrics.map((metric) => (
-                <div className={`preview-metric preview-${metric.tone}`} key={metric.label}>
-                  <span>{metric.label}</span>
-                  <strong>{metric.value}</strong>
-                </div>
-              ))}
-            </div>
-            <div className="preview-list">
-              {initiatives.map(([name, result]) => (
-                <div key={name}>
-                  <span>{name}</span>
-                  <strong>{result}</strong>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="value-grid" aria-label="What the first version supports">
-        <article>
-          <h2>Client intake</h2>
-          <p>New users complete a required questionnaire and then sign in with Google.</p>
-        </article>
-        <article>
-          <h2>User portal</h2>
-          <p>Each client sees only the intake and sustainability information tied to their email.</p>
-        </article>
-        <article>
-          <h2>Admin view</h2>
-          <p>Neer and Rajvansh are routed to the shared DynamoDB-backed admin dashboard.</p>
-        </article>
-      </section>
+function PublicShell({ children, navigate }: { children: ReactNode; navigate: (route: Route) => void }) {
+  return (
+    <main className="public-page">
+      <PublicNav navigate={navigate} />
+      {children}
+      <Footer navigate={navigate} />
     </main>
   );
 }
 
-function IntakePage({
+function CTAButton({
+  children,
   navigate,
-  onAuthSuccess,
-  onIntakeCreated
+  route,
+  variant = "primary"
 }: {
+  children: ReactNode;
   navigate: (route: Route) => void;
-  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
-  onIntakeCreated: (email: string) => void;
+  route: Route;
+  variant?: "primary" | "secondary";
 }) {
+  return (
+    <button className={variant === "secondary" ? "secondary-button" : undefined} onClick={() => navigate(route)} type="button">
+      {children}
+    </button>
+  );
+}
+
+function HomePage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <section className="hero-panel">
+        <div className="hero-copy">
+          <p className="eyebrow">Retrofit advisory for business facilities</p>
+          <h1>Find funding and savings for your next facility upgrade.</h1>
+          <p>
+            Retrofi helps businesses identify eligible sustainability incentives, estimate savings,
+            and build a clear roadmap for high-value retrofits.
+          </p>
+          <div className="hero-actions">
+            <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+            <CTAButton navigate={navigate} route="how-it-works" variant="secondary">
+              See How It Works
+            </CTAButton>
+          </div>
+        </div>
+        <div className="scan-preview" aria-label="Sample Retrofi scan report">
+          <div className="preview-topline">
+            <span>Free scan preview</span>
+            <strong>Ready</strong>
+          </div>
+          <div className="report-card">
+            <span>Site</span>
+            <strong>Ninth Street Market</strong>
+          </div>
+          <div className="opportunity-range">
+            <span>Estimated Opportunity Range</span>
+            <strong>$18k-$75k</strong>
+          </div>
+          <div className="category-pills">
+            <span>HVAC</span>
+            <span>Lighting</span>
+            <span>Refrigeration</span>
+          </div>
+          <div className="report-status">
+            <div>
+              <span>Report Status</span>
+              <strong>Free Scan Ready</strong>
+            </div>
+            <div>
+              <span>Next Step</span>
+              <strong>Upload utility bills</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="split-section">
+        <div>
+          <p className="eyebrow">The problem</p>
+          <h2>Retrofit incentives are valuable, but hard to navigate.</h2>
+        </div>
+        <p>
+          Programs are spread across utilities, government agencies, tax rules, and financing providers.
+          Retrofi turns scattered information into a clear business roadmap.
+        </p>
+      </section>
+
+      <section className="content-section">
+        <div className="section-heading">
+          <p className="eyebrow">Platform focus</p>
+          <h2>What Retrofi helps with</h2>
+        </div>
+        <div className="card-grid three">
+          {[
+            ["Identify incentives", "Find rebates, tax incentives, grants, and financing options that may apply to your facility."],
+            ["Estimate savings", "Use business and utility data to estimate savings, ROI, and payback."],
+            ["Plan implementation", "Prioritize upgrades and understand the next steps to move forward."]
+          ].map(([title, copy]) => (
+            <article className="feature-card" key={title}>
+              <span className="card-icon" aria-hidden="true" />
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-section compact">
+        <div className="section-heading">
+          <p className="eyebrow">Process</p>
+          <h2>How Retrofi works</h2>
+        </div>
+        <div className="step-grid">
+          {["Tell us about your business", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
+            (step, index) => (
+              <article className="step-card" key={step}>
+                <span>{index + 1}</span>
+                <h3>{step}</h3>
+              </article>
+            )
+          )}
+        </div>
+        <button className="text-link" onClick={() => navigate("how-it-works")} type="button">
+          View the full process
+        </button>
+      </section>
+
+      <section className="content-section">
+        <div className="section-heading">
+          <p className="eyebrow">Best fit</p>
+          <h2>Built for businesses with real facility costs</h2>
+        </div>
+        <div className="business-chip-grid">
+          {[
+            "Restaurants & commercial kitchens",
+            "Grocery & convenience stores",
+            "Hotels & hospitality",
+            "Warehouses & industrial spaces",
+            "Medical & dental offices",
+            "Multi-location businesses"
+          ].map((business) => (
+            <button className="business-chip" key={business} onClick={() => navigate("for-businesses")} type="button">
+              {business}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="trust-strip" aria-label="Trust commitments">
+        {[
+          "Your information is kept private",
+          "Utility bills are used only for analysis",
+          "Built for businesses, not consumers",
+          "Recommendations are based on facility and program data"
+        ].map((item) => (
+          <span key={item}>{item}</span>
+        ))}
+      </section>
+
+      <section className="final-cta">
+        <h2>See what opportunities your business may qualify for.</h2>
+        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+      </section>
+    </PublicShell>
+  );
+}
+
+function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
+  const steps = [
+    ["Complete the free scan", "Share your business address, utility provider, organization type, and basic facility information."],
+    ["Receive an opportunity preview", "See estimated value range, likely retrofit categories, and whether your facility appears to have meaningful opportunities."],
+    ["Upload utility bills", "Utility bills help Retrofi estimate savings, ROI, payback, and project priority."],
+    ["Unlock the Opportunity Report", "Get exact programs, eligibility analysis, savings estimates, financing options, required documents, and deadlines."],
+    ["Get implementation support", "For businesses ready to move forward, Retrofi can help organize documents, review quotes, and track next steps."]
+  ];
+
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        eyebrow="Process"
+        title="How Retrofi Works"
+        copy="From a quick business scan to a detailed retrofit roadmap, Retrofi helps you move from opportunity discovery to implementation."
+      />
+      <section className="timeline-section">
+        {steps.map(([title, copy], index) => (
+          <article className="timeline-step" key={title}>
+            <span>{index + 1}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </div>
+          </article>
+        ))}
+      </section>
+      <section className="two-column-section">
+        <article className="feature-card">
+          <h2>What you need to start</h2>
+          <ul>
+            {[
+              "Business address",
+              "Utility provider",
+              "Organization type",
+              "Business/building type",
+              "Approximate square footage",
+              "Recent utility bills for detailed analysis"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="comparison-card">
+          <h2>Free scan vs full report</h2>
+          <div className="comparison-grid">
+            <div>
+              <h3>Free Scan</h3>
+              <p>Estimated value range, general opportunity categories, and basic eligibility preview.</p>
+            </div>
+            <div>
+              <h3>Opportunity Report</h3>
+              <p>Exact program details, ROI/payback estimates, document checklist, deadlines, and prioritized roadmap.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+      <section className="final-cta">
+        <h2>Start with a quick scan, then decide whether deeper analysis is worth it.</h2>
+        <div className="hero-actions">
+          <CTAButton navigate={navigate} route="pricing" variant="secondary">Compare pricing</CTAButton>
+          <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+        </div>
+      </section>
+    </PublicShell>
+  );
+}
+
+function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
+  const cards = [
+    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Create Free Scan"],
+    ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
+    ["Implementation Support", "Starting at $3,500", "Businesses ready to move forward", ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "Incentive tracking", "60-90 days of support"], "Contact Us"],
+    ["Multi-Site", "Custom", "Franchisees, regional operators, and multi-location businesses", ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations"], "Contact Us"]
+  ];
+
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        eyebrow="Pricing"
+        title="Simple project-based pricing"
+        copy="Start with a free scan, then upgrade only if there is enough potential value to justify a deeper analysis."
+      />
+      <section className="pricing-grid">
+        {cards.map(([name, price, bestFor, includes, cta], index) => (
+          <article className={index === 1 ? "pricing-card recommended" : "pricing-card"} key={name as string}>
+            {index === 1 ? <span className="recommended-badge">Recommended</span> : null}
+            <h2>{name}</h2>
+            <strong>{price}</strong>
+            <p>Best for: {bestFor}</p>
+            <ul>
+              {(includes as string[]).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <button onClick={() => navigate(cta === "Contact Us" ? "about" : "scan")} type="button">
+              {cta}
+            </button>
+          </article>
+        ))}
+      </section>
+      <section className="faq-grid">
+        {[
+          ["Why is the scan free?", "The scan helps identify whether a deeper analysis is likely to be worth it."],
+          ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
+          ["Do I need utility bills?", "Not for the free scan. Utility bills are needed for detailed savings and ROI."],
+          ["Is this a subscription?", "V1 is not a subscription."],
+          ["Do you charge a success fee?", "No success fee initially."],
+          ["Can I use this for multiple sites?", "Yes. Multi-site pricing is custom based on portfolio size."]
+        ].map(([question, answer]) => (
+          <article className="feature-card" key={question}>
+            <h3>{question}</h3>
+            <p>{answer}</p>
+          </article>
+        ))}
+      </section>
+    </PublicShell>
+  );
+}
+
+function ForBusinessesPage({ navigate }: { navigate: (route: Route) => void }) {
+  const businessTypes = [
+    ["Restaurants & Commercial Kitchens", "Cooking equipment, refrigeration, HVAC, water heating, lighting."],
+    ["Grocery & Convenience Stores", "Refrigeration, lighting, HVAC, controls, backup power."],
+    ["Hotels & Hospitality", "HVAC, water heating, laundry, smart controls, lighting."],
+    ["Warehouses & Industrial Spaces", "Lighting, HVAC, motors, fleet/EV charging, solar."],
+    ["Medical & Dental Offices", "HVAC, lighting, equipment efficiency, utility cost reduction."],
+    ["Multi-Location Businesses", "Repeatable scans, portfolio prioritization, standardized recommendations."]
+  ];
+
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        eyebrow="For businesses"
+        title="Built for businesses with real facility costs"
+        copy="Retrofi is designed for businesses where energy, equipment, water, refrigeration, HVAC, lighting, or facility upgrades can meaningfully affect operating costs."
+      />
+      <section className="card-grid two">
+        {businessTypes.map(([title, copy]) => (
+          <article className="feature-card" key={title}>
+            <h3>{title}</h3>
+            <p>Likely upgrade areas: {copy}</p>
+          </article>
+        ))}
+      </section>
+      <section className="two-column-section">
+        <article className="feature-card">
+          <h2>Retrofi is most useful if your business has:</h2>
+          <ul>
+            {["A physical location", "Monthly utility bills", "Equipment, HVAC, refrigeration, lighting, or water usage", "Interest in reducing operating costs", "Possible upgrade plans in the next 3-12 months"].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="feature-card muted-card">
+          <h2>Retrofi may be less useful for:</h2>
+          <ul>
+            {["Homeowners", "Very small home-based businesses", "Businesses with no physical facility", "Businesses not considering upgrades", "Businesses outside supported regions"].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
+      <section className="final-cta">
+        <h2>See if Retrofi fits your business.</h2>
+        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
+      </section>
+    </PublicShell>
+  );
+}
+
+function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <PageHero
+        eyebrow="About Retrofi"
+        title="Making sustainability upgrades financially practical."
+        copy="Retrofi exists to help businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
+      />
+      <section className="two-column-section">
+        <article className="feature-card">
+          <h2>Why we built Retrofi</h2>
+          <p>
+            Many businesses want to reduce costs and improve efficiency, but incentives are spread
+            across utilities, agencies, tax rules, and financing programs. Retrofi helps bring those
+            pieces into one roadmap.
+          </p>
+        </article>
+        <article className="feature-card">
+          <h2>How we use your information</h2>
+          <p>
+            We use business and utility information only to prepare recommendations, estimate savings,
+            and identify relevant opportunities. Your information is kept private and is not sold to
+            third parties.
+          </p>
+        </article>
+      </section>
+      <section className="card-grid two">
+        {[
+          ["Neer Kuchlous", "Founder", "Business development, customer workflow, and market validation."],
+          ["Rajvansh Gupta", "Founder", "Product, data systems, and retrofit opportunity research."]
+        ].map(([name, role, copy]) => (
+          <article className="team-card" key={name}>
+            <span>{name.split(" ").map((part) => part[0]).join("")}</span>
+            <h3>{name}</h3>
+            <strong>{role}</strong>
+            <p>{copy}</p>
+          </article>
+        ))}
+      </section>
+      <section className="final-cta">
+        <h2>Have questions before starting?</h2>
+        <p>Contact us at hello@retrofi.org.</p>
+      </section>
+    </PublicShell>
+  );
+}
+
+function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate}>
+      <section className="results-panel">
+        <p className="eyebrow">Free scan</p>
+        <h1>Your free scan is being prepared</h1>
+        <p>
+          Retrofi is reviewing your business and site information to identify likely incentive and
+          retrofit opportunities.
+        </p>
+        <div className="card-grid three">
+          {[
+            ["Estimated opportunity range", "Coming soon"],
+            ["Likely categories", "Pending analysis"],
+            ["Recommended next step", "Upload utility bills for detailed savings and ROI"]
+          ].map(([label, value]) => (
+            <article className="feature-card" key={label}>
+              <span className="eyebrow">{label}</span>
+              <h3>{value}</h3>
+            </article>
+          ))}
+        </div>
+        <div className="hero-actions">
+          <CTAButton navigate={navigate} route="home" variant="secondary">Back to Home</CTAButton>
+          <button disabled type="button">Upload Utility Bills</button>
+        </div>
+      </section>
+    </PublicShell>
+  );
+}
+
+function PageHero({ copy, eyebrow, title }: { copy: string; eyebrow: string; title: string }) {
+  return (
+    <section className="page-hero">
+      <p className="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p>{copy}</p>
+    </section>
+  );
+}
+
+function IntakePage({ navigate }: { navigate: (route: Route) => void }) {
   const [form, setForm] = useState<IntakeFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [pendingSignInEmail, setPendingSignInEmail] = useState<string | null>(null);
 
   function updateField(name: keyof IntakeFormState, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -823,8 +1275,8 @@ function IntakePage({
     setIsSubmitting(true);
 
     try {
-      const payload = await apiPost<PortalPayload>("/api/intake", form);
-      setPendingSignInEmail(payload.user.email);
+      await apiPost<PortalPayload>("/api/intake", form);
+      navigate("scan-results");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
     } finally {
@@ -832,18 +1284,9 @@ function IntakePage({
     }
   }
 
-  function continueWithSignInPage(email: string) {
-    onIntakeCreated(email);
-    setPendingSignInEmail(null);
-    navigate("portal");
-  }
-
   return (
-    <main className="form-page">
-      <button className="back-button" onClick={() => navigate("home")} type="button">
-        Back
-      </button>
-      <section className="form-shell">
+    <PublicShell navigate={navigate}>
+      <section className="scan-page form-shell">
         <div className="form-intro">
           <h1>Tell us about your business</h1>
           <p>We&apos;ll use this information to tailor your recommendations.</p>
@@ -864,7 +1307,13 @@ function IntakePage({
               required
               value={form.companyName}
             />
-            <Field label="Website" name="website" onChange={updateField} value={form.website} />
+            <Field
+              label="Website"
+              name="website"
+              onChange={updateField}
+              placeholder="https://example.com"
+              value={form.website}
+            />
             <SelectField
               label="Organization type"
               name="organizationType"
@@ -877,7 +1326,7 @@ function IntakePage({
               label="Organization size"
               name="organizationSize"
               onChange={updateField}
-              options={["1-10", "11-50", "51-200", "201-1,000", "1,001+"]}
+              options={organizationSizeOptions}
               value={form.organizationSize}
             />
           </div>
@@ -936,97 +1385,62 @@ function IntakePage({
               required
               values={form.interestedImprovements}
             />
+            <TextArea
+              label="Anything else we should know?"
+              name="notes"
+              onChange={updateField}
+              value={form.notes}
+            />
           </div>
 
           <h2>Contact Information</h2>
           <div className="field-grid">
+            <Field label="Contact name" name="fullName" onChange={updateField} required value={form.fullName} />
             <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
-            <Field label="Full name" name="fullName" onChange={updateField} value={form.fullName} />
             <Field label="Phone" name="phone" onChange={updateField} value={form.phone} />
-            <Field label="Role/title" name="roleTitle" onChange={updateField} value={form.roleTitle} />
-            <SelectField
-              label="Preferred contact"
-              name="contactPreference"
-              onChange={updateField}
-              options={["Email", "Phone", "Text"]}
-              value={form.contactPreference}
-            />
           </div>
 
           {error ? <p className="error-message">{error}</p> : null}
-          <div
-            aria-describedby="privacy-tooltip"
-            className="privacy-cue"
-            tabIndex={0}
-          >
+          <div className="privacy-line">
             <LockIcon />
-            <span>Private &amp; Secure</span>
-            <span className="privacy-tooltip" id="privacy-tooltip" role="tooltip">
-              Your information stays private. We use it only to personalize your recommendations.
-            </span>
+            <span>Your information is kept private and used only to prepare your recommendations.</span>
           </div>
           <button disabled={isSubmitting} type="submit">
             {isSubmitting ? (
               "Submitting..."
             ) : (
-              "Create My Plan"
+              "Create Free Scan"
             )}
           </button>
         </form>
       </section>
-
-      {pendingSignInEmail ? (
-        <div className="modal-backdrop" role="presentation">
-          <section
-            aria-labelledby="save-results-title"
-            aria-modal="true"
-            className="save-results-modal"
-            role="dialog"
-          >
-            <div className="modal-copy">
-              <p className="eyebrow">Save results</p>
-              <h2 id="save-results-title">Sign in to save your results</h2>
-              <p>
-                Link your Google account so your plan, recommendations, and next steps stay connected
-                to your business profile.
-              </p>
-            </div>
-            <GoogleSignInButton<AuthPayload>
-              endpoint="/api/auth/google"
-              onSuccess={onAuthSuccess}
-            />
-            <button
-              className="secondary-button"
-              onClick={() => continueWithSignInPage(pendingSignInEmail)}
-              type="button"
-            >
-              Continue with temporary code
-            </button>
-          </section>
-        </div>
-      ) : null}
-    </main>
+    </PublicShell>
   );
 }
 
 function SignInPage({
+  navigate,
   message,
   onAuthSuccess
 }: {
+  navigate: (route: Route) => void;
   message: string | null;
   onAuthSuccess: (payload: AuthPayload, credential: string) => void;
 }) {
   return (
-    <main className="center-page">
-      <section className="auth-card">
+    <PublicShell navigate={navigate}>
+      <section className="sign-in-panel">
         <div>
           <p className="eyebrow">Sign in</p>
-          <h1>Continue to your dashboard.</h1>
+          <h1>Access your Retrofi reports and project dashboard.</h1>
           {message ? <p className="muted-message">{message}</p> : null}
         </div>
         <GoogleSignInButton<AuthPayload> endpoint="/api/auth/google" onSuccess={onAuthSuccess} />
+        <button className="secondary-button" onClick={() => navigate("scan")} type="button">
+          Create a free scan
+        </button>
       </section>
-    </main>
+    </PublicShell>
   );
 }
 
@@ -1834,7 +2248,7 @@ export function App() {
   }, []);
 
   function navigate(nextRoute: Route) {
-    const path = nextRoute === "home" ? "/" : `/${nextRoute}`;
+    const path = pathForRoute(nextRoute);
     window.history.pushState({}, "", path);
     setRoute(nextRoute);
   }
@@ -1853,21 +2267,37 @@ export function App() {
     navigate("home");
   }
 
-  if (route === "get-started") {
-    return (
-      <IntakePage
-        navigate={navigate}
-        onAuthSuccess={handleAuthSuccess}
-        onIntakeCreated={(email) => {
-          setSignInMessage(`Your profile is ready. Sign in with Google using ${email}.`);
-        }}
-      />
-    );
+  if (route === "how-it-works") {
+    return <HowItWorksPage navigate={navigate} />;
+  }
+
+  if (route === "pricing") {
+    return <PricingPage navigate={navigate} />;
+  }
+
+  if (route === "for-businesses") {
+    return <ForBusinessesPage navigate={navigate} />;
+  }
+
+  if (route === "about") {
+    return <AboutPage navigate={navigate} />;
+  }
+
+  if (route === "scan") {
+    return <IntakePage navigate={navigate} />;
+  }
+
+  if (route === "scan-results") {
+    return <ScanResultsPage navigate={navigate} />;
+  }
+
+  if (route === "sign-in") {
+    return <SignInPage navigate={navigate} message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
   }
 
   if (route === "portal" || route === "admin") {
     if (!authPayload) {
-      return <SignInPage message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
+      return <SignInPage navigate={navigate} message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
     }
 
     if (authPayload.dashboard === "admin" && authPayload.adminDashboard) {

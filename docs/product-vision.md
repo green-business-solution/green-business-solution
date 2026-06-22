@@ -1,10 +1,12 @@
-# Green Business Solution Product Vision
+# Retrofi Product Vision
 
-This document is the shared product source of truth for Codex sessions and other AI agents working on the Green Business Solution website. Keep it updated as product decisions are made.
+This document is the shared product source of truth for Codex sessions and other AI agents working on the Retrofi website. Keep it updated as product decisions are made.
 
 ## End Goal
 
-Green Business Solution should help businesses identify relevant sustainability, energy-efficiency, rebate, incentive, and implementation opportunities from a small amount of business and site information.
+Retrofi is a B2B sustainability retrofit platform for medium-sized businesses. It helps businesses identify eligible sustainability incentives, estimate potential savings, and create a clear retrofit roadmap.
+
+Retrofi should feel like a serious, clean, business-focused energy and retrofit advisory platform. It is not just a rebate database, a government portal, an ESG reporting dashboard, a nonprofit awareness page, or a consumer solar quote site.
 
 The long-term experience should move from:
 
@@ -17,6 +19,49 @@ The long-term experience should move from:
 
 The product should feel useful immediately after intake, before asking for more documents.
 
+## Public Website Direction
+
+Production website:
+
+- `https://retrofi.org`
+
+The public site should guide a business visitor to click `Create Free Scan`, fill out the scan form, and land on a separate scan results/opportunity preview page.
+
+Design direction:
+
+- Clean Arcadia-inspired B2B energy-platform feel.
+- Polished climate-tech spacing and cards, without feeling like ESG reporting software.
+- Practical estimate/eligibility flow inspired by business clean-energy and savings calculators.
+- Off-white/warm gray background, deep evergreen primary actions, pale green/blue-green accents, subtle borders, soft shadows, and rounded cards.
+- Use dashboard/report mockups and business facility language rather than nature imagery or cartoon illustrations.
+
+Primary CTA:
+
+- `Create Free Scan`
+
+Secondary CTA:
+
+- `See How It Works`
+
+Do not use `Request Demo` as the primary CTA.
+
+Final top navigation:
+
+- Left: Retrofi logo
+- Center: `How It Works`, `Pricing`, `For Businesses`, `About`
+- Right: `Sign In`, `Create Free Scan`
+
+Current public URL structure:
+
+- `/` = Home
+- `/how-it-works` = full process explanation
+- `/pricing` = project-based pricing
+- `/for-businesses` = business type fit
+- `/about` = mission, founder trust, and data use
+- `/scan` = free scan intake form
+- `/scan/results` = scan results placeholder
+- `/sign-in` = report/dashboard sign-in
+
 ## Target User
 
 The intake form is likely filled out by a business owner, site manager, property manager, or operations lead. The form should prioritize the company and site over the individual person.
@@ -25,18 +70,16 @@ Personal contact information is still needed, but it should not be the first thi
 
 ## Current Website Flow
 
-Production website:
-
-- `https://retrofi.org`
-
 1. User lands on the public website.
-2. User clicks the primary get-started action.
+2. User clicks `Create Free Scan`.
 3. User completes a business-first intake form.
 4. The app saves the intake data to DynamoDB through the local/API backend.
-5. After intake save, the app shows a modal titled `Sign in to save your results`.
-6. The modal should offer Google sign-in so the user's plan and recommendations stay connected to their business profile.
-7. The user can continue with the temporary-code portal flow if they do not sign in with Google.
+5. After intake save, the app routes to `/scan/results`.
+6. `/scan/results` currently shows a clean placeholder that the free scan is being prepared.
+7. `Sign In` leads to Google-backed report/dashboard access.
 8. Admin users can inspect intake records and data tables.
+
+Legacy `/get-started` should continue routing to `/scan` for compatibility.
 
 ## Intake Form Direction
 
@@ -54,6 +97,8 @@ Removed sections:
 
 Current required fields:
 
+- Contact name
+- Email
 - Company name
 - Organization type
 - Site address
@@ -62,16 +107,13 @@ Current required fields:
 - Building type
 - Square footage
 - Interested improvements
-- Email
 
 Current optional fields:
 
 - Website
 - Organization size
-- Full name
 - Phone
-- Role/title
-- Preferred contact
+- Anything else we should know?
 
 Industry was removed from the visible form. Older stored records may still contain an industry value, but new users should not be asked for it.
 
@@ -100,33 +142,36 @@ The required-fields note belongs in the form header row, aligned with the first 
 
 The submit CTA should be:
 
-- `Create My Plan`
+- `Create Free Scan`
 
-After the user clicks `Create My Plan`, the app should save the intake record first, then show a modal:
+After the user clicks `Create Free Scan`, the app should save the intake record first, then route to:
 
-- Modal title: `Sign in to save your results`
-- Primary option: Google sign-in button
-- Fallback option: `Continue with temporary code`
-- Purpose: connect the user's plan, recommendations, and next steps to their business profile
+- `/scan/results`
 
-Privacy cue:
+Privacy line:
 
-- Show a small lock icon above the submit button.
-- Visible text: `Private & Secure`
-- Hover/focus tooltip: `Your information stays private. We use it only to personalize your recommendations.`
+- Show a small lock icon above the submit button with the visible text:
+- `Your information is kept private and used only to prepare your recommendations.`
 
 The lock icon should not be inside the submit button. It should sit separately in the whitespace above the button so it is not conflated with the action.
 
 ## Post-Submit Opportunity Experience
 
-After intake submission, the next planned product direction is an opportunity preview page.
+After intake submission, the current next page is `/scan/results`.
 
-The page should show initial opportunities based on the business and site information. It should not require utility bills before showing anything useful.
+Current placeholder content:
 
-Planned page concept:
+- Title: `Your free scan is being prepared`
+- Supporting copy: `Retrofi is reviewing your business and site information to identify likely incentive and retrofit opportunities.`
+- Placeholder cards:
+  - Estimated opportunity range: `Coming soon`
+  - Likely categories: `Pending analysis`
+  - Recommended next step: `Upload utility bills for detailed savings and ROI`
+
+Later planned page concept:
 
 - Header: `Your Initial Opportunities`
-- Supporting copy: Based on the business and site information, these are the areas Green Business Solution will evaluate first.
+- Supporting copy: Based on the business and site information, these are the areas Retrofi will evaluate first.
 - Opportunity cards for likely categories such as LED upgrades, HVAC, refrigeration, solar, EV charging, water efficiency, and building controls.
 - Each card can show relevance, why it may apply, and what data is needed next.
 
