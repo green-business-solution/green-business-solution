@@ -385,15 +385,28 @@ app.post("/api/admin/users", async (req, res) => {
     const admin = await requireAdmin(req.body?.adminUserId);
     const [users, intakes] = await Promise.all([scanAll(usersTable), scanAll(intakeTable)]);
     const intakeByUser = new Map(intakes.map((intake) => [intake.userId, intake]));
+    const sortedUsers = [...users].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    const sortedIntakes = [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 
     res.json({
       admin: publicUser(admin),
-      users: users
+      users: sortedUsers
         .map((user) => ({
           user: publicUser(user),
           intake: intakeByUser.get(user.userId) || null
-        }))
-        .sort((a, b) => String(b.user.createdAt).localeCompare(String(a.user.createdAt)))
+        })),
+      dataTables: [
+        {
+          name: usersTable,
+          recordCount: sortedUsers.length,
+          records: sortedUsers
+        },
+        {
+          name: intakeTable,
+          recordCount: sortedIntakes.length,
+          records: sortedIntakes
+        }
+      ]
     });
   } catch (error) {
     handleError(res, error);

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) admin data tab and crawler planning
+
+- Added an admin `Data` tab that displays raw snapshots of the current DynamoDB user and intake tables for human validation.
+- Extended the admin API response with table snapshots for authenticated admins.
+- Updated the rebate/tax incentive database instructions with current decisions and planned implementation actions.
+
 ## 2026-06-21 - Codex (GPT-5) intake form sectioning
 
 - Reorganized the intake form into Contact Information, Top 7 Most Important Questions, and Other Questions sections.

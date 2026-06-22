@@ -561,6 +561,43 @@ dd {
   margin-top: 4px;
 }
 
+.data-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.data-card {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.data-card h3 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.data-card p {
+  color: #5d6b63;
+  margin: 0;
+}
+
+.data-card pre {
+  background: #132019;
+  border-radius: 6px;
+  color: #f4faf5;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+  max-height: 520px;
+  overflow: auto;
+  padding: 14px;
+  white-space: pre;
+}
+
 @media (max-width: 980px) {
   .hero-band,
   .form-shell,

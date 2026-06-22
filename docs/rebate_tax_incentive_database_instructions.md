@@ -1091,17 +1091,39 @@ The first version should optimize for:
 
 Once extraction results are consistently accurate, more records can be auto-published.
 
+## Current Product Decisions
+
+These decisions were added after the initial architecture note:
+
+- DSIRE API access is not required for the first exploration pass. If the project has permission to access relevant DSIRE data, an adapter may use normal HTTP requests to fetch HTML and clean it when the public pages return usable static content. Still prefer official APIs, structured feeds, or bulk exports if they are available because they are usually more stable, complete, and easier to audit than cleaned HTML.
+- Data format handling can be source-specific. Some sources will be HTML pages, some will be PDFs, and some may expose structured listings or files. Make the fetch/clean/parser strategy a case-by-case adapter decision.
+- Admin review should extend the existing admin page. All admin workflows should appear as tabs in the admin interface rather than as separate admin apps.
+- The current admin page includes a `Data` tab for inspecting the existing DynamoDB tables so humans can validate records while development is underway.
+- Classification for zip code, utility provider, business classification, and square footage is deferred. The current likely approach is to use OpenAI models through an API key after deterministic extraction has captured source evidence.
+- Scheduled jobs should likely use AWS EventBridge and a compute target such as Lambda, but this should be decided after the crawler, document fetching, extraction, and review tools exist.
+- Utility rebate catalogs may eventually need both program-level and measure-level records. The first implementation should preserve enough source document and section evidence to support either choice.
+
+## Planned Actions
+
+Do not implement these until the user explicitly confirms the next implementation step:
+
+- Build source-specific adapters for the first proof-of-concept sources, likely CEC and Silicon Valley Power.
+- Decide whether opportunity storage should use DynamoDB, a relational database, or a hybrid design after the first schema and query needs are clearer.
+- Decide where scheduled jobs should run after the ingestion tools exist. Compare EventBridge plus Lambda, EventBridge plus ECS/Fargate, GitHub Actions, and any long-running server option.
+- Add source document storage, likely S3, once raw HTML/PDF retention is needed.
+- Add an admin review workflow as additional tabs on the existing admin page.
+- Add OpenAI-based classification for zip code, utility provider, business classification, and square footage after deterministic evidence extraction is working.
+- Decide whether PG&E/SCE/SDG&E/SVP catalogs should publish program-level records, measure-level records, or both.
+
 ## Open Implementation Decisions
 
 The following decisions materially affect implementation:
 
-- Whether DSIRE API access is available.
 - Whether the final storage model should remain DynamoDB-only or use a relational database for normalized opportunity tables.
 - Whether raw source documents should be stored in S3.
 - Where scheduled jobs should run, such as local cron, GitHub Actions, AWS EventBridge plus Lambda, ECS scheduled tasks, or another server.
 - Whether a job queue is needed for fetch/extract/classify/review stages.
-- Which AI provider and model budget should be used for classification and extraction.
-- Whether the review UI should extend the current admin page or become a separate admin workflow.
+- Which OpenAI model and budget should be used for classification and extraction.
 - Whether utility rebate catalogs should produce program-level opportunities, measure-level opportunities, or both.
 - What partner domains should be allowed for utility third-party implementers.
 - What service-territory-to-zip dataset or API should be used.

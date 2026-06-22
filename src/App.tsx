@@ -63,6 +63,20 @@ type AdminRow = {
   intake: IntakeRecord | null;
 };
 
+type AdminTab = "Users" | "Data";
+
+type DatabaseTableSnapshot = {
+  name: string;
+  recordCount: number;
+  records: unknown[];
+};
+
+type AdminPayload = {
+  admin: UserRecord;
+  users: AdminRow[];
+  dataTables: DatabaseTableSnapshot[];
+};
+
 type IntakeFormState = {
   fullName: string;
   email: string;
@@ -709,6 +723,8 @@ function AdminPage() {
   const [adminCode, setAdminCode] = useState(window.localStorage.getItem(adminSessionKey) || "");
   const [admin, setAdmin] = useState<UserRecord | null>(null);
   const [rows, setRows] = useState<AdminRow[]>([]);
+  const [dataTables, setDataTables] = useState<DatabaseTableSnapshot[]>([]);
+  const [activeTab, setActiveTab] = useState<AdminTab>("Users");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -716,12 +732,13 @@ function AdminPage() {
     setError(null);
     setIsLoading(true);
     try {
-      const payload = await apiPost<{ admin: UserRecord; users: AdminRow[] }>("/api/admin/users", {
+      const payload = await apiPost<AdminPayload>("/api/admin/users", {
         adminUserId: code
       });
       window.localStorage.setItem(adminSessionKey, code);
       setAdmin(payload.admin);
       setRows(payload.users);
+      setDataTables(payload.dataTables || []);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Admin login failed.");
     } finally {
@@ -765,85 +782,157 @@ function AdminPage() {
 
   return (
     <WorkspaceLayout
-      navItems={["Users"]}
+      activeNavItem={activeTab}
+      navItems={["Users", "Data"]}
+      onNavItemChange={(item) => setActiveTab(item as AdminTab)}
       onSignOut={() => {
         window.localStorage.removeItem(adminSessionKey);
         setAdmin(null);
         setRows([]);
+        setDataTables([]);
+        setActiveTab("Users");
       }}
       title="Admin"
       user={admin}
     >
-      <section className="admin-section">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Temporary and linked users</p>
-            <h2>Client intake records</h2>
-          </div>
-          <button className="secondary-button" onClick={() => void loadUsers(adminCode)} type="button">
-            Refresh
-          </button>
-        </div>
-
-        <div className="admin-table" role="table" aria-label="Client intake records">
-          <div className="admin-row admin-head" role="row">
-            <span role="columnheader">Code</span>
-            <span role="columnheader">Name</span>
-            <span role="columnheader">Company</span>
-            <span role="columnheader">Site</span>
-            <span role="columnheader">Building</span>
-            <span role="columnheader">Improvements and goals</span>
-            <span role="columnheader">Created</span>
-          </div>
-          {rows.map(({ user, intake }) => (
-            <div className="admin-row" role="row" key={user.userId}>
-              <span role="cell">{user.userId}</span>
-              <span role="cell">
-                <strong>{user.fullName}</strong>
-                <small>{user.email}</small>
-                <small>{intake?.contact.roleTitle || user.role}</small>
-              </span>
-              <span role="cell">
-                <strong>{user.companyName || intake?.business.companyName || "Internal admin"}</strong>
-                <small>{intake?.business.organizationType || "No organization type"}</small>
-                <small>{user.googleLinked ? "Google linked" : "Temporary code"}</small>
-              </span>
-              <span role="cell">
-                {intake?.site?.address || "No site address"}
-                <small>{intake?.site?.electricUtilityProvider || "No utility provider"}</small>
-              </span>
-              <span role="cell">
-                {intake?.site
-                  ? `${intake.site.buildingType} / ${intake.site.ownershipStatus}`
-                  : "No building profile"}
-                <small>{intake?.site?.squareFootage || "No square footage"}</small>
-              </span>
-              <span role="cell">
-                {intake?.sustainability.interestedImprovements?.join(", ") || "No improvements selected"}
-                <small>{intake?.sustainability.goals || "No intake form"}</small>
-              </span>
-              <span role="cell">{formatDate(user.createdAt)}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      {activeTab === "Users" ? (
+        <AdminUsersPanel isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} rows={rows} />
+      ) : (
+        <AdminDataPanel dataTables={dataTables} isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} />
+      )}
     </WorkspaceLayout>
   );
 }
 
+function AdminUsersPanel({
+  isLoading,
+  onRefresh,
+  rows
+}: {
+  isLoading: boolean;
+  onRefresh: () => void;
+  rows: AdminRow[];
+}) {
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Temporary and linked users</p>
+          <h2>Client intake records</h2>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      <div className="admin-table" role="table" aria-label="Client intake records">
+        <div className="admin-row admin-head" role="row">
+          <span role="columnheader">Code</span>
+          <span role="columnheader">Name</span>
+          <span role="columnheader">Company</span>
+          <span role="columnheader">Site</span>
+          <span role="columnheader">Building</span>
+          <span role="columnheader">Improvements and goals</span>
+          <span role="columnheader">Created</span>
+        </div>
+        {rows.map(({ user, intake }) => (
+          <div className="admin-row" role="row" key={user.userId}>
+            <span role="cell">{user.userId}</span>
+            <span role="cell">
+              <strong>{user.fullName}</strong>
+              <small>{user.email}</small>
+              <small>{intake?.contact.roleTitle || user.role}</small>
+            </span>
+            <span role="cell">
+              <strong>{user.companyName || intake?.business.companyName || "Internal admin"}</strong>
+              <small>{intake?.business.organizationType || "No organization type"}</small>
+              <small>{user.googleLinked ? "Google linked" : "Temporary code"}</small>
+            </span>
+            <span role="cell">
+              {intake?.site?.address || "No site address"}
+              <small>{intake?.site?.electricUtilityProvider || "No utility provider"}</small>
+            </span>
+            <span role="cell">
+              {intake?.site
+                ? `${intake.site.buildingType} / ${intake.site.ownershipStatus}`
+                : "No building profile"}
+              <small>{intake?.site?.squareFootage || "No square footage"}</small>
+            </span>
+            <span role="cell">
+              {intake?.sustainability.interestedImprovements?.join(", ") || "No improvements selected"}
+              <small>{intake?.sustainability.goals || "No intake form"}</small>
+            </span>
+            <span role="cell">{formatDate(user.createdAt)}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AdminDataPanel({
+  dataTables,
+  isLoading,
+  onRefresh
+}: {
+  dataTables: DatabaseTableSnapshot[];
+  isLoading: boolean;
+  onRefresh: () => void;
+}) {
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Database inspection</p>
+          <h2>Data</h2>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      <div className="data-grid">
+        {dataTables.length > 0 ? (
+          dataTables.map((table) => (
+            <article className="data-card" key={table.name}>
+              <div className="data-card-header">
+                <div>
+                  <p className="eyebrow">{table.name}</p>
+                  <h3>{table.recordCount} records</h3>
+                </div>
+              </div>
+              <pre>{JSON.stringify(table.records, null, 2)}</pre>
+            </article>
+          ))
+        ) : (
+          <article className="data-card">
+            <p>No database snapshot loaded.</p>
+          </article>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function WorkspaceLayout({
+  activeNavItem,
   children,
   navItems,
+  onNavItemChange,
   onSignOut,
   title,
   user
 }: {
+  activeNavItem?: string;
   children: ReactNode;
   navItems: string[];
+  onNavItemChange?: (item: string) => void;
   onSignOut: () => void;
   title: string;
   user: UserRecord;
 }) {
+  const currentNavItem = activeNavItem || navItems[0];
+
   return (
     <div className="workspace-layout">
       <aside className="workspace-sidebar">
@@ -857,8 +946,13 @@ function WorkspaceLayout({
           </div>
         </div>
         <nav className="workspace-nav" aria-label={`${title} sections`}>
-          {navItems.map((item, index) => (
-            <button aria-current={index === 0 ? "page" : undefined} key={item} type="button">
+          {navItems.map((item) => (
+            <button
+              aria-current={item === currentNavItem ? "page" : undefined}
+              key={item}
+              onClick={() => onNavItemChange?.(item)}
+              type="button"
+            >
               {item}
             </button>
           ))}
