@@ -25,7 +25,7 @@ Production website:
 
 - `https://retrofi.org`
 
-The public site should guide a business visitor to click `Create Free Scan`, fill out the scan form, and land on a separate scan results/opportunity preview page.
+The public site should guide a business visitor to click `Create My Report`, fill out the scan form, and land on a separate scan results/opportunity preview page.
 
 Design direction:
 
@@ -37,7 +37,7 @@ Design direction:
 
 Primary CTA:
 
-- `Create Free Scan`
+- `Create My Report`
 
 Secondary CTA:
 
@@ -49,7 +49,7 @@ Final top navigation:
 
 - Left: RetroFi logo
 - Center: `How It Works`, `Pricing`, `About` dropdown
-- Right: `Sign In`, `Create Free Scan`
+- Right: `Sign In`, `Create My Report`
 
 Current public URL structure:
 
@@ -81,7 +81,7 @@ Personal contact information is still needed, but it should not be the first thi
 ## Current Website Flow
 
 1. User lands on the public website.
-2. User clicks `Create Free Scan`.
+2. User clicks `Create My Report`.
 3. User completes a business-first intake form.
 4. The app saves the intake data to DynamoDB through the local/API backend.
 5. After intake save, the app routes to `/scan/results`.
@@ -152,9 +152,9 @@ The required-fields note belongs in the form header row, aligned with the first 
 
 The submit CTA should be:
 
-- `Create Free Scan`
+- `Create My Report`
 
-After the user clicks `Create Free Scan`, the app should save the intake record first, then route to:
+After the user clicks `Create My Report`, the app should save the intake record first, then route to:
 
 - `/scan/results`
 

@@ -37,7 +37,7 @@
 
 ## 2026-06-22 - Codex (GPT-5) RetroFi public website rebuild
 
-- Rebuilt the public RetroFi flow around `Create Free Scan` with Home, How It Works, Pricing, About, Scan, Scan Results, and Sign In routes.
+- Rebuilt the public RetroFi flow around `Create My Report` with Home, How It Works, Pricing, About, Scan, Scan Results, and Sign In routes.
 - Refined the scan form to match the business-first intake direction, submit through the existing API, and route to `/scan/results`.
 - Added the RetroFi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, document title, and updated product-vision documentation.
 
