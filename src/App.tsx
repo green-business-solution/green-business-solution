@@ -489,7 +489,7 @@ function IntakePage({
         </div>
 
         <form className="intake-form" onSubmit={submitForm}>
-          <h2>Contact information</h2>
+          <h2>Contact Information</h2>
           <div className="field-grid">
             <Field label="Full name" name="fullName" onChange={updateField} required value={form.fullName} />
             <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
@@ -504,7 +504,7 @@ function IntakePage({
             />
           </div>
 
-          <h2>Site profile</h2>
+          <h2>Top 7 Most Important Questions</h2>
           <div className="field-grid">
             <TextArea
               label="Site address"
@@ -525,6 +525,14 @@ function IntakePage({
               options={utilityProviderOptions}
               required
               value={form.electricUtilityProvider}
+            />
+            <SelectField
+              label="Organization type"
+              name="organizationType"
+              onChange={updateField}
+              options={organizationTypeOptions}
+              required
+              value={form.organizationType}
             />
             <SelectField
               label="Ownership status"
@@ -550,9 +558,21 @@ function IntakePage({
               required
               value={form.squareFootage}
             />
+            <CheckboxGroup
+              label="Interested improvements"
+              onChange={(values) =>
+                setForm((current) => ({
+                  ...current,
+                  interestedImprovements: values
+                }))
+              }
+              options={improvementOptions}
+              required
+              values={form.interestedImprovements}
+            />
           </div>
 
-          <h2>Business profile</h2>
+          <h2>Other Questions</h2>
           <div className="field-grid">
             <Field
               label="Company name"
@@ -563,14 +583,6 @@ function IntakePage({
             />
             <Field label="Website" name="website" onChange={updateField} value={form.website} />
             <Field label="Industry" name="industry" onChange={updateField} required value={form.industry} />
-            <SelectField
-              label="Organization type"
-              name="organizationType"
-              onChange={updateField}
-              options={organizationTypeOptions}
-              required
-              value={form.organizationType}
-            />
             <SelectField
               label="Organization size"
               name="organizationSize"
@@ -592,22 +604,6 @@ function IntakePage({
               onChange={updateField}
               options={["Under $2,500", "$2,500-$10,000", "$10,000-$50,000", "$50,000+"]}
               value={form.monthlyUtilitySpend}
-            />
-          </div>
-
-          <h2>Sustainability priorities</h2>
-          <div className="field-grid">
-            <CheckboxGroup
-              label="Interested improvements"
-              onChange={(values) =>
-                setForm((current) => ({
-                  ...current,
-                  interestedImprovements: values
-                }))
-              }
-              options={improvementOptions}
-              required
-              values={form.interestedImprovements}
             />
             <TextArea
               label="What sustainability goals are you trying to achieve?"
