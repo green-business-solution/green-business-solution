@@ -65,9 +65,9 @@ Primary key:
 
 - `opportunityId` string, currently composed from the source, external ID type, and source external ID
 
-Current DSIRE, CEC, SDG&E, and SVP fields include:
+Current DSIRE, CEC, SDG&E, SCE, and SVP fields include:
 
-- `sourceKey`: currently `SOURCE_DSIRE`, `SOURCE_CA_ENERGY_COMMISSION`, `SOURCE_SDGE_BUSINESS`, or `SOURCE_SILICON_VALLEY_POWER`
+- `sourceKey`: currently `SOURCE_DSIRE`, `SOURCE_CA_ENERGY_COMMISSION`, `SOURCE_SDGE_BUSINESS`, `SOURCE_SCE_BUSINESS`, or `SOURCE_SILICON_VALLEY_POWER`
 - `sourceName`
 - `origin`: structured source metadata including source key, source name, source URL, base URL, and document type
 - `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records; CEC solicitation number or URL hash for CEC records; SDG&E program URL fingerprint or source section hash; SVP source URL fingerprint plus section-title slug
@@ -92,11 +92,12 @@ Current DSIRE, CEC, SDG&E, and SVP fields include:
 - `details`
 - `publishedAt`
 - `published`
-- `ingestionMode`: currently `public_table_inventory`, `rss_delta_feed`, `cec_sitemap_detail`, `sdge_business_seed_pages`, or `svp_static_section_splitter`
+- `ingestionMode`: currently `public_table_inventory`, `rss_delta_feed`, `cec_sitemap_detail`, `sdge_business_seed_pages`, `sce_bounded_business_sections`, or `svp_static_section_splitter`
 - `contentHash`
 - `dsire`
 - `cec`
 - `sdge`
+- `sce`
 - `svp`
 - `evidence`
 - `raw`
@@ -122,6 +123,12 @@ footage. These are inferred from CEC detail-page text and should be reviewed bef
 SDG&E records preserve source metadata under `sdge`, including the SDG&E seed page, section heading,
 section category, contractor/delivery partner, and program URL. SDG&E records also include `origin`
 and `evidence` on every writable record so admins can see where each opportunity originated.
+
+SCE records preserve source metadata under `sce`, including the official SCE page title, section heading,
+section category, and parser version. The SCE importer uses bounded official business pages and stores
+external partner or aggregator links as evidence/application links without crawling those external domains.
+SCE records are currently marked for review because the source mixes utility-run programs, statewide
+programs, third-party implementer programs, external portals, and potentially duplicate records.
 
 SVP records preserve source metadata under `svp`, including the official SVP source page, section
 heading, section category, fetch mode, and parser version. The SVP importer uses curated official pages

@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) Southern California Edison opportunity import
+
+- Added a reusable bounded SCE business-program importer for demand response, building efficiency, financing, economic development, EV charging, and fleet electrification records.
+- Preserved official SCE source/origin metadata and evidence on every writable opportunity candidate.
+- Imported 18 validated SCE records into `gbs-opportunity-candidates`.
+- Added SCE documentation and a source implementation scorecard so difficult, partial, and high-value ingestion sources can be compared before weekly automation is finalized.
+
 ## 2026-06-21 - Codex (GPT-5) Silicon Valley Power opportunity import
 
 - Added a reusable Silicon Valley Power static-section importer for business rebates, electrification rebates, save-money programs, BOC scholarships, and EV charging incentives.

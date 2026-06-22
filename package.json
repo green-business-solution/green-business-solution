@@ -17,6 +17,8 @@
     "gather:dsire:aws:rss": "node scripts/gather-dsire-opportunities.mjs --mode rss --write-dynamodb",
     "gather:sdge": "node scripts/gather-sdge-opportunities.mjs",
     "gather:sdge:aws": "node scripts/gather-sdge-opportunities.mjs --write-dynamodb",
+    "gather:sce": "node scripts/gather-sce-opportunities.mjs",
+    "gather:sce:aws": "node scripts/gather-sce-opportunities.mjs --write-dynamodb",
     "gather:svp": "node scripts/gather-svp-opportunities.mjs",
     "gather:svp:aws": "node scripts/gather-svp-opportunities.mjs --write-dynamodb",
     "test": "vitest run",
