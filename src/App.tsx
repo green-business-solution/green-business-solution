@@ -905,7 +905,7 @@ function Brand({ onClick }: { onClick: () => void }) {
       <span className="brand-mark" aria-hidden="true">
         R
       </span>
-      <span>Retrofi</span>
+      <span>RetroFi</span>
     </button>
   );
 }
@@ -1221,7 +1221,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
           <p className="eyebrow">Retrofit advisory for business facilities</p>
           <h1>Find funding and savings for your next facility upgrade.</h1>
           <p>
-            Retrofi helps businesses identify eligible sustainability incentives, estimate savings,
+            RetroFi helps businesses identify eligible sustainability incentives, estimate savings,
             and build a clear roadmap for high-value retrofits.
           </p>
           <div className="hero-actions">
@@ -1231,7 +1231,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
             </CTAButton>
           </div>
         </div>
-        <div className="scan-preview" aria-label="Sample Retrofi scan report">
+        <div className="scan-preview" aria-label="Sample RetroFi scan report">
           <div className="preview-topline">
             <span>Free scan preview</span>
             <strong>Ready</strong>
@@ -1271,15 +1271,15 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
         </div>
         <p>
           Programs are spread across utilities, government agencies, tax rules, and financing
-          providers. Retrofi turns scattered information into a clear business roadmap.
+          providers. RetroFi turns scattered information into a clear business roadmap.
         </p>
       </section>
 
       <section className="content-section">
         <SectionHeading
-          copy="Retrofi connects program matching, savings context, and a decision-ready path forward."
+          copy="RetroFi connects program matching, savings context, and a decision-ready path forward."
           eyebrow="Platform focus"
-          title="What Retrofi helps with"
+          title="What RetroFi helps with"
         />
         <div className="card-grid three">
           {[
@@ -1304,7 +1304,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
         <SectionHeading
           copy="The first step stays lightweight. The detailed work only starts when a site looks worth pursuing."
           eyebrow="Process"
-          title="How Retrofi works"
+          title="How RetroFi works"
         />
         <div className="step-grid">
           {["Tell us about your business", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
@@ -1346,9 +1346,9 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
   const steps = [
     ["Complete the free scan", "Share your business address, utility provider, organization type, and basic facility information."],
     ["Receive an opportunity preview", "See estimated value range, likely retrofit categories, and whether your facility appears to have meaningful opportunities."],
-    ["Upload utility bills", "Utility bills help Retrofi estimate savings, ROI, payback, and project priority."],
+    ["Upload utility bills", "Utility bills help RetroFi estimate savings, ROI, payback, and project priority."],
     ["Unlock the Opportunity Report", "Get exact programs, eligibility analysis, savings estimates, financing options, required documents, and deadlines."],
-    ["Get implementation support", "For businesses ready to move forward, Retrofi can help organize documents, review quotes, and track next steps."]
+    ["Get implementation support", "For businesses ready to move forward, RetroFi can help organize documents, review quotes, and track next steps."]
   ];
 
   return (
@@ -1356,8 +1356,8 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
       <PageHero
         compact
         eyebrow="Process"
-        title="How Retrofi Works"
-        copy="From a quick business scan to a detailed retrofit roadmap, Retrofi helps you move from opportunity discovery to implementation."
+        title="How RetroFi Works"
+        copy="From a quick business scan to a detailed retrofit roadmap, RetroFi helps you move from opportunity discovery to implementation."
       />
       <section className="timeline-section">
         {steps.map(([title, copy], index) => (
@@ -1479,9 +1479,9 @@ function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
     <PublicShell navigate={navigate}>
       <PageHero
         compact
-        eyebrow="About Retrofi"
-        title="About Retrofi"
-        copy="Retrofi helps businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
+        eyebrow="About RetroFi"
+        title="About RetroFi"
+        copy="RetroFi helps businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
       />
       <AboutSubnav navigate={navigate} />
       <section className="card-grid two about-hub-grid">
@@ -1491,10 +1491,10 @@ function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
           label="Mission"
           navigate={navigate}
           route="about-mission"
-          title="Why Retrofi exists"
+          title="Why RetroFi exists"
         />
         <AboutHubCard
-          copy="See who is building Retrofi and the roles behind the product."
+          copy="See who is building RetroFi and the roles behind the product."
           icon="team"
           label="Team"
           navigate={navigate}
@@ -1502,7 +1502,7 @@ function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
           title="Meet the team"
         />
         <AboutHubCard
-          copy="Understand how Retrofi uses business information and utility bills to prepare recommendations."
+          copy="Understand how RetroFi uses business information and utility bills to prepare recommendations."
           icon="trust"
           label="Trust & Data"
           navigate={navigate}
@@ -1529,7 +1529,7 @@ function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
         compact
         eyebrow="Mission"
         title="Making sustainability upgrades financially practical."
-        copy="Retrofi is building a cleaner path from incentive discovery to confident retrofit decisions."
+        copy="RetroFi is building a cleaner path from incentive discovery to confident retrofit decisions."
       />
       <AboutSubnav navigate={navigate} />
       <section className="two-column-section">
@@ -1543,13 +1543,13 @@ function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
         <article className="feature-card">
           <h2>Our mission</h2>
           <p>
-            Retrofi exists to help businesses identify relevant opportunities, estimate savings, and
+            RetroFi exists to help businesses identify relevant opportunities, estimate savings, and
             move toward practical facility upgrades with more confidence.
           </p>
         </article>
       </section>
       <section className="content-section">
-        <SectionHeading eyebrow="What we believe" title="Retrofi should turn complexity into clear next steps" />
+        <SectionHeading eyebrow="What we believe" title="RetroFi should turn complexity into clear next steps" />
         <div className="card-grid three">
           {[
             "Sustainability should be financially practical",
@@ -1578,7 +1578,7 @@ function TeamPage({ navigate }: { navigate: (route: Route) => void }) {
         compact
         eyebrow="Team"
         title="Meet the team"
-        copy="Retrofi is built by a small team focused on product, data systems, retrofit research, and customer workflow."
+        copy="RetroFi is built by a small team focused on product, data systems, retrofit research, and customer workflow."
       />
       <AboutSubnav navigate={navigate} />
       <section className="team-grid">
@@ -1615,7 +1615,7 @@ function TrustPage({ navigate }: { navigate: (route: Route) => void }) {
         compact
         eyebrow="Trust & Data"
         title="Trust & Data"
-        copy="Retrofi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
+        copy="RetroFi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
       />
       <AboutSubnav navigate={navigate} />
       <section className="card-grid two trust-grid">
@@ -1688,8 +1688,8 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
     event.preventDefault();
 
     const subject = contactForm.company
-      ? `Retrofi inquiry from ${contactForm.company}`
-      : `Retrofi inquiry from ${contactForm.name || "website visitor"}`;
+      ? `RetroFi inquiry from ${contactForm.company}`
+      : `RetroFi inquiry from ${contactForm.name || "website visitor"}`;
     const body = [
       `Name: ${contactForm.name}`,
       `Email: ${contactForm.email}`,
@@ -1706,7 +1706,7 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
       <PageHero
         compact
         eyebrow="Contact"
-        title="Contact Retrofi"
+        title="Contact RetroFi"
         copy="Have questions before starting a scan or uploading business information? Reach out to us."
       />
       <AboutSubnav navigate={navigate} />
@@ -1773,7 +1773,7 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
             </label>
           </div>
           <div className="hero-actions">
-            <button type="submit">Email Retrofi</button>
+            <button type="submit">Email RetroFi</button>
             <CTAButton navigate={navigate} route="scan" variant="secondary">
               Create Free Scan
             </CTAButton>
@@ -1791,7 +1791,7 @@ function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
         <p className="eyebrow">Free scan</p>
         <h1>Your free scan is being prepared</h1>
         <p>
-          Retrofi is reviewing your business and site information to identify likely incentive and
+          RetroFi is reviewing your business and site information to identify likely incentive and
           retrofit opportunities.
         </p>
         <div className="card-grid three compact-cards">

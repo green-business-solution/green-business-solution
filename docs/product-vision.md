@@ -1,12 +1,12 @@
-# Retrofi Product Vision
+# RetroFi Product Vision
 
-This document is the shared product source of truth for Codex sessions and other AI agents working on the Retrofi website. Keep it updated as product decisions are made.
+This document is the shared product source of truth for Codex sessions and other AI agents working on the RetroFi website. Keep it updated as product decisions are made.
 
 ## End Goal
 
-Retrofi is a B2B sustainability retrofit platform for medium-sized businesses. It helps businesses identify eligible sustainability incentives, estimate potential savings, and create a clear retrofit roadmap.
+RetroFi is a B2B sustainability retrofit platform for medium-sized businesses. It helps businesses identify eligible sustainability incentives, estimate potential savings, and create a clear retrofit roadmap.
 
-Retrofi should feel like a serious, clean, business-focused energy and retrofit advisory platform. It is not just a rebate database, a government portal, an ESG reporting dashboard, a nonprofit awareness page, or a consumer solar quote site.
+RetroFi should feel like a serious, clean, business-focused energy and retrofit advisory platform. It is not just a rebate database, a government portal, an ESG reporting dashboard, a nonprofit awareness page, or a consumer solar quote site.
 
 The long-term experience should move from:
 
@@ -47,7 +47,7 @@ Do not use `Request Demo` as the primary CTA.
 
 Final top navigation:
 
-- Left: Retrofi logo
+- Left: RetroFi logo
 - Center: `How It Works`, `Pricing`, `About` dropdown
 - Right: `Sign In`, `Create Free Scan`
 
@@ -172,7 +172,7 @@ After intake submission, the current next page is `/scan/results`.
 Current placeholder content:
 
 - Title: `Your free scan is being prepared`
-- Supporting copy: `Retrofi is reviewing your business and site information to identify likely incentive and retrofit opportunities.`
+- Supporting copy: `RetroFi is reviewing your business and site information to identify likely incentive and retrofit opportunities.`
 - Placeholder cards:
   - Estimated opportunity range: `Coming soon`
   - Likely categories: `Pending analysis`
@@ -181,7 +181,7 @@ Current placeholder content:
 Later planned page concept:
 
 - Header: `Your Initial Opportunities`
-- Supporting copy: Based on the business and site information, these are the areas Retrofi will evaluate first.
+- Supporting copy: Based on the business and site information, these are the areas RetroFi will evaluate first.
 - Opportunity cards for likely categories such as LED upgrades, HVAC, refrigeration, solar, EV charging, water efficiency, and building controls.
 - Each card can show relevance, why it may apply, and what data is needed next.
 

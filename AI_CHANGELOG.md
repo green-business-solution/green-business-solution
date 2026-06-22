@@ -14,7 +14,7 @@
 
 ## 2026-06-22 - Codex (GPT-5) remove For Businesses surface
 
-- Removed the `For Businesses` page and all related homepage/nav/footer content from the public Retrofi site.
+- Removed the `For Businesses` page and all related homepage/nav/footer content from the public RetroFi site.
 - Redirected legacy `/for-businesses` requests back to the homepage so old links do not lead to a dead page.
 
 ## 2026-06-22 - Codex (GPT-5) agent smoke-check clarification
@@ -29,17 +29,17 @@
 - Added password session support so admins can refresh and review opportunity records after non-Google login.
 - Compacted admin opportunity records returned from the API to avoid Lambda response-size failures during admin sign-in.
 
-## 2026-06-22 - Codex (GPT-5) Retrofi public site refinement
+## 2026-06-22 - Codex (GPT-5) RetroFi public site refinement
 
 - Split the About area into an overview hub plus Mission, Team, Trust & Data, and Contact subpages with matching routes and footer links.
 - Reworked the public navigation into a cleaner desktop layout with an About dropdown and a dedicated mobile menu/CTA pattern.
 - Tightened the public visual hierarchy with smaller secondary heroes, denser card spacing, real lightweight icons, aligned pricing/team/business grids, and a more compact footer.
 
-## 2026-06-22 - Codex (GPT-5) Retrofi public website rebuild
+## 2026-06-22 - Codex (GPT-5) RetroFi public website rebuild
 
-- Rebuilt the public Retrofi flow around `Create Free Scan` with Home, How It Works, Pricing, About, Scan, Scan Results, and Sign In routes.
+- Rebuilt the public RetroFi flow around `Create Free Scan` with Home, How It Works, Pricing, About, Scan, Scan Results, and Sign In routes.
 - Refined the scan form to match the business-first intake direction, submit through the existing API, and route to `/scan/results`.
-- Added the Retrofi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, document title, and updated product-vision documentation.
+- Added the RetroFi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, document title, and updated product-vision documentation.
 
 ## 2026-06-22 - Codex (GPT-5) fast-iteration agent workflow
 
