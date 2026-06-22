@@ -1046,7 +1046,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           Sign In
         </button>
         <button onClick={() => go("scan")} type="button">
-          Create My Report
+          Get Started
         </button>
       </div>
       <button
@@ -1082,8 +1082,8 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           <button className="link-button" onClick={() => go("sign-in")} type="button">
             Sign In
           </button>
-          <button onClick={() => go("scan")} type="button">
-            Create My Report
+        <button onClick={() => go("scan")} type="button">
+          Get Started
           </button>
         </div>
       ) : null}
@@ -1103,7 +1103,7 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
-          ["Create My Report", "scan"]
+          ["Get Started", "scan"]
         ].map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
             {label}
@@ -1242,7 +1242,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
             and build a clear roadmap for high-value retrofits.
           </p>
           <div className="hero-actions">
-          <CTAButton navigate={navigate} route="scan">Create My Report</CTAButton>
+            <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
             <CTAButton navigate={navigate} route="how-it-works" variant="secondary">
               See How It Works
             </CTAButton>
@@ -1353,7 +1353,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
       <section className="final-cta">
         <h2>See what opportunities your business may qualify for.</h2>
         <p>Start with a free scan. Upgrade only if deeper analysis is worth it.</p>
-        <CTAButton navigate={navigate} route="scan">Create My Report</CTAButton>
+        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
       </section>
     </PublicShell>
   );
@@ -1429,7 +1429,7 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Move from discovery to a practical retrofit decision path.</h2>
-        <CTAButton navigate={navigate} route="scan">Create My Report</CTAButton>
+        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
       </section>
     </PublicShell>
   );
@@ -1437,7 +1437,7 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
 
 function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
   const cards = [
-    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Create My Report"],
+    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Get Started"],
     ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
     ["Implementation Support", "Starting at $3,500", "Businesses ready to move forward", ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "Incentive tracking", "60-90 days of support"], "Contact Us"],
     ["Multi-Site", "Custom", "Franchisees, regional operators, and multi-location businesses", ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations"], "Contact Us"]
@@ -1582,7 +1582,7 @@ function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Start with a free scan and evaluate where a real project may exist.</h2>
-        <CTAButton navigate={navigate} route="scan">Create My Report</CTAButton>
+        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
       </section>
     </PublicShell>
   );
@@ -1687,7 +1687,7 @@ function TrustPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Start with a free scan and share more only when deeper analysis is useful.</h2>
-        <CTAButton navigate={navigate} route="scan">Create My Report</CTAButton>
+        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
       </section>
     </PublicShell>
   );
@@ -1792,7 +1792,7 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
           <div className="hero-actions">
             <button type="submit">Email RetroFi</button>
             <CTAButton navigate={navigate} route="scan" variant="secondary">
-              Create My Report
+              Get Started
             </CTAButton>
           </div>
         </form>
