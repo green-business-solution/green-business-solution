@@ -33,8 +33,7 @@ const requiredFields = [
   ["organizationType", "Organization type"],
   ["ownershipStatus", "Ownership status"],
   ["buildingType", "Building type"],
-  ["squareFootage", "Square footage"],
-  ["timeline", "Timeline"]
+  ["squareFootage", "Square footage"]
 ];
 
 function cleanText(value) {

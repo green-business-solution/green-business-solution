@@ -107,3 +107,8 @@
 - Reordered the intake form around Business Information, Site Information, Opportunity Priorities, and Contact Information.
 - Made Full name and narrative priority fields optional while keeping company, site, email, timeline, and interested improvements required.
 - Preserved all existing intake fields and DynamoDB storage keys.
+
+## 2026-06-21 - Codex (GPT-5) intake priority simplification
+
+- Removed the Opportunity Priorities section and its subquestions from the intake form.
+- Dropped Timeline from backend required-field validation because the field is no longer shown.

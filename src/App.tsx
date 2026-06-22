@@ -613,45 +613,6 @@ function IntakePage({
             />
           </div>
 
-          <h2>Opportunity Priorities</h2>
-          <div className="field-grid">
-            <Field
-              label="Primary operating region"
-              name="headquarters"
-              onChange={updateField}
-              value={form.headquarters}
-            />
-            <SelectField
-              label="Monthly utility spend"
-              name="monthlyUtilitySpend"
-              onChange={updateField}
-              options={["Under $2,500", "$2,500-$10,000", "$10,000-$50,000", "$50,000+"]}
-              value={form.monthlyUtilitySpend}
-            />
-            <TextArea
-              label="What sustainability goals are you trying to achieve?"
-              name="sustainabilityGoals"
-              onChange={updateField}
-              placeholder="Energy savings, supplier scoring, waste diversion, emissions tracking..."
-              value={form.sustainabilityGoals}
-            />
-            <TextArea
-              label="What is difficult about tracking this today?"
-              name="currentChallenges"
-              onChange={updateField}
-              value={form.currentChallenges}
-            />
-            <SelectField
-              label="Timeline"
-              name="timeline"
-              onChange={updateField}
-              options={["Immediately", "This quarter", "Next 6 months", "Exploring only"]}
-              required
-              value={form.timeline}
-            />
-            <TextArea label="Additional notes" name="notes" onChange={updateField} value={form.notes} />
-          </div>
-
           <h2>Contact Information</h2>
           <div className="field-grid">
             <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
