@@ -50,3 +50,7 @@ The `sts` command should show account `448016109714`. The diagnostics endpoint s
 npm run typecheck
 npm run build
 ```
+
+## Production
+
+The `retrofi.org` production hosting stack is documented in [docs/production-deployment.md](./docs/production-deployment.md).

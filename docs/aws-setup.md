@@ -13,6 +13,18 @@ Current local AWS CLI profile name:
 gbs
 ```
 
+Registered production domain:
+
+```text
+retrofi.org
+```
+
+Route 53 hosted zone:
+
+```text
+Z04402863EVV8FUF4EWUX
+```
+
 Account root email:
 
 ```text

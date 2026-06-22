@@ -12,8 +12,9 @@ import {
 import { fromIni } from "@aws-sdk/credential-providers";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
-const region = process.env.AWS_REGION || "us-east-2";
-const profile = process.env.AWS_PROFILE || "gbs";
+const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
+const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
+const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
@@ -37,7 +38,7 @@ const client = new DynamoDBClient({
   credentials: profile ? fromIni({ profile }) : undefined
 });
 const db = DynamoDBDocumentClient.from(client);
-const app = express();
+export const app = express();
 
 app.use(express.json({ limit: "128kb" }));
 
@@ -653,7 +654,9 @@ app.post("/api/auth/google", async (req, res) => {
   }
 });
 
-app.listen(port, "127.0.0.1", () => {
-  console.log(`Green Business Solution API running at http://127.0.0.1:${port}`);
-  console.log(`Using AWS profile ${profile}, region ${region}`);
-});
+if (!isLambdaRuntime) {
+  app.listen(port, "127.0.0.1", () => {
+    console.log(`Green Business Solution API running at http://127.0.0.1:${port}`);
+    console.log(`Using AWS profile ${profile || "default credential chain"}, region ${region}`);
+  });
+}

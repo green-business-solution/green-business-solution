@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) retrofi.org production hosting setup
+
+- Registered `retrofi.org` through Amazon Route 53 with auto-renew and privacy protection enabled.
+- Added Lambda-compatible API entrypoint support while preserving local `gbs` profile development behavior.
+- Added a CloudFormation template and deploy script for S3, CloudFront, ACM, Route 53 records, API Gateway, and Lambda production hosting.
+- Documented the production deployment command, hosted zone, and Google OAuth authorized-origin requirements.
+
 ## 2026-06-21 - Codex (GPT-5) SDG&E opportunity import and source metadata
 
 - Added a reusable SDG&E business-program importer for curated SDG&E seed pages, program tables, program tiles, demand-response sections, EV programs, and the Economic Development Rate page.
