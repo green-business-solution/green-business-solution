@@ -2,6 +2,20 @@
 
 GitHub is the source of truth for this project. AWS is a deployment target, not the canonical copy of the code.
 
+## Fast-Iteration Rule
+
+This project is in early development. Agents should optimize for fast shared iteration over local-only polish.
+
+After making a meaningful change:
+
+1. Commit and push it to GitHub immediately.
+2. If the change affects deployed app behavior, infrastructure, AWS data, or AWS configuration, deploy/apply the corresponding AWS change immediately.
+3. Do not leave useful changes only on one laptop.
+4. Do not wait on broad local testing before sharing changes unless the user explicitly asks for testing or the change is clearly risky.
+5. If local tests/checks are skipped, say so plainly in the final response.
+
+For documentation-only or instruction-only changes, a GitHub push is usually enough. For code or configuration that changes runtime behavior, assume AWS should be updated too unless there is no deployed AWS surface for that change yet.
+
 Before making code changes, an agent should:
 
 1. Run `git status`.
@@ -12,15 +26,16 @@ Before making code changes, an agent should:
 
 After making code changes, an agent should:
 
-1. Run relevant tests or checks when practical.
-2. Review `git diff`.
-3. Update `AI_CHANGELOG.md` for meaningful LLM-authored changes.
-4. Commit the corresponding code changes to Git with a clear message.
-5. Push the commit to GitHub.
-6. Provide a short explanation of:
+1. Review `git diff`.
+2. Update `AI_CHANGELOG.md` for meaningful LLM-authored changes.
+3. Commit the corresponding code changes to Git with a clear message.
+4. Push the commit to GitHub immediately.
+5. Deploy or apply the matching AWS change immediately when the change affects deployed app behavior, infrastructure, AWS data, or AWS configuration.
+6. Run local tests/checks only when quick, explicitly requested, or needed for a clearly risky change. Local tests should not become a reason to leave useful work unpushed.
+7. Provide a short explanation of:
    - files changed
    - behavior changed
-   - tests/checks run
+   - tests/checks run, or that local testing was intentionally skipped for fast iteration
    - any deployment or AWS changes made
 
 If an agent changes code directly on AWS, the same change must be copied back into the GitHub repo as soon as possible. Direct AWS edits should be treated as temporary hotfixes until they are committed and pushed.

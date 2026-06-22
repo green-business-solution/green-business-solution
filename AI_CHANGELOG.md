@@ -6,6 +6,12 @@
 - Refined the scan form to match the business-first intake direction, submit through the existing API, and route to `/scan/results`.
 - Added the Retrofi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, document title, and updated product-vision documentation.
 
+## 2026-06-22 - Codex (GPT-5) fast-iteration agent workflow
+
+- Updated repository agent instructions so agents commit and push meaningful changes to GitHub immediately during early development.
+- Added guidance to apply matching AWS changes immediately when a code/configuration change affects deployed app behavior, infrastructure, AWS data, or AWS configuration.
+- Made broad local testing optional unless explicitly requested or clearly risky, with skipped local testing reported in the final response.
+
 ## 2026-06-22 - Codex (GPT-5) admin opportunity review workflow
 
 - Added an admin review workspace for `gbs-opportunity-candidates` with search and filters for source, status, program type, review status, utility provider, business classification, and warnings.
