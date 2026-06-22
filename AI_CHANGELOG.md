@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) agent smoke-check clarification
+
+- Clarified that the fast-iteration workflow removes the need for human/user testing before GitHub/AWS sharing, not quick AI-agent verification.
+- Updated agent instructions to require quick practical smoke checks before pushing/deploying code, configuration, infrastructure, AWS data, or runtime behavior changes when practical.
+- Kept broad or slow local test passes optional unless explicitly requested or clearly needed for risky work.
+
 ## 2026-06-22 - Codex (GPT-5) password auth and compact admin payload
 
 - Added username/password account creation and login alongside Google sign-in on the unified sign-in screen.
