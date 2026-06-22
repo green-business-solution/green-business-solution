@@ -4,7 +4,7 @@
 
 - Rebuilt the public Retrofi flow around `Create Free Scan` with Home, How It Works, Pricing, For Businesses, About, Scan, Scan Results, and Sign In routes.
 - Refined the scan form to match the business-first intake direction, submit through the existing API, and route to `/scan/results`.
-- Added the Retrofi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, and updated product-vision documentation.
+- Added the Retrofi B2B energy-platform visual layer, responsive navigation/footer, scan results placeholder, document title, and updated product-vision documentation.
 
 ## 2026-06-22 - Codex (GPT-5) admin opportunity review workflow
 
