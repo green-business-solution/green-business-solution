@@ -494,12 +494,8 @@ function IntakePage({
       </button>
       <section className="form-shell">
         <div className="form-intro">
-          <p className="eyebrow">Get started</p>
           <h1>Tell us about your business</h1>
-          <p>
-            Required fields are marked with an asterisk. After submission, you&apos;ll receive a
-            six-digit temporary code that opens your user portal.
-          </p>
+          <p>We&apos;ll use this information to tailor your recommendations.</p>
         </div>
 
         <form className="intake-form" onSubmit={submitForm}>
