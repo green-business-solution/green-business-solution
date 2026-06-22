@@ -62,3 +62,7 @@
 ## 2026-06-21 - Codex (GPT-5) intake CTA wording
 
 - Changed the intake form submit button from `Create temporary user` to `Create My Plan`.
+
+## 2026-06-21 - Codex (GPT-5) intake heading wording
+
+- Shortened the intake form heading to `Tell us about your business`.
