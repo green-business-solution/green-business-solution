@@ -39,9 +39,20 @@ Representative fields:
 - `submissionId`
 - `contact`
 - `business`
+- `site`
 - `sustainability`
 - `createdAt`
 - `updatedAt`
+
+Current intake form fields include:
+
+- Site address, later used to derive state, county, city, ZIP, and utility territory
+- Electric utility provider: `PG&E`, `SCE`, `SDG&E`, `SVP`, or `Other`
+- Organization type: `Business`, `Nonprofit`, `Government`, `School`, or `Hospital`
+- Ownership status: `Own`, `Lease`, or `Manage`
+- Building type: `Office`, `Retail`, `Restaurant`, `Warehouse`, `Manufacturing`, `Grocery`, `Hospitality`, `Healthcare`, `Education`, or `Other`
+- Square footage, approximate accepted
+- Interested improvements: `LED`, `HVAC`, `Refrigeration`, `Solar`, `EV Charging`, `Water Efficiency`, `Building Controls`, or `Show Me Everything`
 
 ## Local API
 

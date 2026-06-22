@@ -28,11 +28,17 @@ app.use(express.json({ limit: "128kb" }));
 const requiredFields = [
   ["fullName", "Full name"],
   ["email", "Email"],
+  ["siteAddress", "Site address"],
+  ["electricUtilityProvider", "Electric utility provider"],
   ["companyName", "Company name"],
   ["roleTitle", "Role/title"],
   ["industry", "Industry"],
+  ["organizationType", "Organization type"],
   ["organizationSize", "Organization size"],
   ["headquarters", "Primary operating region"],
+  ["ownershipStatus", "Ownership status"],
+  ["buildingType", "Building type"],
+  ["squareFootage", "Square footage"],
   ["sustainabilityGoals", "Sustainability goals"],
   ["currentChallenges", "Current challenges"],
   ["timeline", "Timeline"]
@@ -47,6 +53,14 @@ function cleanOptional(value) {
   return text.length > 0 ? text : null;
 }
 
+function cleanStringArray(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.map(cleanText).filter(Boolean);
+}
+
 function validateIntake(input) {
   const errors = [];
 
@@ -59,6 +73,10 @@ function validateIntake(input) {
   const email = cleanText(input.email);
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.push("Email must be a valid email address.");
+  }
+
+  if (cleanStringArray(input.interestedImprovements).length === 0) {
+    errors.push("Select at least one interested improvement.");
   }
 
   return errors;
@@ -96,12 +114,22 @@ function createIntakeRecord(userId, input, now) {
       companyName: cleanText(input.companyName),
       website: cleanOptional(input.website),
       industry: cleanText(input.industry),
+      organizationType: cleanText(input.organizationType),
       organizationSize: cleanText(input.organizationSize),
       headquarters: cleanText(input.headquarters)
+    },
+    site: {
+      address: cleanText(input.siteAddress),
+      electricUtilityProvider: cleanText(input.electricUtilityProvider),
+      ownershipStatus: cleanText(input.ownershipStatus),
+      buildingType: cleanText(input.buildingType),
+      squareFootage: cleanText(input.squareFootage),
+      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"]
     },
     sustainability: {
       goals: cleanText(input.sustainabilityGoals),
       currentChallenges: cleanText(input.currentChallenges),
+      interestedImprovements: cleanStringArray(input.interestedImprovements),
       monthlyUtilitySpend: cleanOptional(input.monthlyUtilitySpend),
       timeline: cleanText(input.timeline),
       notes: cleanOptional(input.notes)

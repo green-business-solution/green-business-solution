@@ -29,12 +29,22 @@ type IntakeRecord = {
     companyName: string;
     website: string | null;
     industry: string;
+    organizationType?: string;
     organizationSize: string;
     headquarters: string;
+  };
+  site?: {
+    address: string;
+    electricUtilityProvider: string;
+    ownershipStatus: string;
+    buildingType: string;
+    squareFootage: string;
+    derivedFieldsPlanned?: string[];
   };
   sustainability: {
     goals: string;
     currentChallenges: string;
+    interestedImprovements?: string[];
     monthlyUtilitySpend: string | null;
     timeline: string;
     notes: string | null;
@@ -59,11 +69,18 @@ type IntakeFormState = {
   phone: string;
   roleTitle: string;
   contactPreference: string;
+  siteAddress: string;
+  electricUtilityProvider: string;
   companyName: string;
   website: string;
   industry: string;
+  organizationType: string;
   organizationSize: string;
   headquarters: string;
+  ownershipStatus: string;
+  buildingType: string;
+  squareFootage: string;
+  interestedImprovements: string[];
   sustainabilityGoals: string;
   currentChallenges: string;
   monthlyUtilitySpend: string;
@@ -77,11 +94,18 @@ const initialFormState: IntakeFormState = {
   phone: "",
   roleTitle: "",
   contactPreference: "Email",
+  siteAddress: "",
+  electricUtilityProvider: "",
   companyName: "",
   website: "",
   industry: "",
+  organizationType: "",
   organizationSize: "",
   headquarters: "",
+  ownershipStatus: "",
+  buildingType: "",
+  squareFootage: "",
+  interestedImprovements: [],
   sustainabilityGoals: "",
   currentChallenges: "",
   monthlyUtilitySpend: "",
@@ -99,6 +123,32 @@ const initiatives = [
   ["Energy efficiency audit", "18% utility reduction"],
   ["Supplier sustainability scorecard", "42 vendors mapped"],
   ["Waste diversion tracking", "63% diversion rate"]
+];
+
+const utilityProviderOptions = ["PG&E", "SCE", "SDG&E", "SVP", "Other"];
+const organizationTypeOptions = ["Business", "Nonprofit", "Government", "School", "Hospital"];
+const ownershipStatusOptions = ["Own", "Lease", "Manage"];
+const buildingTypeOptions = [
+  "Office",
+  "Retail",
+  "Restaurant",
+  "Warehouse",
+  "Manufacturing",
+  "Grocery",
+  "Hospitality",
+  "Healthcare",
+  "Education",
+  "Other"
+];
+const improvementOptions = [
+  "LED",
+  "HVAC",
+  "Refrigeration",
+  "Solar",
+  "EV Charging",
+  "Water Efficiency",
+  "Building Controls",
+  "Show Me Everything"
 ];
 
 const sessionKey = "gbs-user-session";
@@ -263,6 +313,51 @@ function SelectField({
   );
 }
 
+function CheckboxGroup({
+  label,
+  values,
+  onChange,
+  options,
+  required
+}: {
+  label: string;
+  values: string[];
+  onChange: (values: string[]) => void;
+  options: string[];
+  required?: boolean;
+}) {
+  function toggle(option: string) {
+    if (values.includes(option)) {
+      onChange(values.filter((value) => value !== option));
+      return;
+    }
+
+    onChange([...values, option]);
+  }
+
+  return (
+    <fieldset className="field field-wide checkbox-group">
+      <legend>
+        {label}
+        {required ? <b aria-label="required"> *</b> : null}
+      </legend>
+      <div className="checkbox-grid">
+        {options.map((option) => (
+          <label key={option}>
+            <input
+              checked={values.includes(option)}
+              onChange={() => toggle(option)}
+              type="checkbox"
+              value={option}
+            />
+            <span>{option}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 function HomePage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <main className="landing-page">
@@ -409,6 +504,54 @@ function IntakePage({
             />
           </div>
 
+          <h2>Site profile</h2>
+          <div className="field-grid">
+            <TextArea
+              label="Site address"
+              name="siteAddress"
+              onChange={updateField}
+              placeholder="Street address, city, state, ZIP"
+              required
+              value={form.siteAddress}
+            />
+            <p className="field-note field-wide">
+              Site address will be used later to derive state, county, city, ZIP, and utility
+              territory.
+            </p>
+            <SelectField
+              label="Electric utility provider"
+              name="electricUtilityProvider"
+              onChange={updateField}
+              options={utilityProviderOptions}
+              required
+              value={form.electricUtilityProvider}
+            />
+            <SelectField
+              label="Ownership status"
+              name="ownershipStatus"
+              onChange={updateField}
+              options={ownershipStatusOptions}
+              required
+              value={form.ownershipStatus}
+            />
+            <SelectField
+              label="Building type"
+              name="buildingType"
+              onChange={updateField}
+              options={buildingTypeOptions}
+              required
+              value={form.buildingType}
+            />
+            <Field
+              label="Square footage"
+              name="squareFootage"
+              onChange={updateField}
+              placeholder="Approximate is fine"
+              required
+              value={form.squareFootage}
+            />
+          </div>
+
           <h2>Business profile</h2>
           <div className="field-grid">
             <Field
@@ -420,6 +563,14 @@ function IntakePage({
             />
             <Field label="Website" name="website" onChange={updateField} value={form.website} />
             <Field label="Industry" name="industry" onChange={updateField} required value={form.industry} />
+            <SelectField
+              label="Organization type"
+              name="organizationType"
+              onChange={updateField}
+              options={organizationTypeOptions}
+              required
+              value={form.organizationType}
+            />
             <SelectField
               label="Organization size"
               name="organizationSize"
@@ -446,6 +597,18 @@ function IntakePage({
 
           <h2>Sustainability priorities</h2>
           <div className="field-grid">
+            <CheckboxGroup
+              label="Interested improvements"
+              onChange={(values) =>
+                setForm((current) => ({
+                  ...current,
+                  interestedImprovements: values
+                }))
+              }
+              options={improvementOptions}
+              required
+              values={form.interestedImprovements}
+            />
             <TextArea
               label="What sustainability goals are you trying to achieve?"
               name="sustainabilityGoals"
@@ -631,8 +794,9 @@ function AdminPage() {
             <span role="columnheader">Code</span>
             <span role="columnheader">Name</span>
             <span role="columnheader">Company</span>
-            <span role="columnheader">Identity</span>
-            <span role="columnheader">Goals</span>
+            <span role="columnheader">Site</span>
+            <span role="columnheader">Building</span>
+            <span role="columnheader">Improvements and goals</span>
             <span role="columnheader">Created</span>
           </div>
           {rows.map(({ user, intake }) => (
@@ -641,12 +805,27 @@ function AdminPage() {
               <span role="cell">
                 <strong>{user.fullName}</strong>
                 <small>{user.email}</small>
+                <small>{intake?.contact.roleTitle || user.role}</small>
               </span>
-              <span role="cell">{user.companyName || intake?.business.companyName || "Internal admin"}</span>
               <span role="cell">
-                {user.googleLinked ? "Google linked" : "Temporary code"} / {user.role}
+                <strong>{user.companyName || intake?.business.companyName || "Internal admin"}</strong>
+                <small>{intake?.business.organizationType || "No organization type"}</small>
+                <small>{user.googleLinked ? "Google linked" : "Temporary code"}</small>
               </span>
-              <span role="cell">{intake?.sustainability.goals || "No intake form"}</span>
+              <span role="cell">
+                {intake?.site?.address || "No site address"}
+                <small>{intake?.site?.electricUtilityProvider || "No utility provider"}</small>
+              </span>
+              <span role="cell">
+                {intake?.site
+                  ? `${intake.site.buildingType} / ${intake.site.ownershipStatus}`
+                  : "No building profile"}
+                <small>{intake?.site?.squareFootage || "No square footage"}</small>
+              </span>
+              <span role="cell">
+                {intake?.sustainability.interestedImprovements?.join(", ") || "No improvements selected"}
+                <small>{intake?.sustainability.goals || "No intake form"}</small>
+              </span>
               <span role="cell">{formatDate(user.createdAt)}</span>
             </div>
           ))}
@@ -746,6 +925,8 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
         <dl>
           <dt>Company</dt>
           <dd>{intake.business.companyName}</dd>
+          <dt>Organization type</dt>
+          <dd>{intake.business.organizationType || "Not provided"}</dd>
           <dt>Industry</dt>
           <dd>{intake.business.industry}</dd>
           <dt>Size</dt>
@@ -754,9 +935,26 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dd>{intake.business.headquarters}</dd>
         </dl>
       </article>
+      <article>
+        <p className="eyebrow">Site and building</p>
+        <dl>
+          <dt>Site address</dt>
+          <dd>{intake.site?.address || "Not provided"}</dd>
+          <dt>Electric utility provider</dt>
+          <dd>{intake.site?.electricUtilityProvider || "Not provided"}</dd>
+          <dt>Ownership status</dt>
+          <dd>{intake.site?.ownershipStatus || "Not provided"}</dd>
+          <dt>Building type</dt>
+          <dd>{intake.site?.buildingType || "Not provided"}</dd>
+          <dt>Square footage</dt>
+          <dd>{intake.site?.squareFootage || "Not provided"}</dd>
+        </dl>
+      </article>
       <article className="profile-wide">
         <p className="eyebrow">Sustainability priorities</p>
         <dl>
+          <dt>Interested improvements</dt>
+          <dd>{intake.sustainability.interestedImprovements?.join(", ") || "Not provided"}</dd>
           <dt>Goals</dt>
           <dd>{intake.sustainability.goals}</dd>
           <dt>Current challenges</dt>

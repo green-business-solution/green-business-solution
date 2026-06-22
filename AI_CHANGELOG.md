@@ -37,3 +37,9 @@
 - Verified Rajvansh Gupta's temporary admin code `768383` exists in DynamoDB and works through the local API.
 - Added clearer browser/API error messages for missing local API, expired AWS SSO credentials, and AWS profile access issues.
 - Added `/api/diagnostics` and documented the local troubleshooting checklist for collaborators.
+
+## 2026-06-21 - Codex (GPT-5) intake form expansion
+
+- Added site address, electric utility provider, organization type, ownership status, building type, square footage, and interested improvements to the client intake form.
+- Stored the new fields in the existing DynamoDB-backed intake record under `site`, `business`, and `sustainability`.
+- Updated user and admin portal displays so the new intake answers are visible after submission.
