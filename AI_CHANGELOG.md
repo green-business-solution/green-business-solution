@@ -4,6 +4,7 @@
 
 - Restyled the sign-in page around a visible email/password form, account-mode toggle, divider, and Google sign-in option.
 - Hid the public footer from non-home public pages so the sign-in flow stays visually focused.
+- Expanded the Google sign-in button to match the form width and made it slightly taller.
 
 ## 2026-06-22 - Codex (GPT-5) agent smoke-check clarification
 

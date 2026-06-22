@@ -1996,6 +1996,16 @@ body {
 
 .sign-in-panel .google-button-slot {
   justify-content: center;
+  min-height: 50px;
+}
+
+.sign-in-panel .google-button-slot > div,
+.sign-in-panel .google-button-slot iframe {
+  width: 100% !important;
+}
+
+.sign-in-panel .google-button-slot iframe {
+  height: 48px !important;
 }
 
 .sign-in-panel .google-auth .error-message,

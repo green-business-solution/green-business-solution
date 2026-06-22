@@ -539,10 +539,7 @@ function GoogleSignInButton<T>({
         }
       });
 
-      const buttonWidth = Math.min(
-        400,
-        Math.max(300, Math.floor(buttonRef.current.getBoundingClientRect().width || 400))
-      );
+      const buttonWidth = Math.max(300, Math.floor(buttonRef.current.getBoundingClientRect().width || 480));
 
       buttonRef.current.innerHTML = "";
       window.google.accounts.id.renderButton(buttonRef.current, {
