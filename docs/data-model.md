@@ -103,6 +103,10 @@ Current DSIRE, CEC, SDG&E, SCE, and SVP fields include:
 - `raw`
 - `dataQuality`
 - `reviewStatus`
+- `reviewNotes`
+- `duplicateOf`
+- `reviewedAt`
+- `reviewedBy`
 - `firstSeenAt`
 - `lastSeenAt`
 - `createdAt`
@@ -110,6 +114,10 @@ Current DSIRE, CEC, SDG&E, SCE, and SVP fields include:
 
 This is not the final relational opportunity schema. It is a DynamoDB-backed prototype table so admins
 can inspect gathered source records while we build the normalized opportunity database.
+
+Admins can review records from the `gbs-opportunity-candidates` admin tab. Review actions update
+`reviewStatus`, `reviewNotes`, `duplicateOf`, `reviewedAt`, `reviewedBy`, and `updatedAt` on the same
+DynamoDB row. Supported review statuses are `approved`, `rejected`, `needs_review`, and `duplicate`.
 
 Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. RSS records preserve the
 raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`

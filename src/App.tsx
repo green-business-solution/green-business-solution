@@ -92,6 +92,86 @@ type DatabaseTableSnapshot = {
   records: unknown[];
 };
 
+type MatchParameter = {
+  values?: unknown;
+  mode?: string;
+  min?: number | null;
+  max?: number | null;
+  confidence?: string;
+  method?: string;
+  rationale?: string;
+};
+
+type OpportunityEvidence = {
+  sourceName?: string;
+  sourceUrl?: string;
+  documentType?: string;
+  sectionHeading?: string;
+  sectionCategory?: string;
+  retrievedAt?: string;
+  extractedText?: string | null;
+};
+
+type OpportunityRecord = {
+  opportunityId: string;
+  canonicalTitle?: string;
+  normalizedTitle?: string;
+  sourceKey?: string;
+  sourceName?: string;
+  sourceUrl?: string;
+  origin?: {
+    sourceKey?: string;
+    sourceName?: string;
+    sourceUrl?: string;
+    sourceBaseUrl?: string;
+    documentType?: string;
+  };
+  status?: string;
+  sourceStatus?: string;
+  reviewStatus?: string;
+  reviewNotes?: string | null;
+  duplicateOf?: string | null;
+  reviewedAt?: string;
+  reviewedBy?: {
+    fullName?: string;
+    email?: string;
+  };
+  category?: string;
+  programType?: string;
+  summary?: string;
+  administrator?: string;
+  deliveryPartner?: string | null;
+  applicationUrl?: string | null;
+  websiteUrl?: string | null;
+  technologies?: unknown;
+  sectors?: unknown;
+  matchingParameters?: {
+    zipCode?: MatchParameter;
+    utilityProvider?: MatchParameter;
+    businessClassification?: MatchParameter;
+    squareFootage?: MatchParameter;
+    demandKw?: MatchParameter;
+    matchingWarnings?: unknown;
+    [key: string]: unknown;
+  };
+  eligibilityRules?: unknown;
+  evidence?: OpportunityEvidence[];
+  dataQuality?: {
+    status?: string;
+    isWritable?: boolean;
+    criticalIssues?: unknown;
+    warnings?: unknown;
+  };
+  raw?: unknown;
+  createdAt?: string;
+  updatedAt?: string;
+  lastSeenAt?: string;
+};
+
+type OpportunityReviewResponse = {
+  opportunity: OpportunityRecord;
+};
+
 type AdminPayload = {
   admin: UserRecord;
   users: AdminRow[];
@@ -237,6 +317,7 @@ const googleClientId =
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
   "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const googleIdentityScriptUrl = "https://accounts.google.com/gsi/client";
+const opportunitiesTableName = "gbs-opportunity-candidates";
 let googleIdentityScriptPromise: Promise<void> | null = null;
 
 function loadGoogleIdentityScript() {
@@ -415,6 +496,77 @@ function formatDate(value: string | null) {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(new Date(value));
+}
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function toText(value: unknown) {
+  return typeof value === "string" ? value : "";
+}
+
+function toStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.map((item) => (typeof item === "string" ? item : "")).filter(Boolean);
+}
+
+function valuesFromParameter(parameter: MatchParameter | undefined) {
+  return toStringArray(parameter?.values);
+}
+
+function asOpportunityRecords(records: unknown[]) {
+  return records.filter((record): record is OpportunityRecord => {
+    if (!isPlainRecord(record)) return false;
+    return typeof record.opportunityId === "string" && typeof record.sourceKey === "string";
+  });
+}
+
+function uniqueSorted(values: string[]) {
+  return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
+function getOpportunityTitle(opportunity: OpportunityRecord) {
+  return opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId;
+}
+
+function getOpportunityReviewStatus(opportunity: OpportunityRecord) {
+  return opportunity.reviewStatus || "needs_review";
+}
+
+function getOpportunityWarnings(opportunity: OpportunityRecord) {
+  return [
+    ...toStringArray(opportunity.dataQuality?.warnings),
+    ...toStringArray(opportunity.matchingParameters?.matchingWarnings)
+  ];
+}
+
+function getOpportunityUtilityProviders(opportunity: OpportunityRecord) {
+  return valuesFromParameter(opportunity.matchingParameters?.utilityProvider);
+}
+
+function getOpportunityBusinessClassifications(opportunity: OpportunityRecord) {
+  const fromMatching = valuesFromParameter(opportunity.matchingParameters?.businessClassification);
+  return fromMatching.length > 0 ? fromMatching : toStringArray(opportunity.sectors);
+}
+
+function getOpportunityTechnologies(opportunity: OpportunityRecord) {
+  return toStringArray(opportunity.technologies);
+}
+
+function formatSquareFootage(parameter: MatchParameter | undefined) {
+  if (!parameter) return "Not specified";
+  if (parameter.min == null && parameter.max == null) return parameter.mode || "Not specified";
+  if (parameter.min != null && parameter.max != null) return `${parameter.min} - ${parameter.max} sq ft`;
+  if (parameter.min != null) return `At least ${parameter.min} sq ft`;
+  return `Up to ${parameter.max} sq ft`;
+}
+
+function compactJson(value: unknown) {
+  return JSON.stringify(value ?? null, null, 2);
 }
 
 function Field({
@@ -911,6 +1063,27 @@ function AdminDashboard({
   const navItems = ["Users", ...dataTables.map((table) => table.name)];
   const selectedDataTable = dataTables.find((table) => table.name === activeTab) || null;
 
+  function handleOpportunityUpdated(updatedOpportunity: OpportunityRecord) {
+    setAdminPayload((currentPayload) => ({
+      ...currentPayload,
+      dataTables: currentPayload.dataTables.map((table) => {
+        if (table.name !== opportunitiesTableName) {
+          return table;
+        }
+
+        return {
+          ...table,
+          records: table.records.map((record) => {
+            if (!isPlainRecord(record) || record.opportunityId !== updatedOpportunity.opportunityId) {
+              return record;
+            }
+            return updatedOpportunity;
+          })
+        };
+      })
+    }));
+  }
+
   async function refreshDashboard() {
     if (!credential) {
       setError("Sign in again to refresh the admin dashboard.");
@@ -957,8 +1130,10 @@ function AdminDashboard({
         <AdminUsersPanel isLoading={isLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : (
         <AdminDataPanel
+          credential={credential}
           dataTable={selectedDataTable}
           isLoading={isLoading}
+          onOpportunityUpdated={handleOpportunityUpdated}
           onRefresh={() => void refreshDashboard()}
         />
       )}
@@ -1031,14 +1206,30 @@ function AdminUsersPanel({
 }
 
 function AdminDataPanel({
+  credential,
   dataTable,
   isLoading,
+  onOpportunityUpdated,
   onRefresh
 }: {
+  credential: string | null;
   dataTable: DatabaseTableSnapshot | null;
   isLoading: boolean;
+  onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
   onRefresh: () => void;
 }) {
+  if (dataTable?.name === opportunitiesTableName) {
+    return (
+      <OpportunityReviewPanel
+        credential={credential}
+        dataTable={dataTable}
+        isLoading={isLoading}
+        onOpportunityUpdated={onOpportunityUpdated}
+        onRefresh={onRefresh}
+      />
+    );
+  }
+
   return (
     <section className="admin-section">
       <div className="section-heading">
@@ -1069,6 +1260,413 @@ function AdminDataPanel({
         )}
       </div>
     </section>
+  );
+}
+
+function OpportunityReviewPanel({
+  credential,
+  dataTable,
+  isLoading,
+  onOpportunityUpdated,
+  onRefresh
+}: {
+  credential: string | null;
+  dataTable: DatabaseTableSnapshot;
+  isLoading: boolean;
+  onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
+  onRefresh: () => void;
+}) {
+  const records = asOpportunityRecords(dataTable.records);
+  const [search, setSearch] = useState("");
+  const [sourceFilter, setSourceFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [programTypeFilter, setProgramTypeFilter] = useState("");
+  const [reviewStatusFilter, setReviewStatusFilter] = useState("");
+  const [utilityFilter, setUtilityFilter] = useState("");
+  const [businessFilter, setBusinessFilter] = useState("");
+  const [warningFilter, setWarningFilter] = useState("");
+  const [selectedOpportunityId, setSelectedOpportunityId] = useState(records[0]?.opportunityId || "");
+
+  const sourceOptions = uniqueSorted(records.map((record) => record.sourceName || record.sourceKey || ""));
+  const statusOptions = uniqueSorted(records.map((record) => record.status || ""));
+  const programTypeOptions = uniqueSorted(records.map((record) => record.programType || ""));
+  const reviewStatusOptions = uniqueSorted(records.map(getOpportunityReviewStatus));
+  const utilityOptions = uniqueSorted(records.flatMap(getOpportunityUtilityProviders));
+  const businessOptions = uniqueSorted(records.flatMap(getOpportunityBusinessClassifications));
+  const warningOptions = uniqueSorted(records.flatMap(getOpportunityWarnings));
+  const normalizedSearch = search.trim().toLowerCase();
+  const filteredRecords = records.filter((record) => {
+    const sourceValue = record.sourceName || record.sourceKey || "";
+    const haystack = [
+      getOpportunityTitle(record),
+      record.summary,
+      record.sourceName,
+      record.sourceKey,
+      record.status,
+      record.programType,
+      record.category,
+      record.administrator,
+      getOpportunityTechnologies(record).join(" "),
+      getOpportunityUtilityProviders(record).join(" "),
+      getOpportunityBusinessClassifications(record).join(" "),
+      getOpportunityWarnings(record).join(" ")
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return (
+      (!normalizedSearch || haystack.includes(normalizedSearch)) &&
+      (!sourceFilter || sourceValue === sourceFilter) &&
+      (!statusFilter || record.status === statusFilter) &&
+      (!programTypeFilter || record.programType === programTypeFilter) &&
+      (!reviewStatusFilter || getOpportunityReviewStatus(record) === reviewStatusFilter) &&
+      (!utilityFilter || getOpportunityUtilityProviders(record).includes(utilityFilter)) &&
+      (!businessFilter || getOpportunityBusinessClassifications(record).includes(businessFilter)) &&
+      (!warningFilter || getOpportunityWarnings(record).includes(warningFilter))
+    );
+  });
+  const selectedOpportunity =
+    filteredRecords.find((record) => record.opportunityId === selectedOpportunityId) || filteredRecords[0] || null;
+
+  useEffect(() => {
+    if (!selectedOpportunity && filteredRecords.length > 0) {
+      setSelectedOpportunityId(filteredRecords[0].opportunityId);
+    }
+  }, [filteredRecords, selectedOpportunity]);
+
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Opportunity review</p>
+          <h2>{dataTable.recordCount} opportunity candidates</h2>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      <div className="review-filters">
+        <label className="field">
+          <span>Search</span>
+          <input
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Title, source, warning, technology"
+            type="search"
+            value={search}
+          />
+        </label>
+        <ReviewSelect label="Source" onChange={setSourceFilter} options={sourceOptions} value={sourceFilter} />
+        <ReviewSelect label="Status" onChange={setStatusFilter} options={statusOptions} value={statusFilter} />
+        <ReviewSelect
+          label="Program type"
+          onChange={setProgramTypeFilter}
+          options={programTypeOptions}
+          value={programTypeFilter}
+        />
+        <ReviewSelect
+          label="Review status"
+          onChange={setReviewStatusFilter}
+          options={reviewStatusOptions}
+          value={reviewStatusFilter}
+        />
+        <ReviewSelect label="Utility" onChange={setUtilityFilter} options={utilityOptions} value={utilityFilter} />
+        <ReviewSelect
+          label="Business"
+          onChange={setBusinessFilter}
+          options={businessOptions}
+          value={businessFilter}
+        />
+        <ReviewSelect label="Warning" onChange={setWarningFilter} options={warningOptions} value={warningFilter} />
+      </div>
+
+      <div className="review-count-row">
+        <strong>{filteredRecords.length} shown</strong>
+        <span>{records.length} loaded from DynamoDB</span>
+      </div>
+
+      <div className="opportunity-review-layout">
+        <div className="opportunity-list" aria-label="Opportunity candidates">
+          {filteredRecords.length === 0 ? (
+            <p className="empty-state">No opportunities match the current filters.</p>
+          ) : (
+            filteredRecords.map((record) => (
+              <button
+                aria-current={record.opportunityId === selectedOpportunity?.opportunityId ? "true" : undefined}
+                className="opportunity-list-item"
+                key={record.opportunityId}
+                onClick={() => setSelectedOpportunityId(record.opportunityId)}
+                type="button"
+              >
+                <span>
+                  <strong>{getOpportunityTitle(record)}</strong>
+                  <small>{record.sourceName || record.sourceKey || "Unknown source"}</small>
+                </span>
+                <span className="status-stack">
+                  <mark>{getOpportunityReviewStatus(record)}</mark>
+                  <small>{record.status || "unknown"} / {record.programType || "unknown"}</small>
+                </span>
+              </button>
+            ))
+          )}
+        </div>
+
+        <OpportunityDetailPanel
+          credential={credential}
+          opportunity={selectedOpportunity}
+          onOpportunityUpdated={onOpportunityUpdated}
+        />
+      </div>
+    </section>
+  );
+}
+
+function ReviewSelect({
+  label,
+  onChange,
+  options,
+  value
+}: {
+  label: string;
+  onChange: (value: string) => void;
+  options: string[];
+  value: string;
+}) {
+  return (
+    <label className="field">
+      <span>{label}</span>
+      <select onChange={(event) => onChange(event.target.value)} value={value}>
+        <option value="">All</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function OpportunityDetailPanel({
+  credential,
+  opportunity,
+  onOpportunityUpdated
+}: {
+  credential: string | null;
+  opportunity: OpportunityRecord | null;
+  onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
+}) {
+  const [notes, setNotes] = useState("");
+  const [duplicateOf, setDuplicateOf] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    setNotes(opportunity?.reviewNotes || "");
+    setDuplicateOf(opportunity?.duplicateOf || "");
+    setError(null);
+    setMessage(null);
+  }, [opportunity?.opportunityId, opportunity?.reviewNotes, opportunity?.duplicateOf]);
+
+  if (!opportunity) {
+    return (
+      <article className="opportunity-detail">
+        <p className="empty-state">Select an opportunity to review.</p>
+      </article>
+    );
+  }
+
+  const warnings = getOpportunityWarnings(opportunity);
+  const utilityProviders = getOpportunityUtilityProviders(opportunity);
+  const businessClassifications = getOpportunityBusinessClassifications(opportunity);
+  const technologies = getOpportunityTechnologies(opportunity);
+  const evidence = Array.isArray(opportunity.evidence) ? opportunity.evidence : [];
+
+  async function submitReview(status: string) {
+    const currentOpportunity = opportunity;
+    if (!currentOpportunity) {
+      setError("Select an opportunity before saving review changes.");
+      return;
+    }
+
+    if (!credential) {
+      setError("Sign in again before saving review changes.");
+      return;
+    }
+
+    if (status === "duplicate" && !duplicateOf.trim()) {
+      setError("Enter the opportunity ID this record duplicates.");
+      return;
+    }
+
+    setIsSaving(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const opportunityId = currentOpportunity.opportunityId;
+      const response = await apiPost<OpportunityReviewResponse>(
+        `/api/admin/opportunities/${encodeURIComponent(opportunityId)}/review`,
+        {
+          credential,
+          status,
+          notes,
+          duplicateOf
+        }
+      );
+      onOpportunityUpdated(response.opportunity);
+      setMessage("Review saved.");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not save review.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <article className="opportunity-detail">
+      <div className="opportunity-detail-header">
+        <div>
+          <p className="eyebrow">{opportunity.sourceName || opportunity.sourceKey || "Opportunity"}</p>
+          <h3>{getOpportunityTitle(opportunity)}</h3>
+        </div>
+        <div className="status-stack">
+          <mark>{getOpportunityReviewStatus(opportunity)}</mark>
+          <small>{opportunity.status || "unknown"} / {opportunity.programType || "unknown"}</small>
+        </div>
+      </div>
+
+      <div className="review-actions">
+        <div className="review-button-row">
+          <button disabled={isSaving} onClick={() => void submitReview("approved")} type="button">
+            Approve
+          </button>
+          <button
+            className="secondary-button"
+            disabled={isSaving}
+            onClick={() => void submitReview("needs_review")}
+            type="button"
+          >
+            Needs review
+          </button>
+          <button
+            className="danger-button"
+            disabled={isSaving}
+            onClick={() => void submitReview("rejected")}
+            type="button"
+          >
+            Reject
+          </button>
+          <button
+            className="secondary-button"
+            disabled={isSaving}
+            onClick={() => void submitReview("duplicate")}
+            type="button"
+          >
+            Mark duplicate
+          </button>
+        </div>
+
+        <label className="field">
+          <span>Duplicate of</span>
+          <input
+            onChange={(event) => setDuplicateOf(event.target.value)}
+            placeholder="Opportunity ID"
+            value={duplicateOf}
+          />
+        </label>
+
+        <label className="field field-wide">
+          <span>Review notes</span>
+          <textarea onChange={(event) => setNotes(event.target.value)} value={notes} />
+        </label>
+
+        <button
+          className="secondary-button"
+          disabled={isSaving}
+          onClick={() => void submitReview(getOpportunityReviewStatus(opportunity))}
+          type="button"
+        >
+          {isSaving ? "Saving..." : "Save notes"}
+        </button>
+        {message ? <p className="success-message">{message}</p> : null}
+        {error ? <p className="error-message">{error}</p> : null}
+      </div>
+
+      <div className="opportunity-summary-grid">
+        <DetailItem label="Source" value={opportunity.sourceName || opportunity.sourceKey || "Unknown"} />
+        <DetailItem label="Program type" value={opportunity.programType || "Unknown"} />
+        <DetailItem label="Category" value={opportunity.category || "Unknown"} />
+        <DetailItem label="Administrator" value={opportunity.administrator || "Unknown"} />
+        <DetailItem label="Utility" value={utilityProviders.join(", ") || "Not classified"} />
+        <DetailItem label="Business" value={businessClassifications.join(", ") || "Not classified"} />
+        <DetailItem label="Square footage" value={formatSquareFootage(opportunity.matchingParameters?.squareFootage)} />
+        <DetailItem label="Technologies" value={technologies.join(", ") || "Not classified"} />
+      </div>
+
+      <section className="detail-section">
+        <h4>Summary</h4>
+        <p>{opportunity.summary || "No summary stored."}</p>
+      </section>
+
+      <section className="detail-section">
+        <h4>Source links</h4>
+        <div className="link-list">
+          {opportunity.sourceUrl ? (
+            <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">
+              Source page
+            </a>
+          ) : null}
+          {opportunity.applicationUrl ? (
+            <a href={opportunity.applicationUrl} rel="noreferrer" target="_blank">
+              Application
+            </a>
+          ) : null}
+          {opportunity.websiteUrl && opportunity.websiteUrl !== opportunity.sourceUrl ? (
+            <a href={opportunity.websiteUrl} rel="noreferrer" target="_blank">
+              Website
+            </a>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="detail-section">
+        <h4>Warnings</h4>
+        {warnings.length > 0 ? (
+          <div className="pill-row">
+            {warnings.map((warning) => (
+              <span key={warning}>{warning}</span>
+            ))}
+          </div>
+        ) : (
+          <p>No warnings.</p>
+        )}
+      </section>
+
+      <section className="detail-section">
+        <h4>Evidence</h4>
+        <pre>{compactJson(evidence)}</pre>
+      </section>
+
+      <section className="detail-section">
+        <h4>Matching parameters</h4>
+        <pre>{compactJson(opportunity.matchingParameters)}</pre>
+      </section>
+
+      <section className="detail-section">
+        <h4>Raw record</h4>
+        <pre>{compactJson(opportunity.raw ?? opportunity)}</pre>
+      </section>
+    </article>
+  );
+}
+
+function DetailItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
   );
 }
 

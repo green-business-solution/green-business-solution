@@ -39,6 +39,7 @@ const client = new DynamoDBClient({
 });
 const db = DynamoDBDocumentClient.from(client);
 export const app = express();
+let activeServer = null;
 
 app.use(express.json({ limit: "128kb" }));
 
@@ -52,6 +53,7 @@ const requiredFields = [
   ["buildingType", "Building type"],
   ["squareFootage", "Square footage"]
 ];
+const opportunityReviewStatuses = new Set(["approved", "rejected", "needs_review", "duplicate"]);
 
 let googleKeysCache = {
   expiresAt: 0,
@@ -431,6 +433,74 @@ async function requireGoogleUser(credential) {
   return linkGoogleUser(user, googleUser);
 }
 
+async function requireAdminUser(credential) {
+  const user = await requireGoogleUser(credential);
+  if (user.role !== "admin") {
+    const error = new Error("This Google account does not have admin access.");
+    error.status = 403;
+    throw error;
+  }
+  return user;
+}
+
+async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential }) {
+  const admin = await requireAdminUser(credential);
+  const cleanOpportunityId = cleanText(opportunityId);
+  const cleanStatus = cleanText(status);
+  const cleanNotes = cleanOptional(notes);
+  const cleanDuplicateOf = cleanStatus === "duplicate" ? cleanOptional(duplicateOf) : null;
+
+  if (!cleanOpportunityId) {
+    const error = new Error("Opportunity ID is required.");
+    error.status = 400;
+    throw error;
+  }
+
+  if (!opportunityReviewStatuses.has(cleanStatus)) {
+    const error = new Error("Review status must be approved, rejected, needs_review, or duplicate.");
+    error.status = 400;
+    throw error;
+  }
+
+  if (cleanNotes && cleanNotes.length > 4000) {
+    const error = new Error("Review notes must be 4000 characters or fewer.");
+    error.status = 400;
+    throw error;
+  }
+
+  if (cleanStatus === "duplicate" && !cleanDuplicateOf) {
+    const error = new Error("Duplicate records must include the opportunity ID they duplicate.");
+    error.status = 400;
+    throw error;
+  }
+
+  const now = new Date().toISOString();
+  const result = await db.send(
+    new UpdateCommand({
+      TableName: opportunitiesTable,
+      Key: { opportunityId: cleanOpportunityId },
+      ConditionExpression: "attribute_exists(opportunityId)",
+      UpdateExpression:
+        "SET reviewStatus = :reviewStatus, reviewNotes = :reviewNotes, duplicateOf = :duplicateOf, reviewedAt = :reviewedAt, reviewedBy = :reviewedBy, updatedAt = :updatedAt",
+      ExpressionAttributeValues: {
+        ":reviewStatus": cleanStatus,
+        ":reviewNotes": cleanNotes,
+        ":duplicateOf": cleanDuplicateOf,
+        ":reviewedAt": now,
+        ":reviewedBy": {
+          userId: admin.userId,
+          email: admin.email,
+          fullName: admin.fullName
+        },
+        ":updatedAt": now
+      },
+      ReturnValues: "ALL_NEW"
+    })
+  );
+
+  return result.Attributes;
+}
+
 async function buildAuthPayload(user) {
   if (user.role === "admin") {
     return {
@@ -654,9 +724,29 @@ app.post("/api/auth/google", async (req, res) => {
   }
 });
 
+app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
+  try {
+    const opportunity = await updateOpportunityReview({
+      opportunityId: req.params.opportunityId,
+      status: req.body?.status,
+      notes: req.body?.notes,
+      duplicateOf: req.body?.duplicateOf,
+      credential: req.body?.credential
+    });
+    res.json({ opportunity });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 if (!isLambdaRuntime) {
-  app.listen(port, "127.0.0.1", () => {
+  activeServer = app.listen(port, "127.0.0.1", () => {
     console.log(`Green Business Solution API running at http://127.0.0.1:${port}`);
     console.log(`Using AWS profile ${profile || "default credential chain"}, region ${region}`);
+  });
+  activeServer.on("error", (error) => {
+    console.error(`Could not start Green Business Solution API on http://127.0.0.1:${port}`);
+    console.error(error);
+    process.exitCode = 1;
   });
 }

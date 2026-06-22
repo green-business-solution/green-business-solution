@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) admin opportunity review workflow
+
+- Added an admin review workspace for `gbs-opportunity-candidates` with search and filters for source, status, program type, review status, utility provider, business classification, and warnings.
+- Added opportunity detail review with normalized fields, source links, warnings, evidence, matching parameters, and raw record inspection.
+- Added admin-only review updates for approve, reject, needs-review, duplicate marking, and notes persisted back to DynamoDB.
+
 ## 2026-06-22 - Codex (GPT-5) production Google sign-in render fix
 
 - Fixed the production Google sign-in screen blanking out after Google Identity Services loaded.

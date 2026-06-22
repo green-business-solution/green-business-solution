@@ -754,6 +754,225 @@ dd {
   white-space: pre;
 }
 
+.review-filters {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  padding: 16px;
+}
+
+.review-count-row {
+  align-items: center;
+  color: #5d6b63;
+  display: flex;
+  font-size: 13px;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.review-count-row strong {
+  color: #17211b;
+}
+
+.opportunity-review-layout {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.opportunity-list,
+.opportunity-detail {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+}
+
+.opportunity-list {
+  display: grid;
+  max-height: calc(100vh - 280px);
+  overflow: auto;
+}
+
+.opportunity-list-item {
+  background: #ffffff;
+  border-bottom: 1px solid #edf1ee;
+  border-radius: 0;
+  color: #17211b;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  justify-content: stretch;
+  min-height: auto;
+  padding: 14px;
+  text-align: left;
+}
+
+.opportunity-list-item:hover,
+.opportunity-list-item[aria-current="true"] {
+  background: #edf4ef;
+}
+
+.opportunity-list-item strong,
+.opportunity-list-item small,
+.status-stack small {
+  display: block;
+}
+
+.opportunity-list-item small,
+.status-stack small {
+  color: #5d6b63;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.status-stack {
+  align-items: end;
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  text-align: right;
+}
+
+.opportunity-detail {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+}
+
+.opportunity-detail-header {
+  align-items: start;
+  border-bottom: 1px solid #edf1ee;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding-bottom: 16px;
+}
+
+.opportunity-detail h3,
+.opportunity-detail h4 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.review-actions {
+  background: #f7faf7;
+  border: 1px solid #e4ebe6;
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.review-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.danger-button {
+  background: #a6422b;
+}
+
+.danger-button:hover {
+  background: #84331f;
+}
+
+.success-message {
+  background: #edf8ef;
+  border: 1px solid #b7dfc1;
+  border-radius: 6px;
+  color: #24563b;
+  margin: 0;
+  padding: 12px;
+}
+
+.opportunity-summary-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.opportunity-summary-grid div {
+  background: #f7faf7;
+  border: 1px solid #e4ebe6;
+  border-radius: 6px;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+}
+
+.opportunity-summary-grid span {
+  color: #617169;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.opportunity-summary-grid strong {
+  overflow-wrap: anywhere;
+}
+
+.detail-section {
+  display: grid;
+  gap: 10px;
+}
+
+.detail-section p {
+  color: #4f5e56;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.detail-section pre {
+  background: #132019;
+  border-radius: 6px;
+  color: #f4faf5;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+  max-height: 340px;
+  overflow: auto;
+  padding: 14px;
+  white-space: pre;
+}
+
+.link-list,
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.link-list a,
+.pill-row span {
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 7px 10px;
+}
+
+.link-list a {
+  background: #e8f2ec;
+  color: #176b4c;
+  text-decoration: none;
+}
+
+.pill-row span {
+  background: #fff7e8;
+  color: #815a13;
+}
+
+.empty-state {
+  color: #5d6b63;
+  margin: 0;
+  padding: 18px;
+}
+
 @media (max-width: 980px) {
   .hero-band,
   .form-shell,
@@ -801,5 +1020,24 @@ dd {
 
   .admin-head {
     display: none;
+  }
+
+  .review-filters,
+  .opportunity-review-layout,
+  .opportunity-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .opportunity-list {
+    max-height: 520px;
+  }
+
+  .opportunity-detail-header {
+    display: grid;
+  }
+
+  .status-stack {
+    justify-items: start;
+    text-align: left;
   }
 }
