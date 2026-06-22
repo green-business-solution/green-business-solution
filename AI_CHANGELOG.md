@@ -52,3 +52,7 @@
 ## 2026-06-21 - Codex (GPT-5) intake form required fields
 
 - Made the intake form `Role/title` field optional while keeping the rest of the required contact fields unchanged.
+
+## 2026-06-21 - Codex (GPT-5) intake CTA wording
+
+- Changed the intake form submit button from `Create temporary user` to `Find Opportunities`.
