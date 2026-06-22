@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) homepage hero and logo lockup
+
+- Refined the RetroFi header lockup so the icon and wordmark sit closer together with responsive icon sizing.
+- Replaced the homepage split hero and scan preview card with a centered full-width gradient banner using the requested slogan, headline, subheadline, and `/scan` CTA.
+- Updated the mobile header CTA label to `Get Started` while keeping it routed to `/scan`.
+
 ## 2026-06-22 - Codex (GPT-5) RetroFi logo and hover polish
 
 - Added the uploaded RetroFi logo asset to the public site header/footer branding and browser favicon.

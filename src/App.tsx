@@ -1285,7 +1285,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <span />
       </button>
       <button className="mobile-cta" onClick={() => go("scan")} type="button">
-        Create My Report
+        Get Started
       </button>
       {isMenuOpen ? (
         <div className="mobile-menu-panel">
@@ -1309,8 +1309,8 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           <button className="link-button" onClick={() => go("sign-in")} type="button">
             Sign In
           </button>
-        <button onClick={() => go("scan")} type="button">
-          Get Started
+          <button onClick={() => go("scan")} type="button">
+            Get Started
           </button>
         </div>
       ) : null}
@@ -1465,48 +1465,14 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
     <PublicShell navigate={navigate} showFooter>
       <section className="hero-panel">
         <div className="hero-copy">
-          <p className="eyebrow">Retrofit advisory for business facilities</p>
-          <h1>Find funding and savings for your next facility upgrade.</h1>
-          <p>
-            RetroFi helps businesses identify eligible sustainability incentives, estimate savings,
-            and build a clear roadmap for high-value retrofits.
+          <p className="hero-eyebrow">Sustainable. Profitable. Practical.</p>
+          <h1>Maximize the value of every upgrade.</h1>
+          <p className="hero-subheadline">
+            RetroFi delivers your personalized implementation plan with funding opportunities, savings estimates, and
+            prioritized next steps from start to finish.
           </p>
           <div className="hero-actions">
             <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
-            <CTAButton navigate={navigate} route="how-it-works" variant="secondary">
-              See How It Works
-            </CTAButton>
-          </div>
-        </div>
-        <div className="scan-preview" aria-label="Sample RetroFi scan report">
-          <div className="preview-topline">
-            <span>Free scan preview</span>
-            <strong>Ready</strong>
-          </div>
-          <div className="preview-stack">
-            <div className="report-card">
-              <span>Site</span>
-              <strong>Ninth Street Market</strong>
-            </div>
-            <div className="opportunity-range">
-              <span>Estimated Opportunity Range</span>
-              <strong>$18k-$75k</strong>
-            </div>
-          </div>
-          <div className="category-pills">
-            <span>HVAC</span>
-            <span>Lighting</span>
-            <span>Refrigeration</span>
-          </div>
-          <div className="report-status">
-            <div>
-              <span>Report Status</span>
-              <strong>Free Scan Ready</strong>
-            </div>
-            <div>
-              <span>Next Step</span>
-              <strong>Upload utility bills</strong>
-            </div>
           </div>
         </div>
       </section>

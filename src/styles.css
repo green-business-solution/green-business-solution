@@ -1123,10 +1123,13 @@ body {
 .brand-link {
   background: transparent;
   color: var(--retrofi-text);
-  font-size: 17px;
-  gap: 10px;
+  font-size: 18px;
+  font-weight: 850;
+  gap: 8px;
+  line-height: 1;
   min-height: auto;
   padding: 0;
+  white-space: nowrap;
 }
 
 .brand-link:hover {
@@ -1135,9 +1138,12 @@ body {
 
 .brand-symbol {
   display: block;
-  height: 38px;
+  flex: 0 0 auto;
+  height: 32px;
   object-fit: contain;
-  width: 38px;
+  transform: scale(1.16);
+  transform-origin: center;
+  width: 32px;
 }
 
 .site-nav {
@@ -1260,7 +1266,6 @@ body {
   width: 18px;
 }
 
-.hero-panel,
 .results-panel {
   background: var(--retrofi-gradient);
   border: 1px solid rgba(16, 32, 24, 0.08);
@@ -1272,12 +1277,67 @@ body {
 }
 
 .hero-panel {
-  align-items: center;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.64) 0, rgba(255, 255, 255, 0) 36%),
+    radial-gradient(circle at 15% 18%, rgba(195, 222, 216, 0.38) 0, rgba(195, 222, 216, 0) 30%),
+    linear-gradient(135deg, #f7f8f4 0%, #eaf3ef 45%, #d7eae3 100%);
   display: grid;
-  gap: 34px;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
-  min-height: 520px;
-  padding: clamp(28px, 4vw, 56px);
+  margin: 0 0 72px;
+  min-height: 680px;
+  overflow: hidden;
+  padding: 96px clamp(24px, 6vw, 72px);
+  place-items: center;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-panel::after {
+  background:
+    linear-gradient(115deg, rgba(14, 70, 55, 0.05) 0 1px, transparent 1px 100%),
+    linear-gradient(25deg, rgba(14, 70, 55, 0.035) 0 1px, transparent 1px 100%);
+  background-size: 96px 96px;
+  content: "";
+  inset: 0;
+  opacity: 0.38;
+  pointer-events: none;
+  position: absolute;
+}
+
+.hero-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-panel .hero-copy {
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+  max-width: 930px;
+}
+
+.hero-eyebrow {
+  color: var(--retrofi-green-dark);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.hero-panel h1 {
+  color: var(--retrofi-text);
+  font-size: 82px;
+  line-height: 1;
+  margin: 0;
+  max-width: 920px;
+}
+
+.hero-subheadline {
+  color: var(--retrofi-muted);
+  font-size: 22px;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 850px;
 }
 
 .page-hero {
@@ -1297,7 +1357,6 @@ body {
   padding-block: 28px;
 }
 
-.hero-copy h1,
 .results-panel h1 {
   color: var(--retrofi-text);
   font-size: clamp(48px, 5vw, 72px);
@@ -1332,6 +1391,18 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.hero-panel .hero-actions {
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.hero-panel .hero-actions button {
+  font-size: 17px;
+  min-height: 56px;
+  min-width: 156px;
+  padding: 0 30px;
 }
 
 .scan-preview {
@@ -2480,7 +2551,12 @@ body {
   }
 
   .hero-panel {
-    grid-template-columns: 1fr;
+    min-height: 640px;
+    padding-block: 88px;
+  }
+
+  .hero-panel h1 {
+    font-size: 72px;
   }
 
   .site-footer {
@@ -2545,8 +2621,7 @@ body {
   }
 
   .page-hero,
-  .results-panel,
-  .hero-panel {
+  .results-panel {
     width: calc(100% - 28px);
   }
 
@@ -2571,10 +2646,15 @@ body {
     padding: 0 8px;
     text-align: left;
   }
+
+  .brand-symbol {
+    height: 30px;
+    transform: scale(1.14);
+    width: 30px;
+  }
 }
 
 @media (max-width: 760px) {
-  .hero-copy h1,
   .page-hero h1,
   .results-panel h1,
   .scan-page .form-intro h1 {
@@ -2606,8 +2686,22 @@ body {
   }
 
   .hero-panel {
-    min-height: auto;
-    padding: 24px;
+    min-height: 590px;
+    padding: 78px 22px 84px;
+  }
+
+  .hero-panel h1 {
+    font-size: 52px;
+    line-height: 1.04;
+  }
+
+  .hero-eyebrow {
+    font-size: 17px;
+  }
+
+  .hero-subheadline {
+    font-size: 19px;
+    line-height: 1.5;
   }
 
   .database-shell {
@@ -2642,6 +2736,11 @@ body {
     width: 100%;
   }
 
+  .hero-panel .hero-actions,
+  .hero-panel .hero-actions button {
+    width: auto;
+  }
+
   .about-subnav {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2660,6 +2759,15 @@ body {
 @media (max-width: 520px) {
   .public-page .site-header {
     grid-template-columns: auto auto;
+  }
+
+  .brand-link {
+    font-size: 17px;
+  }
+
+  .brand-symbol {
+    height: 28px;
+    width: 28px;
   }
 
   .sign-in-page .site-header {
