@@ -540,7 +540,7 @@ function IntakePage({
             />
           </div>
 
-          <h2>Top 7 Most Important Questions</h2>
+          <h2>Business Information</h2>
           <div className="field-grid">
             <TextArea
               label="Site address"

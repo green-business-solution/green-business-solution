@@ -13,7 +13,7 @@
 
 ## 2026-06-21 - Codex (GPT-5) intake form sectioning
 
-- Reorganized the intake form into Contact Information, Top 7 Most Important Questions, and Other Questions sections.
+- Reorganized the intake form into Contact Information, Business Information, and Other Questions sections.
 - Moved organization type and interested improvements into the top ROI question group without changing submitted field names or DynamoDB storage shape.
 
 ## 2026-06-19 - Codex (GPT-5)
