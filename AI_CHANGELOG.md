@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) database footer removal
+
+- Removed the public site footer from the `/database` page so the DSIRE browser ends at the database interface instead of showing the general marketing footer.
+
 ## 2026-06-22 - Codex (GPT-5) homepage hero and logo lockup
 
 - Refined the RetroFi header lockup so the icon and wordmark sit closer together with responsive icon sizing.

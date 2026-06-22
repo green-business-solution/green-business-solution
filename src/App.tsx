@@ -2077,7 +2077,7 @@ function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
   const maxPage = Math.max(1, Math.ceil(total / (response?.perPage || 25)));
 
   return (
-    <PublicShell navigate={navigate} pageClassName="database-page" showFooter>
+    <PublicShell navigate={navigate} pageClassName="database-page">
       <section className="database-shell">
         <div className="database-toolbar">
           <div>
