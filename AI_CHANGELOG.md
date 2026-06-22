@@ -48,3 +48,7 @@
 - Added site address, electric utility provider, organization type, ownership status, building type, square footage, and interested improvements to the client intake form.
 - Stored the new fields in the existing DynamoDB-backed intake record under `site`, `business`, and `sustainability`.
 - Updated user and admin portal displays so the new intake answers are visible after submission.
+
+## 2026-06-21 - Codex (GPT-5) intake form required fields
+
+- Made the intake form `Role/title` field optional while keeping the rest of the required contact fields unchanged.

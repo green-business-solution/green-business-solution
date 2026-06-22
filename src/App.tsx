@@ -494,7 +494,7 @@ function IntakePage({
             <Field label="Full name" name="fullName" onChange={updateField} required value={form.fullName} />
             <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
             <Field label="Phone" name="phone" onChange={updateField} value={form.phone} />
-            <Field label="Role/title" name="roleTitle" onChange={updateField} required value={form.roleTitle} />
+            <Field label="Role/title" name="roleTitle" onChange={updateField} value={form.roleTitle} />
             <SelectField
               label="Preferred contact"
               name="contactPreference"
