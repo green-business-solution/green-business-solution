@@ -136,3 +136,8 @@
 
 - Removed the Industry intake question and site-address helper note.
 - Updated Organization type choices for commercial, industrial, agricultural, multifamily, nonprofit, government, and other organizations.
+
+## 2026-06-21 - Codex (GPT-5) intake privacy tooltip
+
+- Moved the lock icon into a separate `Private & Secure` cue above the submit button.
+- Replaced the native title tooltip with a custom hover/focus tooltip for the privacy message.

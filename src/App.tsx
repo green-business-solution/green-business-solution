@@ -1,7 +1,7 @@
 import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 const LockIcon = () => (
-  <svg aria-hidden="true" className="button-icon" fill="none" viewBox="0 0 24 24">
+  <svg aria-hidden="true" className="lock-icon" fill="none" viewBox="0 0 24 24">
     <path
       d="M7 10V8a5 5 0 0 1 10 0v2"
       stroke="currentColor"
@@ -793,18 +793,22 @@ function IntakePage({
           </div>
 
           {error ? <p className="error-message">{error}</p> : null}
-          <button
-            disabled={isSubmitting}
-            title="Your information stays private. We use it only to personalize your recommendations."
-            type="submit"
+          <div
+            aria-describedby="privacy-tooltip"
+            className="privacy-cue"
+            tabIndex={0}
           >
+            <LockIcon />
+            <span>Private &amp; Secure</span>
+            <span className="privacy-tooltip" id="privacy-tooltip" role="tooltip">
+              Your information stays private. We use it only to personalize your recommendations.
+            </span>
+          </div>
+          <button disabled={isSubmitting} type="submit">
             {isSubmitting ? (
               "Submitting..."
             ) : (
-              <>
-                <LockIcon />
-                Create My Plan
-              </>
+              "Create My Plan"
             )}
           </button>
         </form>
