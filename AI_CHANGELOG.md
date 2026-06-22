@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) admin-only database access
+
+- Restricted the `/database` page to signed-in admin accounts and passed existing admin credentials into database API requests.
+- Added server-side admin authentication middleware for `/api/database/*` so DSIRE clone data is no longer publicly readable through the API.
+
 ## 2026-06-22 - Codex (GPT-5) database footer removal
 
 - Removed the public site footer from the `/database` page so the DSIRE browser ends at the database interface instead of showing the general marketing footer.

@@ -771,6 +771,12 @@ async function requirePasswordSessionUser(sessionToken) {
 }
 
 async function requireAdminFromAuth({ credential, passwordSessionToken }) {
+  if (!cleanText(credential) && !cleanText(passwordSessionToken)) {
+    const error = new Error("Admin sign-in is required.");
+    error.status = 401;
+    throw error;
+  }
+
   const user = cleanText(passwordSessionToken)
     ? await requirePasswordSessionUser(passwordSessionToken)
     : await requireAdminUser(credential);
@@ -782,6 +788,23 @@ async function requireAdminFromAuth({ credential, passwordSessionToken }) {
   }
 
   return user;
+}
+
+function bearerCredentialFromRequest(req) {
+  const authorization = cleanText(req.get("authorization"));
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  return match ? cleanText(match[1]) : "";
+}
+
+function adminAuthFromRequest(req) {
+  return {
+    credential: cleanText(req.get("x-gbs-google-credential")) || bearerCredentialFromRequest(req) || req.body?.credential,
+    passwordSessionToken: cleanText(req.get("x-gbs-password-session")) || req.body?.passwordSessionToken
+  };
+}
+
+async function requireAdminFromRequest(req) {
+  return requireAdminFromAuth(adminAuthFromRequest(req));
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -1560,6 +1583,15 @@ app.get("/api/diagnostics", async (_req, res) => {
       adminEmails: [...adminEmails],
       adminsPresent
     });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.use("/api/database", async (req, res, next) => {
+  try {
+    await requireAdminFromRequest(req);
+    next();
   } catch (error) {
     handleError(res, error);
   }

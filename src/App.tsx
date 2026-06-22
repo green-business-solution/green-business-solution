@@ -560,11 +560,11 @@ function isLocalDevelopmentHost() {
   return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
 }
 
-async function apiGet<T>(path: string): Promise<T> {
+async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
 
   try {
-    response = await fetch(path);
+    response = await fetch(path, init);
   } catch {
     throw new Error(
       isLocalDevelopmentHost()
@@ -640,6 +640,14 @@ function adminAuthBody(credential: AuthCredential) {
   }
 
   return { credential: credential.value };
+}
+
+function adminAuthHeaders(credential: AuthCredential): HeadersInit {
+  if (credential.provider === "password") {
+    return { "x-gbs-password-session": credential.value };
+  }
+
+  return { Authorization: `Bearer ${credential.value}` };
 }
 
 function refreshAuthPayload(credential: AuthCredential) {
@@ -1997,7 +2005,13 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
+function DatabasePage({
+  credential,
+  navigate
+}: {
+  credential: AuthCredential;
+  navigate: (route: Route) => void;
+}) {
   const [filters, setFilters] = useState({
     q: "",
     state: "",
@@ -2025,7 +2039,9 @@ function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
 
     setIsLoading(true);
     setError(null);
-    apiGet<DatabaseProgramsResponse>(`/api/database/programs?${query}`)
+    apiGet<DatabaseProgramsResponse>(`/api/database/programs?${query}`, {
+      headers: adminAuthHeaders(credential)
+    })
       .then((payload) => {
         if (!isMounted) return;
         setResponse(payload);
@@ -2045,7 +2061,18 @@ function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
     return () => {
       isMounted = false;
     };
-  }, [filters.category, filters.q, filters.sector, filters.state, filters.technology, filters.type, page, selectedProgramId]);
+  }, [
+    credential.provider,
+    credential.value,
+    filters.category,
+    filters.q,
+    filters.sector,
+    filters.state,
+    filters.technology,
+    filters.type,
+    page,
+    selectedProgramId
+  ]);
 
   useEffect(() => {
     if (!selectedProgramId) {
@@ -2055,7 +2082,9 @@ function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
 
     let isMounted = true;
     setIsDetailLoading(true);
-    apiGet<DatabaseProgramResponse>(`/api/database/programs/${encodeURIComponent(selectedProgramId)}`)
+    apiGet<DatabaseProgramResponse>(`/api/database/programs/${encodeURIComponent(selectedProgramId)}`, {
+      headers: adminAuthHeaders(credential)
+    })
       .then((payload) => {
         if (isMounted) setSelectedProgram(payload.program);
       })
@@ -2069,7 +2098,7 @@ function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
     return () => {
       isMounted = false;
     };
-  }, [selectedProgramId]);
+  }, [credential.provider, credential.value, selectedProgramId]);
 
   const facets = response?.facets;
   const programs = response?.programs || [];
@@ -3349,6 +3378,13 @@ export function App() {
     navigate(payload.dashboard === "admin" ? "admin" : "portal");
   }
 
+  function handleDatabaseAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
+    setAuthPayload(payload);
+    setAuthCredential(credential);
+    setSignInMessage(null);
+    navigate(payload.dashboard === "admin" ? "database" : "portal");
+  }
+
   function signOut() {
     setAuthPayload(null);
     setAuthCredential(null);
@@ -3365,7 +3401,21 @@ export function App() {
   }
 
   if (route === "database") {
-    return <DatabasePage navigate={navigate} />;
+    if (!authPayload) {
+      return (
+        <SignInPage
+          navigate={navigate}
+          message={signInMessage || "Sign in with an admin account to view the database."}
+          onAuthSuccess={handleDatabaseAuthSuccess}
+        />
+      );
+    }
+
+    if (authPayload.dashboard !== "admin" || !authCredential) {
+      return <UserDashboard onSignOut={signOut} payload={authPayload} />;
+    }
+
+    return <DatabasePage credential={authCredential} navigate={navigate} />;
   }
 
   if (route === "about") {
