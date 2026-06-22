@@ -55,4 +55,4 @@
 
 ## 2026-06-21 - Codex (GPT-5) intake CTA wording
 
-- Changed the intake form submit button from `Create temporary user` to `Find Opportunities`.
+- Changed the intake form submit button from `Create temporary user` to `Find My Opportunities`.
