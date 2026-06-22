@@ -4,6 +4,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
+  PutCommand,
   ScanCommand,
   TransactWriteCommand,
   UpdateCommand
@@ -23,6 +24,13 @@ const googleAllowedClientIds = [
   ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "").split(",").map((value) => value.trim())
 ].filter(Boolean);
 const googleCertsUrl = "https://www.googleapis.com/oauth2/v3/certs";
+const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com"];
+const adminEmails = new Set(
+  (process.env.GBS_ADMIN_EMAILS || defaultAdminEmails.join(","))
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
 
 const client = new DynamoDBClient({
   region,
@@ -68,6 +76,22 @@ function cleanStringArray(value) {
 
 function cleanEmail(value) {
   return cleanText(value).toLowerCase();
+}
+
+function isAdminEmail(email) {
+  return adminEmails.has(cleanEmail(email));
+}
+
+function adminNameForEmail(email) {
+  const normalized = cleanEmail(email);
+  if (normalized === "neerkuchlous@gmail.com") return "Neer Kuchlous";
+  if (normalized === "pmrajvansh@gmail.com") return "Rajvansh Gupta";
+  return "";
+}
+
+function createInternalUserId(role) {
+  const prefix = role === "admin" ? "admin" : "user";
+  return `${prefix}_${crypto.randomUUID()}`;
 }
 
 function decodeJwtJson(segment) {
@@ -269,16 +293,6 @@ function createIntakeRecord(userId, input, now) {
   };
 }
 
-async function getUser(userId) {
-  const result = await db.send(
-    new GetCommand({
-      TableName: usersTable,
-      Key: { userId }
-    })
-  );
-  return result.Item || null;
-}
-
 async function getIntake(userId) {
   const result = await db.send(
     new GetCommand({
@@ -287,48 +301,6 @@ async function getIntake(userId) {
     })
   );
   return result.Item || null;
-}
-
-async function updateLastLogin(userId) {
-  const now = new Date().toISOString();
-  await db.send(
-    new UpdateCommand({
-      TableName: usersTable,
-      Key: { userId },
-      UpdateExpression: "SET lastLoginAt = :now, updatedAt = :now",
-      ExpressionAttributeValues: {
-        ":now": now
-      }
-    })
-  );
-}
-
-async function requireUser(userId) {
-  const code = cleanText(userId);
-  if (!/^\d{6}$/.test(code)) {
-    const error = new Error("Enter a valid six-digit temporary code.");
-    error.status = 400;
-    throw error;
-  }
-
-  const user = await getUser(code);
-  if (!user || user.status !== "active") {
-    const error = new Error("No active user was found for that code.");
-    error.status = 404;
-    throw error;
-  }
-
-  return user;
-}
-
-async function requireAdmin(userId) {
-  const user = await requireUser(userId);
-  if (user.role !== "admin") {
-    const error = new Error("This code does not have admin access.");
-    error.status = 403;
-    throw error;
-  }
-  return user;
 }
 
 async function scanAll(TableName) {
@@ -360,6 +332,38 @@ async function findUserByGoogleIdentity(googleUser) {
   });
 }
 
+async function createAdminUserFromGoogle(googleUser) {
+  const now = new Date().toISOString();
+  const user = {
+    userId: createInternalUserId("admin"),
+    role: "admin",
+    status: "active",
+    fullName: googleUser.name || adminNameForEmail(googleUser.email) || googleUser.email,
+    email: googleUser.email,
+    companyName: null,
+    authProvider: "google",
+    googleLinked: true,
+    googleSubject: googleUser.sub,
+    googleEmail: googleUser.email,
+    googleName: googleUser.name,
+    googlePicture: googleUser.picture,
+    linkedAt: now,
+    createdAt: now,
+    updatedAt: now,
+    lastLoginAt: now
+  };
+
+  await db.send(
+    new PutCommand({
+      TableName: usersTable,
+      Item: user,
+      ConditionExpression: "attribute_not_exists(userId)"
+    })
+  );
+
+  return user;
+}
+
 async function linkGoogleUser(user, googleUser) {
   if (user.googleSubject && user.googleSubject !== googleUser.sub) {
     const error = new Error("This app account is already linked to another Google account.");
@@ -368,13 +372,18 @@ async function linkGoogleUser(user, googleUser) {
   }
 
   const now = new Date().toISOString();
+  const role = isAdminEmail(googleUser.email) ? "admin" : "client";
   const result = await db.send(
     new UpdateCommand({
       TableName: usersTable,
       Key: { userId: user.userId },
       UpdateExpression:
-        "SET authProvider = :authProvider, googleLinked = :googleLinked, googleSubject = :googleSubject, googleEmail = :googleEmail, googleName = :googleName, googlePicture = :googlePicture, linkedAt = if_not_exists(linkedAt, :now), lastLoginAt = :now, updatedAt = :now",
+        "SET #role = :role, authProvider = :authProvider, googleLinked = :googleLinked, googleSubject = :googleSubject, googleEmail = :googleEmail, googleName = :googleName, googlePicture = :googlePicture, linkedAt = if_not_exists(linkedAt, :now), lastLoginAt = :now, updatedAt = :now",
+      ExpressionAttributeNames: {
+        "#role": "role"
+      },
       ExpressionAttributeValues: {
+        ":role": role,
         ":authProvider": "google",
         ":googleLinked": true,
         ":googleSubject": googleUser.sub,
@@ -389,6 +398,7 @@ async function linkGoogleUser(user, googleUser) {
 
   return result.Attributes || {
     ...user,
+    role,
     authProvider: "google",
     googleLinked: true,
     googleSubject: googleUser.sub,
@@ -406,14 +416,36 @@ async function requireGoogleUser(credential) {
   const user = await findUserByGoogleIdentity(googleUser);
 
   if (!user) {
+    if (isAdminEmail(googleUser.email)) {
+      return createAdminUserFromGoogle(googleUser);
+    }
+
     const error = new Error(
-      "No active Green Business Solution account was found for that Google email. Create an intake record or ask an admin to add your email."
+      "No Green Business Solution profile was found for that Google account. Complete the intake form first, then sign in with the same Google email."
     );
     error.status = 404;
     throw error;
   }
 
   return linkGoogleUser(user, googleUser);
+}
+
+async function buildAuthPayload(user) {
+  if (user.role === "admin") {
+    return {
+      dashboard: "admin",
+      user: publicUser(user),
+      intake: null,
+      adminDashboard: await buildAdminPayload(user)
+    };
+  }
+
+  return {
+    dashboard: "client",
+    user: publicUser(user),
+    intake: await getIntake(user.userId),
+    adminDashboard: null
+  };
 }
 
 async function buildAdminPayload(admin) {
@@ -465,8 +497,8 @@ async function createClientUser(input) {
     throw error;
   }
 
-  for (let attempt = 0; attempt < 10; attempt += 1) {
-    const userId = String(crypto.randomInt(100000, 1000000));
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const userId = createInternalUserId("client");
     const now = new Date().toISOString();
     const intake = createIntakeRecord(userId, input, now);
     const user = {
@@ -476,7 +508,7 @@ async function createClientUser(input) {
       fullName: intake.contact.fullName || intake.business.companyName,
       email: intake.contact.email,
       companyName: intake.business.companyName,
-      authProvider: "temporaryCode",
+      authProvider: "google",
       googleLinked: false,
       createdAt: now,
       updatedAt: now
@@ -512,7 +544,7 @@ async function createClientUser(input) {
     }
   }
 
-  const error = new Error("Could not allocate a temporary code. Please try again.");
+  const error = new Error("Could not create your account. Please try again.");
   error.status = 500;
   throw error;
 }
@@ -576,7 +608,14 @@ app.get("/api/health", (_req, res) => {
 
 app.get("/api/diagnostics", async (_req, res) => {
   try {
-    const [neer, rajvansh] = await Promise.all([getUser("471140"), getUser("768383")]);
+    const users = await scanAll(usersTable);
+    const adminsPresent = Object.fromEntries(
+      [...adminEmails].map((email) => [
+        email,
+        users.some((user) => user.status === "active" && cleanEmail(user.email) === email && user.role === "admin")
+      ])
+    );
+
     res.json({
       ok: true,
       region,
@@ -585,10 +624,8 @@ app.get("/api/diagnostics", async (_req, res) => {
       intakeTable,
       opportunitiesTable,
       googleClientConfigured: Boolean(googleClientId),
-      adminsPresent: {
-        neer: Boolean(neer),
-        rajvansh: Boolean(rajvansh)
-      }
+      adminEmails: [...adminEmails],
+      adminsPresent
     });
   } catch (error) {
     handleError(res, error);
@@ -607,61 +644,10 @@ app.post("/api/intake", async (req, res) => {
   }
 });
 
-app.post("/api/login", async (req, res) => {
-  try {
-    const user = await requireUser(req.body?.userId);
-    await updateLastLogin(user.userId);
-    res.json({
-      user: publicUser({ ...user, lastLoginAt: new Date().toISOString() }),
-      intake: user.role === "client" ? await getIntake(user.userId) : null
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-});
-
 app.post("/api/auth/google", async (req, res) => {
   try {
     const user = await requireGoogleUser(req.body?.credential);
-    res.json({
-      user: publicUser(user),
-      intake: user.role === "client" ? await getIntake(user.userId) : null
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-});
-
-app.post("/api/portal", async (req, res) => {
-  try {
-    const user = await requireUser(req.body?.userId);
-    res.json({
-      user: publicUser(user),
-      intake: await getIntake(user.userId)
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-});
-
-app.post("/api/admin/users", async (req, res) => {
-  try {
-    const admin = await requireAdmin(req.body?.adminUserId);
-    res.json(await buildAdminPayload(admin));
-  } catch (error) {
-    handleError(res, error);
-  }
-});
-
-app.post("/api/admin/google", async (req, res) => {
-  try {
-    const admin = await requireGoogleUser(req.body?.credential);
-    if (admin.role !== "admin") {
-      const error = new Error("This Google account does not have admin access.");
-      error.status = 403;
-      throw error;
-    }
-    res.json(await buildAdminPayload(admin));
+    res.json(await buildAuthPayload(user));
   } catch (error) {
     handleError(res, error);
   }

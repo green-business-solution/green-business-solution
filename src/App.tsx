@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 
 const LockIcon = () => (
   <svg aria-hidden="true" className="lock-icon" fill="none" viewBox="0 0 24 24">
@@ -96,6 +96,13 @@ type AdminPayload = {
   admin: UserRecord;
   users: AdminRow[];
   dataTables: DatabaseTableSnapshot[];
+};
+
+type AuthPayload = {
+  dashboard: "client" | "admin";
+  user: UserRecord;
+  intake: IntakeRecord | null;
+  adminDashboard: AdminPayload | null;
 };
 
 type GoogleCredentialResponse = {
@@ -225,8 +232,7 @@ const improvementOptions = [
   "Show Me Everything"
 ];
 
-const sessionKey = "gbs-user-session";
-const adminSessionKey = "gbs-admin-session";
+const staleSessionKeys = ["gbs-user-session", "gbs-admin-session"];
 const googleClientId =
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
   "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
@@ -316,7 +322,7 @@ function GoogleSignInButton<T>({
   onSuccess
 }: {
   endpoint: string;
-  onSuccess: (payload: T) => void;
+  onSuccess: (payload: T, credential: string) => void;
 }) {
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const onSuccessRef = useRef(onSuccess);
@@ -365,7 +371,7 @@ function GoogleSignInButton<T>({
           setIsSigningIn(true);
           try {
             const payload = await apiPost<T>(endpoint, { credential });
-            onSuccessRef.current(payload);
+            onSuccessRef.current(payload, credential);
           } catch (requestError) {
             setError(requestError instanceof Error ? requestError.message : "Google sign-in failed.");
           } finally {
@@ -574,10 +580,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
         </div>
         <nav aria-label="Primary">
           <button className="link-button" onClick={() => navigate("portal")} type="button">
-            User portal
-          </button>
-          <button className="link-button" onClick={() => navigate("admin")} type="button">
-            Admin
+            Sign in
           </button>
         </nav>
       </header>
@@ -596,7 +599,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
               Get started
             </button>
             <button className="secondary-button" onClick={() => navigate("portal")} type="button">
-              Enter temporary code
+              Sign in with Google
             </button>
           </div>
         </div>
@@ -630,15 +633,15 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
       <section className="value-grid" aria-label="What the first version supports">
         <article>
           <h2>Client intake</h2>
-          <p>New users complete a required questionnaire and receive a six-digit temporary code.</p>
+          <p>New users complete a required questionnaire and then sign in with Google.</p>
         </article>
         <article>
           <h2>User portal</h2>
-          <p>Each temporary code opens a portal showing only that user&apos;s submitted information.</p>
+          <p>Each client sees only the intake and sustainability information tied to their email.</p>
         </article>
         <article>
           <h2>Admin view</h2>
-          <p>Admin codes for Neer and Rajvansh unlock the shared DynamoDB-backed intake table.</p>
+          <p>Neer and Rajvansh are routed to the shared DynamoDB-backed admin dashboard.</p>
         </article>
       </section>
     </main>
@@ -647,10 +650,10 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
 
 function IntakePage({
   navigate,
-  setPortalPayload
+  onIntakeCreated
 }: {
   navigate: (route: Route) => void;
-  setPortalPayload: (payload: PortalPayload) => void;
+  onIntakeCreated: (email: string) => void;
 }) {
   const [form, setForm] = useState<IntakeFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
@@ -667,8 +670,7 @@ function IntakePage({
 
     try {
       const payload = await apiPost<PortalPayload>("/api/intake", form);
-      window.localStorage.setItem(sessionKey, payload.user.userId);
-      setPortalPayload(payload);
+      onIntakeCreated(payload.user.email);
       navigate("portal");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
@@ -817,110 +819,85 @@ function IntakePage({
   );
 }
 
-function PortalPage({
-  payload,
-  setPortalPayload
+function SignInPage({
+  message,
+  onAuthSuccess
 }: {
-  payload: PortalPayload | null;
-  setPortalPayload: (payload: PortalPayload | null) => void;
+  message: string | null;
+  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
 }) {
-  const [code, setCode] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  async function login(event: FormEvent) {
-    event.preventDefault();
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      const nextPayload = await apiPost<PortalPayload>("/api/login", { userId: code });
-      window.localStorage.setItem(sessionKey, nextPayload.user.userId);
-      setPortalPayload(nextPayload);
-    } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Login failed.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  if (!payload) {
-    return (
-      <main className="center-page">
-        <section className="code-card">
-          <form className="code-form" onSubmit={login}>
-            <p className="eyebrow">User portal</p>
-            <h1>Enter your six-digit temporary code.</h1>
-            <input
-              inputMode="numeric"
-              maxLength={6}
-              onChange={(event) => setCode(event.target.value)}
-              placeholder="123456"
-              value={code}
-            />
-            {error ? <p className="error-message">{error}</p> : null}
-            <button disabled={isLoading} type="submit">
-              {isLoading ? "Opening..." : "Open portal"}
-            </button>
-          </form>
-          <div className="auth-divider">
-            <span>or</span>
-          </div>
-          <GoogleSignInButton<PortalPayload>
-            endpoint="/api/auth/google"
-            onSuccess={(nextPayload) => {
-              window.localStorage.setItem(sessionKey, nextPayload.user.userId);
-              setPortalPayload(nextPayload);
-            }}
-          />
-        </section>
-      </main>
-    );
-  }
-
   return (
-    <WorkspaceLayout
-      navItems={["My information"]}
-      onSignOut={() => {
-        window.localStorage.removeItem(sessionKey);
-        setPortalPayload(null);
-      }}
-      title="User portal"
-      user={payload.user}
-    >
+    <main className="center-page">
+      <section className="auth-card">
+        <div>
+          <p className="eyebrow">Sign in</p>
+          <h1>Continue to your dashboard.</h1>
+          {message ? <p className="muted-message">{message}</p> : null}
+        </div>
+        <GoogleSignInButton<AuthPayload> endpoint="/api/auth/google" onSuccess={onAuthSuccess} />
+      </section>
+    </main>
+  );
+}
+
+function UserDashboard({
+  payload,
+  onSignOut
+}: {
+  payload: AuthPayload;
+  onSignOut: () => void;
+}) {
+  return (
+    <WorkspaceLayout navItems={["My information"]} onSignOut={onSignOut} title="User portal" user={payload.user}>
       <ProfilePanel intake={payload.intake} user={payload.user} />
     </WorkspaceLayout>
   );
 }
 
-function AdminPage() {
-  const [adminCode, setAdminCode] = useState(window.localStorage.getItem(adminSessionKey) || "");
-  const [admin, setAdmin] = useState<UserRecord | null>(null);
-  const [rows, setRows] = useState<AdminRow[]>([]);
-  const [dataTables, setDataTables] = useState<DatabaseTableSnapshot[]>([]);
+function AdminDashboard({
+  credential,
+  onAuthSuccess,
+  onSignOut,
+  payload
+}: {
+  credential: string | null;
+  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
+  onSignOut: () => void;
+  payload: AdminPayload;
+}) {
+  const [adminPayload, setAdminPayload] = useState(payload);
   const [activeTab, setActiveTab] = useState("Users");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { admin, users: rows, dataTables } = adminPayload;
   const navItems = ["Users", ...dataTables.map((table) => table.name)];
   const selectedDataTable = dataTables.find((table) => table.name === activeTab) || null;
 
-  async function loadUsers(code: string) {
+  async function refreshDashboard() {
+    if (!credential) {
+      setError("Sign in again to refresh the admin dashboard.");
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
     try {
-      const payload = await apiPost<AdminPayload>("/api/admin/users", {
-        adminUserId: code
-      });
-      window.localStorage.setItem(adminSessionKey, code);
-      setAdmin(payload.admin);
-      setRows(payload.users);
-      setDataTables(payload.dataTables || []);
+      const nextPayload = await apiPost<AuthPayload>("/api/auth/google", { credential });
+      if (!nextPayload.adminDashboard) {
+        throw new Error("This Google account does not have admin access.");
+      }
+      setAdminPayload(nextPayload.adminDashboard);
+      onAuthSuccess(nextPayload, credential);
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Admin login failed.");
+      setError(requestError instanceof Error ? requestError.message : "Admin refresh failed.");
     } finally {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    setAdminPayload(payload);
+  }, [payload]);
 
   useEffect(() => {
     if (activeTab !== "Users" && dataTables.length > 0 && !dataTables.some((table) => table.name === activeTab)) {
@@ -928,72 +905,24 @@ function AdminPage() {
     }
   }, [activeTab, dataTables]);
 
-  useEffect(() => {
-    if (adminCode.length === 6 && !admin) {
-      void loadUsers(adminCode);
-    }
-  }, []);
-
-  if (!admin) {
-    return (
-      <main className="center-page">
-        <section className="code-card">
-          <form
-            className="code-form"
-            onSubmit={(event) => {
-              event.preventDefault();
-              void loadUsers(adminCode);
-            }}
-          >
-            <p className="eyebrow">Admin</p>
-            <h1>Enter an admin temporary code.</h1>
-            <input
-              inputMode="numeric"
-              maxLength={6}
-              onChange={(event) => setAdminCode(event.target.value)}
-              placeholder="123456"
-              value={adminCode}
-            />
-            {error ? <p className="error-message">{error}</p> : null}
-            <button disabled={isLoading} type="submit">
-              {isLoading ? "Checking..." : "Open admin"}
-            </button>
-          </form>
-          <div className="auth-divider">
-            <span>or</span>
-          </div>
-          <GoogleSignInButton<AdminPayload>
-            endpoint="/api/admin/google"
-            onSuccess={(payload) => {
-              setAdmin(payload.admin);
-              setRows(payload.users);
-              setDataTables(payload.dataTables || []);
-            }}
-          />
-        </section>
-      </main>
-    );
-  }
-
   return (
     <WorkspaceLayout
       activeNavItem={activeTab}
       navItems={navItems}
       onNavItemChange={setActiveTab}
-      onSignOut={() => {
-        window.localStorage.removeItem(adminSessionKey);
-        setAdmin(null);
-        setRows([]);
-        setDataTables([]);
-        setActiveTab("Users");
-      }}
+      onSignOut={onSignOut}
       title="Admin"
       user={admin}
     >
+      {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
-        <AdminUsersPanel isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} rows={rows} />
+        <AdminUsersPanel isLoading={isLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : (
-        <AdminDataPanel dataTable={selectedDataTable} isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} />
+        <AdminDataPanel
+          dataTable={selectedDataTable}
+          isLoading={isLoading}
+          onRefresh={() => void refreshDashboard()}
+        />
       )}
     </WorkspaceLayout>
   );
@@ -1012,7 +941,7 @@ function AdminUsersPanel({
     <section className="admin-section">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Temporary and linked users</p>
+          <p className="eyebrow">Google-authenticated users</p>
           <h2>Client intake records</h2>
         </div>
         <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
@@ -1022,7 +951,6 @@ function AdminUsersPanel({
 
       <div className="admin-table" role="table" aria-label="Client intake records">
         <div className="admin-row admin-head" role="row">
-          <span role="columnheader">Code</span>
           <span role="columnheader">Name</span>
           <span role="columnheader">Company</span>
           <span role="columnheader">Site</span>
@@ -1032,7 +960,6 @@ function AdminUsersPanel({
         </div>
         {rows.map(({ user, intake }) => (
           <div className="admin-row" role="row" key={user.userId}>
-            <span role="cell">{user.userId}</span>
             <span role="cell">
               <strong>{user.fullName}</strong>
               <small>{user.email}</small>
@@ -1041,7 +968,7 @@ function AdminUsersPanel({
             <span role="cell">
               <strong>{user.companyName || intake?.business.companyName || "Internal admin"}</strong>
               <small>{intake?.business.organizationType || "No organization type"}</small>
-              <small>{user.googleLinked ? "Google linked" : "Temporary code"}</small>
+              <small>{user.googleLinked ? "Google linked" : "Google pending"}</small>
             </span>
             <span role="cell">
               {intake?.site?.address || "No site address"}
@@ -1158,7 +1085,7 @@ function WorkspaceLayout({
             <h1>{user.fullName}</h1>
           </div>
           <div className="session-chip">
-            <span>{user.userId}</span>
+            <span>{user.email}</span>
             <button className="secondary-button" onClick={onSignOut} type="button">
               Sign out
             </button>
@@ -1177,7 +1104,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
         <article>
           <p className="eyebrow">Account</p>
           <h2>{user.role === "admin" ? "Admin account" : "No intake record found"}</h2>
-          <p>This temporary code is active, but it is not attached to a client intake submission.</p>
+          <p>This Google account is active, but it is not attached to a client intake submission.</p>
         </article>
       </section>
     );
@@ -1186,9 +1113,9 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
   return (
     <section className="profile-grid">
       <article>
-        <p className="eyebrow">Temporary code</p>
-        <h2>{user.userId}</h2>
-        <p>Save this code. It opens this portal until Google account linking is added.</p>
+        <p className="eyebrow">Google account</p>
+        <h2>{user.email}</h2>
+        <p>This profile opens when you sign in with the matching Google account.</p>
       </article>
       <article>
         <p className="eyebrow">Contact</p>
@@ -1252,8 +1179,9 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
 
 export function App() {
   const [route, setRoute] = useState<Route>(routeFromPath);
-  const [portalPayload, setPortalPayload] = useState<PortalPayload | null>(null);
-  const storedCode = useMemo(() => window.localStorage.getItem(sessionKey), []);
+  const [authPayload, setAuthPayload] = useState<AuthPayload | null>(null);
+  const [authCredential, setAuthCredential] = useState<string | null>(null);
+  const [signInMessage, setSignInMessage] = useState<string | null>(null);
 
   useEffect(() => {
     function syncRoute() {
@@ -1264,13 +1192,10 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (!storedCode || portalPayload) return;
-    void apiPost<PortalPayload>("/api/portal", { userId: storedCode })
-      .then(setPortalPayload)
-      .catch(() => {
-        window.localStorage.removeItem(sessionKey);
-      });
-  }, [portalPayload, storedCode]);
+    for (const key of staleSessionKeys) {
+      window.localStorage.removeItem(key);
+    }
+  }, []);
 
   function navigate(nextRoute: Route) {
     const path = nextRoute === "home" ? "/" : `/${nextRoute}`;
@@ -1278,16 +1203,48 @@ export function App() {
     setRoute(nextRoute);
   }
 
+  function handleAuthSuccess(payload: AuthPayload, credential: string) {
+    setAuthPayload(payload);
+    setAuthCredential(credential);
+    setSignInMessage(null);
+    navigate(payload.dashboard === "admin" ? "admin" : "portal");
+  }
+
+  function signOut() {
+    setAuthPayload(null);
+    setAuthCredential(null);
+    setSignInMessage(null);
+    navigate("home");
+  }
+
   if (route === "get-started") {
-    return <IntakePage navigate={navigate} setPortalPayload={setPortalPayload} />;
+    return (
+      <IntakePage
+        navigate={navigate}
+        onIntakeCreated={(email) => {
+          setSignInMessage(`Your profile is ready. Sign in with Google using ${email}.`);
+        }}
+      />
+    );
   }
 
-  if (route === "portal") {
-    return <PortalPage payload={portalPayload} setPortalPayload={setPortalPayload} />;
-  }
+  if (route === "portal" || route === "admin") {
+    if (!authPayload) {
+      return <SignInPage message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
+    }
 
-  if (route === "admin") {
-    return <AdminPage />;
+    if (authPayload.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminDashboard
+          credential={authCredential}
+          onAuthSuccess={handleAuthSuccess}
+          onSignOut={signOut}
+          payload={authPayload.adminDashboard}
+        />
+      );
+    }
+
+    return <UserDashboard onSignOut={signOut} payload={authPayload} />;
   }
 
   return <HomePage navigate={navigate} />;

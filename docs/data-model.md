@@ -8,7 +8,8 @@ The local development app writes to DynamoDB in the Green Business Solution AWS 
 
 Primary key:
 
-- `userId` string, currently a six-digit temporary code
+- `userId` string, an internal account identifier. New records use an opaque `user_...` or `admin_...` ID.
+- Legacy records may still have six-digit IDs from the removed temporary-code prototype, but those IDs are no longer accepted as login credentials.
 
 Representative fields:
 
@@ -17,16 +18,18 @@ Representative fields:
 - `fullName`
 - `email`
 - `companyName`
-- `authProvider`: currently `temporaryCode`
-- `googleLinked`: boolean, currently `false`
+- `authProvider`: currently `google`
+- `googleLinked`: boolean
+- `googleSubject`
+- `googleEmail`
 - `createdAt`
 - `updatedAt`
 - `lastLoginAt`
 
-Seeded admin users:
+Admin users:
 
-- Neer Kuchlous, temporary admin code `471140`
-- Rajvansh Gupta, temporary admin code `768383`
+- Neer Kuchlous, granted by verified Google email `neerkuchlous@gmail.com`
+- Rajvansh Gupta, granted by verified Google email `pmrajvansh@gmail.com`
 
 ### `gbs-client-intake`
 
@@ -115,7 +118,7 @@ aws sso login --profile gbs
 
 ## Diagnostics
 
-Use this checklist when a temporary code works on one laptop but fails on another:
+Use this checklist when Google sign-in, intake submission, or admin loading works on one laptop but fails on another:
 
 ```sh
 git pull --ff-only
@@ -136,4 +139,4 @@ Expected:
 The admin dashboard displays one tab per table returned by the local API, including
 `gbs-opportunity-candidates` after that table has been created in AWS.
 
-If only Vite is running, the browser can render the pages but form and code submission will fail because `/api` has nothing to talk to.
+If only Vite is running, the browser can render the pages but intake submission and Google-authenticated dashboard loading will fail because `/api` has nothing to talk to.

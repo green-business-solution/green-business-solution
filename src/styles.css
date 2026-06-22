@@ -272,7 +272,7 @@ mark {
 .value-grid h2,
 .profile-grid h2,
 .form-intro h1,
-.code-card h1,
+.auth-card h1,
 .section-heading h2 {
   letter-spacing: 0;
   margin-bottom: 8px;
@@ -328,7 +328,7 @@ mark {
 }
 
 .intake-form,
-.code-card {
+.auth-card {
   background: #ffffff;
   border: 1px solid #dce3dd;
   border-radius: 8px;
@@ -518,40 +518,14 @@ textarea {
   padding: 24px;
 }
 
-.code-card {
+.auth-card {
   max-width: 420px;
   width: 100%;
 }
 
-.code-form,
 .google-auth {
   display: grid;
   gap: 16px;
-}
-
-.code-card input {
-  font-size: 26px;
-  font-weight: 850;
-  letter-spacing: 0.16em;
-  text-align: center;
-}
-
-.auth-divider {
-  align-items: center;
-  color: #718078;
-  display: grid;
-  font-size: 13px;
-  font-weight: 750;
-  gap: 12px;
-  grid-template-columns: 1fr auto 1fr;
-  text-transform: uppercase;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-  background: #e1e8e3;
-  content: "";
-  height: 1px;
 }
 
 .google-button-slot {
@@ -673,7 +647,7 @@ dd {
 .admin-row {
   display: grid;
   gap: 14px;
-  grid-template-columns: 78px minmax(150px, 0.9fr) minmax(160px, 0.9fr) minmax(190px, 1fr) minmax(150px, 0.8fr) minmax(220px, 1.2fr) 138px;
+  grid-template-columns: minmax(150px, 0.9fr) minmax(160px, 0.9fr) minmax(190px, 1fr) minmax(150px, 0.8fr) minmax(220px, 1.2fr) 138px;
   padding: 15px 16px;
 }
 

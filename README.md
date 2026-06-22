@@ -33,7 +33,7 @@ The Google client secret is not used by the local browser sign-in flow.
 
 ## Local Troubleshooting
 
-If the website shows an API or request error after entering a temporary code:
+If the website shows an API or request error after Google sign-in, intake submission, or admin loading:
 
 ```sh
 aws sso login --profile gbs

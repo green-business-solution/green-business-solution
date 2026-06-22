@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) unified Google login
+
+- Removed temporary-code login from the user portal and admin dashboard.
+- Replaced separate user/admin login screens with one Google sign-in flow that routes verified admins to the admin dashboard and clients to the user dashboard.
+- Switched new intake-created account IDs from six-digit codes to opaque internal IDs and documented legacy numeric IDs as non-login database keys.
+
 ## 2026-06-21 - Codex (GPT-5) DSIRE public inventory import fix
 
 - Debugged why the DSIRE AWS table had only 25 records: the RSS feed is a recent-change feed, not the full inventory.
