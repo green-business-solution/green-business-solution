@@ -45,7 +45,7 @@ type IntakeRecord = {
     fullName: string;
     email: string;
     phone: string | null;
-    roleTitle: string;
+    roleTitle: string | null;
     contactPreference: string | null;
   };
   business: {
@@ -1046,7 +1046,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dt>Phone</dt>
           <dd>{intake.contact.phone || "Not provided"}</dd>
           <dt>Role/title</dt>
-          <dd>{intake.contact.roleTitle}</dd>
+          <dd>{intake.contact.roleTitle || "Not provided"}</dd>
         </dl>
       </article>
       <article>

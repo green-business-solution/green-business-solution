@@ -31,7 +31,6 @@ const requiredFields = [
   ["siteAddress", "Site address"],
   ["electricUtilityProvider", "Electric utility provider"],
   ["companyName", "Company name"],
-  ["roleTitle", "Role/title"],
   ["industry", "Industry"],
   ["organizationType", "Organization type"],
   ["organizationSize", "Organization size"],
@@ -107,7 +106,7 @@ function createIntakeRecord(userId, input, now) {
       fullName: cleanText(input.fullName),
       email: cleanText(input.email).toLowerCase(),
       phone: cleanOptional(input.phone),
-      roleTitle: cleanText(input.roleTitle),
+      roleTitle: cleanOptional(input.roleTitle),
       contactPreference: cleanOptional(input.contactPreference)
     },
     business: {

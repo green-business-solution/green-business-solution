@@ -90,3 +90,8 @@
 
 - Centered and widened the intake form layout.
 - Moved the required-field note into the Contact Information header row.
+
+## 2026-06-21 - Codex (GPT-5) intake persistence
+
+- Aligned backend validation with the optional `Role/title` field so submissions without a title can still be stored in DynamoDB.
+- Updated the portal display to show `Not provided` when optional role/title information is blank.
