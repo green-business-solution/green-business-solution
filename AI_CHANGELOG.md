@@ -187,3 +187,9 @@
 
 - Added `docs/product-vision.md` as the shared source of truth for website flow, intake decisions, post-submit opportunity direction, and agent coordination.
 - Linked the product vision document from the README.
+
+## 2026-06-22 - Codex (GPT-5) save-results Google sign-in modal
+
+- Changed intake submission to show a `Sign in to save your results` modal after the intake record is saved.
+- Reused the existing Google sign-in button in the save-results modal with a temporary-code fallback.
+- Updated the product vision document with the intended post-submit save-results flow.

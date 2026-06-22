@@ -29,8 +29,10 @@ Personal contact information is still needed, but it should not be the first thi
 2. User clicks the primary get-started action.
 3. User completes a business-first intake form.
 4. The app saves the intake data to DynamoDB through the local/API backend.
-5. The user receives or enters a temporary code for the portal flow.
-6. Admin users can inspect intake records and data tables.
+5. After intake save, the app shows a modal titled `Sign in to save your results`.
+6. The modal should offer Google sign-in so the user's plan and recommendations stay connected to their business profile.
+7. The user can continue with the temporary-code portal flow if they do not sign in with Google.
+8. Admin users can inspect intake records and data tables.
 
 ## Intake Form Direction
 
@@ -95,6 +97,13 @@ The required-fields note belongs in the form header row, aligned with the first 
 The submit CTA should be:
 
 - `Create My Plan`
+
+After the user clicks `Create My Plan`, the app should save the intake record first, then show a modal:
+
+- Modal title: `Sign in to save your results`
+- Primary option: Google sign-in button
+- Fallback option: `Continue with temporary code`
+- Purpose: connect the user's plan, recommendations, and next steps to their business profile
 
 Privacy cue:
 

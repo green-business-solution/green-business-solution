@@ -511,6 +511,46 @@ textarea {
   visibility: visible;
 }
 
+.modal-backdrop {
+  align-items: center;
+  background: rgba(23, 33, 27, 0.42);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 50;
+}
+
+.save-results-modal {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(23, 33, 27, 0.24);
+  display: grid;
+  gap: 20px;
+  max-width: 460px;
+  padding: 26px;
+  width: min(100%, 460px);
+}
+
+.modal-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.modal-copy h2 {
+  font-size: 28px;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.modal-copy p:not(.eyebrow) {
+  color: #5d6b63;
+  line-height: 1.55;
+  margin: 0;
+}
+
 .center-page {
   align-items: center;
   display: flex;

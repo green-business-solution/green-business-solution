@@ -650,14 +650,17 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
 
 function IntakePage({
   navigate,
+  onAuthSuccess,
   onIntakeCreated
 }: {
   navigate: (route: Route) => void;
+  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
   onIntakeCreated: (email: string) => void;
 }) {
   const [form, setForm] = useState<IntakeFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingSignInEmail, setPendingSignInEmail] = useState<string | null>(null);
 
   function updateField(name: keyof IntakeFormState, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -670,13 +673,18 @@ function IntakePage({
 
     try {
       const payload = await apiPost<PortalPayload>("/api/intake", form);
-      onIntakeCreated(payload.user.email);
-      navigate("portal");
+      setPendingSignInEmail(payload.user.email);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function continueWithSignInPage(email: string) {
+    onIntakeCreated(email);
+    setPendingSignInEmail(null);
+    navigate("portal");
   }
 
   return (
@@ -815,6 +823,37 @@ function IntakePage({
           </button>
         </form>
       </section>
+
+      {pendingSignInEmail ? (
+        <div className="modal-backdrop" role="presentation">
+          <section
+            aria-labelledby="save-results-title"
+            aria-modal="true"
+            className="save-results-modal"
+            role="dialog"
+          >
+            <div className="modal-copy">
+              <p className="eyebrow">Save results</p>
+              <h2 id="save-results-title">Sign in to save your results</h2>
+              <p>
+                Link your Google account so your plan, recommendations, and next steps stay connected
+                to your business profile.
+              </p>
+            </div>
+            <GoogleSignInButton<AuthPayload>
+              endpoint="/api/auth/google"
+              onSuccess={onAuthSuccess}
+            />
+            <button
+              className="secondary-button"
+              onClick={() => continueWithSignInPage(pendingSignInEmail)}
+              type="button"
+            >
+              Continue with temporary code
+            </button>
+          </section>
+        </div>
+      ) : null}
     </main>
   );
 }
@@ -1221,6 +1260,7 @@ export function App() {
     return (
       <IntakePage
         navigate={navigate}
+        onAuthSuccess={handleAuthSuccess}
         onIntakeCreated={(email) => {
           setSignInMessage(`Your profile is ready. Sign in with Google using ${email}.`);
         }}
