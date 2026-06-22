@@ -204,3 +204,7 @@
 - Changed intake submission to show a `Sign in to save your results` modal after the intake record is saved.
 - Reused the existing Google sign-in button in the save-results modal with a temporary-code fallback.
 - Updated the product vision document with the intended post-submit save-results flow.
+
+## 2026-06-22 - Codex (GPT-5) production domain documentation
+
+- Added `https://retrofi.org` to the product vision document as the production website domain.
