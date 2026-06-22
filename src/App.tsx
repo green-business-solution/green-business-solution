@@ -633,7 +633,7 @@ function IntakePage({
 
           {error ? <p className="error-message">{error}</p> : null}
           <button disabled={isSubmitting} type="submit">
-            {isSubmitting ? "Submitting..." : "Create My Sustainability Plan"}
+            {isSubmitting ? "Submitting..." : "Create My Plan"}
           </button>
         </form>
       </section>
