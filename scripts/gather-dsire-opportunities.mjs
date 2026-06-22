@@ -810,8 +810,13 @@ function buildDynamodbOpportunityItem(record, metadata) {
     dsire: record.dsire,
     geography: record.geography,
     administrator: record.administrator,
+    implementingSector: record.implementingSector,
     sectors: record.sectors,
+    eligibleSectors: record.eligibleSectors,
     technologies: record.technologies,
+    technologyRecords: record.technologyRecords,
+    parameterSets: record.parameterSets,
+    dsireClone: record.dsireClone,
     evidence: record.evidence,
     raw: record.raw,
     dataQuality: record.dataQuality,
@@ -920,7 +925,7 @@ function normalizeRssItem(item, context) {
   };
   const contentHash = sha256(stableStringify(rawForHash));
 
-  return {
+  const normalizedRecord = {
     sourceKey: SOURCE_KEY,
     sourceName: SOURCE_NAME,
     ingestionMode: "rss_delta_feed",
@@ -961,6 +966,11 @@ function normalizeRssItem(item, context) {
     ],
     contentHash,
     raw: item
+  };
+
+  return {
+    ...normalizedRecord,
+    dsireClone: buildDsireCloneRecord(normalizedRecord)
   };
 }
 
@@ -1026,8 +1036,28 @@ function normalizeApiRecord(record, retrievedAt, options = {}) {
   const details = normalizeDetails(readPath(record, "details"));
   const summary = cleanHtmlText(summaryHtml) ?? details.find((detail) => detail.value)?.value ?? null;
   const published = normalizePublished(readPath(record, "published"));
+  const implementingSector = normalizeLookup(
+    coalesce(
+      readPath(record, "sectorObj"),
+      readPath(record, "implementingSectorObj"),
+      readPath(record, "implementingSector")
+    )
+  );
+  const parameterSets = normalizeParameterSets(readPath(record, "parameterSets"));
+  const parameterSetSectors = parameterSets.flatMap((parameterSet) => parameterSet.sectors);
+  const parameterSetTechnologies = parameterSets.flatMap((parameterSet) => parameterSet.technologies);
+  const eligibleSectors = uniqueLookupArray([
+    ...normalizeLookupArray(coalesce(readPath(record, "eligibleSectors"), readPath(record, "sectors"))),
+    ...parameterSetSectors
+  ]);
+  const technologyRecords = uniqueLookupArray([
+    ...extractTechnologyRecords(record),
+    ...parameterSetTechnologies
+  ]);
+  const sectorNames = eligibleSectors.map((sector) => sector.name).filter(Boolean);
+  const technologyNames = technologyRecords.map((technology) => technology.name).filter(Boolean);
 
-  return {
+  const normalizedRecord = {
     sourceKey: SOURCE_KEY,
     sourceName: SOURCE_NAME,
     ingestionMode: options.ingestionMode ?? "licensed_api",
@@ -1074,10 +1104,12 @@ function normalizeApiRecord(record, retrievedAt, options = {}) {
       readPath(record, "implementingSectorObj.name"),
       readPath(record, "implementingSector")
     ),
-    sectors: normalizeNameList(
-      coalesce(readPath(record, "sectors"), readPath(record, "eligibleSectors"), readPath(record, "sectorObj"))
-    ),
-    technologies: extractTechnologies(record),
+    implementingSector,
+    sectors: sectorNames,
+    eligibleSectors,
+    technologies: technologyNames,
+    technologyRecords,
+    parameterSets,
     dsire: compactObject({
       programId: externalId == null ? null : String(externalId),
       category,
@@ -1104,6 +1136,11 @@ function normalizeApiRecord(record, retrievedAt, options = {}) {
     ],
     contentHash,
     raw: record
+  };
+
+  return {
+    ...normalizedRecord,
+    dsireClone: buildDsireCloneRecord(normalizedRecord)
   };
 }
 
@@ -1137,12 +1174,279 @@ function normalizeDetails(details) {
 }
 
 function extractTechnologies(record) {
-  return uniqueArray([
-    ...normalizeNameList(
+  return extractTechnologyRecords(record).map((technology) => technology.name).filter(Boolean);
+}
+
+function extractTechnologyRecords(record) {
+  return uniqueLookupArray([
+    ...normalizeLookupArray(
       coalesce(readPath(record, "technologies"), readPath(record, "energyCategories"), readPath(record, "technologyObj"))
     ),
-    ...normalizeNameList(readPath(record, "additionalTechnologies"))
+    ...normalizeNameList(readPath(record, "additionalTechnologies")).map((name) => ({
+      name,
+      slug: slugify(name)
+    }))
   ]);
+}
+
+function normalizeParameterSets(parameterSets) {
+  if (!Array.isArray(parameterSets)) {
+    return [];
+  }
+
+  return parameterSets
+    .map((parameterSet, index) =>
+      compactObject({
+        id: parameterSet.id == null ? null : String(parameterSet.id),
+        programId: parameterSet.programId == null ? null : String(parameterSet.programId),
+        label: cleanHtmlText(parameterSet.label),
+        displayOrder: parameterSet.displayOrder ?? index,
+        sectors: normalizeLookupArray(parameterSet.sectors),
+        technologies: normalizeLookupArray(parameterSet.technologies),
+        parameters: normalizeParameters(parameterSet.parameters)
+      })
+    )
+    .filter((parameterSet) => Object.keys(parameterSet).length > 0);
+}
+
+function normalizeParameters(parameters) {
+  if (!Array.isArray(parameters)) {
+    return [];
+  }
+
+  return parameters
+    .map((parameter) =>
+      compactObject({
+        id: parameter.id == null ? null : String(parameter.id),
+        source: cleanHtmlText(parameter.source),
+        qualifier: cleanHtmlText(parameter.qualifier),
+        amount: normalizeNumber(parameter.amount),
+        amountText: parameter.amount == null || parameter.amount === "" ? null : String(parameter.amount),
+        units: cleanHtmlText(parameter.units),
+        displayValue: cleanHtmlText(parameter.displayValue)
+      })
+    )
+    .filter((parameter) => Object.keys(parameter).length > 0);
+}
+
+function normalizeLookupArray(value) {
+  if (value == null || value === "") {
+    return [];
+  }
+
+  const values = Array.isArray(value) ? value : [value];
+  return uniqueLookupArray(values.map((item) => normalizeLookup(item)).filter(Boolean));
+}
+
+function normalizeLookup(value) {
+  if (value == null || value === "") {
+    return null;
+  }
+
+  if (typeof value === "object") {
+    const name = normalizeName(value);
+    if (!name) {
+      return null;
+    }
+
+    return compactObject({
+      id: value.id == null ? null : String(value.id),
+      name,
+      slug: slugify(name),
+      category: cleanHtmlText(value.category),
+      categoryId: value.categoryId == null ? null : String(value.categoryId),
+      energyCategoryId: value.energyCategoryId == null ? null : String(value.energyCategoryId),
+      parentId: value.parentId == null ? null : String(value.parentId),
+      selectable: value.selectable,
+      active: value.active
+    });
+  }
+
+  const name = String(value).trim();
+  return name ? { name, slug: slugify(name) } : null;
+}
+
+function uniqueLookupArray(values) {
+  const seen = new Set();
+  const result = [];
+
+  for (const value of values) {
+    if (!value?.name) {
+      continue;
+    }
+
+    const key = value.id ? `id:${value.id}` : `name:${value.name.toLowerCase()}`;
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    result.push(value);
+  }
+
+  return result;
+}
+
+function normalizeNumber(value) {
+  if (value == null || value === "") {
+    return null;
+  }
+
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function buildDsireCloneRecord(record) {
+  const state = compactObject({
+    id: record.dsire?.stateId == null ? null : String(record.dsire.stateId),
+    abbreviation: record.state,
+    name: record.stateName,
+    isTerritory: record.raw?.stateObj?.is_territory
+  });
+  const category = compactObject({
+    id: record.categoryId == null ? null : String(record.categoryId),
+    name: record.category,
+    slug: record.category ? slugify(record.category) : null
+  });
+  const programType = compactObject({
+    id: record.programTypeId == null ? null : String(record.programTypeId),
+    categoryId: record.categoryId == null ? null : String(record.categoryId),
+    name: record.programType,
+    slug: record.programType ? slugify(record.programType) : null
+  });
+  const implementingSector =
+    record.implementingSector ??
+    compactObject({
+      id: record.dsire?.sectorId == null ? null : String(record.dsire.sectorId),
+      name: record.dsire?.sectorName,
+      slug: record.dsire?.sectorName ? slugify(record.dsire.sectorName) : null
+    });
+  const sourceProgramId = record.dsire?.programId ?? record.externalId;
+
+  return {
+    schemaVersion: "dsire-clone-v1",
+    sourceSystem: "DSIRE",
+    sourceProgramId: sourceProgramId == null ? null : String(sourceProgramId),
+    sourceRecordType: record.ingestionMode,
+    program: compactObject({
+      id: sourceProgramId == null ? null : String(sourceProgramId),
+      sourceProgramId: sourceProgramId == null ? null : String(sourceProgramId),
+      code: record.dsire?.programCode ?? record.raw?.code ?? null,
+      name: record.canonicalTitle,
+      slug: slugify(record.canonicalTitle),
+      state,
+      isEntireState: record.geography?.entireState,
+      category,
+      programType,
+      implementingSector,
+      websiteUrl: record.websiteUrl,
+      sourceUrl: record.sourceUrl,
+      administrator: record.administrator,
+      fundingSource: record.fundingSource,
+      budget: record.budget,
+      startDate: record.startDate,
+      startDateText: record.raw?.startDateText ?? null,
+      endDate: record.endDate,
+      endDateText: record.raw?.endDateText ?? null,
+      summaryText: record.summary,
+      published: record.published,
+      createdAt: record.sourceCreatedAt,
+      updatedAt: record.lastUpdated,
+      lastReviewedAt: record.lastUpdated
+    }),
+    overviewDetails: record.details ?? [],
+    eligibleSectors: record.eligibleSectors ?? [],
+    technologies: record.technologyRecords ?? [],
+    parameterSets: record.parameterSets ?? [],
+    authorities: normalizeAuthorities(record.raw?.authorities),
+    contacts: normalizeContacts(record.raw?.contacts),
+    memos: normalizeMemos(record.raw?.memos ?? record.raw?.subscriptionMemos),
+    geography: record.geography ?? {},
+    source: {
+      sourceKey: record.sourceKey,
+      sourceName: record.sourceName,
+      sourceUrl: record.sourceUrl,
+      externalId: record.externalId,
+      externalIdType: record.externalIdType,
+      ingestionMode: record.ingestionMode
+    },
+    searchText: normalizeComparableText(
+      [
+        record.canonicalTitle,
+        record.dsire?.programCode,
+        record.state,
+        record.stateName,
+        record.category,
+        record.programType,
+        record.administrator,
+        record.summary,
+        ...(record.sectors ?? []),
+        ...(record.technologies ?? []),
+        ...(record.details ?? []).flatMap((detail) => [detail.label, detail.value])
+      ].join(" ")
+    )
+  };
+}
+
+function normalizeAuthorities(authorities) {
+  if (!Array.isArray(authorities)) {
+    return [];
+  }
+
+  return authorities.map((authority, index) =>
+    compactObject({
+      id: authority.id == null ? null : String(authority.id),
+      displayOrder: authority.order ?? authority.displayOrder ?? index,
+      code: cleanHtmlText(authority.code),
+      website: cleanUrl(authority.website),
+      enacted: normalizeDate(authority.enacted),
+      enactedText: cleanHtmlText(authority.enactedtext ?? authority.enactedText),
+      effective: normalizeDate(authority.effective),
+      effectiveText: cleanHtmlText(authority.effectivetext ?? authority.effectiveText),
+      expired: normalizeDate(authority.expired),
+      expiredText: cleanHtmlText(authority.expiredtext ?? authority.expiredText),
+      fileUrl: cleanUrl(authority.file_url ?? authority.fileUrl),
+      fileName: cleanHtmlText(authority.file_name ?? authority.fileName)
+    })
+  );
+}
+
+function normalizeContacts(contacts) {
+  if (!Array.isArray(contacts)) {
+    return [];
+  }
+
+  return contacts.map((contact) =>
+    compactObject({
+      id: contact.id == null ? null : String(contact.id),
+      firstName: cleanHtmlText(contact.first_name ?? contact.firstName),
+      lastName: cleanHtmlText(contact.last_name ?? contact.lastName),
+      organizationName: cleanHtmlText(contact.organization_name ?? contact.organizationName),
+      phone: cleanHtmlText(contact.phone),
+      email: cleanHtmlText(contact.email),
+      websiteUrl: cleanUrl(contact.website_url ?? contact.websiteUrl),
+      address: cleanHtmlText(contact.address),
+      city: cleanHtmlText(contact.city),
+      stateId: contact.state_id == null ? null : String(contact.state_id),
+      zip: cleanHtmlText(contact.zip),
+      webVisibleDefault: contact.web_visible_default ?? contact.webVisibleDefault
+    })
+  );
+}
+
+function normalizeMemos(memos) {
+  if (!Array.isArray(memos)) {
+    return [];
+  }
+
+  return memos.map((memo) =>
+    compactObject({
+      id: memo.id == null ? null : String(memo.id),
+      addedByUser: memo.added_by_user ?? memo.addedByUser,
+      addedAt: normalizeDate(memo.Added ?? memo.added ?? memo.addedAt),
+      memo: cleanHtmlText(memo.memo)
+    })
+  );
 }
 
 function extractRecordsFromApiResponse(payload) {

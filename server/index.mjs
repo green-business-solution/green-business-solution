@@ -960,6 +960,321 @@ function compactOpportunityRecord(record) {
   };
 }
 
+function isDatabaseCloneRecord(record) {
+  return isDsireOpportunityRecord(record) && record?.ingestionMode !== "rss_delta_feed";
+}
+
+function slugify(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function normalizeFilterValue(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function parseQueryList(value) {
+  if (value == null) {
+    return [];
+  }
+
+  const values = Array.isArray(value) ? value : String(value).split(",");
+  return values.map((item) => normalizeFilterValue(item)).filter(Boolean);
+}
+
+function parsePositiveInteger(value, fallback, max) {
+  const number = Number(value);
+  if (!Number.isInteger(number) || number < 1) {
+    return fallback;
+  }
+
+  return Math.min(number, max);
+}
+
+function toLookupArray(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (typeof item === "string") {
+        return {
+          name: item,
+          slug: slugify(item)
+        };
+      }
+
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const name = cleanText(item.name || item.title || item.abbreviation || item.code || item.id);
+      if (!name) {
+        return null;
+      }
+
+      return {
+        ...item,
+        id: item.id == null ? undefined : String(item.id),
+        name,
+        slug: item.slug || slugify(name)
+      };
+    })
+    .filter(Boolean);
+}
+
+function uniqueLookups(values) {
+  const seen = new Set();
+  const result = [];
+
+  for (const value of values) {
+    if (!value?.name) {
+      continue;
+    }
+
+    const key = value.id ? `id:${value.id}` : `name:${value.name.toLowerCase()}`;
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    result.push(value);
+  }
+
+  return result;
+}
+
+function lookupMatches(lookup, filters) {
+  if (filters.length === 0) {
+    return true;
+  }
+
+  const values = [lookup?.id, lookup?.name, lookup?.slug, lookup?.abbreviation].map(normalizeFilterValue);
+  return filters.some((filter) => values.includes(filter));
+}
+
+function anyLookupMatches(lookups, filters) {
+  if (filters.length === 0) {
+    return true;
+  }
+
+  return lookups.some((lookup) => lookupMatches(lookup, filters));
+}
+
+function compactDatabaseDetails(details) {
+  if (!Array.isArray(details)) {
+    return [];
+  }
+
+  return details
+    .map((detail, index) => ({
+      id: detail?.id == null ? null : String(detail.id),
+      label: detail?.label || null,
+      value: compactText(detail?.value, 1800),
+      displayOrder: detail?.displayOrder ?? index,
+      templateId: detail?.templateId == null ? null : String(detail.templateId)
+    }))
+    .filter((detail) => detail.label || detail.value)
+    .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0));
+}
+
+function compactDatabaseParameterSets(parameterSets) {
+  if (!Array.isArray(parameterSets)) {
+    return [];
+  }
+
+  return parameterSets.map((parameterSet, index) => ({
+    id: parameterSet?.id == null ? null : String(parameterSet.id),
+    label: parameterSet?.label || null,
+    displayOrder: parameterSet?.displayOrder ?? index,
+    sectors: toLookupArray(parameterSet?.sectors),
+    technologies: toLookupArray(parameterSet?.technologies),
+    parameters: Array.isArray(parameterSet?.parameters)
+      ? parameterSet.parameters.map((parameter) => ({
+          id: parameter?.id == null ? null : String(parameter.id),
+          source: parameter?.source || null,
+          qualifier: parameter?.qualifier || null,
+          amount: parameter?.amount ?? null,
+          amountText: parameter?.amountText || null,
+          units: parameter?.units || null,
+          displayValue: parameter?.displayValue || null
+        }))
+      : []
+  }));
+}
+
+function buildDatabaseProgram(record, { includeDetail = false } = {}) {
+  const clone = record.dsireClone || {};
+  const cloneProgram = clone.program || {};
+  const sourceProgramId = String(cloneProgram.sourceProgramId || clone.sourceProgramId || record.dsire?.programId || record.externalId);
+  const name = cloneProgram.name || record.canonicalTitle || "Untitled DSIRE program";
+  const state = {
+    id: cloneProgram.state?.id || (record.dsire?.stateId == null ? null : String(record.dsire.stateId)),
+    abbreviation: cloneProgram.state?.abbreviation || record.state || null,
+    name: cloneProgram.state?.name || record.stateName || null,
+    isTerritory: cloneProgram.state?.isTerritory ?? record.raw?.stateObj?.is_territory ?? null
+  };
+  const category = {
+    id: cloneProgram.category?.id || (record.categoryId == null ? null : String(record.categoryId)),
+    name: cloneProgram.category?.name || record.category || null,
+    slug: cloneProgram.category?.slug || slugify(record.category)
+  };
+  const programType = {
+    id: cloneProgram.programType?.id || (record.programTypeId == null ? null : String(record.programTypeId)),
+    categoryId: cloneProgram.programType?.categoryId || (record.categoryId == null ? null : String(record.categoryId)),
+    name: cloneProgram.programType?.name || record.programType || null,
+    slug: cloneProgram.programType?.slug || slugify(record.programType)
+  };
+  const implementingSector = {
+    id: cloneProgram.implementingSector?.id || record.implementingSector?.id || (record.dsire?.sectorId == null ? null : String(record.dsire.sectorId)),
+    name: cloneProgram.implementingSector?.name || record.implementingSector?.name || record.dsire?.sectorName || null,
+    slug: cloneProgram.implementingSector?.slug || record.implementingSector?.slug || slugify(record.dsire?.sectorName)
+  };
+  const overviewDetails = compactDatabaseDetails(clone.overviewDetails || record.details);
+  const parameterSets = compactDatabaseParameterSets(clone.parameterSets || record.parameterSets || record.raw?.parameterSets);
+  const eligibleSectors = uniqueLookups([
+    ...toLookupArray(clone.eligibleSectors),
+    ...toLookupArray(record.eligibleSectors),
+    ...toLookupArray(record.sectors),
+    ...parameterSets.flatMap((parameterSet) => parameterSet.sectors)
+  ]);
+  const technologies = uniqueLookups([
+    ...toLookupArray(clone.technologies),
+    ...toLookupArray(record.technologyRecords),
+    ...toLookupArray(record.technologies),
+    ...parameterSets.flatMap((parameterSet) => parameterSet.technologies)
+  ]);
+  const summaryText = compactText(cloneProgram.summaryText || record.summary, includeDetail ? 8000 : 700);
+
+  return {
+    id: sourceProgramId,
+    opportunityId: record.opportunityId,
+    sourceSystem: "DSIRE",
+    sourceUrl: cloneProgram.sourceUrl || record.sourceUrl || null,
+    websiteUrl: cloneProgram.websiteUrl || record.websiteUrl || null,
+    code: cloneProgram.code || record.dsire?.programCode || record.raw?.code || null,
+    name,
+    slug: cloneProgram.slug || slugify(name),
+    state,
+    category,
+    programType,
+    implementingSector,
+    eligibleSectors,
+    technologies,
+    published: cloneProgram.published ?? record.published ?? null,
+    status: record.status || "unknown",
+    administrator: cloneProgram.administrator || record.administrator || null,
+    fundingSource: cloneProgram.fundingSource || record.fundingSource || null,
+    budget: cloneProgram.budget || record.budget || null,
+    startDate: cloneProgram.startDate || record.startDate || null,
+    startDateText: cloneProgram.startDateText || record.raw?.startDateText || null,
+    endDate: cloneProgram.endDate || record.endDate || null,
+    endDateText: cloneProgram.endDateText || record.raw?.endDateText || null,
+    summaryText,
+    lastReviewedAt: cloneProgram.lastReviewedAt || record.lastUpdated || null,
+    updatedAt: cloneProgram.updatedAt || record.lastUpdated || record.updatedAt || null,
+    createdAt: cloneProgram.createdAt || record.sourceCreatedAt || null,
+    geography: clone.geography || record.geography || {},
+    overviewDetails: includeDetail ? overviewDetails : [],
+    parameterSets: includeDetail ? parameterSets : [],
+    authorities: includeDetail && Array.isArray(clone.authorities) ? clone.authorities : [],
+    contacts: includeDetail && Array.isArray(clone.contacts) ? clone.contacts : [],
+    memos: includeDetail && Array.isArray(clone.memos) ? clone.memos : []
+  };
+}
+
+function filterDatabasePrograms(programs, query) {
+  const q = normalizeFilterValue(query.q);
+  const stateFilters = parseQueryList(query.state);
+  const categoryFilters = parseQueryList(query.category);
+  const typeFilters = parseQueryList(query.type);
+  const technologyFilters = parseQueryList(query.technology);
+  const sectorFilters = parseQueryList(query.eligible_sector || query.sector);
+  const implementingSectorFilters = parseQueryList(query.implementing_sector);
+
+  return programs.filter((program) => {
+    const haystack = normalizeFilterValue(
+      [
+        program.name,
+        program.code,
+        program.administrator,
+        program.summaryText,
+        program.state?.abbreviation,
+        program.state?.name,
+        program.category?.name,
+        program.programType?.name,
+        program.implementingSector?.name,
+        ...program.eligibleSectors.map((sector) => sector.name),
+        ...program.technologies.map((technology) => technology.name)
+      ].join(" ")
+    );
+
+    return (
+      (!q || haystack.includes(q)) &&
+      lookupMatches(program.state, stateFilters) &&
+      lookupMatches(program.category, categoryFilters) &&
+      lookupMatches(program.programType, typeFilters) &&
+      lookupMatches(program.implementingSector, implementingSectorFilters) &&
+      anyLookupMatches(program.technologies, technologyFilters) &&
+      anyLookupMatches(program.eligibleSectors, sectorFilters)
+    );
+  });
+}
+
+function buildFacet(values, labelKey = "name") {
+  const map = new Map();
+
+  for (const value of values) {
+    if (!value) {
+      continue;
+    }
+
+    const id = value.id ?? value.abbreviation ?? value.slug ?? value[labelKey];
+    const label = value[labelKey] || value.name || value.abbreviation || id;
+    if (!id || !label) {
+      continue;
+    }
+
+    const key = String(id);
+    const existing = map.get(key);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      map.set(key, {
+        id: key,
+        label: String(label),
+        value: value.slug || value.abbreviation || String(label),
+        count: 1
+      });
+    }
+  }
+
+  return [...map.values()].sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function buildDatabaseFacets(programs) {
+  return {
+    states: buildFacet(programs.map((program) => program.state), "name"),
+    categories: buildFacet(programs.map((program) => program.category), "name"),
+    programTypes: buildFacet(programs.map((program) => program.programType), "name"),
+    implementingSectors: buildFacet(programs.map((program) => program.implementingSector), "name"),
+    eligibleSectors: buildFacet(programs.flatMap((program) => program.eligibleSectors), "name"),
+    technologies: buildFacet(programs.flatMap((program) => program.technologies), "name")
+  };
+}
+
+async function loadDatabasePrograms({ includeDetail = false } = {}) {
+  const records = await scanAll(opportunitiesTable);
+  return records
+    .filter(isDatabaseCloneRecord)
+    .map((record) => buildDatabaseProgram(record, { includeDetail }))
+    .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name));
+}
+
 async function buildPasswordAuthPayload(sessionResult) {
   return {
     ...(await buildAuthPayload(sessionResult.user)),
@@ -1232,6 +1547,180 @@ app.get("/api/diagnostics", async (_req, res) => {
       googleClientConfigured: Boolean(googleClientId),
       adminEmails: [...adminEmails],
       adminsPresent
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/programs", async (req, res) => {
+  try {
+    const page = parsePositiveInteger(req.query.page, 1, 10000);
+    const perPage = parsePositiveInteger(req.query.per_page || req.query.perPage, 24, 100);
+    const programs = await loadDatabasePrograms();
+    const filteredPrograms = filterDatabasePrograms(programs, req.query);
+    const start = (page - 1) * perPage;
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      page,
+      perPage,
+      total: filteredPrograms.length,
+      programs: filteredPrograms.slice(start, start + perPage),
+      facets: buildDatabaseFacets(programs),
+      resultFacets: buildDatabaseFacets(filteredPrograms)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/programs/updates", async (req, res) => {
+  try {
+    const updatedAfter = req.query.updated_after ? new Date(String(req.query.updated_after)) : null;
+    const updatedBefore = req.query.updated_before ? new Date(String(req.query.updated_before)) : null;
+    const programs = await loadDatabasePrograms();
+    const updates = programs.filter((program) => {
+      const updatedAt = program.updatedAt ? new Date(program.updatedAt) : null;
+      if (!updatedAt || Number.isNaN(updatedAt.getTime())) {
+        return false;
+      }
+
+      return (!updatedAfter || updatedAt >= updatedAfter) && (!updatedBefore || updatedAt <= updatedBefore);
+    });
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      total: updates.length,
+      updates: updates.map((program) => ({
+        id: program.id,
+        opportunityId: program.opportunityId,
+        name: program.name,
+        updatedAt: program.updatedAt,
+        sourceUrl: program.sourceUrl
+      }))
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/programs/:programId", async (req, res) => {
+  try {
+    const requestedId = normalizeFilterValue(req.params.programId);
+    const programs = await loadDatabasePrograms({ includeDetail: true });
+    const program = programs.find(
+      (item) =>
+        normalizeFilterValue(item.id) === requestedId ||
+        normalizeFilterValue(item.opportunityId) === requestedId ||
+        normalizeFilterValue(item.slug) === requestedId
+    );
+
+    if (!program) {
+      const error = new Error("Program was not found.");
+      error.status = 404;
+      throw error;
+    }
+
+    res.json({ program });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/facets", async (_req, res) => {
+  try {
+    const programs = await loadDatabasePrograms();
+    res.json({
+      generatedAt: new Date().toISOString(),
+      facets: buildDatabaseFacets(programs)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/states", async (_req, res) => {
+  try {
+    const programs = await loadDatabasePrograms();
+    res.json({ states: buildDatabaseFacets(programs).states });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/program-types", async (_req, res) => {
+  try {
+    const programs = await loadDatabasePrograms();
+    const facets = buildDatabaseFacets(programs);
+    res.json({
+      categories: facets.categories,
+      programTypes: facets.programTypes
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/technologies", async (_req, res) => {
+  try {
+    const programs = await loadDatabasePrograms();
+    res.json({ technologies: buildDatabaseFacets(programs).technologies });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/sectors", async (_req, res) => {
+  try {
+    const programs = await loadDatabasePrograms();
+    const facets = buildDatabaseFacets(programs);
+    res.json({
+      eligibleSectors: facets.eligibleSectors,
+      implementingSectors: facets.implementingSectors
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/summary/maps", async (req, res) => {
+  try {
+    const programs = filterDatabasePrograms(await loadDatabasePrograms(), req.query);
+    res.json({
+      generatedAt: new Date().toISOString(),
+      states: buildFacet(programs.map((program) => program.state), "name")
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/database/summary/tables", async (req, res) => {
+  try {
+    const programs = filterDatabasePrograms(await loadDatabasePrograms(), req.query);
+    const rows = new Map();
+
+    for (const program of programs) {
+      const state = program.state?.abbreviation || "Unknown";
+      const type = program.programType?.name || "Unknown";
+      const key = `${state}:${type}`;
+      const existing = rows.get(key);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        rows.set(key, {
+          state,
+          stateName: program.state?.name || state,
+          programType: type,
+          count: 1
+        });
+      }
+    }
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      rows: [...rows.values()].sort((a, b) => a.state.localeCompare(b.state) || a.programType.localeCompare(b.programType))
     });
   } catch (error) {
     handleError(res, error);

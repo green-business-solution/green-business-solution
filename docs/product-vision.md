@@ -223,6 +223,10 @@ Important compatibility note:
 
 The long-term opportunity/rebate/incentive database plan is documented in `docs/rebate_tax_incentive_database_instructions.md`.
 
+The current DSIRE-sourced database clone is available at `/database`. It is backed by the
+`gbs-opportunity-candidates` DynamoDB table and projects DSIRE records into a Program-style shape while
+we defer the final relational matching database.
+
 Current direction:
 
 - Use DynamoDB prototype opportunity-candidate storage for gathered source records.

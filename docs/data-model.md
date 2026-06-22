@@ -108,13 +108,19 @@ Minimal active DSIRE fields:
 - `details`
 - `geography`
 - `administrator`
+- `implementingSector`
 - `sectors`
+- `eligibleSectors`
 - `technologies`
+- `technologyRecords`
+- `parameterSets`
 - `ingestionMode`: `public_table_inventory`, `rss_delta_feed`, or `licensed_api`
 - `recordKind`
 - `contentHash`
 - `previousContentHash`
 - `dsire`
+- `dsireClone`: DSIRE-like clone projection with `program`, `overviewDetails`, `eligibleSectors`,
+  `technologies`, `parameterSets`, `authorities`, `contacts`, `memos`, and `source`
 - `evidence`
 - `raw`
 - `dataQuality`
@@ -150,6 +156,19 @@ DynamoDB row. Supported review statuses are `approved`, `rejected`, `needs_revie
 Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. RSS records preserve the
 raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`
 because the feed can contain repeated program codes with different titles.
+
+## Public DSIRE Clone
+
+The public DSIRE-sourced database browser is available at:
+
+```text
+https://retrofi.org/database
+```
+
+It is backed by read-only API endpoints under `/api/database/*`. These endpoints currently read from
+`gbs-opportunity-candidates`, filter to DSIRE public-table/API inventory records, and project each row
+into a DSIRE-like Program shape. This is the first clone layer; it is not yet a separate relational
+database.
 
 ## Local API
 

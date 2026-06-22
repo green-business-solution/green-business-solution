@@ -23,10 +23,24 @@ const LockIcon = () => (
   </svg>
 );
 
+const EyeIcon = () => (
+  <svg aria-hidden="true" className="eye-icon" fill="none" viewBox="0 0 24 24">
+    <path
+      d="M2.8 12s3.4-6 9.2-6 9.2 6 9.2 6-3.4 6-9.2 6-9.2-6-9.2-6Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+    <circle cx="12" cy="12" r="2.6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+  </svg>
+);
+
 type Route =
   | "home"
   | "how-it-works"
   | "pricing"
+  | "database"
   | "about"
   | "about-mission"
   | "about-team"
@@ -232,6 +246,106 @@ type AuthCredential = {
   value: string;
 };
 
+type DatabaseFacetOption = {
+  id: string;
+  label: string;
+  value: string;
+  count: number;
+};
+
+type DatabaseFacets = {
+  states: DatabaseFacetOption[];
+  categories: DatabaseFacetOption[];
+  programTypes: DatabaseFacetOption[];
+  implementingSectors: DatabaseFacetOption[];
+  eligibleSectors: DatabaseFacetOption[];
+  technologies: DatabaseFacetOption[];
+};
+
+type DatabaseLookup = {
+  id?: string | null;
+  name?: string | null;
+  slug?: string | null;
+  abbreviation?: string | null;
+  category?: string | null;
+};
+
+type DatabaseProgram = {
+  id: string;
+  opportunityId: string;
+  sourceSystem: string;
+  sourceUrl?: string | null;
+  websiteUrl?: string | null;
+  code?: string | null;
+  name: string;
+  slug: string;
+  state?: {
+    id?: string | null;
+    abbreviation?: string | null;
+    name?: string | null;
+    isTerritory?: boolean | null;
+  };
+  category?: DatabaseLookup;
+  programType?: DatabaseLookup & { categoryId?: string | null };
+  implementingSector?: DatabaseLookup;
+  eligibleSectors: DatabaseLookup[];
+  technologies: DatabaseLookup[];
+  published?: boolean | null;
+  status?: string;
+  administrator?: string | null;
+  fundingSource?: string | null;
+  budget?: string | null;
+  startDate?: string | null;
+  startDateText?: string | null;
+  endDate?: string | null;
+  endDateText?: string | null;
+  summaryText?: string | null;
+  lastReviewedAt?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+  geography?: unknown;
+  overviewDetails: Array<{
+    id?: string | null;
+    label?: string | null;
+    value?: string | null;
+    displayOrder?: number | null;
+    templateId?: string | null;
+  }>;
+  parameterSets: Array<{
+    id?: string | null;
+    label?: string | null;
+    displayOrder?: number | null;
+    sectors: DatabaseLookup[];
+    technologies: DatabaseLookup[];
+    parameters: Array<{
+      id?: string | null;
+      source?: string | null;
+      qualifier?: string | null;
+      amount?: number | null;
+      amountText?: string | null;
+      units?: string | null;
+      displayValue?: string | null;
+    }>;
+  }>;
+  authorities: unknown[];
+  contacts: unknown[];
+  memos: unknown[];
+};
+
+type DatabaseProgramsResponse = {
+  generatedAt: string;
+  page: number;
+  perPage: number;
+  total: number;
+  programs: DatabaseProgram[];
+  facets: DatabaseFacets;
+  resultFacets: DatabaseFacets;
+};
+
+type DatabaseProgramResponse = {
+  program: DatabaseProgram;
+};
+
 type PasswordAuthPayload = AuthPayload & {
   sessionToken: string;
 };
@@ -417,6 +531,7 @@ function loadGoogleIdentityScript() {
 function routeFromPath(): Route {
   if (window.location.pathname === "/how-it-works") return "how-it-works";
   if (window.location.pathname === "/pricing") return "pricing";
+  if (window.location.pathname === "/database") return "database";
   if (window.location.pathname === "/for-businesses") return "home";
   if (window.location.pathname === "/about") return "about";
   if (window.location.pathname === "/about/mission") return "about-mission";
@@ -443,6 +558,37 @@ function pathForRoute(route: Route) {
 
 function isLocalDevelopmentHost() {
   return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+}
+
+async function apiGet<T>(path: string): Promise<T> {
+  let response: Response;
+
+  try {
+    response = await fetch(path);
+  } catch {
+    throw new Error(
+      isLocalDevelopmentHost()
+        ? "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
+        : "Could not reach the server. Refresh the page and try again."
+    );
+  }
+
+  const text = await response.text();
+  let payload: { error?: string } = {};
+
+  if (text) {
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      payload = {};
+    }
+  }
+
+  if (!response.ok) {
+    throw new Error(payload.error || `Request failed with HTTP ${response.status}.`);
+  }
+
+  return payload as T;
 }
 
 async function apiPost<T>(path: string, body: unknown): Promise<T> {
@@ -589,9 +735,14 @@ function GoogleSignInButton<T>({
   }, [endpoint]);
 
   return (
-    <div className="google-auth">
+    <div className={["google-auth", isLoading ? "is-loading" : ""].filter(Boolean).join(" ")} aria-busy={isLoading}>
+      {isLoading ? (
+        <div aria-hidden="true" className="google-loading-button">
+          <span className="google-loading-logo">G</span>
+          <span>Continue with Google</span>
+        </div>
+      ) : null}
       <div className="google-button-slot" ref={buttonRef} />
-      {isLoading ? <p className="muted-message">Loading Google...</p> : null}
       {isSigningIn ? <p className="muted-message">Signing in...</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
     </div>
@@ -643,12 +794,14 @@ function PasswordAuthForm({
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isSignup = mode === "signup";
 
   useEffect(() => {
     setUsername(initialUsername);
     setPassword("");
     setError(null);
+    setIsPasswordVisible(false);
   }, [initialUsername, mode]);
 
   async function submitPasswordAuth(event: FormEvent) {
@@ -682,14 +835,25 @@ function PasswordAuthForm({
       </label>
       <label className="field">
         <span>Password</span>
-        <input
-          autoComplete={isSignup ? "new-password" : "current-password"}
-          minLength={8}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-          type="password"
-          value={password}
-        />
+        <span className="password-input-shell">
+          <input
+            autoComplete={isSignup ? "new-password" : "current-password"}
+            minLength={8}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Password"
+            required
+            type={isPasswordVisible ? "text" : "password"}
+            value={password}
+          />
+          <button
+            aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+            className="password-visibility-button"
+            onClick={() => setIsPasswordVisible((current) => !current)}
+            type="button"
+          >
+            <EyeIcon />
+          </button>
+        </span>
       </label>
       {error ? <p className="error-message">{error}</p> : null}
       <button disabled={isSubmitting} type="submit">
@@ -764,6 +928,52 @@ function getOpportunityTechnologies(opportunity: OpportunityRecord) {
 
 function compactJson(value: unknown) {
   return JSON.stringify(value ?? null, null, 2);
+}
+
+function formatProgramDate(value?: string | null) {
+  if (!value) return "Not listed";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(parsed);
+}
+
+function lookupLabel(value?: DatabaseLookup | null) {
+  return value?.name || value?.abbreviation || "Not listed";
+}
+
+function joinLookupLabels(values: DatabaseLookup[]) {
+  return values.map((value) => lookupLabel(value)).filter(Boolean).join(", ");
+}
+
+function formatParameterValue(parameter: DatabaseProgram["parameterSets"][number]["parameters"][number]) {
+  const amount = parameter.displayValue || [parameter.qualifier, parameter.amountText ?? parameter.amount, parameter.units]
+    .filter((part) => part != null && part !== "")
+    .join(" ");
+
+  if (parameter.source && amount) return `${parameter.source}: ${amount}`;
+  return parameter.source || amount || "Parameter listed";
+}
+
+function buildDatabaseQuery(filters: {
+  category: string;
+  q: string;
+  sector: string;
+  state: string;
+  technology: string;
+  type: string;
+}, page: number) {
+  const params = new URLSearchParams();
+  params.set("page", String(page));
+  params.set("per_page", "25");
+
+  if (filters.q.trim()) params.set("q", filters.q.trim());
+  if (filters.state) params.set("state", filters.state);
+  if (filters.category) params.set("category", filters.category);
+  if (filters.type) params.set("type", filters.type);
+  if (filters.technology) params.set("technology", filters.technology);
+  if (filters.sector) params.set("eligible_sector", filters.sector);
+
+  return params.toString();
 }
 
 function Field({
@@ -1016,6 +1226,9 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <button className="link-button" onClick={() => go("pricing")} type="button">
           Pricing
         </button>
+        <button className="link-button" onClick={() => go("database")} type="button">
+          Database
+        </button>
         <div
           className="nav-dropdown"
           onMouseEnter={() => setIsAboutOpen(true)}
@@ -1082,6 +1295,9 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           <button className="link-button" onClick={() => go("pricing")} type="button">
             Pricing
           </button>
+          <button className="link-button" onClick={() => go("database")} type="button">
+            Database
+          </button>
           <div className="mobile-about-group">
             <span>About</span>
             {aboutLinks.map((item) => (
@@ -1114,7 +1330,8 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
-          ["Get Started", "scan"]
+          ["Database", "database"],
+          ["Create My Report", "scan"]
         ].map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
             {label}
@@ -1142,14 +1359,16 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
 function PublicShell({
   children,
   navigate,
+  pageClassName,
   showFooter = false
 }: {
   children: ReactNode;
   navigate: (route: Route) => void;
+  pageClassName?: string;
   showFooter?: boolean;
 }) {
   return (
-    <main className="public-page">
+    <main className={["public-page", pageClassName].filter(Boolean).join(" ")}>
       <PublicNav navigate={navigate} />
       {children}
       {showFooter ? <Footer navigate={navigate} /> : null}
@@ -1812,6 +2031,305 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
+function DatabasePage({ navigate }: { navigate: (route: Route) => void }) {
+  const [filters, setFilters] = useState({
+    q: "",
+    state: "",
+    category: "",
+    type: "",
+    technology: "",
+    sector: ""
+  });
+  const [page, setPage] = useState(1);
+  const [response, setResponse] = useState<DatabaseProgramsResponse | null>(null);
+  const [selectedProgramId, setSelectedProgramId] = useState("");
+  const [selectedProgram, setSelectedProgram] = useState<DatabaseProgram | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
+
+  function updateFilter(name: keyof typeof filters, value: string) {
+    setFilters((current) => ({ ...current, [name]: value }));
+    setPage(1);
+  }
+
+  useEffect(() => {
+    let isMounted = true;
+    const query = buildDatabaseQuery(filters, page);
+
+    setIsLoading(true);
+    setError(null);
+    apiGet<DatabaseProgramsResponse>(`/api/database/programs?${query}`)
+      .then((payload) => {
+        if (!isMounted) return;
+        setResponse(payload);
+        const stillVisible = payload.programs.some((program) => program.id === selectedProgramId);
+        if ((!selectedProgramId || !stillVisible) && payload.programs[0]) {
+          setSelectedProgramId(payload.programs[0].id);
+        }
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load database programs.");
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [filters.category, filters.q, filters.sector, filters.state, filters.technology, filters.type, page, selectedProgramId]);
+
+  useEffect(() => {
+    if (!selectedProgramId) {
+      setSelectedProgram(null);
+      return;
+    }
+
+    let isMounted = true;
+    setIsDetailLoading(true);
+    apiGet<DatabaseProgramResponse>(`/api/database/programs/${encodeURIComponent(selectedProgramId)}`)
+      .then((payload) => {
+        if (isMounted) setSelectedProgram(payload.program);
+      })
+      .catch(() => {
+        if (isMounted) setSelectedProgram(null);
+      })
+      .finally(() => {
+        if (isMounted) setIsDetailLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedProgramId]);
+
+  const facets = response?.facets;
+  const programs = response?.programs || [];
+  const total = response?.total || 0;
+  const maxPage = Math.max(1, Math.ceil(total / (response?.perPage || 25)));
+
+  return (
+    <PublicShell navigate={navigate} pageClassName="database-page" showFooter>
+      <section className="database-shell">
+        <div className="database-toolbar">
+          <div>
+            <p className="eyebrow">DSIRE-sourced clone</p>
+            <h1>Incentive and policy database</h1>
+            <p>
+              Browse normalized DSIRE program records before we connect them to business-profile matching.
+            </p>
+          </div>
+          <div className="database-stats">
+            <strong>{total.toLocaleString()}</strong>
+            <span>matching programs</span>
+          </div>
+        </div>
+
+        <div className="database-filters">
+          <label className="field database-search">
+            <span>Search</span>
+            <input
+              onChange={(event) => updateFilter("q", event.target.value)}
+              placeholder="Program, administrator, technology"
+              type="search"
+              value={filters.q}
+            />
+          </label>
+          <DatabaseFilterSelect label="State" onChange={(value) => updateFilter("state", value)} options={facets?.states || []} value={filters.state} />
+          <DatabaseFilterSelect label="Category" onChange={(value) => updateFilter("category", value)} options={facets?.categories || []} value={filters.category} />
+          <DatabaseFilterSelect label="Type" onChange={(value) => updateFilter("type", value)} options={facets?.programTypes || []} value={filters.type} />
+          <DatabaseFilterSelect label="Technology" onChange={(value) => updateFilter("technology", value)} options={facets?.technologies || []} value={filters.technology} />
+          <DatabaseFilterSelect label="Eligible sector" onChange={(value) => updateFilter("sector", value)} options={facets?.eligibleSectors || []} value={filters.sector} />
+        </div>
+
+        {error ? <p className="error-message">{error}</p> : null}
+
+        <div className="database-layout">
+          <section className="database-list-panel" aria-label="DSIRE clone programs">
+            <div className="database-list-header">
+              <span>{isLoading ? "Loading programs" : `${programs.length} shown`}</span>
+              <span>Page {page} of {maxPage}</span>
+            </div>
+            <div className="database-list">
+              {programs.length === 0 && !isLoading ? (
+                <p className="empty-state">No DSIRE programs match the current filters.</p>
+              ) : null}
+              {programs.map((program) => (
+                <button
+                  aria-current={program.id === selectedProgramId ? "true" : undefined}
+                  className="database-list-item"
+                  key={program.id}
+                  onClick={() => setSelectedProgramId(program.id)}
+                  type="button"
+                >
+                  <span>
+                    <strong>{program.name}</strong>
+                    <small>{lookupLabel(program.state)} / {lookupLabel(program.programType)}</small>
+                  </span>
+                  <mark>{program.category?.name || "Uncategorized"}</mark>
+                </button>
+              ))}
+            </div>
+            <div className="database-pagination">
+              <button className="secondary-button" disabled={page <= 1 || isLoading} onClick={() => setPage((current) => Math.max(1, current - 1))} type="button">
+                Previous
+              </button>
+              <button className="secondary-button" disabled={page >= maxPage || isLoading} onClick={() => setPage((current) => current + 1)} type="button">
+                Next
+              </button>
+            </div>
+          </section>
+
+          <DatabaseProgramDetail isLoading={isDetailLoading} program={selectedProgram} />
+        </div>
+      </section>
+    </PublicShell>
+  );
+}
+
+function DatabaseFilterSelect({
+  label,
+  onChange,
+  options,
+  value
+}: {
+  label: string;
+  onChange: (value: string) => void;
+  options: DatabaseFacetOption[];
+  value: string;
+}) {
+  return (
+    <label className="field">
+      <span>{label}</span>
+      <select onChange={(event) => onChange(event.target.value)} value={value}>
+        <option value="">All</option>
+        {options.map((option) => (
+          <option key={option.id} value={option.value}>
+            {option.label} ({option.count})
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function DatabaseProgramDetail({ isLoading, program }: { isLoading: boolean; program: DatabaseProgram | null }) {
+  if (isLoading) {
+    return (
+      <section className="database-detail-panel">
+        <p className="empty-state">Loading program details...</p>
+      </section>
+    );
+  }
+
+  if (!program) {
+    return (
+      <section className="database-detail-panel">
+        <p className="empty-state">Select a program to inspect its cloned DSIRE fields.</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="database-detail-panel">
+      <div className="database-detail-header">
+        <p className="eyebrow">{program.sourceSystem} Program {program.id}</p>
+        <h2>{program.name}</h2>
+        <div className="database-chip-row">
+          <span>{lookupLabel(program.state)}</span>
+          <span>{lookupLabel(program.category)}</span>
+          <span>{lookupLabel(program.programType)}</span>
+        </div>
+      </div>
+
+      <div className="database-summary-grid">
+        <DetailItem label="Implementing sector" value={lookupLabel(program.implementingSector)} />
+        <DetailItem label="Administrator" value={program.administrator || "Not listed"} />
+        <DetailItem label="Start date" value={formatProgramDate(program.startDate || program.startDateText)} />
+        <DetailItem label="End date" value={formatProgramDate(program.endDate || program.endDateText)} />
+        <DetailItem label="Last reviewed" value={formatProgramDate(program.lastReviewedAt)} />
+        <DetailItem label="Published" value={program.published === false ? "No" : "Yes"} />
+      </div>
+
+      <section className="database-detail-section">
+        <h3>Program Overview</h3>
+        {program.overviewDetails.length > 0 ? (
+          <dl className="database-definition-list">
+            {program.overviewDetails.map((detail) => (
+              <div key={`${detail.id}-${detail.label}`}>
+                <dt>{detail.label || "Detail"}</dt>
+                <dd>{detail.value || "Not listed"}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : (
+          <p>No overview details were available in the source record.</p>
+        )}
+      </section>
+
+      <section className="database-detail-section">
+        <h3>Incentives</h3>
+        {program.parameterSets.length > 0 ? (
+          <div className="parameter-set-list">
+            {program.parameterSets.map((parameterSet, index) => (
+              <article className="parameter-set" key={parameterSet.id || index}>
+                <h4>{parameterSet.label || `Parameter set ${index + 1}`}</h4>
+                <p>{joinLookupLabels(parameterSet.technologies) || "No technology listed"}</p>
+                <small>{joinLookupLabels(parameterSet.sectors) || "No eligible sector listed"}</small>
+                <ul>
+                  {parameterSet.parameters.map((parameter, parameterIndex) => (
+                    <li key={parameter.id || parameterIndex}>{formatParameterValue(parameter)}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p>No machine-readable incentive parameter sets were available in the source record.</p>
+        )}
+      </section>
+
+      <section className="database-detail-section">
+        <h3>Summary</h3>
+        <p>{program.summaryText || "No summary listed."}</p>
+      </section>
+
+      <section className="database-detail-section">
+        <h3>Eligible Sectors and Technologies</h3>
+        <div className="database-chip-row">
+          {(program.eligibleSectors.length > 0 ? program.eligibleSectors : [{ name: "No eligible sector listed" }]).map((sector) => (
+            <span key={sector.id || sector.name || "sector"}>{lookupLabel(sector)}</span>
+          ))}
+        </div>
+        <div className="database-chip-row">
+          {(program.technologies.length > 0 ? program.technologies : [{ name: "No technology listed" }]).map((technology) => (
+            <span key={technology.id || technology.name || "technology"}>{lookupLabel(technology)}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="database-detail-section">
+        <h3>Authorities, Contacts, and Memos</h3>
+        <div className="database-summary-grid">
+          <DetailItem label="Authorities" value={String(program.authorities.length)} />
+          <DetailItem label="Contacts" value={String(program.contacts.length)} />
+          <DetailItem label="Memos" value={String(program.memos.length)} />
+        </div>
+      </section>
+
+      <section className="database-detail-section">
+        <h3>Source Links</h3>
+        <div className="link-list">
+          {program.sourceUrl ? <a href={program.sourceUrl} rel="noreferrer" target="_blank">DSIRE source</a> : null}
+          {program.websiteUrl ? <a href={program.websiteUrl} rel="noreferrer" target="_blank">Program website</a> : null}
+        </div>
+      </section>
+    </section>
+  );
+}
+
 function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
   return (
     <PublicShell navigate={navigate}>
@@ -2031,7 +2549,7 @@ function SignInPage({
   onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
 }) {
   return (
-    <PublicShell navigate={navigate} showFooter={false}>
+    <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
       <section className="sign-in-panel">
         {message ? <p className="muted-message">{message}</p> : null}
         <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
@@ -2878,6 +3396,10 @@ export function App() {
 
   if (route === "pricing") {
     return <PricingPage navigate={navigate} />;
+  }
+
+  if (route === "database") {
+    return <DatabasePage navigate={navigate} />;
   }
 
   if (route === "about") {

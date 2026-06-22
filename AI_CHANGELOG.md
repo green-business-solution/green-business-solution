@@ -5,6 +5,17 @@
 - Added the uploaded RetroFi logo asset to the public site header/footer branding and browser favicon.
 - Changed the About dropdown so hovering over the trigger area opens the menu without a click and keeps it open while moving into Mission or Team.
 
+## 2026-06-22 - Codex (GPT-5) DSIRE clone database browser
+
+- Added a public `/database` page for browsing DSIRE-sourced programs with search, facets, program list, and detail sections.
+- Added read-only DSIRE clone API endpoints for programs, details, facets, lookups, update feed, and summary counts.
+- Updated DSIRE ingestion to write `dsireClone`, eligible sectors, technology records, and parameter sets into DynamoDB for clone-shaped records.
+
+## 2026-06-22 - Codex (GPT-5) generated-style login polish
+
+- Reworked the sign-in page to more closely match the generated reference: larger centered card, stronger header bar, roomier fields, green CTA, pill divider, and full-width Google option.
+- Added a password visibility control and a Google-button loading fallback so the layout stays polished while Google Identity Services loads.
+
 ## 2026-06-22 - Codex (GPT-5) DSIRE-only opportunity scope
 
 - Removed non-DSIRE opportunity ingestion scripts, npm commands, and source-specific ingestion docs.

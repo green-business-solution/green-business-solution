@@ -161,6 +161,13 @@ Representative fields:
 - `fundingSource`
 - `budget`
 - `details`
+- `implementingSector`
+- `sectors`
+- `eligibleSectors`
+- `technologies`
+- `technologyRecords`
+- `parameterSets`
+- `dsireClone`
 - `ingestionMode`
 - `contentHash`
 - `dsire`
@@ -183,6 +190,42 @@ program code with a different title.
 
 The local admin API includes this table in its `dataTables` response, so it appears as its own tab in
 the admin dashboard.
+
+## DSIRE Clone Projection
+
+The ingestion script writes a `dsireClone` projection with `schemaVersion: dsire-clone-v1`. This
+projection follows the DSIRE clone specification in `dsire_clone_specification.md` while still using the
+current DynamoDB prototype table.
+
+The clone projection includes:
+
+- `program`: DSIRE-like program header with state, category, program type, implementing sector, dates,
+  summary text, source URL, and publication status.
+- `overviewDetails`: normalized Program Overview details from DSIRE `details`.
+- `eligibleSectors`: eligible sector lookup records, primarily derived from DSIRE parameter sets.
+- `technologies`: technology lookup records, including category and energy-category IDs where provided.
+- `parameterSets`: machine-readable incentive rows with sectors, technologies, and parameter values.
+- `authorities`, `contacts`, and `memos`: empty arrays unless the source payload provides those child records.
+- `source`: source lineage back to the DSIRE record.
+
+The public site exposes this clone at:
+
+```text
+https://retrofi.org/database
+```
+
+The read-only API endpoints are:
+
+- `GET /api/database/programs`
+- `GET /api/database/programs/{id}`
+- `GET /api/database/facets`
+- `GET /api/database/states`
+- `GET /api/database/program-types`
+- `GET /api/database/technologies`
+- `GET /api/database/sectors`
+- `GET /api/database/summary/maps`
+- `GET /api/database/summary/tables`
+- `GET /api/database/programs/updates`
 
 ## Weekly Reuse
 
