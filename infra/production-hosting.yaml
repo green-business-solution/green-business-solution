@@ -108,7 +108,7 @@ Resources:
       Handler: server/lambda.handler
       MemorySize: 512
       Role: !GetAtt ApiExecutionRole.Arn
-      Runtime: nodejs20.x
+      Runtime: nodejs24.x
       Timeout: 20
 
   ApiLogGroup:
@@ -217,7 +217,7 @@ Resources:
                 - TLSv1.2
             DomainName: !Sub ${HttpApi}.execute-api.${AWS::Region}.amazonaws.com
             Id: api-gateway
-        OrderedCacheBehaviors:
+        CacheBehaviors:
           - AllowedMethods:
               - DELETE
               - GET
