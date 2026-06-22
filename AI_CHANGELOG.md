@@ -101,3 +101,9 @@
 
 - Aligned backend validation with the optional `Role/title` field so submissions without a title can still be stored in DynamoDB.
 - Updated the portal display to show `Not provided` when optional role/title information is blank.
+
+## 2026-06-21 - Codex (GPT-5) company-first intake flow
+
+- Reordered the intake form around Business Information, Site Information, Opportunity Priorities, and Contact Information.
+- Made Full name and narrative priority fields optional while keeping company, site, email, timeline, and interested improvements required.
+- Preserved all existing intake fields and DynamoDB storage keys.

@@ -42,7 +42,7 @@ type IntakeRecord = {
   userId: string;
   submissionId: string;
   contact: {
-    fullName: string;
+    fullName: string | null;
     email: string;
     phone: string | null;
     roleTitle: string | null;
@@ -521,26 +521,39 @@ function IntakePage({
 
         <form className="intake-form" onSubmit={submitForm}>
           <div className="form-section-heading">
-            <h2>Contact Information</h2>
+            <h2>Business Information</h2>
             <p className="required-note">
               Required fields are marked with <span aria-hidden="true">*</span>
             </p>
           </div>
           <div className="field-grid">
-            <Field label="Full name" name="fullName" onChange={updateField} required value={form.fullName} />
-            <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
-            <Field label="Phone" name="phone" onChange={updateField} value={form.phone} />
-            <Field label="Role/title" name="roleTitle" onChange={updateField} value={form.roleTitle} />
-            <SelectField
-              label="Preferred contact"
-              name="contactPreference"
+            <Field
+              label="Company name"
+              name="companyName"
               onChange={updateField}
-              options={["Email", "Phone", "Text"]}
-              value={form.contactPreference}
+              required
+              value={form.companyName}
+            />
+            <Field label="Website" name="website" onChange={updateField} value={form.website} />
+            <SelectField
+              label="Organization type"
+              name="organizationType"
+              onChange={updateField}
+              options={organizationTypeOptions}
+              required
+              value={form.organizationType}
+            />
+            <Field label="Industry" name="industry" onChange={updateField} value={form.industry} />
+            <SelectField
+              label="Organization size"
+              name="organizationSize"
+              onChange={updateField}
+              options={["1-10", "11-50", "51-200", "201-1,000", "1,001+"]}
+              value={form.organizationSize}
             />
           </div>
 
-          <h2>Business Information</h2>
+          <h2>Site Information</h2>
           <div className="field-grid">
             <TextArea
               label="Site address"
@@ -561,14 +574,6 @@ function IntakePage({
               options={utilityProviderOptions}
               required
               value={form.electricUtilityProvider}
-            />
-            <SelectField
-              label="Organization type"
-              name="organizationType"
-              onChange={updateField}
-              options={organizationTypeOptions}
-              required
-              value={form.organizationType}
             />
             <SelectField
               label="Ownership status"
@@ -608,30 +613,12 @@ function IntakePage({
             />
           </div>
 
-          <h2>Other Questions</h2>
+          <h2>Opportunity Priorities</h2>
           <div className="field-grid">
-            <Field
-              label="Company name"
-              name="companyName"
-              onChange={updateField}
-              required
-              value={form.companyName}
-            />
-            <Field label="Website" name="website" onChange={updateField} value={form.website} />
-            <Field label="Industry" name="industry" onChange={updateField} required value={form.industry} />
-            <SelectField
-              label="Organization size"
-              name="organizationSize"
-              onChange={updateField}
-              options={["1-10", "11-50", "51-200", "201-1,000", "1,001+"]}
-              required
-              value={form.organizationSize}
-            />
             <Field
               label="Primary operating region"
               name="headquarters"
               onChange={updateField}
-              required
               value={form.headquarters}
             />
             <SelectField
@@ -646,14 +633,12 @@ function IntakePage({
               name="sustainabilityGoals"
               onChange={updateField}
               placeholder="Energy savings, supplier scoring, waste diversion, emissions tracking..."
-              required
               value={form.sustainabilityGoals}
             />
             <TextArea
               label="What is difficult about tracking this today?"
               name="currentChallenges"
               onChange={updateField}
-              required
               value={form.currentChallenges}
             />
             <SelectField
@@ -665,6 +650,21 @@ function IntakePage({
               value={form.timeline}
             />
             <TextArea label="Additional notes" name="notes" onChange={updateField} value={form.notes} />
+          </div>
+
+          <h2>Contact Information</h2>
+          <div className="field-grid">
+            <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
+            <Field label="Full name" name="fullName" onChange={updateField} value={form.fullName} />
+            <Field label="Phone" name="phone" onChange={updateField} value={form.phone} />
+            <Field label="Role/title" name="roleTitle" onChange={updateField} value={form.roleTitle} />
+            <SelectField
+              label="Preferred contact"
+              name="contactPreference"
+              onChange={updateField}
+              options={["Email", "Phone", "Text"]}
+              value={form.contactPreference}
+            />
           </div>
 
           {error ? <p className="error-message">{error}</p> : null}
@@ -1040,7 +1040,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
         <p className="eyebrow">Contact</p>
         <dl>
           <dt>Name</dt>
-          <dd>{intake.contact.fullName}</dd>
+          <dd>{intake.contact.fullName || "Not provided"}</dd>
           <dt>Email</dt>
           <dd>{intake.contact.email}</dd>
           <dt>Phone</dt>

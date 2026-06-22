@@ -26,20 +26,14 @@ const app = express();
 app.use(express.json({ limit: "128kb" }));
 
 const requiredFields = [
-  ["fullName", "Full name"],
   ["email", "Email"],
   ["siteAddress", "Site address"],
   ["electricUtilityProvider", "Electric utility provider"],
   ["companyName", "Company name"],
-  ["industry", "Industry"],
   ["organizationType", "Organization type"],
-  ["organizationSize", "Organization size"],
-  ["headquarters", "Primary operating region"],
   ["ownershipStatus", "Ownership status"],
   ["buildingType", "Building type"],
   ["squareFootage", "Square footage"],
-  ["sustainabilityGoals", "Sustainability goals"],
-  ["currentChallenges", "Current challenges"],
   ["timeline", "Timeline"]
 ];
 
@@ -103,7 +97,7 @@ function createIntakeRecord(userId, input, now) {
     userId,
     submissionId: `intake_${userId}`,
     contact: {
-      fullName: cleanText(input.fullName),
+      fullName: cleanOptional(input.fullName),
       email: cleanText(input.email).toLowerCase(),
       phone: cleanOptional(input.phone),
       roleTitle: cleanOptional(input.roleTitle),
@@ -229,7 +223,7 @@ async function createClientUser(input) {
       userId,
       role: "client",
       status: "active",
-      fullName: intake.contact.fullName,
+      fullName: intake.contact.fullName || intake.business.companyName,
       email: intake.contact.email,
       companyName: intake.business.companyName,
       authProvider: "temporaryCode",
