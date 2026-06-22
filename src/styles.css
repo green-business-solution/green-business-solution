@@ -1154,6 +1154,14 @@ body {
   position: relative;
 }
 
+.dropdown-panel-wrap {
+  padding-top: 8px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 20;
+}
+
 .dropdown-trigger {
   gap: 6px;
 }
@@ -1170,9 +1178,6 @@ body {
   display: grid;
   gap: 2px;
   padding: 8px;
-  position: absolute;
-  right: 0;
-  top: calc(100% + 10px);
   width: 200px;
   z-index: 20;
 }
@@ -2024,6 +2029,10 @@ body {
 
   .site-nav,
   .nav-actions {
+    display: none;
+  }
+
+  .dropdown-panel-wrap {
     display: none;
   }
 

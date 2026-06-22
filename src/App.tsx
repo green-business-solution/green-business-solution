@@ -1021,7 +1021,14 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <div className="nav-dropdown" onMouseLeave={() => setIsAboutOpen(false)}>
           <button
             aria-expanded={isAboutOpen}
+            aria-haspopup="menu"
             className="link-button dropdown-trigger"
+            onBlur={(event) => {
+              if (!event.currentTarget.parentElement?.contains(event.relatedTarget as Node | null)) {
+                setIsAboutOpen(false);
+              }
+            }}
+            onFocus={() => setIsAboutOpen(true)}
             onClick={() => setIsAboutOpen((current) => !current)}
             type="button"
           >
@@ -1031,12 +1038,14 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
             </span>
           </button>
           {isAboutOpen ? (
-            <div className="dropdown-panel" role="menu">
-              {aboutLinks.map((item) => (
-                <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
-                  {item.label}
-                </button>
-              ))}
+            <div className="dropdown-panel-wrap">
+              <div className="dropdown-panel" role="menu">
+                {aboutLinks.map((item) => (
+                  <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : null}
         </div>
