@@ -7,6 +7,12 @@
 - Batched DynamoDB writes for the larger DSIRE import and expanded normalized fields for cleaner admin review.
 - Updated DSIRE ingestion and data-model documentation.
 
+## 2026-06-21 - Codex (GPT-5) local Google OAuth sign-in
+
+- Added Google Identity Services sign-in buttons to the user portal and admin login screens.
+- Added backend Google ID token verification, account linking to existing DynamoDB users by Google subject or email, and Google-backed admin loading.
+- Documented the local OAuth client ID setup and kept the Google client secret out of the repository.
+
 ## 2026-06-21 - Codex (GPT-5) DSIRE AWS opportunity import
 
 - Added DSIRE RSS validation and DynamoDB upsert support for the `gbs-opportunity-candidates` table.

@@ -21,6 +21,14 @@ The development command starts:
 - local API: `http://127.0.0.1:8787`
 - Vite app: first available port starting at `http://127.0.0.1:5173`
 
+Google sign-in is configured for local development with the Green Business Solution web OAuth client. The default public client ID is built into the app for localhost testing. Override it only when switching OAuth clients:
+
+```sh
+VITE_GOOGLE_CLIENT_ID=google-web-client-id GOOGLE_CLIENT_ID=google-web-client-id npm run dev
+```
+
+The Google client secret is not used by the local browser sign-in flow.
+
 ## Local Troubleshooting
 
 If the website shows an API or request error after entering a temporary code:

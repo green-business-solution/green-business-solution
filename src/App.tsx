@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 const LockIcon = () => (
   <svg aria-hidden="true" className="button-icon" fill="none" viewBox="0 0 24 24">
@@ -98,6 +98,37 @@ type AdminPayload = {
   dataTables: DatabaseTableSnapshot[];
 };
 
+type GoogleCredentialResponse = {
+  credential?: string;
+  select_by?: string;
+};
+
+type GoogleButtonOptions = {
+  logo_alignment?: "left" | "center";
+  shape?: "rectangular" | "pill" | "circle" | "square";
+  size?: "large" | "medium" | "small";
+  text?: "signin_with" | "signup_with" | "continue_with" | "signin";
+  theme?: "outline" | "filled_blue" | "filled_black";
+  width?: number;
+};
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: {
+            callback: (response: GoogleCredentialResponse) => void;
+            cancel_on_tap_outside?: boolean;
+            client_id: string;
+          }) => void;
+          renderButton: (parent: HTMLElement, options: GoogleButtonOptions) => void;
+        };
+      };
+    };
+  }
+}
+
 type IntakeFormState = {
   fullName: string;
   email: string;
@@ -196,6 +227,43 @@ const improvementOptions = [
 
 const sessionKey = "gbs-user-session";
 const adminSessionKey = "gbs-admin-session";
+const googleClientId =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+  "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
+const googleIdentityScriptUrl = "https://accounts.google.com/gsi/client";
+let googleIdentityScriptPromise: Promise<void> | null = null;
+
+function loadGoogleIdentityScript() {
+  if (window.google?.accounts?.id) {
+    return Promise.resolve();
+  }
+
+  if (!googleIdentityScriptPromise) {
+    googleIdentityScriptPromise = new Promise((resolve, reject) => {
+      const existingScript = document.querySelector<HTMLScriptElement>(
+        `script[src="${googleIdentityScriptUrl}"]`
+      );
+
+      if (existingScript) {
+        existingScript.addEventListener("load", () => resolve(), { once: true });
+        existingScript.addEventListener("error", () => reject(new Error("Google sign-in failed to load.")), {
+          once: true
+        });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.async = true;
+      script.defer = true;
+      script.src = googleIdentityScriptUrl;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Google sign-in failed to load."));
+      document.head.appendChild(script);
+    });
+  }
+
+  return googleIdentityScriptPromise;
+}
 
 function routeFromPath(): Route {
   if (window.location.pathname === "/get-started") return "get-started";
@@ -241,6 +309,99 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
   }
 
   return payload as T;
+}
+
+function GoogleSignInButton<T>({
+  endpoint,
+  onSuccess
+}: {
+  endpoint: string;
+  onSuccess: (payload: T) => void;
+}) {
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+  const onSuccessRef = useRef(onSuccess);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  useEffect(() => {
+    onSuccessRef.current = onSuccess;
+  }, [onSuccess]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function renderGoogleButton() {
+      if (!googleClientId) {
+        setError("Google sign-in is not configured.");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        await loadGoogleIdentityScript();
+      } catch (scriptError) {
+        if (!isMounted) return;
+        setError(scriptError instanceof Error ? scriptError.message : "Google sign-in failed to load.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!isMounted || !buttonRef.current || !window.google?.accounts?.id) {
+        return;
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: googleClientId,
+        cancel_on_tap_outside: true,
+        callback: async (response) => {
+          const credential = response.credential;
+          if (!credential) {
+            setError("Google did not return a sign-in credential.");
+            return;
+          }
+
+          setError(null);
+          setIsSigningIn(true);
+          try {
+            const payload = await apiPost<T>(endpoint, { credential });
+            onSuccessRef.current(payload);
+          } catch (requestError) {
+            setError(requestError instanceof Error ? requestError.message : "Google sign-in failed.");
+          } finally {
+            setIsSigningIn(false);
+          }
+        }
+      });
+
+      buttonRef.current.innerHTML = "";
+      window.google.accounts.id.renderButton(buttonRef.current, {
+        logo_alignment: "left",
+        shape: "rectangular",
+        size: "large",
+        text: "continue_with",
+        theme: "outline",
+        width: 320
+      });
+      setIsLoading(false);
+    }
+
+    void renderGoogleButton();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [endpoint]);
+
+  return (
+    <div className="google-auth">
+      <div className="google-button-slot" ref={buttonRef}>
+        {isLoading ? <span>Loading Google...</span> : null}
+      </div>
+      {isSigningIn ? <p className="muted-message">Signing in...</p> : null}
+      {error ? <p className="error-message">{error}</p> : null}
+    </div>
+  );
 }
 
 function formatDate(value: string | null) {
@@ -682,21 +843,33 @@ function PortalPage({
   if (!payload) {
     return (
       <main className="center-page">
-        <form className="code-card" onSubmit={login}>
-          <p className="eyebrow">User portal</p>
-          <h1>Enter your six-digit temporary code.</h1>
-          <input
-            inputMode="numeric"
-            maxLength={6}
-            onChange={(event) => setCode(event.target.value)}
-            placeholder="123456"
-            value={code}
+        <section className="code-card">
+          <form className="code-form" onSubmit={login}>
+            <p className="eyebrow">User portal</p>
+            <h1>Enter your six-digit temporary code.</h1>
+            <input
+              inputMode="numeric"
+              maxLength={6}
+              onChange={(event) => setCode(event.target.value)}
+              placeholder="123456"
+              value={code}
+            />
+            {error ? <p className="error-message">{error}</p> : null}
+            <button disabled={isLoading} type="submit">
+              {isLoading ? "Opening..." : "Open portal"}
+            </button>
+          </form>
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+          <GoogleSignInButton<PortalPayload>
+            endpoint="/api/auth/google"
+            onSuccess={(nextPayload) => {
+              window.localStorage.setItem(sessionKey, nextPayload.user.userId);
+              setPortalPayload(nextPayload);
+            }}
           />
-          {error ? <p className="error-message">{error}</p> : null}
-          <button disabled={isLoading} type="submit">
-            {isLoading ? "Opening..." : "Open portal"}
-          </button>
-        </form>
+        </section>
       </main>
     );
   }
@@ -760,27 +933,40 @@ function AdminPage() {
   if (!admin) {
     return (
       <main className="center-page">
-        <form
-          className="code-card"
-          onSubmit={(event) => {
-            event.preventDefault();
-            void loadUsers(adminCode);
-          }}
-        >
-          <p className="eyebrow">Admin</p>
-          <h1>Enter an admin temporary code.</h1>
-          <input
-            inputMode="numeric"
-            maxLength={6}
-            onChange={(event) => setAdminCode(event.target.value)}
-            placeholder="123456"
-            value={adminCode}
+        <section className="code-card">
+          <form
+            className="code-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void loadUsers(adminCode);
+            }}
+          >
+            <p className="eyebrow">Admin</p>
+            <h1>Enter an admin temporary code.</h1>
+            <input
+              inputMode="numeric"
+              maxLength={6}
+              onChange={(event) => setAdminCode(event.target.value)}
+              placeholder="123456"
+              value={adminCode}
+            />
+            {error ? <p className="error-message">{error}</p> : null}
+            <button disabled={isLoading} type="submit">
+              {isLoading ? "Checking..." : "Open admin"}
+            </button>
+          </form>
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+          <GoogleSignInButton<AdminPayload>
+            endpoint="/api/admin/google"
+            onSuccess={(payload) => {
+              setAdmin(payload.admin);
+              setRows(payload.users);
+              setDataTables(payload.dataTables || []);
+            }}
           />
-          {error ? <p className="error-message">{error}</p> : null}
-          <button disabled={isLoading} type="submit">
-            {isLoading ? "Checking..." : "Open admin"}
-          </button>
-        </form>
+        </section>
       </main>
     );
   }

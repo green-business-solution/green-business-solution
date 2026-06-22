@@ -2,12 +2,23 @@
 
 The current development version uses six-digit temporary codes as user IDs.
 
-Future Google login should add:
+Local development now supports Google sign-in through Google Identity Services:
 
-1. A Google OAuth sign-in flow.
-2. A way for users to enter their existing temporary code after Google sign-in.
-3. A backend endpoint that verifies the Google identity and links it to the existing `gbs-users` record.
-4. A permanent identity field on the user record, such as:
+1. The React app renders the Google sign-in button with the web client ID.
+2. The browser sends Google's returned identity credential to the local API.
+3. The API verifies the Google ID token signature, issuer, expiration, verified email, and audience.
+4. The API links the Google identity to an existing active `gbs-users` record by `googleSubject` or matching email.
+
+The default local web client ID is embedded because it is public OAuth metadata, not a secret. It can be overridden with:
+
+```sh
+VITE_GOOGLE_CLIENT_ID=google-web-client-id
+GOOGLE_CLIENT_ID=google-web-client-id
+```
+
+The Google client secret is not needed for this browser ID-token flow and must not be committed.
+
+Linked user records include:
 
 ```json
 {
@@ -19,7 +30,7 @@ Future Google login should add:
 }
 ```
 
-Admin access should move away from temporary codes before any public deployment. A future production version should grant admin access based on verified Google identity and an allowlist of admin emails:
+Admin access should move away from temporary codes before any public deployment. The local admin Google endpoint grants admin access only when the matched app user already has `role: "admin"`. A future production version should also keep an explicit allowlist of admin emails:
 
 - `neerkuchlous@gmail.com`
 - `pmrajvansh@gmail.com`
