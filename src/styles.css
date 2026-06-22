@@ -1127,13 +1127,11 @@ body {
   background: transparent;
 }
 
-.brand-link .brand-mark {
-  background: var(--retrofi-green);
-  border-radius: 9px;
-  color: #ffffff;
-  font-size: 17px;
-  height: 36px;
-  width: 36px;
+.brand-symbol {
+  display: block;
+  height: 38px;
+  object-fit: contain;
+  width: 38px;
 }
 
 .site-nav {

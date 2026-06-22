@@ -919,9 +919,7 @@ function CheckboxGroup({
 function Brand({ onClick }: { onClick: () => void }) {
   return (
     <button className="brand-link" onClick={onClick} type="button">
-      <span className="brand-mark" aria-hidden="true">
-        R
-      </span>
+      <img alt="" aria-hidden="true" className="brand-symbol" src="/retrofi-logo.png" />
       <span>RetroFi</span>
     </button>
   );
@@ -1018,7 +1016,11 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <button className="link-button" onClick={() => go("pricing")} type="button">
           Pricing
         </button>
-        <div className="nav-dropdown" onMouseLeave={() => setIsAboutOpen(false)}>
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setIsAboutOpen(true)}
+          onMouseLeave={() => setIsAboutOpen(false)}
+        >
           <button
             aria-expanded={isAboutOpen}
             aria-haspopup="menu"

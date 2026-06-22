@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) RetroFi logo and hover polish
+
+- Added the uploaded RetroFi logo asset to the public site header/footer branding and browser favicon.
+- Changed the About dropdown so hovering over the trigger area opens the menu without a click and keeps it open while moving into Mission or Team.
+
 ## 2026-06-22 - Codex (GPT-5) DSIRE-only opportunity scope
 
 - Removed non-DSIRE opportunity ingestion scripts, npm commands, and source-specific ingestion docs.
