@@ -27,7 +27,6 @@ type Route =
   | "home"
   | "how-it-works"
   | "pricing"
-  | "for-businesses"
   | "about"
   | "about-mission"
   | "about-team"
@@ -389,7 +388,7 @@ function loadGoogleIdentityScript() {
 function routeFromPath(): Route {
   if (window.location.pathname === "/how-it-works") return "how-it-works";
   if (window.location.pathname === "/pricing") return "pricing";
-  if (window.location.pathname === "/for-businesses") return "for-businesses";
+  if (window.location.pathname === "/for-businesses") return "home";
   if (window.location.pathname === "/about") return "about";
   if (window.location.pathname === "/about/mission") return "about-mission";
   if (window.location.pathname === "/about/team") return "about-team";
@@ -1002,9 +1001,6 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
         <button className="link-button" onClick={() => go("pricing")} type="button">
           Pricing
         </button>
-        <button className="link-button" onClick={() => go("for-businesses")} type="button">
-          For Businesses
-        </button>
         <div className="nav-dropdown" onMouseLeave={() => setIsAboutOpen(false)}>
           <button
             aria-expanded={isAboutOpen}
@@ -1058,9 +1054,6 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           <button className="link-button" onClick={() => go("pricing")} type="button">
             Pricing
           </button>
-          <button className="link-button" onClick={() => go("for-businesses")} type="button">
-            For Businesses
-          </button>
           <div className="mobile-about-group">
             <span>About</span>
             {aboutLinks.map((item) => (
@@ -1093,7 +1086,6 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
-          ["For Businesses", "for-businesses"],
           ["Create Free Scan", "scan"]
         ].map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
@@ -1330,28 +1322,6 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
         </button>
       </section>
 
-      <section className="content-section">
-        <SectionHeading eyebrow="Best fit" title="Built for businesses with real facility costs" />
-        <div className="card-grid three compact-cards">
-          {[
-            "Restaurants & commercial kitchens",
-            "Grocery & convenience stores",
-            "Hotels & hospitality",
-            "Warehouses & industrial spaces",
-            "Medical & dental offices",
-            "Multi-location businesses"
-          ].map((business) => (
-            <article className="business-preview-card" key={business}>
-              <h3>{business}</h3>
-              <button className="text-link with-icon" onClick={() => navigate("for-businesses")} type="button">
-                See business types
-                <ArrowUpRightIcon />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="trust-strip" aria-label="Trust commitments">
         {[
           "Your information is kept private",
@@ -1499,58 +1469,6 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
             <p>{answer}</p>
           </article>
         ))}
-      </section>
-    </PublicShell>
-  );
-}
-
-function ForBusinessesPage({ navigate }: { navigate: (route: Route) => void }) {
-  const businessTypes = [
-    ["Restaurants & Commercial Kitchens", "Cooking equipment, refrigeration, HVAC, water heating, lighting."],
-    ["Grocery & Convenience Stores", "Refrigeration, lighting, HVAC, controls, backup power."],
-    ["Hotels & Hospitality", "HVAC, water heating, laundry, smart controls, lighting."],
-    ["Warehouses & Industrial Spaces", "Lighting, HVAC, motors, fleet/EV charging, solar."],
-    ["Medical & Dental Offices", "HVAC, lighting, equipment efficiency, utility cost reduction."],
-    ["Multi-Location Businesses", "Repeatable scans, portfolio prioritization, standardized recommendations."]
-  ];
-
-  return (
-    <PublicShell navigate={navigate}>
-      <PageHero
-        compact
-        eyebrow="For businesses"
-        title="Built for businesses with real facility costs"
-        copy="Retrofi is designed for businesses where energy, equipment, water, refrigeration, HVAC, lighting, or facility upgrades can meaningfully affect operating costs."
-      />
-      <section className="card-grid two business-type-grid">
-        {businessTypes.map(([title, copy]) => (
-          <article className="feature-card" key={title}>
-            <h3>{title}</h3>
-            <p>Likely upgrade areas: {copy}</p>
-          </article>
-        ))}
-      </section>
-      <section className="two-column-section">
-        <article className="feature-card list-card">
-          <h2>Retrofi is most useful if your business has:</h2>
-          <ul>
-            {["A physical location", "Monthly utility bills", "Equipment, HVAC, refrigeration, lighting, or water usage", "Interest in reducing operating costs", "Possible upgrade plans in the next 3-12 months"].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className="feature-card muted-card list-card">
-          <h2>Retrofi may be less useful for:</h2>
-          <ul>
-            {["Homeowners", "Very small home-based businesses", "Businesses with no physical facility", "Businesses not considering upgrades", "Businesses outside supported regions"].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-      <section className="final-cta">
-        <h2>See if Retrofi fits your business.</h2>
-        <CTAButton navigate={navigate} route="scan">Create Free Scan</CTAButton>
       </section>
     </PublicShell>
   );
@@ -2927,10 +2845,6 @@ export function App() {
 
   if (route === "pricing") {
     return <PricingPage navigate={navigate} />;
-  }
-
-  if (route === "for-businesses") {
-    return <ForBusinessesPage navigate={navigate} />;
   }
 
   if (route === "about") {

@@ -48,7 +48,7 @@ Do not use `Request Demo` as the primary CTA.
 Final top navigation:
 
 - Left: Retrofi logo
-- Center: `How It Works`, `Pricing`, `For Businesses`, `About` dropdown
+- Center: `How It Works`, `Pricing`, `About` dropdown
 - Right: `Sign In`, `Create Free Scan`
 
 Current public URL structure:
@@ -56,7 +56,6 @@ Current public URL structure:
 - `/` = Home
 - `/how-it-works` = full process explanation
 - `/pricing` = project-based pricing
-- `/for-businesses` = business type fit
 - `/about` = about overview hub
 - `/about/mission` = mission
 - `/about/team` = team
@@ -90,7 +89,7 @@ Personal contact information is still needed, but it should not be the first thi
 7. `Sign In` leads to Google-backed report/dashboard access.
 8. Admin users can inspect intake records and data tables.
 
-Legacy `/get-started` should continue routing to `/scan` for compatibility.
+Legacy `/get-started` should continue routing to `/scan` for compatibility. Legacy `/for-businesses` can fall back to home.
 
 ## Intake Form Direction
 

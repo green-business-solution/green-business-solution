@@ -1422,8 +1422,7 @@ body {
 .final-cta h2,
 .feature-card h2,
 .comparison-card h2,
-.hub-card h3,
-.business-preview-card h3 {
+.hub-card h3 {
   font-size: clamp(30px, 3vw, 44px);
   line-height: 1.1;
   margin: 0;
@@ -1466,8 +1465,8 @@ body {
 .pricing-card,
 .comparison-card,
 .team-card,
-.hub-card,
-.business-preview-card {
+.sign-in-panel,
+.hub-card {
   background: var(--retrofi-surface);
   border: 1px solid var(--retrofi-border);
   border-radius: 14px;
@@ -1479,15 +1478,13 @@ body {
 
 .feature-card:hover,
 .pricing-card:hover,
-.hub-card:hover,
-.business-preview-card:hover {
+.hub-card:hover {
   transform: translateY(-2px);
 }
 
 .feature-card,
 .pricing-card,
-.hub-card,
-.business-preview-card {
+.hub-card {
   transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
 }
 
@@ -1512,8 +1509,7 @@ body {
 .step-card h3,
 .pricing-card h2,
 .team-card h3,
-.hub-card h3,
-.business-preview-card h3 {
+.hub-card h3 {
   margin: 0;
 }
 
@@ -1521,7 +1517,6 @@ body {
 .step-card h3,
 .team-card h3,
 .hub-card h3,
-.business-preview-card h3,
 .pricing-card h2 {
   font-size: 22px;
   line-height: 1.18;
@@ -1560,11 +1555,6 @@ body {
 .arrow-icon {
   height: 16px;
   width: 16px;
-}
-
-.business-preview-card {
-  align-content: space-between;
-  min-height: 166px;
 }
 
 .trust-strip {
@@ -1755,7 +1745,6 @@ body {
 }
 
 .about-hub-grid,
-.business-type-grid,
 .trust-grid {
   margin-bottom: 72px;
 }
