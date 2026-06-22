@@ -496,6 +496,9 @@ function IntakePage({
         <div className="form-intro">
           <h1>Tell us about your business</h1>
           <p>We&apos;ll use this information to tailor your recommendations.</p>
+          <p className="required-note">
+            Required fields are marked with <span aria-hidden="true">*</span>
+          </p>
         </div>
 
         <form className="intake-form" onSubmit={submitForm}>

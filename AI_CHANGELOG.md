@@ -70,3 +70,7 @@
 ## 2026-06-21 - Codex (GPT-5) intake intro copy
 
 - Removed the `Get started` eyebrow from the intake form and replaced the helper text with recommendation-focused copy.
+
+## 2026-06-21 - Codex (GPT-5) intake required-field note
+
+- Added a styled required-field note below the intake form intro copy.

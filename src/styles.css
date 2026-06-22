@@ -292,8 +292,26 @@ mark {
 
 .form-intro {
   align-self: start;
+  display: grid;
+  gap: 10px;
   position: sticky;
   top: 24px;
+}
+
+.form-intro h1 {
+  margin-bottom: 0;
+}
+
+.form-intro .required-note {
+  color: #6f7d74;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.required-note span {
+  color: #a6422b;
+  font-weight: 850;
 }
 
 .intake-form,
