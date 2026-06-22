@@ -200,7 +200,8 @@ Suggested future flow:
 ## Current Limitations
 
 - The relational opportunity database has not been implemented yet.
-- This script does not create migrations, queues, cron schedules, Lambda jobs, or admin review tabs.
+- This script does not create migrations, queues, cron schedules, or Lambda jobs. DSIRE records appear
+  in the existing admin opportunity review tab after they are written to DynamoDB.
 - RSS mode cannot gather all DSIRE opportunities.
 - Public-table mode defaults to financial incentives. Use `--public-category all` to include regulatory policies too.
 - API mode is ready for configuration, but the actual licensed DSIRE API base URL, auth format, and pagination parameters need to be confirmed if formal API access is provided later.

@@ -18,6 +18,7 @@ const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
+const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
 const googleAllowedClientIds = [
@@ -814,6 +815,25 @@ async function updateOpportunityReview({ opportunityId, status, notes, duplicate
     throw error;
   }
 
+  const existing = await db.send(
+    new GetCommand({
+      TableName: opportunitiesTable,
+      Key: { opportunityId: cleanOpportunityId }
+    })
+  );
+
+  if (!existing.Item) {
+    const error = new Error("Opportunity record was not found.");
+    error.status = 404;
+    throw error;
+  }
+
+  if (!isDsireOpportunityRecord(existing.Item)) {
+    const error = new Error("Only DSIRE opportunity records are active for review.");
+    error.status = 400;
+    throw error;
+  }
+
   const now = new Date().toISOString();
   const result = await db.send(
     new UpdateCommand({
@@ -841,6 +861,10 @@ async function updateOpportunityReview({ opportunityId, status, notes, duplicate
   return result.Attributes;
 }
 
+function isDsireOpportunityRecord(record) {
+  return record?.sourceKey === dsireSourceKey;
+}
+
 function compactEvidence(evidence) {
   if (!Array.isArray(evidence)) {
     return [];
@@ -853,39 +877,83 @@ function compactEvidence(evidence) {
     sectionHeading: item?.sectionHeading,
     sectionCategory: item?.sectionCategory,
     retrievedAt: item?.retrievedAt,
+    rawContentHash: item?.rawContentHash,
+    parentDocumentHash: item?.parentDocumentHash,
     extractedText: compactText(item?.extractedText, maxEvidenceTextLength)
   }));
 }
 
+function compactDetailLabels(details) {
+  if (!Array.isArray(details)) {
+    return [];
+  }
+
+  return details.map((detail) => detail?.label).filter(Boolean).slice(0, 20);
+}
+
+function buildDsireSourceRecords(record, evidence) {
+  return [
+    {
+      sourceKey: record.sourceKey,
+      sourceName: record.sourceName,
+      sourceUrl: record.sourceUrl,
+      externalId: record.externalId,
+      externalIdType: record.externalIdType,
+      ingestionMode: record.ingestionMode,
+      ingestRunId: record.ingestRunId,
+      evidence
+    }
+  ];
+}
+
 function compactOpportunityRecord(record) {
+  const evidence = compactEvidence(record.evidence);
+
   return {
     opportunityId: record.opportunityId,
+    IUID: record.opportunityId,
     canonicalTitle: record.canonicalTitle,
     normalizedTitle: record.normalizedTitle,
     sourceKey: record.sourceKey,
     sourceName: record.sourceName,
     sourceUrl: record.sourceUrl,
+    sourceRecords: buildDsireSourceRecords(record, evidence),
+    externalId: record.externalId,
+    externalIdType: record.externalIdType,
+    ingestionMode: record.ingestionMode,
+    ingestRunId: record.ingestRunId,
     origin: record.origin,
     status: record.status,
-    sourceStatus: record.sourceStatus,
     reviewStatus: record.reviewStatus,
     reviewNotes: record.reviewNotes || null,
     duplicateOf: record.duplicateOf || null,
     reviewedAt: record.reviewedAt,
     reviewedBy: record.reviewedBy,
     category: record.category,
+    categoryId: record.categoryId,
     programType: record.programType,
+    programTypeId: record.programTypeId,
     summary: compactText(record.summary, 1600),
+    state: record.state,
+    stateName: record.stateName,
+    geography: record.geography,
     administrator: record.administrator,
-    deliveryPartner: record.deliveryPartner || null,
-    applicationUrl: record.applicationUrl || null,
     websiteUrl: record.websiteUrl || null,
     technologies: record.technologies,
     sectors: record.sectors,
-    matchingParameters: record.matchingParameters,
-    eligibilityRules: record.eligibilityRules,
-    evidence: compactEvidence(record.evidence),
+    lastUpdated: record.lastUpdated,
+    sourceCreatedAt: record.sourceCreatedAt,
+    startDate: record.startDate,
+    endDate: record.endDate,
+    fundingSource: record.fundingSource,
+    budget: record.budget,
+    detailLabels: compactDetailLabels(record.details),
+    dsire: record.dsire,
+    evidence,
     dataQuality: record.dataQuality,
+    contentHash: record.contentHash,
+    previousContentHash: record.previousContentHash,
+    firstSeenAt: record.firstSeenAt,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
     lastSeenAt: record.lastSeenAt
@@ -928,7 +996,7 @@ async function buildAdminPayload(admin) {
     .filter(isActiveUserRecord)
     .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
   const sortedIntakes = [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
-  const sortedOpportunities = [...opportunities].sort((a, b) =>
+  const sortedOpportunities = opportunities.filter(isDsireOpportunityRecord).sort((a, b) =>
     String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
       String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
     )
@@ -1228,7 +1296,7 @@ app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
       credential: req.body?.credential,
       passwordSessionToken: req.body?.passwordSessionToken
     });
-    res.json({ opportunity });
+    res.json({ opportunity: compactOpportunityRecord(opportunity) });
   } catch (error) {
     handleError(res, error);
   }

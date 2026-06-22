@@ -125,13 +125,30 @@ type OpportunityEvidence = {
   extractedText?: string | null;
 };
 
+type OpportunitySourceRecord = {
+  sourceKey?: string;
+  sourceName?: string;
+  sourceUrl?: string;
+  externalId?: string;
+  externalIdType?: string;
+  ingestionMode?: string;
+  ingestRunId?: string;
+  evidence?: OpportunityEvidence[];
+};
+
 type OpportunityRecord = {
   opportunityId: string;
+  IUID?: string;
   canonicalTitle?: string;
   normalizedTitle?: string;
   sourceKey?: string;
   sourceName?: string;
   sourceUrl?: string;
+  sourceRecords?: OpportunitySourceRecord[];
+  externalId?: string;
+  externalIdType?: string;
+  ingestionMode?: string;
+  ingestRunId?: string;
   origin?: {
     sourceKey?: string;
     sourceName?: string;
@@ -150,14 +167,23 @@ type OpportunityRecord = {
     email?: string;
   };
   category?: string;
+  categoryId?: string;
   programType?: string;
+  programTypeId?: string;
   summary?: string;
+  summaryHtml?: string;
+  state?: string;
+  stateName?: string;
+  geography?: unknown;
   administrator?: string;
   deliveryPartner?: string | null;
   applicationUrl?: string | null;
   websiteUrl?: string | null;
   technologies?: unknown;
   sectors?: unknown;
+  details?: unknown;
+  detailLabels?: unknown;
+  dsire?: unknown;
   matchingParameters?: {
     zipCode?: MatchParameter;
     utilityProvider?: MatchParameter;
@@ -175,7 +201,10 @@ type OpportunityRecord = {
     criticalIssues?: unknown;
     warnings?: unknown;
   };
+  contentHash?: string;
+  previousContentHash?: string | null;
   raw?: unknown;
+  firstSeenAt?: string;
   createdAt?: string;
   updatedAt?: string;
   lastSeenAt?: string;
@@ -724,10 +753,6 @@ function getOpportunityWarnings(opportunity: OpportunityRecord) {
   ];
 }
 
-function getOpportunityUtilityProviders(opportunity: OpportunityRecord) {
-  return valuesFromParameter(opportunity.matchingParameters?.utilityProvider);
-}
-
 function getOpportunityBusinessClassifications(opportunity: OpportunityRecord) {
   const fromMatching = valuesFromParameter(opportunity.matchingParameters?.businessClassification);
   return fromMatching.length > 0 ? fromMatching : toStringArray(opportunity.sectors);
@@ -735,14 +760,6 @@ function getOpportunityBusinessClassifications(opportunity: OpportunityRecord) {
 
 function getOpportunityTechnologies(opportunity: OpportunityRecord) {
   return toStringArray(opportunity.technologies);
-}
-
-function formatSquareFootage(parameter: MatchParameter | undefined) {
-  if (!parameter) return "Not specified";
-  if (parameter.min == null && parameter.max == null) return parameter.mode || "Not specified";
-  if (parameter.min != null && parameter.max != null) return `${parameter.min} - ${parameter.max} sq ft`;
-  if (parameter.min != null) return `At least ${parameter.min} sq ft`;
-  return `Up to ${parameter.max} sq ft`;
 }
 
 function compactJson(value: unknown) {
@@ -2268,8 +2285,7 @@ function OpportunityReviewPanel({
   const [statusFilter, setStatusFilter] = useState("");
   const [programTypeFilter, setProgramTypeFilter] = useState("");
   const [reviewStatusFilter, setReviewStatusFilter] = useState("");
-  const [utilityFilter, setUtilityFilter] = useState("");
-  const [businessFilter, setBusinessFilter] = useState("");
+  const [stateFilter, setStateFilter] = useState("");
   const [warningFilter, setWarningFilter] = useState("");
   const [selectedOpportunityId, setSelectedOpportunityId] = useState(records[0]?.opportunityId || "");
 
@@ -2277,12 +2293,12 @@ function OpportunityReviewPanel({
   const statusOptions = uniqueSorted(records.map((record) => record.status || ""));
   const programTypeOptions = uniqueSorted(records.map((record) => record.programType || ""));
   const reviewStatusOptions = uniqueSorted(records.map(getOpportunityReviewStatus));
-  const utilityOptions = uniqueSorted(records.flatMap(getOpportunityUtilityProviders));
-  const businessOptions = uniqueSorted(records.flatMap(getOpportunityBusinessClassifications));
+  const stateOptions = uniqueSorted(records.map((record) => record.stateName || record.state || ""));
   const warningOptions = uniqueSorted(records.flatMap(getOpportunityWarnings));
   const normalizedSearch = search.trim().toLowerCase();
   const filteredRecords = records.filter((record) => {
     const sourceValue = record.sourceName || record.sourceKey || "";
+    const stateValue = record.stateName || record.state || "";
     const haystack = [
       getOpportunityTitle(record),
       record.summary,
@@ -2291,9 +2307,10 @@ function OpportunityReviewPanel({
       record.status,
       record.programType,
       record.category,
+      record.stateName,
+      record.state,
       record.administrator,
       getOpportunityTechnologies(record).join(" "),
-      getOpportunityUtilityProviders(record).join(" "),
       getOpportunityBusinessClassifications(record).join(" "),
       getOpportunityWarnings(record).join(" ")
     ]
@@ -2306,8 +2323,7 @@ function OpportunityReviewPanel({
       (!statusFilter || record.status === statusFilter) &&
       (!programTypeFilter || record.programType === programTypeFilter) &&
       (!reviewStatusFilter || getOpportunityReviewStatus(record) === reviewStatusFilter) &&
-      (!utilityFilter || getOpportunityUtilityProviders(record).includes(utilityFilter)) &&
-      (!businessFilter || getOpportunityBusinessClassifications(record).includes(businessFilter)) &&
+      (!stateFilter || stateValue === stateFilter) &&
       (!warningFilter || getOpportunityWarnings(record).includes(warningFilter))
     );
   });
@@ -2356,13 +2372,7 @@ function OpportunityReviewPanel({
           options={reviewStatusOptions}
           value={reviewStatusFilter}
         />
-        <ReviewSelect label="Utility" onChange={setUtilityFilter} options={utilityOptions} value={utilityFilter} />
-        <ReviewSelect
-          label="Business"
-          onChange={setBusinessFilter}
-          options={businessOptions}
-          value={businessFilter}
-        />
+        <ReviewSelect label="State" onChange={setStateFilter} options={stateOptions} value={stateFilter} />
         <ReviewSelect label="Warning" onChange={setWarningFilter} options={warningOptions} value={warningFilter} />
       </div>
 
@@ -2464,10 +2474,22 @@ function OpportunityDetailPanel({
   }
 
   const warnings = getOpportunityWarnings(opportunity);
-  const utilityProviders = getOpportunityUtilityProviders(opportunity);
   const businessClassifications = getOpportunityBusinessClassifications(opportunity);
   const technologies = getOpportunityTechnologies(opportunity);
   const evidence = Array.isArray(opportunity.evidence) ? opportunity.evidence : [];
+  const dsireMetadata = {
+    IUID: opportunity.IUID,
+    sourceRecords: opportunity.sourceRecords,
+    externalId: opportunity.externalId,
+    externalIdType: opportunity.externalIdType,
+    ingestionMode: opportunity.ingestionMode,
+    ingestRunId: opportunity.ingestRunId,
+    dsire: opportunity.dsire,
+    geography: opportunity.geography,
+    detailLabels: opportunity.detailLabels,
+    contentHash: opportunity.contentHash,
+    previousContentHash: opportunity.previousContentHash
+  };
 
   async function submitReview(status: string) {
     const currentOpportunity = opportunity;
@@ -2583,11 +2605,11 @@ function OpportunityDetailPanel({
         <DetailItem label="Source" value={opportunity.sourceName || opportunity.sourceKey || "Unknown"} />
         <DetailItem label="Program type" value={opportunity.programType || "Unknown"} />
         <DetailItem label="Category" value={opportunity.category || "Unknown"} />
+        <DetailItem label="State" value={opportunity.stateName || opportunity.state || "Unknown"} />
         <DetailItem label="Administrator" value={opportunity.administrator || "Unknown"} />
-        <DetailItem label="Utility" value={utilityProviders.join(", ") || "Not classified"} />
-        <DetailItem label="Business" value={businessClassifications.join(", ") || "Not classified"} />
-        <DetailItem label="Square footage" value={formatSquareFootage(opportunity.matchingParameters?.squareFootage)} />
+        <DetailItem label="Sectors" value={businessClassifications.join(", ") || "Not specified"} />
         <DetailItem label="Technologies" value={technologies.join(", ") || "Not classified"} />
+        <DetailItem label="External ID" value={opportunity.externalId || "Unknown"} />
       </div>
 
       <section className="detail-section">
@@ -2635,8 +2657,8 @@ function OpportunityDetailPanel({
       </section>
 
       <section className="detail-section">
-        <h4>Matching parameters</h4>
-        <pre>{compactJson(opportunity.matchingParameters)}</pre>
+        <h4>DSIRE metadata</h4>
+        <pre>{compactJson(dsireMetadata)}</pre>
       </section>
 
       <section className="detail-section">

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) DSIRE-only opportunity scope
+
+- Removed non-DSIRE opportunity ingestion scripts, npm commands, and source-specific ingestion docs.
+- Rewrote the opportunity ingestion registry, database instructions, and data model around DSIRE as the only active opportunity source.
+- Updated the admin opportunity review API and UI to expose only DSIRE records with compact DSIRE source lineage and metadata.
+
 ## 2026-06-22 - Codex (GPT-5) unique email accounts
 
 - Enforced normalized email as the single account identity across intake, Google sign-in, and password signup.
