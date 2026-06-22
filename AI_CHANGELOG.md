@@ -75,3 +75,8 @@
 ## 2026-06-21 - Codex (GPT-5) intake required-field note
 
 - Added a styled required-field note below the intake form intro copy.
+
+## 2026-06-21 - Codex (GPT-5) intake privacy affordance
+
+- Changed the intake subheader back to `your recommendations`.
+- Added a lock icon and privacy tooltip to the `Create My Plan` submit button.

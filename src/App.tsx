@@ -1,5 +1,28 @@
 import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 
+const LockIcon = () => (
+  <svg aria-hidden="true" className="button-icon" fill="none" viewBox="0 0 24 24">
+    <path
+      d="M7 10V8a5 5 0 0 1 10 0v2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+    <rect
+      height="10"
+      rx="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      width="14"
+      x="5"
+      y="10"
+    />
+  </svg>
+);
+
 type Route = "home" | "get-started" | "portal" | "admin";
 
 type UserRecord = {
@@ -495,7 +518,7 @@ function IntakePage({
       <section className="form-shell">
         <div className="form-intro">
           <h1>Tell us about your business</h1>
-          <p>We&apos;ll use this information to tailor our recommendations.</p>
+          <p>We&apos;ll use this information to tailor your recommendations.</p>
           <p className="required-note">
             Required fields are marked with <span aria-hidden="true">*</span>
           </p>
@@ -645,8 +668,19 @@ function IntakePage({
           </div>
 
           {error ? <p className="error-message">{error}</p> : null}
-          <button disabled={isSubmitting} type="submit">
-            {isSubmitting ? "Submitting..." : "Create My Plan"}
+          <button
+            disabled={isSubmitting}
+            title="Your information stays private. We use it only to personalize your recommendations."
+            type="submit"
+          >
+            {isSubmitting ? (
+              "Submitting..."
+            ) : (
+              <>
+                <LockIcon />
+                Create My Plan
+              </>
+            )}
           </button>
         </form>
       </section>

@@ -26,11 +26,15 @@ textarea {
 }
 
 button {
+  align-items: center;
   border: 0;
   border-radius: 6px;
   background: #176b4c;
   color: #ffffff;
   cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  justify-content: center;
   font-weight: 750;
   min-height: 42px;
   padding: 0 16px;
@@ -43,6 +47,12 @@ button:hover {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.65;
+}
+
+.button-icon {
+  flex: 0 0 auto;
+  height: 17px;
+  width: 17px;
 }
 
 h1,
