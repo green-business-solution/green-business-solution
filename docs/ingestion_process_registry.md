@@ -30,12 +30,12 @@ each opportunity came from after aggregation, matching, and future AI-assisted c
 | DSIRE | `SOURCE_DSIRE` | `scripts/gather-dsire-opportunities.mjs` | `npm run gather:dsire:public` | `npm run gather:dsire:aws` | DSIRE public table endpoint, defaulting to Financial Incentive records | Implemented |
 | California Energy Commission | `SOURCE_CA_ENERGY_COMMISSION` | `scripts/gather-cec-opportunities.mjs` | `npm run gather:cec` | `npm run gather:cec:aws` | Official CEC sitemap plus solicitation detail pages | Implemented |
 | SDG&E Business Programs | `SOURCE_SDGE_BUSINESS` | `scripts/gather-sdge-opportunities.mjs` | `npm run gather:sdge` | `npm run gather:sdge:aws` | Curated SDG&E business seed pages, program tables, and program tiles | Implemented |
+| Silicon Valley Power | `SOURCE_SILICON_VALLEY_POWER` | `scripts/gather-svp-opportunities.mjs` | `npm run gather:svp` | `npm run gather:svp:aws` | Curated SVP pages split into business program sections | Implemented |
 
 ## Planned Importers
 
 | Source | Source key | Recommended adapter | Notes |
 | --- | --- | --- | --- |
-| Silicon Valley Power | `SOURCE_SILICON_VALLEY_POWER` | `static_section_splitter_adapter` | Good quick win after SDG&E. |
 | Southern California Edison | `SOURCE_SCE_BUSINESS` | `third_party_program_index_adapter` plus hub crawler | Requires stronger duplicate and external-domain controls. |
 | PG&E Business Programs | `SOURCE_PGE_BUSINESS` | `bounded_hub_pdf_catalog_adapter` | Requires PDF catalog handling. |
 | DOE Better Buildings Financing Navigator | `SOURCE_DOE_BB_FINANCING_NAVIGATOR` | `financing_taxonomy_adapter` | Taxonomy enrichment, not a core opportunity crawler. |

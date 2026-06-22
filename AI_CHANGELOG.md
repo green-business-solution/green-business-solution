@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) Silicon Valley Power opportunity import
+
+- Added a reusable Silicon Valley Power static-section importer for business rebates, electrification rebates, save-money programs, BOC scholarships, and EV charging incentives.
+- Preserved official SVP source/origin metadata on every opportunity candidate, with a documented reader fallback when direct SVP fetches are blocked.
+- Added deterministic matching fields for utility provider, SVP/Santa Clara geography mode, business classification, square footage, and demand thresholds.
+- Documented the SVP ingestion workflow for later weekly automation.
+
 ## 2026-06-21 - Codex (GPT-5) retrofi.org production hosting setup
 
 - Registered `retrofi.org` through Amazon Route 53 with auto-renew and privacy protection enabled.
