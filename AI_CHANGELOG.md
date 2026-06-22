@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) DSIRE ingestion starter
+
+- Added a reusable DSIRE ingestion script with configurable API mode and public RSS fallback mode.
+- Added local JSON run artifacts for raw records, normalized opportunity candidates, source document metadata, and change reports.
+- Documented DSIRE ingestion commands, API environment variables, output files, weekly reuse, and current limitations.
+
 ## 2026-06-21 - Codex (GPT-5) table-specific admin tabs
 
 - Replaced the single admin `Data` tab with one admin tab per returned database table.
