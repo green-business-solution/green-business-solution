@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) CEC opportunity import
+
+- Added a California Energy Commission sitemap/detail-page importer for solicitation opportunity candidates.
+- Extracted solicitation numbers, status, deadlines, purpose text, application portals, file links, technology tags, and source evidence.
+- Added inferred matching parameters for ZIP code, utility provider, business classification, and square footage.
+- Imported 177 validated CEC records into `gbs-opportunity-candidates` and documented the ingestion flow.
+
 ## 2026-06-21 - Codex (GPT-5) unified Google login
 
 - Removed temporary-code login from the user portal and admin dashboard.

@@ -8,6 +8,8 @@
     "dev:api": "node server/index.mjs",
     "dev:client": "vite",
     "build": "tsc -b && vite build",
+    "gather:cec": "node scripts/gather-cec-opportunities.mjs",
+    "gather:cec:aws": "node scripts/gather-cec-opportunities.mjs --write-dynamodb",
     "gather:dsire": "node scripts/gather-dsire-opportunities.mjs",
     "gather:dsire:public": "node scripts/gather-dsire-opportunities.mjs --mode public-table",
     "gather:dsire:rss": "node scripts/gather-dsire-opportunities.mjs --mode rss",

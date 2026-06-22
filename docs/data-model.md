@@ -65,27 +65,36 @@ Primary key:
 
 - `opportunityId` string, currently composed from the source, external ID type, and source external ID
 
-Current DSIRE public-table and RSS fields include:
+Current DSIRE and CEC fields include:
 
-- `sourceKey`: currently `SOURCE_DSIRE`
-- `sourceName`: currently `DSIRE`
-- `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records
+- `sourceKey`: currently `SOURCE_DSIRE` or `SOURCE_CA_ENERGY_COMMISSION`
+- `sourceName`
+- `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records; CEC solicitation number or URL hash for CEC records
 - `canonicalTitle`
 - `normalizedTitle`
+- `sourceUrl`
 - `state`
 - `stateName`
 - `category`
 - `categoryId`
+- `programType`
 - `summary`
 - `summaryHtml`
 - `websiteUrl`
 - `lastUpdated`
+- `deadlineDate`
+- `applicationUrl`
+- `documents`
+- `technologies`
+- `matchingParameters`
+- `eligibilityRules`
 - `details`
 - `publishedAt`
 - `published`
-- `ingestionMode`: currently `public_table_inventory` or `rss_delta_feed`
+- `ingestionMode`: currently `public_table_inventory`, `rss_delta_feed`, or `cec_sitemap_detail`
 - `contentHash`
 - `dsire`
+- `cec`
 - `evidence`
 - `raw`
 - `dataQuality`
@@ -101,6 +110,11 @@ can inspect gathered source records while we build the normalized opportunity da
 Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. RSS records preserve the
 raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`
 because the feed can contain repeated program codes with different titles.
+
+CEC records preserve source metadata under `cec`, including solicitation number, solicitation type,
+status, division, and program. CEC records also include `matchingParameters` for the four current
+business-profile matching dimensions: ZIP code, utility provider, business classification, and square
+footage. These are inferred from CEC detail-page text and should be reviewed before production use.
 
 ## Local API
 
