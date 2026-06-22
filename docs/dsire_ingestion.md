@@ -30,6 +30,12 @@ Run the public RSS smoke test:
 npm run gather:dsire:rss
 ```
 
+Validate and write the public RSS records into the AWS DynamoDB opportunity-candidates table:
+
+```bash
+npm run gather:dsire:aws
+```
+
 Run API mode after configuring access:
 
 ```bash
@@ -66,6 +72,14 @@ Use environment variables so credentials are not committed:
 | `DSIRE_API_UPDATED_SINCE_PARAM` | Updated-since query parameter. Defaults to `updatedSince`. |
 | `DSIRE_USER_AGENT` | Optional user-agent override. |
 
+AWS/DynamoDB variables:
+
+| Variable | Purpose |
+| --- | --- |
+| `GBS_OPPORTUNITIES_TABLE` | Opportunity-candidates table. Defaults to `gbs-opportunity-candidates`. |
+| `AWS_PROFILE` | AWS CLI profile used for DynamoDB writes. Defaults to `gbs`. |
+| `AWS_REGION` | AWS region. Defaults to `us-east-2`. |
+
 The adapter is intentionally configurable because the exact licensed DSIRE API shape should come from the DSIRE API documentation or credentials we receive.
 
 ## Output Files
@@ -75,6 +89,7 @@ Each run creates:
 - `raw-records.json`: raw API records or RSS items.
 - `normalized-opportunities.json`: normalized opportunity candidate records.
 - `source-documents.json`: fetched API/RSS document metadata and hashes.
+- `validation-report.json`: validator summary, rejected records, and warnings.
 - `changes.json`: new, changed, unchanged, and when safe, removed records compared with the previous local snapshot.
 - `run-manifest.json`: run metadata, counts, output paths, and limitations.
 
@@ -84,6 +99,51 @@ The script also updates:
 - `latest-run-manifest.json`
 
 These files are local ingestion artifacts. They are not yet the final relational opportunity database.
+
+## DynamoDB Storage
+
+For the current prototype, validated DSIRE RSS records can be written to:
+
+```text
+gbs-opportunity-candidates
+```
+
+Primary key:
+
+- `opportunityId`: composed from source key, external ID type, and source external ID.
+
+Representative fields:
+
+- `sourceKey`
+- `sourceName`
+- `externalId`
+- `canonicalTitle`
+- `normalizedTitle`
+- `state`
+- `summary`
+- `publishedAt`
+- `ingestionMode`
+- `contentHash`
+- `dsire`
+- `evidence`
+- `raw`
+- `dataQuality`
+- `reviewStatus`
+- `firstSeenAt`
+- `lastSeenAt`
+- `createdAt`
+- `updatedAt`
+
+The script upserts records by `opportunityId` and reports created, updated, and unchanged counts.
+Only records that pass critical validation are written. RSS records are marked `clean_with_limitations`
+because the feed provides update summaries rather than full program details.
+
+RSS identity uses the DSIRE program code plus a normalized-title hash. The raw program code is preserved
+under `dsire.programCode`. This prevents one RSS item from overwriting another when the feed repeats a
+program code with a different title.
+
+The local admin API includes this table in its `dataTables` response, so it appears as its own tab in
+the admin dashboard.
 
 ## Weekly Reuse
 
@@ -104,4 +164,5 @@ Suggested future flow:
 - This script does not create migrations, queues, cron schedules, Lambda jobs, or admin review tabs.
 - RSS mode cannot gather all DSIRE opportunities.
 - API mode is ready for configuration, but the actual DSIRE API base URL, auth format, and pagination parameters need to be confirmed from the authorized DSIRE API access.
+- DSIRE public program listing/detail exploration currently does not expose stable unauthenticated full-detail JSON records; the public API endpoint returns an access-denied response.
 - Classification by zip code, utility provider, business classification, and square footage remains planned for a later implementation step.

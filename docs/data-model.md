@@ -54,6 +54,42 @@ Current intake form fields include:
 - Square footage, approximate accepted
 - Interested improvements: `LED`, `HVAC`, `Refrigeration`, `Solar`, `EV Charging`, `Water Efficiency`, `Building Controls`, or `Show Me Everything`
 
+### `gbs-opportunity-candidates`
+
+Prototype storage for validated green-business opportunity records gathered from external sources.
+
+Primary key:
+
+- `opportunityId` string, currently composed from the source, external ID type, and source external ID
+
+Current DSIRE RSS fields include:
+
+- `sourceKey`: currently `SOURCE_DSIRE`
+- `sourceName`: currently `DSIRE`
+- `externalId`: DSIRE program code plus title hash for RSS records, such as `OK49F:44a1...`
+- `canonicalTitle`
+- `normalizedTitle`
+- `state`
+- `summary`
+- `publishedAt`
+- `ingestionMode`: currently `rss_delta_feed`
+- `contentHash`
+- `dsire`
+- `evidence`
+- `raw`
+- `dataQuality`
+- `reviewStatus`
+- `firstSeenAt`
+- `lastSeenAt`
+- `createdAt`
+- `updatedAt`
+
+This is not the final relational opportunity schema. It is a DynamoDB-backed prototype table so admins
+can inspect gathered source records while we build the normalized opportunity database.
+
+The raw DSIRE program code is still preserved at `dsire.programCode`. The RSS importer includes a title
+hash in `externalId` because the feed can contain repeated program codes with different titles.
+
 ## Local API
 
 The browser does not receive AWS credentials. The React app calls the local Node API through Vite's `/api` proxy. The API uses the local AWS CLI SSO profile:
@@ -87,5 +123,8 @@ Expected:
 - `npm run dev` starts both the API and Vite.
 - the API prints `Green Business Solution API running at http://127.0.0.1:8787`.
 - `/api/diagnostics` returns `"ok": true`.
+
+The admin dashboard displays one tab per table returned by the local API, including
+`gbs-opportunity-candidates` after that table has been created in AWS.
 
 If only Vite is running, the browser can render the pages but form and code submission will fail because `/api` has nothing to talk to.

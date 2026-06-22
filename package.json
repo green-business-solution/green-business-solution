@@ -10,6 +10,7 @@
     "build": "tsc -b && vite build",
     "gather:dsire": "node scripts/gather-dsire-opportunities.mjs",
     "gather:dsire:rss": "node scripts/gather-dsire-opportunities.mjs --mode rss",
+    "gather:dsire:aws": "node scripts/gather-dsire-opportunities.mjs --mode rss --write-dynamodb",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },

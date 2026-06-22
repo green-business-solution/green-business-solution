@@ -14,6 +14,7 @@ const region = process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
+const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const port = Number(process.env.API_PORT || 8787);
 
 const client = new DynamoDBClient({
@@ -313,7 +314,7 @@ function handleError(res, error) {
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, region, usersTable, intakeTable });
+  res.json({ ok: true, region, usersTable, intakeTable, opportunitiesTable });
 });
 
 app.get("/api/diagnostics", async (_req, res) => {
@@ -325,6 +326,7 @@ app.get("/api/diagnostics", async (_req, res) => {
       profile,
       usersTable,
       intakeTable,
+      opportunitiesTable,
       adminsPresent: {
         neer: Boolean(neer),
         rajvansh: Boolean(rajvansh)
@@ -375,10 +377,19 @@ app.post("/api/portal", async (req, res) => {
 app.post("/api/admin/users", async (req, res) => {
   try {
     const admin = await requireAdmin(req.body?.adminUserId);
-    const [users, intakes] = await Promise.all([scanAll(usersTable), scanAll(intakeTable)]);
+    const [users, intakes, opportunities] = await Promise.all([
+      scanAll(usersTable),
+      scanAll(intakeTable),
+      scanAll(opportunitiesTable)
+    ]);
     const intakeByUser = new Map(intakes.map((intake) => [intake.userId, intake]));
     const sortedUsers = [...users].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
     const sortedIntakes = [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    const sortedOpportunities = [...opportunities].sort((a, b) =>
+      String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
+        String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
+      )
+    );
 
     res.json({
       admin: publicUser(admin),
@@ -397,6 +408,11 @@ app.post("/api/admin/users", async (req, res) => {
           name: intakeTable,
           recordCount: sortedIntakes.length,
           records: sortedIntakes
+        },
+        {
+          name: opportunitiesTable,
+          recordCount: sortedOpportunities.length,
+          records: sortedOpportunities
         }
       ]
     });

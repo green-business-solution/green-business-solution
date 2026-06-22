@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) DSIRE AWS opportunity import
+
+- Added DSIRE RSS validation and DynamoDB upsert support for the `gbs-opportunity-candidates` table.
+- Added a `gather:dsire:aws` command for writing validated DSIRE opportunity candidates into AWS.
+- Included the opportunity-candidates table in admin API data tabs and documented its prototype schema.
+
 ## 2026-06-21 - Codex (GPT-5) DSIRE ingestion starter
 
 - Added a reusable DSIRE ingestion script with configurable API mode and public RSS fallback mode.

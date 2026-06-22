@@ -3,6 +3,9 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { fromIni } from "@aws-sdk/credential-providers";
 
 const SOURCE_KEY = "SOURCE_DSIRE";
 const SOURCE_NAME = "DSIRE";
@@ -11,6 +14,9 @@ const DEFAULT_RSS_URL = "https://programs.dsireusa.org/rss/";
 const DEFAULT_PROGRAMS_PATH = "/programs";
 const DEFAULT_PAGE_SIZE = 100;
 const DEFAULT_MAX_PAGES = 1000;
+const DEFAULT_DYNAMODB_TABLE = "gbs-opportunity-candidates";
+const DEFAULT_AWS_REGION = "us-east-2";
+const DEFAULT_AWS_PROFILE = "gbs";
 const DEFAULT_USER_AGENT =
   "GreenBusinessSolutionBot/0.1 (+https://github.com/green-business-solution/green-business-solution)";
 
@@ -34,6 +40,7 @@ async function main() {
   const requestedMode = args.mode ?? "auto";
   const apiBaseUrl = args.apiBaseUrl ?? process.env.DSIRE_API_BASE_URL;
   const mode = requestedMode === "auto" ? (apiBaseUrl ? "api" : "rss") : requestedMode;
+  const runId = `dsire-${mode}-${safeTimestamp(startedAt)}`;
 
   const config = {
     mode,
@@ -54,6 +61,10 @@ async function main() {
     pageSize: positiveInteger(args.pageSize, DEFAULT_PAGE_SIZE, "page size"),
     maxPages: positiveInteger(args.maxPages, DEFAULT_MAX_PAGES, "max pages"),
     limit: args.limit == null ? null : positiveInteger(args.limit, null, "limit"),
+    writeDynamodb: parseBoolean(args.writeDynamodb, false),
+    dynamodbTable: args.dynamodbTable ?? process.env.GBS_OPPORTUNITIES_TABLE ?? DEFAULT_DYNAMODB_TABLE,
+    awsRegion: args.awsRegion ?? process.env.AWS_REGION ?? DEFAULT_AWS_REGION,
+    awsProfile: args.awsProfile ?? process.env.AWS_PROFILE ?? DEFAULT_AWS_PROFILE,
     userAgent: process.env.DSIRE_USER_AGENT ?? DEFAULT_USER_AGENT
   };
 
@@ -68,21 +79,40 @@ async function main() {
   }
 
   const result = mode === "api" ? await gatherFromApi(config) : await gatherFromRss(config);
+  const validation = validateNormalizedRecords(result.normalizedRecords, {
+    checkedAt: new Date().toISOString()
+  });
+  const dynamodbWrite =
+    config.writeDynamodb && validation.summary.writableRecords > 0
+      ? await writeDynamodbRecords(validation.records, config, {
+          runId,
+          startedAt
+        })
+      : null;
   const completedAt = new Date().toISOString();
 
   const outputs = await writeRunOutputs({
+    runId,
     config,
     startedAt,
     completedAt,
     rawRecords: result.rawRecords,
-    normalizedRecords: result.normalizedRecords,
+    normalizedRecords: validation.records,
     sourceDocuments: result.sourceDocuments,
-    context: result.context
+    context: result.context,
+    validation,
+    dynamodbWrite
   });
 
   console.log(`DSIRE ingestion completed in ${mode} mode.`);
   console.log(`Raw records: ${result.rawRecords.length}`);
-  console.log(`Normalized opportunity candidates: ${result.normalizedRecords.length}`);
+  console.log(`Normalized opportunity candidates: ${validation.records.length}`);
+  console.log(`Validation: ${validation.summary.writableRecords} writable, ${validation.summary.rejectedRecords} rejected`);
+  if (dynamodbWrite) {
+    console.log(
+      `DynamoDB write: ${dynamodbWrite.createdRecords} created, ${dynamodbWrite.updatedRecords} updated, ${dynamodbWrite.unchangedRecords} unchanged in ${dynamodbWrite.tableName}`
+    );
+  }
   console.log(`Run directory: ${path.relative(process.cwd(), outputs.runDir)}`);
   console.log(`Change report: ${path.relative(process.cwd(), outputs.changesPath)}`);
 
@@ -97,6 +127,7 @@ async function main() {
 
 function parseArgs(argv) {
   const args = {};
+  const booleanFlags = new Set(["write-dynamodb"]);
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
@@ -112,6 +143,12 @@ function parseArgs(argv) {
 
     const [rawKey, inlineValue] = arg.slice(2).split("=", 2);
     const key = camelCase(rawKey);
+
+    if (booleanFlags.has(rawKey) && inlineValue == null) {
+      args[key] = true;
+      continue;
+    }
+
     const value = inlineValue ?? argv[index + 1];
 
     if (inlineValue == null) {
@@ -166,6 +203,10 @@ Options:
   --api-base-url https://example.dsire-api-host
   --api-programs-path /programs
   --rss-url https://programs.dsireusa.org/rss/
+  --write-dynamodb
+  --dynamodb-table gbs-opportunity-candidates
+  --aws-profile gbs
+  --aws-region us-east-2
 `);
 }
 
@@ -340,6 +381,206 @@ async function fetchText(url, { accept, userAgent, apiKey, apiAuthHeader, apiAut
   };
 }
 
+function validateNormalizedRecords(records, { checkedAt }) {
+  const validatedRecords = records.map((record) => {
+    const criticalIssues = [];
+    const warnings = [];
+
+    if (!record.sourceKey) {
+      criticalIssues.push("missing_source_key");
+    }
+
+    if (!record.externalId || String(record.externalId).trim().length < 3) {
+      criticalIssues.push("missing_or_short_external_id");
+    }
+
+    if (!record.canonicalTitle || String(record.canonicalTitle).trim().length < 4) {
+      criticalIssues.push("missing_or_short_canonical_title");
+    }
+
+    if (!record.contentHash || String(record.contentHash).length !== 64) {
+      criticalIssues.push("missing_or_invalid_content_hash");
+    }
+
+    if (record.ingestionMode === "rss_delta_feed") {
+      if (!record.dsire?.programCode || !/^[A-Z]{2}\d+[A-Z]?$/.test(record.dsire.programCode)) {
+        criticalIssues.push("missing_or_invalid_dsire_program_code");
+      }
+
+      if (!record.publishedAt) {
+        warnings.push("missing_published_at");
+      }
+
+      warnings.push("rss_record_contains_update_summary_not_full_program_details");
+    }
+
+    const isWritable = criticalIssues.length === 0;
+
+    return {
+      ...record,
+      reviewStatus: isWritable ? "needs_review" : "rejected",
+      dataQuality: {
+        validator: "dsire-opportunity-validator-v1",
+        checkedAt,
+        status: isWritable && warnings.length === 0 ? "clean" : isWritable ? "clean_with_limitations" : "rejected",
+        isWritable,
+        criticalIssues,
+        warnings
+      }
+    };
+  });
+
+  const keyCounts = new Map();
+  for (const record of validatedRecords) {
+    const key = recordKey(record);
+    keyCounts.set(key, (keyCounts.get(key) || 0) + 1);
+  }
+
+  const dedupedValidatedRecords = validatedRecords.map((record) => {
+    const key = recordKey(record);
+    if (keyCounts.get(key) === 1) {
+      return record;
+    }
+
+    const criticalIssues = [...record.dataQuality.criticalIssues, "duplicate_record_key_in_current_run"];
+    return {
+      ...record,
+      reviewStatus: "rejected",
+      dataQuality: {
+        ...record.dataQuality,
+        status: "rejected",
+        isWritable: false,
+        criticalIssues
+      }
+    };
+  });
+
+  const writableRecords = dedupedValidatedRecords.filter((record) => record.dataQuality.isWritable);
+  const rejectedRecords = dedupedValidatedRecords.filter((record) => !record.dataQuality.isWritable);
+
+  return {
+    records: dedupedValidatedRecords,
+    writableRecords,
+    rejectedRecords,
+    summary: {
+      totalRecords: dedupedValidatedRecords.length,
+      writableRecords: writableRecords.length,
+      rejectedRecords: rejectedRecords.length,
+      warningRecords: dedupedValidatedRecords.filter((record) => record.dataQuality.warnings.length > 0).length
+    }
+  };
+}
+
+async function writeDynamodbRecords(records, config, { runId, startedAt }) {
+  const writableRecords = records.filter((record) => record.dataQuality?.isWritable);
+  const db = createDynamodbDocumentClient(config);
+  const summary = {
+    tableName: config.dynamodbTable,
+    region: config.awsRegion,
+    profile: config.awsProfile,
+    attemptedRecords: writableRecords.length,
+    createdRecords: 0,
+    updatedRecords: 0,
+    unchangedRecords: 0,
+    skippedRecords: records.length - writableRecords.length
+  };
+
+  for (const record of writableRecords) {
+    const opportunityId = recordKey(record);
+    const existing = await db.send(
+      new GetCommand({
+        TableName: config.dynamodbTable,
+        Key: { opportunityId }
+      })
+    );
+    const previous = existing.Item || null;
+    const now = new Date().toISOString();
+    const item = buildDynamodbOpportunityItem(record, {
+      opportunityId,
+      runId,
+      firstSeenAt: previous?.firstSeenAt || startedAt,
+      createdAt: previous?.createdAt || startedAt,
+      updatedAt: previous && previous.contentHash === record.contentHash ? previous.updatedAt || now : now,
+      lastSeenAt: now,
+      previousContentHash: previous?.contentHash || null
+    });
+
+    await db.send(
+      new PutCommand({
+        TableName: config.dynamodbTable,
+        Item: item
+      })
+    );
+
+    if (!previous) {
+      summary.createdRecords += 1;
+    } else if (previous.contentHash === record.contentHash) {
+      summary.unchangedRecords += 1;
+    } else {
+      summary.updatedRecords += 1;
+    }
+  }
+
+  return summary;
+}
+
+function createDynamodbDocumentClient(config) {
+  const client = new DynamoDBClient({
+    region: config.awsRegion,
+    credentials: config.awsProfile ? fromIni({ profile: config.awsProfile }) : undefined
+  });
+
+  return DynamoDBDocumentClient.from(client, {
+    marshallOptions: {
+      removeUndefinedValues: true
+    }
+  });
+}
+
+function buildDynamodbOpportunityItem(record, metadata) {
+  return {
+    opportunityId: metadata.opportunityId,
+    sourceKey: record.sourceKey,
+    sourceName: record.sourceName,
+    externalId: String(record.externalId),
+    externalIdType: record.externalIdType,
+    canonicalTitle: record.canonicalTitle,
+    normalizedTitle: normalizeComparableText(record.canonicalTitle),
+    sourceUrl: record.sourceUrl,
+    status: record.status,
+    programType: record.programType,
+    state: record.state,
+    summary: record.summary,
+    publishedAt: record.publishedAt,
+    ingestionMode: record.ingestionMode,
+    recordKind: record.recordKind,
+    contentHash: record.contentHash,
+    previousContentHash: metadata.previousContentHash,
+    dsire: record.dsire,
+    geography: record.geography,
+    administrator: record.administrator,
+    sectors: record.sectors,
+    technologies: record.technologies,
+    evidence: record.evidence,
+    raw: record.raw,
+    dataQuality: record.dataQuality,
+    reviewStatus: record.reviewStatus,
+    ingestRunId: metadata.runId,
+    firstSeenAt: metadata.firstSeenAt,
+    lastSeenAt: metadata.lastSeenAt,
+    createdAt: metadata.createdAt,
+    updatedAt: metadata.updatedAt
+  };
+}
+
+function normalizeComparableText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
 function parseRssItems(xml) {
   const itemPattern = /<item\b[^>]*>([\s\S]*?)<\/item>/gi;
   const items = [];
@@ -394,6 +635,9 @@ function stripHtml(value) {
 function normalizeRssItem(item, context) {
   const titleParts = parseRssTitle(item.title);
   const sourceUrl = item.link ?? context.finalUrl ?? context.rssUrl;
+  const titleFingerprint = titleParts.programName
+    ? sha256(normalizeComparableText(titleParts.programName)).slice(0, 12)
+    : null;
   const rawForHash = {
     title: item.title,
     description: item.description,
@@ -408,8 +652,16 @@ function normalizeRssItem(item, context) {
     sourceName: SOURCE_NAME,
     ingestionMode: "rss_delta_feed",
     recordKind: "dsire_rss_update",
-    externalId: titleParts.programCode ?? item.guid ?? contentHash,
-    externalIdType: titleParts.programCode ? "dsire_program_code" : "rss_guid_or_hash",
+    externalId:
+      titleParts.programCode && titleFingerprint
+        ? `${titleParts.programCode}:${titleFingerprint}`
+        : titleParts.programCode ?? item.guid ?? contentHash,
+    externalIdType:
+      titleParts.programCode && titleFingerprint
+        ? "dsire_program_code_title_hash"
+        : titleParts.programCode
+          ? "dsire_program_code"
+          : "rss_guid_or_hash",
     canonicalTitle: titleParts.programName ?? item.title ?? "Untitled DSIRE update",
     sourceUrl,
     status: "unknown",
@@ -605,15 +857,25 @@ function extractTotalCount(payload) {
   return Number(total);
 }
 
-async function writeRunOutputs({ config, startedAt, completedAt, rawRecords, normalizedRecords, sourceDocuments, context }) {
-  const safeTimestamp = startedAt.replace(/[:.]/g, "-");
-  const runId = `dsire-${config.mode}-${safeTimestamp}`;
+async function writeRunOutputs({
+  runId,
+  config,
+  startedAt,
+  completedAt,
+  rawRecords,
+  normalizedRecords,
+  sourceDocuments,
+  context,
+  validation,
+  dynamodbWrite
+}) {
   const runDir = path.join(config.outputDir, "runs", runId);
   await mkdir(runDir, { recursive: true });
 
   const rawPath = path.join(runDir, "raw-records.json");
   const normalizedPath = path.join(runDir, "normalized-opportunities.json");
   const sourceDocumentsPath = path.join(runDir, "source-documents.json");
+  const validationPath = path.join(runDir, "validation-report.json");
   const changesPath = path.join(runDir, "changes.json");
   const manifestPath = path.join(runDir, "run-manifest.json");
   const latestNormalizedPath = path.join(config.outputDir, "latest-normalized-opportunities.json");
@@ -643,12 +905,17 @@ async function writeRunOutputs({ config, startedAt, completedAt, rawRecords, nor
       newRecords: changes.summary.newRecords,
       changedRecords: changes.summary.changedRecords,
       unchangedRecords: changes.summary.unchangedRecords,
-      removedRecords: changes.summary.removedRecords
+      removedRecords: changes.summary.removedRecords,
+      writableRecords: validation.summary.writableRecords,
+      rejectedRecords: validation.summary.rejectedRecords
     },
+    validation: validation.summary,
+    dynamodbWrite,
     outputs: {
       rawRecords: relativePath(rawPath),
       normalizedOpportunities: relativePath(normalizedPath),
       sourceDocuments: relativePath(sourceDocumentsPath),
+      validationReport: relativePath(validationPath),
       changes: relativePath(changesPath),
       latestNormalizedOpportunities: relativePath(latestNormalizedPath),
       latestRunManifest: relativePath(latestManifestPath)
@@ -663,6 +930,16 @@ async function writeRunOutputs({ config, startedAt, completedAt, rawRecords, nor
   await writeJson(rawPath, rawRecords);
   await writeJson(normalizedPath, normalizedRecords);
   await writeJson(sourceDocumentsPath, sourceDocuments);
+  await writeJson(validationPath, {
+    summary: validation.summary,
+    rejectedRecords: validation.rejectedRecords.map(summaryRecord),
+    warnings: validation.records
+      .filter((record) => record.dataQuality.warnings.length > 0)
+      .map((record) => ({
+        ...summaryRecord(record),
+        warnings: record.dataQuality.warnings
+      }))
+  });
   await writeJson(changesPath, changes);
   await writeJson(manifestPath, manifest);
   await writeJson(latestNormalizedPath, normalizedRecords);
@@ -909,6 +1186,22 @@ function relativePath(filePath) {
 
 function camelCase(value) {
   return value.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+function parseBoolean(value, fallback) {
+  if (value == null) {
+    return fallback;
+  }
+
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  return ["1", "true", "yes", "on"].includes(String(value).toLowerCase());
+}
+
+function safeTimestamp(value) {
+  return value.replace(/[:.]/g, "-");
 }
 
 function positiveInteger(value, fallback, label) {
