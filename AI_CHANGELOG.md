@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) DSIRE public inventory import fix
+
+- Debugged why the DSIRE AWS table had only 25 records: the RSS feed is a recent-change feed, not the full inventory.
+- Added DSIRE public-table inventory mode against `/api/v1/programs`, defaulting AWS imports to Financial Incentive records.
+- Batched DynamoDB writes for the larger DSIRE import and expanded normalized fields for cleaner admin review.
+- Updated DSIRE ingestion and data-model documentation.
+
 ## 2026-06-21 - Codex (GPT-5) DSIRE AWS opportunity import
 
 - Added DSIRE RSS validation and DynamoDB upsert support for the `gbs-opportunity-candidates` table.

@@ -4,15 +4,19 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { BatchWriteCommand, DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 
 const SOURCE_KEY = "SOURCE_DSIRE";
 const SOURCE_NAME = "DSIRE";
 const DEFAULT_OUTPUT_DIR = "var/opportunity-ingestion/dsire";
 const DEFAULT_RSS_URL = "https://programs.dsireusa.org/rss/";
+const DEFAULT_PUBLIC_API_BASE_URL = "https://programs.dsireusa.org/api/v1/";
+const DEFAULT_PUBLIC_PROGRAMS_PATH = "/programs";
+const DEFAULT_PUBLIC_REFERER = "https://programs.dsireusa.org/system/program";
 const DEFAULT_PROGRAMS_PATH = "/programs";
 const DEFAULT_PAGE_SIZE = 100;
+const DEFAULT_PUBLIC_PAGE_SIZE = 500;
 const DEFAULT_MAX_PAGES = 1000;
 const DEFAULT_DYNAMODB_TABLE = "gbs-opportunity-candidates";
 const DEFAULT_AWS_REGION = "us-east-2";
@@ -37,9 +41,9 @@ async function main() {
   }
 
   const startedAt = new Date().toISOString();
-  const requestedMode = args.mode ?? "auto";
+  const requestedMode = normalizeMode(args.mode ?? "auto");
   const apiBaseUrl = args.apiBaseUrl ?? process.env.DSIRE_API_BASE_URL;
-  const mode = requestedMode === "auto" ? (apiBaseUrl ? "api" : "rss") : requestedMode;
+  const mode = requestedMode === "auto" ? (apiBaseUrl ? "api" : "public-table") : requestedMode;
   const runId = `dsire-${mode}-${safeTimestamp(startedAt)}`;
 
   const config = {
@@ -47,6 +51,11 @@ async function main() {
     requestedMode,
     outputDir: path.resolve(process.cwd(), args.outputDir ?? DEFAULT_OUTPUT_DIR),
     rssUrl: args.rssUrl ?? process.env.DSIRE_RSS_URL ?? DEFAULT_RSS_URL,
+    publicApiBaseUrl: args.publicApiBaseUrl ?? process.env.DSIRE_PUBLIC_API_BASE_URL ?? DEFAULT_PUBLIC_API_BASE_URL,
+    publicProgramsPath:
+      args.publicProgramsPath ?? process.env.DSIRE_PUBLIC_PROGRAMS_PATH ?? DEFAULT_PUBLIC_PROGRAMS_PATH,
+    publicReferer: args.publicReferer ?? process.env.DSIRE_PUBLIC_REFERER ?? DEFAULT_PUBLIC_REFERER,
+    publicCategory: args.publicCategory ?? process.env.DSIRE_PUBLIC_CATEGORY ?? "financial",
     apiBaseUrl,
     apiProgramsPath: args.apiProgramsPath ?? process.env.DSIRE_API_PROGRAMS_PATH ?? DEFAULT_PROGRAMS_PATH,
     apiKey: process.env.DSIRE_API_KEY,
@@ -58,7 +67,11 @@ async function main() {
     apiPageStart: Number(process.env.DSIRE_API_PAGE_START ?? "1"),
     apiUpdatedSinceParam: process.env.DSIRE_API_UPDATED_SINCE_PARAM ?? "updatedSince",
     updatedSince: args.updatedSince,
-    pageSize: positiveInteger(args.pageSize, DEFAULT_PAGE_SIZE, "page size"),
+    pageSize: positiveInteger(
+      args.pageSize,
+      mode === "public-table" ? DEFAULT_PUBLIC_PAGE_SIZE : DEFAULT_PAGE_SIZE,
+      "page size"
+    ),
     maxPages: positiveInteger(args.maxPages, DEFAULT_MAX_PAGES, "max pages"),
     limit: args.limit == null ? null : positiveInteger(args.limit, null, "limit"),
     writeDynamodb: parseBoolean(args.writeDynamodb, false),
@@ -68,8 +81,8 @@ async function main() {
     userAgent: process.env.DSIRE_USER_AGENT ?? DEFAULT_USER_AGENT
   };
 
-  if (mode !== "api" && mode !== "rss") {
-    throw new Error(`Unsupported mode "${mode}". Use "auto", "api", or "rss".`);
+  if (mode !== "api" && mode !== "rss" && mode !== "public-table") {
+    throw new Error(`Unsupported mode "${mode}". Use "auto", "public-table", "api", or "rss".`);
   }
 
   if (mode === "api" && !config.apiBaseUrl) {
@@ -78,7 +91,12 @@ async function main() {
     );
   }
 
-  const result = mode === "api" ? await gatherFromApi(config) : await gatherFromRss(config);
+  const result =
+    mode === "api"
+      ? await gatherFromApi(config)
+      : mode === "rss"
+        ? await gatherFromRss(config)
+        : await gatherFromPublicTable(config);
   const validation = validateNormalizedRecords(result.normalizedRecords, {
     checkedAt: new Date().toISOString()
   });
@@ -123,6 +141,102 @@ async function main() {
       console.log(`- ${limitation}`);
     }
   }
+}
+
+async function gatherFromPublicTable(config) {
+  const retrievedAt = new Date().toISOString();
+  const rawRecords = [];
+  const sourceDocuments = [];
+  let recordsTotal = null;
+  let recordsFiltered = null;
+
+  for (let pageIndex = 0; pageIndex < config.maxPages; pageIndex += 1) {
+    const requestedUrl = buildPublicTablePageUrl(config, pageIndex);
+    const response = await fetchJson(requestedUrl, {
+      accept: "application/json, text/javascript, */*; q=0.01",
+      userAgent: config.userAgent,
+      headers: {
+        Referer: config.publicReferer,
+        "X-Requested-With": "XMLHttpRequest"
+      }
+    });
+    const pageHash = sha256(response.body);
+    const payload = response.json;
+    const records = extractRecordsFromApiResponse(payload);
+
+    recordsTotal = extractTotalCount(payload) ?? recordsTotal;
+    recordsFiltered = extractFilteredCount(payload) ?? recordsFiltered ?? recordsTotal;
+
+    sourceDocuments.push({
+      sourceKey: SOURCE_KEY,
+      sourceName: SOURCE_NAME,
+      documentType: "public_table_api_response",
+      originalUrl: requestedUrl,
+      finalUrl: response.finalUrl,
+      contentType: response.contentType,
+      httpStatus: response.httpStatus,
+      retrievedAt,
+      rawHash: pageHash,
+      pageIndex,
+      recordCount: records.length,
+      recordsTotal,
+      recordsFiltered,
+      publicCategory: config.publicCategory
+    });
+
+    rawRecords.push(...records);
+
+    if (config.limit != null && rawRecords.length >= config.limit) {
+      rawRecords.length = config.limit;
+      break;
+    }
+
+    const expectedCount = recordsFiltered ?? recordsTotal;
+
+    if (records.length === 0) {
+      break;
+    }
+
+    if (expectedCount != null && rawRecords.length >= expectedCount) {
+      break;
+    }
+
+    if (records.length < config.pageSize) {
+      break;
+    }
+  }
+
+  const normalizedRecords = rawRecords.map((record) =>
+    normalizeApiRecord(record, retrievedAt, {
+      ingestionMode: "public_table_inventory",
+      recordKind: "canonical_candidate",
+      sourceDocumentType: "public_table_record"
+    })
+  );
+
+  const limitations = [];
+  if (config.publicCategory === "financial") {
+    limitations.push(
+      "Public table mode imports DSIRE Financial Incentive records by default. Use --public-category all if regulatory policies should also be loaded."
+    );
+  }
+  if (config.limit != null) {
+    limitations.push("This run used --limit, so it is not a full inventory.");
+  }
+
+  return {
+    rawRecords,
+    normalizedRecords,
+    sourceDocuments,
+    context: {
+      mode: "public-table",
+      isFullInventory: config.limit == null,
+      recordsTotal,
+      recordsFiltered,
+      publicCategory: config.publicCategory,
+      limitations
+    }
+  };
 }
 
 function parseArgs(argv) {
@@ -172,13 +286,15 @@ Gather DSIRE opportunity records or update-feed records.
 Usage:
   npm run gather:dsire
   npm run gather:dsire:rss
+  npm run gather:dsire:public
   node scripts/gather-dsire-opportunities.mjs --mode api --updated-since 2026-01-01
 
 Modes:
-  auto  Uses API mode when DSIRE_API_BASE_URL is set; otherwise uses public RSS mode.
-  api   Pulls program records from a configured DSIRE API endpoint.
-  rss   Pulls the public DSIRE update feed. This is useful for weekly change detection,
-        but it is not a full DSIRE opportunity database export.
+  auto          Uses API mode when DSIRE_API_BASE_URL is set; otherwise uses public-table mode.
+  public-table  Pulls the current DSIRE public table inventory from /api/v1/programs.
+  api           Pulls program records from a configured DSIRE API endpoint.
+  rss           Pulls the public DSIRE update feed. This is useful for weekly change detection,
+                but it is not a full DSIRE opportunity database export.
 
 API environment variables:
   DSIRE_API_BASE_URL              Required for API mode.
@@ -193,13 +309,20 @@ API environment variables:
   DSIRE_API_UPDATED_SINCE_PARAM   Defaults to updatedSince.
   DSIRE_USER_AGENT                Overrides the default user agent.
 
+Public table options:
+  DSIRE_PUBLIC_API_BASE_URL       Defaults to https://programs.dsireusa.org/api/v1/.
+  DSIRE_PUBLIC_PROGRAMS_PATH      Defaults to /programs.
+  DSIRE_PUBLIC_REFERER            Defaults to https://programs.dsireusa.org/system/program.
+  DSIRE_PUBLIC_CATEGORY           financial, regulatory, or all. Defaults to financial.
+
 Options:
-  --mode auto|api|rss
+  --mode auto|public-table|api|rss
   --output-dir var/opportunity-ingestion/dsire
   --limit 25
-  --page-size 100
+  --page-size 500
   --max-pages 1000
   --updated-since 2026-01-01
+  --public-category financial|regulatory|all
   --api-base-url https://example.dsire-api-host
   --api-programs-path /programs
   --rss-url https://programs.dsireusa.org/rss/
@@ -348,16 +471,47 @@ function buildApiPageUrl(config, pageIndex) {
   return apiUrl.toString();
 }
 
+function buildPublicTablePageUrl(config, pageIndex) {
+  const publicUrl = new URL(stripLeadingSlash(config.publicProgramsPath), ensureTrailingSlash(config.publicApiBaseUrl));
+  publicUrl.searchParams.set("draw", String(pageIndex + 1));
+  publicUrl.searchParams.set("start", String(pageIndex * config.pageSize));
+  publicUrl.searchParams.set("length", String(config.pageSize));
+
+  for (const categoryId of publicCategoryIds(config.publicCategory)) {
+    publicUrl.searchParams.append("category[]", categoryId);
+  }
+
+  return publicUrl.toString();
+}
+
+function publicCategoryIds(category) {
+  switch (String(category || "financial").toLowerCase()) {
+    case "all":
+      return [];
+    case "financial":
+    case "financial-incentive":
+    case "financial_incentive":
+      return ["1"];
+    case "regulatory":
+    case "regulatory-policy":
+    case "regulatory_policy":
+      return ["2"];
+    default:
+      throw new Error(`Unsupported public DSIRE category "${category}". Use financial, regulatory, or all.`);
+  }
+}
+
 async function fetchJson(url, options) {
   const response = await fetchText(url, options);
   const json = JSON.parse(response.body);
   return { ...response, json };
 }
 
-async function fetchText(url, { accept, userAgent, apiKey, apiAuthHeader, apiAuthScheme }) {
+async function fetchText(url, { accept, userAgent, apiKey, apiAuthHeader, apiAuthScheme, headers: extraHeaders = {} }) {
   const headers = {
     Accept: accept,
-    "User-Agent": userAgent
+    "User-Agent": userAgent,
+    ...extraHeaders
   };
 
   if (apiKey) {
@@ -390,8 +544,10 @@ function validateNormalizedRecords(records, { checkedAt }) {
       criticalIssues.push("missing_source_key");
     }
 
-    if (!record.externalId || String(record.externalId).trim().length < 3) {
-      criticalIssues.push("missing_or_short_external_id");
+    if (!record.externalId) {
+      criticalIssues.push("missing_external_id");
+    } else if (record.externalIdType !== "dsire_program_id" && String(record.externalId).trim().length < 3) {
+      criticalIssues.push("short_external_id");
     }
 
     if (!record.canonicalTitle || String(record.canonicalTitle).trim().length < 4) {
@@ -412,6 +568,28 @@ function validateNormalizedRecords(records, { checkedAt }) {
       }
 
       warnings.push("rss_record_contains_update_summary_not_full_program_details");
+    }
+
+    if (record.ingestionMode === "public_table_inventory") {
+      if (!record.dsire?.programId) {
+        criticalIssues.push("missing_dsire_program_id");
+      }
+
+      if (!record.category) {
+        warnings.push("missing_category");
+      }
+
+      if (!record.programType) {
+        warnings.push("missing_program_type");
+      }
+
+      if (!record.summary) {
+        warnings.push("missing_clean_summary");
+      }
+
+      if (record.published !== true) {
+        warnings.push("record_not_marked_published_by_dsire");
+      }
     }
 
     const isWritable = criticalIssues.length === 0;
@@ -474,6 +652,7 @@ function validateNormalizedRecords(records, { checkedAt }) {
 async function writeDynamodbRecords(records, config, { runId, startedAt }) {
   const writableRecords = records.filter((record) => record.dataQuality?.isWritable);
   const db = createDynamodbDocumentClient(config);
+  const existingRecords = await scanExistingDynamodbRecords(db, config.dynamodbTable);
   const summary = {
     tableName: config.dynamodbTable,
     region: config.awsRegion,
@@ -484,16 +663,11 @@ async function writeDynamodbRecords(records, config, { runId, startedAt }) {
     unchangedRecords: 0,
     skippedRecords: records.length - writableRecords.length
   };
+  const items = [];
 
   for (const record of writableRecords) {
     const opportunityId = recordKey(record);
-    const existing = await db.send(
-      new GetCommand({
-        TableName: config.dynamodbTable,
-        Key: { opportunityId }
-      })
-    );
-    const previous = existing.Item || null;
+    const previous = existingRecords.get(opportunityId) || null;
     const now = new Date().toISOString();
     const item = buildDynamodbOpportunityItem(record, {
       opportunityId,
@@ -505,12 +679,7 @@ async function writeDynamodbRecords(records, config, { runId, startedAt }) {
       previousContentHash: previous?.contentHash || null
     });
 
-    await db.send(
-      new PutCommand({
-        TableName: config.dynamodbTable,
-        Item: item
-      })
-    );
+    items.push(item);
 
     if (!previous) {
       summary.createdRecords += 1;
@@ -521,7 +690,58 @@ async function writeDynamodbRecords(records, config, { runId, startedAt }) {
     }
   }
 
+  await batchWriteDynamodbItems(db, config.dynamodbTable, items);
+
   return summary;
+}
+
+async function scanExistingDynamodbRecords(db, tableName) {
+  const records = new Map();
+  let ExclusiveStartKey;
+
+  do {
+    const response = await db.send(
+      new ScanCommand({
+        TableName: tableName,
+        ProjectionExpression: "opportunityId, contentHash, firstSeenAt, createdAt, updatedAt",
+        ExclusiveStartKey
+      })
+    );
+
+    for (const item of response.Items || []) {
+      records.set(item.opportunityId, item);
+    }
+
+    ExclusiveStartKey = response.LastEvaluatedKey;
+  } while (ExclusiveStartKey);
+
+  return records;
+}
+
+async function batchWriteDynamodbItems(db, tableName, items) {
+  for (const chunk of chunks(items, 25)) {
+    let RequestItems = {
+      [tableName]: chunk.map((Item) => ({
+        PutRequest: { Item }
+      }))
+    };
+    let attempt = 0;
+
+    while ((RequestItems[tableName] || []).length > 0) {
+      const response = await db.send(new BatchWriteCommand({ RequestItems }));
+      const unprocessedItems = response.UnprocessedItems?.[tableName] || [];
+
+      if (unprocessedItems.length === 0) {
+        break;
+      }
+
+      attempt += 1;
+      await sleep(Math.min(250 * 2 ** attempt, 5000));
+      RequestItems = {
+        [tableName]: unprocessedItems
+      };
+    }
+  }
 }
 
 function createDynamodbDocumentClient(config) {
@@ -548,10 +768,24 @@ function buildDynamodbOpportunityItem(record, metadata) {
     normalizedTitle: normalizeComparableText(record.canonicalTitle),
     sourceUrl: record.sourceUrl,
     status: record.status,
+    category: record.category,
+    categoryId: record.categoryId,
     programType: record.programType,
+    programTypeId: record.programTypeId,
     state: record.state,
+    stateName: record.stateName,
     summary: record.summary,
+    summaryHtml: record.summaryHtml,
     publishedAt: record.publishedAt,
+    published: record.published,
+    websiteUrl: record.websiteUrl,
+    lastUpdated: record.lastUpdated,
+    sourceCreatedAt: record.sourceCreatedAt,
+    startDate: record.startDate,
+    endDate: record.endDate,
+    fundingSource: record.fundingSource,
+    budget: record.budget,
+    details: record.details,
     ingestionMode: record.ingestionMode,
     recordKind: record.recordKind,
     contentHash: record.contentHash,
@@ -624,12 +858,34 @@ function decodeXml(value) {
     .replace(/&apos;/g, "'");
 }
 
-function stripHtml(value) {
+function decodeHtmlEntities(value) {
+  return decodeXml(value)
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)));
+}
+
+function cleanHtmlText(value) {
   if (value == null) {
     return null;
   }
 
-  return value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() || null;
+  return (
+    decodeHtmlEntities(String(value))
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/(p|li|div|tr|h[1-6])>/gi, "\n")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/[ \t\r\f\v]+/g, " ")
+      .replace(/\n\s+/g, "\n")
+      .replace(/\s*\n\s*/g, "\n")
+      .replace(/\n{2,}/g, "\n")
+      .trim()
+      .replace(/\s+/g, " ") || null
+  );
+}
+
+function stripHtml(value) {
+  return cleanHtmlText(value);
 }
 
 function normalizeRssItem(item, context) {
@@ -715,7 +971,7 @@ function parseRssTitle(title) {
   };
 }
 
-function normalizeApiRecord(record, retrievedAt) {
+function normalizeApiRecord(record, retrievedAt, options = {}) {
   const externalId = coalesce(
     readPath(record, "id"),
     readPath(record, "programId"),
@@ -729,40 +985,65 @@ function normalizeApiRecord(record, retrievedAt) {
     "Untitled DSIRE program";
   const contentHash = sha256(stableStringify(record));
   const sourceUrl =
-    coalesce(readPath(record, "url"), readPath(record, "websiteUrl"), readPath(record, "detailUrl")) ??
+    coalesce(readPath(record, "detailUrl"), readPath(record, "dsireUrl"), readPath(record, "url")) ??
     buildLikelyDsireDetailUrl(externalId, canonicalTitle);
+  const websiteUrl = cleanUrl(readPath(record, "websiteUrl"));
+  const category = coalesce(readPath(record, "categoryObj.name"), readPath(record, "typeObj.categoryObj.name"));
+  const categoryId = coalesce(
+    readPath(record, "categoryObj.id"),
+    readPath(record, "typeObj.categoryObj.id"),
+    readPath(record, "category")
+  );
+  const programType = coalesce(
+    readPath(record, "type.name"),
+    readPath(record, "typeObj.name"),
+    readPath(record, "incentiveType.name"),
+    readPath(record, "type"),
+    readPath(record, "incentiveType")
+  );
+  const programTypeId = coalesce(readPath(record, "typeObj.id"), readPath(record, "type"));
+  const state = coalesce(readPath(record, "state.abbreviation"), readPath(record, "stateObj.abbreviation"), readPath(record, "stateCode"));
+  const stateName = coalesce(readPath(record, "state.name"), readPath(record, "stateObj.name"));
+  const summaryHtml = coalesce(readPath(record, "summary"), readPath(record, "description"));
+  const details = normalizeDetails(readPath(record, "details"));
+  const summary = cleanHtmlText(summaryHtml) ?? details.find((detail) => detail.value)?.value ?? null;
+  const published = normalizePublished(readPath(record, "published"));
 
   return {
     sourceKey: SOURCE_KEY,
     sourceName: SOURCE_NAME,
-    ingestionMode: "licensed_api",
-    recordKind: "canonical_candidate",
+    ingestionMode: options.ingestionMode ?? "licensed_api",
+    recordKind: options.recordKind ?? "canonical_candidate",
     externalId: externalId == null ? contentHash : String(externalId),
     externalIdType: externalId == null ? "content_hash" : "dsire_program_id",
     canonicalTitle,
     sourceUrl,
     status: normalizeStatus(coalesce(readPath(record, "status"), readPath(record, "programStatus"))),
-    programType: coalesce(
-      readPath(record, "type.name"),
-      readPath(record, "typeObj.name"),
-      readPath(record, "incentiveType.name"),
-      readPath(record, "categoryObj.name"),
-      readPath(record, "type"),
-      readPath(record, "incentiveType")
+    category,
+    categoryId,
+    programType,
+    programTypeId,
+    state,
+    stateName,
+    summary,
+    summaryHtml,
+    published,
+    websiteUrl,
+    lastUpdated: normalizeDate(
+      coalesce(readPath(record, "updatedTs"), readPath(record, "updatedAt"), readPath(record, "updated_at"))
     ),
-    state: coalesce(
-      readPath(record, "state.abbreviation"),
-      readPath(record, "stateObj.abbreviation"),
-      readPath(record, "stateCode"),
-      readPath(record, "state")
+    sourceCreatedAt: normalizeDate(
+      coalesce(readPath(record, "createdTs"), readPath(record, "createdAt"), readPath(record, "created_at"))
     ),
+    startDate: normalizeDate(coalesce(readPath(record, "startDate"), readPath(record, "startDateDisplay"), readPath(record, "startDateText"))),
+    endDate: normalizeDate(coalesce(readPath(record, "endDate"), readPath(record, "endDateDisplay"), readPath(record, "endDateText"))),
+    fundingSource: cleanHtmlText(readPath(record, "fundingSource")),
+    budget: cleanHtmlText(readPath(record, "budget")),
+    details,
     geography: compactObject({
-      state: coalesce(
-        readPath(record, "state.abbreviation"),
-        readPath(record, "stateObj.abbreviation"),
-        readPath(record, "stateCode"),
-        readPath(record, "state")
-      ),
+      state,
+      stateName,
+      entireState: readPath(record, "entireState") === true,
       counties: normalizeNameList(coalesce(readPath(record, "counties"), readPath(record, "county"))),
       cities: normalizeNameList(coalesce(readPath(record, "cities"), readPath(record, "city"))),
       zipCodes: normalizeNameList(coalesce(readPath(record, "zipCodes"), readPath(record, "zip_codes")))
@@ -777,20 +1058,27 @@ function normalizeApiRecord(record, retrievedAt) {
     sectors: normalizeNameList(
       coalesce(readPath(record, "sectors"), readPath(record, "eligibleSectors"), readPath(record, "sectorObj"))
     ),
-    technologies: normalizeNameList(
-      coalesce(readPath(record, "technologies"), readPath(record, "energyCategories"), readPath(record, "technologyObj"))
-    ),
-    updatedAt: normalizeDate(
-      coalesce(readPath(record, "updatedTs"), readPath(record, "updatedAt"), readPath(record, "updated_at"))
-    ),
-    createdAt: normalizeDate(
-      coalesce(readPath(record, "createdTs"), readPath(record, "createdAt"), readPath(record, "created_at"))
-    ),
+    technologies: extractTechnologies(record),
+    dsire: compactObject({
+      programId: externalId == null ? null : String(externalId),
+      category,
+      categoryId,
+      programType,
+      programTypeId,
+      stateId: readPath(record, "stateObj.id") ?? readPath(record, "state"),
+      state,
+      stateName,
+      sectorId: readPath(record, "sectorObj.id") ?? readPath(record, "sector"),
+      sectorName: readPath(record, "sectorObj.name"),
+      published,
+      lastUpdatedDisplay: readPath(record, "lastUpdated"),
+      createdTs: readPath(record, "createdTs")
+    }),
     evidence: [
       {
         sourceName: SOURCE_NAME,
         sourceUrl,
-        documentType: "api_record",
+        documentType: options.sourceDocumentType ?? "api_record",
         retrievedAt,
         rawContentHash: contentHash
       }
@@ -798,6 +1086,34 @@ function normalizeApiRecord(record, retrievedAt) {
     contentHash,
     raw: record
   };
+}
+
+function normalizeDetails(details) {
+  if (!Array.isArray(details)) {
+    return [];
+  }
+
+  return details
+    .map((detail) =>
+      compactObject({
+        id: detail.id == null ? null : String(detail.id),
+        label: cleanHtmlText(detail.label),
+        value: cleanHtmlText(detail.value),
+        valueHtml: detail.value || null,
+        displayOrder: detail.displayOrder,
+        templateId: detail.templateId == null ? null : String(detail.templateId)
+      })
+    )
+    .filter((detail) => Object.keys(detail).length > 0);
+}
+
+function extractTechnologies(record) {
+  return uniqueArray([
+    ...normalizeNameList(
+      coalesce(readPath(record, "technologies"), readPath(record, "energyCategories"), readPath(record, "technologyObj"))
+    ),
+    ...normalizeNameList(readPath(record, "additionalTechnologies"))
+  ]);
 }
 
 function extractRecordsFromApiResponse(payload) {
@@ -857,6 +1173,16 @@ function extractTotalCount(payload) {
   return Number(total);
 }
 
+function extractFilteredCount(payload) {
+  const total = coalesce(readPath(payload, "recordsFiltered"), readPath(payload, "meta.filtered"));
+
+  if (total == null || Number.isNaN(Number(total))) {
+    return null;
+  }
+
+  return Number(total);
+}
+
 async function writeRunOutputs({
   runId,
   config,
@@ -895,8 +1221,9 @@ async function writeRunOutputs({
     completedAt,
     isFullInventory: context.isFullInventory,
     updatedSince: config.updatedSince ?? null,
-    pageSize: config.mode === "api" ? config.pageSize : null,
-    maxPages: config.mode === "api" ? config.maxPages : null,
+    pageSize: config.mode === "api" || config.mode === "public-table" ? config.pageSize : null,
+    maxPages: config.mode === "api" || config.mode === "public-table" ? config.maxPages : null,
+    publicCategory: config.mode === "public-table" ? config.publicCategory : null,
     limit: config.limit,
     counts: {
       rawRecords: rawRecords.length,
@@ -1099,6 +1426,32 @@ function normalizeDate(value) {
   return parsed.toISOString();
 }
 
+function normalizePublished(value) {
+  if (value == null || value === "") {
+    return null;
+  }
+
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  const normalized = String(value).trim().toLowerCase();
+  if (["yes", "true", "1", "published"].includes(normalized)) {
+    return true;
+  }
+
+  if (["no", "false", "0", "unpublished"].includes(normalized)) {
+    return false;
+  }
+
+  return null;
+}
+
+function cleanUrl(value) {
+  const text = String(value || "").trim();
+  return text.length > 0 ? text : null;
+}
+
 function inferStateFromProgramCode(programCode) {
   if (!programCode) {
     return null;
@@ -1168,6 +1521,24 @@ function stableStringify(value) {
   return JSON.stringify(value);
 }
 
+function uniqueArray(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function chunks(values, size) {
+  const result = [];
+  for (let index = 0; index < values.length; index += size) {
+    result.push(values.slice(index, index + size));
+  }
+  return result;
+}
+
+async function sleep(ms) {
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 function sha256(value) {
   return createHash("sha256").update(String(value)).digest("hex");
 }
@@ -1186,6 +1557,14 @@ function relativePath(filePath) {
 
 function camelCase(value) {
   return value.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+function normalizeMode(value) {
+  if (value === "public") {
+    return "public-table";
+  }
+
+  return value;
 }
 
 function parseBoolean(value, fallback) {

@@ -62,17 +62,25 @@ Primary key:
 
 - `opportunityId` string, currently composed from the source, external ID type, and source external ID
 
-Current DSIRE RSS fields include:
+Current DSIRE public-table and RSS fields include:
 
 - `sourceKey`: currently `SOURCE_DSIRE`
 - `sourceName`: currently `DSIRE`
-- `externalId`: DSIRE program code plus title hash for RSS records, such as `OK49F:44a1...`
+- `externalId`: DSIRE numeric program ID for public-table records; DSIRE program code plus title hash for RSS records
 - `canonicalTitle`
 - `normalizedTitle`
 - `state`
+- `stateName`
+- `category`
+- `categoryId`
 - `summary`
+- `summaryHtml`
+- `websiteUrl`
+- `lastUpdated`
+- `details`
 - `publishedAt`
-- `ingestionMode`: currently `rss_delta_feed`
+- `published`
+- `ingestionMode`: currently `public_table_inventory` or `rss_delta_feed`
 - `contentHash`
 - `dsire`
 - `evidence`
@@ -87,8 +95,9 @@ Current DSIRE RSS fields include:
 This is not the final relational opportunity schema. It is a DynamoDB-backed prototype table so admins
 can inspect gathered source records while we build the normalized opportunity database.
 
-The raw DSIRE program code is still preserved at `dsire.programCode`. The RSS importer includes a title
-hash in `externalId` because the feed can contain repeated program codes with different titles.
+Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. RSS records preserve the
+raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`
+because the feed can contain repeated program codes with different titles.
 
 ## Local API
 

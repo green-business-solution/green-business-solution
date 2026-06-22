@@ -10,17 +10,18 @@ The command runs `scripts/gather-dsire-opportunities.mjs`. It writes local JSON 
 
 ## Current Behavior
 
-The script supports two modes:
+The script supports three modes:
 
+- `public-table`: gathers the current DSIRE public table inventory from `https://programs.dsireusa.org/api/v1/programs`.
 - `api`: gathers full DSIRE program records from a configured licensed/API endpoint.
 - `rss`: gathers the public DSIRE update feed for weekly change detection.
 
 The default command uses `auto` mode:
 
 - If `DSIRE_API_BASE_URL` is set, it runs API mode.
-- If `DSIRE_API_BASE_URL` is not set, it runs RSS mode.
+- If `DSIRE_API_BASE_URL` is not set, it runs public-table mode.
 
-RSS mode is useful for detecting recently added or updated DSIRE programs, but it is not a full opportunity database export. Full DSIRE gathering requires configured API access or another authorized structured endpoint.
+RSS mode is useful for detecting recently added or updated DSIRE programs, but it is not a full opportunity database export. Public-table mode uses the same structured JSON endpoint that DSIRE's browser table uses. By default, it imports the `Financial Incentive` category because that is closest to rebates, tax incentives, grants, loans, and financing opportunities.
 
 ## Commands
 
@@ -30,10 +31,22 @@ Run the public RSS smoke test:
 npm run gather:dsire:rss
 ```
 
-Validate and write the public RSS records into the AWS DynamoDB opportunity-candidates table:
+Run the public DSIRE inventory without writing to AWS:
+
+```bash
+npm run gather:dsire:public
+```
+
+Validate and write DSIRE financial-incentive inventory records into the AWS DynamoDB opportunity-candidates table:
 
 ```bash
 npm run gather:dsire:aws
+```
+
+Validate and write only the public RSS records into AWS when testing weekly changed-item behavior:
+
+```bash
+npm run gather:dsire:aws:rss
 ```
 
 Run API mode after configuring access:
@@ -51,7 +64,7 @@ DSIRE_API_BASE_URL="https://example.dsire-api-host" npm run gather:dsire -- --mo
 Limit records during testing:
 
 ```bash
-npm run gather:dsire:rss -- --limit 5
+npm run gather:dsire:public -- --limit 5
 ```
 
 ## API Configuration
@@ -82,6 +95,15 @@ AWS/DynamoDB variables:
 
 The adapter is intentionally configurable because the exact licensed DSIRE API shape should come from the DSIRE API documentation or credentials we receive.
 
+Public table variables:
+
+| Variable | Purpose |
+| --- | --- |
+| `DSIRE_PUBLIC_API_BASE_URL` | Public DSIRE API base URL. Defaults to `https://programs.dsireusa.org/api/v1/`. |
+| `DSIRE_PUBLIC_PROGRAMS_PATH` | Public DSIRE program endpoint path. Defaults to `/programs`. |
+| `DSIRE_PUBLIC_REFERER` | Referer header expected by the public table endpoint. Defaults to `https://programs.dsireusa.org/system/program`. |
+| `DSIRE_PUBLIC_CATEGORY` | `financial`, `regulatory`, or `all`. Defaults to `financial`. |
+
 ## Output Files
 
 Each run creates:
@@ -102,7 +124,7 @@ These files are local ingestion artifacts. They are not yet the final relational
 
 ## DynamoDB Storage
 
-For the current prototype, validated DSIRE RSS records can be written to:
+For the current prototype, validated DSIRE public-table and RSS records can be written to:
 
 ```text
 gbs-opportunity-candidates
@@ -120,8 +142,22 @@ Representative fields:
 - `canonicalTitle`
 - `normalizedTitle`
 - `state`
+- `stateName`
+- `category`
+- `categoryId`
+- `programTypeId`
 - `summary`
+- `summaryHtml`
 - `publishedAt`
+- `published`
+- `websiteUrl`
+- `lastUpdated`
+- `sourceCreatedAt`
+- `startDate`
+- `endDate`
+- `fundingSource`
+- `budget`
+- `details`
 - `ingestionMode`
 - `contentHash`
 - `dsire`
@@ -135,8 +171,8 @@ Representative fields:
 - `updatedAt`
 
 The script upserts records by `opportunityId` and reports created, updated, and unchanged counts.
-Only records that pass critical validation are written. RSS records are marked `clean_with_limitations`
-because the feed provides update summaries rather than full program details.
+Only records that pass critical validation are written. Public-table records use DSIRE numeric program IDs.
+RSS records are marked `clean_with_limitations` because the feed provides update summaries rather than full program details.
 
 RSS identity uses the DSIRE program code plus a normalized-title hash. The raw program code is preserved
 under `dsire.programCode`. This prevents one RSS item from overwriting another when the feed repeats a
@@ -163,6 +199,6 @@ Suggested future flow:
 - The relational opportunity database has not been implemented yet.
 - This script does not create migrations, queues, cron schedules, Lambda jobs, or admin review tabs.
 - RSS mode cannot gather all DSIRE opportunities.
-- API mode is ready for configuration, but the actual DSIRE API base URL, auth format, and pagination parameters need to be confirmed from the authorized DSIRE API access.
-- DSIRE public program listing/detail exploration currently does not expose stable unauthenticated full-detail JSON records; the public API endpoint returns an access-denied response.
+- Public-table mode defaults to financial incentives. Use `--public-category all` to include regulatory policies too.
+- API mode is ready for configuration, but the actual licensed DSIRE API base URL, auth format, and pagination parameters need to be confirmed if formal API access is provided later.
 - Classification by zip code, utility provider, business classification, and square footage remains planned for a later implementation step.
