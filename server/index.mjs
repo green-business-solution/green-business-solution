@@ -1028,7 +1028,7 @@ function toLookupArray(value) {
 }
 
 function uniqueLookups(values) {
-  const seen = new Set();
+  const seen = new Map();
   const result = [];
 
   for (const value of values) {
@@ -1036,12 +1036,24 @@ function uniqueLookups(values) {
       continue;
     }
 
-    const key = value.id ? `id:${value.id}` : `name:${value.name.toLowerCase()}`;
-    if (seen.has(key)) {
+    const key = normalizeFilterValue(value.slug || value.name || value.id);
+    if (!key) {
       continue;
     }
 
-    seen.add(key);
+    const existingIndex = seen.get(key);
+    if (existingIndex != null) {
+      result[existingIndex] = {
+        ...value,
+        ...result[existingIndex],
+        id: result[existingIndex].id || value.id,
+        slug: result[existingIndex].slug || value.slug,
+        name: result[existingIndex].name || value.name
+      };
+      continue;
+    }
+
+    seen.set(key, result.length);
     result.push(value);
   }
 
@@ -1091,8 +1103,8 @@ function compactDatabaseParameterSets(parameterSets) {
     id: parameterSet?.id == null ? null : String(parameterSet.id),
     label: parameterSet?.label || null,
     displayOrder: parameterSet?.displayOrder ?? index,
-    sectors: toLookupArray(parameterSet?.sectors),
-    technologies: toLookupArray(parameterSet?.technologies),
+    sectors: uniqueLookups(toLookupArray(parameterSet?.sectors)),
+    technologies: uniqueLookups(toLookupArray(parameterSet?.technologies)),
     parameters: Array.isArray(parameterSet?.parameters)
       ? parameterSet.parameters.map((parameter) => ({
           id: parameter?.id == null ? null : String(parameter.id),
@@ -1239,7 +1251,7 @@ function buildFacet(values, labelKey = "name") {
       continue;
     }
 
-    const key = String(id);
+    const key = normalizeFilterValue(value.slug || value.abbreviation || label || id);
     const existing = map.get(key);
     if (existing) {
       existing.count += 1;
