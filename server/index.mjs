@@ -90,6 +90,11 @@ function cleanUsername(value) {
   return cleanText(value).toLowerCase();
 }
 
+function isValidEmail(value) {
+  const email = cleanEmail(value);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 function isAdminEmail(email) {
   return adminEmails.has(cleanEmail(email));
 }
@@ -101,9 +106,9 @@ function adminNameForEmail(email) {
   return "";
 }
 
-function createInternalUserId(role) {
-  const prefix = role === "admin" ? "admin" : "user";
-  return `${prefix}_${crypto.randomUUID()}`;
+function createAccountUserId(email) {
+  const digest = crypto.createHash("sha256").update(cleanEmail(email)).digest("hex").slice(0, 32);
+  return `account_${digest}`;
 }
 
 function createPasswordError(message, status = 400) {
@@ -112,16 +117,20 @@ function createPasswordError(message, status = 400) {
   return error;
 }
 
-function validatePasswordAuthInput(input) {
+function validatePasswordAuthInput(input, { requireEmail = false } = {}) {
   const username = cleanUsername(input?.username);
   const password = typeof input?.password === "string" ? input.password : "";
 
   if (!username) {
-    throw createPasswordError("Username is required.");
+    throw createPasswordError(requireEmail ? "Email is required." : "Username is required.");
   }
 
   if (username.length < 3 || username.length > 96 || !/^[a-z0-9._@+-]+$/.test(username)) {
     throw createPasswordError("Username must be 3-96 characters and can use letters, numbers, dots, dashes, underscores, plus signs, and @.");
+  }
+
+  if (requireEmail && !isValidEmail(username)) {
+    throw createPasswordError("Enter a valid email address.");
   }
 
   if (password.length < 8 || password.length > 128) {
@@ -419,34 +428,89 @@ async function scanAll(TableName) {
   return items;
 }
 
+function isActiveUserRecord(user) {
+  return user?.status === "active" && ["client", "admin"].includes(user.role);
+}
+
+function emailIdentitiesForUser(user) {
+  return [user?.email, user?.googleEmail, user?.passwordUsername]
+    .map(cleanEmail)
+    .filter((email) => email && isValidEmail(email));
+}
+
+function activeUsersByEmail(users, email) {
+  const normalized = cleanEmail(email);
+  if (!isValidEmail(normalized)) {
+    return [];
+  }
+
+  return users.filter((user) => isActiveUserRecord(user) && emailIdentitiesForUser(user).includes(normalized));
+}
+
+function createDuplicateEmailError(email) {
+  const error = new Error(`An account already exists for ${cleanEmail(email)}. Log in with that email instead.`);
+  error.status = 409;
+  return error;
+}
+
+function createMultipleAccountsError(email) {
+  const error = new Error(
+    `More than one active account uses ${cleanEmail(email)}. Ask an admin to merge the duplicate records before signing in.`
+  );
+  error.status = 409;
+  return error;
+}
+
+function requireSingleEmailAccount(users, email, { allowUserId = null } = {}) {
+  const matches = activeUsersByEmail(users, email).filter((user) => user.userId !== allowUserId);
+
+  if (allowUserId && matches.length > 0) {
+    throw createMultipleAccountsError(email);
+  }
+
+  if (matches.length > 1) {
+    throw createMultipleAccountsError(email);
+  }
+
+  return matches[0] || null;
+}
+
 async function findUserByGoogleIdentity(googleUser) {
   const users = await scanAll(usersTable);
-  const subjectMatch = users.find(
-    (user) => user.status === "active" && cleanText(user.googleSubject) === googleUser.sub
-  );
+  const activeUsers = users.filter(isActiveUserRecord);
+  const subjectMatches = activeUsers.filter((user) => cleanText(user.googleSubject) === googleUser.sub);
+
+  if (subjectMatches.length > 1) {
+    throw createMultipleAccountsError(googleUser.email);
+  }
+
+  const subjectMatch = subjectMatches[0] || null;
 
   if (subjectMatch) {
+    requireSingleEmailAccount(activeUsers, googleUser.email, { allowUserId: subjectMatch.userId });
     return subjectMatch;
   }
 
-  return users.find((user) => {
-    if (user.status !== "active") return false;
-    return cleanEmail(user.email) === googleUser.email || cleanEmail(user.googleEmail) === googleUser.email;
-  });
+  return requireSingleEmailAccount(activeUsers, googleUser.email);
 }
 
 async function findUserByPasswordUsername(username) {
   const normalized = cleanUsername(username);
   const users = await scanAll(usersTable);
+  const activeUsers = users.filter(isActiveUserRecord);
 
-  return users.find((user) => {
-    if (user.status !== "active") return false;
-    return (
-      cleanUsername(user.passwordUsername) === normalized ||
-      cleanEmail(user.email) === normalized ||
-      cleanEmail(user.googleEmail) === normalized
-    );
-  });
+  if (isValidEmail(normalized)) {
+    return requireSingleEmailAccount(activeUsers, normalized);
+  }
+
+  const matches = activeUsers.filter((user) => cleanUsername(user.passwordUsername) === normalized);
+  if (matches.length > 1) {
+    const error = new Error(`More than one active account uses ${normalized}. Ask an admin to merge the duplicate records before signing in.`);
+    error.status = 409;
+    throw error;
+  }
+
+  return matches[0] || null;
 }
 
 async function findUserByPasswordSession(sessionToken) {
@@ -506,11 +570,11 @@ async function issuePasswordSession(user) {
 }
 
 async function createPasswordAccount(input) {
-  const { username, password } = validatePasswordAuthInput(input);
+  const { username, password } = validatePasswordAuthInput(input, { requireEmail: true });
   const existing = await findUserByPasswordUsername(username);
 
   if (existing?.passwordLinked) {
-    throw createPasswordError("An account already exists for that username. Log in instead.", 409);
+    throw createPasswordError("An account already exists for that email. Log in instead.", 409);
   }
 
   const passwordFields = await createPasswordFields(password);
@@ -545,42 +609,39 @@ async function createPasswordAccount(input) {
     return issuePasswordSession(result.Attributes || { ...existing, ...passwordFields, role });
   }
 
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    const role = isAdminEmail(username) ? "admin" : "client";
-    const user = {
-      userId: createInternalUserId(role),
-      role,
-      status: "active",
-      fullName: displayNameForUsername(username),
-      email: username,
-      companyName: null,
-      authProvider: "password",
-      googleLinked: false,
-      passwordUsername: username,
-      passwordLinkedAt: now,
-      ...passwordFields,
-      createdAt: now,
-      updatedAt: now
-    };
+  const role = isAdminEmail(username) ? "admin" : "client";
+  const user = {
+    userId: createAccountUserId(username),
+    role,
+    status: "active",
+    fullName: displayNameForUsername(username),
+    email: username,
+    companyName: null,
+    authProvider: "password",
+    googleLinked: false,
+    passwordUsername: username,
+    passwordLinkedAt: now,
+    ...passwordFields,
+    createdAt: now,
+    updatedAt: now
+  };
 
-    try {
-      await db.send(
-        new PutCommand({
-          TableName: usersTable,
-          Item: user,
-          ConditionExpression: "attribute_not_exists(userId)"
-        })
-      );
+  try {
+    await db.send(
+      new PutCommand({
+        TableName: usersTable,
+        Item: user,
+        ConditionExpression: "attribute_not_exists(userId)"
+      })
+    );
 
-      return issuePasswordSession(user);
-    } catch (error) {
-      if (error.name !== "ConditionalCheckFailedException") {
-        throw error;
-      }
+    return issuePasswordSession(user);
+  } catch (error) {
+    if (error.name === "ConditionalCheckFailedException") {
+      throw createDuplicateEmailError(username);
     }
+    throw error;
   }
-
-  throw createPasswordError("Could not create your account. Please try again.", 500);
 }
 
 async function loginPasswordAccount(input) {
@@ -598,7 +659,7 @@ async function loginPasswordAccount(input) {
 async function createAdminUserFromGoogle(googleUser) {
   const now = new Date().toISOString();
   const user = {
-    userId: createInternalUserId("admin"),
+    userId: createAccountUserId(googleUser.email),
     role: "admin",
     status: "active",
     fullName: googleUser.name || adminNameForEmail(googleUser.email) || googleUser.email,
@@ -863,7 +924,9 @@ async function buildAdminPayload(admin) {
     scanAll(opportunitiesTable)
   ]);
   const intakeByUser = new Map(intakes.map((intake) => [intake.userId, intake]));
-  const sortedUsers = [...users].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+  const sortedUsers = users
+    .filter(isActiveUserRecord)
+    .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
   const sortedIntakes = [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
   const sortedOpportunities = [...opportunities].sort((a, b) =>
     String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
@@ -905,20 +968,27 @@ async function createClientUser(input) {
     throw error;
   }
 
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    const userId = createInternalUserId("client");
-    const now = new Date().toISOString();
-    const intake = createIntakeRecord(userId, input, now);
+  const email = cleanEmail(input.email);
+  const users = await scanAll(usersTable);
+  const existing = requireSingleEmailAccount(users, email);
+  const now = new Date().toISOString();
+
+  if (existing) {
+    if (existing.role !== "client") {
+      throw createDuplicateEmailError(email);
+    }
+
+    const existingIntake = await getIntake(existing.userId);
+    if (existingIntake) {
+      throw createDuplicateEmailError(email);
+    }
+
+    const intake = createIntakeRecord(existing.userId, input, now);
     const user = {
-      userId,
-      role: "client",
-      status: "active",
+      ...existing,
       fullName: intake.contact.fullName || intake.business.companyName,
-      email: intake.contact.email,
+      email,
       companyName: intake.business.companyName,
-      authProvider: "google",
-      googleLinked: false,
-      createdAt: now,
       updatedAt: now
     };
 
@@ -927,10 +997,24 @@ async function createClientUser(input) {
         new TransactWriteCommand({
           TransactItems: [
             {
-              Put: {
+              Update: {
                 TableName: usersTable,
-                Item: user,
-                ConditionExpression: "attribute_not_exists(userId)"
+                Key: { userId: existing.userId },
+                ConditionExpression: "attribute_exists(userId) AND #status = :active AND #role = :client",
+                UpdateExpression:
+                  "SET fullName = :fullName, email = :email, companyName = :companyName, updatedAt = :now",
+                ExpressionAttributeNames: {
+                  "#role": "role",
+                  "#status": "status"
+                },
+                ExpressionAttributeValues: {
+                  ":active": "active",
+                  ":client": "client",
+                  ":fullName": user.fullName,
+                  ":email": email,
+                  ":companyName": user.companyName,
+                  ":now": now
+                }
               }
             },
             {
@@ -946,15 +1030,57 @@ async function createClientUser(input) {
 
       return { user, intake };
     } catch (error) {
-      if (error.name !== "TransactionCanceledException") {
-        throw error;
+      if (error.name === "TransactionCanceledException") {
+        throw createDuplicateEmailError(email);
       }
+      throw error;
     }
   }
 
-  const error = new Error("Could not create your account. Please try again.");
-  error.status = 500;
-  throw error;
+  const userId = createAccountUserId(email);
+  const intake = createIntakeRecord(userId, input, now);
+  const user = {
+    userId,
+    role: "client",
+    status: "active",
+    fullName: intake.contact.fullName || intake.business.companyName,
+    email,
+    companyName: intake.business.companyName,
+    authProvider: "google",
+    googleLinked: false,
+    createdAt: now,
+    updatedAt: now
+  };
+
+  try {
+    await db.send(
+      new TransactWriteCommand({
+        TransactItems: [
+          {
+            Put: {
+              TableName: usersTable,
+              Item: user,
+              ConditionExpression: "attribute_not_exists(userId)"
+            }
+          },
+          {
+            Put: {
+              TableName: intakeTable,
+              Item: intake,
+              ConditionExpression: "attribute_not_exists(userId)"
+            }
+          }
+        ]
+      })
+    );
+
+    return { user, intake };
+  } catch (error) {
+    if (error.name === "TransactionCanceledException") {
+      throw createDuplicateEmailError(email);
+    }
+    throw error;
+  }
 }
 
 function classifyError(error) {

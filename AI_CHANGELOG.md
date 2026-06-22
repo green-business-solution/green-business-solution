@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) unique email accounts
+
+- Enforced normalized email as the single account identity across intake, Google sign-in, and password signup.
+- Switched new user records to deterministic email-based account IDs so duplicate account creation for the same email is blocked.
+- Allowed intake submission to attach to an existing client account when that email does not already have an intake record.
+
 ## 2026-06-22 - Codex (GPT-5) sign-in page restyle
 
 - Restyled the sign-in page around a visible email/password form, account-mode toggle, divider, and Google sign-in option.

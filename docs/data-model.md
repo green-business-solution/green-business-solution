@@ -8,8 +8,9 @@ The local development app writes to DynamoDB in the Green Business Solution AWS 
 
 Primary key:
 
-- `userId` string, an internal account identifier. New records use an opaque `user_...` or `admin_...` ID.
+- `userId` string, an internal account identifier. New active records use an `account_...` ID derived from the normalized email so the API can block duplicate accounts for the same email.
 - Legacy records may still have six-digit IDs from the removed temporary-code prototype, but those IDs are no longer accepted as login credentials.
+- Active user records should be unique by normalized email across `email`, `googleEmail`, and `passwordUsername`. Intake, Google sign-in, and password signup all use that same email identity.
 
 Representative fields:
 
@@ -18,8 +19,9 @@ Representative fields:
 - `fullName`
 - `email`
 - `companyName`
-- `authProvider`: currently `google`
+- `authProvider`: `google`, `password`, or `google,password`
 - `googleLinked`: boolean
+- `passwordLinked`: boolean
 - `googleSubject`
 - `googleEmail`
 - `createdAt`
