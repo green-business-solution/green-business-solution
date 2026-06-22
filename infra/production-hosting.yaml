@@ -226,7 +226,7 @@ Resources:
               - PATCH
               - POST
               - PUT
-            CachePolicyId: 4135ea2d-6df8-4e05-b921-63639d789ab6
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
             Compress: true
             OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac
             PathPattern: /api/*
