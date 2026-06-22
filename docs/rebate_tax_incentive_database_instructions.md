@@ -1098,32 +1098,40 @@ These decisions were added after the initial architecture note:
 - DSIRE API access is not required for the first exploration pass. If the project has permission to access relevant DSIRE data, an adapter may use normal HTTP requests to fetch HTML and clean it when the public pages return usable static content. Still prefer official APIs, structured feeds, or bulk exports if they are available because they are usually more stable, complete, and easier to audit than cleaned HTML.
 - Data format handling can be source-specific. Some sources will be HTML pages, some will be PDFs, and some may expose structured listings or files. Make the fetch/clean/parser strategy a case-by-case adapter decision.
 - Admin review should extend the existing admin page. All admin workflows should appear as tabs in the admin interface rather than as separate admin apps.
-- The current admin page includes a `Data` tab for inspecting the existing DynamoDB tables so humans can validate records while development is underway.
-- Classification for zip code, utility provider, business classification, and square footage is deferred. The current likely approach is to use OpenAI models through an API key after deterministic extraction has captured source evidence.
-- Scheduled jobs should likely use AWS EventBridge and a compute target such as Lambda, but this should be decided after the crawler, document fetching, extraction, and review tools exist.
-- Utility rebate catalogs may eventually need both program-level and measure-level records. The first implementation should preserve enough source document and section evidence to support either choice.
+- Each database table should have its own tab in the admin interface. Raw table views are acceptable for now because the immediate goal is human validation and debugging.
+- Opportunity records should likely use a relational database because matching users to opportunities depends on filtering and joining across eligibility, geography, utility, business classification, program type, status, and measures.
+- The existing DynamoDB user and intake tables can remain in place while the opportunity database is designed separately.
+- Minimize long-term raw file storage at first. Store source URLs, retrieved/extracted text, important evidence snippets, timestamps, and enough metadata for review. Temporary HTML/PDF files can be kept during a run and deleted after parsing unless later audit needs justify S3 storage.
+- Classification for zip code, utility provider, business classification, and square footage is deferred. Codex can be used as a human-supervised audit/classification layer for small weekly batches, and programmatic OpenAI/Codex APIs can be evaluated later if unattended classification is needed.
+- Scheduled jobs should likely use AWS EventBridge and a compute target such as Lambda or ECS/Fargate, but this should be decided after the crawler, document fetching, extraction, queueing, and review tools exist.
+- A job queue is desirable so document fetching, parsing, classification, review packet generation, and retries can be separated cleanly.
+- Utility rebate catalogs should eventually support both program-level and measure-level records. Program records should act as parents; measure/benefit records should represent specific rebate lines, equipment categories, or incentive terms when a catalog exposes them.
+- A weekly Codex audit can run after the automated opportunity gatherer. Use a real Codex automation, `codex exec`, Codex GitHub Action, or SDK-driven process for unattended operation; use ordinary interactive Codex review during testing.
 
 ## Planned Actions
 
 Do not implement these until the user explicitly confirms the next implementation step:
 
 - Build source-specific adapters for the first proof-of-concept sources, likely CEC and Silicon Valley Power.
-- Decide whether opportunity storage should use DynamoDB, a relational database, or a hybrid design after the first schema and query needs are clearer.
+- Design the first relational opportunity schema and choose the database engine, such as Postgres on RDS/Aurora or another managed relational option.
 - Decide where scheduled jobs should run after the ingestion tools exist. Compare EventBridge plus Lambda, EventBridge plus ECS/Fargate, GitHub Actions, and any long-running server option.
-- Add source document storage, likely S3, once raw HTML/PDF retention is needed.
+- Design the job queue flow for fetch, parse, extract, classify, review, and publish stages.
+- Decide whether any source document storage needs S3 after testing URL-plus-extracted-text retention.
 - Add an admin review workflow as additional tabs on the existing admin page.
-- Add OpenAI-based classification for zip code, utility provider, business classification, and square footage after deterministic evidence extraction is working.
-- Decide whether PG&E/SCE/SDG&E/SVP catalogs should publish program-level records, measure-level records, or both.
+- Add Codex/OpenAI-assisted classification for zip code, utility provider, business classification, and square footage after deterministic evidence extraction is working.
+- Create a scheduled Codex audit workflow after the automated opportunity gatherer produces stable review packets.
+- Add cron/scheduled job setup once the gatherer and queue workers exist.
+- Model both program-level and measure-level opportunity records in a human-auditable way in the admin interface.
 
 ## Open Implementation Decisions
 
 The following decisions materially affect implementation:
 
-- Whether the final storage model should remain DynamoDB-only or use a relational database for normalized opportunity tables.
-- Whether raw source documents should be stored in S3.
-- Where scheduled jobs should run, such as local cron, GitHub Actions, AWS EventBridge plus Lambda, ECS scheduled tasks, or another server.
-- Whether a job queue is needed for fetch/extract/classify/review stages.
-- Which OpenAI model and budget should be used for classification and extraction.
-- Whether utility rebate catalogs should produce program-level opportunities, measure-level opportunities, or both.
+- Which relational database engine and migration tool should be used for normalized opportunity tables.
+- Whether any raw source documents should be stored in S3, or whether source URLs plus extracted text and evidence snippets are sufficient.
+- Where scheduled jobs should run, such as AWS EventBridge plus Lambda, AWS EventBridge plus ECS/Fargate, GitHub Actions, or another server.
+- Which queue implementation should be used for fetch/extract/classify/review stages.
+- Which Codex/OpenAI automation surface should run weekly audits, and whether that should use Codex app automations, `codex exec`, Codex GitHub Action, the Codex SDK, or direct OpenAI API calls.
+- Which OpenAI/Codex model and budget should be used for classification and extraction if a programmatic API path is selected.
 - What partner domains should be allowed for utility third-party implementers.
 - What service-territory-to-zip dataset or API should be used.

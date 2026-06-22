@@ -86,8 +86,6 @@ type AdminRow = {
   intake: IntakeRecord | null;
 };
 
-type AdminTab = "Users" | "Data";
-
 type DatabaseTableSnapshot = {
   name: string;
   recordCount: number;
@@ -757,9 +755,11 @@ function AdminPage() {
   const [admin, setAdmin] = useState<UserRecord | null>(null);
   const [rows, setRows] = useState<AdminRow[]>([]);
   const [dataTables, setDataTables] = useState<DatabaseTableSnapshot[]>([]);
-  const [activeTab, setActiveTab] = useState<AdminTab>("Users");
+  const [activeTab, setActiveTab] = useState("Users");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navItems = ["Users", ...dataTables.map((table) => table.name)];
+  const selectedDataTable = dataTables.find((table) => table.name === activeTab) || null;
 
   async function loadUsers(code: string) {
     setError(null);
@@ -778,6 +778,12 @@ function AdminPage() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (activeTab !== "Users" && dataTables.length > 0 && !dataTables.some((table) => table.name === activeTab)) {
+      setActiveTab("Users");
+    }
+  }, [activeTab, dataTables]);
 
   useEffect(() => {
     if (adminCode.length === 6 && !admin) {
@@ -816,8 +822,8 @@ function AdminPage() {
   return (
     <WorkspaceLayout
       activeNavItem={activeTab}
-      navItems={["Users", "Data"]}
-      onNavItemChange={(item) => setActiveTab(item as AdminTab)}
+      navItems={navItems}
+      onNavItemChange={setActiveTab}
       onSignOut={() => {
         window.localStorage.removeItem(adminSessionKey);
         setAdmin(null);
@@ -831,7 +837,7 @@ function AdminPage() {
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} rows={rows} />
       ) : (
-        <AdminDataPanel dataTables={dataTables} isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} />
+        <AdminDataPanel dataTable={selectedDataTable} isLoading={isLoading} onRefresh={() => void loadUsers(adminCode)} />
       )}
     </WorkspaceLayout>
   );
@@ -904,11 +910,11 @@ function AdminUsersPanel({
 }
 
 function AdminDataPanel({
-  dataTables,
+  dataTable,
   isLoading,
   onRefresh
 }: {
-  dataTables: DatabaseTableSnapshot[];
+  dataTable: DatabaseTableSnapshot | null;
   isLoading: boolean;
   onRefresh: () => void;
 }) {
@@ -917,7 +923,7 @@ function AdminDataPanel({
       <div className="section-heading">
         <div>
           <p className="eyebrow">Database inspection</p>
-          <h2>Data</h2>
+          <h2>{dataTable?.name || "Table data"}</h2>
         </div>
         <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
           {isLoading ? "Refreshing..." : "Refresh"}
@@ -925,21 +931,19 @@ function AdminDataPanel({
       </div>
 
       <div className="data-grid">
-        {dataTables.length > 0 ? (
-          dataTables.map((table) => (
-            <article className="data-card" key={table.name}>
-              <div className="data-card-header">
-                <div>
-                  <p className="eyebrow">{table.name}</p>
-                  <h3>{table.recordCount} records</h3>
-                </div>
+        {dataTable ? (
+          <article className="data-card">
+            <div className="data-card-header">
+              <div>
+                <p className="eyebrow">{dataTable.name}</p>
+                <h3>{dataTable.recordCount} records</h3>
               </div>
-              <pre>{JSON.stringify(table.records, null, 2)}</pre>
-            </article>
-          ))
+            </div>
+            <pre>{JSON.stringify(dataTable.records, null, 2)}</pre>
+          </article>
         ) : (
           <article className="data-card">
-            <p>No database snapshot loaded.</p>
+            <p>No database table selected.</p>
           </article>
         )}
       </div>

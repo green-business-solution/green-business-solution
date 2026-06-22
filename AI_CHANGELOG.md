@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-21 - Codex (GPT-5) table-specific admin tabs
+
+- Replaced the single admin `Data` tab with one admin tab per returned database table.
+- Updated rebate/tax incentive planning notes with current decisions on relational opportunity storage, job queues, scheduled Codex review, minimal raw-file retention, and program/measure-level records.
+
 ## 2026-06-21 - Codex (GPT-5) admin data tab and crawler planning
 
 - Added an admin `Data` tab that displays raw snapshots of the current DynamoDB user and intake tables for human validation.
