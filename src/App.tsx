@@ -195,6 +195,15 @@ type AuthPayload = {
   adminDashboard: AdminPayload | null;
 };
 
+type AuthCredential = {
+  provider: "google" | "password";
+  value: string;
+};
+
+type PasswordAuthPayload = AuthPayload & {
+  sessionToken: string;
+};
+
 type GoogleCredentialResponse = {
   credential?: string;
   select_by?: string;
@@ -385,6 +394,10 @@ function pathForRoute(route: Route) {
   return `/${route}`;
 }
 
+function isLocalDevelopmentHost() {
+  return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+}
+
 async function apiPost<T>(path: string, body: unknown): Promise<T> {
   let response: Response;
 
@@ -398,7 +411,9 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
     });
   } catch {
     throw new Error(
-      "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
+      isLocalDevelopmentHost()
+        ? "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
+        : "Could not reach the server. Refresh the page and try again."
     );
   }
 
@@ -416,7 +431,9 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
   if (!response.ok) {
     const fallback =
       response.status >= 500
-        ? "The local API returned an error. Check the terminal running `npm run dev`; if AWS credentials are mentioned, run `aws sso login --profile gbs` and restart the dev server."
+        ? isLocalDevelopmentHost()
+          ? "The local API returned an error. Check the terminal running `npm run dev`; if AWS credentials are mentioned, run `aws sso login --profile gbs` and restart the dev server."
+          : "The server returned an error. Try again in a minute."
         : `Request failed with HTTP ${response.status}.`;
     throw new Error(payload.error || fallback);
   }
@@ -424,12 +441,28 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
   return payload as T;
 }
 
+function adminAuthBody(credential: AuthCredential) {
+  if (credential.provider === "password") {
+    return { passwordSessionToken: credential.value };
+  }
+
+  return { credential: credential.value };
+}
+
+function refreshAuthPayload(credential: AuthCredential) {
+  if (credential.provider === "password") {
+    return apiPost<AuthPayload>("/api/auth/password/session", { sessionToken: credential.value });
+  }
+
+  return apiPost<AuthPayload>("/api/auth/google", { credential: credential.value });
+}
+
 function GoogleSignInButton<T>({
   endpoint,
   onSuccess
 }: {
   endpoint: string;
-  onSuccess: (payload: T, credential: string) => void;
+  onSuccess: (payload: T, credential: AuthCredential) => void;
 }) {
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const onSuccessRef = useRef(onSuccess);
@@ -478,7 +511,7 @@ function GoogleSignInButton<T>({
           setIsSigningIn(true);
           try {
             const payload = await apiPost<T>(endpoint, { credential });
-            onSuccessRef.current(payload, credential);
+            onSuccessRef.current(payload, { provider: "google", value: credential });
           } catch (requestError) {
             setError(requestError instanceof Error ? requestError.message : "Google sign-in failed.");
           } finally {
@@ -513,6 +546,116 @@ function GoogleSignInButton<T>({
       {isSigningIn ? <p className="muted-message">Signing in...</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
     </div>
+  );
+}
+
+function PasswordAuthPanel({
+  initialUsername = "",
+  onAuthSuccess
+}: {
+  initialUsername?: string;
+  onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
+}) {
+  const [mode, setMode] = useState<"signup" | "login" | null>(null);
+
+  return (
+    <div className="password-auth-panel">
+      <button className="secondary-button auth-wide-button" onClick={() => setMode("signup")} type="button">
+        Create an account
+      </button>
+      <button className="link-button auth-text-button" onClick={() => setMode("login")} type="button">
+        Already have an account? Log in
+      </button>
+      {mode ? (
+        <PasswordAuthForm
+          initialUsername={initialUsername}
+          mode={mode}
+          onAuthSuccess={onAuthSuccess}
+          onModeChange={setMode}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function PasswordAuthForm({
+  initialUsername,
+  mode,
+  onAuthSuccess,
+  onModeChange
+}: {
+  initialUsername: string;
+  mode: "signup" | "login";
+  onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
+  onModeChange: (mode: "signup" | "login") => void;
+}) {
+  const [username, setUsername] = useState(initialUsername);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSignup = mode === "signup";
+
+  useEffect(() => {
+    setUsername(initialUsername);
+    setPassword("");
+    setError(null);
+  }, [initialUsername, mode]);
+
+  async function submitPasswordAuth(event: FormEvent) {
+    event.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
+    try {
+      const endpoint = isSignup ? "/api/auth/password/signup" : "/api/auth/password/login";
+      const payload = await apiPost<PasswordAuthPayload>(endpoint, { username, password });
+      onAuthSuccess(payload, { provider: "password", value: payload.sessionToken });
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Password sign-in failed.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <form className="password-auth-form" onSubmit={submitPasswordAuth}>
+      <div>
+        <p className="eyebrow">{isSignup ? "Create account" : "Log in"}</p>
+        <h2>{isSignup ? "Use a username and password." : "Enter your account details."}</h2>
+      </div>
+      <label className="field">
+        <span>Username or email</span>
+        <input
+          autoComplete="username"
+          onChange={(event) => setUsername(event.target.value)}
+          placeholder="name@example.com"
+          required
+          value={username}
+        />
+      </label>
+      <label className="field">
+        <span>Password</span>
+        <input
+          autoComplete={isSignup ? "new-password" : "current-password"}
+          minLength={8}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+          type="password"
+          value={password}
+        />
+      </label>
+      {error ? <p className="error-message">{error}</p> : null}
+      <button disabled={isSubmitting} type="submit">
+        {isSubmitting ? "Submitting..." : isSignup ? "Create account" : "Log in"}
+      </button>
+      <button
+        className="link-button auth-text-button"
+        onClick={() => onModeChange(isSignup ? "login" : "signup")}
+        type="button"
+      >
+        {isSignup ? "Already have an account? Log in" : "Need an account? Create one"}
+      </button>
+    </form>
   );
 }
 
@@ -1425,7 +1568,7 @@ function SignInPage({
 }: {
   navigate: (route: Route) => void;
   message: string | null;
-  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
+  onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
 }) {
   return (
     <PublicShell navigate={navigate}>
@@ -1436,9 +1579,7 @@ function SignInPage({
           {message ? <p className="muted-message">{message}</p> : null}
         </div>
         <GoogleSignInButton<AuthPayload> endpoint="/api/auth/google" onSuccess={onAuthSuccess} />
-        <button className="secondary-button" onClick={() => navigate("scan")} type="button">
-          Create a free scan
-        </button>
+        <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
       </section>
     </PublicShell>
   );
@@ -1464,8 +1605,8 @@ function AdminDashboard({
   onSignOut,
   payload
 }: {
-  credential: string | null;
-  onAuthSuccess: (payload: AuthPayload, credential: string) => void;
+  credential: AuthCredential | null;
+  onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
   onSignOut: () => void;
   payload: AdminPayload;
 }) {
@@ -1507,9 +1648,9 @@ function AdminDashboard({
     setError(null);
     setIsLoading(true);
     try {
-      const nextPayload = await apiPost<AuthPayload>("/api/auth/google", { credential });
+      const nextPayload = await refreshAuthPayload(credential);
       if (!nextPayload.adminDashboard) {
-        throw new Error("This Google account does not have admin access.");
+        throw new Error("This account does not have admin access.");
       }
       setAdminPayload(nextPayload.adminDashboard);
       onAuthSuccess(nextPayload, credential);
@@ -1626,7 +1767,7 @@ function AdminDataPanel({
   onOpportunityUpdated,
   onRefresh
 }: {
-  credential: string | null;
+  credential: AuthCredential | null;
   dataTable: DatabaseTableSnapshot | null;
   isLoading: boolean;
   onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
@@ -1684,7 +1825,7 @@ function OpportunityReviewPanel({
   onOpportunityUpdated,
   onRefresh
 }: {
-  credential: string | null;
+  credential: AuthCredential | null;
   dataTable: DatabaseTableSnapshot;
   isLoading: boolean;
   onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
@@ -1866,7 +2007,7 @@ function OpportunityDetailPanel({
   opportunity,
   onOpportunityUpdated
 }: {
-  credential: string | null;
+  credential: AuthCredential | null;
   opportunity: OpportunityRecord | null;
   onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
 }) {
@@ -1922,7 +2063,7 @@ function OpportunityDetailPanel({
       const response = await apiPost<OpportunityReviewResponse>(
         `/api/admin/opportunities/${encodeURIComponent(opportunityId)}/review`,
         {
-          credential,
+          ...adminAuthBody(credential),
           status,
           notes,
           duplicateOf
@@ -2230,7 +2371,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
 export function App() {
   const [route, setRoute] = useState<Route>(routeFromPath);
   const [authPayload, setAuthPayload] = useState<AuthPayload | null>(null);
-  const [authCredential, setAuthCredential] = useState<string | null>(null);
+  const [authCredential, setAuthCredential] = useState<AuthCredential | null>(null);
   const [signInMessage, setSignInMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -2253,7 +2394,7 @@ export function App() {
     setRoute(nextRoute);
   }
 
-  function handleAuthSuccess(payload: AuthPayload, credential: string) {
+  function handleAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
     setAuthPayload(payload);
     setAuthCredential(credential);
     setSignInMessage(null);

@@ -586,6 +586,43 @@ textarea {
   margin: 0;
 }
 
+.password-auth-panel {
+  border-top: 1px solid #eef2ef;
+  display: grid;
+  gap: 12px;
+  padding-top: 18px;
+}
+
+.save-results-modal .password-auth-panel {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.auth-wide-button,
+.auth-text-button {
+  width: 100%;
+}
+
+.auth-text-button {
+  color: #176b4c;
+  font-size: 14px;
+  min-height: 34px;
+}
+
+.password-auth-form {
+  border-top: 1px solid #eef2ef;
+  display: grid;
+  gap: 14px;
+  padding-top: 16px;
+}
+
+.password-auth-form h2 {
+  font-size: 18px;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin: 0;
+}
+
 .workspace-layout {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);

@@ -55,6 +55,10 @@ const requiredFields = [
   ["squareFootage", "Square footage"]
 ];
 const opportunityReviewStatuses = new Set(["approved", "rejected", "needs_review", "duplicate"]);
+const passwordHashAlgorithm = "scrypt";
+const passwordHashKeyLength = 64;
+const passwordSessionDurationMs = 7 * 24 * 60 * 60 * 1000;
+const maxEvidenceTextLength = 1200;
 
 let googleKeysCache = {
   expiresAt: 0,
@@ -82,6 +86,10 @@ function cleanEmail(value) {
   return cleanText(value).toLowerCase();
 }
 
+function cleanUsername(value) {
+  return cleanText(value).toLowerCase();
+}
+
 function isAdminEmail(email) {
   return adminEmails.has(cleanEmail(email));
 }
@@ -96,6 +104,96 @@ function adminNameForEmail(email) {
 function createInternalUserId(role) {
   const prefix = role === "admin" ? "admin" : "user";
   return `${prefix}_${crypto.randomUUID()}`;
+}
+
+function createPasswordError(message, status = 400) {
+  const error = new Error(message);
+  error.status = status;
+  return error;
+}
+
+function validatePasswordAuthInput(input) {
+  const username = cleanUsername(input?.username);
+  const password = typeof input?.password === "string" ? input.password : "";
+
+  if (!username) {
+    throw createPasswordError("Username is required.");
+  }
+
+  if (username.length < 3 || username.length > 96 || !/^[a-z0-9._@+-]+$/.test(username)) {
+    throw createPasswordError("Username must be 3-96 characters and can use letters, numbers, dots, dashes, underscores, plus signs, and @.");
+  }
+
+  if (password.length < 8 || password.length > 128) {
+    throw createPasswordError("Password must be 8-128 characters.");
+  }
+
+  return { username, password };
+}
+
+function derivePasswordKey(password, salt) {
+  return new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, passwordHashKeyLength, (error, key) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(key);
+    });
+  });
+}
+
+async function createPasswordFields(password) {
+  const passwordSalt = crypto.randomBytes(16).toString("base64url");
+  const derivedKey = await derivePasswordKey(password, passwordSalt);
+
+  return {
+    passwordAlgorithm: passwordHashAlgorithm,
+    passwordHashKeyLength,
+    passwordHash: derivedKey.toString("base64url"),
+    passwordSalt,
+    passwordLinked: true
+  };
+}
+
+async function verifyPassword(password, user) {
+  if (
+    !user?.passwordLinked ||
+    user.passwordAlgorithm !== passwordHashAlgorithm ||
+    !user.passwordHash ||
+    !user.passwordSalt
+  ) {
+    return false;
+  }
+
+  const expected = Buffer.from(String(user.passwordHash), "base64url");
+  const candidate = await derivePasswordKey(password, String(user.passwordSalt));
+
+  return expected.length === candidate.length && crypto.timingSafeEqual(expected, candidate);
+}
+
+function createPasswordSessionToken() {
+  return crypto.randomBytes(32).toString("base64url");
+}
+
+function hashPasswordSessionToken(token) {
+  return crypto.createHash("sha256").update(token).digest("base64url");
+}
+
+function authProviderForPasswordUser(user) {
+  return user?.googleLinked ? "google,password" : "password";
+}
+
+function displayNameForUsername(username) {
+  return adminNameForEmail(username) || username.split("@")[0] || username;
+}
+
+function compactText(value, maxLength) {
+  const text = cleanText(value);
+  if (!text || text.length <= maxLength) {
+    return text || null;
+  }
+  return `${text.slice(0, maxLength)}...`;
 }
 
 function decodeJwtJson(segment) {
@@ -252,6 +350,7 @@ function publicUser(user) {
     companyName: user.companyName || null,
     authProvider: user.authProvider,
     googleLinked: Boolean(user.googleLinked),
+    passwordLinked: Boolean(user.passwordLinked),
     createdAt: user.createdAt,
     lastLoginAt: user.lastLoginAt || null
   };
@@ -336,6 +435,166 @@ async function findUserByGoogleIdentity(googleUser) {
   });
 }
 
+async function findUserByPasswordUsername(username) {
+  const normalized = cleanUsername(username);
+  const users = await scanAll(usersTable);
+
+  return users.find((user) => {
+    if (user.status !== "active") return false;
+    return (
+      cleanUsername(user.passwordUsername) === normalized ||
+      cleanEmail(user.email) === normalized ||
+      cleanEmail(user.googleEmail) === normalized
+    );
+  });
+}
+
+async function findUserByPasswordSession(sessionToken) {
+  const cleanToken = cleanText(sessionToken);
+  if (!cleanToken) {
+    throw createPasswordError("Sign in again to continue.", 401);
+  }
+
+  const sessionHash = hashPasswordSessionToken(cleanToken);
+  const users = await scanAll(usersTable);
+  const user = users.find(
+    (record) => record.status === "active" && cleanText(record.passwordSessionHash) === sessionHash
+  );
+
+  if (!user) {
+    throw createPasswordError("Sign in again to continue.", 401);
+  }
+
+  const expiresAt = Date.parse(user.passwordSessionExpiresAt || "");
+  if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+    throw createPasswordError("Your session expired. Sign in again.", 401);
+  }
+
+  return user;
+}
+
+async function issuePasswordSession(user) {
+  const sessionToken = createPasswordSessionToken();
+  const now = new Date().toISOString();
+  const expiresAt = new Date(Date.now() + passwordSessionDurationMs).toISOString();
+  const result = await db.send(
+    new UpdateCommand({
+      TableName: usersTable,
+      Key: { userId: user.userId },
+      UpdateExpression:
+        "SET passwordSessionHash = :sessionHash, passwordSessionCreatedAt = :now, passwordSessionExpiresAt = :expiresAt, lastLoginAt = :now, updatedAt = :now",
+      ExpressionAttributeValues: {
+        ":sessionHash": hashPasswordSessionToken(sessionToken),
+        ":now": now,
+        ":expiresAt": expiresAt
+      },
+      ReturnValues: "ALL_NEW"
+    })
+  );
+
+  return {
+    sessionToken,
+    user: result.Attributes || {
+      ...user,
+      passwordSessionHash: hashPasswordSessionToken(sessionToken),
+      passwordSessionCreatedAt: now,
+      passwordSessionExpiresAt: expiresAt,
+      lastLoginAt: now,
+      updatedAt: now
+    }
+  };
+}
+
+async function createPasswordAccount(input) {
+  const { username, password } = validatePasswordAuthInput(input);
+  const existing = await findUserByPasswordUsername(username);
+
+  if (existing?.passwordLinked) {
+    throw createPasswordError("An account already exists for that username. Log in instead.", 409);
+  }
+
+  const passwordFields = await createPasswordFields(password);
+  const now = new Date().toISOString();
+
+  if (existing) {
+    const role = isAdminEmail(existing.email) || isAdminEmail(username) ? "admin" : existing.role || "client";
+    const result = await db.send(
+      new UpdateCommand({
+        TableName: usersTable,
+        Key: { userId: existing.userId },
+        UpdateExpression:
+          "SET #role = :role, authProvider = :authProvider, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
+        ExpressionAttributeNames: {
+          "#role": "role"
+        },
+        ExpressionAttributeValues: {
+          ":role": role,
+          ":authProvider": authProviderForPasswordUser(existing),
+          ":passwordLinked": true,
+          ":passwordUsername": username,
+          ":passwordHash": passwordFields.passwordHash,
+          ":passwordSalt": passwordFields.passwordSalt,
+          ":passwordAlgorithm": passwordFields.passwordAlgorithm,
+          ":passwordHashKeyLength": passwordFields.passwordHashKeyLength,
+          ":now": now
+        },
+        ReturnValues: "ALL_NEW"
+      })
+    );
+
+    return issuePasswordSession(result.Attributes || { ...existing, ...passwordFields, role });
+  }
+
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const role = isAdminEmail(username) ? "admin" : "client";
+    const user = {
+      userId: createInternalUserId(role),
+      role,
+      status: "active",
+      fullName: displayNameForUsername(username),
+      email: username,
+      companyName: null,
+      authProvider: "password",
+      googleLinked: false,
+      passwordUsername: username,
+      passwordLinkedAt: now,
+      ...passwordFields,
+      createdAt: now,
+      updatedAt: now
+    };
+
+    try {
+      await db.send(
+        new PutCommand({
+          TableName: usersTable,
+          Item: user,
+          ConditionExpression: "attribute_not_exists(userId)"
+        })
+      );
+
+      return issuePasswordSession(user);
+    } catch (error) {
+      if (error.name !== "ConditionalCheckFailedException") {
+        throw error;
+      }
+    }
+  }
+
+  throw createPasswordError("Could not create your account. Please try again.", 500);
+}
+
+async function loginPasswordAccount(input) {
+  const { username, password } = validatePasswordAuthInput(input);
+  const user = await findUserByPasswordUsername(username);
+  const isValid = user ? await verifyPassword(password, user) : false;
+
+  if (!isValid) {
+    throw createPasswordError("Invalid username or password.", 401);
+  }
+
+  return issuePasswordSession(user);
+}
+
 async function createAdminUserFromGoogle(googleUser) {
   const now = new Date().toISOString();
   const user = {
@@ -377,6 +636,7 @@ async function linkGoogleUser(user, googleUser) {
 
   const now = new Date().toISOString();
   const role = isAdminEmail(googleUser.email) ? "admin" : "client";
+  const authProvider = user.passwordLinked ? "google,password" : "google";
   const result = await db.send(
     new UpdateCommand({
       TableName: usersTable,
@@ -388,7 +648,7 @@ async function linkGoogleUser(user, googleUser) {
       },
       ExpressionAttributeValues: {
         ":role": role,
-        ":authProvider": "google",
+        ":authProvider": authProvider,
         ":googleLinked": true,
         ":googleSubject": googleUser.sub,
         ":googleEmail": googleUser.email,
@@ -403,7 +663,7 @@ async function linkGoogleUser(user, googleUser) {
   return result.Attributes || {
     ...user,
     role,
-    authProvider: "google",
+    authProvider,
     googleLinked: true,
     googleSubject: googleUser.sub,
     googleEmail: googleUser.email,
@@ -444,8 +704,26 @@ async function requireAdminUser(credential) {
   return user;
 }
 
-async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential }) {
-  const admin = await requireAdminUser(credential);
+async function requirePasswordSessionUser(sessionToken) {
+  return findUserByPasswordSession(sessionToken);
+}
+
+async function requireAdminFromAuth({ credential, passwordSessionToken }) {
+  const user = cleanText(passwordSessionToken)
+    ? await requirePasswordSessionUser(passwordSessionToken)
+    : await requireAdminUser(credential);
+
+  if (user.role !== "admin") {
+    const error = new Error("This account does not have admin access.");
+    error.status = 403;
+    throw error;
+  }
+
+  return user;
+}
+
+async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
+  const admin = await requireAdminFromAuth({ credential, passwordSessionToken });
   const cleanOpportunityId = cleanText(opportunityId);
   const cleanStatus = cleanText(status);
   const cleanNotes = cleanOptional(notes);
@@ -502,6 +780,64 @@ async function updateOpportunityReview({ opportunityId, status, notes, duplicate
   return result.Attributes;
 }
 
+function compactEvidence(evidence) {
+  if (!Array.isArray(evidence)) {
+    return [];
+  }
+
+  return evidence.map((item) => ({
+    sourceName: item?.sourceName,
+    sourceUrl: item?.sourceUrl,
+    documentType: item?.documentType,
+    sectionHeading: item?.sectionHeading,
+    sectionCategory: item?.sectionCategory,
+    retrievedAt: item?.retrievedAt,
+    extractedText: compactText(item?.extractedText, maxEvidenceTextLength)
+  }));
+}
+
+function compactOpportunityRecord(record) {
+  return {
+    opportunityId: record.opportunityId,
+    canonicalTitle: record.canonicalTitle,
+    normalizedTitle: record.normalizedTitle,
+    sourceKey: record.sourceKey,
+    sourceName: record.sourceName,
+    sourceUrl: record.sourceUrl,
+    origin: record.origin,
+    status: record.status,
+    sourceStatus: record.sourceStatus,
+    reviewStatus: record.reviewStatus,
+    reviewNotes: record.reviewNotes || null,
+    duplicateOf: record.duplicateOf || null,
+    reviewedAt: record.reviewedAt,
+    reviewedBy: record.reviewedBy,
+    category: record.category,
+    programType: record.programType,
+    summary: compactText(record.summary, 1600),
+    administrator: record.administrator,
+    deliveryPartner: record.deliveryPartner || null,
+    applicationUrl: record.applicationUrl || null,
+    websiteUrl: record.websiteUrl || null,
+    technologies: record.technologies,
+    sectors: record.sectors,
+    matchingParameters: record.matchingParameters,
+    eligibilityRules: record.eligibilityRules,
+    evidence: compactEvidence(record.evidence),
+    dataQuality: record.dataQuality,
+    createdAt: record.createdAt,
+    updatedAt: record.updatedAt,
+    lastSeenAt: record.lastSeenAt
+  };
+}
+
+async function buildPasswordAuthPayload(sessionResult) {
+  return {
+    ...(await buildAuthPayload(sessionResult.user)),
+    sessionToken: sessionResult.sessionToken
+  };
+}
+
 async function buildAuthPayload(user) {
   if (user.role === "admin") {
     return {
@@ -545,7 +881,7 @@ async function buildAdminPayload(admin) {
       {
         name: usersTable,
         recordCount: sortedUsers.length,
-        records: sortedUsers
+        records: sortedUsers.map(publicUser)
       },
       {
         name: intakeTable,
@@ -555,7 +891,7 @@ async function buildAdminPayload(admin) {
       {
         name: opportunitiesTable,
         recordCount: sortedOpportunities.length,
-        records: sortedOpportunities
+        records: sortedOpportunities.map(compactOpportunityRecord)
       }
     ]
   };
@@ -632,7 +968,9 @@ function classifyError(error) {
     return {
       status: 503,
       message:
-        "AWS credentials are not ready for the local API. Run `aws sso login --profile gbs`, then restart `npm run dev`."
+        isLambdaRuntime
+          ? "The production API could not access AWS. Check the Lambda execution role and deployment configuration."
+          : "AWS credentials are not ready for the local API. Run `aws sso login --profile gbs`, then restart `npm run dev`."
     };
   }
 
@@ -648,7 +986,9 @@ function classifyError(error) {
     return {
       status: 503,
       message:
-        "The local API could not reach AWS DynamoDB. Check internet access, then run `aws sts get-caller-identity --profile gbs`."
+        isLambdaRuntime
+          ? "The production API could not reach its AWS data store. Try again in a minute."
+          : "The local API could not reach AWS DynamoDB. Check internet access, then run `aws sts get-caller-identity --profile gbs`."
     };
   }
 
@@ -725,6 +1065,33 @@ app.post("/api/auth/google", async (req, res) => {
   }
 });
 
+app.post("/api/auth/password/signup", async (req, res) => {
+  try {
+    const sessionResult = await createPasswordAccount(req.body || {});
+    res.status(201).json(await buildPasswordAuthPayload(sessionResult));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/auth/password/login", async (req, res) => {
+  try {
+    const sessionResult = await loginPasswordAccount(req.body || {});
+    res.json(await buildPasswordAuthPayload(sessionResult));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/auth/password/session", async (req, res) => {
+  try {
+    const user = await requirePasswordSessionUser(req.body?.sessionToken);
+    res.json(await buildAuthPayload(user));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
   try {
     const opportunity = await updateOpportunityReview({
@@ -732,7 +1099,8 @@ app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
       status: req.body?.status,
       notes: req.body?.notes,
       duplicateOf: req.body?.duplicateOf,
-      credential: req.body?.credential
+      credential: req.body?.credential,
+      passwordSessionToken: req.body?.passwordSessionToken
     });
     res.json({ opportunity });
   } catch (error) {

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) password auth and compact admin payload
+
+- Added username/password account creation and login alongside Google sign-in on the unified sign-in screen.
+- Added password session support so admins can refresh and review opportunity records after non-Google login.
+- Compacted admin opportunity records returned from the API to avoid Lambda response-size failures during admin sign-in.
+
 ## 2026-06-22 - Codex (GPT-5) Retrofi public website rebuild
 
 - Rebuilt the public Retrofi flow around `Create Free Scan` with Home, How It Works, Pricing, For Businesses, About, Scan, Scan Results, and Sign In routes.
