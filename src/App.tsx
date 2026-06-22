@@ -401,9 +401,8 @@ function GoogleSignInButton<T>({
 
   return (
     <div className="google-auth">
-      <div className="google-button-slot" ref={buttonRef}>
-        {isLoading ? <span>Loading Google...</span> : null}
-      </div>
+      <div className="google-button-slot" ref={buttonRef} />
+      {isLoading ? <p className="muted-message">Loading Google...</p> : null}
       {isSigningIn ? <p className="muted-message">Signing in...</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
     </div>

@@ -568,6 +568,10 @@ textarea {
   gap: 16px;
 }
 
+.google-auth .muted-message {
+  text-align: center;
+}
+
 .google-button-slot {
   display: flex;
   justify-content: center;

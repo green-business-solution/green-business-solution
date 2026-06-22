@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) production Google sign-in render fix
+
+- Fixed the production Google sign-in screen blanking out after Google Identity Services loaded.
+- Kept the Google-rendered button in an empty DOM slot so React does not reconcile children that external Google code has replaced.
+
 ## 2026-06-21 - Codex (GPT-5) Southern California Edison opportunity import
 
 - Added a reusable bounded SCE business-program importer for demand response, building efficiency, financing, economic development, EV charging, and fleet electrification records.
