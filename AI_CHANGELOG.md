@@ -112,3 +112,8 @@
 
 - Removed the Opportunity Priorities section and its subquestions from the intake form.
 - Dropped Timeline from backend required-field validation because the field is no longer shown.
+
+## 2026-06-21 - Codex (GPT-5) business information cleanup
+
+- Removed the Industry intake question and site-address helper note.
+- Updated Organization type choices for commercial, industrial, agricultural, multifamily, nonprofit, government, and other organizations.

@@ -161,7 +161,15 @@ const initiatives = [
 ];
 
 const utilityProviderOptions = ["PG&E", "SCE", "SDG&E", "SVP", "Other"];
-const organizationTypeOptions = ["Business", "Nonprofit", "Government", "School", "Hospital"];
+const organizationTypeOptions = [
+  "Commercial Business",
+  "Industrial Facility",
+  "Agricultural Operation",
+  "Multifamily Property",
+  "Nonprofit Organization",
+  "Government / Public Agency",
+  "Other"
+];
 const ownershipStatusOptions = ["Own", "Lease", "Manage"];
 const buildingTypeOptions = [
   "Office",
@@ -543,7 +551,6 @@ function IntakePage({
               required
               value={form.organizationType}
             />
-            <Field label="Industry" name="industry" onChange={updateField} value={form.industry} />
             <SelectField
               label="Organization size"
               name="organizationSize"
@@ -563,10 +570,6 @@ function IntakePage({
               required
               value={form.siteAddress}
             />
-            <p className="field-note field-wide">
-              Site address will be used later to derive state, county, city, ZIP, and utility
-              territory.
-            </p>
             <SelectField
               label="Electric utility provider"
               name="electricUtilityProvider"
@@ -1017,8 +1020,6 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dd>{intake.business.companyName}</dd>
           <dt>Organization type</dt>
           <dd>{intake.business.organizationType || "Not provided"}</dd>
-          <dt>Industry</dt>
-          <dd>{intake.business.industry}</dd>
           <dt>Size</dt>
           <dd>{intake.business.organizationSize}</dd>
           <dt>Region</dt>
