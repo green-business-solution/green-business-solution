@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) admin sign-in performance
+
+- Changed admin auth responses to return a lightweight dashboard shell instead of scanning all admin DynamoDB tables during sign-in.
+- Added admin-only lazy data endpoints for client rows and individual database table snapshots.
+- Updated the admin dashboard to load the active tab on demand and refresh only the currently selected admin section.
+
 ## 2026-06-23 - Codex (GPT-5) sign-in navbar sizing
 
 - Removed sign-in-page-specific navbar sizing overrides so the sign-in page reuses the same public navbar dimensions as the homepage.

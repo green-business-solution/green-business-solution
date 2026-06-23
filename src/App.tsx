@@ -191,6 +191,14 @@ type AdminPayload = {
   dataTables: DatabaseTableSnapshot[];
 };
 
+type AdminUsersResponse = {
+  users: AdminRow[];
+};
+
+type AdminTableResponse = {
+  table: DatabaseTableSnapshot;
+};
+
 type AuthPayload = {
   dashboard: "client" | "admin";
   user: UserRecord;
@@ -421,14 +429,6 @@ function adminAuthHeaders(credential: AuthCredential): HeadersInit {
   }
 
   return { Authorization: `Bearer ${credential.value}` };
-}
-
-function refreshAuthPayload(credential: AuthCredential) {
-  if (credential.provider === "password") {
-    return apiPost<AuthPayload>("/api/auth/password/session", { sessionToken: credential.value });
-  }
-
-  return apiPost<AuthPayload>("/api/auth/google", { credential: credential.value });
 }
 
 function takeSessionStorageItem(key: string) {
@@ -2307,24 +2307,29 @@ function UserDashboard({
   );
 }
 
+function adminSectionKey(tab: string) {
+  return tab === "Users" ? "users" : `table:${tab}`;
+}
+
 function AdminDashboard({
   credential,
-  onAuthSuccess,
   onSignOut,
   payload
 }: {
   credential: AuthCredential | null;
-  onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
   onSignOut: () => void;
   payload: AdminPayload;
 }) {
   const [adminPayload, setAdminPayload] = useState(payload);
   const [activeTab, setActiveTab] = useState("Users");
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadedSections, setLoadedSections] = useState<string[]>([]);
+  const [loadingSectionKey, setLoadingSectionKey] = useState<string | null>(null);
   const { admin, users: rows, dataTables } = adminPayload;
   const navItems = ["Users", ...dataTables.map((table) => table.name)];
   const selectedDataTable = dataTables.find((table) => table.name === activeTab) || null;
+  const activeSectionKey = adminSectionKey(activeTab);
+  const isCurrentSectionLoading = loadingSectionKey === activeSectionKey;
 
   function handleOpportunityUpdated(updatedOpportunity: OpportunityRecord) {
     setAdminPayload((currentPayload) => ({
@@ -2347,30 +2352,65 @@ function AdminDashboard({
     }));
   }
 
-  async function refreshDashboard() {
+  function markSectionLoaded(sectionKey: string) {
+    setLoadedSections((currentSections) =>
+      currentSections.includes(sectionKey) ? currentSections : [...currentSections, sectionKey]
+    );
+  }
+
+  async function loadDashboardSection(tab: string, { force = false }: { force?: boolean } = {}) {
+    const sectionKey = adminSectionKey(tab);
+
+    if (!force && loadedSections.includes(sectionKey)) {
+      return;
+    }
+
     if (!credential) {
       setError("Sign in again to refresh the admin dashboard.");
       return;
     }
 
     setError(null);
-    setIsLoading(true);
+    setLoadingSectionKey(sectionKey);
+
     try {
-      const nextPayload = await refreshAuthPayload(credential);
-      if (!nextPayload.adminDashboard) {
-        throw new Error("This account does not have admin access.");
+      if (tab === "Users") {
+        const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
+          headers: adminAuthHeaders(credential)
+        });
+        setAdminPayload((currentPayload) => ({
+          ...currentPayload,
+          users: response.users
+        }));
+      } else {
+        const response = await apiGet<AdminTableResponse>(`/api/admin/tables/${encodeURIComponent(tab)}`, {
+          headers: adminAuthHeaders(credential)
+        });
+        setAdminPayload((currentPayload) => ({
+          ...currentPayload,
+          dataTables: currentPayload.dataTables.some((table) => table.name === response.table.name)
+            ? currentPayload.dataTables.map((table) =>
+                table.name === response.table.name ? response.table : table
+              )
+            : [...currentPayload.dataTables, response.table]
+        }));
       }
-      setAdminPayload(nextPayload.adminDashboard);
-      onAuthSuccess(nextPayload, credential);
+      markSectionLoaded(sectionKey);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Admin refresh failed.");
     } finally {
-      setIsLoading(false);
+      setLoadingSectionKey((currentSectionKey) => (currentSectionKey === sectionKey ? null : currentSectionKey));
     }
+  }
+
+  async function refreshDashboard() {
+    await loadDashboardSection(activeTab, { force: true });
   }
 
   useEffect(() => {
     setAdminPayload(payload);
+    setLoadedSections([]);
+    setLoadingSectionKey(null);
   }, [payload]);
 
   useEffect(() => {
@@ -2378,6 +2418,10 @@ function AdminDashboard({
       setActiveTab("Users");
     }
   }, [activeTab, dataTables]);
+
+  useEffect(() => {
+    void loadDashboardSection(activeTab);
+  }, [activeTab, credential, loadedSections]);
 
   return (
     <WorkspaceLayout
@@ -2390,12 +2434,12 @@ function AdminDashboard({
     >
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
-        <AdminUsersPanel isLoading={isLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
+        <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : (
         <AdminDataPanel
           credential={credential}
           dataTable={selectedDataTable}
-          isLoading={isLoading}
+          isLoading={isCurrentSectionLoading}
           onOpportunityUpdated={handleOpportunityUpdated}
           onRefresh={() => void refreshDashboard()}
         />
@@ -2434,7 +2478,14 @@ function AdminUsersPanel({
           <span role="columnheader">Improvements and goals</span>
           <span role="columnheader">Created</span>
         </div>
-        {rows.map(({ user, intake }) => (
+        {rows.length === 0 ? (
+          <div className="admin-row admin-empty-row" role="row">
+            <span role="cell">
+              <strong>{isLoading ? "Loading client records..." : "No client records loaded."}</strong>
+              <small>{isLoading ? "This tab is loading after sign-in." : "Use Refresh to load the latest records."}</small>
+            </span>
+          </div>
+        ) : rows.map(({ user, intake }) => (
           <div className="admin-row" role="row" key={user.userId}>
             <span role="cell">
               <strong>{user.fullName}</strong>
@@ -2493,6 +2544,8 @@ function AdminDataPanel({
     );
   }
 
+  const isInitialLoad = isLoading && (!dataTable || dataTable.records.length === 0);
+
   return (
     <section className="admin-section">
       <div className="section-heading">
@@ -2506,7 +2559,11 @@ function AdminDataPanel({
       </div>
 
       <div className="data-grid">
-        {dataTable ? (
+        {isInitialLoad ? (
+          <article className="data-card">
+            <p>Loading {dataTable?.name || "table data"}...</p>
+          </article>
+        ) : dataTable ? (
           <article className="data-card">
             <div className="data-card-header">
               <div>
@@ -2654,7 +2711,9 @@ function OpportunityReviewPanel({
       <div className="opportunity-review-layout">
         <div className="opportunity-list" aria-label="Opportunity candidates">
           {filteredRecords.length === 0 ? (
-            <p className="empty-state">No opportunities match the current filters.</p>
+            <p className="empty-state">
+              {isLoading ? "Loading opportunity candidates..." : "No opportunities match the current filters."}
+            </p>
           ) : (
             filteredRecords.map((record) => (
               <button
@@ -3220,7 +3279,6 @@ export function App() {
       return (
         <AdminDashboard
           credential={authCredential}
-          onAuthSuccess={handleAuthSuccess}
           onSignOut={signOut}
           payload={authPayload.adminDashboard}
         />

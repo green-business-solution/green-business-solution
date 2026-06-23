@@ -1525,7 +1525,7 @@ async function buildAuthPayload(user) {
       dashboard: "admin",
       user: publicUser(user),
       intake: null,
-      adminDashboard: await buildAdminPayload(user)
+      adminDashboard: buildAdminShellPayload(user)
     };
   }
 
@@ -1537,44 +1537,67 @@ async function buildAuthPayload(user) {
   };
 }
 
-async function buildAdminPayload(admin) {
-  const [users, intakes, opportunities] = await Promise.all([
-    scanAll(usersTable),
-    scanAll(intakeTable),
-    scanAll(opportunitiesTable)
-  ]);
+function buildAdminShellPayload(admin) {
+  return {
+    admin: publicUser(admin),
+    users: [],
+    dataTables: [usersTable, intakeTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
+  };
+}
+
+async function buildAdminUserRows() {
+  const [users, intakes] = await Promise.all([scanAll(usersTable), scanAll(intakeTable)]);
   const intakeByUser = new Map(intakes.map((intake) => [intake.userId, intake]));
   const sortedUsers = users
     .filter(isActiveUserRecord)
     .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
-  const sortedIntakes = [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
-  const sortedOpportunities = opportunities.filter(isDsireOpportunityRecord).sort((a, b) =>
-    String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
-      String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
-    )
-  );
-  // Full DSIRE snapshots can exceed Lambda's synchronous response limit. Keep
-  // sign-in fast by returning a review preview plus total counts.
-  const visibleOpportunities = sortedOpportunities.slice(0, adminDataRecordLimit).map(compactOpportunityRecord);
 
-  return {
-    admin: publicUser(admin),
-    users: sortedUsers.map((user) => ({
-      user: publicUser(user),
-      intake: intakeByUser.get(user.userId) || null
-    })),
-    dataTables: [
-      tableSnapshot(usersTable, sortedUsers.map(publicUser)),
-      tableSnapshot(intakeTable, sortedIntakes),
-      tableSnapshot(opportunitiesTable, visibleOpportunities, {
-        recordCount: sortedOpportunities.length,
-        note:
-          sortedOpportunities.length > adminDataRecordLimit
-            ? `Showing the ${adminDataRecordLimit} most recent DSIRE candidates so the admin sign-in response stays below AWS Lambda payload limits.`
-            : null
-      })
-    ]
-  };
+  return sortedUsers.map((user) => ({
+    user: publicUser(user),
+    intake: intakeByUser.get(user.userId) || null
+  }));
+}
+
+async function buildAdminTableSnapshot(tableName) {
+  const cleanTableName = cleanText(tableName);
+
+  if (cleanTableName === usersTable) {
+    const users = await scanAll(usersTable);
+    const sortedUsers = users
+      .filter(isActiveUserRecord)
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    return tableSnapshot(usersTable, sortedUsers.map(publicUser));
+  }
+
+  if (cleanTableName === intakeTable) {
+    const intakes = await scanAll(intakeTable);
+    return tableSnapshot(
+      intakeTable,
+      [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+    );
+  }
+
+  if (cleanTableName === opportunitiesTable) {
+    const opportunities = await scanAll(opportunitiesTable);
+    const sortedOpportunities = opportunities.filter(isDsireOpportunityRecord).sort((a, b) =>
+      String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
+        String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
+      )
+    );
+    const visibleOpportunities = sortedOpportunities.slice(0, adminDataRecordLimit).map(compactOpportunityRecord);
+
+    return tableSnapshot(opportunitiesTable, visibleOpportunities, {
+      recordCount: sortedOpportunities.length,
+      note:
+        sortedOpportunities.length > adminDataRecordLimit
+          ? `Showing the ${adminDataRecordLimit} most recent DSIRE candidates so the admin dashboard stays below AWS Lambda payload limits.`
+          : null
+    });
+  }
+
+  const error = new Error("Admin table was not found.");
+  error.status = 404;
+  throw error;
 }
 
 async function createClientUser(input) {
@@ -2101,6 +2124,24 @@ app.post("/api/auth/password/session", async (req, res) => {
   try {
     const user = await requirePasswordSessionUser(req.body?.sessionToken);
     res.json(await buildAuthPayload(user));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/users", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json({ users: await buildAdminUserRows() });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/tables/:tableName", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json({ table: await buildAdminTableSnapshot(req.params.tableName) });
   } catch (error) {
     handleError(res, error);
   }

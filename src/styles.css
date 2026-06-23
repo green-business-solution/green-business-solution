@@ -734,6 +734,10 @@ dd {
   overflow-wrap: anywhere;
 }
 
+.admin-empty-row span {
+  grid-column: 1 / -1;
+}
+
 .admin-row small {
   display: block;
   margin-top: 4px;
