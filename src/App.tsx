@@ -1,7 +1,13 @@
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
-import { OAUTH_REDIRECT_ERROR_KEY, OAUTH_REDIRECT_RESULT_KEY, OPPORTUNITIES_TABLE_NAME, STALE_SESSION_KEYS } from "./config";
+import {
+  AUTH_CREDENTIAL_STORAGE_KEY,
+  OAUTH_REDIRECT_ERROR_KEY,
+  OAUTH_REDIRECT_RESULT_KEY,
+  OPPORTUNITIES_TABLE_NAME,
+  STALE_SESSION_KEYS
+} from "./config";
 import { GoogleSignInButton } from "./googleSignIn";
 import { EyeIcon, LockIcon } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
@@ -429,6 +435,71 @@ function adminAuthHeaders(credential: AuthCredential): HeadersInit {
   }
 
   return { Authorization: `Bearer ${credential.value}` };
+}
+
+function readStoredAuthCredential(): AuthCredential | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  let rawValue: string | null = null;
+  try {
+    rawValue = window.localStorage.getItem(AUTH_CREDENTIAL_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+
+  if (!rawValue) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue) as Partial<AuthCredential>;
+    if (parsed.provider === "password" && typeof parsed.value === "string" && parsed.value) {
+      return {
+        provider: "password",
+        value: parsed.value
+      };
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function storeAuthCredential(credential: AuthCredential) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (credential.provider === "password" && credential.value) {
+    try {
+      window.localStorage.setItem(AUTH_CREDENTIAL_STORAGE_KEY, JSON.stringify(credential));
+    } catch {
+      // Session restore is a convenience; sign-in should still succeed if browser storage is blocked.
+    }
+  }
+}
+
+function clearStoredAuthCredential() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(AUTH_CREDENTIAL_STORAGE_KEY);
+  } catch {
+    // Ignore storage failures so sign-out can still clear in-memory auth state.
+  }
+}
+
+function refreshStoredAuthPayload(credential: AuthCredential) {
+  if (credential.provider !== "password") {
+    throw new Error("Only server-backed sessions can be restored.");
+  }
+
+  return apiPost<AuthPayload>("/api/auth/password/session", { sessionToken: credential.value });
 }
 
 function takeSessionStorageItem(key: string) {
@@ -1743,10 +1814,12 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
 
 function DatabasePage({
   credential,
-  navigate
+  navigate,
+  onSignOut
 }: {
   credential: AuthCredential;
   navigate: (route: Route) => void;
+  onSignOut: () => void;
 }) {
   const [filters, setFilters] = useState({
     q: "",
@@ -1842,7 +1915,7 @@ function DatabasePage({
   const maxPage = Math.max(1, Math.ceil(total / (response?.perPage || 25)));
 
   return (
-    <PublicShell navigate={navigate} pageClassName="database-page">
+    <PublicShell isSignedIn navigate={navigate} onSignOut={onSignOut} pageClassName="database-page">
       <section className="database-shell">
         <div className="database-toolbar">
           <div>
@@ -2288,6 +2361,18 @@ function SignInPage({
           <span>Or</span>
         </div>
         <GoogleSignInButton />
+      </section>
+    </PublicShell>
+  );
+}
+
+function SessionRestoringPage({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
+      <section className="sign-in-panel session-restoring-panel">
+        <p className="eyebrow">Session</p>
+        <h1>Loading</h1>
+        <p className="muted-message">Checking your signed-in session...</p>
       </section>
     </PublicShell>
   );
@@ -3155,6 +3240,7 @@ export function App() {
   const [authPayload, setAuthPayload] = useState<AuthPayload | null>(null);
   const [authCredential, setAuthCredential] = useState<AuthCredential | null>(null);
   const [signInMessage, setSignInMessage] = useState<string | null>(null);
+  const [isAuthRestoring, setIsAuthRestoring] = useState(true);
 
   useEffect(() => {
     function syncRoute() {
@@ -3171,11 +3257,14 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
     const redirectResult = takeOAuthRedirectResult();
     if (redirectResult) {
+      storeAuthCredential(redirectResult.credential);
       setAuthPayload(redirectResult.payload);
       setAuthCredential(redirectResult.credential);
       setSignInMessage(null);
+      setIsAuthRestoring(false);
       return;
     }
 
@@ -3183,6 +3272,34 @@ export function App() {
     if (redirectError) {
       setSignInMessage(redirectError);
     }
+
+    const storedCredential = readStoredAuthCredential();
+    if (!storedCredential) {
+      setIsAuthRestoring(false);
+      return;
+    }
+
+    refreshStoredAuthPayload(storedCredential)
+      .then((payload) => {
+        if (!isMounted) return;
+        setAuthPayload(payload);
+        setAuthCredential(storedCredential);
+        setSignInMessage(null);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        clearStoredAuthCredential();
+        setSignInMessage("Your session expired. Sign in again.");
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsAuthRestoring(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   function navigate(nextRoute: Route) {
@@ -3192,6 +3309,7 @@ export function App() {
   }
 
   function handleAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
+    storeAuthCredential(credential);
     setAuthPayload(payload);
     setAuthCredential(credential);
     setSignInMessage(null);
@@ -3199,6 +3317,7 @@ export function App() {
   }
 
   function handleDatabaseAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
+    storeAuthCredential(credential);
     setAuthPayload(payload);
     setAuthCredential(credential);
     setSignInMessage(null);
@@ -3206,10 +3325,15 @@ export function App() {
   }
 
   function signOut() {
+    clearStoredAuthCredential();
     setAuthPayload(null);
     setAuthCredential(null);
     setSignInMessage(null);
     navigate("home");
+  }
+
+  if (isAuthRestoring) {
+    return <SessionRestoringPage navigate={navigate} />;
   }
 
   if (route === "how-it-works") {
@@ -3235,7 +3359,7 @@ export function App() {
       return <UserDashboard onSignOut={signOut} payload={authPayload} />;
     }
 
-    return <DatabasePage credential={authCredential} navigate={navigate} />;
+    return <DatabasePage credential={authCredential} navigate={navigate} onSignOut={signOut} />;
   }
 
   if (route === "about") {

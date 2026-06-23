@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) persisted auth session restore
+
+- Persisted the backend-issued password session credential after Google or password sign-in so refreshes and direct protected-route loads can restore auth state.
+- Added startup session restoration through `/api/auth/password/session` before protected routes render their login fallback.
+- Updated the database page shell to show the signed-in navbar state after an admin session is restored.
+
 ## 2026-06-23 - Codex (GPT-5) brand and Google logo alignment
 
 - Replaced the navbar `R` mark with the same `retrofi-logo.png` asset used by the favicon.
