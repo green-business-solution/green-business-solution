@@ -1295,14 +1295,14 @@ body {
   opacity: 0.72;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta) {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button) {
   background: var(--retrofi-green);
   border-radius: 8px;
   min-height: 46px;
   padding: 0 18px;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):hover {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):hover {
   background: var(--retrofi-green-dark);
 }
 

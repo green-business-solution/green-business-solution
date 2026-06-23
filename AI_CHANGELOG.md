@@ -3,6 +3,7 @@
 ## 2026-06-23 - Codex (GPT-5) Google button color correction
 
 - Strengthened the sign-in page Google button CSS so it keeps a white secondary-button background with dark text while preserving its existing size.
+- Excluded the Google sign-in button from the broad public-page CTA button rule that was forcing a green background.
 
 ## 2026-06-23 - Codex (GPT-5) admin sign-in performance
 
