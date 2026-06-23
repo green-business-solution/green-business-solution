@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) admin database tab
+
+- Moved the DSIRE incentive database browser into the admin dashboard as a `Database` sidebar tab.
+- Removed the public footer link and standalone `/database` page flow; legacy `/database` visits now resolve to `/admin`.
+- Replaced the raw `gbs-opportunity-candidates` admin tab with the normalized database browser and avoided refetching the program list when selecting a program.
+
 ## 2026-06-23 - Codex (GPT-5) persisted auth session restore
 
 - Persisted the backend-issued password session credential after Google or password sign-in so refreshes and direct protected-route loads can restore auth state.

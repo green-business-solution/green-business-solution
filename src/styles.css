@@ -2046,6 +2046,22 @@ body {
   padding: 28px clamp(18px, 3vw, 36px) 72px;
 }
 
+.admin-database-shell {
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+
+.admin-database-shell .database-toolbar h1 {
+  font-size: clamp(30px, 3vw, 46px);
+}
+
+.admin-database-shell .database-list {
+  max-height: calc(100vh - 430px);
+  min-height: 420px;
+}
+
 .database-toolbar {
   align-items: end;
   display: grid;

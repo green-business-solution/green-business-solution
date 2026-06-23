@@ -1133,7 +1133,6 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
-          ["Database", "database"],
           ["Create My Report", "scan"]
         ].map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
@@ -1812,14 +1811,12 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function DatabasePage({
+function DatabaseBrowser({
   credential,
-  navigate,
-  onSignOut
+  embedded = false
 }: {
   credential: AuthCredential;
-  navigate: (route: Route) => void;
-  onSignOut: () => void;
+  embedded?: boolean;
 }) {
   const [filters, setFilters] = useState({
     q: "",
@@ -1854,10 +1851,16 @@ function DatabasePage({
       .then((payload) => {
         if (!isMounted) return;
         setResponse(payload);
-        const stillVisible = payload.programs.some((program) => program.id === selectedProgramId);
-        if ((!selectedProgramId || !stillVisible) && payload.programs[0]) {
-          setSelectedProgramId(payload.programs[0].id);
-        }
+        setSelectedProgramId((currentProgramId) => {
+          const stillVisible = payload.programs.some((program) => program.id === currentProgramId);
+          if ((!currentProgramId || !stillVisible) && payload.programs[0]) {
+            return payload.programs[0].id;
+          }
+          if (currentProgramId && payload.programs.length === 0) {
+            return "";
+          }
+          return currentProgramId;
+        });
       })
       .catch((requestError) => {
         if (!isMounted) return;
@@ -1879,8 +1882,7 @@ function DatabasePage({
     filters.state,
     filters.technology,
     filters.type,
-    page,
-    selectedProgramId
+    page
   ]);
 
   useEffect(() => {
@@ -1915,81 +1917,79 @@ function DatabasePage({
   const maxPage = Math.max(1, Math.ceil(total / (response?.perPage || 25)));
 
   return (
-    <PublicShell isSignedIn navigate={navigate} onSignOut={onSignOut} pageClassName="database-page">
-      <section className="database-shell">
-        <div className="database-toolbar">
-          <div>
-            <p className="eyebrow">DSIRE-sourced clone</p>
-            <h1>Incentive and policy database</h1>
-            <p>
-              Browse normalized DSIRE program records before we connect them to business-profile matching.
-            </p>
+    <section className={embedded ? "database-shell admin-database-shell" : "database-shell"}>
+      <div className="database-toolbar">
+        <div>
+          <p className="eyebrow">DSIRE-sourced clone</p>
+          <h1>Incentive and policy database</h1>
+          <p>
+            Browse normalized DSIRE program records before we connect them to business-profile matching.
+          </p>
+        </div>
+        <div className="database-stats">
+          <strong>{total.toLocaleString()}</strong>
+          <span>matching programs</span>
+        </div>
+      </div>
+
+      <div className="database-filters">
+        <label className="field database-search">
+          <span>Search</span>
+          <input
+            onChange={(event) => updateFilter("q", event.target.value)}
+            placeholder="Program, administrator, technology"
+            type="search"
+            value={filters.q}
+          />
+        </label>
+        <DatabaseFilterSelect label="State" onChange={(value) => updateFilter("state", value)} options={facets?.states || []} value={filters.state} />
+        <DatabaseFilterSelect label="Category" onChange={(value) => updateFilter("category", value)} options={facets?.categories || []} value={filters.category} />
+        <DatabaseFilterSelect label="Type" onChange={(value) => updateFilter("type", value)} options={facets?.programTypes || []} value={filters.type} />
+        <DatabaseFilterSelect label="Technology" onChange={(value) => updateFilter("technology", value)} options={facets?.technologies || []} value={filters.technology} />
+        <DatabaseFilterSelect label="Eligible sector" onChange={(value) => updateFilter("sector", value)} options={facets?.eligibleSectors || []} value={filters.sector} />
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+
+      <div className="database-layout">
+        <section className="database-list-panel" aria-label="DSIRE clone programs">
+          <div className="database-list-header">
+            <span>{isLoading ? "Loading programs" : `${programs.length} shown`}</span>
+            <span>Page {page} of {maxPage}</span>
           </div>
-          <div className="database-stats">
-            <strong>{total.toLocaleString()}</strong>
-            <span>matching programs</span>
+          <div className="database-list">
+            {programs.length === 0 && !isLoading ? (
+              <p className="empty-state">No DSIRE programs match the current filters.</p>
+            ) : null}
+            {programs.map((program) => (
+              <button
+                aria-current={program.id === selectedProgramId ? "true" : undefined}
+                className="database-list-item"
+                key={program.id}
+                onClick={() => setSelectedProgramId(program.id)}
+                type="button"
+              >
+                <span>
+                  <strong>{program.name}</strong>
+                  <small>{lookupLabel(program.state)} / {lookupLabel(program.programType)}</small>
+                </span>
+                <mark>{program.category?.name || "Uncategorized"}</mark>
+              </button>
+            ))}
           </div>
-        </div>
+          <div className="database-pagination">
+            <button className="secondary-button" disabled={page <= 1 || isLoading} onClick={() => setPage((current) => Math.max(1, current - 1))} type="button">
+              Previous
+            </button>
+            <button className="secondary-button" disabled={page >= maxPage || isLoading} onClick={() => setPage((current) => current + 1)} type="button">
+              Next
+            </button>
+          </div>
+        </section>
 
-        <div className="database-filters">
-          <label className="field database-search">
-            <span>Search</span>
-            <input
-              onChange={(event) => updateFilter("q", event.target.value)}
-              placeholder="Program, administrator, technology"
-              type="search"
-              value={filters.q}
-            />
-          </label>
-          <DatabaseFilterSelect label="State" onChange={(value) => updateFilter("state", value)} options={facets?.states || []} value={filters.state} />
-          <DatabaseFilterSelect label="Category" onChange={(value) => updateFilter("category", value)} options={facets?.categories || []} value={filters.category} />
-          <DatabaseFilterSelect label="Type" onChange={(value) => updateFilter("type", value)} options={facets?.programTypes || []} value={filters.type} />
-          <DatabaseFilterSelect label="Technology" onChange={(value) => updateFilter("technology", value)} options={facets?.technologies || []} value={filters.technology} />
-          <DatabaseFilterSelect label="Eligible sector" onChange={(value) => updateFilter("sector", value)} options={facets?.eligibleSectors || []} value={filters.sector} />
-        </div>
-
-        {error ? <p className="error-message">{error}</p> : null}
-
-        <div className="database-layout">
-          <section className="database-list-panel" aria-label="DSIRE clone programs">
-            <div className="database-list-header">
-              <span>{isLoading ? "Loading programs" : `${programs.length} shown`}</span>
-              <span>Page {page} of {maxPage}</span>
-            </div>
-            <div className="database-list">
-              {programs.length === 0 && !isLoading ? (
-                <p className="empty-state">No DSIRE programs match the current filters.</p>
-              ) : null}
-              {programs.map((program) => (
-                <button
-                  aria-current={program.id === selectedProgramId ? "true" : undefined}
-                  className="database-list-item"
-                  key={program.id}
-                  onClick={() => setSelectedProgramId(program.id)}
-                  type="button"
-                >
-                  <span>
-                    <strong>{program.name}</strong>
-                    <small>{lookupLabel(program.state)} / {lookupLabel(program.programType)}</small>
-                  </span>
-                  <mark>{program.category?.name || "Uncategorized"}</mark>
-                </button>
-              ))}
-            </div>
-            <div className="database-pagination">
-              <button className="secondary-button" disabled={page <= 1 || isLoading} onClick={() => setPage((current) => Math.max(1, current - 1))} type="button">
-                Previous
-              </button>
-              <button className="secondary-button" disabled={page >= maxPage || isLoading} onClick={() => setPage((current) => current + 1)} type="button">
-                Next
-              </button>
-            </div>
-          </section>
-
-          <DatabaseProgramDetail isLoading={isDetailLoading} program={selectedProgram} />
-        </div>
-      </section>
-    </PublicShell>
+        <DatabaseProgramDetail isLoading={isDetailLoading} program={selectedProgram} />
+      </div>
+    </section>
   );
 }
 
@@ -2392,7 +2392,10 @@ function UserDashboard({
   );
 }
 
+const ADMIN_DATABASE_TAB = "Database";
+
 function adminSectionKey(tab: string) {
+  if (tab === ADMIN_DATABASE_TAB) return "database";
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
@@ -2411,8 +2414,13 @@ function AdminDashboard({
   const [loadedSections, setLoadedSections] = useState<string[]>([]);
   const [loadingSectionKey, setLoadingSectionKey] = useState<string | null>(null);
   const { admin, users: rows, dataTables } = adminPayload;
-  const navItems = ["Users", ...dataTables.map((table) => table.name)];
-  const selectedDataTable = dataTables.find((table) => table.name === activeTab) || null;
+  const navItems = [
+    "Users",
+    ...dataTables.filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME).map((table) => table.name),
+    ADMIN_DATABASE_TAB
+  ];
+  const selectedDataTable =
+    activeTab === ADMIN_DATABASE_TAB ? null : dataTables.find((table) => table.name === activeTab) || null;
   const activeSectionKey = adminSectionKey(activeTab);
   const isCurrentSectionLoading = loadingSectionKey === activeSectionKey;
 
@@ -2456,6 +2464,12 @@ function AdminDashboard({
     }
 
     setError(null);
+
+    if (tab === ADMIN_DATABASE_TAB) {
+      markSectionLoaded(sectionKey);
+      return;
+    }
+
     setLoadingSectionKey(sectionKey);
 
     try {
@@ -2499,7 +2513,11 @@ function AdminDashboard({
   }, [payload]);
 
   useEffect(() => {
-    if (activeTab !== "Users" && dataTables.length > 0 && !dataTables.some((table) => table.name === activeTab)) {
+    const isVisibleDataTable =
+      activeTab !== OPPORTUNITIES_TABLE_NAME &&
+      dataTables.some((table) => table.name === activeTab);
+
+    if (activeTab !== "Users" && activeTab !== ADMIN_DATABASE_TAB && !isVisibleDataTable) {
       setActiveTab("Users");
     }
   }, [activeTab, dataTables]);
@@ -2520,6 +2538,8 @@ function AdminDashboard({
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
+      ) : activeTab === ADMIN_DATABASE_TAB ? (
+        <AdminDatabasePanel credential={credential} />
       ) : (
         <AdminDataPanel
           credential={credential}
@@ -2602,6 +2622,18 @@ function AdminUsersPanel({
       </div>
     </section>
   );
+}
+
+function AdminDatabasePanel({ credential }: { credential: AuthCredential | null }) {
+  if (!credential) {
+    return (
+      <section className="admin-section">
+        <p className="error-message">Sign in again to view the database.</p>
+      </section>
+    );
+  }
+
+  return <DatabaseBrowser credential={credential} embedded />;
 }
 
 function AdminDataPanel({
@@ -3244,8 +3276,13 @@ export function App() {
 
   useEffect(() => {
     function syncRoute() {
-      setRoute(routeFromPath());
+      const nextRoute = routeFromPath();
+      if (window.location.pathname === "/database") {
+        window.history.replaceState({}, "", pathForRoute(nextRoute));
+      }
+      setRoute(nextRoute);
     }
+    syncRoute();
     window.addEventListener("popstate", syncRoute);
     return () => window.removeEventListener("popstate", syncRoute);
   }, []);
@@ -3316,14 +3353,6 @@ export function App() {
     navigate(payload.dashboard === "admin" ? "admin" : "portal");
   }
 
-  function handleDatabaseAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
-    storeAuthCredential(credential);
-    setAuthPayload(payload);
-    setAuthCredential(credential);
-    setSignInMessage(null);
-    navigate(payload.dashboard === "admin" ? "database" : "portal");
-  }
-
   function signOut() {
     clearStoredAuthCredential();
     setAuthPayload(null);
@@ -3342,24 +3371,6 @@ export function App() {
 
   if (route === "pricing") {
     return <PricingPage navigate={navigate} />;
-  }
-
-  if (route === "database") {
-    if (!authPayload) {
-      return (
-        <SignInPage
-          navigate={navigate}
-          message={signInMessage || "Sign in with an admin account to view the database."}
-          onAuthSuccess={handleDatabaseAuthSuccess}
-        />
-      );
-    }
-
-    if (authPayload.dashboard !== "admin" || !authCredential) {
-      return <UserDashboard onSignOut={signOut} payload={authPayload} />;
-    }
-
-    return <DatabasePage credential={authCredential} navigate={navigate} onSignOut={signOut} />;
   }
 
   if (route === "about") {

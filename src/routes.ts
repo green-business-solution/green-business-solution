@@ -2,7 +2,6 @@ export type Route =
   | "home"
   | "how-it-works"
   | "pricing"
-  | "database"
   | "about"
   | "about-mission"
   | "about-team"
@@ -24,7 +23,7 @@ export const aboutLinks: Array<{ label: string; route: Route }> = [
 export function routeFromPath(pathname = typeof window === "undefined" ? "/" : window.location.pathname): Route {
   if (pathname === "/how-it-works") return "how-it-works";
   if (pathname === "/pricing") return "pricing";
-  if (pathname === "/database") return "database";
+  if (pathname === "/database") return "admin";
   if (pathname === "/for-businesses") return "home";
   if (pathname === "/about") return "about";
   if (pathname === "/about/mission") return "about-mission";
