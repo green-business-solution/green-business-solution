@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import express from "express";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DescribeTableCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
@@ -51,6 +51,7 @@ const client = new DynamoDBClient({
 const db = DynamoDBDocumentClient.from(client);
 export const app = express();
 let activeServer = null;
+const tableItemCountCache = new Map();
 
 app.use(express.json({ limit: "128kb" }));
 
@@ -73,6 +74,10 @@ const maxEvidenceTextLength = 1200;
 const adminDataRecordLimit = Math.min(
   250,
   Math.max(25, Number.parseInt(process.env.GBS_ADMIN_DATA_RECORD_LIMIT || "150", 10) || 150)
+);
+const databaseBatchScanLimit = Math.min(
+  250,
+  Math.max(25, Number.parseInt(process.env.GBS_DATABASE_BATCH_SCAN_LIMIT || "100", 10) || 100)
 );
 const googleOAuthStateCookie = "gbs_google_oauth_state";
 const oauthRedirectResultStorageKey = "gbs-oauth-redirect-result";
@@ -611,6 +616,49 @@ async function scanAll(TableName) {
   } while (ExclusiveStartKey);
 
   return items;
+}
+
+function encodeScanCursor(key) {
+  if (!key) {
+    return null;
+  }
+
+  return Buffer.from(JSON.stringify(key), "utf8").toString("base64url");
+}
+
+function decodeScanCursor(value) {
+  const cursor = cleanText(value);
+  if (!cursor) {
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(Buffer.from(cursor, "base64url").toString("utf8"));
+  } catch {
+    const error = new Error("Database cursor is invalid.");
+    error.status = 400;
+    throw error;
+  }
+}
+
+async function getApproximateTableItemCount(TableName) {
+  const cached = tableItemCountCache.get(TableName);
+  const now = Date.now();
+  if (cached && cached.expiresAt > now) {
+    return cached.count;
+  }
+
+  try {
+    const result = await client.send(new DescribeTableCommand({ TableName }));
+    const count = typeof result.Table?.ItemCount === "number" ? result.Table.ItemCount : null;
+    tableItemCountCache.set(TableName, {
+      count,
+      expiresAt: now + 5 * 60 * 1000
+    });
+    return count;
+  } catch {
+    return null;
+  }
 }
 
 function isActiveUserRecord(user) {
@@ -1512,6 +1560,28 @@ async function loadDatabasePrograms({ includeDetail = false } = {}) {
     .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name));
 }
 
+async function loadDatabaseProgramBatch({ cursor, limit }) {
+  const result = await db.send(
+    new ScanCommand({
+      TableName: opportunitiesTable,
+      ExclusiveStartKey: cursor,
+      Limit: limit
+    })
+  );
+  const records = result.Items || [];
+  const programs = records
+    .filter(isDatabaseCloneRecord)
+    .map((record) => buildDatabaseProgram(record))
+    .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name));
+
+  return {
+    programs,
+    scannedCount: result.ScannedCount ?? records.length,
+    rawCount: records.length,
+    nextCursor: encodeScanCursor(result.LastEvaluatedKey)
+  };
+}
+
 async function buildPasswordAuthPayload(sessionResult) {
   return {
     ...(await buildAuthPayload(sessionResult.user)),
@@ -1882,9 +1952,45 @@ app.get("/api/database/programs/updates", async (req, res) => {
   }
 });
 
+app.get("/api/database/programs/batch", async (req, res) => {
+  try {
+    const limit = parsePositiveInteger(req.query.limit, databaseBatchScanLimit, 250);
+    const cursor = decodeScanCursor(req.query.cursor);
+    const [batch, estimatedTotal] = await Promise.all([
+      loadDatabaseProgramBatch({ cursor, limit }),
+      getApproximateTableItemCount(opportunitiesTable)
+    ]);
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      programs: batch.programs,
+      scannedCount: batch.scannedCount,
+      rawCount: batch.rawCount,
+      matchedCount: batch.programs.length,
+      estimatedTotal,
+      nextCursor: batch.nextCursor,
+      isComplete: !batch.nextCursor
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.get("/api/database/programs/:programId", async (req, res) => {
   try {
     const requestedId = normalizeFilterValue(req.params.programId);
+    const directResult = await db.send(
+      new GetCommand({
+        TableName: opportunitiesTable,
+        Key: { opportunityId: String(req.params.programId) }
+      })
+    );
+
+    if (directResult.Item && isDatabaseCloneRecord(directResult.Item)) {
+      res.json({ program: buildDatabaseProgram(directResult.Item, { includeDetail: true }) });
+      return;
+    }
+
     const programs = await loadDatabasePrograms({ includeDetail: true });
     const program = programs.find(
       (item) =>

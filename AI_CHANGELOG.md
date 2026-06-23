@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) database loading progress
+
+- Added a chunked admin-only `/api/database/programs/batch` endpoint so the database browser can load opportunity records incrementally.
+- Updated the admin database tab to show a real progress bar based on DynamoDB scan progress while partial opportunities become available.
+- Moved database filtering, facets, and pagination to the loaded client-side dataset and optimized program detail lookup through the `opportunityId` table key.
+
 ## 2026-06-23 - Codex (GPT-5) admin database tab
 
 - Moved the DSIRE incentive database browser into the admin dashboard as a `Database` sidebar tab.

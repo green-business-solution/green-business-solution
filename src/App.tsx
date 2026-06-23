@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -298,14 +298,22 @@ type DatabaseProgram = {
   memos: unknown[];
 };
 
-type DatabaseProgramsResponse = {
+type DatabaseProgramsBatchResponse = {
   generatedAt: string;
-  page: number;
-  perPage: number;
-  total: number;
   programs: DatabaseProgram[];
-  facets: DatabaseFacets;
-  resultFacets: DatabaseFacets;
+  scannedCount: number;
+  rawCount: number;
+  matchedCount: number;
+  estimatedTotal: number | null;
+  nextCursor: string | null;
+  isComplete: boolean;
+};
+
+type DatabaseLoadProgress = {
+  scannedCount: number;
+  loadedPrograms: number;
+  estimatedTotal: number | null;
+  isComplete: boolean;
 };
 
 type DatabaseProgramResponse = {
@@ -739,26 +747,111 @@ function formatParameterValue(parameter: DatabaseProgram["parameterSets"][number
   return parameter.source || amount || "Parameter listed";
 }
 
-function buildDatabaseQuery(filters: {
-  category: string;
-  q: string;
-  sector: string;
-  state: string;
-  technology: string;
-  type: string;
-}, page: number) {
-  const params = new URLSearchParams();
-  params.set("page", String(page));
-  params.set("per_page", "25");
+function normalizeDatabaseFilterValue(value: unknown) {
+  return String(value || "").trim().toLowerCase();
+}
 
-  if (filters.q.trim()) params.set("q", filters.q.trim());
-  if (filters.state) params.set("state", filters.state);
-  if (filters.category) params.set("category", filters.category);
-  if (filters.type) params.set("type", filters.type);
-  if (filters.technology) params.set("technology", filters.technology);
-  if (filters.sector) params.set("eligible_sector", filters.sector);
+function databaseLookupMatches(lookup: DatabaseLookup | null | undefined, filter: string) {
+  if (!filter) return true;
+  const normalizedFilter = normalizeDatabaseFilterValue(filter);
+  return [lookup?.id, lookup?.name, lookup?.slug, lookup?.abbreviation]
+    .map(normalizeDatabaseFilterValue)
+    .includes(normalizedFilter);
+}
 
-  return params.toString();
+function databaseLookupListMatches(lookups: DatabaseLookup[], filter: string) {
+  if (!filter) return true;
+  return lookups.some((lookup) => databaseLookupMatches(lookup, filter));
+}
+
+function databaseProgramMatchesFilters(
+  program: DatabaseProgram,
+  filters: {
+    category: string;
+    q: string;
+    sector: string;
+    state: string;
+    technology: string;
+    type: string;
+  }
+) {
+  const query = normalizeDatabaseFilterValue(filters.q);
+  const haystack = normalizeDatabaseFilterValue(
+    [
+      program.name,
+      program.code,
+      program.administrator,
+      program.summaryText,
+      program.state?.abbreviation,
+      program.state?.name,
+      program.category?.name,
+      program.programType?.name,
+      program.implementingSector?.name,
+      ...program.eligibleSectors.map((sector) => sector.name),
+      ...program.technologies.map((technology) => technology.name)
+    ].join(" ")
+  );
+
+  return (
+    (!query || haystack.includes(query)) &&
+    databaseLookupMatches(program.state, filters.state) &&
+    databaseLookupMatches(program.category, filters.category) &&
+    databaseLookupMatches(program.programType, filters.type) &&
+    databaseLookupListMatches(program.technologies, filters.technology) &&
+    databaseLookupListMatches(program.eligibleSectors, filters.sector)
+  );
+}
+
+function sortDatabasePrograms(programs: DatabaseProgram[]) {
+  return [...programs].sort(
+    (a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name)
+  );
+}
+
+function buildDatabaseFacet(values: Array<DatabaseLookup | null | undefined>, labelKey: "name" | "abbreviation" = "name") {
+  const map = new Map<string, DatabaseFacetOption>();
+
+  for (const value of values) {
+    if (!value) continue;
+    const id = value.id ?? value.abbreviation ?? value.slug ?? value[labelKey];
+    const label = value[labelKey] || value.name || value.abbreviation || id;
+    if (!id || !label) continue;
+
+    const key = normalizeDatabaseFilterValue(value.slug || value.abbreviation || label || id);
+    const existing = map.get(key);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      map.set(key, {
+        id: key,
+        label: String(label),
+        value: value.slug || value.abbreviation || String(label),
+        count: 1
+      });
+    }
+  }
+
+  return [...map.values()].sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function buildClientDatabaseFacets(programs: DatabaseProgram[]): DatabaseFacets {
+  return {
+    states: buildDatabaseFacet(programs.map((program) => program.state), "name"),
+    categories: buildDatabaseFacet(programs.map((program) => program.category), "name"),
+    programTypes: buildDatabaseFacet(programs.map((program) => program.programType), "name"),
+    implementingSectors: buildDatabaseFacet(programs.map((program) => program.implementingSector), "name"),
+    eligibleSectors: buildDatabaseFacet(programs.flatMap((program) => program.eligibleSectors), "name"),
+    technologies: buildDatabaseFacet(programs.flatMap((program) => program.technologies), "name")
+  };
+}
+
+function databaseProgressPercent(progress: DatabaseLoadProgress) {
+  if (progress.isComplete) return 100;
+  if (!progress.estimatedTotal || progress.estimatedTotal <= 0) {
+    return progress.scannedCount > 0 ? 12 : 4;
+  }
+
+  return Math.min(99, Math.max(4, Math.round((progress.scannedCount / progress.estimatedTotal) * 100)));
 }
 
 function Field({
@@ -1827,11 +1920,16 @@ function DatabaseBrowser({
     sector: ""
   });
   const [page, setPage] = useState(1);
-  const [response, setResponse] = useState<DatabaseProgramsResponse | null>(null);
+  const [loadedPrograms, setLoadedPrograms] = useState<DatabaseProgram[]>([]);
+  const [loadProgress, setLoadProgress] = useState<DatabaseLoadProgress>({
+    scannedCount: 0,
+    loadedPrograms: 0,
+    estimatedTotal: null,
+    isComplete: false
+  });
   const [selectedProgramId, setSelectedProgramId] = useState("");
   const [selectedProgram, setSelectedProgram] = useState<DatabaseProgram | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isDetailLoading, setIsDetailLoading] = useState(false);
 
   function updateFilter(name: keyof typeof filters, value: string) {
@@ -1841,49 +1939,109 @@ function DatabaseBrowser({
 
   useEffect(() => {
     let isMounted = true;
-    const query = buildDatabaseQuery(filters, page);
 
-    setIsLoading(true);
-    setError(null);
-    apiGet<DatabaseProgramsResponse>(`/api/database/programs?${query}`, {
-      headers: adminAuthHeaders(credential)
-    })
-      .then((payload) => {
-        if (!isMounted) return;
-        setResponse(payload);
-        setSelectedProgramId((currentProgramId) => {
-          const stillVisible = payload.programs.some((program) => program.id === currentProgramId);
-          if ((!currentProgramId || !stillVisible) && payload.programs[0]) {
-            return payload.programs[0].id;
-          }
-          if (currentProgramId && payload.programs.length === 0) {
-            return "";
-          }
-          return currentProgramId;
-        });
-      })
-      .catch((requestError) => {
+    async function loadProgramBatches() {
+      let cursor: string | null = null;
+      let scannedCount = 0;
+      let accumulatedPrograms: DatabaseProgram[] = [];
+
+      setLoadedPrograms([]);
+      setSelectedProgramId("");
+      setSelectedProgram(null);
+      setError(null);
+      setLoadProgress({
+        scannedCount: 0,
+        loadedPrograms: 0,
+        estimatedTotal: null,
+        isComplete: false
+      });
+
+      try {
+        do {
+          const params = new URLSearchParams({ limit: "100" });
+          if (cursor) params.set("cursor", cursor);
+
+          const payload = await apiGet<DatabaseProgramsBatchResponse>(`/api/database/programs/batch?${params}`, {
+            headers: adminAuthHeaders(credential)
+          });
+
+          if (!isMounted) return;
+
+          accumulatedPrograms = sortDatabasePrograms([...accumulatedPrograms, ...payload.programs]);
+          scannedCount += payload.scannedCount || 0;
+          cursor = payload.nextCursor;
+
+          setLoadedPrograms(accumulatedPrograms);
+          setLoadProgress({
+            scannedCount,
+            loadedPrograms: accumulatedPrograms.length,
+            estimatedTotal: payload.estimatedTotal,
+            isComplete: payload.isComplete
+          });
+        } while (cursor);
+
+        if (isMounted) {
+          setLoadProgress((current) => ({ ...current, isComplete: true }));
+        }
+      } catch (requestError) {
         if (!isMounted) return;
         setError(requestError instanceof Error ? requestError.message : "Could not load database programs.");
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
+        setLoadProgress((current) => ({
+          ...current,
+          isComplete: false
+        }));
+      }
+    }
+
+    void loadProgramBatches();
 
     return () => {
       isMounted = false;
     };
-  }, [
-    credential.provider,
-    credential.value,
-    filters.category,
-    filters.q,
-    filters.sector,
-    filters.state,
-    filters.technology,
-    filters.type,
-    page
-  ]);
+  }, [credential.provider, credential.value]);
+
+  const filteredPrograms = useMemo(
+    () => loadedPrograms.filter((program) => databaseProgramMatchesFilters(program, filters)),
+    [
+      filters.category,
+      filters.q,
+      filters.sector,
+      filters.state,
+      filters.technology,
+      filters.type,
+      loadedPrograms
+    ]
+  );
+  const total = filteredPrograms.length;
+  const perPage = 25;
+  const maxPage = Math.max(1, Math.ceil(total / perPage));
+  const start = (page - 1) * perPage;
+  const programs = filteredPrograms.slice(start, start + perPage);
+  const facets = useMemo(() => buildClientDatabaseFacets(loadedPrograms), [loadedPrograms]);
+  const isLoading = !loadProgress.isComplete && !error;
+
+  useEffect(() => {
+    if (!loadProgress.isComplete) {
+      return;
+    }
+
+    setSelectedProgramId((currentProgramId) => {
+      const stillVisible = filteredPrograms.some((program) => program.opportunityId === currentProgramId);
+      if ((!currentProgramId || !stillVisible) && filteredPrograms[0]) {
+        return filteredPrograms[0].opportunityId;
+      }
+      if (currentProgramId && filteredPrograms.length === 0) {
+        return "";
+      }
+      return currentProgramId;
+    });
+  }, [filteredPrograms, loadProgress.isComplete]);
+
+  useEffect(() => {
+    if (page > maxPage) {
+      setPage(maxPage);
+    }
+  }, [maxPage, page]);
 
   useEffect(() => {
     if (!selectedProgramId) {
@@ -1911,11 +2069,6 @@ function DatabaseBrowser({
     };
   }, [credential.provider, credential.value, selectedProgramId]);
 
-  const facets = response?.facets;
-  const programs = response?.programs || [];
-  const total = response?.total || 0;
-  const maxPage = Math.max(1, Math.ceil(total / (response?.perPage || 25)));
-
   return (
     <section className={embedded ? "database-shell admin-database-shell" : "database-shell"}>
       <div className="database-toolbar">
@@ -1928,7 +2081,7 @@ function DatabaseBrowser({
         </div>
         <div className="database-stats">
           <strong>{total.toLocaleString()}</strong>
-          <span>matching programs</span>
+          <span>{error ? "loaded before error" : isLoading ? "loaded matches so far" : "matching programs"}</span>
         </div>
       </div>
 
@@ -1949,12 +2102,14 @@ function DatabaseBrowser({
         <DatabaseFilterSelect label="Eligible sector" onChange={(value) => updateFilter("sector", value)} options={facets?.eligibleSectors || []} value={filters.sector} />
       </div>
 
+      <DatabaseLoadingProgress hasError={Boolean(error)} progress={loadProgress} />
+
       {error ? <p className="error-message">{error}</p> : null}
 
       <div className="database-layout">
         <section className="database-list-panel" aria-label="DSIRE clone programs">
           <div className="database-list-header">
-            <span>{isLoading ? "Loading programs" : `${programs.length} shown`}</span>
+            <span>{isLoading ? `${programs.length} shown while loading` : `${programs.length} shown`}</span>
             <span>Page {page} of {maxPage}</span>
           </div>
           <div className="database-list">
@@ -1963,10 +2118,10 @@ function DatabaseBrowser({
             ) : null}
             {programs.map((program) => (
               <button
-                aria-current={program.id === selectedProgramId ? "true" : undefined}
+                aria-current={program.opportunityId === selectedProgramId ? "true" : undefined}
                 className="database-list-item"
-                key={program.id}
-                onClick={() => setSelectedProgramId(program.id)}
+                key={program.opportunityId}
+                onClick={() => setSelectedProgramId(program.opportunityId)}
                 type="button"
               >
                 <span>
@@ -1978,10 +2133,10 @@ function DatabaseBrowser({
             ))}
           </div>
           <div className="database-pagination">
-            <button className="secondary-button" disabled={page <= 1 || isLoading} onClick={() => setPage((current) => Math.max(1, current - 1))} type="button">
+            <button className="secondary-button" disabled={page <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))} type="button">
               Previous
             </button>
-            <button className="secondary-button" disabled={page >= maxPage || isLoading} onClick={() => setPage((current) => current + 1)} type="button">
+            <button className="secondary-button" disabled={page >= maxPage} onClick={() => setPage((current) => current + 1)} type="button">
               Next
             </button>
           </div>
@@ -1989,6 +2144,46 @@ function DatabaseBrowser({
 
         <DatabaseProgramDetail isLoading={isDetailLoading} program={selectedProgram} />
       </div>
+    </section>
+  );
+}
+
+function DatabaseLoadingProgress({
+  hasError,
+  progress
+}: {
+  hasError: boolean;
+  progress: DatabaseLoadProgress;
+}) {
+  const percent = databaseProgressPercent(progress);
+  const scannedLabel = progress.estimatedTotal
+    ? `${progress.scannedCount.toLocaleString()} of about ${progress.estimatedTotal.toLocaleString()} records scanned`
+    : `${progress.scannedCount.toLocaleString()} records scanned`;
+  const statusLabel = hasError
+    ? "Opportunity database load stopped"
+    : progress.isComplete
+      ? "Opportunity database loaded"
+      : "Loading opportunity database";
+
+  return (
+    <section className="database-load-progress" aria-live="polite">
+      <div className="database-load-progress-header">
+        <span>{statusLabel}</span>
+        <strong>{percent}%</strong>
+      </div>
+      <div
+        aria-label={statusLabel}
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={percent}
+        className="database-progress-track"
+        role="progressbar"
+      >
+        <span style={{ width: `${percent}%` }} />
+      </div>
+      <p>
+        {scannedLabel}. {progress.loadedPrograms.toLocaleString()} opportunities available so far.
+      </p>
     </section>
   );
 }
