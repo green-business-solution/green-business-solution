@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) Google button color correction
+
+- Strengthened the sign-in page Google button CSS so it keeps a white secondary-button background with dark text while preserving its existing size.
+
 ## 2026-06-23 - Codex (GPT-5) admin sign-in performance
 
 - Changed admin auth responses to return a lightweight dashboard shell instead of scanning all admin DynamoDB tables during sign-in.

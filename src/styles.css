@@ -2540,6 +2540,7 @@ body {
 .google-loading-button {
   align-items: center;
   background: #ffffff;
+  background-image: none;
   border: 1px solid #d4dad7;
   border-radius: 8px;
   color: #111827;
@@ -2553,13 +2554,22 @@ body {
   width: 100%;
 }
 
+.sign-in-panel .google-auth .google-loading-button {
+  background: #ffffff;
+  background-image: none;
+  border-color: #d4dad7;
+  color: #17211b;
+}
+
 .google-redirect-button {
   cursor: pointer;
   padding: 0 24px;
 }
 
-.google-redirect-button:hover:not(:disabled) {
+.sign-in-panel .google-auth .google-redirect-button:hover:not(:disabled) {
   background: #f8faf9;
+  background-image: none;
+  color: #0b1712;
 }
 
 .google-loading-logo {
