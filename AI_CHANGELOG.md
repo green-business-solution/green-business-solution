@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) database filter placeholders
+
+- Added a functional `Implementing sector` dropdown to the admin database tab.
+- Renamed the DSIRE program type filter label from `Type` to `Program type`.
+- Added disabled placeholder filter buttons for `Date`, `Coverage area`, and `Square footage` so planned DSIRE filter parity work is visible in the UI.
+
 ## 2026-06-23 - Codex (GPT-5) database loading progress
 
 - Added a chunked admin-only `/api/database/programs/batch` endpoint so the database browser can load opportunity records incrementally.

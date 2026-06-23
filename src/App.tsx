@@ -768,6 +768,7 @@ function databaseProgramMatchesFilters(
   program: DatabaseProgram,
   filters: {
     category: string;
+    implementingSector: string;
     q: string;
     sector: string;
     state: string;
@@ -797,6 +798,7 @@ function databaseProgramMatchesFilters(
     databaseLookupMatches(program.state, filters.state) &&
     databaseLookupMatches(program.category, filters.category) &&
     databaseLookupMatches(program.programType, filters.type) &&
+    databaseLookupMatches(program.implementingSector, filters.implementingSector) &&
     databaseLookupListMatches(program.technologies, filters.technology) &&
     databaseLookupListMatches(program.eligibleSectors, filters.sector)
   );
@@ -1916,6 +1918,7 @@ function DatabaseBrowser({
     state: "",
     category: "",
     type: "",
+    implementingSector: "",
     technology: "",
     sector: ""
   });
@@ -2004,6 +2007,7 @@ function DatabaseBrowser({
     () => loadedPrograms.filter((program) => databaseProgramMatchesFilters(program, filters)),
     [
       filters.category,
+      filters.implementingSector,
       filters.q,
       filters.sector,
       filters.state,
@@ -2097,9 +2101,18 @@ function DatabaseBrowser({
         </label>
         <DatabaseFilterSelect label="State" onChange={(value) => updateFilter("state", value)} options={facets?.states || []} value={filters.state} />
         <DatabaseFilterSelect label="Category" onChange={(value) => updateFilter("category", value)} options={facets?.categories || []} value={filters.category} />
-        <DatabaseFilterSelect label="Type" onChange={(value) => updateFilter("type", value)} options={facets?.programTypes || []} value={filters.type} />
+        <DatabaseFilterSelect label="Program type" onChange={(value) => updateFilter("type", value)} options={facets?.programTypes || []} value={filters.type} />
+        <DatabaseFilterSelect
+          label="Implementing sector"
+          onChange={(value) => updateFilter("implementingSector", value)}
+          options={facets?.implementingSectors || []}
+          value={filters.implementingSector}
+        />
         <DatabaseFilterSelect label="Technology" onChange={(value) => updateFilter("technology", value)} options={facets?.technologies || []} value={filters.technology} />
         <DatabaseFilterSelect label="Eligible sector" onChange={(value) => updateFilter("sector", value)} options={facets?.eligibleSectors || []} value={filters.sector} />
+        <DatabaseDisabledFilterButton label="Date" note="Planned" />
+        <DatabaseDisabledFilterButton label="Coverage area" note="Planned" />
+        <DatabaseDisabledFilterButton label="Square footage" note="Planned" />
       </div>
 
       <DatabaseLoadingProgress hasError={Boolean(error)} progress={loadProgress} />
@@ -2210,6 +2223,17 @@ function DatabaseFilterSelect({
           </option>
         ))}
       </select>
+    </label>
+  );
+}
+
+function DatabaseDisabledFilterButton({ label, note }: { label: string; note: string }) {
+  return (
+    <label className="field database-disabled-filter">
+      <span>{label}</span>
+      <button aria-disabled="true" disabled type="button">
+        {note}
+      </button>
     </label>
   );
 }

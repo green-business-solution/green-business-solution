@@ -2109,8 +2109,12 @@ body {
   border-radius: 8px;
   display: grid;
   gap: 14px;
-  grid-template-columns: minmax(240px, 1.5fr) repeat(5, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   padding: 16px;
+}
+
+.database-search {
+  grid-column: span 2;
 }
 
 .database-filters .field {
@@ -2122,6 +2126,22 @@ body {
   font-size: 12px;
   font-weight: 850;
   text-transform: uppercase;
+}
+
+.database-disabled-filter button {
+  background: #f3f6f4;
+  border: 1px solid #d9e2dc;
+  border-radius: 7px;
+  color: #76847c;
+  cursor: not-allowed;
+  font-size: 13px;
+  font-weight: 850;
+  height: 42px;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 12px;
+  text-transform: uppercase;
+  width: 100%;
 }
 
 .database-load-progress {
