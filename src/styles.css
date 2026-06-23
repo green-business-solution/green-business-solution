@@ -1120,11 +1120,6 @@ body {
   z-index: 30;
 }
 
-.public-page.sign-in-page .site-header {
-  height: 112px;
-  padding: 0;
-}
-
 .navbar-inner {
   align-items: center;
   display: grid;
@@ -2357,50 +2352,6 @@ body {
     #fafbf8;
 }
 
-.sign-in-page .site-header {
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid rgba(214, 222, 216, 0.72);
-  box-shadow: 0 8px 26px rgba(24, 38, 30, 0.08);
-  max-width: none;
-  padding: 28px clamp(30px, 5.5vw, 110px);
-}
-
-.sign-in-page .navbar-inner {
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  max-width: none;
-  padding: 0 clamp(30px, 5.5vw, 110px);
-}
-
-.sign-in-page .site-header .brand-link {
-  font-size: 28px;
-  gap: 16px;
-}
-
-.sign-in-page .site-header .brand-symbol {
-  font-size: 25px;
-  height: 48px;
-  width: 48px;
-}
-
-.sign-in-page .site-nav {
-  gap: 34px;
-  justify-self: center;
-}
-
-.sign-in-page .nav-actions {
-  gap: 26px;
-  justify-self: end;
-}
-
-.sign-in-page .link-button {
-  font-size: 18px;
-}
-
-.sign-in-page .nav-actions > button:not(.link-button) {
-  font-size: 18px;
-  min-height: 56px;
-}
-
 .sign-in-panel {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(6, 45, 34, 0.13);
@@ -2689,11 +2640,6 @@ body {
     display: none;
   }
 
-  .sign-in-page .site-nav,
-  .sign-in-page .nav-actions {
-    display: none;
-  }
-
   .menu-button {
     display: inline-grid;
     gap: 4px;
@@ -2884,20 +2830,6 @@ body {
     height: 28px;
     transform: none;
     width: 28px;
-  }
-
-  .sign-in-page .site-header {
-    padding: 0;
-  }
-
-  .sign-in-page .site-header .brand-link {
-    font-size: 20px;
-  }
-
-  .sign-in-page .site-header .brand-symbol {
-    height: 42px;
-    transform: none;
-    width: 42px;
   }
 
   .mobile-cta {

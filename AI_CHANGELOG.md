@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) sign-in navbar sizing
+
+- Removed sign-in-page-specific navbar sizing overrides so the sign-in page reuses the same public navbar dimensions as the homepage.
+
 ## 2026-06-23 - Codex (GPT-5) signed-in home navbar state
 
 - Updated the home page public navbar so the auth action changes from `Sign In` to `Sign Out` when the current SPA session is signed in.
