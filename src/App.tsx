@@ -1137,7 +1137,7 @@ function CheckboxGroup({
 function Brand({ onClick }: { onClick: () => void }) {
   return (
     <button className="brand-link" onClick={onClick} type="button">
-      <img alt="" aria-hidden="true" className="brand-symbol" src="/retrofi-logo.png" />
+      <span aria-hidden="true" className="brand-symbol">R</span>
       <span>RetroFi</span>
     </button>
   );
@@ -1226,102 +1226,98 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
 
   return (
     <header className="site-header">
-      <Brand onClick={() => go("home")} />
-      <nav aria-label="Primary" className="site-nav">
-        <button className="link-button" onClick={() => go("how-it-works")} type="button">
-          How It Works
-        </button>
-        <button className="link-button" onClick={() => go("pricing")} type="button">
-          Pricing
-        </button>
-        <button className="link-button" onClick={() => go("database")} type="button">
-          Database
-        </button>
-        <div
-          className="nav-dropdown"
-          onMouseEnter={() => setIsAboutOpen(true)}
-          onMouseLeave={() => setIsAboutOpen(false)}
-        >
-          <button
-            aria-expanded={isAboutOpen}
-            aria-haspopup="menu"
-            className="link-button dropdown-trigger"
-            onBlur={(event) => {
-              if (!event.currentTarget.parentElement?.contains(event.relatedTarget as Node | null)) {
-                setIsAboutOpen(false);
-              }
-            }}
-            onFocus={() => setIsAboutOpen(true)}
-            onClick={() => setIsAboutOpen((current) => !current)}
-            type="button"
-          >
-            About
-            <span aria-hidden="true" className="dropdown-caret">
-              ▾
-            </span>
-          </button>
-          {isAboutOpen ? (
-            <div className="dropdown-panel-wrap">
-              <div className="dropdown-panel" role="menu">
-                {aboutLinks.map((item) => (
-                  <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
-      </nav>
-      <div className="nav-actions">
-        <button className="link-button" onClick={() => go("sign-in")} type="button">
-          Sign In
-        </button>
-        <button onClick={() => go("scan")} type="button">
-          Get Started
-        </button>
-      </div>
-      <button
-        aria-expanded={isMenuOpen}
-        aria-label="Toggle navigation"
-        className="menu-button"
-        onClick={() => setIsMenuOpen((current) => !current)}
-        type="button"
-      >
-        <span />
-        <span />
-        <span />
-      </button>
-      <button className="mobile-cta" onClick={() => go("scan")} type="button">
-        Get Started
-      </button>
-      {isMenuOpen ? (
-        <div className="mobile-menu-panel">
+      <div className="navbar-inner">
+        <Brand onClick={() => go("home")} />
+        <nav aria-label="Primary" className="site-nav">
           <button className="link-button" onClick={() => go("how-it-works")} type="button">
             How It Works
           </button>
           <button className="link-button" onClick={() => go("pricing")} type="button">
             Pricing
           </button>
-          <button className="link-button" onClick={() => go("database")} type="button">
-            Database
-          </button>
-          <div className="mobile-about-group">
-            <span>About</span>
-            {aboutLinks.map((item) => (
-              <button className="mobile-sub-link" key={item.route} onClick={() => go(item.route)} type="button">
-                {item.label}
-              </button>
-            ))}
+          <div
+            className="nav-dropdown"
+            onMouseEnter={() => setIsAboutOpen(true)}
+            onMouseLeave={() => setIsAboutOpen(false)}
+          >
+            <button
+              aria-expanded={isAboutOpen}
+              aria-haspopup="menu"
+              className="link-button dropdown-trigger"
+              onBlur={(event) => {
+                if (!event.currentTarget.parentElement?.contains(event.relatedTarget as Node | null)) {
+                  setIsAboutOpen(false);
+                }
+              }}
+              onFocus={() => setIsAboutOpen(true)}
+              onClick={() => setIsAboutOpen((current) => !current)}
+              type="button"
+            >
+              About
+              <span aria-hidden="true" className="dropdown-caret">
+                ▾
+              </span>
+            </button>
+            {isAboutOpen ? (
+              <div className="dropdown-panel-wrap">
+                <div className="dropdown-panel" role="menu">
+                  {aboutLinks.map((item) => (
+                    <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
+        </nav>
+        <div className="nav-actions">
           <button className="link-button" onClick={() => go("sign-in")} type="button">
             Sign In
           </button>
-          <button onClick={() => go("scan")} type="button">
+          <button className="nav-cta" onClick={() => go("scan")} type="button">
             Get Started
           </button>
         </div>
-      ) : null}
+        <button
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation"
+          className="menu-button"
+          onClick={() => setIsMenuOpen((current) => !current)}
+          type="button"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <button className="mobile-cta" onClick={() => go("scan")} type="button">
+          Get Started
+        </button>
+        {isMenuOpen ? (
+          <div className="mobile-menu-panel">
+            <button className="link-button" onClick={() => go("how-it-works")} type="button">
+              How It Works
+            </button>
+            <button className="link-button" onClick={() => go("pricing")} type="button">
+              Pricing
+            </button>
+            <div className="mobile-about-group">
+              <span>About</span>
+              {aboutLinks.map((item) => (
+                <button className="mobile-sub-link" key={item.route} onClick={() => go(item.route)} type="button">
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            <button className="link-button" onClick={() => go("sign-in")} type="button">
+              Sign In
+            </button>
+            <button className="nav-cta" onClick={() => go("scan")} type="button">
+              Get Started
+            </button>
+          </div>
+        ) : null}
+      </div>
     </header>
   );
 }
@@ -1476,7 +1472,7 @@ function HomePage({ navigate }: { navigate: (route: Route) => void }) {
           <p className="hero-eyebrow">Sustainable. Profitable. Practical.</p>
           <h1>Maximize the value of every upgrade.</h1>
           <p className="hero-subheadline">
-            RetroFi delivers your personalized implementation plan with funding opportunities, savings estimates, and
+            RetroFi delivers your personalized retrofit implementation plan with funding opportunities, savings estimates, and
             prioritized next steps from start to finish.
           </p>
           <div className="hero-actions">

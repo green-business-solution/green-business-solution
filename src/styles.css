@@ -1110,12 +1110,29 @@ body {
 
 .public-page .site-header {
   align-items: center;
+  display: block;
+  height: 86px;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  z-index: 30;
+}
+
+.public-page.sign-in-page .site-header {
+  height: 112px;
+  padding: 0;
+}
+
+.navbar-inner {
+  align-items: center;
   display: grid;
-  gap: 18px;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  height: 100%;
   margin: 0 auto;
-  max-width: 1240px;
-  padding: 20px clamp(18px, 3vw, 36px);
+  max-width: 1440px;
+  padding: 0 48px;
   position: relative;
   width: 100%;
 }
@@ -1137,27 +1154,75 @@ body {
 }
 
 .brand-symbol {
-  display: block;
+  background: #064d3b;
+  border-radius: 10px;
+  color: #ffffff;
+  display: grid;
   flex: 0 0 auto;
-  height: 32px;
+  font-size: 20px;
+  font-weight: 850;
+  height: 38px;
+  line-height: 1;
+  place-items: center;
+  width: 38px;
+}
+
+.public-page .site-header .brand-link {
+  font-size: 23px;
+  font-weight: 800;
+  gap: 9px;
+  justify-self: start;
+  letter-spacing: 0;
+}
+
+.public-page .site-header .brand-symbol {
+  font-size: 18px;
+  height: 34px;
   object-fit: contain;
-  transform: scale(1.16);
-  transform-origin: center;
-  width: 32px;
+  transform: none;
+  width: 34px;
 }
 
 .site-nav {
   align-items: center;
   display: flex;
-  gap: 6px;
+  gap: 42px;
   justify-content: center;
+  justify-self: center;
   min-width: 0;
 }
 
 .nav-actions {
   align-items: center;
   display: flex;
-  gap: 10px;
+  gap: 24px;
+  justify-self: end;
+}
+
+.public-page .site-header .site-nav {
+  gap: 42px;
+}
+
+.public-page .site-header .nav-actions {
+  gap: 24px;
+}
+
+.public-page .site-header .nav-actions .nav-cta,
+.public-page .site-header .mobile-menu-panel .nav-cta {
+  background: #064d3b;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(6, 77, 59, 0.16);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  height: 52px;
+  min-height: 52px;
+  padding: 0 28px;
+}
+
+.public-page .site-header .nav-actions .nav-cta:hover,
+.public-page .site-header .mobile-menu-panel .nav-cta:hover {
+  background: #053f31;
 }
 
 .nav-dropdown {
@@ -1165,10 +1230,11 @@ body {
 }
 
 .dropdown-panel-wrap {
-  padding-top: 8px;
+  left: 50%;
+  padding-top: 12px;
   position: absolute;
-  right: 0;
   top: 100%;
+  transform: translateX(-50%);
   z-index: 20;
 }
 
@@ -1182,9 +1248,9 @@ body {
 
 .dropdown-panel {
   background: #ffffff;
-  border: 1px solid var(--retrofi-border);
-  border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(16, 32, 24, 0.1);
+  border: 1px solid #dce5dd;
+  border-radius: 16px;
+  box-shadow: 0 18px 44px rgba(16, 32, 24, 0.12);
   display: grid;
   gap: 2px;
   padding: 8px;
@@ -1197,8 +1263,8 @@ body {
   border-radius: 10px;
   color: var(--retrofi-text);
   justify-content: start;
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: auto;
+  padding: 12px 16px;
   text-align: left;
 }
 
@@ -1207,6 +1273,7 @@ body {
 }
 
 .mobile-cta {
+  color: #ffffff;
   display: none;
 }
 
@@ -1214,14 +1281,28 @@ body {
   display: none;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item) {
+.public-page .site-header .link-button {
+  border-radius: 0;
+  color: #12231b;
+  font-size: 18px;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 0;
+}
+
+.public-page .site-header .link-button:hover {
+  background: transparent;
+  opacity: 0.72;
+}
+
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta) {
   background: var(--retrofi-green);
   border-radius: 8px;
   min-height: 46px;
   padding: 0 18px;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):hover {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):hover {
   background: var(--retrofi-green-dark);
 }
 
@@ -2269,36 +2350,45 @@ body {
 
 .sign-in-page {
   background:
-    radial-gradient(circle at 50% 38%, rgba(220, 232, 224, 0.42), transparent 34rem),
-    linear-gradient(180deg, #ffffff 0, #f7faf7 18rem, #f4f8f5 100%);
+    radial-gradient(circle at 50% 18%, rgba(7, 78, 58, 0.07), transparent 34%),
+    radial-gradient(circle at 15% 55%, rgba(7, 78, 58, 0.045), transparent 32%),
+    radial-gradient(circle at 85% 55%, rgba(7, 78, 58, 0.04), transparent 32%),
+    #fafbf8;
 }
 
 .sign-in-page .site-header {
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid rgba(214, 222, 216, 0.72);
-  box-shadow: 0 10px 30px rgba(24, 38, 30, 0.08);
+  box-shadow: 0 8px 26px rgba(24, 38, 30, 0.08);
   max-width: none;
-  padding: 30px clamp(28px, 5.5vw, 108px);
+  padding: 28px clamp(30px, 5.5vw, 110px);
 }
 
-.sign-in-page .brand-link {
-  font-size: 24px;
-  gap: 14px;
+.sign-in-page .navbar-inner {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  max-width: none;
+  padding: 0 clamp(30px, 5.5vw, 110px);
 }
 
-.sign-in-page .brand-link .brand-mark {
-  border-radius: 10px;
-  font-size: 22px;
-  height: 54px;
-  width: 54px;
+.sign-in-page .site-header .brand-link {
+  font-size: 28px;
+  gap: 16px;
+}
+
+.sign-in-page .site-header .brand-symbol {
+  font-size: 25px;
+  height: 48px;
+  width: 48px;
 }
 
 .sign-in-page .site-nav {
   gap: 34px;
+  justify-self: center;
 }
 
 .sign-in-page .nav-actions {
   gap: 26px;
+  justify-self: end;
 }
 
 .sign-in-page .link-button {
@@ -2306,58 +2396,56 @@ body {
 }
 
 .sign-in-page .nav-actions > button:not(.link-button) {
-  border-radius: 10px;
   font-size: 18px;
-  min-height: 62px;
-  padding: 0 26px;
+  min-height: 56px;
 }
 
 .sign-in-panel {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.93)),
-    #ffffff;
-  border: 1px solid rgba(209, 219, 212, 0.95);
-  border-radius: 22px;
-  box-shadow: 0 28px 72px rgba(24, 38, 30, 0.12);
-  display: grid;
-  gap: 28px;
-  margin: 78px auto 96px;
-  max-width: 820px;
-  padding: clamp(44px, 5.2vw, 66px) clamp(38px, 5.4vw, 60px) 52px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(6, 45, 34, 0.13);
+  border-radius: 18px;
+  box-shadow:
+    0 28px 70px rgba(6, 45, 34, 0.1),
+    0 2px 8px rgba(6, 45, 34, 0.04);
+  display: block;
+  margin: 88px auto 92px;
+  max-width: 840px;
+  padding: 70px 60px 70px;
   overflow: hidden;
   text-align: left;
-  width: min(820px, calc(100vw - 40px));
+  width: min(840px, max(720px, 41vw), calc(100vw - 48px));
 }
 
 .sign-in-panel .password-auth-panel {
-  gap: 28px;
+  display: block;
   min-width: 0;
   width: 100%;
 }
 
 .sign-in-panel h1 {
-  color: #082418;
-  font-size: clamp(56px, 5.7vw, 82px);
+  color: #062d22;
+  font-size: clamp(64px, 5vw, 88px);
   letter-spacing: 0;
-  line-height: 0.98;
-  margin: 0 0 14px;
+  line-height: 0.95;
+  margin: 0 0 42px;
 }
 
 .sign-in-panel .password-auth-form {
-  gap: 28px;
+  gap: 0;
   min-width: 0;
   width: 100%;
 }
 
 .sign-in-panel .field {
-  gap: 14px;
+  gap: 10px;
+  margin-bottom: 32px;
   min-width: 0;
 }
 
 .sign-in-panel .field > span:first-child {
-  color: #0d1110;
-  font-size: 18px;
-  font-weight: 850;
+  color: #0b1712;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 .password-input-shell {
@@ -2369,23 +2457,24 @@ body {
 
 .sign-in-panel input {
   background: #ffffff;
-  border: 1px solid #d2d9d5;
+  border: 1px solid #d3dad6;
   border-radius: 9px;
   box-shadow: inset 0 0 0 1px rgba(16, 32, 24, 0.02);
-  color: #101714;
-  font-size: 21px;
+  color: #0b1712;
+  font-size: 22px;
   font-weight: 500;
-  min-height: 82px;
-  padding: 14px 20px;
+  height: 80px;
+  min-height: 80px;
+  padding: 0 24px;
   width: 100%;
 }
 
 .sign-in-panel .password-input-shell input {
-  padding-right: 66px;
+  padding-right: 72px;
 }
 
 .sign-in-panel input::placeholder {
-  color: #737b77;
+  color: #6f7974;
 }
 
 .password-visibility-button {
@@ -2394,7 +2483,7 @@ body {
   min-height: 44px;
   padding: 0;
   position: absolute;
-  right: 18px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   width: 44px;
@@ -2406,11 +2495,15 @@ body {
 }
 
 .sign-in-panel .password-auth-form button[type="submit"] {
-  background: linear-gradient(90deg, #0a593f 0%, #074e39 100%);
-  border-radius: 9px;
-  box-shadow: 0 10px 20px rgba(8, 67, 48, 0.18);
+  background: linear-gradient(180deg, #0e5a43 0%, #074a37 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 14px 24px rgba(7, 74, 55, 0.2);
   color: #ffffff;
-  font-size: 21px;
+  font-size: 22px;
+  font-weight: 850;
+  height: 76px;
+  margin-top: 8px;
   min-height: 76px;
   width: 100%;
 }
@@ -2421,18 +2514,20 @@ body {
 
 .auth-switch-row {
   align-items: center;
-  color: #737b77;
+  color: #69736e;
   display: flex;
   flex-wrap: wrap;
-  font-size: 18px;
-  font-weight: 850;
-  gap: 16px;
+  font-size: 17px;
+  font-weight: 800;
+  gap: 12px;
   justify-content: center;
+  margin-top: 24px;
 }
 
 .auth-inline-link {
   color: #0b6ffb;
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 850;
   min-height: auto;
   padding: 0;
 }
@@ -2456,24 +2551,28 @@ body {
 .auth-divider {
   align-items: center;
   color: #1a211d;
-  display: grid;
-  font-size: 20px;
-  gap: 0;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  font-size: 18px;
+  gap: 18px;
   line-height: 1;
+  margin: 42px 0 34px;
 }
 
 .auth-divider span {
-  background: #f4f6f4;
+  background: #f5f6f5;
   border-radius: 999px;
-  box-shadow: 0 1px 8px rgba(16, 32, 24, 0.06);
-  padding: 10px 18px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+  display: grid;
+  height: 46px;
+  place-items: center;
+  width: 46px;
 }
 
 .auth-divider::before,
 .auth-divider::after {
   background: #dfe5e1;
   content: "";
+  flex: 1;
   height: 1px;
 }
 
@@ -2489,21 +2588,22 @@ body {
 .google-loading-button {
   align-items: center;
   background: #ffffff;
-  border: 1px solid #d2d9d5;
-  border-radius: 9px;
-  color: #202724;
+  border: 1px solid #d4dad7;
+  border-radius: 8px;
+  color: #111827;
   display: flex;
-  font-size: 21px;
-  font-weight: 650;
+  font-size: 22px;
+  font-weight: 600;
+  height: 76px;
   justify-content: center;
-  min-height: 64px;
+  min-height: 76px;
   position: relative;
   width: 100%;
 }
 
 .google-loading-logo {
   color: #4285f4;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 850;
   left: 24px;
   line-height: 1;
@@ -2511,17 +2611,59 @@ body {
 }
 
 .sign-in-panel .google-button-slot {
-  justify-content: center;
-  min-height: 64px;
+  justify-content: stretch;
+  min-height: 76px;
 }
 
 .sign-in-panel .google-button-slot > div,
+.sign-in-panel .google-button-slot > div > div,
 .sign-in-panel .google-button-slot iframe {
+  height: 76px !important;
+  max-width: none !important;
   width: 100% !important;
 }
 
+.sign-in-panel .google-button-slot [role="button"] {
+  align-items: center !important;
+  border: 1px solid #d4dad7 !important;
+  border-radius: 8px !important;
+  color: #111827 !important;
+  display: flex !important;
+  font-size: 22px !important;
+  font-weight: 500 !important;
+  height: 76px !important;
+  justify-content: center !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sign-in-panel .google-button-slot [role="button"] > div:last-child {
+  height: 100% !important;
+  justify-content: center !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.sign-in-panel .google-button-slot [role="button"] svg,
+.sign-in-panel .google-button-slot [role="button"] .LgbsSe-Bz112c {
+  height: 28px !important;
+  width: 28px !important;
+}
+
+.sign-in-panel .google-button-slot [role="button"] .nsm7Bb-HzV7m-LgbsSe-Bz112c {
+  left: 24px !important;
+  margin: 0 !important;
+  position: absolute !important;
+}
+
+.sign-in-panel .google-button-slot [role="button"] .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  flex-grow: 0 !important;
+  font-size: 22px !important;
+  font-weight: 500 !important;
+}
+
 .sign-in-panel .google-button-slot iframe {
-  height: 62px !important;
+  height: 76px !important;
 }
 
 .sign-in-panel .google-auth .error-message,
@@ -2579,12 +2721,17 @@ body {
   }
 
   .public-page .site-header {
-    grid-template-columns: auto 1fr auto auto;
-    gap: 12px;
+    height: 76px;
   }
 
-  .site-nav,
-  .nav-actions {
+  .navbar-inner {
+    gap: 12px;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    padding: 0 32px;
+  }
+
+  .public-page .site-header .site-nav,
+  .public-page .site-header .nav-actions {
     display: none;
   }
 
@@ -2600,13 +2747,19 @@ body {
   .menu-button {
     display: inline-grid;
     gap: 4px;
+    grid-column: 4;
     justify-content: center;
+    justify-self: end;
   }
 
   .mobile-cta {
     display: inline-flex;
-    min-height: 42px;
-    padding: 0 14px;
+    font-size: 16px;
+    grid-column: 3;
+    height: 44px;
+    justify-self: end;
+    min-height: 44px;
+    padding: 0 18px;
   }
 
   .mobile-menu-panel {
@@ -2616,8 +2769,12 @@ body {
     box-shadow: 0 16px 36px rgba(16, 32, 24, 0.1);
     display: grid;
     gap: 6px;
-    grid-column: 1 / -1;
+    left: 32px;
     padding: 12px;
+    position: absolute;
+    right: 32px;
+    top: calc(100% + 8px);
+    z-index: 30;
   }
 
   .page-hero,
@@ -2647,9 +2804,15 @@ body {
     text-align: left;
   }
 
-  .brand-symbol {
+  .public-page .site-header .brand-link {
+    font-size: 21px;
+    gap: 8px;
+  }
+
+  .public-page .site-header .brand-symbol {
+    font-size: 16px;
     height: 30px;
-    transform: scale(1.14);
+    transform: none;
     width: 30px;
   }
 }
@@ -2678,7 +2841,7 @@ body {
   }
 
   .public-page .site-header {
-    grid-template-columns: auto auto auto;
+    height: 74px;
   }
 
   .mobile-cta {
@@ -2757,38 +2920,47 @@ body {
 }
 
 @media (max-width: 520px) {
-  .public-page .site-header {
-    grid-template-columns: auto auto;
+  .navbar-inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0 20px;
   }
 
-  .brand-link {
-    font-size: 17px;
+  .public-page .site-header .brand-link {
+    font-size: 20px;
   }
 
-  .brand-symbol {
+  .public-page .site-header .brand-symbol {
+    font-size: 15px;
     height: 28px;
+    transform: none;
     width: 28px;
   }
 
   .sign-in-page .site-header {
-    padding: 18px;
+    padding: 0;
   }
 
-  .sign-in-page .brand-link {
+  .sign-in-page .site-header .brand-link {
     font-size: 20px;
   }
 
-  .sign-in-page .brand-link .brand-mark {
-    border-radius: 9px;
-    font-size: 18px;
-    height: 44px;
-    width: 44px;
+  .sign-in-page .site-header .brand-symbol {
+    height: 42px;
+    transform: none;
+    width: 42px;
   }
 
   .mobile-cta {
-    grid-column: 1 / -1;
-    justify-self: start;
-    width: calc(100vw - 36px);
+    display: none;
+  }
+
+  .menu-button {
+    grid-column: 3;
+  }
+
+  .mobile-menu-panel {
+    left: 20px;
+    right: 20px;
   }
 
   .about-subnav {
@@ -2797,7 +2969,7 @@ body {
 
   .sign-in-panel {
     gap: 22px;
-    margin: 30px max(24px, calc((100vw - 342px) / 2)) 56px;
+    margin: 30px 24px 56px;
     padding: 34px 18px;
     width: min(342px, calc(100vw - 48px));
   }

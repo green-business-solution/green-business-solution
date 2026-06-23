@@ -1,9 +1,21 @@
 # AI Changelog
 
+## 2026-06-22 - Codex (GPT-5) navbar spacing and hero copy refinement
+
+- Reworked the public RetroFi navbar into a full-width header with a centered 1440px inner grid so the logo starts near the desktop left edge and the center links stay visually centered.
+- Kept the main navbar links to `How It Works`, `Pricing`, and the existing About dropdown, with `Sign In` and `Get Started` aligned on the right and routed to `/scan`.
+- Updated the homepage subheadline phrase to `personalized retrofit implementation plan`.
+
 ## 2026-06-22 - Codex (GPT-5) admin-only database access
 
 - Restricted the `/database` page to signed-in admin accounts and passed existing admin credentials into database API requests.
 - Added server-side admin authentication middleware for `/api/database/*` so DSIRE clone data is no longer publicly readable through the API.
+
+## 2026-06-22 - Codex (GPT-5) login reference polish follow-up
+
+- Tuned the `/sign-in` page proportions to better match the generated reference, including an 840px desktop card, softer page glow, roomier form controls, and mobile gutters that prevent horizontal cropping.
+- Updated the public sign-in navbar to use the simple dark-green `R` mark, remove the `Database` link, and label the primary CTA `Create My Report`.
+- Overrode the injected Google Identity Services button wrapper so the Google sign-in option is full-width and visually aligned with the email, password, and primary login controls.
 
 ## 2026-06-22 - Codex (GPT-5) database footer removal
 
