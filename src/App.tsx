@@ -920,7 +920,15 @@ function ArrowUpRightIcon() {
   );
 }
 
-function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
+function PublicNav({
+  isSignedIn = false,
+  navigate,
+  onSignOut
+}: {
+  isSignedIn?: boolean;
+  navigate: (route: Route) => void;
+  onSignOut?: () => void;
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
 
@@ -928,6 +936,24 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
     setIsMenuOpen(false);
     setIsAboutOpen(false);
     navigate(route);
+  }
+
+  function signOutFromNav() {
+    setIsMenuOpen(false);
+    setIsAboutOpen(false);
+    onSignOut?.();
+  }
+
+  function renderAuthAction() {
+    return isSignedIn ? (
+      <button className="link-button" onClick={signOutFromNav} type="button">
+        Sign Out
+      </button>
+    ) : (
+      <button className="link-button" onClick={() => go("sign-in")} type="button">
+        Sign In
+      </button>
+    );
   }
 
   return (
@@ -978,9 +1004,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           </div>
         </nav>
         <div className="nav-actions">
-          <button className="link-button" onClick={() => go("sign-in")} type="button">
-            Sign In
-          </button>
+          {renderAuthAction()}
           <button className="nav-cta" onClick={() => go("scan")} type="button">
             Create My Report
           </button>
@@ -1015,9 +1039,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
                 </button>
               ))}
             </div>
-            <button className="link-button" onClick={() => go("sign-in")} type="button">
-              Sign In
-            </button>
+            {renderAuthAction()}
             <button className="nav-cta" onClick={() => go("scan")} type="button">
               Create My Report
             </button>
@@ -1068,18 +1090,22 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
 
 function PublicShell({
   children,
+  isSignedIn,
   navigate,
+  onSignOut,
   pageClassName,
   showFooter = false
 }: {
   children: ReactNode;
+  isSignedIn?: boolean;
   navigate: (route: Route) => void;
+  onSignOut?: () => void;
   pageClassName?: string;
   showFooter?: boolean;
 }) {
   return (
     <main className={["public-page", pageClassName].filter(Boolean).join(" ")}>
-      <PublicNav navigate={navigate} />
+      <PublicNav isSignedIn={isSignedIn} navigate={navigate} onSignOut={onSignOut} />
       {children}
       {showFooter ? <Footer navigate={navigate} /> : null}
     </main>
@@ -1170,9 +1196,17 @@ function AboutHubCard({
   );
 }
 
-function HomePage({ navigate }: { navigate: (route: Route) => void }) {
+function HomePage({
+  isSignedIn,
+  navigate,
+  onSignOut
+}: {
+  isSignedIn: boolean;
+  navigate: (route: Route) => void;
+  onSignOut: () => void;
+}) {
   return (
-    <PublicShell navigate={navigate} showFooter>
+    <PublicShell isSignedIn={isSignedIn} navigate={navigate} onSignOut={onSignOut} showFooter>
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="hero-eyebrow">Sustainable. Profitable. Practical.</p>
@@ -3196,5 +3230,5 @@ export function App() {
     return <UserDashboard onSignOut={signOut} payload={authPayload} />;
   }
 
-  return <HomePage navigate={navigate} />;
+  return <HomePage isSignedIn={Boolean(authPayload)} navigate={navigate} onSignOut={signOut} />;
 }

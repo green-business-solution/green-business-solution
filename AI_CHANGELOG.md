@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) signed-in home navbar state
+
+- Updated the home page public navbar so the auth action changes from `Sign In` to `Sign Out` when the current SPA session is signed in.
+- Reused the existing sign-out handler so the button clears auth state and returns to the homepage.
+
 ## 2026-06-23 - Codex (GPT-5) Google OAuth redirect flow
 
 - Replaced the Google Identity Services browser button flow with a backend OAuth authorization-code redirect flow.
