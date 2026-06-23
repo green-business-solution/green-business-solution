@@ -843,7 +843,7 @@ function CheckboxGroup({
 function Brand({ onClick }: { onClick: () => void }) {
   return (
     <button className="brand-link" onClick={onClick} type="button">
-      <span aria-hidden="true" className="brand-symbol">R</span>
+      <img alt="" aria-hidden="true" className="brand-symbol" src="/retrofi-logo.png" />
       <span>RetroFi</span>
     </button>
   );

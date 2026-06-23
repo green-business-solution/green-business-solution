@@ -1153,16 +1153,12 @@ body {
 }
 
 .brand-symbol {
-  background: #064d3b;
+  background: #ffffff;
   border-radius: 10px;
-  color: #ffffff;
-  display: grid;
+  display: block;
   flex: 0 0 auto;
-  font-size: 20px;
-  font-weight: 850;
   height: 38px;
-  line-height: 1;
-  place-items: center;
+  object-fit: cover;
   width: 38px;
 }
 
@@ -1175,11 +1171,10 @@ body {
 }
 
 .public-page .site-header .brand-symbol {
-  font-size: 18px;
-  height: 34px;
-  object-fit: contain;
+  height: 38px;
+  object-fit: cover;
   transform: none;
-  width: 34px;
+  width: 38px;
 }
 
 .site-nav {
@@ -2573,12 +2568,12 @@ body {
 }
 
 .google-loading-logo {
-  color: #4285f4;
-  font-size: 28px;
-  font-weight: 850;
+  display: block;
+  height: 28px;
   left: 24px;
   line-height: 1;
   position: absolute;
+  width: 28px;
 }
 
 .sign-in-panel .google-auth .error-message,
@@ -2720,10 +2715,9 @@ body {
   }
 
   .public-page .site-header .brand-symbol {
-    font-size: 16px;
-    height: 30px;
+    height: 34px;
     transform: none;
-    width: 30px;
+    width: 34px;
   }
 }
 
@@ -2840,10 +2834,9 @@ body {
   }
 
   .public-page .site-header .brand-symbol {
-    font-size: 15px;
-    height: 28px;
+    height: 32px;
     transform: none;
-    width: 28px;
+    width: 32px;
   }
 
   .mobile-cta {

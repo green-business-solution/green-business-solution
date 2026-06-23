@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) brand and Google logo alignment
+
+- Replaced the navbar `R` mark with the same `retrofi-logo.png` asset used by the favicon.
+- Replaced the plain Google `G` text in the sign-in button with a multicolor Google-style SVG mark.
+
 ## 2026-06-23 - Codex (GPT-5) Google button color correction
 
 - Strengthened the sign-in page Google button CSS so it keeps a white secondary-button background with dark text while preserving its existing size.
