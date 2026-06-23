@@ -153,13 +153,24 @@ function googleRedirectUriForRequest(req) {
 }
 
 function oauthCookieOptions(req) {
-  return {
+  const options = {
     httpOnly: true,
     maxAge: googleOAuthCookieMaxAgeMs,
     path: "/api/auth/google",
     sameSite: "lax",
     secure: googleRedirectUriForRequest(req).startsWith("https://")
   };
+
+  try {
+    const redirectHostname = new URL(googleRedirectUriForRequest(req)).hostname;
+    if (redirectHostname === "retrofi.org" || redirectHostname.endsWith(".retrofi.org")) {
+      options.domain = ".retrofi.org";
+    }
+  } catch {
+    // If the redirect URI is malformed, the exchange will fail later with a clearer OAuth error.
+  }
+
+  return options;
 }
 
 function oauthClearCookieOptions(req) {
