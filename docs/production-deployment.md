@@ -34,18 +34,20 @@ The script:
 
 ## Google OAuth
 
-The Google OAuth web client must include these authorized JavaScript origins:
+The Google OAuth web client must include this Authorized redirect URI:
 
 ```text
-http://localhost:5173
-http://127.0.0.1:5173
-https://retrofi.org
-https://www.retrofi.org
+https://retrofi.org/api/auth/google/callback
 ```
 
-This app uses Google Identity Services ID tokens through the browser, so the client secret is not needed by the frontend or API for this flow.
+The API Lambda uses the Google authorization-code redirect flow. The client secret is required on the backend and is passed to CloudFormation through the `GOOGLE_CLIENT_SECRET` deploy environment variable, not committed to Git.
 
-Leave redirect URIs empty for the current sign-in implementation. RetroFi does not currently use Google's authorization-code redirect flow; the browser gets an ID token and the API verifies it at `/api/auth/google`.
+Optional local development redirect URIs:
+
+```text
+http://localhost:5173/api/auth/google/callback
+http://127.0.0.1:5173/api/auth/google/callback
+```
 
 ## Domain
 

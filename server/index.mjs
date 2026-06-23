@@ -21,16 +21,20 @@ const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportuni
 const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
+const googleRedirectUri = process.env.GOOGLE_REDIRECT_URI || "";
 const googleAllowedClientIds = [
   googleClientId,
   ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "").split(",").map((value) => value.trim())
 ].filter(Boolean);
+const googleAuthorizeUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 const googleCertsUrl = "https://www.googleapis.com/oauth2/v3/certs";
-const recommendedGoogleAuthorizedOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://retrofi.org",
-  "https://www.retrofi.org"
+const googleTokenUrl = "https://oauth2.googleapis.com/token";
+const recommendedGoogleRedirectUris = [
+  "http://localhost:5173/api/auth/google/callback",
+  "http://127.0.0.1:5173/api/auth/google/callback",
+  "https://retrofi.org/api/auth/google/callback",
+  "https://www.retrofi.org/api/auth/google/callback"
 ];
 const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com"];
 const adminEmails = new Set(
@@ -70,6 +74,10 @@ const adminDataRecordLimit = Math.min(
   250,
   Math.max(25, Number.parseInt(process.env.GBS_ADMIN_DATA_RECORD_LIMIT || "150", 10) || 150)
 );
+const googleOAuthStateCookie = "gbs_google_oauth_state";
+const oauthRedirectResultStorageKey = "gbs-oauth-redirect-result";
+const oauthRedirectErrorStorageKey = "gbs-oauth-redirect-error";
+const googleOAuthCookieMaxAgeMs = 10 * 60 * 1000;
 
 let googleKeysCache = {
   expiresAt: 0,
@@ -128,6 +136,118 @@ function publicGoogleClientIdHint() {
   }
 
   return `${googleClientId.slice(0, 20)}...${googleClientId.slice(-36)}`;
+}
+
+function firstHeaderValue(value) {
+  return cleanText(value).split(",")[0]?.trim() || "";
+}
+
+function requestOrigin(req) {
+  const proto = firstHeaderValue(req.get("x-forwarded-proto")) || req.protocol || "http";
+  const host = firstHeaderValue(req.get("x-forwarded-host")) || cleanText(req.get("host"));
+  return host ? `${proto}://${host}` : "";
+}
+
+function googleRedirectUriForRequest(req) {
+  return googleRedirectUri || `${requestOrigin(req)}/api/auth/google/callback`;
+}
+
+function oauthCookieOptions(req) {
+  return {
+    httpOnly: true,
+    maxAge: googleOAuthCookieMaxAgeMs,
+    path: "/api/auth/google",
+    sameSite: "lax",
+    secure: googleRedirectUriForRequest(req).startsWith("https://")
+  };
+}
+
+function oauthClearCookieOptions(req) {
+  const { maxAge: _maxAge, ...options } = oauthCookieOptions(req);
+  return options;
+}
+
+function parseCookies(req) {
+  return cleanText(req.get("cookie"))
+    .split(";")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .reduce((cookies, part) => {
+      const separatorIndex = part.indexOf("=");
+      if (separatorIndex === -1) {
+        return cookies;
+      }
+
+      const name = part.slice(0, separatorIndex).trim();
+      const value = part.slice(separatorIndex + 1).trim();
+      try {
+        cookies[name] = decodeURIComponent(value);
+      } catch {
+        cookies[name] = value;
+      }
+      return cookies;
+    }, {});
+}
+
+function clearGoogleOAuthCookies(req, res) {
+  res.clearCookie(googleOAuthStateCookie, oauthClearCookieOptions(req));
+}
+
+function createGoogleOAuthError(message, status = 400) {
+  const error = new Error(message);
+  error.status = status;
+  return error;
+}
+
+function scriptSafeJson(value) {
+  return JSON.stringify(value).replace(/[<>&\u2028\u2029]/g, (character) => {
+    if (character === "<") return "\\u003c";
+    if (character === ">") return "\\u003e";
+    if (character === "&") return "\\u0026";
+    if (character === "\u2028") return "\\u2028";
+    return "\\u2029";
+  });
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderOAuthCallbackPage({ authResult = null, error = null, redirectPath = "/sign-in" }) {
+  const result = {
+    authResult,
+    error,
+    redirectPath,
+    resultStorageKey: oauthRedirectResultStorageKey,
+    errorStorageKey: oauthRedirectErrorStorageKey
+  };
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RetroFi sign in</title>
+  </head>
+  <body>
+    <p>${escapeHtml(error ? "Google sign-in could not finish. Redirecting..." : "Completing Google sign-in...")}</p>
+    <script>
+      (() => {
+        const result = ${scriptSafeJson(result)};
+        if (result.error) {
+          window.sessionStorage.setItem(result.errorStorageKey, result.error);
+        } else if (result.authResult) {
+          window.sessionStorage.setItem(result.resultStorageKey, JSON.stringify(result.authResult));
+        }
+        window.location.replace(result.redirectPath);
+      })();
+    </script>
+  </body>
+</html>`;
 }
 
 function createPasswordError(message, status = 400) {
@@ -346,6 +466,38 @@ async function verifyGoogleCredential(credential) {
     name: cleanText(payload.name),
     picture: cleanText(payload.picture)
   };
+}
+
+async function exchangeGoogleAuthorizationCode({ code, redirectUri }) {
+  if (!googleClientId || !googleClientSecret) {
+    throw createGoogleOAuthError("Google redirect sign-in is not configured on the server.", 503);
+  }
+
+  const response = await fetch(googleTokenUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: new URLSearchParams({
+      client_id: googleClientId,
+      client_secret: googleClientSecret,
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: redirectUri
+    })
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const message = cleanText(payload.error_description) || cleanText(payload.error) || "Google could not exchange the authorization code.";
+    throw createGoogleOAuthError(message, 401);
+  }
+
+  if (!payload.id_token) {
+    throw createGoogleOAuthError("Google did not return an identity token.", 401);
+  }
+
+  return payload;
 }
 
 function validateIntake(input) {
@@ -760,8 +912,7 @@ async function linkGoogleUser(user, googleUser) {
   };
 }
 
-async function requireGoogleUser(credential) {
-  const googleUser = await verifyGoogleCredential(credential);
+async function requireGoogleUserFromIdentity(googleUser) {
   const user = await findUserByGoogleIdentity(googleUser);
 
   // Admins can be created from the allowlisted Google identity. Client accounts
@@ -779,6 +930,10 @@ async function requireGoogleUser(credential) {
   }
 
   return linkGoogleUser(user, googleUser);
+}
+
+async function requireGoogleUser(credential) {
+  return requireGoogleUserFromIdentity(await verifyGoogleCredential(credential));
 }
 
 async function requireAdminUser(credential) {
@@ -1592,9 +1747,11 @@ app.get("/api/health", (_req, res) => {
     intakeTable,
     opportunitiesTable,
     googleClientConfigured: Boolean(googleClientId),
+    googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
+    googleRedirectUri: googleRedirectUri || null,
     googleAllowedClientIdsCount: googleAllowedClientIds.length,
     googleClientIdHint: publicGoogleClientIdHint(),
-    recommendedGoogleAuthorizedOrigins
+    recommendedGoogleRedirectUris
   });
 });
 
@@ -1616,9 +1773,11 @@ app.get("/api/diagnostics", async (_req, res) => {
       intakeTable,
       opportunitiesTable,
       googleClientConfigured: Boolean(googleClientId),
+      googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
+      googleRedirectUri: googleRedirectUri || null,
       googleAllowedClientIdsCount: googleAllowedClientIds.length,
       googleClientIdHint: publicGoogleClientIdHint(),
-      recommendedGoogleAuthorizedOrigins,
+      recommendedGoogleRedirectUris,
       adminDataRecordLimit,
       adminEmails: [...adminEmails],
       adminsPresent
@@ -1820,6 +1979,83 @@ app.post("/api/intake", async (req, res) => {
     });
   } catch (error) {
     handleError(res, error);
+  }
+});
+
+app.get("/api/auth/google/start", (req, res) => {
+  try {
+    if (!googleClientId || !googleClientSecret) {
+      throw createGoogleOAuthError("Google redirect sign-in is not configured on the server.", 503);
+    }
+
+    const state = crypto.randomBytes(24).toString("base64url");
+    const redirectUri = googleRedirectUriForRequest(req);
+    res.cookie(googleOAuthStateCookie, state, oauthCookieOptions(req));
+
+    const authorizationUrl = new URL(googleAuthorizeUrl);
+    authorizationUrl.search = new URLSearchParams({
+      client_id: googleClientId,
+      include_granted_scopes: "true",
+      prompt: "select_account",
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope: "openid email profile",
+      state
+    }).toString();
+
+    res.redirect(authorizationUrl.toString());
+  } catch (error) {
+    const classified = classifyError(error);
+    res
+      .status(classified.status)
+      .type("html")
+      .send(renderOAuthCallbackPage({ error: classified.message }));
+  }
+});
+
+app.get("/api/auth/google/callback", async (req, res) => {
+  try {
+    const returnedError = cleanText(req.query?.error);
+    if (returnedError) {
+      throw createGoogleOAuthError(cleanText(req.query?.error_description) || returnedError, 401);
+    }
+
+    const code = cleanText(req.query?.code);
+    const state = cleanText(req.query?.state);
+    const expectedState = parseCookies(req)[googleOAuthStateCookie];
+    if (!code || !state || !expectedState || state !== expectedState) {
+      throw createGoogleOAuthError("Google sign-in state did not match. Try signing in again.", 401);
+    }
+
+    clearGoogleOAuthCookies(req, res);
+
+    const redirectUri = googleRedirectUriForRequest(req);
+    const tokenPayload = await exchangeGoogleAuthorizationCode({ code, redirectUri });
+    const user = await requireGoogleUserFromIdentity(await verifyGoogleCredential(tokenPayload.id_token));
+    const sessionResult = await issuePasswordSession(user);
+    const { sessionToken, ...payload } = await buildPasswordAuthPayload(sessionResult);
+
+    res
+      .type("html")
+      .send(
+        renderOAuthCallbackPage({
+          authResult: {
+            credential: {
+              provider: "password",
+              value: sessionToken
+            },
+            payload
+          },
+          redirectPath: payload.dashboard === "admin" ? "/admin" : "/portal"
+        })
+      );
+  } catch (error) {
+    clearGoogleOAuthCookies(req, res);
+    const classified = classifyError(error);
+    res
+      .status(classified.status)
+      .type("html")
+      .send(renderOAuthCallbackPage({ error: classified.message }));
   }
 });
 

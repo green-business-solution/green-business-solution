@@ -1,7 +1,7 @@
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
-import { OPPORTUNITIES_TABLE_NAME, STALE_SESSION_KEYS } from "./config";
+import { OAUTH_REDIRECT_ERROR_KEY, OAUTH_REDIRECT_RESULT_KEY, OPPORTUNITIES_TABLE_NAME, STALE_SESSION_KEYS } from "./config";
 import { GoogleSignInButton } from "./googleSignIn";
 import { EyeIcon, LockIcon } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
@@ -302,6 +302,11 @@ type PasswordAuthPayload = AuthPayload & {
   sessionToken: string;
 };
 
+type OAuthRedirectResult = {
+  payload: AuthPayload;
+  credential: AuthCredential;
+};
+
 type IntakeFormState = {
   fullName: string;
   email: string;
@@ -424,6 +429,38 @@ function refreshAuthPayload(credential: AuthCredential) {
   }
 
   return apiPost<AuthPayload>("/api/auth/google", { credential: credential.value });
+}
+
+function takeSessionStorageItem(key: string) {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const value = window.sessionStorage.getItem(key);
+  window.sessionStorage.removeItem(key);
+  return value;
+}
+
+function takeOAuthRedirectResult(): OAuthRedirectResult | null {
+  const rawValue = takeSessionStorageItem(OAUTH_REDIRECT_RESULT_KEY);
+  if (!rawValue) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue) as Partial<OAuthRedirectResult>;
+    if (parsed.payload?.dashboard && parsed.credential?.provider && parsed.credential.value) {
+      return parsed as OAuthRedirectResult;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function takeOAuthRedirectError() {
+  return takeSessionStorageItem(OAUTH_REDIRECT_ERROR_KEY);
 }
 
 function PasswordAuthPanel({
@@ -2216,7 +2253,7 @@ function SignInPage({
         <div className="auth-divider" role="presentation">
           <span>Or</span>
         </div>
-        <GoogleSignInButton<AuthPayload> endpoint="/api/auth/google" onSuccess={onAuthSuccess} />
+        <GoogleSignInButton />
       </section>
     </PublicShell>
   );
@@ -3037,6 +3074,21 @@ export function App() {
   useEffect(() => {
     for (const key of STALE_SESSION_KEYS) {
       window.localStorage.removeItem(key);
+    }
+  }, []);
+
+  useEffect(() => {
+    const redirectResult = takeOAuthRedirectResult();
+    if (redirectResult) {
+      setAuthPayload(redirectResult.payload);
+      setAuthCredential(redirectResult.credential);
+      setSignInMessage(null);
+      return;
+    }
+
+    const redirectError = takeOAuthRedirectError();
+    if (redirectError) {
+      setSignInMessage(redirectError);
     }
   }, []);
 

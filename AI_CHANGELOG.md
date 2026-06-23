@@ -1,5 +1,13 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) Google OAuth redirect flow
+
+- Replaced the Google Identity Services browser button flow with a backend OAuth authorization-code redirect flow.
+- Added `/api/auth/google/start` and `/api/auth/google/callback` with state-cookie validation, Google code exchange, ID-token verification, and app session handoff back to the SPA.
+- Updated the sign-in page to use a normal redirect button and removed old Google iframe styling overrides.
+- Added CloudFormation and deploy-script support for backend-only `GOOGLE_CLIENT_SECRET` and `GOOGLE_REDIRECT_URI` configuration.
+- Updated Google auth and production deployment docs around authorized redirect URIs.
+
 ## 2026-06-23 - Codex (GPT-5) auth refactor and Google sign-in payload fix
 
 - Extracted frontend route, API, config, icon, auth credential, and Google sign-in helpers from `App.tsx` into small modules so the sign-in flow is easier to inspect.

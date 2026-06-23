@@ -8,6 +8,8 @@ HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z04402863EVV8FUF4EWUX}"
 REGION="${AWS_DEPLOY_REGION:-us-east-1}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
+GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
+GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI:-https://${DOMAIN_NAME}/api/auth/google/callback}"
 ADMIN_EMAILS="${GBS_ADMIN_EMAILS:-neerkuchlous@gmail.com,pmrajvansh@gmail.com}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD_DIR="${ROOT_DIR}/build"
@@ -31,6 +33,11 @@ stack_output() {
 }
 
 cd "${ROOT_DIR}"
+
+if [ -z "${GOOGLE_CLIENT_SECRET}" ]; then
+  echo "GOOGLE_CLIENT_SECRET must be set to deploy Google redirect sign-in." >&2
+  exit 1
+fi
 
 ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
 ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
@@ -73,6 +80,8 @@ aws_region cloudformation deploy \
     LambdaCodeBucket="${ARTIFACT_BUCKET}" \
     LambdaCodeKey="${LAMBDA_CODE_KEY}" \
     GoogleClientId="${GOOGLE_CLIENT_ID}" \
+    GoogleClientSecret="${GOOGLE_CLIENT_SECRET}" \
+    GoogleRedirectUri="${GOOGLE_REDIRECT_URI}" \
     AdminEmails="${ADMIN_EMAILS}" \
     DataRegion="${DATA_REGION}"
 

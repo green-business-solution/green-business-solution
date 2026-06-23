@@ -17,6 +17,13 @@ Parameters:
   GoogleClientId:
     Type: String
     Default: 754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com
+  GoogleClientSecret:
+    Type: String
+    NoEcho: true
+    Description: Google OAuth web client secret used only by the API Lambda for authorization-code exchange.
+  GoogleRedirectUri:
+    Type: String
+    Default: https://retrofi.org/api/auth/google/callback
   AdminEmails:
     Type: String
     Default: neerkuchlous@gmail.com,pmrajvansh@gmail.com
@@ -104,6 +111,8 @@ Resources:
           GBS_INTAKE_TABLE: !Ref IntakeTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
+          GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
+          GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
           GBS_ADMIN_EMAILS: !Ref AdminEmails
       Handler: server/lambda.handler
       MemorySize: 512
