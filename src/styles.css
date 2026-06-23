@@ -1212,30 +1212,18 @@ body {
   background: #064d3b;
   border-radius: 12px;
   box-shadow: 0 8px 18px rgba(6, 77, 59, 0.16);
-  color: transparent;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 800;
   height: 52px;
   min-height: 52px;
   min-width: 198px;
   padding: 0 28px;
-  position: relative;
 }
 
 .public-page .site-header .nav-actions .nav-cta:hover,
 .public-page .site-header .mobile-menu-panel .nav-cta:hover {
   background: #053f31;
-}
-
-.public-page .site-header .nav-cta::after {
-  align-items: center;
-  color: #ffffff;
-  content: "Create My Report";
-  display: flex;
-  inset: 0;
-  justify-content: center;
-  position: absolute;
-  white-space: nowrap;
 }
 
 .nav-dropdown {

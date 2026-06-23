@@ -45,6 +45,8 @@ https://www.retrofi.org
 
 This app uses Google Identity Services ID tokens through the browser, so the client secret is not needed by the frontend or API for this flow.
 
+Leave redirect URIs empty for the current sign-in implementation. RetroFi does not currently use Google's authorization-code redirect flow; the browser gets an ID token and the API verifies it at `/api/auth/google`.
+
 ## Domain
 
 Route 53 hosted zone:

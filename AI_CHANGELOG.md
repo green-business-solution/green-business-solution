@@ -1,5 +1,14 @@
 # AI Changelog
 
+## 2026-06-23 - Codex (GPT-5) auth refactor and Google sign-in payload fix
+
+- Extracted frontend route, API, config, icon, auth credential, and Google sign-in helpers from `App.tsx` into small modules so the sign-in flow is easier to inspect.
+- Added `STYLE_GUIDE.md` with RetroFi visual and implementation rules for future human and AI contributors.
+- Clarified Google Identity Services setup docs: this app uses browser ID tokens and Authorized JavaScript origins, not redirect URIs.
+- Added OAuth diagnostics to `/api/health` and `/api/diagnostics`, including the expected browser origins and a public client ID hint.
+- Fixed admin Google sign-in failing behind AWS Lambda response limits by returning a bounded DSIRE admin preview with total counts instead of every compacted opportunity record.
+- Replaced CSS-generated navbar CTA text with real button text for accessibility and simpler styling.
+
 ## 2026-06-22 - Codex (GPT-5) navbar spacing and hero copy refinement
 
 - Reworked the public RetroFi navbar into a full-width header with a centered 1440px inner grid so the logo starts near the desktop left edge and the center links stay visually centered.

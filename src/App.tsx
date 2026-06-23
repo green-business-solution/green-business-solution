@@ -1,56 +1,10 @@
-import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
-
-const LockIcon = () => (
-  <svg aria-hidden="true" className="lock-icon" fill="none" viewBox="0 0 24 24">
-    <path
-      d="M7 10V8a5 5 0 0 1 10 0v2"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-    <rect
-      height="10"
-      rx="2"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      width="14"
-      x="5"
-      y="10"
-    />
-  </svg>
-);
-
-const EyeIcon = () => (
-  <svg aria-hidden="true" className="eye-icon" fill="none" viewBox="0 0 24 24">
-    <path
-      d="M2.8 12s3.4-6 9.2-6 9.2 6 9.2 6-3.4 6-9.2 6-9.2-6-9.2-6Z"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-    <circle cx="12" cy="12" r="2.6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-  </svg>
-);
-
-type Route =
-  | "home"
-  | "how-it-works"
-  | "pricing"
-  | "database"
-  | "about"
-  | "about-mission"
-  | "about-team"
-  | "about-trust"
-  | "about-contact"
-  | "scan"
-  | "scan-results"
-  | "sign-in"
-  | "portal"
-  | "admin";
+import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { apiGet, apiPost } from "./api";
+import type { AuthCredential } from "./authTypes";
+import { OPPORTUNITIES_TABLE_NAME, STALE_SESSION_KEYS } from "./config";
+import { GoogleSignInButton } from "./googleSignIn";
+import { EyeIcon, LockIcon } from "./icons";
+import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
 
 type UserRecord = {
   userId: string;
@@ -116,6 +70,9 @@ type AdminRow = {
 type DatabaseTableSnapshot = {
   name: string;
   recordCount: number;
+  loadedCount?: number;
+  isTruncated?: boolean;
+  note?: string | null;
   records: unknown[];
 };
 
@@ -241,11 +198,6 @@ type AuthPayload = {
   adminDashboard: AdminPayload | null;
 };
 
-type AuthCredential = {
-  provider: "google" | "password";
-  value: string;
-};
-
 type DatabaseFacetOption = {
   id: string;
   label: string;
@@ -350,37 +302,6 @@ type PasswordAuthPayload = AuthPayload & {
   sessionToken: string;
 };
 
-type GoogleCredentialResponse = {
-  credential?: string;
-  select_by?: string;
-};
-
-type GoogleButtonOptions = {
-  logo_alignment?: "left" | "center";
-  shape?: "rectangular" | "pill" | "circle" | "square";
-  size?: "large" | "medium" | "small";
-  text?: "signin_with" | "signup_with" | "continue_with" | "signin";
-  theme?: "outline" | "filled_blue" | "filled_black";
-  width?: number;
-};
-
-declare global {
-  interface Window {
-    google?: {
-      accounts: {
-        id: {
-          initialize: (config: {
-            callback: (response: GoogleCredentialResponse) => void;
-            cancel_on_tap_outside?: boolean;
-            client_id: string;
-          }) => void;
-          renderButton: (parent: HTMLElement, options: GoogleButtonOptions) => void;
-        };
-      };
-    };
-  }
-}
-
 type IntakeFormState = {
   fullName: string;
   email: string;
@@ -481,159 +402,6 @@ const improvementOptions = [
   "Not sure yet"
 ];
 
-const aboutLinks: Array<{ label: string; route: Route }> = [
-  { label: "Mission", route: "about-mission" },
-  { label: "Team", route: "about-team" },
-  { label: "Trust & Data", route: "about-trust" },
-  { label: "Contact", route: "about-contact" }
-];
-
-const staleSessionKeys = ["gbs-user-session", "gbs-admin-session"];
-const googleClientId =
-  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
-  "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
-const googleIdentityScriptUrl = "https://accounts.google.com/gsi/client";
-const opportunitiesTableName = "gbs-opportunity-candidates";
-let googleIdentityScriptPromise: Promise<void> | null = null;
-
-function loadGoogleIdentityScript() {
-  if (window.google?.accounts?.id) {
-    return Promise.resolve();
-  }
-
-  if (!googleIdentityScriptPromise) {
-    googleIdentityScriptPromise = new Promise((resolve, reject) => {
-      const existingScript = document.querySelector<HTMLScriptElement>(
-        `script[src="${googleIdentityScriptUrl}"]`
-      );
-
-      if (existingScript) {
-        existingScript.addEventListener("load", () => resolve(), { once: true });
-        existingScript.addEventListener("error", () => reject(new Error("Google sign-in failed to load.")), {
-          once: true
-        });
-        return;
-      }
-
-      const script = document.createElement("script");
-      script.async = true;
-      script.defer = true;
-      script.src = googleIdentityScriptUrl;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error("Google sign-in failed to load."));
-      document.head.appendChild(script);
-    });
-  }
-
-  return googleIdentityScriptPromise;
-}
-
-function routeFromPath(): Route {
-  if (window.location.pathname === "/how-it-works") return "how-it-works";
-  if (window.location.pathname === "/pricing") return "pricing";
-  if (window.location.pathname === "/database") return "database";
-  if (window.location.pathname === "/for-businesses") return "home";
-  if (window.location.pathname === "/about") return "about";
-  if (window.location.pathname === "/about/mission") return "about-mission";
-  if (window.location.pathname === "/about/team") return "about-team";
-  if (window.location.pathname === "/about/trust") return "about-trust";
-  if (window.location.pathname === "/about/contact") return "about-contact";
-  if (window.location.pathname === "/scan" || window.location.pathname === "/get-started") return "scan";
-  if (window.location.pathname === "/scan/results") return "scan-results";
-  if (window.location.pathname === "/sign-in") return "sign-in";
-  if (window.location.pathname === "/portal") return "portal";
-  if (window.location.pathname === "/admin") return "admin";
-  return "home";
-}
-
-function pathForRoute(route: Route) {
-  if (route === "home") return "/";
-  if (route === "about-mission") return "/about/mission";
-  if (route === "about-team") return "/about/team";
-  if (route === "about-trust") return "/about/trust";
-  if (route === "about-contact") return "/about/contact";
-  if (route === "scan-results") return "/scan/results";
-  return `/${route}`;
-}
-
-function isLocalDevelopmentHost() {
-  return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
-}
-
-async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
-  let response: Response;
-
-  try {
-    response = await fetch(path, init);
-  } catch {
-    throw new Error(
-      isLocalDevelopmentHost()
-        ? "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
-        : "Could not reach the server. Refresh the page and try again."
-    );
-  }
-
-  const text = await response.text();
-  let payload: { error?: string } = {};
-
-  if (text) {
-    try {
-      payload = JSON.parse(text);
-    } catch {
-      payload = {};
-    }
-  }
-
-  if (!response.ok) {
-    throw new Error(payload.error || `Request failed with HTTP ${response.status}.`);
-  }
-
-  return payload as T;
-}
-
-async function apiPost<T>(path: string, body: unknown): Promise<T> {
-  let response: Response;
-
-  try {
-    response = await fetch(path, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-  } catch {
-    throw new Error(
-      isLocalDevelopmentHost()
-        ? "Could not reach the local API. Run `npm run dev` from the repo root and confirm the API is running at http://127.0.0.1:8787."
-        : "Could not reach the server. Refresh the page and try again."
-    );
-  }
-
-  const text = await response.text();
-  let payload: { error?: string } = {};
-
-  if (text) {
-    try {
-      payload = JSON.parse(text);
-    } catch {
-      payload = {};
-    }
-  }
-
-  if (!response.ok) {
-    const fallback =
-      response.status >= 500
-        ? isLocalDevelopmentHost()
-          ? "The local API returned an error. Check the terminal running `npm run dev`; if AWS credentials are mentioned, run `aws sso login --profile gbs` and restart the dev server."
-          : "The server returned an error. Try again in a minute."
-        : `Request failed with HTTP ${response.status}.`;
-    throw new Error(payload.error || fallback);
-  }
-
-  return payload as T;
-}
-
 function adminAuthBody(credential: AuthCredential) {
   if (credential.provider === "password") {
     return { passwordSessionToken: credential.value };
@@ -656,105 +424,6 @@ function refreshAuthPayload(credential: AuthCredential) {
   }
 
   return apiPost<AuthPayload>("/api/auth/google", { credential: credential.value });
-}
-
-function GoogleSignInButton<T>({
-  endpoint,
-  onSuccess
-}: {
-  endpoint: string;
-  onSuccess: (payload: T, credential: AuthCredential) => void;
-}) {
-  const buttonRef = useRef<HTMLDivElement | null>(null);
-  const onSuccessRef = useRef(onSuccess);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSigningIn, setIsSigningIn] = useState(false);
-
-  useEffect(() => {
-    onSuccessRef.current = onSuccess;
-  }, [onSuccess]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function renderGoogleButton() {
-      if (!googleClientId) {
-        setError("Google sign-in is not configured.");
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        await loadGoogleIdentityScript();
-      } catch (scriptError) {
-        if (!isMounted) return;
-        setError(scriptError instanceof Error ? scriptError.message : "Google sign-in failed to load.");
-        setIsLoading(false);
-        return;
-      }
-
-      if (!isMounted || !buttonRef.current || !window.google?.accounts?.id) {
-        return;
-      }
-
-      window.google.accounts.id.initialize({
-        client_id: googleClientId,
-        cancel_on_tap_outside: true,
-        callback: async (response) => {
-          const credential = response.credential;
-          if (!credential) {
-            setError("Google did not return a sign-in credential.");
-            return;
-          }
-
-          setError(null);
-          setIsSigningIn(true);
-          try {
-            const payload = await apiPost<T>(endpoint, { credential });
-            onSuccessRef.current(payload, { provider: "google", value: credential });
-          } catch (requestError) {
-            setError(requestError instanceof Error ? requestError.message : "Google sign-in failed.");
-          } finally {
-            setIsSigningIn(false);
-          }
-        }
-      });
-
-      const buttonWidth = Math.max(300, Math.floor(buttonRef.current.getBoundingClientRect().width || 480));
-
-      buttonRef.current.innerHTML = "";
-      window.google.accounts.id.renderButton(buttonRef.current, {
-        logo_alignment: "left",
-        shape: "rectangular",
-        size: "large",
-        text: "continue_with",
-        theme: "outline",
-        width: buttonWidth
-      });
-      setIsLoading(false);
-    }
-
-    void renderGoogleButton();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [endpoint]);
-
-  return (
-    <div className={["google-auth", isLoading ? "is-loading" : ""].filter(Boolean).join(" ")} aria-busy={isLoading}>
-      {isLoading ? (
-        <div aria-hidden="true" className="google-loading-button">
-          <span className="google-loading-logo">G</span>
-          <span>Continue with Google</span>
-        </div>
-      ) : null}
-      <div className="google-button-slot" ref={buttonRef} />
-      {isSigningIn ? <p className="muted-message">Signing in...</p> : null}
-      {error ? <p className="error-message">{error}</p> : null}
-    </div>
-  );
 }
 
 function PasswordAuthPanel({
@@ -1276,7 +945,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
             Sign In
           </button>
           <button className="nav-cta" onClick={() => go("scan")} type="button">
-            Get Started
+            Create My Report
           </button>
         </div>
         <button
@@ -1291,7 +960,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
           <span />
         </button>
         <button className="mobile-cta" onClick={() => go("scan")} type="button">
-          Get Started
+          Create My Report
         </button>
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
@@ -1313,7 +982,7 @@ function PublicNav({ navigate }: { navigate: (route: Route) => void }) {
               Sign In
             </button>
             <button className="nav-cta" onClick={() => go("scan")} type="button">
-              Get Started
+              Create My Report
             </button>
           </div>
         ) : null}
@@ -2590,7 +2259,7 @@ function AdminDashboard({
     setAdminPayload((currentPayload) => ({
       ...currentPayload,
       dataTables: currentPayload.dataTables.map((table) => {
-        if (table.name !== opportunitiesTableName) {
+        if (table.name !== OPPORTUNITIES_TABLE_NAME) {
           return table;
         }
 
@@ -2741,7 +2410,7 @@ function AdminDataPanel({
   onOpportunityUpdated: (opportunity: OpportunityRecord) => void;
   onRefresh: () => void;
 }) {
-  if (dataTable?.name === opportunitiesTableName) {
+  if (dataTable?.name === OPPORTUNITIES_TABLE_NAME) {
     return (
       <OpportunityReviewPanel
         credential={credential}
@@ -2772,8 +2441,12 @@ function AdminDataPanel({
               <div>
                 <p className="eyebrow">{dataTable.name}</p>
                 <h3>{dataTable.recordCount} records</h3>
+                {dataTable.isTruncated ? (
+                  <small>{dataTable.loadedCount || dataTable.records.length} loaded in this dashboard preview</small>
+                ) : null}
               </div>
             </div>
+            {dataTable.note ? <p className="muted-message">{dataTable.note}</p> : null}
             <pre>{JSON.stringify(dataTable.records, null, 2)}</pre>
           </article>
         ) : (
@@ -2898,8 +2571,14 @@ function OpportunityReviewPanel({
 
       <div className="review-count-row">
         <strong>{filteredRecords.length} shown</strong>
-        <span>{records.length} loaded from DynamoDB</span>
+        <span>
+          {dataTable.isTruncated
+            ? `${records.length} loaded of ${dataTable.recordCount} DynamoDB records`
+            : `${records.length} loaded from DynamoDB`}
+        </span>
       </div>
+
+      {dataTable.note ? <p className="muted-message">{dataTable.note}</p> : null}
 
       <div className="opportunity-review-layout">
         <div className="opportunity-list" aria-label="Opportunity candidates">
@@ -3356,7 +3035,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    for (const key of staleSessionKeys) {
+    for (const key of STALE_SESSION_KEYS) {
       window.localStorage.removeItem(key);
     }
   }, []);

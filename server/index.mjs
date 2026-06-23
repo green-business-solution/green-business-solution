@@ -26,6 +26,12 @@ const googleAllowedClientIds = [
   ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "").split(",").map((value) => value.trim())
 ].filter(Boolean);
 const googleCertsUrl = "https://www.googleapis.com/oauth2/v3/certs";
+const recommendedGoogleAuthorizedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://retrofi.org",
+  "https://www.retrofi.org"
+];
 const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com"];
 const adminEmails = new Set(
   (process.env.GBS_ADMIN_EMAILS || defaultAdminEmails.join(","))
@@ -60,6 +66,10 @@ const passwordHashAlgorithm = "scrypt";
 const passwordHashKeyLength = 64;
 const passwordSessionDurationMs = 7 * 24 * 60 * 60 * 1000;
 const maxEvidenceTextLength = 1200;
+const adminDataRecordLimit = Math.min(
+  250,
+  Math.max(25, Number.parseInt(process.env.GBS_ADMIN_DATA_RECORD_LIMIT || "150", 10) || 150)
+);
 
 let googleKeysCache = {
   expiresAt: 0,
@@ -110,6 +120,14 @@ function adminNameForEmail(email) {
 function createAccountUserId(email) {
   const digest = crypto.createHash("sha256").update(cleanEmail(email)).digest("hex").slice(0, 32);
   return `account_${digest}`;
+}
+
+function publicGoogleClientIdHint() {
+  if (!googleClientId) {
+    return "";
+  }
+
+  return `${googleClientId.slice(0, 20)}...${googleClientId.slice(-36)}`;
 }
 
 function createPasswordError(message, status = 400) {
@@ -256,6 +274,9 @@ async function verifyGoogleCredential(credential) {
   const header = decodeJwtJson(encodedHeader);
   const payload = decodeJwtJson(encodedPayload);
 
+  // The frontend uses Google Identity Services. That returns an ID token directly to
+  // the browser callback, so the API verifies the token instead of exchanging an
+  // OAuth redirect code with a client secret.
   if (header.alg !== "RS256" || !header.kid) {
     const error = new Error("Google returned an unsupported identity token.");
     error.status = 401;
@@ -476,6 +497,8 @@ function requireSingleEmailAccount(users, email, { allowUserId = null } = {}) {
   return matches[0] || null;
 }
 
+// A verified email must resolve to one active app account. This avoids the
+// "same Google address opens two dashboards" failure mode.
 async function findUserByGoogleIdentity(googleUser) {
   const users = await scanAll(usersTable);
   const activeUsers = users.filter(isActiveUserRecord);
@@ -741,6 +764,8 @@ async function requireGoogleUser(credential) {
   const googleUser = await verifyGoogleCredential(credential);
   const user = await findUserByGoogleIdentity(googleUser);
 
+  // Admins can be created from the allowlisted Google identity. Client accounts
+  // still need an intake/profile first so a blank portal is not created by accident.
   if (!user) {
     if (isAdminEmail(googleUser.email)) {
       return createAdminUserFromGoogle(googleUser);
@@ -980,6 +1005,17 @@ function compactOpportunityRecord(record) {
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
     lastSeenAt: record.lastSeenAt
+  };
+}
+
+function tableSnapshot(name, records, { recordCount = records.length, note = null } = {}) {
+  return {
+    name,
+    recordCount,
+    loadedCount: records.length,
+    isTruncated: records.length < recordCount,
+    note,
+    records
   };
 }
 
@@ -1351,6 +1387,9 @@ async function buildAdminPayload(admin) {
       String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
     )
   );
+  // Full DSIRE snapshots can exceed Lambda's synchronous response limit. Keep
+  // sign-in fast by returning a review preview plus total counts.
+  const visibleOpportunities = sortedOpportunities.slice(0, adminDataRecordLimit).map(compactOpportunityRecord);
 
   return {
     admin: publicUser(admin),
@@ -1359,21 +1398,15 @@ async function buildAdminPayload(admin) {
       intake: intakeByUser.get(user.userId) || null
     })),
     dataTables: [
-      {
-        name: usersTable,
-        recordCount: sortedUsers.length,
-        records: sortedUsers.map(publicUser)
-      },
-      {
-        name: intakeTable,
-        recordCount: sortedIntakes.length,
-        records: sortedIntakes
-      },
-      {
-        name: opportunitiesTable,
+      tableSnapshot(usersTable, sortedUsers.map(publicUser)),
+      tableSnapshot(intakeTable, sortedIntakes),
+      tableSnapshot(opportunitiesTable, visibleOpportunities, {
         recordCount: sortedOpportunities.length,
-        records: sortedOpportunities.map(compactOpportunityRecord)
-      }
+        note:
+          sortedOpportunities.length > adminDataRecordLimit
+            ? `Showing the ${adminDataRecordLimit} most recent DSIRE candidates so the admin sign-in response stays below AWS Lambda payload limits.`
+            : null
+      })
     ]
   };
 }
@@ -1558,7 +1591,10 @@ app.get("/api/health", (_req, res) => {
     usersTable,
     intakeTable,
     opportunitiesTable,
-    googleClientConfigured: Boolean(googleClientId)
+    googleClientConfigured: Boolean(googleClientId),
+    googleAllowedClientIdsCount: googleAllowedClientIds.length,
+    googleClientIdHint: publicGoogleClientIdHint(),
+    recommendedGoogleAuthorizedOrigins
   });
 });
 
@@ -1580,6 +1616,10 @@ app.get("/api/diagnostics", async (_req, res) => {
       intakeTable,
       opportunitiesTable,
       googleClientConfigured: Boolean(googleClientId),
+      googleAllowedClientIdsCount: googleAllowedClientIds.length,
+      googleClientIdHint: publicGoogleClientIdHint(),
+      recommendedGoogleAuthorizedOrigins,
+      adminDataRecordLimit,
       adminEmails: [...adminEmails],
       adminsPresent
     });
