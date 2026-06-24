@@ -1,0 +1,1360 @@
+[
+  {
+    "id": "electric_usage_reduction",
+    "display_name": "Electric usage reduction",
+    "description": "Estimates kWh and electric cost savings from measures that reduce electricity consumption.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "typical_opportunity_categories": [
+      "lighting",
+      "plug load",
+      "custom electric efficiency"
+    ],
+    "calculation_method": "Estimate baseline annual kWh, apply deemed or custom percentage savings, and multiply avoided kWh by average or rate-specific avoided electric cost.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "cost_per_sqft",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_kwh_saved",
+      "per_unit",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "electric_demand_reduction",
+    "display_name": "Electric demand reduction",
+    "description": "Estimates peak kW and demand charge savings from demand-management measures.",
+    "financial_impact_type": "electric_demand_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "monthly_peak_kw",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing",
+      "square_footage"
+    ],
+    "typical_opportunity_categories": [
+      "demand response",
+      "load management",
+      "controls"
+    ],
+    "calculation_method": "Estimate reducible peak kW and multiply by applicable monthly demand charge rate and affected billing periods.",
+    "project_cost_estimation_methods": [
+      "benchmark_range",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_kw",
+      "custom"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide peak kw.",
+      "Provide demand charge rate.",
+      "Provide rate schedule."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "hvac_electric_efficiency",
+    "display_name": "HVAC electric efficiency",
+    "description": "Estimates electric savings from high-efficiency cooling, ventilation, heat pumps, and related HVAC upgrades that do not primarily switch fuels.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "square_footage"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "typical_opportunity_categories": [
+      "HVAC",
+      "air conditioners",
+      "chillers",
+      "heat pumps"
+    ],
+    "calculation_method": "Estimate cooling or HVAC electric load share, apply equipment efficiency improvement, and value kWh and optional kW reductions.",
+    "project_cost_estimation_methods": [
+      "cost_per_ton",
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_ton",
+      "per_unit",
+      "per_kwh_saved"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide square footage.",
+      "Provide equipment efficiency rating."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "gas_usage_reduction",
+    "display_name": "Gas usage reduction",
+    "description": "Estimates therm and gas cost savings from gas efficiency measures.",
+    "financial_impact_type": "gas_usage_reduction",
+    "affected_bill_types": [
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_therms",
+      "annual_gas_cost",
+      "average_cost_per_therm"
+    ],
+    "optional_bill_fields": [
+      "monthly_therms",
+      "gas_rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity"
+    ],
+    "typical_opportunity_categories": [
+      "furnaces",
+      "boilers",
+      "water heaters",
+      "steam systems"
+    ],
+    "calculation_method": "Estimate baseline therm use for the affected end use, apply deemed or modeled efficiency improvement, and multiply saved therms by avoided gas cost.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "per_therm_saved",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual therms.",
+      "Provide average cost per therm.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "gas_to_electric_replacement",
+    "display_name": "Gas-to-electric replacement",
+    "description": "Estimates net utility impact from electrification projects that displace gas with electric equipment.",
+    "financial_impact_type": "gas_to_electric_replacement",
+    "affected_bill_types": [
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_therms",
+      "annual_gas_cost",
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_therm",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_therms",
+      "monthly_kwh",
+      "rate_schedule",
+      "gas_rate_schedule",
+      "peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "equipment_efficiency_rating"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "quantity",
+      "square_footage"
+    ],
+    "typical_opportunity_categories": [
+      "heat pumps",
+      "heat pump water heaters",
+      "commercial kitchen electrification"
+    ],
+    "calculation_method": "Estimate displaced gas therms, added electric kWh, avoided gas cost, added electric cost, and net annual operating cost change.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "cost_per_ton",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "tax_credit",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual therms.",
+      "Provide annual kwh.",
+      "Provide average cost per therm.",
+      "Provide average cost per kwh."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "solar_electric_offset",
+    "display_name": "Solar electric offset",
+    "description": "Estimates electric bill savings from onsite solar generation.",
+    "financial_impact_type": "solar_offset",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "average_cost_per_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "roof_area",
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "typical_opportunity_categories": [
+      "solar PV",
+      "solar thermal electric"
+    ],
+    "calculation_method": "Estimate system size from roof or quote, estimate annual generation, cap offset by site load, and value generation using average or TOU-adjusted electric rates.",
+    "project_cost_estimation_methods": [
+      "cost_per_kw",
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "per_kw",
+      "performance_based",
+      "tax_credit",
+      "sales_tax_exemption"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide roof area.",
+      "Provide ownership status."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "battery_tou_demand_savings",
+    "display_name": "Battery TOU and demand savings",
+    "description": "Estimates savings from battery storage through demand charge reduction, TOU arbitrage, resilience value, and paired-solar value.",
+    "financial_impact_type": "battery_tou_demand_savings",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "time_of_use_periods",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate",
+      "monthly_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_kwh",
+      "monthly_peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "typical_opportunity_categories": [
+      "battery storage",
+      "lithium-ion",
+      "resilience"
+    ],
+    "calculation_method": "Estimate storage capacity and dispatch value against demand peaks and TOU periods; include incentive value as a project-cost reduction when applicable.",
+    "project_cost_estimation_methods": [
+      "cost_per_kwh_storage",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_kwh_storage",
+      "percent_of_project_cost",
+      "tax_exemption"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide rate schedule.",
+      "Provide time of use periods.",
+      "Provide peak kw.",
+      "Provide demand charge rate."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "ev_charging_site_load",
+    "display_name": "EV charging site load",
+    "description": "Estimates site electric load, operating cost, and incentive value for EV charging infrastructure.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "annual_kwh",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "parking_spaces",
+      "ownership_status",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "typical_opportunity_categories": [
+      "EV charging",
+      "make-ready",
+      "EVSE"
+    ],
+    "calculation_method": "Estimate charger count and utilization, added kWh, possible demand impacts, make-ready cost, and incentive offset.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "grant_amount",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide parking spaces.",
+      "Provide rate schedule.",
+      "Provide project cost estimate."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "fleet_fuel_replacement",
+    "display_name": "Fleet fuel replacement",
+    "description": "Estimates avoided gasoline or diesel cost and added charging cost from fleet electrification.",
+    "financial_impact_type": "fleet_fuel_replacement",
+    "affected_bill_types": [
+      "fuel",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_gallons",
+      "annual_fuel_cost",
+      "average_cost_per_gallon",
+      "vehicle_count"
+    ],
+    "optional_bill_fields": [
+      "estimated_miles",
+      "fuel_type",
+      "monthly_fuel_cost",
+      "rate_schedule",
+      "average_cost_per_kwh"
+    ],
+    "required_non_bill_inputs": [
+      "vehicle_count"
+    ],
+    "optional_non_bill_inputs": [
+      "parking_spaces",
+      "project_cost_estimate",
+      "equipment_category"
+    ],
+    "typical_opportunity_categories": [
+      "fleet electrification",
+      "clean vehicles",
+      "medium-duty EV",
+      "heavy-duty EV"
+    ],
+    "calculation_method": "Estimate avoided fuel gallons and fuel cost, estimate replacement electric usage, and compare net annual operating cost after incentives.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "grant_amount",
+      "tax_credit"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide vehicle count.",
+      "Provide annual gallons.",
+      "Provide average cost per gallon."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "water_sewer_reduction",
+    "display_name": "Water and sewer reduction",
+    "description": "Estimates water, sewer, and related utility savings from efficiency measures.",
+    "financial_impact_type": "water_sewer_reduction",
+    "affected_bill_types": [
+      "water_sewer"
+    ],
+    "required_bill_fields": [
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "optional_bill_fields": [
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity",
+      "square_footage",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "water fixtures",
+      "dishwashers",
+      "laundry",
+      "cooling towers",
+      "irrigation"
+    ],
+    "calculation_method": "Estimate avoided water volume and avoided sewer volume, then multiply by blended water and sewer costs.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual water use.",
+      "Provide annual water cost.",
+      "Provide annual sewer cost."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "waste_hauling_cost_reduction",
+    "display_name": "Waste hauling cost reduction",
+    "description": "Estimates savings from reducing landfill, recycling, organics, contamination, or overage charges.",
+    "financial_impact_type": "waste_cost_reduction",
+    "affected_bill_types": [
+      "waste"
+    ],
+    "required_bill_fields": [
+      "total_waste_cost",
+      "pickup_frequency",
+      "bin_size"
+    ],
+    "optional_bill_fields": [
+      "landfill_service_cost",
+      "recycling_service_cost",
+      "organics_service_cost",
+      "contamination_fees",
+      "overage_fees"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity"
+    ],
+    "typical_opportunity_categories": [
+      "waste",
+      "recycling",
+      "organics",
+      "food waste"
+    ],
+    "calculation_method": "Estimate service changes and avoided hauling, overage, or contamination fees from waste diversion or volume reduction.",
+    "project_cost_estimation_methods": [
+      "benchmark_range",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "grant_amount",
+      "per_unit"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide total waste cost.",
+      "Provide pickup frequency.",
+      "Provide bin size."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "commercial_kitchen_equipment_efficiency",
+    "display_name": "Commercial kitchen equipment efficiency",
+    "description": "Estimates electric, gas, and water savings from efficient commercial food-service equipment.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount"
+    ],
+    "typical_opportunity_categories": [
+      "commercial cooking",
+      "food service",
+      "dishwashers",
+      "water heaters"
+    ],
+    "calculation_method": "Use equipment type to choose electric, gas, and water end-use savings factors, then value each avoided utility stream.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide equipment category.",
+      "Provide quantity.",
+      "Provide annual kwh."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "refrigeration_electric_efficiency",
+    "display_name": "Refrigeration electric efficiency",
+    "description": "Estimates electric savings from refrigeration, freezer, case controls, and related equipment.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "refrigeration",
+      "freezers",
+      "vending controls"
+    ],
+    "calculation_method": "Estimate refrigeration baseline load, apply deemed savings by equipment or controls, and value avoided kWh plus optional demand savings.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "per_kwh_saved"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "motor_vfd_efficiency",
+    "display_name": "Motor and VFD efficiency",
+    "description": "Estimates electric savings from motors, VFDs, compressed air, pumps, and variable-speed controls.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "monthly_kwh"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "motors",
+      "VFDs",
+      "compressed air",
+      "pumps"
+    ],
+    "calculation_method": "Estimate motor horsepower or connected load, operating hours, and VFD or efficiency savings factor; value avoided kWh and optional kW.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "per_hp",
+      "per_unit",
+      "per_kwh_saved"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "controls_building_automation",
+    "display_name": "Controls and building automation",
+    "description": "Estimates electric and gas savings from controls, thermostats, building automation, and load management.",
+    "financial_impact_type": "electric_demand_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "peak_kw",
+      "demand_charges",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "square_footage",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model"
+    ],
+    "typical_opportunity_categories": [
+      "controls",
+      "thermostats",
+      "building automation",
+      "load management"
+    ],
+    "calculation_method": "Apply controls savings percentage to affected electric and gas end uses and include demand reduction where schedule control affects peak load.",
+    "project_cost_estimation_methods": [
+      "cost_per_sqft",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "per_kwh_saved",
+      "per_kw"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide square footage."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "envelope_insulation_savings",
+    "display_name": "Envelope and insulation savings",
+    "description": "Estimates heating and cooling savings from insulation, air sealing, windows, roofs, and envelope improvements.",
+    "financial_impact_type": "gas_usage_reduction",
+    "affected_bill_types": [
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_therms",
+      "annual_gas_cost",
+      "average_cost_per_therm"
+    ],
+    "optional_bill_fields": [
+      "annual_kwh",
+      "average_cost_per_kwh",
+      "square_footage"
+    ],
+    "required_non_bill_inputs": [
+      "square_footage",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "contractor_quote_amount",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "insulation",
+      "windows",
+      "doors",
+      "air sealing",
+      "roofs"
+    ],
+    "calculation_method": "Estimate heating and cooling load reduction from envelope measure type, then value avoided therms and optional avoided kWh.",
+    "project_cost_estimation_methods": [
+      "cost_per_sqft",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide square footage.",
+      "Provide annual therms.",
+      "Provide average cost per therm."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "project_cost_reduction_only",
+    "display_name": "Project cost reduction only",
+    "description": "Estimates incentive value for programs that reduce upfront project cost but do not define direct bill savings.",
+    "financial_impact_type": "project_cost_reduction_only",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity",
+      "ownership_status"
+    ],
+    "typical_opportunity_categories": [
+      "rebates",
+      "buydowns",
+      "equipment incentives"
+    ],
+    "calculation_method": "Calculate incentive value from stated amount, percentage, cap, or eligible project-cost basis; do not estimate operational savings without a secondary model.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "fixed_amount",
+      "percent_of_project_cost",
+      "capped_percent_of_project_cost",
+      "per_unit"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "rebate_per_unit_or_equipment_count",
+    "display_name": "Per-unit or equipment-count rebate",
+    "description": "Calculates incentive value when rebate is based on eligible equipment count.",
+    "financial_impact_type": "project_cost_reduction_only",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "quantity"
+    ],
+    "optional_bill_fields": [
+      "project_cost_estimate",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "prescriptive rebates",
+      "equipment replacement"
+    ],
+    "calculation_method": "Multiply eligible quantity by the applicable per-unit rebate and cap by program rules when present.",
+    "project_cost_estimation_methods": [
+      "cost_per_unit",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "per_unit"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide quantity.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "custom_incentive_per_kwh_saved",
+    "display_name": "Custom incentive per kWh saved",
+    "description": "Calculates incentive value for custom programs that pay per verified kWh or kW saved.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "contractor_quote_amount",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "custom efficiency",
+      "whole-building",
+      "performance incentives"
+    ],
+    "calculation_method": "Estimate verified annual kWh savings, multiply by incentive rate, and apply project-cost or program caps.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "per_kwh_saved",
+      "per_kw"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide project cost estimate.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "tax_benefit_project_cost_reduction",
+    "display_name": "Tax benefit project-cost reduction",
+    "description": "Estimates tax credit or deduction value tied to eligible project cost.",
+    "financial_impact_type": "tax_benefit",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "tax_entity_type"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_appetite_unknown",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quote_date",
+      "project_timing"
+    ],
+    "typical_opportunity_categories": [
+      "tax credits",
+      "tax deductions",
+      "renewable energy tax benefits"
+    ],
+    "calculation_method": "Apply credit, deduction, or depreciation assumptions to eligible project cost and flag tax-review needs.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "tax_credit",
+      "tax_deduction"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide tax entity type.",
+      "Provide ownership status."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "sales_or_property_tax_exemption",
+    "display_name": "Sales or property tax exemption",
+    "description": "Estimates avoided sales tax or property tax value for eligible equipment or renewable energy assets.",
+    "financial_impact_type": "tax_benefit",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing"
+    ],
+    "typical_opportunity_categories": [
+      "sales tax exemptions",
+      "property tax exemptions"
+    ],
+    "calculation_method": "Estimate taxable eligible cost and apply jurisdiction tax rate or exemption rules; property tax value requires assessed-value assumptions.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "tax_exemption"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "grant_funding",
+    "display_name": "Grant funding",
+    "description": "Estimates grant award value and remaining net project cost.",
+    "financial_impact_type": "project_cost_reduction_only",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status"
+    ],
+    "typical_opportunity_categories": [
+      "grants",
+      "solicitations",
+      "public funding"
+    ],
+    "calculation_method": "Estimate grant value from stated award amount or eligible-cost percentage and cap; treat competitiveness and award uncertainty separately.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "grant_amount",
+      "percent_of_project_cost",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "financing_cash_flow",
+    "display_name": "Financing cash flow",
+    "description": "Estimates project cash flow under loans, leases, or other financing terms.",
+    "financial_impact_type": "financing_cash_flow",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost"
+    ],
+    "typical_opportunity_categories": [
+      "loans",
+      "financing",
+      "on-bill financing"
+    ],
+    "calculation_method": "Calculate estimated debt service and compare annual payments to modeled utility savings and incentive-adjusted project cost.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "financing"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "pace_or_on_bill_financing",
+    "display_name": "PACE or on-bill financing",
+    "description": "Estimates cash-flow impact from PACE assessments or utility on-bill financing.",
+    "financial_impact_type": "financing_cash_flow",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "financing_term_years",
+      "interest_rate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "down_payment",
+      "annual_electric_cost",
+      "annual_gas_cost"
+    ],
+    "required_non_bill_inputs": [
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "landlord_approval_status",
+      "project_timing"
+    ],
+    "typical_opportunity_categories": [
+      "PACE",
+      "on-bill financing"
+    ],
+    "calculation_method": "Estimate assessment or on-bill payment, term, and cash-flow effect against expected utility savings.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range"
+    ],
+    "incentive_value_methods": [
+      "financing"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide financing term years."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "policy_or_permitting_value",
+    "display_name": "Policy or permitting value",
+    "description": "Classifies policies, expedited permitting, net metering, interconnection, certification, and non-cash rules that affect project feasibility or value.",
+    "financial_impact_type": "policy_or_permitting_value",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [
+      "service_address",
+      "utility_provider",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "landlord_approval_status"
+    ],
+    "typical_opportunity_categories": [
+      "policy",
+      "permitting",
+      "interconnection",
+      "net metering",
+      "green building"
+    ],
+    "calculation_method": "Do not estimate bill savings directly; record compliance, timeline, eligibility, or compensation effect and attach a secondary savings model if project economics are affected.",
+    "project_cost_estimation_methods": [
+      "unknown"
+    ],
+    "incentive_value_methods": [
+      "unknown"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide service address.",
+      "Provide utility provider.",
+      "Provide project timing."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "no_direct_savings",
+    "display_name": "No direct savings",
+    "description": "Flags records that do not provide enough financial linkage or do not directly affect utility bills, project costs, taxes, financing, or permitting.",
+    "financial_impact_type": "no_direct_savings",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [],
+    "required_non_bill_inputs": [],
+    "optional_non_bill_inputs": [],
+    "typical_opportunity_categories": [
+      "information-only",
+      "unclear programs"
+    ],
+    "calculation_method": "No deterministic calculation until a program-specific value path is identified.",
+    "project_cost_estimation_methods": [
+      "unknown"
+    ],
+    "incentive_value_methods": [
+      "unknown"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide source program details."
+    ],
+    "notes": ""
+  }
+]

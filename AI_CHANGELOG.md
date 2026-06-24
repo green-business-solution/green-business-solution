@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-24 - Codex (GPT-5) savings model sample mapping
+
+- Added a reusable savings model library for bill/document-driven opportunity valuation.
+- Added a canonical bill and document field dictionary covering electric, gas, water/sewer, waste, fuel/fleet, and project inputs.
+- Created a 50-opportunity sample mapping from current opportunity candidates to primary and secondary savings models, plus import-ready CSV and coverage report.
+- Added generation and validation scripts for the sample artifacts without mutating production opportunity records.
+
 ## 2026-06-23 - Codex (GPT-5) database filter placeholders
 
 - Added a functional `Implementing sector` dropdown to the admin database tab.

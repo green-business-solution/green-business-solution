@@ -1,0 +1,2451 @@
+[
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3831",
+    "opportunity_name": "AEP (Central, SWEPCO and North) - Commercial Solutions Program",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "motor_vfd_efficiency",
+      "controls_building_automation"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate",
+      "annual_therms",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage",
+      "contractor_quote_amount",
+      "project_cost_estimate"
+    ],
+    "incentive_value_method": "per_kwh_saved",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Commercial program includes lighting, HVAC, motors, controls, and custom measures; primary value starts with electric kWh reduction.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5170",
+    "opportunity_name": "AEP (Central, SWEPCO and North) - SCORE Program for Schools",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "controls_building_automation",
+      "hvac_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "annual_therms",
+      "peak_kw",
+      "demand_charges",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage",
+      "project_cost_estimate",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_kwh_saved",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "School efficiency program includes LED lighting and controls; bill savings are electric-usage driven.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5171",
+    "opportunity_name": "AEP (Central) - CitySmart Program",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "per_kwh_saved",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "CitySmart covers LED lighting, refrigeration, HVAC, and VFD measures; primary model is electric usage reduction.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3659",
+    "opportunity_name": "AEP Public Service Company of Oklahoma - Commercial Rebate Program",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Prescriptive commercial rebates span LED lighting, refrigeration, kitchen equipment, VFDs, and envelope measures.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3654",
+    "opportunity_name": "AEP SWEPCO - Commercial and Industrial Energy Efficiency Rebate Programs",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "ev_charging_site_load",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "peak_kw",
+      "demand_charge_rate",
+      "time_of_use_periods",
+      "demand_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage",
+      "project_cost_estimate",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "SWEPCO program includes LEDs, controls, refrigeration, pools, and EVSE; electric usage reduction is the dominant reusable model.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5513",
+    "opportunity_name": "Agricultural Energy Loan Program",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "solar_electric_offset",
+      "gas_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "time_of_use_periods",
+      "generation_charges",
+      "delivery_charges",
+      "monthly_therms",
+      "gas_rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount",
+      "project_cost_estimate",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Agricultural energy loan affects cash flow for many eligible renewable and efficiency project types.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4971",
+    "opportunity_name": "Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "hvac_electric_efficiency",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "square_footage"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount",
+      "ownership_status"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Commercial rebate covers heat pumps, boilers, air conditioners, geothermal, and LEDs; HVAC efficiency is the clearest primary model.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide square footage.",
+      "Provide equipment efficiency rating."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5512",
+    "opportunity_name": "Commercial Energy Loan Program",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "time_of_use_periods",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount",
+      "project_cost_estimate",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Commercial energy loan changes project affordability and can pair with several savings models depending on final project scope.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3801",
+    "opportunity_name": "Energy Efficient Schools Initiative - Loans",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "controls_building_automation",
+      "motor_vfd_efficiency"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "annual_therms",
+      "time_of_use_periods",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount",
+      "project_cost_estimate"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Loan program for school efficiency upgrades primarily requires cash-flow modeling plus measure-specific savings after project selection.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4633",
+    "opportunity_name": "Michigan Saves - Business Energy Financing",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "gas_to_electric_replacement",
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "monthly_therms",
+      "monthly_kwh",
+      "rate_schedule",
+      "gas_rate_schedule",
+      "peak_kw",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "demand_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "project_cost_estimate",
+      "quantity",
+      "square_footage",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Business financing program supports many measures, so financing cash flow is primary and utility models are secondary.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4365",
+    "opportunity_name": "AES Indiana - Business Energy Incentives Program",
+    "primary_savings_model_id": "refrigeration_electric_efficiency",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "commercial_kitchen_equipment_efficiency",
+      "controls_building_automation"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "time_of_use_periods"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount",
+      "project_cost_estimate"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Business incentives include refrigeration, controls, HVAC, compressed air, and food-service equipment.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1613",
+    "opportunity_name": "Alameda Municipal Power - Commercial Rebate Program",
+    "primary_savings_model_id": "electric_usage_reduction",
+    "secondary_savings_model_ids": [
+      "motor_vfd_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "peak_kw",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Commercial rebate includes lighting, controls, windows, VFDs, and water heaters; primary value is avoided electric usage.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide average cost per kwh.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4698",
+    "opportunity_name": "Ameren Illinois - Energy-Efficiency Program",
+    "primary_savings_model_id": "refrigeration_electric_efficiency",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "commercial_kitchen_equipment_efficiency",
+      "envelope_insulation_savings"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "annual_kwh",
+      "average_cost_per_kwh",
+      "square_footage"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Ameren program explicitly covers commercial refrigeration, HVAC, food service, insulation, windows, and water heaters.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5307",
+    "opportunity_name": "City and County of Denver - Elevations Energy Loans",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset",
+      "water_sewer_reduction",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric",
+      "water_sewer"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present",
+      "monthly_kwh",
+      "peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "quantity",
+      "square_footage",
+      "equipment_efficiency_rating",
+      "equipment_make_model"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Energy loan covers solar, water-using appliances, motors, food service, and refrigeration; financing is the direct program effect.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:630",
+    "opportunity_name": "Delmarva Power - Green Energy Program Incentives",
+    "primary_savings_model_id": "solar_electric_offset",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "average_cost_per_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "roof_area",
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "quantity",
+      "ownership_status"
+    ],
+    "incentive_value_method": "per_kw",
+    "project_cost_estimation_method": "cost_per_kw",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Green energy incentive includes solar PV and solar thermal; electric bill offset is the primary value path for PV.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide roof area.",
+      "Provide ownership status."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4387",
+    "opportunity_name": "DEMEC Member Utilities - Green Energy Program Incentives",
+    "primary_savings_model_id": "solar_electric_offset",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "average_cost_per_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "roof_area",
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "quantity",
+      "ownership_status"
+    ],
+    "incentive_value_method": "per_kw",
+    "project_cost_estimation_method": "cost_per_kw",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Municipal green energy incentive includes solar PV and solar thermal, so solar offset plus project-cost reduction applies.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide roof area.",
+      "Provide ownership status."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:21861",
+    "opportunity_name": "Agricultural Energy Program",
+    "primary_savings_model_id": "grant_funding",
+    "secondary_savings_model_ids": [
+      "battery_tou_demand_savings",
+      "motor_vfd_efficiency",
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "annual_kwh",
+      "monthly_peak_kw",
+      "peak_kw",
+      "demand_charge_rate",
+      "monthly_kwh",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "project_cost_estimate",
+      "equipment_make_model",
+      "quantity",
+      "contractor_quote_amount",
+      "equipment_efficiency_rating",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Agricultural grant funds efficiency and renewable measures including lithium-ion storage; grant value is primary until project scope is known.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1931",
+    "opportunity_name": "Alexandria Light and Power - Commercial Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "battery_tou_demand_savings",
+    "secondary_savings_model_ids": [
+      "refrigeration_electric_efficiency",
+      "commercial_kitchen_equipment_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "time_of_use_periods",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate",
+      "monthly_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_kwh",
+      "monthly_peak_kw",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model",
+      "quantity",
+      "contractor_quote_amount",
+      "equipment_efficiency_rating"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_kwh_storage",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Commercial incentives include lithium-ion, refrigeration, food service, HVAC, and lighting; battery value needs rate and demand inputs.",
+    "missing_data_prompts": [
+      "Provide rate schedule.",
+      "Provide time of use periods.",
+      "Provide peak kw.",
+      "Provide demand charge rate."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22773",
+    "opportunity_name": "Battery Energy Storage Business Equipment Tax Exemption",
+    "primary_savings_model_id": "sales_or_property_tax_exemption",
+    "secondary_savings_model_ids": [
+      "battery_tou_demand_savings"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount",
+      "annual_kwh",
+      "monthly_peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing",
+      "project_cost_estimate",
+      "equipment_make_model",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "tax_exemption",
+    "project_cost_estimation_method": "cost_per_kwh_storage",
+    "calculation_readiness": "needs_tax_review",
+    "confidence": "high",
+    "classification_reason": "Battery storage business equipment property tax exemption directly reduces tax/project ownership cost; storage savings are secondary.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22529",
+    "opportunity_name": "Community EV Chargers Incentive Program",
+    "primary_savings_model_id": "ev_charging_site_load",
+    "secondary_savings_model_ids": [
+      "grant_funding"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "annual_kwh",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "time_of_use_periods",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "parking_spaces",
+      "ownership_status",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "quantity",
+      "contractor_quote_amount",
+      "ownership_status"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "Community EV charging grant covers make-ready, Level 2, and DC fast charging infrastructure.",
+    "missing_data_prompts": [
+      "Provide parking spaces.",
+      "Provide rate schedule.",
+      "Provide project cost estimate."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22523",
+    "opportunity_name": "PSE&G Electric Vehicle Charging Program",
+    "primary_savings_model_id": "ev_charging_site_load",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "annual_kwh",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "time_of_use_periods",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "parking_spaces",
+      "ownership_status",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "quantity",
+      "contractor_quote_amount",
+      "ownership_status"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "PSE&G EV charging rebate affects EVSE and make-ready project cost while adding site electric load.",
+    "missing_data_prompts": [
+      "Provide parking spaces.",
+      "Provide rate schedule.",
+      "Provide project cost estimate."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22546",
+    "opportunity_name": "Alabama Power - Make Ready Program",
+    "primary_savings_model_id": "ev_charging_site_load",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "rate_schedule",
+      "annual_kwh",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "time_of_use_periods",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "parking_spaces",
+      "ownership_status",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "quantity",
+      "contractor_quote_amount",
+      "ownership_status"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "Make-ready program covers Level 2 and DC fast charging equipment; site load and project-cost offset both apply.",
+    "missing_data_prompts": [
+      "Provide parking spaces.",
+      "Provide rate schedule.",
+      "Provide project cost estimate."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1935",
+    "opportunity_name": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
+    "primary_savings_model_id": "water_sewer_reduction",
+    "secondary_savings_model_ids": [
+      "gas_to_electric_replacement",
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "water_sewer",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "optional_bill_fields": [
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present",
+      "monthly_therms",
+      "monthly_kwh",
+      "rate_schedule",
+      "gas_rate_schedule",
+      "peak_kw",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity",
+      "square_footage",
+      "equipment_efficiency_rating",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "low",
+    "classification_reason": "Residential program includes washers, dishwashers, water heaters, HVAC, solar, and EVSE; water savings are possible but business fit requires review.",
+    "missing_data_prompts": [
+      "Provide annual water use.",
+      "Provide annual water cost.",
+      "Provide annual sewer cost."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1939",
+    "opportunity_name": "Elk River Municipal Utilities - Residential Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "water_sewer_reduction",
+    "secondary_savings_model_ids": [
+      "gas_to_electric_replacement",
+      "electric_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "water_sewer",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "optional_bill_fields": [
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present",
+      "monthly_therms",
+      "monthly_kwh",
+      "rate_schedule",
+      "gas_rate_schedule",
+      "peak_kw",
+      "delivery_charges",
+      "generation_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity",
+      "square_footage",
+      "equipment_efficiency_rating",
+      "project_cost_estimate",
+      "equipment_make_model"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "low",
+    "classification_reason": "Residential rebate includes washers and dishwashers plus electric equipment; mapped to water/sewer with low confidence due residential focus.",
+    "missing_data_prompts": [
+      "Provide annual water use.",
+      "Provide annual water cost.",
+      "Provide annual sewer cost."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4723",
+    "opportunity_name": "JEA - Residential Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "water_sewer_reduction",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "gas_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "water_sewer",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost"
+    ],
+    "optional_bill_fields": [
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "monthly_therms",
+      "gas_rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "quantity",
+      "square_footage",
+      "equipment_efficiency_rating",
+      "equipment_make_model",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "low",
+    "classification_reason": "Residential efficiency rebate includes water heaters, washers, dishwashers, HVAC, and insulation; business applicability is uncertain.",
+    "missing_data_prompts": [
+      "Provide annual water use.",
+      "Provide annual water cost.",
+      "Provide annual sewer cost."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3284",
+    "opportunity_name": "Black Hills Energy (Gas) - Commercial Energy Efficiency Rebate Programs",
+    "primary_savings_model_id": "commercial_kitchen_equipment_efficiency",
+    "secondary_savings_model_ids": [
+      "gas_usage_reduction",
+      "water_sewer_reduction"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "gas",
+      "water_sewer"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "monthly_therms",
+      "gas_rate_schedule",
+      "monthly_water_use",
+      "water_unit",
+      "sewer_cost",
+      "meter_size",
+      "irrigation_meter_present"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Commercial gas efficiency program includes food service equipment, dishwashers, clothes washers, water heaters, furnaces, and boilers.",
+    "missing_data_prompts": [
+      "Provide equipment category.",
+      "Provide quantity.",
+      "Provide annual kwh."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5832",
+    "opportunity_name": "Cleco- Power Wise™ Commercial Program",
+    "primary_savings_model_id": "commercial_kitchen_equipment_efficiency",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "electric_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Commercial program includes dishwasher and commercial cooking equipment along with lighting and HVAC.",
+    "missing_data_prompts": [
+      "Provide equipment category.",
+      "Provide quantity.",
+      "Provide annual kwh."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22561",
+    "opportunity_name": "Commercial Energy Efficiency Rebates (Offered by 12 Utilities)",
+    "primary_savings_model_id": "commercial_kitchen_equipment_efficiency",
+    "secondary_savings_model_ids": [
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "monthly_kwh",
+      "peak_kw",
+      "demand_charges",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Bright Energy Solutions program includes food service, dishwashers, refrigeration, VFDs, lighting, and HVAC for commercial customers.",
+    "missing_data_prompts": [
+      "Provide equipment category.",
+      "Provide quantity.",
+      "Provide annual kwh."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4429",
+    "opportunity_name": "Coldwater Board of Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "motor_vfd_efficiency",
+    "secondary_savings_model_ids": [
+      "controls_building_automation",
+      "hvac_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "monthly_kwh",
+      "annual_therms",
+      "demand_charges",
+      "time_of_use_periods",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "project_cost_estimate",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Commercial and industrial rebate includes VFDs, compressed air, lighting controls, and HVAC.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22560",
+    "opportunity_name": "Commercial Energy Efficiency Rebates (Offered by 5 Utilities)",
+    "primary_savings_model_id": "motor_vfd_efficiency",
+    "secondary_savings_model_ids": [
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "monthly_kwh",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "demand_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Commercial efficiency rebate includes Motor VFDs, compressed air, food service, refrigeration, lighting, and HVAC.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2260",
+    "opportunity_name": "Dakota Electric Association - Commercial and Industrial Energy Efficiency Rebate Program",
+    "primary_savings_model_id": "motor_vfd_efficiency",
+    "secondary_savings_model_ids": [
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "peak_kw",
+      "demand_charge_rate",
+      "monthly_kwh",
+      "annual_therms",
+      "average_cost_per_therm",
+      "annual_water_use",
+      "annual_water_cost",
+      "annual_sewer_cost",
+      "demand_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "quantity"
+    ],
+    "optional_non_bill_inputs": [
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "high",
+    "classification_reason": "Commercial/industrial program includes motors, VFDs, compressed air, refrigeration, food service, and geothermal.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide quantity."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1544",
+    "opportunity_name": "Texas-New Mexico Power Company - Commercial Market Transformation Program",
+    "primary_savings_model_id": "controls_building_automation",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "motor_vfd_efficiency",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "peak_kw",
+      "demand_charges",
+      "time_of_use_periods",
+      "monthly_kwh",
+      "rate_schedule",
+      "demand_charge_rate"
+    ],
+    "required_non_bill_inputs": [
+      "square_footage",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_kwh_saved",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Market transformation program covers controls, thermostats, VFDs, HVAC, refrigeration, insulation, and custom measures.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide square footage."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2458",
+    "opportunity_name": "APS - Energy Efficiency Solutions for Business",
+    "primary_savings_model_id": "controls_building_automation",
+    "secondary_savings_model_ids": [
+      "motor_vfd_efficiency",
+      "hvac_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "peak_kw",
+      "demand_charges",
+      "time_of_use_periods",
+      "demand_charge_rate",
+      "monthly_kwh",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "square_footage",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Business incentives include energy management systems, thermostats, VFDs, chillers, and custom efficiency measures.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide square footage."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3154",
+    "opportunity_name": "Black Hills Energy - Commercial Energy Efficiency Programs",
+    "primary_savings_model_id": "controls_building_automation",
+    "secondary_savings_model_ids": [
+      "hvac_electric_efficiency",
+      "refrigeration_electric_efficiency"
+    ],
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "peak_kw",
+      "demand_charges",
+      "time_of_use_periods",
+      "monthly_kwh",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "square_footage",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "contractor_quote_amount"
+    ],
+    "incentive_value_method": "per_unit",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_equipment_details",
+    "confidence": "medium",
+    "classification_reason": "Commercial program includes thermostats, building controls, lighting controls, HVAC, and refrigeration equipment.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide square footage."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22183",
+    "opportunity_name": "Clean Fuels Incentive Program (CFIP)",
+    "primary_savings_model_id": "grant_funding",
+    "secondary_savings_model_ids": [
+      "fleet_fuel_replacement"
+    ],
+    "affected_bill_types": [
+      "none",
+      "fuel",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "estimated_miles",
+      "fuel_type",
+      "monthly_fuel_cost",
+      "rate_schedule",
+      "average_cost_per_kwh"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "parking_spaces",
+      "project_cost_estimate",
+      "equipment_category"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "cost_per_unit",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "Clean fuels grant supports electric vehicles; grant value and fleet fuel replacement are the relevant models.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3677",
+    "opportunity_name": "Commonwealth Hydropower Program",
+    "primary_savings_model_id": "grant_funding",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "quantity"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "incentive_only",
+    "confidence": "medium",
+    "classification_reason": "Hydropower grant primarily reduces project cost; operational model depends on site-specific generation economics outside this sample.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5888",
+    "opportunity_name": "Energy Efficiency and Solar Grants",
+    "primary_savings_model_id": "grant_funding",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset",
+      "electric_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "monthly_kwh",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Grant covers energy efficiency and solar; funding is primary with electric usage and solar offset as secondary models.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:917",
+    "opportunity_name": "USDA - Rural Energy for America Program (REAP) Grants",
+    "primary_savings_model_id": "grant_funding",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "grant_amount",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "REAP grants reduce eligible renewable energy project cost; specific savings depend on selected technology.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide project timing.",
+      "Provide equipment category."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3543",
+    "opportunity_name": "Sales Tax Exemption for Wind, Solar, and Storage - High Impact Business",
+    "primary_savings_model_id": "sales_or_property_tax_exemption",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset",
+      "battery_tou_demand_savings"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "annual_kwh",
+      "monthly_peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "equipment_make_model",
+      "quantity"
+    ],
+    "incentive_value_method": "tax_exemption",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_tax_review",
+    "confidence": "high",
+    "classification_reason": "Sales tax exemption applies to wind, solar, and storage high-impact business projects.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2742",
+    "opportunity_name": "Tax Exemption for Large-Scale Renewable Energy Projects",
+    "primary_savings_model_id": "sales_or_property_tax_exemption",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "tax_exemption",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_tax_review",
+    "confidence": "high",
+    "classification_reason": "Large-scale renewable project tax exemption reduces tax cost for eligible solar and other generation projects.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1596",
+    "opportunity_name": "Energy Conservation Improvements Property Tax Exemption",
+    "primary_savings_model_id": "sales_or_property_tax_exemption",
+    "secondary_savings_model_ids": [],
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing"
+    ],
+    "incentive_value_method": "tax_exemption",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_tax_review",
+    "confidence": "medium",
+    "classification_reason": "Property tax exemption reduces ownership cost for energy conservation improvements; bill impact depends on the underlying project.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2501",
+    "opportunity_name": "Local Option - Property Tax Exemption for Renewable Energy Systems",
+    "primary_savings_model_id": "sales_or_property_tax_exemption",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "tax_entity_type",
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "project_timing",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "tax_exemption",
+    "project_cost_estimation_method": "benchmark_range",
+    "calculation_readiness": "needs_tax_review",
+    "confidence": "medium",
+    "classification_reason": "Local-option property tax exemption applies to renewable energy systems, likely reducing project ownership cost.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide tax entity type."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3187",
+    "opportunity_name": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
+    "primary_savings_model_id": "pace_or_on_bill_financing",
+    "secondary_savings_model_ids": [
+      "electric_usage_reduction",
+      "gas_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "financing_term_years",
+      "interest_rate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "down_payment",
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "monthly_therms",
+      "gas_rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "landlord_approval_status",
+      "project_timing",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "How$mart on-bill program finances efficiency improvements and should compare payment to utility savings.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4250",
+    "opportunity_name": "SCE - Non-Residential On-Bill Financing Program",
+    "primary_savings_model_id": "pace_or_on_bill_financing",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only"
+    ],
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "financing_term_years",
+      "interest_rate"
+    ],
+    "optional_bill_fields": [
+      "ownership_status",
+      "down_payment",
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "contractor_quote_amount",
+      "quote_date"
+    ],
+    "required_non_bill_inputs": [
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "landlord_approval_status",
+      "project_timing",
+      "quantity",
+      "ownership_status"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "SCE on-bill financing directly affects project cash flow for non-residential efficiency projects.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide ownership status.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5735",
+    "opportunity_name": "Small Business & Municipal Loan Program",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "electric_usage_reduction",
+      "gas_usage_reduction"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric",
+      "gas"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "monthly_kwh",
+      "rate_schedule",
+      "delivery_charges",
+      "generation_charges",
+      "monthly_therms",
+      "gas_rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "equipment_make_model",
+      "equipment_efficiency_rating",
+      "quantity",
+      "square_footage"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "high",
+    "classification_reason": "Commercial and industrial loan program finances efficient electric and gas equipment upgrades.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:679",
+    "opportunity_name": "Sustainable Energy Fund (SEF) Loan Program (PPL Territory)",
+    "primary_savings_model_id": "financing_cash_flow",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset",
+      "controls_building_automation"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [
+      "project_cost_estimate",
+      "interest_rate",
+      "financing_term_years"
+    ],
+    "optional_bill_fields": [
+      "down_payment",
+      "contractor_quote_amount",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "annual_therms",
+      "peak_kw"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "annual_electric_cost",
+      "annual_gas_cost",
+      "annual_water_cost",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "equipment_make_model"
+    ],
+    "incentive_value_method": "financing",
+    "project_cost_estimation_method": "contractor_quote_required",
+    "calculation_readiness": "needs_quote",
+    "confidence": "medium",
+    "classification_reason": "Loan program supports renewable energy, controls, lighting, fuel cells, and other distributed generation projects.",
+    "missing_data_prompts": [
+      "Provide project cost estimate.",
+      "Provide interest rate.",
+      "Provide financing term years."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2628",
+    "opportunity_name": "Columbia Water & Light - Solar Rebates",
+    "primary_savings_model_id": "solar_electric_offset",
+    "secondary_savings_model_ids": [
+      "project_cost_reduction_only",
+      "policy_or_permitting_value"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "average_cost_per_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "contractor_quote_amount",
+      "quote_date",
+      "service_address",
+      "utility_provider",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "roof_area",
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "quantity",
+      "ownership_status",
+      "landlord_approval_status"
+    ],
+    "incentive_value_method": "per_kw",
+    "project_cost_estimation_method": "cost_per_kw",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Solar rebate affects solar project economics and may depend on interconnection or compensation rules.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide roof area.",
+      "Provide ownership status."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2526",
+    "opportunity_name": "EWEB - Solar Electric Program (Rebate)",
+    "primary_savings_model_id": "solar_electric_offset",
+    "secondary_savings_model_ids": [
+      "policy_or_permitting_value"
+    ],
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "average_cost_per_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges",
+      "service_address",
+      "utility_provider",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "roof_area",
+      "ownership_status"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces",
+      "ownership_status",
+      "landlord_approval_status"
+    ],
+    "incentive_value_method": "per_kw",
+    "project_cost_estimation_method": "cost_per_kw",
+    "calculation_readiness": "needs_bill",
+    "confidence": "medium",
+    "classification_reason": "Solar electric rebate maps to solar offset; current incentive availability and future application timing require review.",
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide rate schedule.",
+      "Provide roof area.",
+      "Provide ownership status."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5686",
+    "opportunity_name": "Solar Renewable Energy Credits",
+    "primary_savings_model_id": "policy_or_permitting_value",
+    "secondary_savings_model_ids": [
+      "solar_electric_offset"
+    ],
+    "affected_bill_types": [
+      "none",
+      "electric"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [
+      "service_address",
+      "utility_provider",
+      "rate_schedule",
+      "time_of_use_periods",
+      "demand_charges",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "landlord_approval_status",
+      "project_cost_estimate",
+      "contractor_quote_amount",
+      "parking_spaces"
+    ],
+    "incentive_value_method": "unknown",
+    "project_cost_estimation_method": "unknown",
+    "calculation_readiness": "policy_only",
+    "confidence": "low",
+    "classification_reason": "Solar renewable energy credit program creates policy/market value rather than straightforward bill savings; REC treatment requires review.",
+    "missing_data_prompts": [
+      "Provide service address.",
+      "Provide utility provider.",
+      "Provide project timing."
+    ],
+    "manual_review_required": true
+  },
+  {
+    "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4790",
+    "opportunity_name": "City of San Diego - Sustainable Building Expedited Permit Program",
+    "primary_savings_model_id": "policy_or_permitting_value",
+    "secondary_savings_model_ids": [],
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [
+      "service_address",
+      "utility_provider",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "landlord_approval_status"
+    ],
+    "incentive_value_method": "unknown",
+    "project_cost_estimation_method": "unknown",
+    "calculation_readiness": "policy_only",
+    "confidence": "high",
+    "classification_reason": "Expedited sustainable building permit program affects project timeline and feasibility, not direct bill savings.",
+    "missing_data_prompts": [
+      "Provide service address.",
+      "Provide utility provider.",
+      "Provide project timing."
+    ],
+    "manual_review_required": true
+  }
+]

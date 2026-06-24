@@ -1,0 +1,1288 @@
+[
+  {
+    "id": "utility_provider",
+    "display_name": "Utility provider",
+    "bill_type": "electric",
+    "description": "Electric utility serving the site",
+    "common_bill_labels": [
+      "Utility",
+      "Electric Supplier",
+      "Service Provider"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "policy_or_permitting_value"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "service_address",
+    "display_name": "Service address",
+    "bill_type": "electric",
+    "description": "Address associated with the utility account",
+    "common_bill_labels": [
+      "Service Address",
+      "Premise Address"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "policy_or_permitting_value"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "account_number_masked",
+    "display_name": "Masked account number",
+    "bill_type": "electric",
+    "description": "Masked utility account identifier",
+    "common_bill_labels": [
+      "Account Number",
+      "Customer Number"
+    ],
+    "unit": "masked text",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "billing_period_start",
+    "display_name": "Billing period start",
+    "bill_type": "electric",
+    "description": "Start date for bill period",
+    "common_bill_labels": [
+      "Billing From",
+      "Service From"
+    ],
+    "unit": "date",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "billing_period_end",
+    "display_name": "Billing period end",
+    "bill_type": "electric",
+    "description": "End date for bill period",
+    "common_bill_labels": [
+      "Billing To",
+      "Service To"
+    ],
+    "unit": "date",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_kwh",
+    "display_name": "Monthly kWh",
+    "bill_type": "electric",
+    "description": "Electricity usage by month",
+    "common_bill_labels": [
+      "kWh",
+      "Monthly Usage",
+      "Energy Usage"
+    ],
+    "unit": "kWh",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "solar_electric_offset",
+      "battery_tou_demand_savings",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_kwh",
+    "display_name": "Annual kWh",
+    "bill_type": "electric",
+    "description": "Total electricity usage over 12 months",
+    "common_bill_labels": [
+      "kWh",
+      "Total Usage",
+      "Usage History"
+    ],
+    "unit": "kWh",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "solar_electric_offset",
+      "battery_tou_demand_savings",
+      "ev_charging_site_load",
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency",
+      "controls_building_automation",
+      "envelope_insulation_savings",
+      "custom_incentive_per_kwh_saved"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "total_electric_cost",
+    "display_name": "Total electric cost",
+    "bill_type": "electric",
+    "description": "Electric charges for a bill period",
+    "common_bill_labels": [
+      "Total Electric Charges",
+      "Amount Due"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_electric_cost",
+    "display_name": "Annual electric cost",
+    "bill_type": "electric",
+    "description": "Total electric charges over 12 months",
+    "common_bill_labels": [
+      "Annual Cost",
+      "Total Electric Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "average_cost_per_kwh",
+    "display_name": "Average cost per kWh",
+    "bill_type": "electric",
+    "description": "Blended electric cost divided by kWh",
+    "common_bill_labels": [
+      "Average Rate",
+      "$/kWh"
+    ],
+    "unit": "USD/kWh",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "solar_electric_offset",
+      "ev_charging_site_load",
+      "fleet_fuel_replacement",
+      "commercial_kitchen_equipment_efficiency",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency",
+      "envelope_insulation_savings",
+      "custom_incentive_per_kwh_saved"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "rate_schedule",
+    "display_name": "Rate schedule",
+    "bill_type": "electric",
+    "description": "Electric tariff or rate plan",
+    "common_bill_labels": [
+      "Rate Schedule",
+      "Tariff",
+      "Rate Code"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "electric_demand_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "solar_electric_offset",
+      "battery_tou_demand_savings",
+      "ev_charging_site_load",
+      "fleet_fuel_replacement",
+      "controls_building_automation",
+      "custom_incentive_per_kwh_saved",
+      "policy_or_permitting_value"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "customer_class",
+    "display_name": "Customer class",
+    "bill_type": "electric",
+    "description": "Utility customer class",
+    "common_bill_labels": [
+      "Customer Class",
+      "Service Class"
+    ],
+    "unit": "text",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "peak_kw",
+    "display_name": "Peak kW",
+    "bill_type": "electric",
+    "description": "Peak demand for a bill period or interval",
+    "common_bill_labels": [
+      "Peak Demand",
+      "Billing Demand",
+      "kW"
+    ],
+    "unit": "kW",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_demand_reduction",
+      "hvac_electric_efficiency",
+      "gas_to_electric_replacement",
+      "battery_tou_demand_savings",
+      "ev_charging_site_load",
+      "refrigeration_electric_efficiency",
+      "motor_vfd_efficiency",
+      "controls_building_automation",
+      "custom_incentive_per_kwh_saved"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_peak_kw",
+    "display_name": "Monthly peak kW",
+    "bill_type": "electric",
+    "description": "Peak demand by month",
+    "common_bill_labels": [
+      "Monthly Demand",
+      "Peak kW"
+    ],
+    "unit": "kW",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_demand_reduction",
+      "battery_tou_demand_savings"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "demand_charge_rate",
+    "display_name": "Demand charge rate",
+    "bill_type": "electric",
+    "description": "Demand charge price per kW",
+    "common_bill_labels": [
+      "Demand Rate",
+      "$/kW"
+    ],
+    "unit": "USD/kW",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_demand_reduction",
+      "battery_tou_demand_savings",
+      "ev_charging_site_load",
+      "motor_vfd_efficiency",
+      "custom_incentive_per_kwh_saved"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "demand_charges",
+    "display_name": "Demand charges",
+    "bill_type": "electric",
+    "description": "Total demand charges",
+    "common_bill_labels": [
+      "Demand Charges",
+      "Facilities Demand"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_demand_reduction",
+      "hvac_electric_efficiency",
+      "solar_electric_offset",
+      "battery_tou_demand_savings",
+      "refrigeration_electric_efficiency",
+      "controls_building_automation"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "time_of_use_periods",
+    "display_name": "Time-of-use periods",
+    "bill_type": "electric",
+    "description": "TOU energy periods and prices",
+    "common_bill_labels": [
+      "TOU",
+      "On Peak",
+      "Off Peak"
+    ],
+    "unit": "structured rate periods",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "electric_demand_reduction",
+      "solar_electric_offset",
+      "battery_tou_demand_savings",
+      "ev_charging_site_load",
+      "controls_building_automation"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "delivery_charges",
+    "display_name": "Delivery charges",
+    "bill_type": "electric",
+    "description": "Electric delivery charges",
+    "common_bill_labels": [
+      "Delivery",
+      "Distribution"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "solar_electric_offset"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "generation_charges",
+    "display_name": "Generation charges",
+    "bill_type": "electric",
+    "description": "Electric generation/supply charges",
+    "common_bill_labels": [
+      "Generation",
+      "Supply"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "electric_usage_reduction",
+      "solar_electric_offset"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "fixed_customer_charge",
+    "display_name": "Fixed customer charge",
+    "bill_type": "electric",
+    "description": "Fixed recurring electric customer charge",
+    "common_bill_labels": [
+      "Customer Charge",
+      "Basic Charge"
+    ],
+    "unit": "USD",
+    "extraction_priority": "low",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "taxes_and_fees",
+    "display_name": "Taxes and fees",
+    "bill_type": "electric",
+    "description": "Taxes and public-purpose fees on utility bills",
+    "common_bill_labels": [
+      "Taxes",
+      "Fees",
+      "Surcharges"
+    ],
+    "unit": "USD",
+    "extraction_priority": "low",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "gas_utility_provider",
+    "display_name": "Gas utility provider",
+    "bill_type": "gas",
+    "description": "Gas utility serving the site",
+    "common_bill_labels": [
+      "Gas Utility",
+      "Gas Provider"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_therms",
+    "display_name": "Monthly therms",
+    "bill_type": "gas",
+    "description": "Gas usage by month",
+    "common_bill_labels": [
+      "Therms",
+      "Usage"
+    ],
+    "unit": "therms",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "gas_usage_reduction",
+      "gas_to_electric_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_therms",
+    "display_name": "Annual therms",
+    "bill_type": "gas",
+    "description": "Total gas usage over 12 months",
+    "common_bill_labels": [
+      "Annual Therms",
+      "Therms"
+    ],
+    "unit": "therms",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "gas_usage_reduction",
+      "gas_to_electric_replacement",
+      "commercial_kitchen_equipment_efficiency",
+      "controls_building_automation",
+      "envelope_insulation_savings"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "total_gas_cost",
+    "display_name": "Total gas cost",
+    "bill_type": "gas",
+    "description": "Gas charges for a bill period",
+    "common_bill_labels": [
+      "Total Gas Charges"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_gas_cost",
+    "display_name": "Annual gas cost",
+    "bill_type": "gas",
+    "description": "Total gas charges over 12 months",
+    "common_bill_labels": [
+      "Annual Gas Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "gas_usage_reduction",
+      "gas_to_electric_replacement",
+      "envelope_insulation_savings",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "average_cost_per_therm",
+    "display_name": "Average cost per therm",
+    "bill_type": "gas",
+    "description": "Blended gas cost divided by therms",
+    "common_bill_labels": [
+      "Average Rate",
+      "$/therm"
+    ],
+    "unit": "USD/therm",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "gas_usage_reduction",
+      "gas_to_electric_replacement",
+      "commercial_kitchen_equipment_efficiency",
+      "envelope_insulation_savings"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "gas_rate_schedule",
+    "display_name": "Gas rate schedule",
+    "bill_type": "gas",
+    "description": "Gas tariff or rate plan",
+    "common_bill_labels": [
+      "Gas Rate",
+      "Tariff"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "gas_usage_reduction",
+      "gas_to_electric_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "fixed_gas_charge",
+    "display_name": "Fixed gas charge",
+    "bill_type": "gas",
+    "description": "Fixed recurring gas charge",
+    "common_bill_labels": [
+      "Customer Charge",
+      "Basic Charge"
+    ],
+    "unit": "USD",
+    "extraction_priority": "low",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "gas_delivery_charges",
+    "display_name": "Gas delivery charges",
+    "bill_type": "gas",
+    "description": "Gas distribution or delivery charges",
+    "common_bill_labels": [
+      "Delivery",
+      "Distribution"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "gas_procurement_charges",
+    "display_name": "Gas procurement charges",
+    "bill_type": "gas",
+    "description": "Gas supply or procurement charges",
+    "common_bill_labels": [
+      "Procurement",
+      "Supply"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "water_provider",
+    "display_name": "Water provider",
+    "bill_type": "water_sewer",
+    "description": "Water utility or provider",
+    "common_bill_labels": [
+      "Water Provider",
+      "Utility"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_water_use",
+    "display_name": "Monthly water use",
+    "bill_type": "water_sewer",
+    "description": "Water usage by month",
+    "common_bill_labels": [
+      "Usage",
+      "Consumption"
+    ],
+    "unit": "gallons or CCF",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "water_sewer_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_water_use",
+    "display_name": "Annual water use",
+    "bill_type": "water_sewer",
+    "description": "Total water usage over 12 months",
+    "common_bill_labels": [
+      "Annual Usage",
+      "Water Use"
+    ],
+    "unit": "gallons or CCF",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "water_sewer_reduction",
+      "commercial_kitchen_equipment_efficiency"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "water_unit",
+    "display_name": "Water unit",
+    "bill_type": "water_sewer",
+    "description": "Unit used for water consumption",
+    "common_bill_labels": [
+      "Units",
+      "CCF",
+      "Gallons"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "water_sewer_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "total_water_cost",
+    "display_name": "Total water cost",
+    "bill_type": "water_sewer",
+    "description": "Water charges for a bill period",
+    "common_bill_labels": [
+      "Water Charges"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_water_cost",
+    "display_name": "Annual water cost",
+    "bill_type": "water_sewer",
+    "description": "Total water charges over 12 months",
+    "common_bill_labels": [
+      "Annual Water Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "water_sewer_reduction",
+      "commercial_kitchen_equipment_efficiency"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "sewer_cost",
+    "display_name": "Sewer cost",
+    "bill_type": "water_sewer",
+    "description": "Sewer charges for a bill period",
+    "common_bill_labels": [
+      "Sewer Charges"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "water_sewer_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_sewer_cost",
+    "display_name": "Annual sewer cost",
+    "bill_type": "water_sewer",
+    "description": "Total sewer charges over 12 months",
+    "common_bill_labels": [
+      "Annual Sewer Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "water_sewer_reduction",
+      "commercial_kitchen_equipment_efficiency"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "stormwater_fee",
+    "display_name": "Stormwater fee",
+    "bill_type": "water_sewer",
+    "description": "Stormwater charges",
+    "common_bill_labels": [
+      "Stormwater",
+      "Drainage Fee"
+    ],
+    "unit": "USD",
+    "extraction_priority": "low",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "meter_size",
+    "display_name": "Meter size",
+    "bill_type": "water_sewer",
+    "description": "Water meter size",
+    "common_bill_labels": [
+      "Meter Size"
+    ],
+    "unit": "inches",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "water_sewer_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "irrigation_meter_present",
+    "display_name": "Irrigation meter present",
+    "bill_type": "water_sewer",
+    "description": "Whether a separate irrigation meter exists",
+    "common_bill_labels": [
+      "Irrigation Meter"
+    ],
+    "unit": "boolean",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "water_sewer_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "waste_hauler",
+    "display_name": "Waste hauler",
+    "bill_type": "waste",
+    "description": "Waste service provider",
+    "common_bill_labels": [
+      "Hauler",
+      "Provider"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "landfill_service_cost",
+    "display_name": "Landfill service cost",
+    "bill_type": "waste",
+    "description": "Landfill waste service cost",
+    "common_bill_labels": [
+      "Trash",
+      "Landfill"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "recycling_service_cost",
+    "display_name": "Recycling service cost",
+    "bill_type": "waste",
+    "description": "Recycling service cost",
+    "common_bill_labels": [
+      "Recycling"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "organics_service_cost",
+    "display_name": "Organics service cost",
+    "bill_type": "waste",
+    "description": "Organics or compost service cost",
+    "common_bill_labels": [
+      "Organics",
+      "Compost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "pickup_frequency",
+    "display_name": "Pickup frequency",
+    "bill_type": "waste",
+    "description": "Waste pickup frequency",
+    "common_bill_labels": [
+      "Pickup",
+      "Service Frequency"
+    ],
+    "unit": "pickups/week",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "bin_size",
+    "display_name": "Bin size",
+    "bill_type": "waste",
+    "description": "Waste container size",
+    "common_bill_labels": [
+      "Bin Size",
+      "Container"
+    ],
+    "unit": "yards or gallons",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "contamination_fees",
+    "display_name": "Contamination fees",
+    "bill_type": "waste",
+    "description": "Fees for contaminated recycling or organics",
+    "common_bill_labels": [
+      "Contamination"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "overage_fees",
+    "display_name": "Overage fees",
+    "bill_type": "waste",
+    "description": "Fees for excess waste volume",
+    "common_bill_labels": [
+      "Overage"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "total_waste_cost",
+    "display_name": "Total waste cost",
+    "bill_type": "waste",
+    "description": "Total waste hauling cost",
+    "common_bill_labels": [
+      "Total Waste",
+      "Amount Due"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "waste_hauling_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "fuel_type",
+    "display_name": "Fuel type",
+    "bill_type": "fuel",
+    "description": "Fleet fuel type",
+    "common_bill_labels": [
+      "Fuel Type"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_gallons",
+    "display_name": "Monthly gallons",
+    "bill_type": "fuel",
+    "description": "Fleet fuel gallons by month",
+    "common_bill_labels": [
+      "Gallons"
+    ],
+    "unit": "gallons",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_gallons",
+    "display_name": "Annual gallons",
+    "bill_type": "fuel",
+    "description": "Fleet fuel gallons over 12 months",
+    "common_bill_labels": [
+      "Annual Gallons"
+    ],
+    "unit": "gallons",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "monthly_fuel_cost",
+    "display_name": "Monthly fuel cost",
+    "bill_type": "fuel",
+    "description": "Fleet fuel cost by month",
+    "common_bill_labels": [
+      "Fuel Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "annual_fuel_cost",
+    "display_name": "Annual fuel cost",
+    "bill_type": "fuel",
+    "description": "Fleet fuel cost over 12 months",
+    "common_bill_labels": [
+      "Annual Fuel Cost"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "average_cost_per_gallon",
+    "display_name": "Average cost per gallon",
+    "bill_type": "fuel",
+    "description": "Blended cost per gallon",
+    "common_bill_labels": [
+      "$/gal",
+      "Average Fuel Cost"
+    ],
+    "unit": "USD/gallon",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "vehicle_count",
+    "display_name": "Vehicle count",
+    "bill_type": "fuel",
+    "description": "Number of vehicles in scope",
+    "common_bill_labels": [
+      "Vehicle Count",
+      "Fleet Size"
+    ],
+    "unit": "count",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "estimated_miles",
+    "display_name": "Estimated miles",
+    "bill_type": "fuel",
+    "description": "Annual miles for fleet vehicles",
+    "common_bill_labels": [
+      "Miles",
+      "Odometer"
+    ],
+    "unit": "miles",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "fleet_fuel_replacement"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "fuel_card_provider",
+    "display_name": "Fuel card provider",
+    "bill_type": "fuel",
+    "description": "Fuel card or telematics provider",
+    "common_bill_labels": [
+      "Fuel Card"
+    ],
+    "unit": "text",
+    "extraction_priority": "low",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "project_cost_estimate",
+    "display_name": "Project cost estimate",
+    "bill_type": "project",
+    "description": "Estimated total project cost",
+    "common_bill_labels": [
+      "Project Cost",
+      "Estimate"
+    ],
+    "unit": "USD",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "project_cost_reduction_only",
+      "rebate_per_unit_or_equipment_count",
+      "tax_benefit_project_cost_reduction",
+      "sales_or_property_tax_exemption",
+      "grant_funding",
+      "financing_cash_flow",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "contractor_quote_amount",
+    "display_name": "Contractor quote amount",
+    "bill_type": "project",
+    "description": "Quoted contractor amount",
+    "common_bill_labels": [
+      "Quote",
+      "Proposal Amount"
+    ],
+    "unit": "USD",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "project_cost_reduction_only",
+      "rebate_per_unit_or_equipment_count",
+      "tax_benefit_project_cost_reduction",
+      "sales_or_property_tax_exemption",
+      "grant_funding",
+      "financing_cash_flow"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "quote_date",
+    "display_name": "Quote date",
+    "bill_type": "project",
+    "description": "Date of contractor quote",
+    "common_bill_labels": [
+      "Quote Date"
+    ],
+    "unit": "date",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "project_cost_reduction_only"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "equipment_category",
+    "display_name": "Equipment category",
+    "bill_type": "project",
+    "description": "Equipment or measure type",
+    "common_bill_labels": [
+      "Equipment",
+      "Measure"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "equipment_make_model",
+    "display_name": "Equipment make/model",
+    "bill_type": "project",
+    "description": "Equipment manufacturer and model",
+    "common_bill_labels": [
+      "Make",
+      "Model"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "equipment_efficiency_rating",
+    "display_name": "Equipment efficiency rating",
+    "bill_type": "project",
+    "description": "Efficiency rating for proposed equipment",
+    "common_bill_labels": [
+      "SEER",
+      "EER",
+      "AFUE",
+      "ENERGY STAR"
+    ],
+    "unit": "text",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "quantity",
+    "display_name": "Quantity",
+    "bill_type": "project",
+    "description": "Number of eligible units",
+    "common_bill_labels": [
+      "Quantity",
+      "Count"
+    ],
+    "unit": "count",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "rebate_per_unit_or_equipment_count"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "square_footage",
+    "display_name": "Square footage",
+    "bill_type": "project",
+    "description": "Facility or affected area square footage",
+    "common_bill_labels": [
+      "Square Feet",
+      "Area"
+    ],
+    "unit": "sq ft",
+    "extraction_priority": "high",
+    "used_by_savings_models": [
+      "envelope_insulation_savings"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "roof_area",
+    "display_name": "Roof area",
+    "bill_type": "project",
+    "description": "Usable roof area for solar or envelope projects",
+    "common_bill_labels": [
+      "Roof Area"
+    ],
+    "unit": "sq ft",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "parking_spaces",
+    "display_name": "Parking spaces",
+    "bill_type": "project",
+    "description": "Number of parking spaces or charging stalls",
+    "common_bill_labels": [
+      "Parking Spaces",
+      "Stalls"
+    ],
+    "unit": "count",
+    "extraction_priority": "high",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "ownership_status",
+    "display_name": "Ownership status",
+    "bill_type": "project",
+    "description": "Whether business owns, leases, or manages the property",
+    "common_bill_labels": [
+      "Own",
+      "Lease",
+      "Manage"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "tax_benefit_project_cost_reduction",
+      "sales_or_property_tax_exemption",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "landlord_approval_status",
+    "display_name": "Landlord approval status",
+    "bill_type": "project",
+    "description": "Approval status for leased sites",
+    "common_bill_labels": [
+      "Landlord Approval"
+    ],
+    "unit": "text",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "project_timing",
+    "display_name": "Project timing",
+    "bill_type": "project",
+    "description": "Expected project timing or deadline",
+    "common_bill_labels": [
+      "Timing",
+      "Install Date"
+    ],
+    "unit": "text",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [],
+    "source_evidence_required": true
+  },
+  {
+    "id": "tax_entity_type",
+    "display_name": "Tax entity type",
+    "bill_type": "project",
+    "description": "Tax-paying entity type",
+    "common_bill_labels": [
+      "Entity Type",
+      "Tax Status"
+    ],
+    "unit": "text",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "tax_benefit_project_cost_reduction",
+      "sales_or_property_tax_exemption"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "tax_appetite_unknown",
+    "display_name": "Tax appetite unknown",
+    "bill_type": "project",
+    "description": "Whether tax appetite is unknown",
+    "common_bill_labels": [
+      "Tax Appetite"
+    ],
+    "unit": "boolean",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "tax_benefit_project_cost_reduction"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "financing_term_years",
+    "display_name": "Financing term years",
+    "bill_type": "project",
+    "description": "Loan or financing term",
+    "common_bill_labels": [
+      "Term",
+      "Years"
+    ],
+    "unit": "years",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "financing_cash_flow",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "interest_rate",
+    "display_name": "Interest rate",
+    "bill_type": "project",
+    "description": "Loan or financing interest rate",
+    "common_bill_labels": [
+      "Interest Rate",
+      "APR"
+    ],
+    "unit": "percent",
+    "extraction_priority": "critical",
+    "used_by_savings_models": [
+      "financing_cash_flow",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  },
+  {
+    "id": "down_payment",
+    "display_name": "Down payment",
+    "bill_type": "project",
+    "description": "Upfront payment for financing",
+    "common_bill_labels": [
+      "Down Payment"
+    ],
+    "unit": "USD",
+    "extraction_priority": "medium",
+    "used_by_savings_models": [
+      "financing_cash_flow",
+      "pace_or_on_bill_financing"
+    ],
+    "source_evidence_required": true
+  }
+]
