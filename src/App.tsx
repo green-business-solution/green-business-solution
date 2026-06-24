@@ -8,6 +8,7 @@ import {
   OPPORTUNITIES_TABLE_NAME,
   STALE_SESSION_KEYS
 } from "./config";
+import { databaseProgramMatchesSearch } from "./databaseSearch";
 import { GoogleSignInButton } from "./googleSignIn";
 import { EyeIcon, LockIcon } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
@@ -239,9 +240,13 @@ type DatabaseLookup = {
 type DatabaseProgram = {
   id: string;
   opportunityId: string;
+  sourceKey?: string | null;
   sourceSystem: string;
   sourceUrl?: string | null;
   websiteUrl?: string | null;
+  externalId?: string | null;
+  externalIdType?: string | null;
+  dsireProgramId?: string | number | null;
   code?: string | null;
   name: string;
   slug: string;
@@ -777,24 +782,9 @@ function databaseProgramMatchesFilters(
   }
 ) {
   const query = normalizeDatabaseFilterValue(filters.q);
-  const haystack = normalizeDatabaseFilterValue(
-    [
-      program.name,
-      program.code,
-      program.administrator,
-      program.summaryText,
-      program.state?.abbreviation,
-      program.state?.name,
-      program.category?.name,
-      program.programType?.name,
-      program.implementingSector?.name,
-      ...program.eligibleSectors.map((sector) => sector.name),
-      ...program.technologies.map((technology) => technology.name)
-    ].join(" ")
-  );
 
   return (
-    (!query || haystack.includes(query)) &&
+    (!query || databaseProgramMatchesSearch(program, query)) &&
     databaseLookupMatches(program.state, filters.state) &&
     databaseLookupMatches(program.category, filters.category) &&
     databaseLookupMatches(program.programType, filters.type) &&
@@ -2094,7 +2084,7 @@ function DatabaseBrowser({
           <span>Search</span>
           <input
             onChange={(event) => updateFilter("q", event.target.value)}
-            placeholder="Program, administrator, technology"
+            placeholder="Search title, ID, administrator, or technology"
             type="search"
             value={filters.q}
           />

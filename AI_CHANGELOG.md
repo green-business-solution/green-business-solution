@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-24 - Codex (GPT-5) database ID search
+
+- Extended the admin database search to match opportunity IDs, source keys, external IDs, external ID types, and DSIRE program IDs.
+- Updated the database search placeholder to mention ID search.
+- Added a focused search test covering numeric DSIRE IDs, full opportunity IDs, and existing title/admin/technology matching.
+
 ## 2026-06-24 - Codex (GPT-5) savings model sample mapping
 
 - Added a reusable savings model library for bill/document-driven opportunity valuation.

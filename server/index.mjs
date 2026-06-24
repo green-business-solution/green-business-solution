@@ -1396,6 +1396,7 @@ function buildDatabaseProgram(record, { includeDetail = false } = {}) {
   const clone = record.dsireClone || {};
   const cloneProgram = clone.program || {};
   const sourceProgramId = String(cloneProgram.sourceProgramId || clone.sourceProgramId || record.dsire?.programId || record.externalId);
+  const dsireProgramId = record.dsire?.programId || cloneProgram.sourceProgramId || clone.sourceProgramId || record.raw?.id || record.externalId || null;
   const name = cloneProgram.name || record.canonicalTitle || "Untitled DSIRE program";
   const state = {
     id: cloneProgram.state?.id || (record.dsire?.stateId == null ? null : String(record.dsire.stateId)),
@@ -1438,9 +1439,13 @@ function buildDatabaseProgram(record, { includeDetail = false } = {}) {
   return {
     id: sourceProgramId,
     opportunityId: record.opportunityId,
+    sourceKey: record.sourceKey || null,
     sourceSystem: "DSIRE",
     sourceUrl: cloneProgram.sourceUrl || record.sourceUrl || null,
     websiteUrl: cloneProgram.websiteUrl || record.websiteUrl || null,
+    externalId: record.externalId || null,
+    externalIdType: record.externalIdType || null,
+    dsireProgramId,
     code: cloneProgram.code || record.dsire?.programCode || record.raw?.code || null,
     name,
     slug: cloneProgram.slug || slugify(name),
@@ -1482,24 +1487,8 @@ function filterDatabasePrograms(programs, query) {
   const implementingSectorFilters = parseQueryList(query.implementing_sector);
 
   return programs.filter((program) => {
-    const haystack = normalizeFilterValue(
-      [
-        program.name,
-        program.code,
-        program.administrator,
-        program.summaryText,
-        program.state?.abbreviation,
-        program.state?.name,
-        program.category?.name,
-        program.programType?.name,
-        program.implementingSector?.name,
-        ...program.eligibleSectors.map((sector) => sector.name),
-        ...program.technologies.map((technology) => technology.name)
-      ].join(" ")
-    );
-
     return (
-      (!q || haystack.includes(q)) &&
+      (!q || buildDatabaseProgramSearchText(program).includes(q)) &&
       lookupMatches(program.state, stateFilters) &&
       lookupMatches(program.category, categoryFilters) &&
       lookupMatches(program.programType, typeFilters) &&
@@ -1508,6 +1497,40 @@ function filterDatabasePrograms(programs, query) {
       anyLookupMatches(program.eligibleSectors, sectorFilters)
     );
   });
+}
+
+function buildDatabaseProgramSearchText(program) {
+  return normalizeFilterValue(
+    [
+      program.id,
+      program.opportunityId,
+      program.sourceKey,
+      program.sourceSystem,
+      program.externalId,
+      program.externalIdType,
+      program.dsireProgramId,
+      program.code,
+      program.name,
+      program.administrator,
+      program.summaryText,
+      program.state?.id,
+      program.state?.abbreviation,
+      program.state?.name,
+      program.category?.id,
+      program.category?.name,
+      program.programType?.id,
+      program.programType?.name,
+      program.implementingSector?.id,
+      program.implementingSector?.name,
+      ...program.eligibleSectors.flatMap((sector) => [sector.id, sector.name, sector.slug, sector.abbreviation]),
+      ...program.technologies.flatMap((technology) => [
+        technology.id,
+        technology.name,
+        technology.slug,
+        technology.abbreviation
+      ])
+    ].join(" ")
+  );
 }
 
 function buildFacet(values, labelKey = "name") {
