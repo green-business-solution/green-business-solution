@@ -11,10 +11,12 @@ import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mj
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
+const publicDir = path.join(repoRoot, "public");
 const sampleUsersPath = process.env.SAMPLE_USERS_PATH || path.join(dataDir, "sample_user_profiles.json");
 const sourcePath = process.env.OPPORTUNITY_SOURCE_PATH || "";
 const outputPath = process.env.MATCHING_OUTPUT_PATH || "/tmp/retrofi-sample-matching-results.json";
 const reportPath = process.env.MATCHING_REPORT_PATH || path.join(dataDir, "sample_matching_report.md");
+const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
@@ -56,9 +58,18 @@ const output = {
   sampleUsers: userProfiles,
   results: allResults
 };
+const adminTestCases = {
+  generatedAt: output.generatedAt,
+  matchingNow: output.matchingNow,
+  opportunityCount: output.opportunityCount,
+  sampleUserCount: output.sampleUserCount,
+  testCases: userReports
+};
 
 fs.writeFileSync(outputPath, `${JSON.stringify(output, null, 2)}\n`);
 fs.writeFileSync(reportPath, buildReport({ userReports, opportunities, outputPath }), "utf8");
+fs.mkdirSync(path.dirname(testCasesPath), { recursive: true });
+fs.writeFileSync(testCasesPath, `${JSON.stringify(adminTestCases, null, 2)}\n`);
 
 console.log(`Sample matching complete.`);
 console.log(`Opportunities evaluated: ${opportunities.length}`);
@@ -66,6 +77,7 @@ console.log(`Sample users: ${sampleUsers.length}`);
 console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
 console.log(`Results: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
+console.log(`Admin test cases: ${testCasesPath}`);
 
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
@@ -115,6 +127,7 @@ function buildUserReport(userProfile, results) {
   return {
     sampleUserId: userProfile.sampleUserId,
     description: userProfile.description,
+    sourceForm: userProfile.sourceForm,
     normalizedProfile: userProfile.userMatchProfile,
     statusCounts,
     topResults,

@@ -212,6 +212,87 @@ type AdminTableResponse = {
   table: DatabaseTableSnapshot;
 };
 
+type SampleMatchResult = {
+  opportunityId: string;
+  opportunityName: string;
+  offerId?: string | null;
+  eligibilityStatus: string;
+  rankScore: number;
+  opportunityDataConfidence: number;
+  userProfileCompleteness: number;
+  matchedReasons: string[];
+  unresolvedRequirements: string[];
+  blockers: string[];
+  nextQuestion?: {
+    criterionId?: string;
+    prompt?: string;
+  } | null;
+  sourceSummary?: {
+    state?: string | null;
+    sourceName?: string | null;
+    programType?: string | null;
+    administrator?: string | null;
+  };
+};
+
+type SampleCount = {
+  value: string;
+  count: number;
+};
+
+type SampleNormalizedProfile = {
+  business?: {
+    organizationTypes?: string[];
+    naicsCodes?: string[];
+    organizationSize?: string | null;
+  };
+  site?: {
+    geo?: {
+      stateCode?: string | null;
+      zip5?: string | null;
+      countyFips?: string | null;
+      latitude?: number | null;
+      longitude?: number | null;
+    };
+    utility?: {
+      electric?: {
+        selfReportedName?: string | null;
+        distributionUtilityId?: string | null;
+        verificationStatus?: string | null;
+        territoryCandidates?: string[];
+        customerClass?: string | null;
+      };
+    };
+    ownershipRelationship?: string | null;
+    buildingTypes?: string[];
+    squareFootage?: unknown;
+  };
+  project?: {
+    technologyIds?: string[];
+    stage?: string | null;
+  };
+};
+
+type SampleMatchingTestCase = {
+  sampleUserId: string;
+  description: string;
+  sourceForm: Record<string, unknown>;
+  normalizedProfile: SampleNormalizedProfile;
+  statusCounts: Record<string, number>;
+  topResults: SampleMatchResult[];
+  commonQuestions: SampleCount[];
+  blockers: SampleCount[];
+  unresolved: SampleCount[];
+};
+
+type SampleMatchingTestCasesData = {
+  generatedAt: string;
+  matchingNow: string;
+  opportunityCount: number;
+  sampleUserCount: number;
+  testCases: SampleMatchingTestCase[];
+};
+
 type AuthPayload = {
   dashboard: "client" | "admin";
   user: UserRecord;
@@ -2815,9 +2896,21 @@ function UserDashboard({
 }
 
 const ADMIN_DATABASE_TAB = "Database";
+const ADMIN_TEST_CASES_TAB = "Test Cases";
+const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
+const SAMPLE_MATCH_STATUS_ORDER = [
+  "eligible_active",
+  "likely_eligible",
+  "needs_information",
+  "upcoming",
+  "manual_review",
+  "ineligible",
+  "unavailable"
+];
 
 function adminSectionKey(tab: string) {
   if (tab === ADMIN_DATABASE_TAB) return "database";
+  if (tab === ADMIN_TEST_CASES_TAB) return "test-cases";
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
@@ -2838,11 +2931,14 @@ function AdminDashboard({
   const { admin, users: rows, dataTables } = adminPayload;
   const navItems = [
     "Users",
+    ADMIN_TEST_CASES_TAB,
     ...dataTables.filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME).map((table) => table.name),
     ADMIN_DATABASE_TAB
   ];
   const selectedDataTable =
-    activeTab === ADMIN_DATABASE_TAB ? null : dataTables.find((table) => table.name === activeTab) || null;
+    activeTab === ADMIN_DATABASE_TAB || activeTab === ADMIN_TEST_CASES_TAB
+      ? null
+      : dataTables.find((table) => table.name === activeTab) || null;
   const activeSectionKey = adminSectionKey(activeTab);
   const isCurrentSectionLoading = loadingSectionKey === activeSectionKey;
 
@@ -2880,12 +2976,17 @@ function AdminDashboard({
       return;
     }
 
+    setError(null);
+
+    if (tab === ADMIN_TEST_CASES_TAB) {
+      markSectionLoaded(sectionKey);
+      return;
+    }
+
     if (!credential) {
       setError("Sign in again to refresh the admin dashboard.");
       return;
     }
-
-    setError(null);
 
     if (tab === ADMIN_DATABASE_TAB) {
       markSectionLoaded(sectionKey);
@@ -2939,7 +3040,12 @@ function AdminDashboard({
       activeTab !== OPPORTUNITIES_TABLE_NAME &&
       dataTables.some((table) => table.name === activeTab);
 
-    if (activeTab !== "Users" && activeTab !== ADMIN_DATABASE_TAB && !isVisibleDataTable) {
+    if (
+      activeTab !== "Users" &&
+      activeTab !== ADMIN_TEST_CASES_TAB &&
+      activeTab !== ADMIN_DATABASE_TAB &&
+      !isVisibleDataTable
+    ) {
       setActiveTab("Users");
     }
   }, [activeTab, dataTables]);
@@ -2960,6 +3066,8 @@ function AdminDashboard({
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
+      ) : activeTab === ADMIN_TEST_CASES_TAB ? (
+        <AdminTestCasesPanel />
       ) : activeTab === ADMIN_DATABASE_TAB ? (
         <AdminDatabasePanel credential={credential} />
       ) : (
@@ -2973,6 +3081,306 @@ function AdminDashboard({
       )}
     </WorkspaceLayout>
   );
+}
+
+function AdminTestCasesPanel() {
+  const [dataset, setDataset] = useState<SampleMatchingTestCasesData | null>(null);
+  const [selectedTestCaseId, setSelectedTestCaseId] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const testCases = dataset?.testCases || [];
+  const selectedTestCase = testCases.find((testCase) => testCase.sampleUserId === selectedTestCaseId) || testCases[0];
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadTestCases() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(ADMIN_TEST_CASES_DATA_PATH, { cache: "no-cache" });
+        if (!response.ok) {
+          throw new Error(`Could not load test cases (${response.status}).`);
+        }
+        const nextDataset = (await response.json()) as SampleMatchingTestCasesData;
+        if (isActive) {
+          setDataset(nextDataset);
+          setSelectedTestCaseId((currentId) =>
+            nextDataset.testCases.some((testCase) => testCase.sampleUserId === currentId)
+              ? currentId
+              : nextDataset.testCases[0]?.sampleUserId || ""
+          );
+        }
+      } catch (requestError) {
+        if (isActive) {
+          setError(requestError instanceof Error ? requestError.message : "Could not load test cases.");
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    void loadTestCases();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="admin-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Matching test cases</p>
+            <h2>Loading sample profile results</h2>
+          </div>
+        </div>
+        <p className="muted-message">Loading generated matching results...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="admin-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Matching test cases</p>
+            <h2>Test cases unavailable</h2>
+          </div>
+        </div>
+        <p className="error-message">{error}</p>
+      </section>
+    );
+  }
+
+  if (!selectedTestCase) {
+    return (
+      <section className="admin-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Matching test cases</p>
+            <h2>No generated test cases</h2>
+          </div>
+        </div>
+        <p className="muted-message">Run the sample matching script to generate admin-visible test case results.</p>
+      </section>
+    );
+  }
+
+  const sourceForm = selectedTestCase.sourceForm;
+  const normalizedProfile = selectedTestCase.normalizedProfile;
+  const business = normalizedProfile.business || {};
+  const site = normalizedProfile.site || {};
+  const geo = site.geo || {};
+  const utility = site.utility?.electric || {};
+  const project = normalizedProfile.project || {};
+  const statusRows = SAMPLE_MATCH_STATUS_ORDER.map((status) => ({
+    status,
+    count: selectedTestCase.statusCounts[status] || 0
+  }));
+
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Matching test cases</p>
+          <h2>Sample profile results</h2>
+          <p className="muted-message">
+            Generated {formatDate(dataset?.generatedAt || null)} from {dataset?.opportunityCount.toLocaleString() || "0"} opportunities.
+          </p>
+        </div>
+      </div>
+
+      <div className="test-case-controls">
+        <label className="field">
+          <span>Test case</span>
+          <select onChange={(event) => setSelectedTestCaseId(event.target.value)} value={selectedTestCase.sampleUserId}>
+            {testCases.map((testCase) => (
+              <option key={testCase.sampleUserId} value={testCase.sampleUserId}>
+                {testCase.sampleUserId}
+              </option>
+            ))}
+          </select>
+        </label>
+        <p>{selectedTestCase.description}</p>
+      </div>
+
+      <div className="test-case-layout">
+        <article className="data-card">
+          <div>
+            <p className="eyebrow">Form profile</p>
+            <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
+          </div>
+          <div className="opportunity-summary-grid test-case-profile-grid">
+            <DetailItem label="Organization" value={sampleValue(sourceForm.organizationType)} />
+            <DetailItem label="Size" value={sampleValue(sourceForm.organizationSize)} />
+            <DetailItem label="Site" value={sampleValue(sourceForm.siteAddress)} />
+            <DetailItem label="Utility" value={sampleValue(sourceForm.electricUtilityProvider)} />
+            <DetailItem label="Ownership" value={sampleValue(sourceForm.ownershipStatus)} />
+            <DetailItem label="Building" value={sampleValue(sourceForm.buildingType)} />
+            <DetailItem label="Square feet" value={sampleValue(sourceForm.squareFootage)} />
+            <DetailItem label="Improvements" value={sampleList(toStringArray(sourceForm.interestedImprovements))} />
+          </div>
+          <section className="detail-section">
+            <h4>Normalized matcher profile</h4>
+            <div className="opportunity-summary-grid test-case-profile-grid">
+              <DetailItem label="Applicant types" value={sampleList(business.organizationTypes)} />
+              <DetailItem label="State / ZIP" value={`${sampleValue(geo.stateCode)} / ${sampleValue(geo.zip5)}`} />
+              <DetailItem label="Utility ID" value={sampleValue(utility.distributionUtilityId)} />
+              <DetailItem label="Utility status" value={sampleValue(utility.verificationStatus)} />
+              <DetailItem label="Site control" value={sampleValue(site.ownershipRelationship)} />
+              <DetailItem label="Building types" value={sampleList(site.buildingTypes)} />
+              <DetailItem label="Square feet" value={sampleSquareFootage(site.squareFootage)} />
+              <DetailItem label="Technologies" value={sampleList(project.technologyIds)} />
+            </div>
+          </section>
+        </article>
+
+        <div className="test-case-results">
+          <div className="test-case-stat-grid">
+            {statusRows.map(({ status, count }) => (
+              <article className="data-card test-case-stat-card" key={status}>
+                <span>{sampleStatusLabel(status)}</span>
+                <strong>{count.toLocaleString()}</strong>
+              </article>
+            ))}
+          </div>
+
+          <article className="data-card">
+            <div>
+              <p className="eyebrow">Top matching opportunities</p>
+              <h3>{selectedTestCase.topResults.length} strongest non-blocked results</h3>
+            </div>
+            <div className="match-result-list">
+              {selectedTestCase.topResults.length === 0 ? (
+                <p className="empty-state">No top matches were generated for this test case.</p>
+              ) : (
+                selectedTestCase.topResults.map((result) => <SampleMatchCard key={`${result.opportunityId}:${result.offerId || "offer"}`} result={result} />)
+              )}
+            </div>
+          </article>
+
+          <div className="test-case-insight-grid">
+            <SampleCountCard title="Common next questions" values={selectedTestCase.commonQuestions} />
+            <SampleCountCard title="Common unresolved requirements" values={selectedTestCase.unresolved} />
+            <SampleCountCard title="Common blockers" values={selectedTestCase.blockers} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SampleMatchCard({ result }: { result: SampleMatchResult }) {
+  const sourceSummary = result.sourceSummary || {};
+  const nextQuestion = result.nextQuestion?.prompt
+    ? [`${result.nextQuestion.prompt}${result.nextQuestion.criterionId ? ` (${result.nextQuestion.criterionId})` : ""}`]
+    : [];
+
+  return (
+    <article className="match-result-card">
+      <div className="match-result-header">
+        <div>
+          <p className="eyebrow">{result.opportunityId}</p>
+          <h3>{result.opportunityName}</h3>
+        </div>
+        <div className="status-stack">
+          <mark>{sampleStatusLabel(result.eligibilityStatus)}</mark>
+          <small>Score {result.rankScore}</small>
+        </div>
+      </div>
+
+      <div className="opportunity-summary-grid test-case-profile-grid">
+        <DetailItem label="Source" value={sampleValue(sourceSummary.sourceName)} />
+        <DetailItem label="Program type" value={sampleValue(sourceSummary.programType)} />
+        <DetailItem label="State" value={sampleValue(sourceSummary.state)} />
+        <DetailItem label="Confidence" value={`${Math.round(result.opportunityDataConfidence * 100)}% data / ${Math.round(result.userProfileCompleteness * 100)}% profile`} />
+      </div>
+
+      <div className="match-detail-grid">
+        <SampleTextList title="Matched reasons" values={result.matchedReasons} emptyMessage="No matched reasons generated." />
+        <SampleTextList title="Unresolved" values={result.unresolvedRequirements} emptyMessage="No unresolved requirements." />
+        <SampleTextList title="Blockers" values={result.blockers} emptyMessage="No hard blockers." />
+        <SampleTextList title="Next question" values={nextQuestion} emptyMessage="No follow-up question." />
+      </div>
+    </article>
+  );
+}
+
+function SampleTextList({
+  emptyMessage,
+  title,
+  values
+}: {
+  emptyMessage: string;
+  title: string;
+  values: string[];
+}) {
+  return (
+    <section className="match-detail-section">
+      <h4>{title}</h4>
+      {values.length > 0 ? (
+        <ul>
+          {values.slice(0, 4).map((value) => (
+            <li key={value}>{value}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>{emptyMessage}</p>
+      )}
+    </section>
+  );
+}
+
+function SampleCountCard({ title, values }: { title: string; values: SampleCount[] }) {
+  return (
+    <article className="data-card sample-count-card">
+      <h3>{title}</h3>
+      {values.length > 0 ? (
+        <ol>
+          {values.slice(0, 5).map((item) => (
+            <li key={item.value}>
+              <span>{item.value}</span>
+              <strong>{item.count.toLocaleString()}</strong>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>No values reported.</p>
+      )}
+    </article>
+  );
+}
+
+function sampleValue(value: unknown, fallback = "Not listed") {
+  if (typeof value === "string") return value.trim() || fallback;
+  if (typeof value === "number") return value.toLocaleString();
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  return fallback;
+}
+
+function sampleList(values: string[] | undefined) {
+  return values && values.length > 0 ? values.join(", ") : "Not listed";
+}
+
+function sampleSquareFootage(value: unknown) {
+  if (isPlainRecord(value)) {
+    const parsedValue = sampleValue(value.value);
+    const status = sampleValue(value.parsingStatus, "");
+    return status ? `${parsedValue} (${status})` : parsedValue;
+  }
+  return sampleValue(value);
+}
+
+function sampleStatusLabel(status: string) {
+  return status
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 function AdminUsersPanel({

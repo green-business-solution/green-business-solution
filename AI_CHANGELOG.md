@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) admin matching test case tab
+
+- Added a dedicated admin `Test Cases` tab with a dropdown for generated sample matching profiles.
+- Displayed each selected test case's intake profile, normalized matcher profile, eligibility status counts, strongest matches, common unresolved requirements, next questions, and blockers.
+- Updated the sample matching script to emit a compact public admin fixture alongside the existing full JSON and markdown report.
+
 ## 2026-06-25 - Codex (GPT-5) sample opportunity matching pipeline
 
 - Added a deterministic first-pass matching pipeline with criterion registry, ontology normalization, opportunity match profiles, user match profiles, rule evaluation, scoring, and explanations.
