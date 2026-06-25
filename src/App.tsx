@@ -1162,7 +1162,7 @@ function PublicNav({
         <div className="nav-actions">
           {renderAuthAction()}
           <button className="nav-cta" onClick={() => go("scan")} type="button">
-            Create My Report
+            Get Started
           </button>
         </div>
         <button
@@ -1177,7 +1177,7 @@ function PublicNav({
           <span />
         </button>
         <button className="mobile-cta" onClick={() => go("scan")} type="button">
-          Create My Report
+          Get Started
         </button>
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
@@ -1197,7 +1197,7 @@ function PublicNav({
             </div>
             {renderAuthAction()}
             <button className="nav-cta" onClick={() => go("scan")} type="button">
-              Create My Report
+              Get Started
             </button>
           </div>
         ) : null}
