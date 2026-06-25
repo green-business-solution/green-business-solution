@@ -155,7 +155,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "- Hard failures are limited to explicit unavailable status/deadline, state mismatch, utility mismatch, residential-only mismatch, applicant mismatch, technology mismatch, and parsed numeric threshold failure.",
     "- Missing utility restriction, missing building specificity, and ambiguous opportunity geography return `unknown` rather than a false rejection.",
-    "- Current form limitations are visible for non-California sample users because the utility picker only has California utilities plus `Other / Not sure`.",
+    "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
     "",
     "## Sample User Results"

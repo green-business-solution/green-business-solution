@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) real-address matching test cases
+
+- Replaced the sample matching test-case site addresses with ten real California addresses supplied by the user.
+- Updated sample test-case IDs, descriptions, utility selections, and profile metadata so the generated admin test cases stay coherent with the new addresses.
+- Regenerated the sample matching report and public admin test-case fixture after evaluating all 2,096 opportunities against the 10 revised profiles.
+
 ## 2026-06-25 - Codex (GPT-5) admin matching test case tab
 
 - Added a dedicated admin `Test Cases` tab with a dropdown for generated sample matching profiles.
