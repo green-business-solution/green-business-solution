@@ -31,7 +31,7 @@ Account root email:
 neerkuchlous+greenbusiness@gmail.com
 ```
 
-Use the collaborator email `pmrajvansh@gmail.com` for the IAM Identity Center user, not as the account root email.
+Use collaborator emails for IAM Identity Center users, not as the account root email.
 
 ## Current Identity Center assignments
 
@@ -39,3 +39,4 @@ The following users are assigned `AdministratorAccess` on only account `44801610
 
 - Neer Kuchlous, username `neer`
 - Rajvansh Gupta, username `rajvansh`
+- Ryan Shen, username `rshen0210`

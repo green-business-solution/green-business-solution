@@ -22,12 +22,16 @@ The repository was created and pushed from this local checkout with:
 gh repo create green-business-solution/green-business-solution --private --source . --remote origin --push
 ```
 
-The collaborator was invited with write access:
+Collaborators were invited with write access:
 
 ```sh
 gh api repos/green-business-solution/green-business-solution/collaborators/SchrodingersCatLooks \
   -X PUT \
   -f permission=push
+
+gh api repos/green-business-solution/green-business-solution/collaborators/PlaneCoder75367 \
+  -X PUT \
+  -f permission=push
 ```
 
-The invitation remains pending until `SchrodingersCatLooks` accepts it in GitHub.
+Invitations remain pending until each collaborator accepts them in GitHub.

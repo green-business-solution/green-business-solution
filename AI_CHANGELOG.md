@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) Ryan Shen access setup
+
+- Invited Ryan Shen's GitHub account `PlaneCoder75367` to the private repository with write access.
+- Created Ryan Shen's AWS IAM Identity Center user `rshen0210` with email `rshen0210@gmail.com`.
+- Assigned Ryan Shen the `AdministratorAccess` permission set on only the Green Business Solution AWS account.
+- Documented Ryan's GitHub and AWS access in the repository access notes.
+
 ## 2026-06-25 - Codex (GPT-5) admin scan access polish
 
 - Hid public scan/report-start CTAs for signed-in admin accounts while keeping regular signed-in users unchanged.
