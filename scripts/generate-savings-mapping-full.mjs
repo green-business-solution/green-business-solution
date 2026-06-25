@@ -14,13 +14,7 @@ const opportunities = (source.Items || []).map((item) => unmarshall(item)).filte
 
 const mapping = opportunities.map(classifyOpportunity);
 const unmapped = mapping.filter((record) => record.primary_savings_model_id === "no_direct_savings");
-const uncertain = mapping.filter(
-  (record) =>
-    record.confidence === "low" ||
-    record.business_relevance === "unknown" ||
-    record.business_relevance === "residential_only" ||
-    record.manual_review_required
-);
+const uncertain = mapping.filter((record) => record.manual_review_required);
 
 writeJson("opportunity_savings_mapping.json", mapping);
 writeCsv("opportunity_savings_mapping_import.csv", mapping);
@@ -52,6 +46,19 @@ function classifyOpportunity(opportunity) {
     readiness: classification.calculationReadiness
   });
   const confidence = confidenceFor({ opportunity, text, businessRelevance, classification });
+  const v1Readiness = v1ReadinessFor({
+    businessRelevance,
+    classification,
+    modelIds: [classification.primary, ...classification.secondary],
+    valueRoles
+  });
+  const exclusionOrDelayReason = exclusionOrDelayReasonFor({
+    businessRelevance,
+    classification,
+    v1Readiness,
+    text,
+    opportunity
+  });
   const manualReviewRequired = shouldRequireManualReview({
     opportunity,
     text,
@@ -59,7 +66,8 @@ function classifyOpportunity(opportunity) {
     confidence,
     businessRelevance,
     readiness: classification.calculationReadiness,
-    incentiveMethod: classification.incentiveValueMethod
+    incentiveMethod: classification.incentiveValueMethod,
+    valueRoles
   });
 
   return {
@@ -77,6 +85,8 @@ function classifyOpportunity(opportunity) {
     incentive_value_method: classification.incentiveValueMethod,
     project_cost_estimation_method: classification.projectCostMethod,
     calculation_readiness: classification.calculationReadiness,
+    v1_readiness: v1Readiness,
+    exclusion_or_delay_reason: exclusionOrDelayReason,
     confidence,
     classification_reason: classification.reason,
     missing_data_prompts: primaryModel?.missing_data_prompts || [],
@@ -233,8 +243,8 @@ function result(primary, secondary, incentiveValueMethod, projectCostMethod, cal
 
 function confidenceFor({ opportunity, text, businessRelevance, classification }) {
   if (classification.primary === "no_direct_savings" || businessRelevance === "unknown") return "low";
-  if (businessRelevance === "residential_only" || classification.calculationReadiness === "policy_only") return "low";
-  if (classification.primary === "program_rule_value_only" || classification.primary === "renewable_generation_credit_market_value") return "low";
+  if (classification.primary === "program_rule_value_only" || classification.primary === "renewable_generation_credit_market_value") return "high";
+  if (classification.calculationReadiness === "policy_only") return "high";
   if (toArray(opportunity.technologies).length >= 8 || matches(text, ["custom", "whole building", "variety of", "wide range"])) return "medium";
   if (classification.calculationReadiness === "needs_tax_review") return "medium";
   return "high";
@@ -289,24 +299,55 @@ function classifyBusinessRelevance(opportunity) {
   return "unknown";
 }
 
-function shouldRequireManualReview({ opportunity, text, modelIds, confidence, businessRelevance, readiness, incentiveMethod }) {
+function v1ReadinessFor({ businessRelevance, classification, modelIds, valueRoles }) {
+  if (businessRelevance === "residential_only" || businessRelevance === "public_nonprofit_only" || businessRelevance === "agriculture_only") {
+    return "not_v1_relevant";
+  }
+
+  if (businessRelevance === "unknown") return "unknown";
+  if (modelIds.includes("no_direct_savings")) return "unknown";
+  if (modelIds.includes("renewable_generation_credit_market_value") && valueRoles.length === 1) return "market_credit_only";
+  if (classification.calculationReadiness === "policy_only") return "policy_only";
+  if (classification.calculationReadiness === "needs_tax_review") return "needs_tax_context";
+  if (modelIds.some((id) => ["financing_cash_flow", "pace_or_on_bill_financing"].includes(id))) return "needs_financing_terms";
+  if (classification.calculationReadiness === "needs_quote") return "needs_quote";
+  if (classification.calculationReadiness === "needs_bill") return "needs_bill_data";
+  if (classification.primary === "whole_building_custom_efficiency" || classification.calculationReadiness === "needs_equipment_details") return "needs_project_scope";
+  if (businessRelevance === "mixed") return "needs_project_scope";
+  return "v1_ready";
+}
+
+function exclusionOrDelayReasonFor({ businessRelevance, classification, v1Readiness, text, opportunity }) {
+  if (businessRelevance === "residential_only") return "residential_only";
+  if (businessRelevance === "public_nonprofit_only") return "public_nonprofit_only";
+  if (businessRelevance === "agriculture_only") return "agriculture_only";
+  if (v1Readiness === "policy_only") return "policy_only";
+  if (v1Readiness === "market_credit_only") return "market_credit_only";
+  if (v1Readiness === "needs_tax_context") return "tax_context_required";
+  if (v1Readiness === "needs_financing_terms") return "financing_only";
+  if (v1Readiness === "needs_quote") return "project_scope_required";
+  if (classification.primary === "whole_building_custom_efficiency" || toArray(opportunity.technologies).length >= 8 || matches(text, ["custom", "whole building", "market transformation", "wide range", "variety of"])) return "broad_custom_program";
+  if (v1Readiness === "needs_project_scope") return "project_scope_required";
+  if (v1Readiness === "needs_bill_data") return "project_scope_required";
+  if (v1Readiness === "unknown") return "insufficient_data";
+  return "";
+}
+
+function shouldRequireManualReview({ opportunity, text, modelIds, confidence, businessRelevance, readiness, incentiveMethod, valueRoles }) {
   const broadOrCustom = toArray(opportunity.technologies).length >= 8 || matches(text, ["custom", "whole building", "market transformation", "wide range", "variety of"]);
+  const unclearBroadCustom = broadOrCustom && modelIds.length <= 1;
+  const valueRoleConflict =
+    modelIds.includes("no_direct_savings") && valueRoles.some((role) => role !== "no_direct_savings");
+  const unclearIncentive = incentiveMethod === "unknown" && !["policy_only", "unknown"].includes(readiness);
+
   return (
-    confidence === "low" ||
-    businessRelevance !== "business_relevant" ||
-    broadOrCustom ||
-    readiness === "policy_only" ||
+    businessRelevance === "unknown" ||
+    modelIds.includes("no_direct_savings") ||
+    unclearBroadCustom ||
     readiness === "unknown" ||
-    incentiveMethod === "unknown" ||
-    modelIds.some((id) => [
-      "tax_benefit_project_cost_reduction",
-      "renewable_generation_credit_market_value",
-      "program_rule_value_only",
-      "net_metering_or_export_value",
-      "interconnection_or_grid_access_value",
-      "whole_building_custom_efficiency",
-      "no_direct_savings"
-    ].includes(id))
+    unclearIncentive ||
+    valueRoleConflict ||
+    (confidence === "low" && businessRelevance === "unknown")
   );
 }
 
@@ -328,6 +369,8 @@ function writeCsv(filename, records) {
     "incentive_value_method",
     "project_cost_estimation_method",
     "calculation_readiness",
+    "v1_readiness",
+    "exclusion_or_delay_reason",
     "confidence",
     "manual_review_required"
   ];
@@ -352,7 +395,10 @@ function writeReport(filename, records, summary) {
   const byRelevance = countBy(records, (record) => record.business_relevance);
   const byManualReview = countBy(records, (record) => String(record.manual_review_required));
   const byConfidence = countBy(records, (record) => record.confidence);
-  const uncertain = records.filter((record) => record.manual_review_required || record.confidence === "low");
+  const byV1Readiness = countBy(records, (record) => record.v1_readiness);
+  const byDelayReason = countBy(records, (record) => record.exclusion_or_delay_reason || "none");
+  const uncertain = records.filter((record) => record.manual_review_required);
+  const movedOutExamples = records.filter((record) => !record.manual_review_required && record.exclusion_or_delay_reason).slice(0, 50);
   const topModels = Object.entries(byModel).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const lines = [
     "# Savings Model Coverage Report - Full Dry Run",
@@ -372,7 +418,7 @@ function writeReport(filename, records, summary) {
     `- Savings models in library: ${savingsModels.length}`,
     `- Manual review required: ${summary.manualReviewCount}`,
     `- Manual review not required: ${records.length - summary.manualReviewCount}`,
-    `- Uncertain opportunities: ${summary.uncertainCount}`,
+    `- True classification-uncertain opportunities: ${summary.uncertainCount}`,
     `- Unmapped/no-direct-savings records: ${summary.unmapped.length}`,
     `- Residential-only count: ${byRelevance.residential_only || 0}`,
     `- Business-relevant count: ${byRelevance.business_relevant || 0}`,
@@ -401,6 +447,18 @@ function writeReport(filename, records, summary) {
     "| --- | ---: | ---: |",
     ...Object.entries(byRelevance).sort((a, b) => b[1] - a[1]).map(([relevance, count]) => `| \`${relevance}\` | ${count} | ${percent(count, records.length)} |`),
     "",
+    "## V1 Readiness Distribution",
+    "",
+    "| V1 readiness | Count | Percent |",
+    "| --- | ---: | ---: |",
+    ...Object.entries(byV1Readiness).sort((a, b) => b[1] - a[1]).map(([readiness, count]) => `| \`${readiness}\` | ${count} | ${percent(count, records.length)} |`),
+    "",
+    "## Exclusion Or Delay Reason Distribution",
+    "",
+    "| Reason | Count | Percent |",
+    "| --- | ---: | ---: |",
+    ...Object.entries(byDelayReason).sort((a, b) => b[1] - a[1]).map(([reason, count]) => `| \`${reason}\` | ${count} | ${percent(count, records.length)} |`),
+    "",
     "## Manual Review Required Vs Not Required",
     "",
     "| Manual review required | Count | Percent |",
@@ -413,11 +471,17 @@ function writeReport(filename, records, summary) {
     "| --- | ---: | ---: |",
     ...["high", "medium", "low"].map((key) => `| ${key} | ${byConfidence[key] || 0} | ${percent(byConfidence[key] || 0, records.length)} |`),
     "",
-    "## Uncertain Opportunities",
+    "## Examples No Longer Requiring Manual Review",
     "",
-    `Total uncertain/manual-review records: ${uncertain.length}. Showing the first 200 for review triage.`,
+    "These records are clearly classified but delayed or excluded from V1 for product-readiness reasons.",
     "",
-    ...uncertain.slice(0, 200).map((record) => `- \`${record.opportunity_id}\` - ${record.opportunity_name}: \`${record.primary_savings_model_id}\`, ${record.confidence}, relevance \`${record.business_relevance}\`.`),
+    ...movedOutExamples.map((record) => `- \`${record.opportunity_id}\` - ${record.opportunity_name}: \`${record.primary_savings_model_id}\`, readiness \`${record.v1_readiness}\`, reason \`${record.exclusion_or_delay_reason || "none"}\`.`),
+    "",
+    "## Remaining True Manual-Review Records",
+    "",
+    `Total true manual-review records: ${uncertain.length}. Showing the first 200 with classifier-uncertainty reasons.`,
+    "",
+    ...uncertain.slice(0, 200).map((record) => `- \`${record.opportunity_id}\` - ${record.opportunity_name}: \`${record.primary_savings_model_id}\`, ${record.confidence}, relevance \`${record.business_relevance}\`, reason \`${manualReviewReason(record)}\`.`),
     "",
     "## Unmapped Records",
     "",
@@ -427,17 +491,24 @@ function writeReport(filename, records, summary) {
     "",
     "## Recommended Manual-Review Priorities Before Production Import",
     "",
-    "1. Review all `residential_only`, `mixed`, `public_nonprofit_only`, `agriculture_only`, and `unknown` relevance rows before they can become business matches.",
-    "2. Review `whole_building_custom_efficiency` and broad custom C&I rows because project scope controls the actual model.",
-    "3. Review tax, market-credit, net-metering/export, interconnection, and program-rule rows before showing financial value to users.",
-    "4. Review `no_direct_savings` rows and either add missing taxonomy or keep them out of business-facing recommendations.",
-    "5. Confirm incentive amount/cap fields before production import; current dry-run classification maps value type, not final dollar formulas.",
+    "1. Review true manual-review rows first: unknown business relevance, no-direct-savings rows, and broad/custom rows with unclear model support.",
+    "2. Separately plan V1 gating for `residential_only`, `public_nonprofit_only`, `agriculture_only`, policy-only, tax-context, financing-term, and project-scope queues.",
+    "3. Confirm incentive amount/cap fields before production import; current dry-run classification maps value type, not final dollar formulas.",
     "",
     "## Recommendation",
     "",
-    "The full dry run is ready for review/import planning, but not production import. The next step should be human review of manual-review queues and a second dry run that writes no production data but stores reviewed classifier decisions as local artifacts."
+    "The full dry run is ready for review/import planning, but not production import. The next step should be human review of true classifier-uncertainty rows, followed by V1 queue planning using `v1_readiness` and `exclusion_or_delay_reason`."
   ];
   fs.writeFileSync(path.join(dataDir, filename), `${lines.join("\n")}\n`);
+}
+
+function manualReviewReason(record) {
+  if (record.business_relevance === "unknown") return "business_relevance_unknown";
+  if (record.primary_savings_model_id === "no_direct_savings") return "no_value_path_identified";
+  if (record.calculation_readiness === "unknown") return "calculation_readiness_unknown";
+  if (record.incentive_value_method === "unknown" && !["policy_only", "unknown"].includes(record.calculation_readiness)) return "incentive_type_unclear";
+  if (record.primary_savings_model_id === "whole_building_custom_efficiency" && record.secondary_savings_model_ids.length === 0) return "broad_custom_program_unclear";
+  return "classification_conflict_or_ambiguity";
 }
 
 function searchableText(opportunity) {

@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) manual review semantics refinement
+
+- Reinterpreted full-run `manual_review_required` as true classifier uncertainty instead of V1 readiness or business-scope gating.
+- Added `v1_readiness` and `exclusion_or_delay_reason` to full mapping JSON and import CSV.
+- Regenerated the full dry-run mapping and coverage report, reducing manual-review rows from 1,845 to 525.
+- Updated validation for the new readiness and delay-reason enums without mutating production data.
+
 ## 2026-06-25 - Codex (GPT-5) full savings mapping dry run
 
 - Added a full-run savings mapping generator that classifies the read-only opportunity export without writing to DynamoDB.

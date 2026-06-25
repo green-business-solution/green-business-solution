@@ -18,6 +18,8 @@ type MappingRecord = {
   secondary_savings_model_ids: string[];
   value_roles: string[];
   business_relevance: string;
+  v1_readiness?: string;
+  exclusion_or_delay_reason?: string;
   required_bill_fields: string[];
   optional_bill_fields: string[];
 };
@@ -51,6 +53,31 @@ const allowedBusinessRelevance = new Set([
   "public_nonprofit_only",
   "agriculture_only",
   "unknown"
+]);
+const allowedV1Readiness = new Set([
+  "v1_ready",
+  "not_v1_relevant",
+  "needs_project_scope",
+  "needs_bill_data",
+  "needs_quote",
+  "needs_tax_context",
+  "needs_financing_terms",
+  "policy_only",
+  "market_credit_only",
+  "unknown"
+]);
+const allowedExclusionOrDelayReasons = new Set([
+  "",
+  "residential_only",
+  "public_nonprofit_only",
+  "agriculture_only",
+  "policy_only",
+  "market_credit_only",
+  "financing_only",
+  "tax_context_required",
+  "project_scope_required",
+  "broad_custom_program",
+  "insufficient_data"
 ]);
 const errors: string[] = [];
 
@@ -96,6 +123,14 @@ for (const mappingPath of mappingPaths) {
 
     if (!allowedBusinessRelevance.has(record.business_relevance)) {
       errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has invalid business relevance ${record.business_relevance}.`);
+    }
+
+    if ("v1_readiness" in record && !allowedV1Readiness.has(record.v1_readiness || "")) {
+      errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has invalid v1_readiness ${record.v1_readiness}.`);
+    }
+
+    if ("exclusion_or_delay_reason" in record && !allowedExclusionOrDelayReasons.has(record.exclusion_or_delay_reason || "")) {
+      errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has invalid exclusion_or_delay_reason ${record.exclusion_or_delay_reason}.`);
     }
 
     if (opportunityIds && !opportunityIds.has(record.opportunity_id)) {
