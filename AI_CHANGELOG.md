@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) admin scan access polish
+
+- Hid public scan/report-start CTAs for signed-in admin accounts while keeping regular signed-in users unchanged.
+- Redirected signed-in admins away from `/scan` to `/admin`, including direct browser visits and in-app scan navigation.
+- Passed public auth state into the scan and sign-in shells so signed-in users see `Sign Out` instead of `Sign In` on `/scan`.
+
 ## 2026-06-25 - Codex (GPT-5) manual review semantics refinement
 
 - Reinterpreted full-run `manual_review_required` as true classifier uncertainty instead of V1 readiness or business-scope gating.

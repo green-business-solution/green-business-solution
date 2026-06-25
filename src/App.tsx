@@ -26,6 +26,12 @@ type UserRecord = {
   lastLoginAt: string | null;
 };
 
+type PublicAuthState = {
+  isAdmin: boolean;
+  isSignedIn: boolean;
+  onSignOut: () => void;
+};
+
 type IntakeRecord = {
   userId: string;
   submissionId: string;
@@ -1077,10 +1083,12 @@ function ArrowUpRightIcon() {
 }
 
 function PublicNav({
+  canStartScan = true,
   isSignedIn = false,
   navigate,
   onSignOut
 }: {
+  canStartScan?: boolean;
   isSignedIn?: boolean;
   navigate: (route: Route) => void;
   onSignOut?: () => void;
@@ -1161,9 +1169,11 @@ function PublicNav({
         </nav>
         <div className="nav-actions">
           {renderAuthAction()}
-          <button className="nav-cta" onClick={() => go("scan")} type="button">
-            Get Started
-          </button>
+          {canStartScan ? (
+            <button className="nav-cta" onClick={() => go("scan")} type="button">
+              Get Started
+            </button>
+          ) : null}
         </div>
         <button
           aria-expanded={isMenuOpen}
@@ -1176,9 +1186,11 @@ function PublicNav({
           <span />
           <span />
         </button>
-        <button className="mobile-cta" onClick={() => go("scan")} type="button">
-          Get Started
-        </button>
+        {canStartScan ? (
+          <button className="mobile-cta" onClick={() => go("scan")} type="button">
+            Get Started
+          </button>
+        ) : null}
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
             <button className="link-button" onClick={() => go("how-it-works")} type="button">
@@ -1196,9 +1208,11 @@ function PublicNav({
               ))}
             </div>
             {renderAuthAction()}
-            <button className="nav-cta" onClick={() => go("scan")} type="button">
-              Get Started
-            </button>
+            {canStartScan ? (
+              <button className="nav-cta" onClick={() => go("scan")} type="button">
+                Get Started
+              </button>
+            ) : null}
           </div>
         ) : null}
       </div>
@@ -1206,7 +1220,22 @@ function PublicNav({
   );
 }
 
-function Footer({ navigate }: { navigate: (route: Route) => void }) {
+function Footer({
+  canStartScan = true,
+  navigate
+}: {
+  canStartScan?: boolean;
+  navigate: (route: Route) => void;
+}) {
+  const siteLinks: Array<[string, Route]> = [
+    ["How It Works", "how-it-works"],
+    ["Pricing", "pricing"]
+  ];
+
+  if (canStartScan) {
+    siteLinks.push(["Get Started", "scan"]);
+  }
+
   return (
     <footer className="site-footer">
       <div className="footer-brand">
@@ -1215,12 +1244,8 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
       </div>
       <nav aria-label="Site links" className="footer-links">
         <span className="footer-heading">Site</span>
-        {[
-          ["How It Works", "how-it-works"],
-          ["Pricing", "pricing"],
-          ["Get Started", "scan"]
-        ].map(([label, route]) => (
-          <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
+        {siteLinks.map(([label, route]) => (
+          <button className="footer-link" key={route} onClick={() => navigate(route)} type="button">
             {label}
           </button>
         ))}
@@ -1245,24 +1270,29 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
 
 function PublicShell({
   children,
-  isSignedIn,
   navigate,
-  onSignOut,
   pageClassName,
+  publicAuth,
   showFooter = false
 }: {
   children: ReactNode;
-  isSignedIn?: boolean;
   navigate: (route: Route) => void;
-  onSignOut?: () => void;
   pageClassName?: string;
+  publicAuth?: PublicAuthState;
   showFooter?: boolean;
 }) {
+  const canStartScan = !publicAuth?.isAdmin;
+
   return (
     <main className={["public-page", pageClassName].filter(Boolean).join(" ")}>
-      <PublicNav isSignedIn={isSignedIn} navigate={navigate} onSignOut={onSignOut} />
+      <PublicNav
+        canStartScan={canStartScan}
+        isSignedIn={Boolean(publicAuth?.isSignedIn)}
+        navigate={navigate}
+        onSignOut={publicAuth?.onSignOut}
+      />
       {children}
-      {showFooter ? <Footer navigate={navigate} /> : null}
+      {showFooter ? <Footer canStartScan={canStartScan} navigate={navigate} /> : null}
     </main>
   );
 }
@@ -1282,6 +1312,28 @@ function CTAButton({
     <button className={variant === "secondary" ? "secondary-button" : undefined} onClick={() => navigate(route)} type="button">
       {children}
     </button>
+  );
+}
+
+function ScanStartButton({
+  children,
+  navigate,
+  publicAuth,
+  variant = "primary"
+}: {
+  children: ReactNode;
+  navigate: (route: Route) => void;
+  publicAuth?: PublicAuthState;
+  variant?: "primary" | "secondary";
+}) {
+  if (publicAuth?.isAdmin) {
+    return null;
+  }
+
+  return (
+    <CTAButton navigate={navigate} route="scan" variant={variant}>
+      {children}
+    </CTAButton>
   );
 }
 
@@ -1352,16 +1404,14 @@ function AboutHubCard({
 }
 
 function HomePage({
-  isSignedIn,
   navigate,
-  onSignOut
+  publicAuth
 }: {
-  isSignedIn: boolean;
   navigate: (route: Route) => void;
-  onSignOut: () => void;
+  publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell isSignedIn={isSignedIn} navigate={navigate} onSignOut={onSignOut} showFooter>
+    <PublicShell navigate={navigate} publicAuth={publicAuth} showFooter>
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="hero-eyebrow">Sustainable. Profitable. Practical.</p>
@@ -1371,7 +1421,7 @@ function HomePage({
             prioritized next steps from start to finish.
           </p>
           <div className="hero-actions">
-            <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
+            <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
           </div>
         </div>
       </section>
@@ -1448,13 +1498,19 @@ function HomePage({
       <section className="final-cta">
         <h2>See what opportunities your business may qualify for.</h2>
         <p>Start with a free scan. Upgrade only if deeper analysis is worth it.</p>
-        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );
 }
 
-function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
+function HowItWorksPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   const steps = [
     ["Complete the free scan", "Share your business address, utility provider, organization type, and basic facility information."],
     ["Receive an opportunity preview", "See estimated value range, likely retrofit categories, and whether your facility appears to have meaningful opportunities."],
@@ -1464,7 +1520,7 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
   ];
 
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Process"
@@ -1524,13 +1580,19 @@ function HowItWorksPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Move from discovery to a practical retrofit decision path.</h2>
-        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );
 }
 
-function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
+function PricingPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   const cards = [
     ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Get Started"],
     ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
@@ -1539,7 +1601,7 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
   ];
 
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Pricing"
@@ -1561,9 +1623,11 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
-              {cta}
-            </button>
+            {cta === "Contact Us" || !publicAuth.isAdmin ? (
+              <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
+                {cta}
+              </button>
+            ) : null}
           </article>
         ))}
       </section>
@@ -1586,9 +1650,15 @@ function PricingPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
+function AboutPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="About RetroFi"
@@ -1634,9 +1704,15 @@ function AboutPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
+function MissionPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Mission"
@@ -1677,15 +1753,21 @@ function MissionPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Start with a free scan and evaluate where a real project may exist.</h2>
-        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );
 }
 
-function TeamPage({ navigate }: { navigate: (route: Route) => void }) {
+function TeamPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Team"
@@ -1720,9 +1802,15 @@ function TeamPage({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function TrustPage({ navigate }: { navigate: (route: Route) => void }) {
+function TrustPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Trust & Data"
@@ -1782,13 +1870,19 @@ function TrustPage({ navigate }: { navigate: (route: Route) => void }) {
       </section>
       <section className="final-cta">
         <h2>Start with a free scan and share more only when deeper analysis is useful.</h2>
-        <CTAButton navigate={navigate} route="scan">Get Started</CTAButton>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );
 }
 
-function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
+function ContactPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
@@ -1814,7 +1908,7 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
   }
 
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Contact"
@@ -1886,9 +1980,9 @@ function ContactPage({ navigate }: { navigate: (route: Route) => void }) {
           </div>
           <div className="hero-actions">
             <button type="submit">Email RetroFi</button>
-            <CTAButton navigate={navigate} route="scan" variant="secondary">
+            <ScanStartButton navigate={navigate} publicAuth={publicAuth} variant="secondary">
               Get Started
-            </CTAButton>
+            </ScanStartButton>
           </div>
         </form>
       </section>
@@ -2343,9 +2437,15 @@ function DatabaseProgramDetail({ isLoading, program }: { isLoading: boolean; pro
   );
 }
 
-function ScanResultsPage({ navigate }: { navigate: (route: Route) => void }) {
+function ScanResultsPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="results-panel">
         <p className="eyebrow">Free scan</p>
         <h1>Your free scan is being prepared</h1>
@@ -2394,7 +2494,13 @@ function PageHero({
   );
 }
 
-function IntakePage({ navigate }: { navigate: (route: Route) => void }) {
+function IntakePage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
   const [form, setForm] = useState<IntakeFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -2419,7 +2525,7 @@ function IntakePage({ navigate }: { navigate: (route: Route) => void }) {
   }
 
   return (
-    <PublicShell navigate={navigate}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="scan-page form-shell">
         <div className="form-intro">
           <h1>Tell us about your business</h1>
@@ -2555,14 +2661,16 @@ function IntakePage({ navigate }: { navigate: (route: Route) => void }) {
 function SignInPage({
   navigate,
   message,
-  onAuthSuccess
+  onAuthSuccess,
+  publicAuth
 }: {
   navigate: (route: Route) => void;
   message: string | null;
   onAuthSuccess: (payload: AuthPayload, credential: AuthCredential) => void;
+  publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
+    <PublicShell navigate={navigate} pageClassName="sign-in-page" publicAuth={publicAuth} showFooter={false}>
       <section className="sign-in-panel">
         {message ? <p className="muted-message">{message}</p> : null}
         <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
@@ -3482,6 +3590,7 @@ export function App() {
   const [authCredential, setAuthCredential] = useState<AuthCredential | null>(null);
   const [signInMessage, setSignInMessage] = useState<string | null>(null);
   const [isAuthRestoring, setIsAuthRestoring] = useState(true);
+  const isAdminSignedIn = authPayload?.dashboard === "admin";
 
   useEffect(() => {
     function syncRoute() {
@@ -3548,10 +3657,22 @@ export function App() {
     };
   }, []);
 
+  function routeForCurrentAuth(nextRoute: Route) {
+    return nextRoute === "scan" && isAdminSignedIn ? "admin" : nextRoute;
+  }
+
   function navigate(nextRoute: Route) {
-    const path = pathForRoute(nextRoute);
+    const resolvedRoute = routeForCurrentAuth(nextRoute);
+    const path = pathForRoute(resolvedRoute);
     window.history.pushState({}, "", path);
-    setRoute(nextRoute);
+    setRoute(resolvedRoute);
+  }
+
+  function replaceRoute(nextRoute: Route) {
+    const resolvedRoute = routeForCurrentAuth(nextRoute);
+    const path = pathForRoute(resolvedRoute);
+    window.history.replaceState({}, "", path);
+    setRoute(resolvedRoute);
   }
 
   function handleAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
@@ -3570,53 +3691,80 @@ export function App() {
     navigate("home");
   }
 
+  useEffect(() => {
+    if (!isAuthRestoring && route === "scan" && isAdminSignedIn) {
+      replaceRoute("admin");
+    }
+  }, [isAuthRestoring, isAdminSignedIn, route]);
+
   if (isAuthRestoring) {
     return <SessionRestoringPage navigate={navigate} />;
   }
 
-  if (route === "how-it-works") {
-    return <HowItWorksPage navigate={navigate} />;
+  const publicAuth: PublicAuthState = {
+    isAdmin: isAdminSignedIn,
+    isSignedIn: Boolean(authPayload),
+    onSignOut: signOut
+  };
+  const effectiveRoute = route === "scan" && isAdminSignedIn ? "admin" : route;
+
+  if (effectiveRoute === "how-it-works") {
+    return <HowItWorksPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "pricing") {
-    return <PricingPage navigate={navigate} />;
+  if (effectiveRoute === "pricing") {
+    return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "about") {
-    return <AboutPage navigate={navigate} />;
+  if (effectiveRoute === "about") {
+    return <AboutPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "about-mission") {
-    return <MissionPage navigate={navigate} />;
+  if (effectiveRoute === "about-mission") {
+    return <MissionPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "about-team") {
-    return <TeamPage navigate={navigate} />;
+  if (effectiveRoute === "about-team") {
+    return <TeamPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "about-trust") {
-    return <TrustPage navigate={navigate} />;
+  if (effectiveRoute === "about-trust") {
+    return <TrustPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "about-contact") {
-    return <ContactPage navigate={navigate} />;
+  if (effectiveRoute === "about-contact") {
+    return <ContactPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "scan") {
-    return <IntakePage navigate={navigate} />;
+  if (effectiveRoute === "scan") {
+    return <IntakePage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "scan-results") {
-    return <ScanResultsPage navigate={navigate} />;
+  if (effectiveRoute === "scan-results") {
+    return <ScanResultsPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
-  if (route === "sign-in") {
-    return <SignInPage navigate={navigate} message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
+  if (effectiveRoute === "sign-in") {
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
   }
 
-  if (route === "portal" || route === "admin") {
+  if (effectiveRoute === "portal" || effectiveRoute === "admin") {
     if (!authPayload) {
-      return <SignInPage navigate={navigate} message={signInMessage} onAuthSuccess={handleAuthSuccess} />;
+      return (
+        <SignInPage
+          navigate={navigate}
+          message={signInMessage}
+          onAuthSuccess={handleAuthSuccess}
+          publicAuth={publicAuth}
+        />
+      );
     }
 
     if (authPayload.dashboard === "admin" && authPayload.adminDashboard) {
@@ -3632,5 +3780,5 @@ export function App() {
     return <UserDashboard onSignOut={signOut} payload={authPayload} />;
   }
 
-  return <HomePage isSignedIn={Boolean(authPayload)} navigate={navigate} onSignOut={signOut} />;
+  return <HomePage navigate={navigate} publicAuth={publicAuth} />;
 }
