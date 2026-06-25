@@ -28,7 +28,10 @@ const sourcePath = process.env.OPPORTUNITY_SOURCE_PATH || "/tmp/retrofi-opportun
 
 const savingsModels = readJson<SavingsModel[]>(path.join(dataDir, "savings_models.json"));
 const billFields = readJson<BillField[]>(path.join(dataDir, "bill_field_dictionary.json"));
-const mapping = readJson<MappingRecord[]>(path.join(dataDir, "opportunity_savings_mapping.sample.json"));
+const mappingPaths = [
+  path.join(dataDir, "opportunity_savings_mapping.sample.json"),
+  path.join(dataDir, "opportunity_savings_mapping.json")
+].filter((filePath) => fs.existsSync(filePath));
 
 const modelIds = new Set(savingsModels.map((model) => model.id));
 const fieldIds = new Set(billFields.map((field) => field.id));
@@ -59,44 +62,49 @@ for (const model of savingsModels) {
   }
 }
 
-for (const record of mapping) {
-  if (!modelIds.has(record.primary_savings_model_id)) {
-    errors.push(`Mapping ${record.opportunity_id} has unknown primary model ${record.primary_savings_model_id}.`);
-  }
+const source = fs.existsSync(sourcePath) ? readJson<{ Items?: Record<string, unknown>[] }>(sourcePath) : null;
+const opportunityIds = source
+  ? new Set((source.Items || []).map((item) => unmarshall(item).opportunityId))
+  : null;
 
-  for (const modelId of record.secondary_savings_model_ids || []) {
-    if (!modelIds.has(modelId)) {
-      errors.push(`Mapping ${record.opportunity_id} has unknown secondary model ${modelId}.`);
+for (const mappingPath of mappingPaths) {
+  const mapping = readJson<MappingRecord[]>(mappingPath);
+  const mappingLabel = path.relative(repoRoot, mappingPath);
+
+  for (const record of mapping) {
+    if (!modelIds.has(record.primary_savings_model_id)) {
+      errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has unknown primary model ${record.primary_savings_model_id}.`);
     }
-  }
 
-  for (const fieldId of [...(record.required_bill_fields || []), ...(record.optional_bill_fields || [])]) {
-    if (!fieldIds.has(fieldId)) {
-      errors.push(`Mapping ${record.opportunity_id} references unknown bill/document field ${fieldId}.`);
+    for (const modelId of record.secondary_savings_model_ids || []) {
+      if (!modelIds.has(modelId)) {
+        errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has unknown secondary model ${modelId}.`);
+      }
     }
-  }
 
-  for (const role of record.value_roles || []) {
-    if (!allowedValueRoles.has(role)) {
-      errors.push(`Mapping ${record.opportunity_id} has invalid value role ${role}.`);
+    for (const fieldId of [...(record.required_bill_fields || []), ...(record.optional_bill_fields || [])]) {
+      if (!fieldIds.has(fieldId)) {
+        errors.push(`${mappingLabel}: mapping ${record.opportunity_id} references unknown bill/document field ${fieldId}.`);
+      }
     }
-  }
 
-  if (!allowedBusinessRelevance.has(record.business_relevance)) {
-    errors.push(`Mapping ${record.opportunity_id} has invalid business relevance ${record.business_relevance}.`);
+    for (const role of record.value_roles || []) {
+      if (!allowedValueRoles.has(role)) {
+        errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has invalid value role ${role}.`);
+      }
+    }
+
+    if (!allowedBusinessRelevance.has(record.business_relevance)) {
+      errors.push(`${mappingLabel}: mapping ${record.opportunity_id} has invalid business relevance ${record.business_relevance}.`);
+    }
+
+    if (opportunityIds && !opportunityIds.has(record.opportunity_id)) {
+      errors.push(`${mappingLabel}: opportunity_id does not exist in source scan: ${record.opportunity_id}.`);
+    }
   }
 }
 
-if (fs.existsSync(sourcePath)) {
-  const source = readJson<{ Items?: Record<string, unknown>[] }>(sourcePath);
-  const opportunityIds = new Set((source.Items || []).map((item) => unmarshall(item).opportunityId));
-
-  for (const record of mapping) {
-    if (!opportunityIds.has(record.opportunity_id)) {
-      errors.push(`Mapping opportunity_id does not exist in source scan: ${record.opportunity_id}.`);
-    }
-  }
-} else {
+if (!source) {
   errors.push(
     `Opportunity source scan was not found at ${sourcePath}. Set OPPORTUNITY_SOURCE_PATH to validate sampled IDs against a current database scan.`
   );
@@ -110,7 +118,11 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`Savings mapping validation passed: ${savingsModels.length} models, ${billFields.length} fields, ${mapping.length} mappings.`);
+const mappingSummary = mappingPaths
+  .map((mappingPath) => `${path.relative(repoRoot, mappingPath)}:${readJson<MappingRecord[]>(mappingPath).length}`)
+  .join(", ");
+
+console.log(`Savings mapping validation passed: ${savingsModels.length} models, ${billFields.length} fields, ${mappingSummary}.`);
 
 function readJson<T>(filePath: string): T {
   return JSON.parse(fs.readFileSync(filePath, "utf8")) as T;

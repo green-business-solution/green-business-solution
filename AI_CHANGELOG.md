@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) full savings mapping dry run
+
+- Added a full-run savings mapping generator that classifies the read-only opportunity export without writing to DynamoDB.
+- Generated full dry-run mapping JSON, import CSV, and coverage report for 2,096 opportunity records.
+- Updated savings mapping validation to validate both sample and full mapping files against the source export.
+- Left production opportunity records and database UI unchanged.
+
 ## 2026-06-24 - Codex (GPT-5) savings model refinement
 
 - Added value-role and business-relevance classification to the sample opportunity savings mappings and import CSV.
