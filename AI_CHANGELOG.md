@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) admin user-flow access restore
+
+- Restored public `Get Started` calls to action for signed-in admin users.
+- Removed the signed-in admin redirect from `/scan` to `/admin` so admins can use the normal free-scan intake flow.
+- Kept admin sign-in landing behavior unchanged while allowing admins to navigate into user-facing flows when needed.
+
 ## 2026-06-25 - Codex (GPT-5) retrofit selection shortcut
 
 - Added a compact `Select all retrofit types` action to the free-scan interested-improvements checklist.

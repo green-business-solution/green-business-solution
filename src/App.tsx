@@ -1293,7 +1293,7 @@ function PublicShell({
   publicAuth?: PublicAuthState;
   showFooter?: boolean;
 }) {
-  const canStartScan = !publicAuth?.isAdmin;
+  const canStartScan = true;
 
   return (
     <main className={["public-page", pageClassName].filter(Boolean).join(" ")}>
@@ -1338,10 +1338,6 @@ function ScanStartButton({
   publicAuth?: PublicAuthState;
   variant?: "primary" | "secondary";
 }) {
-  if (publicAuth?.isAdmin) {
-    return null;
-  }
-
   return (
     <CTAButton navigate={navigate} route="scan" variant={variant}>
       {children}
@@ -1635,11 +1631,9 @@ function PricingPage({
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            {cta === "Contact Us" || !publicAuth.isAdmin ? (
-              <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
-                {cta}
-              </button>
-            ) : null}
+            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
+              {cta}
+            </button>
           </article>
         ))}
       </section>
@@ -3677,22 +3671,10 @@ export function App() {
     };
   }, []);
 
-  function routeForCurrentAuth(nextRoute: Route) {
-    return nextRoute === "scan" && isAdminSignedIn ? "admin" : nextRoute;
-  }
-
   function navigate(nextRoute: Route) {
-    const resolvedRoute = routeForCurrentAuth(nextRoute);
-    const path = pathForRoute(resolvedRoute);
+    const path = pathForRoute(nextRoute);
     window.history.pushState({}, "", path);
-    setRoute(resolvedRoute);
-  }
-
-  function replaceRoute(nextRoute: Route) {
-    const resolvedRoute = routeForCurrentAuth(nextRoute);
-    const path = pathForRoute(resolvedRoute);
-    window.history.replaceState({}, "", path);
-    setRoute(resolvedRoute);
+    setRoute(nextRoute);
   }
 
   function handleAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
@@ -3711,12 +3693,6 @@ export function App() {
     navigate("home");
   }
 
-  useEffect(() => {
-    if (!isAuthRestoring && route === "scan" && isAdminSignedIn) {
-      replaceRoute("admin");
-    }
-  }, [isAuthRestoring, isAdminSignedIn, route]);
-
   if (isAuthRestoring) {
     return <SessionRestoringPage navigate={navigate} />;
   }
@@ -3726,7 +3702,7 @@ export function App() {
     isSignedIn: Boolean(authPayload),
     onSignOut: signOut
   };
-  const effectiveRoute = route === "scan" && isAdminSignedIn ? "admin" : route;
+  const effectiveRoute = route;
 
   if (effectiveRoute === "how-it-works") {
     return <HowItWorksPage navigate={navigate} publicAuth={publicAuth} />;
