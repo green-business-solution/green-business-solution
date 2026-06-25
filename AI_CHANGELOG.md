@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) sample opportunity matching pipeline
+
+- Added a deterministic first-pass matching pipeline with criterion registry, ontology normalization, opportunity match profiles, user match profiles, rule evaluation, scoring, and explanations.
+- Added ten sample intake profiles and a read-only sample matching audit script that evaluates every current opportunity against each sample user.
+- Generated a sample matching report from 2,096 live opportunity records and added regression tests for utility mismatches, missing utility restrictions, vehicle battery text, and unavailable program summaries.
+
 ## 2026-06-25 - Codex (GPT-5) intake draft persistence and retrofit select-all option
 
 - Replaced the `Not sure yet` interested-improvements checkbox with an in-grid `All retrofit types` checkbox.
