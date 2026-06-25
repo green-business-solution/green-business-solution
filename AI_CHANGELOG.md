@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) intake draft persistence and retrofit select-all option
+
+- Replaced the `Not sure yet` interested-improvements checkbox with an in-grid `All retrofit types` checkbox.
+- Selecting `All retrofit types` selects every concrete retrofit category, and unselecting it clears the retrofit category selections.
+- Added local browser draft persistence for the free-scan intake form so refreshes restore in-progress entries.
+- Cleared the saved draft after successful intake submission.
+
 ## 2026-06-25 - Codex (GPT-5) admin user-flow access restore
 
 - Restored public `Get Started` calls to action for signed-in admin users.

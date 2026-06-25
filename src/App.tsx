@@ -390,6 +390,31 @@ const initialFormState: IntakeFormState = {
   notes: ""
 };
 
+const intakeFormDraftStorageKey = "retrofi.intakeFormDraft.v1";
+const intakeFormStringFields = [
+  "fullName",
+  "email",
+  "phone",
+  "roleTitle",
+  "contactPreference",
+  "siteAddress",
+  "electricUtilityProvider",
+  "companyName",
+  "website",
+  "industry",
+  "organizationType",
+  "organizationSize",
+  "headquarters",
+  "ownershipStatus",
+  "buildingType",
+  "squareFootage",
+  "sustainabilityGoals",
+  "currentChallenges",
+  "monthlyUtilitySpend",
+  "timeline",
+  "notes"
+] as const satisfies ReadonlyArray<Exclude<keyof IntakeFormState, "interestedImprovements">>;
+
 const utilityProviderOptions = [
   "PG&E",
   "Southern California Edison",
@@ -427,8 +452,8 @@ const buildingTypeOptions = [
   "Multifamily",
   "Other"
 ];
-const notSureImprovementOption = "Not sure yet";
-const improvementOptions = [
+const allRetrofitTypesOption = "All retrofit types";
+const retrofitTypeOptions = [
   "LED lighting",
   "HVAC",
   "Refrigeration",
@@ -437,10 +462,74 @@ const improvementOptions = [
   "EV charging",
   "Water efficiency",
   "Building controls",
-  "Commercial kitchen equipment",
-  notSureImprovementOption
+  "Commercial kitchen equipment"
 ];
-const selectableImprovementOptions = improvementOptions.filter((option) => option !== notSureImprovementOption);
+const improvementOptions = [...retrofitTypeOptions, allRetrofitTypesOption];
+
+function normalizeIntakeFormDraft(value: unknown): IntakeFormState | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const storedDraft = value as Partial<Record<keyof IntakeFormState, unknown>>;
+  const draft: IntakeFormState = { ...initialFormState };
+
+  for (const field of intakeFormStringFields) {
+    const fieldValue = storedDraft[field];
+    if (typeof fieldValue === "string") {
+      draft[field] = fieldValue;
+    }
+  }
+
+  if (Array.isArray(storedDraft.interestedImprovements)) {
+    draft.interestedImprovements = storedDraft.interestedImprovements.filter(
+      (option): option is string => typeof option === "string" && retrofitTypeOptions.includes(option)
+    );
+  }
+
+  return draft;
+}
+
+function readStoredIntakeFormDraft(): IntakeFormState {
+  if (typeof window === "undefined") {
+    return initialFormState;
+  }
+
+  try {
+    const rawDraft = window.localStorage.getItem(intakeFormDraftStorageKey);
+    if (!rawDraft) {
+      return initialFormState;
+    }
+
+    return normalizeIntakeFormDraft(JSON.parse(rawDraft)) ?? initialFormState;
+  } catch {
+    return initialFormState;
+  }
+}
+
+function storeIntakeFormDraft(form: IntakeFormState) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(intakeFormDraftStorageKey, JSON.stringify(form));
+  } catch {
+    // Ignore local storage failures so the form remains usable in private or restricted browsers.
+  }
+}
+
+function clearStoredIntakeFormDraft() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(intakeFormDraftStorageKey);
+  } catch {
+    // Ignore local storage failures so successful submission can continue.
+  }
+}
 
 function adminAuthBody(credential: AuthCredential) {
   if (credential.provider === "password") {
@@ -964,20 +1053,25 @@ function CheckboxGroup({
   values,
   onChange,
   options,
-  action,
+  selectAllOption,
   required
 }: {
   label: string;
   values: string[];
   onChange: (values: string[]) => void;
   options: string[];
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
+  selectAllOption?: string;
   required?: boolean;
 }) {
+  const selectableOptions = selectAllOption ? options.filter((option) => option !== selectAllOption) : options;
+  const allOptionsSelected = Boolean(selectAllOption) && selectableOptions.every((option) => values.includes(option));
+
   function toggle(option: string) {
+    if (option === selectAllOption) {
+      onChange(allOptionsSelected ? [] : selectableOptions);
+      return;
+    }
+
     if (values.includes(option)) {
       onChange(values.filter((value) => value !== option));
       return;
@@ -986,22 +1080,21 @@ function CheckboxGroup({
     onChange([...values, option]);
   }
 
+  function isChecked(option: string) {
+    return option === selectAllOption ? allOptionsSelected : values.includes(option);
+  }
+
   return (
     <fieldset className="field field-wide checkbox-group">
       <legend>
         {label}
         {required ? <b aria-label="required"> *</b> : null}
       </legend>
-      {action ? (
-        <button className="checkbox-group-action" onClick={action.onClick} type="button">
-          {action.label}
-        </button>
-      ) : null}
       <div className="checkbox-grid">
         {options.map((option) => (
           <label key={option}>
             <input
-              checked={values.includes(option)}
+              checked={isChecked(option)}
               onChange={() => toggle(option)}
               type="checkbox"
               value={option}
@@ -2507,9 +2600,13 @@ function IntakePage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const [form, setForm] = useState<IntakeFormState>(initialFormState);
+  const [form, setForm] = useState<IntakeFormState>(() => readStoredIntakeFormDraft());
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    storeIntakeFormDraft(form);
+  }, [form]);
 
   function updateField(name: keyof IntakeFormState, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -2522,6 +2619,7 @@ function IntakePage({
 
     try {
       await apiPost<PortalPayload>("/api/intake", form);
+      clearStoredIntakeFormDraft();
       navigate("scan-results");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
@@ -2620,14 +2718,6 @@ function IntakePage({
               value={form.squareFootage}
             />
             <CheckboxGroup
-              action={{
-                label: "Select all retrofit types",
-                onClick: () =>
-                  setForm((current) => ({
-                    ...current,
-                    interestedImprovements: selectableImprovementOptions
-                  }))
-              }}
               label="Interested improvements"
               onChange={(values) =>
                 setForm((current) => ({
@@ -2637,6 +2727,7 @@ function IntakePage({
               }
               options={improvementOptions}
               required
+              selectAllOption={allRetrofitTypesOption}
               values={form.interestedImprovements}
             />
             <TextArea

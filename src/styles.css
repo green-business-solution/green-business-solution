@@ -410,20 +410,6 @@ mark {
   padding: 0;
 }
 
-.checkbox-group-action {
-  background: #ffffff;
-  border: 1px solid #c8d2cb;
-  color: #17211b;
-  font-size: 13px;
-  justify-self: start;
-  min-height: 36px;
-  padding: 0 12px;
-}
-
-.checkbox-group-action:hover {
-  background: #edf2ee;
-}
-
 .checkbox-grid {
   display: grid;
   gap: 10px;
@@ -1306,14 +1292,14 @@ body {
   opacity: 0.72;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.checkbox-group-action) {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button) {
   background: var(--retrofi-green);
   border-radius: 8px;
   min-height: 46px;
   padding: 0 18px;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.checkbox-group-action):hover {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):hover {
   background: var(--retrofi-green-dark);
 }
 
