@@ -53,9 +53,11 @@ type IntakeRecord = {
   site?: {
     address: string;
     electricUtilityProvider: string;
+    gasUtilityProvider?: string | null;
     ownershipStatus: string;
     buildingType: string;
     squareFootage: string;
+    numberOfUnits?: string | null;
     derivedFieldsPlanned?: string[];
   };
   sustainability: {
@@ -425,6 +427,7 @@ type OAuthRedirectResult = {
 };
 
 type IntakeFormState = {
+  contactName: string;
   fullName: string;
   email: string;
   phone: string;
@@ -432,6 +435,7 @@ type IntakeFormState = {
   contactPreference: string;
   siteAddress: string;
   electricUtilityProvider: string;
+  gasUtilityProvider: string;
   companyName: string;
   website: string;
   industry: string;
@@ -441,6 +445,7 @@ type IntakeFormState = {
   ownershipStatus: string;
   buildingType: string;
   squareFootage: string;
+  numberOfUnits: string;
   interestedImprovements: string[];
   sustainabilityGoals: string;
   currentChallenges: string;
@@ -450,6 +455,7 @@ type IntakeFormState = {
 };
 
 const initialFormState: IntakeFormState = {
+  contactName: "",
   fullName: "",
   email: "",
   phone: "",
@@ -457,6 +463,7 @@ const initialFormState: IntakeFormState = {
   contactPreference: "Email",
   siteAddress: "",
   electricUtilityProvider: "",
+  gasUtilityProvider: "",
   companyName: "",
   website: "",
   industry: "",
@@ -466,6 +473,7 @@ const initialFormState: IntakeFormState = {
   ownershipStatus: "",
   buildingType: "",
   squareFootage: "",
+  numberOfUnits: "",
   interestedImprovements: [],
   sustainabilityGoals: "",
   currentChallenges: "",
@@ -476,6 +484,7 @@ const initialFormState: IntakeFormState = {
 
 const intakeFormDraftStorageKey = "retrofi.intakeFormDraft.v1";
 const intakeFormStringFields = [
+  "contactName",
   "fullName",
   "email",
   "phone",
@@ -483,6 +492,7 @@ const intakeFormStringFields = [
   "contactPreference",
   "siteAddress",
   "electricUtilityProvider",
+  "gasUtilityProvider",
   "companyName",
   "website",
   "industry",
@@ -492,6 +502,7 @@ const intakeFormStringFields = [
   "ownershipStatus",
   "buildingType",
   "squareFootage",
+  "numberOfUnits",
   "sustainabilityGoals",
   "currentChallenges",
   "monthlyUtilitySpend",
@@ -508,15 +519,6 @@ const utilityProviderOptions = [
   "SMUD",
   "Other / Not sure"
 ];
-const organizationTypeOptions = [
-  "Commercial Business",
-  "Industrial Facility",
-  "Agricultural Operation",
-  "Multifamily Property",
-  "Nonprofit Organization",
-  "Government / Public Agency",
-  "Other"
-];
 const organizationSizeOptions = [
   "1-10 employees",
   "11-50 employees",
@@ -524,31 +526,386 @@ const organizationSizeOptions = [
   "251-1,000 employees",
   "1,000+ employees"
 ];
-const ownershipStatusOptions = ["Own", "Lease", "Manage property", "Not sure"];
-const buildingTypeOptions = [
-  "Restaurant / Commercial Kitchen",
-  "Grocery / Convenience Store",
-  "Hotel / Hospitality",
-  "Warehouse / Industrial Space",
-  "Medical / Dental Office",
-  "Office",
-  "Retail",
-  "Multifamily",
-  "Other"
+const electricUtilityStepOptions = [...utilityProviderOptions.filter((option) => option !== "Other / Not sure"), "I'm not sure"];
+const gasUtilityStepOptions = [...electricUtilityStepOptions, "I don't have gas"];
+
+type IntakeFlowId = "unselected" | "homeowner" | "multifamily" | "business" | "organization";
+
+type StepOption = {
+  label: string;
+  value: string;
+};
+
+type ConversationalStep = {
+  id: string;
+  kind: "choice" | "input" | "textarea" | "review";
+  question: string;
+  description?: string;
+  field?: keyof IntakeFormState;
+  inputMode?: "email" | "numeric" | "tel" | "text" | "url";
+  optional?: boolean;
+  options?: StepOption[];
+  placeholder?: string;
+  validate?: (value: string) => string | null;
+};
+
+const organizationTypeChoices: StepOption[] = [
+  { label: "Homeowner", value: "homeowner" },
+  { label: "Multifamily Property Owner / Manager", value: "multifamily_property_owner_manager" },
+  { label: "Business / Commercial", value: "business_commercial" },
+  { label: "Nonprofit", value: "nonprofit" },
+  { label: "Government / Public Agency", value: "government_public_agency" },
+  { label: "School / Education", value: "school_education" },
+  { label: "Agriculture", value: "agriculture" },
+  { label: "Industrial / Manufacturing", value: "industrial_manufacturing" },
+  { label: "Other", value: "other" }
 ];
-const allRetrofitTypesOption = "All retrofit types";
-const retrofitTypeOptions = [
-  "LED lighting",
-  "HVAC",
-  "Refrigeration",
-  "Solar",
-  "Battery storage",
-  "EV charging",
-  "Water efficiency",
-  "Building controls",
-  "Commercial kitchen equipment"
+
+const organizationTypeLabelByValue = Object.fromEntries(
+  organizationTypeChoices.map((option) => [option.value, option.label])
+) as Record<string, string>;
+
+const homeownerBuildingTypeOptions: StepOption[] = [
+  { label: "Single-family home", value: "Single-family home" },
+  { label: "Townhome", value: "Townhome" },
+  { label: "Condo", value: "Condo" },
+  { label: "Duplex / triplex", value: "Duplex / triplex" },
+  { label: "Other", value: "Other" }
 ];
-const improvementOptions = [...retrofitTypeOptions, allRetrofitTypesOption];
+
+const businessBuildingTypeOptions: StepOption[] = [
+  { label: "Office", value: "Office" },
+  { label: "Retail", value: "Retail" },
+  { label: "Restaurant / commercial kitchen", value: "Restaurant / Commercial Kitchen" },
+  { label: "Grocery / convenience store", value: "Grocery / Convenience Store" },
+  { label: "Warehouse", value: "Warehouse" },
+  { label: "Industrial", value: "Industrial" },
+  { label: "Hospitality", value: "Hospitality" },
+  { label: "Medical / dental office", value: "Medical / Dental Office" },
+  { label: "Mixed-use", value: "Mixed-use" },
+  { label: "Other", value: "Other" }
+];
+
+const organizationSizeStepOptions = organizationSizeOptions.map((option) => ({ label: option, value: option }));
+const electricUtilityChoiceOptions = electricUtilityStepOptions.map((option) => ({ label: option, value: option }));
+const gasUtilityChoiceOptions = gasUtilityStepOptions.map((option) => ({ label: option, value: option }));
+
+function intakeFlowForOrganizationType(value: string): IntakeFlowId {
+  switch (value) {
+    case "homeowner":
+      return "homeowner";
+    case "multifamily_property_owner_manager":
+      return "multifamily";
+    case "business_commercial":
+      return "business";
+    case "nonprofit":
+    case "government_public_agency":
+    case "school_education":
+    case "agriculture":
+    case "industrial_manufacturing":
+    case "other":
+      return "organization";
+    default:
+      return "unselected";
+  }
+}
+
+function isEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+function isNumericEntry(value: string) {
+  return /^\d[\d,\s.]*$/.test(value.trim());
+}
+
+function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
+  const steps: ConversationalStep[] = [
+    {
+      id: "organizationType",
+      kind: "choice",
+      question: "What best describes you?",
+      field: "organizationType",
+      options: organizationTypeChoices,
+      validate: (value) => (value ? null : "Choose the option that best matches you.")
+    }
+  ];
+
+  const flow = intakeFlowForOrganizationType(form.organizationType);
+
+  if (flow === "homeowner") {
+    steps.push(
+      {
+        id: "siteAddress",
+        kind: "textarea",
+        question: "What is your property address?",
+        field: "siteAddress",
+        placeholder: "Street address, city, state, ZIP"
+      },
+      {
+        id: "electricUtilityProvider",
+        kind: "choice",
+        question: "Who is your electric utility provider?",
+        field: "electricUtilityProvider",
+        options: electricUtilityChoiceOptions
+      },
+      {
+        id: "gasUtilityProvider",
+        kind: "choice",
+        question: "Who is your gas utility provider?",
+        field: "gasUtilityProvider",
+        options: gasUtilityChoiceOptions,
+        optional: true
+      },
+      {
+        id: "buildingType",
+        kind: "choice",
+        question: "What type of home is it?",
+        field: "buildingType",
+        options: homeownerBuildingTypeOptions
+      },
+      {
+        id: "squareFootage",
+        kind: "input",
+        question: "What is the approximate square footage?",
+        field: "squareFootage",
+        inputMode: "numeric",
+        placeholder: "Approximate is fine",
+        validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
+      },
+      {
+        id: "contactName",
+        kind: "input",
+        question: "What is your name?",
+        field: "contactName",
+        placeholder: "Full name"
+      },
+      {
+        id: "email",
+        kind: "input",
+        question: "What is your email?",
+        field: "email",
+        inputMode: "email",
+        placeholder: "name@example.com",
+        validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
+      },
+      {
+        id: "phone",
+        kind: "input",
+        question: "What is your phone number?",
+        field: "phone",
+        inputMode: "tel",
+        placeholder: "(555) 555-5555",
+        optional: true
+      },
+      {
+        id: "notes",
+        kind: "textarea",
+        question: "Anything else we should know?",
+        field: "notes",
+        placeholder: "Optional details",
+        optional: true
+      }
+    );
+  }
+
+  if (flow === "multifamily") {
+    steps.push(
+      {
+        id: "companyName",
+        kind: "input",
+        question: "What is the property name?",
+        field: "companyName",
+        placeholder: "Property name",
+        optional: true
+      },
+      {
+        id: "siteAddress",
+        kind: "textarea",
+        question: "What is the property address?",
+        field: "siteAddress",
+        placeholder: "Street address, city, state, ZIP"
+      },
+      {
+        id: "electricUtilityProvider",
+        kind: "choice",
+        question: "Who is your electric utility provider?",
+        field: "electricUtilityProvider",
+        options: electricUtilityChoiceOptions
+      },
+      {
+        id: "gasUtilityProvider",
+        kind: "choice",
+        question: "Who is your gas utility provider?",
+        field: "gasUtilityProvider",
+        options: gasUtilityChoiceOptions,
+        optional: true
+      },
+      {
+        id: "numberOfUnits",
+        kind: "input",
+        question: "How many units are in the property?",
+        field: "numberOfUnits",
+        inputMode: "numeric",
+        placeholder: "Number of units",
+        validate: (value) => (!value.trim() ? "Enter the number of units." : isNumericEntry(value) ? null : "Number of units must be numeric.")
+      },
+      {
+        id: "squareFootage",
+        kind: "input",
+        question: "What is the approximate square footage?",
+        field: "squareFootage",
+        inputMode: "numeric",
+        placeholder: "Approximate is fine",
+        validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
+      },
+      {
+        id: "contactName",
+        kind: "input",
+        question: "What is your name?",
+        field: "contactName",
+        placeholder: "Full name"
+      },
+      {
+        id: "email",
+        kind: "input",
+        question: "What is your email?",
+        field: "email",
+        inputMode: "email",
+        placeholder: "name@example.com",
+        validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
+      },
+      {
+        id: "phone",
+        kind: "input",
+        question: "What is your phone number?",
+        field: "phone",
+        inputMode: "tel",
+        placeholder: "(555) 555-5555",
+        optional: true
+      },
+      {
+        id: "notes",
+        kind: "textarea",
+        question: "Anything else we should know?",
+        field: "notes",
+        placeholder: "Optional details",
+        optional: true
+      }
+    );
+  }
+
+  if (flow === "business" || flow === "organization") {
+    const isOrganizationFlow = flow === "organization";
+    steps.push(
+      {
+        id: "companyName",
+        kind: "input",
+        question: isOrganizationFlow ? "What is your organization name?" : "What is your company name?",
+        field: "companyName",
+        placeholder: isOrganizationFlow ? "Organization name" : "Company name"
+      },
+      {
+        id: "website",
+        kind: "input",
+        question: "What is your website?",
+        field: "website",
+        inputMode: "url",
+        placeholder: "https://example.com",
+        optional: true
+      },
+      {
+        id: "organizationSize",
+        kind: "choice",
+        question: "What is your organization size?",
+        field: "organizationSize",
+        options: organizationSizeStepOptions,
+        optional: true
+      },
+      {
+        id: "siteAddress",
+        kind: "textarea",
+        question: "What is your site address?",
+        field: "siteAddress",
+        placeholder: "Street address, city, state, ZIP"
+      },
+      {
+        id: "electricUtilityProvider",
+        kind: "choice",
+        question: "Who is your electric utility provider?",
+        field: "electricUtilityProvider",
+        options: electricUtilityChoiceOptions
+      },
+      {
+        id: "gasUtilityProvider",
+        kind: "choice",
+        question: "Who is your gas utility provider?",
+        field: "gasUtilityProvider",
+        options: gasUtilityChoiceOptions,
+        optional: true
+      },
+      {
+        id: "buildingType",
+        kind: "choice",
+        question: "What type of building is it?",
+        field: "buildingType",
+        options: businessBuildingTypeOptions
+      },
+      {
+        id: "squareFootage",
+        kind: "input",
+        question: "What is the approximate square footage?",
+        field: "squareFootage",
+        inputMode: "numeric",
+        placeholder: "Approximate is fine",
+        validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
+      },
+      {
+        id: "contactName",
+        kind: "input",
+        question: "What is your name?",
+        field: "contactName",
+        placeholder: "Full name"
+      },
+      {
+        id: "email",
+        kind: "input",
+        question: "What is your email?",
+        field: "email",
+        inputMode: "email",
+        placeholder: "name@example.com",
+        validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
+      },
+      {
+        id: "phone",
+        kind: "input",
+        question: "What is your phone number?",
+        field: "phone",
+        inputMode: "tel",
+        placeholder: "(555) 555-5555",
+        optional: true
+      },
+      {
+        id: "notes",
+        kind: "textarea",
+        question: "Anything else we should know?",
+        field: "notes",
+        placeholder: "Optional details",
+        optional: true
+      }
+    );
+  }
+
+  if (flow !== "unselected") {
+    steps.push({
+      id: "review",
+      kind: "review",
+      question: "Review and submit",
+      description: "Use Back to make changes before you submit."
+    });
+  }
+
+  return steps;
+}
 
 function normalizeIntakeFormDraft(value: unknown): IntakeFormState | null {
   if (!value || typeof value !== "object") {
@@ -567,8 +924,16 @@ function normalizeIntakeFormDraft(value: unknown): IntakeFormState | null {
 
   if (Array.isArray(storedDraft.interestedImprovements)) {
     draft.interestedImprovements = storedDraft.interestedImprovements.filter(
-      (option): option is string => typeof option === "string" && retrofitTypeOptions.includes(option)
+      (option): option is string => typeof option === "string"
     );
+  }
+
+  if (!draft.contactName && draft.fullName) {
+    draft.contactName = draft.fullName;
+  }
+
+  if (!draft.fullName && draft.contactName) {
+    draft.fullName = draft.contactName;
   }
 
   return draft;
@@ -2685,6 +3050,8 @@ function IntakePage({
   publicAuth: PublicAuthState;
 }) {
   const [form, setForm] = useState<IntakeFormState>(() => readStoredIntakeFormDraft());
+  const steps = useMemo(() => buildConversationalSteps(form), [form]);
+  const [stepIndex, setStepIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -2692,17 +3059,200 @@ function IntakePage({
     storeIntakeFormDraft(form);
   }, [form]);
 
+  useEffect(() => {
+    setStepIndex((current) => Math.min(current, Math.max(steps.length - 1, 0)));
+  }, [steps.length]);
+
+  const currentStep = steps[stepIndex];
+  const flow = intakeFlowForOrganizationType(form.organizationType);
+  const progressPercent = steps.length > 0 ? Math.round(((stepIndex + 1) / steps.length) * 100) : 0;
+
+  const reviewRows = useMemo(() => {
+    const rows: Array<{ label: string; value: string }> = [
+      { label: "User type", value: organizationTypeLabelByValue[form.organizationType] || "Not provided" }
+    ];
+
+    if (form.companyName.trim()) {
+      rows.push({
+        label:
+          flow === "multifamily"
+            ? "Property name"
+            : flow === "organization"
+              ? "Organization name"
+              : "Company name",
+        value: form.companyName.trim()
+      });
+    }
+
+    if (form.contactName.trim()) {
+      rows.push({ label: "Name", value: form.contactName.trim() });
+    }
+
+    rows.push({ label: "Address", value: form.siteAddress.trim() || "Not provided" });
+    rows.push({ label: "Electric utility", value: form.electricUtilityProvider.trim() || "Not provided" });
+
+    if (form.gasUtilityProvider.trim()) {
+      rows.push({ label: "Gas utility", value: form.gasUtilityProvider.trim() });
+    }
+
+    if (form.website.trim()) {
+      rows.push({ label: "Website", value: form.website.trim() });
+    }
+
+    if (form.organizationSize.trim()) {
+      rows.push({ label: "Organization size", value: form.organizationSize.trim() });
+    }
+
+    if (form.buildingType.trim()) {
+      rows.push({
+        label: flow === "homeowner" ? "Home type" : "Building type",
+        value: form.buildingType.trim()
+      });
+    }
+
+    if (form.numberOfUnits.trim()) {
+      rows.push({ label: "Number of units", value: form.numberOfUnits.trim() });
+    }
+
+    rows.push({ label: "Square footage", value: form.squareFootage.trim() || "Not provided" });
+    rows.push({ label: "Email", value: form.email.trim() || "Not provided" });
+
+    if (form.phone.trim()) {
+      rows.push({ label: "Phone", value: form.phone.trim() });
+    }
+
+    if (form.notes.trim()) {
+      rows.push({ label: "Notes", value: form.notes.trim() });
+    }
+
+    return rows;
+  }, [flow, form]);
+
   function updateField(name: keyof IntakeFormState, value: string) {
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => {
+      if (name === "contactName") {
+        return { ...current, contactName: value, fullName: value };
+      }
+
+      if (name === "fullName") {
+        return { ...current, fullName: value, contactName: value };
+      }
+
+      return { ...current, [name]: value };
+    });
+  }
+
+  function resetPathSpecificFields(nextOrganizationType: string) {
+    const nextFlow = intakeFlowForOrganizationType(nextOrganizationType);
+
+    setForm((current) => {
+      const nextForm = {
+        ...current,
+        organizationType: nextOrganizationType,
+        buildingType: ""
+      };
+
+      if (nextFlow === "homeowner") {
+        nextForm.companyName = "";
+        nextForm.website = "";
+        nextForm.organizationSize = "";
+        nextForm.numberOfUnits = "";
+      } else if (nextFlow === "multifamily") {
+        nextForm.website = "";
+        nextForm.organizationSize = "";
+      } else if (nextFlow === "business" || nextFlow === "organization") {
+        nextForm.numberOfUnits = "";
+      }
+
+      return nextForm;
+    });
+  }
+
+  function validateCurrentStep() {
+    if (!currentStep?.field) {
+      return null;
+    }
+
+    const value = form[currentStep.field];
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    if (!currentStep.optional && !value.trim()) {
+      return "This question is required before continuing.";
+    }
+
+    return currentStep.validate?.(value) ?? null;
+  }
+
+  function goBack() {
+    setError(null);
+    setStepIndex((current) => Math.max(current - 1, 0));
+  }
+
+  function goNext() {
+    const validationError = validateCurrentStep();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError(null);
+    setStepIndex((current) => Math.min(current + 1, steps.length - 1));
+  }
+
+  function handleChoiceSelection(field: keyof IntakeFormState, value: string) {
+    setError(null);
+
+    if (field === "organizationType") {
+      resetPathSpecificFields(value);
+      setStepIndex(1);
+      return;
+    }
+
+    updateField(field, value);
+    setStepIndex((current) => Math.min(current + 1, steps.length - 1));
   }
 
   async function submitForm(event: FormEvent) {
     event.preventDefault();
+
+    if (currentStep?.kind !== "review") {
+      goNext();
+      return;
+    }
+
     setError(null);
     setIsSubmitting(true);
 
     try {
-      await apiPost<PortalPayload>("/api/intake", form);
+      await apiPost<PortalPayload>("/api/intake", {
+        fullName: form.contactName,
+        contactName: form.contactName,
+        email: form.email,
+        phone: form.phone,
+        roleTitle: "",
+        contactPreference: "Email",
+        siteAddress: form.siteAddress,
+        electricUtilityProvider: form.electricUtilityProvider,
+        gasUtilityProvider: form.gasUtilityProvider,
+        companyName: form.companyName,
+        website: form.website,
+        industry: "",
+        organizationType: form.organizationType,
+        organizationSize: form.organizationSize,
+        headquarters: "",
+        ownershipStatus: "",
+        buildingType: form.buildingType,
+        squareFootage: form.squareFootage,
+        numberOfUnits: form.numberOfUnits,
+        interestedImprovements: [],
+        sustainabilityGoals: "",
+        currentChallenges: "",
+        monthlyUtilitySpend: "",
+        timeline: "",
+        notes: form.notes
+      });
       clearStoredIntakeFormDraft();
       navigate("scan-results");
     } catch (requestError) {
@@ -2712,135 +3262,142 @@ function IntakePage({
     }
   }
 
+  function renderStepBody() {
+    if (!currentStep) {
+      return null;
+    }
+
+    if (currentStep.kind === "choice" && currentStep.field && currentStep.options) {
+      const selectedValue = form[currentStep.field];
+      return (
+        <div className="conversational-choice-grid">
+          {currentStep.options.map((option) => (
+            <button
+              className={selectedValue === option.value ? "choice-card is-selected" : "choice-card"}
+              key={option.value}
+              onClick={() => handleChoiceSelection(currentStep.field as keyof IntakeFormState, option.value)}
+              type="button"
+            >
+              <span>{option.label}</span>
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    if (currentStep.kind === "review") {
+      return (
+        <div className="review-panel">
+          <div className="review-grid">
+            {reviewRows.map((row) => (
+              <article className="review-item" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (!currentStep.field) {
+      return null;
+    }
+
+    const value = form[currentStep.field];
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    if (currentStep.kind === "textarea") {
+      return (
+        <label className="conversational-input-shell">
+          <textarea
+            name={currentStep.field}
+            onChange={(event) => updateField(currentStep.field as keyof IntakeFormState, event.target.value)}
+            placeholder={currentStep.placeholder}
+            value={value}
+          />
+        </label>
+      );
+    }
+
+    return (
+      <label className="conversational-input-shell">
+        <input
+          inputMode={currentStep.inputMode === "numeric" ? "numeric" : undefined}
+          name={currentStep.field}
+          onChange={(event) => updateField(currentStep.field as keyof IntakeFormState, event.target.value)}
+          placeholder={currentStep.placeholder}
+          type={currentStep.inputMode === "email" ? "email" : currentStep.inputMode === "tel" ? "tel" : currentStep.inputMode === "url" ? "url" : "text"}
+          value={value}
+        />
+      </label>
+    );
+  }
+
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="scan-page form-shell">
         <div className="form-intro">
           <h1>Tell us about your facility</h1>
-          <p>We&apos;ll use this information to tailor your recommendations.</p>
+          <p>Answer a few quick questions and RetroFi will tailor your next steps automatically.</p>
         </div>
 
-        <form className="intake-form" onSubmit={submitForm}>
-          <div className="form-section-heading">
-            <h2>Business Information</h2>
-            <p className="required-note">
-              Required fields are marked with <span aria-hidden="true">*</span>
-            </p>
+        <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
+          <div className="conversational-step-shell">
+            <div className="conversational-step-meta">
+              <span className="eyebrow">Free scan intake</span>
+              <span>{steps.length > 0 ? `Step ${stepIndex + 1} of ${steps.length}` : ""}</span>
+            </div>
+            <div className="conversational-step-body">
+              <h2>{currentStep?.question}</h2>
+              {currentStep?.description ? <p>{currentStep.description}</p> : null}
+              {currentStep?.optional ? <p className="required-note">Optional</p> : null}
+              {renderStepBody()}
+            </div>
           </div>
-          <div className="field-grid">
-            <Field
-              label="Company name"
-              name="companyName"
-              onChange={updateField}
-              required
-              value={form.companyName}
-            />
-            <Field
-              label="Website"
-              name="website"
-              onChange={updateField}
-              placeholder="https://example.com"
-              value={form.website}
-            />
-            <SelectField
-              label="Organization type"
-              name="organizationType"
-              onChange={updateField}
-              options={organizationTypeOptions}
-              required
-              value={form.organizationType}
-            />
-            <SelectField
-              label="Organization size"
-              name="organizationSize"
-              onChange={updateField}
-              options={organizationSizeOptions}
-              value={form.organizationSize}
-            />
-          </div>
-
-          <h2>Site Information</h2>
-          <div className="field-grid">
-            <TextArea
-              label="Site address"
-              name="siteAddress"
-              onChange={updateField}
-              placeholder="Street address, city, state, ZIP"
-              required
-              value={form.siteAddress}
-            />
-            <SelectField
-              label="Electric utility provider"
-              name="electricUtilityProvider"
-              onChange={updateField}
-              options={utilityProviderOptions}
-              required
-              value={form.electricUtilityProvider}
-            />
-            <SelectField
-              label="Ownership status"
-              name="ownershipStatus"
-              onChange={updateField}
-              options={ownershipStatusOptions}
-              required
-              value={form.ownershipStatus}
-            />
-            <SelectField
-              label="Building type"
-              name="buildingType"
-              onChange={updateField}
-              options={buildingTypeOptions}
-              required
-              value={form.buildingType}
-            />
-            <Field
-              label="Square footage"
-              name="squareFootage"
-              onChange={updateField}
-              placeholder="Approximate is fine"
-              required
-              value={form.squareFootage}
-            />
-            <CheckboxGroup
-              label="Interested improvements"
-              onChange={(values) =>
-                setForm((current) => ({
-                  ...current,
-                  interestedImprovements: values
-                }))
-              }
-              options={improvementOptions}
-              required
-              selectAllOption={allRetrofitTypesOption}
-              values={form.interestedImprovements}
-            />
-            <TextArea
-              label="Anything else we should know?"
-              name="notes"
-              onChange={updateField}
-              value={form.notes}
-            />
-          </div>
-
-          <h2>Contact Information</h2>
-          <div className="field-grid">
-            <Field label="Contact name" name="fullName" onChange={updateField} required value={form.fullName} />
-            <Field label="Email" name="email" onChange={updateField} required type="email" value={form.email} />
-            <Field label="Phone" name="phone" onChange={updateField} value={form.phone} />
-          </div>
-
           {error ? <p className="error-message">{error}</p> : null}
           <div className="privacy-line">
             <LockIcon />
             <span>Your information is kept private and used only to prepare your recommendations.</span>
           </div>
-          <button disabled={isSubmitting} type="submit">
-            {isSubmitting ? (
-              "Submitting..."
-            ) : (
-              "Get Started"
-            )}
-          </button>
+          <div className="conversational-footer">
+            <div className="conversational-actions">
+              <button className="secondary-button" disabled={stepIndex === 0 || isSubmitting} onClick={goBack} type="button">
+                Back
+              </button>
+              <div className="conversational-action-group">
+                {currentStep?.kind === "choice" && currentStep.optional ? (
+                  <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
+                    Skip for now
+                  </button>
+                ) : null}
+                {currentStep?.kind === "input" || currentStep?.kind === "textarea" ? (
+                  <button disabled={isSubmitting} type="submit">
+                    Next
+                  </button>
+                ) : null}
+                {currentStep?.kind === "review" ? (
+                  <button disabled={isSubmitting} type="submit">
+                    {isSubmitting ? "Submitting..." : "Get Started"}
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            <div className="conversational-progress">
+              <div
+                aria-label="Intake progress"
+                aria-valuemax={100}
+                aria-valuemin={0}
+                aria-valuenow={progressPercent}
+                className="conversational-progress-track"
+                role="progressbar"
+              >
+                <span style={{ width: `${progressPercent}%` }} />
+              </div>
+            </div>
+          </div>
         </form>
       </section>
     </PublicShell>
@@ -3458,17 +4015,19 @@ function AdminUsersPanel({
             </span>
             <span role="cell">
               {intake?.site?.address || "No site address"}
-              <small>{intake?.site?.electricUtilityProvider || "No utility provider"}</small>
+              <small>
+                {[intake?.site?.electricUtilityProvider, intake?.site?.gasUtilityProvider].filter(Boolean).join(" / ") || "No utility provider"}
+              </small>
             </span>
             <span role="cell">
               {intake?.site
-                ? `${intake.site.buildingType} / ${intake.site.ownershipStatus}`
+                ? [intake.site.buildingType, intake.site.ownershipStatus].filter(Boolean).join(" / ") || "No building profile"
                 : "No building profile"}
-              <small>{intake?.site?.squareFootage || "No square footage"}</small>
+              <small>{[intake?.site?.numberOfUnits ? `${intake.site.numberOfUnits} units` : "", intake?.site?.squareFootage].filter(Boolean).join(" / ") || "No size details"}</small>
             </span>
             <span role="cell">
-              {intake?.sustainability.interestedImprovements?.join(", ") || "No improvements selected"}
-              <small>{intake?.sustainability.goals || "No intake form"}</small>
+              {intake?.sustainability.interestedImprovements?.join(", ") || intake?.sustainability.notes || "No notes provided"}
+              <small>{intake?.sustainability.goals || "Conversational intake"}</small>
             </span>
             <span role="cell">{formatDate(user.createdAt)}</span>
           </div>
@@ -4079,13 +4638,13 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
         <p className="eyebrow">Business</p>
         <dl>
           <dt>Company</dt>
-          <dd>{intake.business.companyName}</dd>
+          <dd>{intake.business.companyName || "Not provided"}</dd>
           <dt>Organization type</dt>
           <dd>{intake.business.organizationType || "Not provided"}</dd>
           <dt>Size</dt>
-          <dd>{intake.business.organizationSize}</dd>
+          <dd>{intake.business.organizationSize || "Not provided"}</dd>
           <dt>Region</dt>
-          <dd>{intake.business.headquarters}</dd>
+          <dd>{intake.business.headquarters || "Not provided"}</dd>
         </dl>
       </article>
       <article>
@@ -4095,10 +4654,14 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dd>{intake.site?.address || "Not provided"}</dd>
           <dt>Electric utility provider</dt>
           <dd>{intake.site?.electricUtilityProvider || "Not provided"}</dd>
+          <dt>Gas utility provider</dt>
+          <dd>{intake.site?.gasUtilityProvider || "Not provided"}</dd>
           <dt>Ownership status</dt>
           <dd>{intake.site?.ownershipStatus || "Not provided"}</dd>
           <dt>Building type</dt>
           <dd>{intake.site?.buildingType || "Not provided"}</dd>
+          <dt>Number of units</dt>
+          <dd>{intake.site?.numberOfUnits || "Not provided"}</dd>
           <dt>Square footage</dt>
           <dd>{intake.site?.squareFootage || "Not provided"}</dd>
         </dl>

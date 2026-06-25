@@ -55,15 +55,11 @@ const tableItemCountCache = new Map();
 
 app.use(express.json({ limit: "128kb" }));
 
-const requiredFields = [
-  ["fullName", "Contact name"],
+const baseRequiredFields = [
   ["email", "Email"],
   ["siteAddress", "Site address"],
   ["electricUtilityProvider", "Electric utility provider"],
-  ["companyName", "Company name"],
   ["organizationType", "Organization type"],
-  ["ownershipStatus", "Ownership status"],
-  ["buildingType", "Building type"],
   ["squareFootage", "Square footage"]
 ];
 const opportunityReviewStatuses = new Set(["approved", "rejected", "needs_review", "duplicate"]);
@@ -117,6 +113,26 @@ function cleanUsername(value) {
 function isValidEmail(value) {
   const email = cleanEmail(value);
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function intakeFlowForOrganizationType(value) {
+  switch (cleanText(value)) {
+    case "homeowner":
+      return "homeowner";
+    case "multifamily_property_owner_manager":
+      return "multifamily";
+    case "business_commercial":
+      return "business";
+    case "nonprofit":
+    case "government_public_agency":
+    case "school_education":
+    case "agriculture":
+    case "industrial_manufacturing":
+    case "other":
+      return "organization";
+    default:
+      return "unknown";
+  }
 }
 
 function isAdminEmail(email) {
@@ -518,10 +534,33 @@ async function exchangeGoogleAuthorizationCode({ code, redirectUri }) {
 
 function validateIntake(input) {
   const errors = [];
+  const contactName = cleanText(input.contactName || input.fullName);
+  const flow = intakeFlowForOrganizationType(input.organizationType);
 
-  for (const [field, label] of requiredFields) {
+  if (!contactName) {
+    errors.push("Contact name is required.");
+  }
+
+  for (const [field, label] of baseRequiredFields) {
     if (!cleanText(input[field])) {
       errors.push(`${label} is required.`);
+    }
+  }
+
+  if ((flow === "business" || flow === "organization") && !cleanText(input.companyName)) {
+    errors.push("Company name is required.");
+  }
+
+  if ((flow === "homeowner" || flow === "business" || flow === "organization") && !cleanText(input.buildingType)) {
+    errors.push("Building type is required.");
+  }
+
+  if (flow === "multifamily") {
+    const unitCount = cleanText(input.numberOfUnits);
+    if (!unitCount) {
+      errors.push("Number of units is required.");
+    } else if (!/^\d[\d,\s.]*$/.test(unitCount)) {
+      errors.push("Number of units must be numeric.");
     }
   }
 
@@ -530,8 +569,9 @@ function validateIntake(input) {
     errors.push("Email must be a valid email address.");
   }
 
-  if (cleanStringArray(input.interestedImprovements).length === 0) {
-    errors.push("Select at least one interested improvement.");
+  const squareFootage = cleanText(input.squareFootage);
+  if (squareFootage && !/^\d[\d,\s.]*$/.test(squareFootage)) {
+    errors.push("Square footage must be numeric.");
   }
 
   return errors;
@@ -556,11 +596,13 @@ function publicUser(user) {
 }
 
 function createIntakeRecord(userId, input, now) {
+  const contactName = cleanText(input.contactName || input.fullName);
+
   return {
     userId,
     submissionId: `intake_${userId}`,
     contact: {
-      fullName: cleanText(input.fullName),
+      fullName: contactName,
       email: cleanText(input.email).toLowerCase(),
       phone: cleanOptional(input.phone),
       roleTitle: cleanOptional(input.roleTitle),
@@ -577,9 +619,11 @@ function createIntakeRecord(userId, input, now) {
     site: {
       address: cleanText(input.siteAddress),
       electricUtilityProvider: cleanText(input.electricUtilityProvider),
+      gasUtilityProvider: cleanOptional(input.gasUtilityProvider),
       ownershipStatus: cleanText(input.ownershipStatus),
       buildingType: cleanText(input.buildingType),
       squareFootage: cleanText(input.squareFootage),
+      numberOfUnits: cleanOptional(input.numberOfUnits),
       derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"]
     },
     sustainability: {
