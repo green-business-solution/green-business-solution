@@ -404,8 +404,24 @@ mark {
 
 .checkbox-group {
   border: 0;
+  display: grid;
+  gap: 10px;
   margin: 0;
   padding: 0;
+}
+
+.checkbox-group-action {
+  background: #ffffff;
+  border: 1px solid #c8d2cb;
+  color: #17211b;
+  font-size: 13px;
+  justify-self: start;
+  min-height: 36px;
+  padding: 0 12px;
+}
+
+.checkbox-group-action:hover {
+  background: #edf2ee;
 }
 
 .checkbox-grid {
@@ -1290,14 +1306,14 @@ body {
   opacity: 0.72;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button) {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.checkbox-group-action) {
   background: var(--retrofi-green);
   border-radius: 8px;
   min-height: 46px;
   padding: 0 18px;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):hover {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.checkbox-group-action):hover {
   background: var(--retrofi-green-dark);
 }
 

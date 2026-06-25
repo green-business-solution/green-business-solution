@@ -427,6 +427,7 @@ const buildingTypeOptions = [
   "Multifamily",
   "Other"
 ];
+const notSureImprovementOption = "Not sure yet";
 const improvementOptions = [
   "LED lighting",
   "HVAC",
@@ -437,8 +438,9 @@ const improvementOptions = [
   "Water efficiency",
   "Building controls",
   "Commercial kitchen equipment",
-  "Not sure yet"
+  notSureImprovementOption
 ];
+const selectableImprovementOptions = improvementOptions.filter((option) => option !== notSureImprovementOption);
 
 function adminAuthBody(credential: AuthCredential) {
   if (credential.provider === "password") {
@@ -962,12 +964,17 @@ function CheckboxGroup({
   values,
   onChange,
   options,
+  action,
   required
 }: {
   label: string;
   values: string[];
   onChange: (values: string[]) => void;
   options: string[];
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
   required?: boolean;
 }) {
   function toggle(option: string) {
@@ -985,6 +992,11 @@ function CheckboxGroup({
         {label}
         {required ? <b aria-label="required"> *</b> : null}
       </legend>
+      {action ? (
+        <button className="checkbox-group-action" onClick={action.onClick} type="button">
+          {action.label}
+        </button>
+      ) : null}
       <div className="checkbox-grid">
         {options.map((option) => (
           <label key={option}>
@@ -2614,6 +2626,14 @@ function IntakePage({
               value={form.squareFootage}
             />
             <CheckboxGroup
+              action={{
+                label: "Select all retrofit types",
+                onClick: () =>
+                  setForm((current) => ({
+                    ...current,
+                    interestedImprovements: selectableImprovementOptions
+                  }))
+              }}
               label="Interested improvements"
               onChange={(values) =>
                 setForm((current) => ({

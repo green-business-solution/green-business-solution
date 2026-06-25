@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) retrofit selection shortcut
+
+- Added a compact `Select all retrofit types` action to the free-scan interested-improvements checklist.
+- The shortcut selects every listed retrofit category while leaving `Not sure yet` unselected.
+- Styled the helper action separately from the primary form submit button.
+
 ## 2026-06-25 - Codex (GPT-5) Ryan Shen access setup
 
 - Invited Ryan Shen's GitHub account `PlaneCoder75367` to the private repository with write access.
