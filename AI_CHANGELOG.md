@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-24 - Codex (GPT-5) savings model refinement
+
+- Added value-role and business-relevance classification to the sample opportunity savings mappings and import CSV.
+- Added savings models for renewable generation credits, whole-building custom efficiency, program-rule value, net metering/export value, and interconnection/grid access value.
+- Replaced blanket manual review with rule-based manual-review logic and expanded validation for value-role and business-relevance enums.
+- Regenerated the 50-opportunity sample mapping and coverage report without mutating production opportunity records.
+
 ## 2026-06-24 - Codex (GPT-5) database ID search
 
 - Extended the admin database search to match opportunity IDs, source keys, external IDs, external ID types, and DSIRE program IDs.

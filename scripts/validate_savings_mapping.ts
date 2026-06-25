@@ -16,6 +16,8 @@ type MappingRecord = {
   opportunity_id: string;
   primary_savings_model_id: string;
   secondary_savings_model_ids: string[];
+  value_roles: string[];
+  business_relevance: string;
   required_bill_fields: string[];
   optional_bill_fields: string[];
 };
@@ -30,6 +32,23 @@ const mapping = readJson<MappingRecord[]>(path.join(dataDir, "opportunity_saving
 
 const modelIds = new Set(savingsModels.map((model) => model.id));
 const fieldIds = new Set(billFields.map((field) => field.id));
+const allowedValueRoles = new Set([
+  "bill_savings",
+  "upfront_cost_reduction",
+  "tax_benefit",
+  "financing",
+  "policy_or_permitting",
+  "market_credit",
+  "no_direct_savings"
+]);
+const allowedBusinessRelevance = new Set([
+  "business_relevant",
+  "residential_only",
+  "mixed",
+  "public_nonprofit_only",
+  "agriculture_only",
+  "unknown"
+]);
 const errors: string[] = [];
 
 for (const model of savingsModels) {
@@ -55,6 +74,16 @@ for (const record of mapping) {
     if (!fieldIds.has(fieldId)) {
       errors.push(`Mapping ${record.opportunity_id} references unknown bill/document field ${fieldId}.`);
     }
+  }
+
+  for (const role of record.value_roles || []) {
+    if (!allowedValueRoles.has(role)) {
+      errors.push(`Mapping ${record.opportunity_id} has invalid value role ${role}.`);
+    }
+  }
+
+  if (!allowedBusinessRelevance.has(record.business_relevance)) {
+    errors.push(`Mapping ${record.opportunity_id} has invalid business relevance ${record.business_relevance}.`);
   }
 }
 

@@ -12,6 +12,8 @@
     "unit": "text",
     "extraction_priority": "critical",
     "used_by_savings_models": [
+      "program_rule_value_only",
+      "interconnection_or_grid_access_value",
       "policy_or_permitting_value"
     ],
     "source_evidence_required": true
@@ -28,6 +30,8 @@
     "unit": "text",
     "extraction_priority": "critical",
     "used_by_savings_models": [
+      "program_rule_value_only",
+      "interconnection_or_grid_access_value",
       "policy_or_permitting_value"
     ],
     "source_evidence_required": true
@@ -93,7 +97,9 @@
       "solar_electric_offset",
       "battery_tou_demand_savings",
       "refrigeration_electric_efficiency",
-      "motor_vfd_efficiency"
+      "motor_vfd_efficiency",
+      "renewable_generation_credit_market_value",
+      "net_metering_or_export_value"
     ],
     "source_evidence_required": true
   },
@@ -121,7 +127,10 @@
       "motor_vfd_efficiency",
       "controls_building_automation",
       "envelope_insulation_savings",
-      "custom_incentive_per_kwh_saved"
+      "custom_incentive_per_kwh_saved",
+      "renewable_generation_credit_market_value",
+      "whole_building_custom_efficiency",
+      "net_metering_or_export_value"
     ],
     "source_evidence_required": true
   },
@@ -157,7 +166,8 @@
       "commercial_kitchen_equipment_efficiency",
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency",
-      "pace_or_on_bill_financing"
+      "pace_or_on_bill_financing",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -183,7 +193,8 @@
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency",
       "envelope_insulation_savings",
-      "custom_incentive_per_kwh_saved"
+      "custom_incentive_per_kwh_saved",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -210,6 +221,9 @@
       "fleet_fuel_replacement",
       "controls_building_automation",
       "custom_incentive_per_kwh_saved",
+      "renewable_generation_credit_market_value",
+      "net_metering_or_export_value",
+      "interconnection_or_grid_access_value",
       "policy_or_permitting_value"
     ],
     "source_evidence_required": true
@@ -249,7 +263,8 @@
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency",
       "controls_building_automation",
-      "custom_incentive_per_kwh_saved"
+      "custom_incentive_per_kwh_saved",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -286,7 +301,8 @@
       "battery_tou_demand_savings",
       "ev_charging_site_load",
       "motor_vfd_efficiency",
-      "custom_incentive_per_kwh_saved"
+      "custom_incentive_per_kwh_saved",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -328,7 +344,8 @@
       "solar_electric_offset",
       "battery_tou_demand_savings",
       "ev_charging_site_load",
-      "controls_building_automation"
+      "controls_building_automation",
+      "net_metering_or_export_value"
     ],
     "source_evidence_required": true
   },
@@ -345,7 +362,8 @@
     "extraction_priority": "medium",
     "used_by_savings_models": [
       "electric_usage_reduction",
-      "solar_electric_offset"
+      "solar_electric_offset",
+      "net_metering_or_export_value"
     ],
     "source_evidence_required": true
   },
@@ -362,7 +380,8 @@
     "extraction_priority": "medium",
     "used_by_savings_models": [
       "electric_usage_reduction",
-      "solar_electric_offset"
+      "solar_electric_offset",
+      "net_metering_or_export_value"
     ],
     "source_evidence_required": true
   },
@@ -442,7 +461,8 @@
       "gas_to_electric_replacement",
       "commercial_kitchen_equipment_efficiency",
       "controls_building_automation",
-      "envelope_insulation_savings"
+      "envelope_insulation_savings",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -492,7 +512,8 @@
       "gas_usage_reduction",
       "gas_to_electric_replacement",
       "commercial_kitchen_equipment_efficiency",
-      "envelope_insulation_savings"
+      "envelope_insulation_savings",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },
@@ -1126,7 +1147,8 @@
     "unit": "sq ft",
     "extraction_priority": "high",
     "used_by_savings_models": [
-      "envelope_insulation_savings"
+      "envelope_insulation_savings",
+      "whole_building_custom_efficiency"
     ],
     "source_evidence_required": true
   },

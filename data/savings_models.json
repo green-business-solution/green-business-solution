@@ -1277,6 +1277,262 @@
     "notes": ""
   },
   {
+    "id": "renewable_generation_credit_market_value",
+    "display_name": "Renewable generation credit market value",
+    "description": "Estimates SREC, REC, or other renewable generation credit value when a market-credit mechanism is separate from utility bill savings.",
+    "financial_impact_type": "market_credit_value",
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh"
+    ],
+    "optional_bill_fields": [
+      "monthly_kwh",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "roof_area",
+      "project_cost_estimate",
+      "ownership_status"
+    ],
+    "typical_opportunity_categories": [
+      "SREC",
+      "REC",
+      "renewable energy credits",
+      "performance credits"
+    ],
+    "calculation_method": "Estimate eligible renewable generation, apply expected credit creation rate and market price assumptions, then separate market-credit revenue from bill offset value.",
+    "project_cost_estimation_methods": [
+      "cost_per_kw",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "performance_based",
+      "market_credit",
+      "unknown"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide equipment category.",
+      "Provide project timing."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "whole_building_custom_efficiency",
+    "display_name": "Whole-building custom efficiency",
+    "description": "Estimates savings for custom C&I or whole-building programs where eligible measures are broad and savings are verified through engineering analysis.",
+    "financial_impact_type": "electric_usage_reduction",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "annual_electric_cost",
+      "average_cost_per_kwh"
+    ],
+    "optional_bill_fields": [
+      "annual_therms",
+      "average_cost_per_therm",
+      "peak_kw",
+      "demand_charge_rate",
+      "square_footage"
+    ],
+    "required_non_bill_inputs": [
+      "project_cost_estimate",
+      "equipment_category"
+    ],
+    "optional_non_bill_inputs": [
+      "contractor_quote_amount",
+      "equipment_efficiency_rating"
+    ],
+    "typical_opportunity_categories": [
+      "custom C&I",
+      "whole building",
+      "market transformation",
+      "energy study"
+    ],
+    "calculation_method": "Use site baseline bills and engineering or benchmark savings assumptions to estimate blended electric, demand, and gas savings across a defined project scope.",
+    "project_cost_estimation_methods": [
+      "contractor_quote_required",
+      "benchmark_range",
+      "cost_per_sqft"
+    ],
+    "incentive_value_methods": [
+      "per_kwh_saved",
+      "per_kw",
+      "capped_percent_of_project_cost"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide project cost estimate.",
+      "Provide equipment category."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "program_rule_value_only",
+    "display_name": "Program rule value only",
+    "description": "Classifies rules, eligibility provisions, or administrative program benefits that have value but no direct bill, tax, grant, financing, or market-credit calculation.",
+    "financial_impact_type": "policy_or_permitting_value",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [
+      "service_address",
+      "utility_provider"
+    ],
+    "required_non_bill_inputs": [
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "ownership_status",
+      "equipment_category"
+    ],
+    "typical_opportunity_categories": [
+      "eligibility rule",
+      "program rule",
+      "certification",
+      "administrative benefit"
+    ],
+    "calculation_method": "Record the rule's effect on eligibility, timeline, or compliance; attach a financial model only when a direct value formula exists.",
+    "project_cost_estimation_methods": [
+      "unknown"
+    ],
+    "incentive_value_methods": [
+      "unknown"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide service address.",
+      "Provide project timing."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "net_metering_or_export_value",
+    "display_name": "Net metering or export value",
+    "description": "Estimates value of exported generation under net metering, net billing, or tariffed export compensation.",
+    "financial_impact_type": "solar_offset",
+    "affected_bill_types": [
+      "electric"
+    ],
+    "required_bill_fields": [
+      "annual_kwh",
+      "monthly_kwh",
+      "rate_schedule"
+    ],
+    "optional_bill_fields": [
+      "time_of_use_periods",
+      "generation_charges",
+      "delivery_charges"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "roof_area"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "ownership_status"
+    ],
+    "typical_opportunity_categories": [
+      "net metering",
+      "net billing",
+      "export credit"
+    ],
+    "calculation_method": "Estimate onsite consumption and exported generation, then value exports under applicable compensation rules and imports under retail rates.",
+    "project_cost_estimation_methods": [
+      "cost_per_kw",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "export_credit",
+      "unknown"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide annual kwh.",
+      "Provide monthly kwh.",
+      "Provide rate schedule."
+    ],
+    "notes": ""
+  },
+  {
+    "id": "interconnection_or_grid_access_value",
+    "display_name": "Interconnection or grid access value",
+    "description": "Classifies interconnection, grid access, make-ready, and queue/tariff rules that affect whether or how a distributed energy project can proceed.",
+    "financial_impact_type": "policy_or_permitting_value",
+    "affected_bill_types": [
+      "none"
+    ],
+    "required_bill_fields": [],
+    "optional_bill_fields": [
+      "utility_provider",
+      "service_address",
+      "rate_schedule"
+    ],
+    "required_non_bill_inputs": [
+      "equipment_category",
+      "project_timing"
+    ],
+    "optional_non_bill_inputs": [
+      "project_cost_estimate",
+      "ownership_status"
+    ],
+    "typical_opportunity_categories": [
+      "interconnection",
+      "grid access",
+      "make-ready",
+      "distributed generation rules"
+    ],
+    "calculation_method": "Record project feasibility, required studies, queue/timeline implications, and any direct make-ready value when stated.",
+    "project_cost_estimation_methods": [
+      "unknown",
+      "contractor_quote_required"
+    ],
+    "incentive_value_methods": [
+      "unknown",
+      "grant_amount",
+      "per_unit"
+    ],
+    "confidence_rules": {
+      "low": "Only opportunity metadata and broad benchmark assumptions are available.",
+      "medium": "Core bill fields and basic project inputs are available, but equipment-level or quote details are missing.",
+      "high": "Required bill fields, project scope, equipment or quote details, and program incentive rules are available."
+    },
+    "missing_data_prompts": [
+      "Provide utility provider.",
+      "Provide service address.",
+      "Provide project timing."
+    ],
+    "notes": ""
+  },
+  {
     "id": "policy_or_permitting_value",
     "display_name": "Policy or permitting value",
     "description": "Classifies policies, expedited permitting, net metering, interconnection, certification, and non-cash rules that affect project feasibility or value.",

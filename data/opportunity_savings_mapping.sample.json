@@ -8,6 +8,11 @@
       "motor_vfd_efficiency",
       "controls_building_automation"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -58,6 +63,11 @@
       "controls_building_automation",
       "hvac_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "public_nonprofit_only",
     "affected_bill_types": [
       "electric"
     ],
@@ -107,6 +117,11 @@
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "public_nonprofit_only",
     "affected_bill_types": [
       "electric"
     ],
@@ -154,6 +169,11 @@
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -206,6 +226,11 @@
       "ev_charging_site_load",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -256,6 +281,11 @@
       "solar_electric_offset",
       "gas_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "agriculture_only",
     "affected_bill_types": [
       "none",
       "electric",
@@ -312,6 +342,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric",
       "none"
@@ -360,6 +395,11 @@
       "hvac_electric_efficiency",
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -415,6 +455,11 @@
       "controls_building_automation",
       "motor_vfd_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "public_nonprofit_only",
     "affected_bill_types": [
       "none",
       "electric"
@@ -469,6 +514,11 @@
       "commercial_kitchen_equipment_efficiency",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric",
@@ -529,6 +579,11 @@
       "commercial_kitchen_equipment_efficiency",
       "controls_building_automation"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -579,6 +634,11 @@
     "secondary_savings_model_ids": [
       "motor_vfd_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -625,6 +685,11 @@
       "commercial_kitchen_equipment_efficiency",
       "envelope_insulation_savings"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric",
       "gas"
@@ -679,6 +744,11 @@
       "water_sewer_reduction",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none",
       "electric",
@@ -738,6 +808,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric",
       "none"
@@ -787,6 +862,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric",
       "none"
@@ -838,6 +918,11 @@
       "motor_vfd_efficiency",
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -890,6 +975,11 @@
       "refrigeration_electric_efficiency",
       "commercial_kitchen_equipment_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -943,6 +1033,11 @@
     "secondary_savings_model_ids": [
       "battery_tou_demand_savings"
     ],
+    "value_roles": [
+      "bill_savings",
+      "tax_benefit"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -977,7 +1072,7 @@
       "Provide ownership status.",
       "Provide tax entity type."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22529",
@@ -986,6 +1081,11 @@
     "secondary_savings_model_ids": [
       "grant_funding"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric",
       "none"
@@ -1022,7 +1122,7 @@
       "Provide rate schedule.",
       "Provide project cost estimate."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22523",
@@ -1031,6 +1131,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric",
       "none"
@@ -1068,7 +1173,7 @@
       "Provide rate schedule.",
       "Provide project cost estimate."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22546",
@@ -1077,6 +1182,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric",
       "none"
@@ -1114,7 +1224,7 @@
       "Provide rate schedule.",
       "Provide project cost estimate."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1935",
@@ -1124,6 +1234,11 @@
       "gas_to_electric_replacement",
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "residential_only",
     "affected_bill_types": [
       "water_sewer",
       "electric",
@@ -1181,6 +1296,11 @@
       "gas_to_electric_replacement",
       "electric_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "residential_only",
     "affected_bill_types": [
       "water_sewer",
       "electric",
@@ -1235,6 +1355,11 @@
       "hvac_electric_efficiency",
       "gas_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "residential_only",
     "affected_bill_types": [
       "water_sewer",
       "electric",
@@ -1288,6 +1413,11 @@
       "gas_usage_reduction",
       "water_sewer_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric",
       "gas",
@@ -1333,7 +1463,7 @@
       "Provide quantity.",
       "Provide annual kwh."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5832",
@@ -1343,6 +1473,11 @@
       "hvac_electric_efficiency",
       "electric_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric"
     ],
@@ -1385,7 +1520,7 @@
       "Provide quantity.",
       "Provide annual kwh."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22561",
@@ -1395,6 +1530,11 @@
       "refrigeration_electric_efficiency",
       "motor_vfd_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1433,7 +1573,7 @@
       "Provide quantity.",
       "Provide annual kwh."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4429",
@@ -1443,6 +1583,11 @@
       "controls_building_automation",
       "hvac_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1481,7 +1626,7 @@
       "Provide equipment category.",
       "Provide quantity."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:22560",
@@ -1491,6 +1636,11 @@
       "commercial_kitchen_equipment_efficiency",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1529,7 +1679,7 @@
       "Provide equipment category.",
       "Provide quantity."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2260",
@@ -1539,6 +1689,11 @@
       "commercial_kitchen_equipment_efficiency",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1577,7 +1732,7 @@
       "Provide equipment category.",
       "Provide quantity."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1544",
@@ -1588,6 +1743,11 @@
       "motor_vfd_efficiency",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric"
     ],
@@ -1635,6 +1795,11 @@
       "motor_vfd_efficiency",
       "hvac_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1682,6 +1847,11 @@
       "hvac_electric_efficiency",
       "refrigeration_electric_efficiency"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "electric"
     ],
@@ -1727,6 +1897,11 @@
     "secondary_savings_model_ids": [
       "fleet_fuel_replacement"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none",
       "fuel",
@@ -1763,7 +1938,7 @@
       "Provide project timing.",
       "Provide equipment category."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3677",
@@ -1772,6 +1947,10 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none"
     ],
@@ -1810,6 +1989,11 @@
       "solar_electric_offset",
       "electric_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "agriculture_only",
     "affected_bill_types": [
       "none",
       "electric"
@@ -1850,7 +2034,7 @@
       "Provide project timing.",
       "Provide equipment category."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:917",
@@ -1859,6 +2043,11 @@
     "secondary_savings_model_ids": [
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none",
       "electric"
@@ -1893,7 +2082,7 @@
       "Provide project timing.",
       "Provide equipment category."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3543",
@@ -1903,6 +2092,11 @@
       "solar_electric_offset",
       "battery_tou_demand_savings"
     ],
+    "value_roles": [
+      "bill_savings",
+      "tax_benefit"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -1942,7 +2136,7 @@
       "Provide ownership status.",
       "Provide tax entity type."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:2742",
@@ -1951,6 +2145,11 @@
     "secondary_savings_model_ids": [
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "tax_benefit"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -1986,13 +2185,17 @@
       "Provide ownership status.",
       "Provide tax entity type."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:1596",
     "opportunity_name": "Energy Conservation Improvements Property Tax Exemption",
     "primary_savings_model_id": "sales_or_property_tax_exemption",
     "secondary_savings_model_ids": [],
+    "value_roles": [
+      "tax_benefit"
+    ],
+    "business_relevance": "residential_only",
     "affected_bill_types": [
       "none"
     ],
@@ -2029,6 +2232,11 @@
     "secondary_savings_model_ids": [
       "solar_electric_offset"
     ],
+    "value_roles": [
+      "bill_savings",
+      "tax_benefit"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none",
       "electric"
@@ -2064,7 +2272,7 @@
       "Provide ownership status.",
       "Provide tax entity type."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:3187",
@@ -2074,6 +2282,11 @@
       "electric_usage_reduction",
       "gas_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none",
       "electric",
@@ -2117,7 +2330,7 @@
       "Provide ownership status.",
       "Provide financing term years."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4250",
@@ -2126,6 +2339,11 @@
     "secondary_savings_model_ids": [
       "project_cost_reduction_only"
     ],
+    "value_roles": [
+      "upfront_cost_reduction",
+      "financing"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none"
     ],
@@ -2161,7 +2379,7 @@
       "Provide ownership status.",
       "Provide financing term years."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5735",
@@ -2171,6 +2389,11 @@
       "electric_usage_reduction",
       "gas_usage_reduction"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric",
@@ -2213,7 +2436,7 @@
       "Provide interest rate.",
       "Provide financing term years."
     ],
-    "manual_review_required": true
+    "manual_review_required": false
   },
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:679",
@@ -2223,6 +2446,11 @@
       "solar_electric_offset",
       "controls_building_automation"
     ],
+    "value_roles": [
+      "bill_savings",
+      "financing"
+    ],
+    "business_relevance": "business_relevant",
     "affected_bill_types": [
       "none",
       "electric"
@@ -2272,8 +2500,13 @@
     "primary_savings_model_id": "solar_electric_offset",
     "secondary_savings_model_ids": [
       "project_cost_reduction_only",
-      "policy_or_permitting_value"
+      "net_metering_or_export_value"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "electric",
       "none"
@@ -2290,10 +2523,7 @@
       "generation_charges",
       "delivery_charges",
       "contractor_quote_amount",
-      "quote_date",
-      "service_address",
-      "utility_provider",
-      "rate_schedule"
+      "quote_date"
     ],
     "required_non_bill_inputs": [
       "roof_area",
@@ -2304,14 +2534,13 @@
       "contractor_quote_amount",
       "parking_spaces",
       "quantity",
-      "ownership_status",
-      "landlord_approval_status"
+      "ownership_status"
     ],
     "incentive_value_method": "per_kw",
     "project_cost_estimation_method": "cost_per_kw",
     "calculation_readiness": "needs_bill",
     "confidence": "medium",
-    "classification_reason": "Solar rebate affects solar project economics and may depend on interconnection or compensation rules.",
+    "classification_reason": "Solar rebate affects solar project economics and may depend on export compensation or interconnection rules.",
     "missing_data_prompts": [
       "Provide annual kwh.",
       "Provide rate schedule.",
@@ -2325,11 +2554,15 @@
     "opportunity_name": "EWEB - Solar Electric Program (Rebate)",
     "primary_savings_model_id": "solar_electric_offset",
     "secondary_savings_model_ids": [
-      "policy_or_permitting_value"
+      "net_metering_or_export_value"
     ],
+    "value_roles": [
+      "bill_savings",
+      "upfront_cost_reduction"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
-      "electric",
-      "none"
+      "electric"
     ],
     "required_bill_fields": [
       "annual_kwh",
@@ -2341,10 +2574,7 @@
       "time_of_use_periods",
       "demand_charges",
       "generation_charges",
-      "delivery_charges",
-      "service_address",
-      "utility_provider",
-      "rate_schedule"
+      "delivery_charges"
     ],
     "required_non_bill_inputs": [
       "roof_area",
@@ -2354,14 +2584,13 @@
       "project_cost_estimate",
       "contractor_quote_amount",
       "parking_spaces",
-      "ownership_status",
-      "landlord_approval_status"
+      "ownership_status"
     ],
     "incentive_value_method": "per_kw",
     "project_cost_estimation_method": "cost_per_kw",
     "calculation_readiness": "needs_bill",
     "confidence": "medium",
-    "classification_reason": "Solar electric rebate maps to solar offset; current incentive availability and future application timing require review.",
+    "classification_reason": "Solar electric rebate maps to solar offset; current incentive availability and export value require review.",
     "missing_data_prompts": [
       "Provide annual kwh.",
       "Provide rate schedule.",
@@ -2373,18 +2602,25 @@
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:5686",
     "opportunity_name": "Solar Renewable Energy Credits",
-    "primary_savings_model_id": "policy_or_permitting_value",
+    "primary_savings_model_id": "renewable_generation_credit_market_value",
     "secondary_savings_model_ids": [
       "solar_electric_offset"
     ],
-    "affected_bill_types": [
-      "none",
-      "electric"
+    "value_roles": [
+      "bill_savings",
+      "policy_or_permitting",
+      "market_credit"
     ],
-    "required_bill_fields": [],
+    "business_relevance": "mixed",
+    "affected_bill_types": [
+      "electric",
+      "none"
+    ],
+    "required_bill_fields": [
+      "annual_kwh"
+    ],
     "optional_bill_fields": [
-      "service_address",
-      "utility_provider",
+      "monthly_kwh",
       "rate_schedule",
       "time_of_use_periods",
       "demand_charges",
@@ -2396,9 +2632,9 @@
       "project_timing"
     ],
     "optional_non_bill_inputs": [
-      "ownership_status",
-      "landlord_approval_status",
+      "roof_area",
       "project_cost_estimate",
+      "ownership_status",
       "contractor_quote_amount",
       "parking_spaces"
     ],
@@ -2406,10 +2642,10 @@
     "project_cost_estimation_method": "unknown",
     "calculation_readiness": "policy_only",
     "confidence": "low",
-    "classification_reason": "Solar renewable energy credit program creates policy/market value rather than straightforward bill savings; REC treatment requires review.",
+    "classification_reason": "Solar renewable energy credit program creates market-credit value rather than straightforward bill savings; REC treatment requires review.",
     "missing_data_prompts": [
-      "Provide service address.",
-      "Provide utility provider.",
+      "Provide annual kwh.",
+      "Provide equipment category.",
       "Provide project timing."
     ],
     "manual_review_required": true
@@ -2417,24 +2653,26 @@
   {
     "opportunity_id": "SOURCE_DSIRE:dsire_program_id:4790",
     "opportunity_name": "City of San Diego - Sustainable Building Expedited Permit Program",
-    "primary_savings_model_id": "policy_or_permitting_value",
+    "primary_savings_model_id": "program_rule_value_only",
     "secondary_savings_model_ids": [],
+    "value_roles": [
+      "policy_or_permitting"
+    ],
+    "business_relevance": "mixed",
     "affected_bill_types": [
       "none"
     ],
     "required_bill_fields": [],
     "optional_bill_fields": [
       "service_address",
-      "utility_provider",
-      "rate_schedule"
+      "utility_provider"
     ],
     "required_non_bill_inputs": [
-      "equipment_category",
       "project_timing"
     ],
     "optional_non_bill_inputs": [
       "ownership_status",
-      "landlord_approval_status"
+      "equipment_category"
     ],
     "incentive_value_method": "unknown",
     "project_cost_estimation_method": "unknown",
@@ -2443,7 +2681,6 @@
     "classification_reason": "Expedited sustainable building permit program affects project timeline and feasibility, not direct bill savings.",
     "missing_data_prompts": [
       "Provide service address.",
-      "Provide utility provider.",
       "Provide project timing."
     ],
     "manual_review_required": true

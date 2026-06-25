@@ -19,6 +19,7 @@ const financialImpactTypes = {
   project_cost_reduction_only: ["none"],
   tax_benefit: ["none"],
   financing_cash_flow: ["none"],
+  market_credit_value: ["electric", "none"],
   policy_or_permitting_value: ["none"],
   no_direct_savings: ["none"]
 };
@@ -48,6 +49,11 @@ const savingsModels = [
   model("grant_funding", "Grant funding", "Estimates grant award value and remaining net project cost.", "project_cost_reduction_only", ["project_cost_estimate"], ["contractor_quote_amount"], ["equipment_category", "project_timing"], ["ownership_status"], ["grants", "solicitations", "public funding"], "Estimate grant value from stated award amount or eligible-cost percentage and cap; treat competitiveness and award uncertainty separately.", ["contractor_quote_required", "benchmark_range"], ["grant_amount", "percent_of_project_cost", "capped_percent_of_project_cost"], prompts(["project_cost_estimate", "project_timing", "equipment_category"])),
   model("financing_cash_flow", "Financing cash flow", "Estimates project cash flow under loans, leases, or other financing terms.", "financing_cash_flow", ["project_cost_estimate", "interest_rate", "financing_term_years"], ["down_payment", "contractor_quote_amount"], ["equipment_category"], ["annual_electric_cost", "annual_gas_cost", "annual_water_cost"], ["loans", "financing", "on-bill financing"], "Calculate estimated debt service and compare annual payments to modeled utility savings and incentive-adjusted project cost.", ["contractor_quote_required", "benchmark_range"], ["financing"], prompts(["project_cost_estimate", "interest_rate", "financing_term_years"])),
   model("pace_or_on_bill_financing", "PACE or on-bill financing", "Estimates cash-flow impact from PACE assessments or utility on-bill financing.", "financing_cash_flow", ["project_cost_estimate", "financing_term_years", "interest_rate"], ["ownership_status", "down_payment", "annual_electric_cost", "annual_gas_cost"], ["ownership_status"], ["landlord_approval_status", "project_timing"], ["PACE", "on-bill financing"], "Estimate assessment or on-bill payment, term, and cash-flow effect against expected utility savings.", ["contractor_quote_required", "benchmark_range"], ["financing"], prompts(["project_cost_estimate", "ownership_status", "financing_term_years"])),
+  model("renewable_generation_credit_market_value", "Renewable generation credit market value", "Estimates SREC, REC, or other renewable generation credit value when a market-credit mechanism is separate from utility bill savings.", "market_credit_value", ["annual_kwh"], ["monthly_kwh", "rate_schedule"], ["equipment_category", "project_timing"], ["roof_area", "project_cost_estimate", "ownership_status"], ["SREC", "REC", "renewable energy credits", "performance credits"], "Estimate eligible renewable generation, apply expected credit creation rate and market price assumptions, then separate market-credit revenue from bill offset value.", ["cost_per_kw", "contractor_quote_required"], ["performance_based", "market_credit", "unknown"], prompts(["annual_kwh", "equipment_category", "project_timing"])),
+  model("whole_building_custom_efficiency", "Whole-building custom efficiency", "Estimates savings for custom C&I or whole-building programs where eligible measures are broad and savings are verified through engineering analysis.", "electric_usage_reduction", ["annual_kwh", "annual_electric_cost", "average_cost_per_kwh"], ["annual_therms", "average_cost_per_therm", "peak_kw", "demand_charge_rate", "square_footage"], ["project_cost_estimate", "equipment_category"], ["contractor_quote_amount", "equipment_efficiency_rating"], ["custom C&I", "whole building", "market transformation", "energy study"], "Use site baseline bills and engineering or benchmark savings assumptions to estimate blended electric, demand, and gas savings across a defined project scope.", ["contractor_quote_required", "benchmark_range", "cost_per_sqft"], ["per_kwh_saved", "per_kw", "capped_percent_of_project_cost"], prompts(["annual_kwh", "project_cost_estimate", "equipment_category"])),
+  model("program_rule_value_only", "Program rule value only", "Classifies rules, eligibility provisions, or administrative program benefits that have value but no direct bill, tax, grant, financing, or market-credit calculation.", "policy_or_permitting_value", [], ["service_address", "utility_provider"], ["project_timing"], ["ownership_status", "equipment_category"], ["eligibility rule", "program rule", "certification", "administrative benefit"], "Record the rule's effect on eligibility, timeline, or compliance; attach a financial model only when a direct value formula exists.", ["unknown"], ["unknown"], prompts(["service_address", "project_timing"])),
+  model("net_metering_or_export_value", "Net metering or export value", "Estimates value of exported generation under net metering, net billing, or tariffed export compensation.", "solar_offset", ["annual_kwh", "monthly_kwh", "rate_schedule"], ["time_of_use_periods", "generation_charges", "delivery_charges"], ["equipment_category", "roof_area"], ["project_cost_estimate", "ownership_status"], ["net metering", "net billing", "export credit"], "Estimate onsite consumption and exported generation, then value exports under applicable compensation rules and imports under retail rates.", ["cost_per_kw", "contractor_quote_required"], ["export_credit", "unknown"], prompts(["annual_kwh", "monthly_kwh", "rate_schedule"])),
+  model("interconnection_or_grid_access_value", "Interconnection or grid access value", "Classifies interconnection, grid access, make-ready, and queue/tariff rules that affect whether or how a distributed energy project can proceed.", "policy_or_permitting_value", [], ["utility_provider", "service_address", "rate_schedule"], ["equipment_category", "project_timing"], ["project_cost_estimate", "ownership_status"], ["interconnection", "grid access", "make-ready", "distributed generation rules"], "Record project feasibility, required studies, queue/timeline implications, and any direct make-ready value when stated.", ["unknown", "contractor_quote_required"], ["unknown", "grant_amount", "per_unit"], prompts(["utility_provider", "service_address", "project_timing"])),
   model("policy_or_permitting_value", "Policy or permitting value", "Classifies policies, expedited permitting, net metering, interconnection, certification, and non-cash rules that affect project feasibility or value.", "policy_or_permitting_value", [], ["service_address", "utility_provider", "rate_schedule"], ["equipment_category", "project_timing"], ["ownership_status", "landlord_approval_status"], ["policy", "permitting", "interconnection", "net metering", "green building"], "Do not estimate bill savings directly; record compliance, timeline, eligibility, or compensation effect and attach a secondary savings model if project economics are affected.", ["unknown"], ["unknown"], prompts(["service_address", "utility_provider", "project_timing"])),
   model("no_direct_savings", "No direct savings", "Flags records that do not provide enough financial linkage or do not directly affect utility bills, project costs, taxes, financing, or permitting.", "no_direct_savings", [], [], [], [], ["information-only", "unclear programs"], "No deterministic calculation until a program-specific value path is identified.", ["unknown"], ["unknown"], prompts(["source program details"]))
 ];
@@ -224,10 +230,10 @@ const sampleClassifications = [
   ["SOURCE_DSIRE:dsire_program_id:4250", "pace_or_on_bill_financing", ["project_cost_reduction_only"], "financing", "contractor_quote_required", "needs_quote", "high", "SCE on-bill financing directly affects project cash flow for non-residential efficiency projects."],
   ["SOURCE_DSIRE:dsire_program_id:5735", "financing_cash_flow", ["electric_usage_reduction", "gas_usage_reduction"], "financing", "contractor_quote_required", "needs_quote", "high", "Commercial and industrial loan program finances efficient electric and gas equipment upgrades."],
   ["SOURCE_DSIRE:dsire_program_id:679", "financing_cash_flow", ["solar_electric_offset", "controls_building_automation"], "financing", "contractor_quote_required", "needs_quote", "medium", "Loan program supports renewable energy, controls, lighting, fuel cells, and other distributed generation projects."],
-  ["SOURCE_DSIRE:dsire_program_id:2628", "solar_electric_offset", ["project_cost_reduction_only", "policy_or_permitting_value"], "per_kw", "cost_per_kw", "needs_bill", "medium", "Solar rebate affects solar project economics and may depend on interconnection or compensation rules."],
-  ["SOURCE_DSIRE:dsire_program_id:2526", "solar_electric_offset", ["policy_or_permitting_value"], "per_kw", "cost_per_kw", "needs_bill", "medium", "Solar electric rebate maps to solar offset; current incentive availability and future application timing require review."],
-  ["SOURCE_DSIRE:dsire_program_id:5686", "policy_or_permitting_value", ["solar_electric_offset"], "unknown", "unknown", "policy_only", "low", "Solar renewable energy credit program creates policy/market value rather than straightforward bill savings; REC treatment requires review."],
-  ["SOURCE_DSIRE:dsire_program_id:4790", "policy_or_permitting_value", [], "unknown", "unknown", "policy_only", "high", "Expedited sustainable building permit program affects project timeline and feasibility, not direct bill savings."]
+  ["SOURCE_DSIRE:dsire_program_id:2628", "solar_electric_offset", ["project_cost_reduction_only", "net_metering_or_export_value"], "per_kw", "cost_per_kw", "needs_bill", "medium", "Solar rebate affects solar project economics and may depend on export compensation or interconnection rules."],
+  ["SOURCE_DSIRE:dsire_program_id:2526", "solar_electric_offset", ["net_metering_or_export_value"], "per_kw", "cost_per_kw", "needs_bill", "medium", "Solar electric rebate maps to solar offset; current incentive availability and export value require review."],
+  ["SOURCE_DSIRE:dsire_program_id:5686", "renewable_generation_credit_market_value", ["solar_electric_offset"], "unknown", "unknown", "policy_only", "low", "Solar renewable energy credit program creates market-credit value rather than straightforward bill savings; REC treatment requires review."],
+  ["SOURCE_DSIRE:dsire_program_id:4790", "program_rule_value_only", [], "unknown", "unknown", "policy_only", "high", "Expedited sustainable building permit program affects project timeline and feasibility, not direct bill savings."]
 ];
 
 if (!fs.existsSync(scanPath)) {
@@ -246,12 +252,26 @@ const mapping = sampleClassifications.map(([opportunityId, primary, secondary, i
 
   const models = [primary, ...secondary].map((id) => modelById.get(id)).filter(Boolean);
   const primaryModel = modelById.get(primary);
+  const modelIds = [primary, ...secondary];
+  const valueRoles = valueRolesForMapping({ modelIds, incentiveMethod, readiness });
+  const businessRelevance = classifyBusinessRelevance(opportunity);
+  const manualReviewRequired = shouldRequireManualReview({
+    opportunity,
+    modelIds,
+    readiness,
+    confidence,
+    businessRelevance,
+    incentiveMethod,
+    reason
+  });
 
   return {
     opportunity_id: opportunityId,
     opportunity_name: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunityId,
     primary_savings_model_id: primary,
     secondary_savings_model_ids: secondary,
+    value_roles: valueRoles,
+    business_relevance: businessRelevance,
     affected_bill_types: unique(models.flatMap((item) => item.affected_bill_types)),
     required_bill_fields: unique(primaryModel.required_bill_fields),
     optional_bill_fields: unique(models.flatMap((item) => item.optional_bill_fields)),
@@ -263,9 +283,130 @@ const mapping = sampleClassifications.map(([opportunityId, primary, secondary, i
     confidence,
     classification_reason: reason,
     missing_data_prompts: primaryModel.missing_data_prompts,
-    manual_review_required: true
+    manual_review_required: manualReviewRequired
   };
 });
+
+function valueRolesForMapping({ modelIds, incentiveMethod, readiness }) {
+  const roles = new Set();
+
+  if (modelIds.some((id) => [
+    "electric_usage_reduction",
+    "electric_demand_reduction",
+    "hvac_electric_efficiency",
+    "gas_usage_reduction",
+    "gas_to_electric_replacement",
+    "solar_electric_offset",
+    "battery_tou_demand_savings",
+    "ev_charging_site_load",
+    "fleet_fuel_replacement",
+    "water_sewer_reduction",
+    "waste_hauling_cost_reduction",
+    "commercial_kitchen_equipment_efficiency",
+    "refrigeration_electric_efficiency",
+    "motor_vfd_efficiency",
+    "controls_building_automation",
+    "envelope_insulation_savings",
+    "custom_incentive_per_kwh_saved",
+    "whole_building_custom_efficiency",
+    "net_metering_or_export_value"
+  ].includes(id))) {
+    roles.add("bill_savings");
+  }
+
+  if (modelIds.some((id) => [
+    "project_cost_reduction_only",
+    "rebate_per_unit_or_equipment_count",
+    "grant_funding"
+  ].includes(id)) || ["fixed_amount", "percent_of_project_cost", "capped_percent_of_project_cost", "per_unit", "per_kw", "per_kwh_saved", "per_ton", "grant_amount"].includes(incentiveMethod)) {
+    roles.add("upfront_cost_reduction");
+  }
+
+  if (modelIds.some((id) => ["tax_benefit_project_cost_reduction", "sales_or_property_tax_exemption"].includes(id)) || ["tax_credit", "tax_deduction", "tax_exemption"].includes(incentiveMethod)) {
+    roles.add("tax_benefit");
+  }
+
+  if (modelIds.some((id) => ["financing_cash_flow", "pace_or_on_bill_financing"].includes(id)) || incentiveMethod === "financing") {
+    roles.add("financing");
+  }
+
+  if (modelIds.some((id) => ["policy_or_permitting_value", "program_rule_value_only", "interconnection_or_grid_access_value"].includes(id)) || readiness === "policy_only") {
+    roles.add("policy_or_permitting");
+  }
+
+  if (modelIds.includes("renewable_generation_credit_market_value")) {
+    roles.add("market_credit");
+  }
+
+  if (modelIds.includes("no_direct_savings") || roles.size === 0) {
+    roles.add("no_direct_savings");
+  }
+
+  return [...roles];
+}
+
+function classifyBusinessRelevance(opportunity) {
+  const sectors = toTextArray([...toArray(opportunity.sectors), ...toArray(opportunity.eligibleSectors)]);
+  const searchable = [
+    opportunity.canonicalTitle,
+    opportunity.summary,
+    opportunity.programType,
+    opportunity.implementingSector?.name,
+    ...sectors
+  ].join(" ").toLowerCase();
+  const hasResidential = /\bresidential\b|homeowner|homes?\b|multifamily residential|low income residential/.test(searchable);
+  const hasBusiness = /\bcommercial\b|\bindustrial\b|\bbusiness\b|non-residential|nonresidential|institutional/.test(searchable);
+  const hasPublicNonprofit = /school|local government|state government|federal government|public sector|nonprofit|municipal/.test(searchable);
+  const hasAgriculture = /agricultural|agriculture|farm|rural/.test(searchable);
+
+  if (hasBusiness && hasResidential) return "mixed";
+  if (hasBusiness) return "business_relevant";
+  if (hasResidential) return "residential_only";
+  if (hasAgriculture && !hasBusiness) return "agriculture_only";
+  if (hasPublicNonprofit && !hasBusiness) return "public_nonprofit_only";
+  return "unknown";
+}
+
+function shouldRequireManualReview({ opportunity, modelIds, readiness, confidence, businessRelevance, incentiveMethod, reason }) {
+  const titleAndReason = `${opportunity.canonicalTitle || ""} ${opportunity.summary || ""} ${reason || ""}`.toLowerCase();
+  const technologyCount = toArray(opportunity.technologies).length;
+  const isBroadOrCustom = technologyCount >= 8 || /custom|whole building|market transformation|many measures|variety of|wide range/.test(titleAndReason);
+  const isLowConfidence = confidence === "low";
+  const isResidentialRisk = businessRelevance === "residential_only";
+  const isUnclearRelevance = businessRelevance === "unknown";
+  const isComplexTax = ["tax_benefit_project_cost_reduction"].some((id) => modelIds.includes(id));
+  const isUnclearFinancing = modelIds.some((id) => ["financing_cash_flow", "pace_or_on_bill_financing"].includes(id)) && readiness !== "needs_quote" && confidence !== "high";
+  const isPolicyOrMarketAmbiguous = readiness === "policy_only" || modelIds.some((id) => [
+    "policy_or_permitting_value",
+    "renewable_generation_credit_market_value",
+    "program_rule_value_only",
+    "net_metering_or_export_value",
+    "interconnection_or_grid_access_value"
+  ].includes(id));
+  const isUnknownMethod = incentiveMethod === "unknown";
+
+  if (isLowConfidence || isResidentialRisk || isUnclearRelevance || isComplexTax || isUnclearFinancing || isPolicyOrMarketAmbiguous || isUnknownMethod) {
+    return true;
+  }
+
+  if (isBroadOrCustom && confidence !== "high") {
+    return true;
+  }
+
+  return false;
+}
+
+function toArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function toTextArray(values) {
+  return values.map((value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value.name || value.title || value.label || "";
+    return "";
+  }).filter(Boolean);
+}
 
 writeJson("savings_models.json", savingsModels);
 writeJson("bill_field_dictionary.json", billFields);
@@ -287,6 +428,8 @@ function writeCsv(filename, records) {
     "opportunity_id",
     "primary_savings_model_id",
     "secondary_savings_model_ids",
+    "value_roles",
+    "business_relevance",
     "affected_bill_types",
     "required_bill_fields",
     "optional_bill_fields",
@@ -315,8 +458,11 @@ function writeCsv(filename, records) {
 function writeReport(filename, records, allOpportunities) {
   const byModel = countBy(records, (record) => record.primary_savings_model_id);
   const byConfidence = countBy(records, (record) => record.confidence);
+  const byValueRole = countBy(records.flatMap((record) => record.value_roles), (role) => role);
+  const byBusinessRelevance = countBy(records, (record) => record.business_relevance);
   const manualReviewCount = records.filter((record) => record.manual_review_required).length;
-  const uncertain = records.filter((record) => record.confidence === "low" || record.calculation_readiness === "unknown" || record.calculation_readiness === "policy_only");
+  const noManualReviewCount = records.length - manualReviewCount;
+  const uncertain = records.filter((record) => record.confidence === "low" || record.calculation_readiness === "unknown" || record.calculation_readiness === "policy_only" || record.business_relevance === "unknown" || record.manual_review_required);
   const lines = [
     "# Savings Model Coverage Report - Sample",
     "",
@@ -337,8 +483,9 @@ function writeReport(filename, records, allOpportunities) {
     `- Savings models in library: ${savingsModels.length}`,
     `- Bill/document fields in dictionary: ${billFields.length}`,
     `- Manual-review mappings: ${manualReviewCount}`,
+    `- Mappings not requiring manual review: ${noManualReviewCount}`,
     "",
-    "## Primary Model Coverage",
+    "## Top Savings Models By Count",
     "",
     "| Savings model | Count | Percent |",
     "| --- | ---: | ---: |",
@@ -346,15 +493,38 @@ function writeReport(filename, records, allOpportunities) {
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
       .map(([modelId, count]) => `| \`${modelId}\` | ${count} | ${Math.round((count / records.length) * 100)}% |`),
     "",
+    "## Value Role Counts",
+    "",
+    "| Value role | Count | Percent |",
+    "| --- | ---: | ---: |",
+    ...Object.entries(byValueRole)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([role, count]) => `| \`${role}\` | ${count} | ${Math.round((count / records.length) * 100)}% |`),
+    "",
+    "## Business Relevance Counts",
+    "",
+    "| Business relevance | Count | Percent |",
+    "| --- | ---: | ---: |",
+    ...Object.entries(byBusinessRelevance)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([relevance, count]) => `| \`${relevance}\` | ${count} | ${Math.round((count / records.length) * 100)}% |`),
+    "",
+    "## Manual Review Coverage",
+    "",
+    "| Manual review required | Count | Percent |",
+    "| --- | ---: | ---: |",
+    `| true | ${manualReviewCount} | ${Math.round((manualReviewCount / records.length) * 100)}% |`,
+    `| false | ${noManualReviewCount} | ${Math.round((noManualReviewCount / records.length) * 100)}% |`,
+    "",
     "## Confidence Coverage",
     "",
     "| Confidence | Count |",
     "| --- | ---: |",
     ...["high", "medium", "low"].map((key) => `| ${key} | ${byConfidence[key] || 0} |`),
     "",
-    "## Unmapped Or Uncertain Opportunities",
+    "## Uncertain Opportunities",
     "",
-    ...uncertain.map((record) => `- \`${record.opportunity_id}\` - ${record.opportunity_name}: ${record.confidence} confidence, ${record.calculation_readiness}.`),
+    ...uncertain.map((record) => `- \`${record.opportunity_id}\` - ${record.opportunity_name}: ${record.confidence} confidence, ${record.calculation_readiness}, relevance \`${record.business_relevance}\`, manual review ${record.manual_review_required}.`),
     "",
     "## Ambiguous Categories",
     "",
@@ -362,17 +532,18 @@ function writeReport(filename, records, allOpportunities) {
     "- Loans, PACE, and on-bill financing do not create direct utility savings by themselves. They should attach to `financing_cash_flow` or `pace_or_on_bill_financing`, then add measure-specific secondary models after project scope is known.",
     "- Tax exemptions and credits usually require tax-review inputs even when the underlying project has clear bill savings.",
     "- Residential-only programs appeared in the sample because the source database contains them. They are mapped with low confidence where business applicability is uncertain.",
-    "- SREC, net-metering, interconnection, and expedited-permit records should stay in `policy_or_permitting_value` unless an explicit cash compensation formula is captured.",
+    "- SREC and REC records now use `renewable_generation_credit_market_value` because they create market-credit value separate from bill offset.",
+    "- Net-metering and export-value records should use `net_metering_or_export_value`; interconnection and grid-access rules should use `interconnection_or_grid_access_value`.",
     "",
     "## Recommended Savings Model Library Changes",
     "",
-    "- Add a future `renewable_generation_credit_market_value` model if SREC, REC, or performance-credit programs become common in business matches.",
     "- Add program-rule fields for incentive caps, eligible-cost percentage, maximum award, and application deadline before importing mappings into production tables.",
-    "- Consider a final `whole_building_custom_efficiency` model for custom C&I programs that require engineering studies instead of prescriptive equipment inputs.",
+    "- Add business-relevance review queues so `residential_only`, `mixed`, and `unknown` programs do not become automatic business matches.",
+    "- Consider adding explicit incentive-rule fields for market credit price source, export compensation rate, and interconnection queue/timeline.",
     "",
     "## Recommendation",
     "",
-    "The sample is good enough to review the model taxonomy and import shape, but not yet good enough to run automatically across the full database. Recommended next step: review these 50 mappings with Neer, add any missing model types, then run a dry-run classifier over the full database with all low-confidence rows queued for manual review."
+    "The sample is ready for a full-database dry-run classifier after human review of the refined taxonomy. It is not ready for production import. Recommended next step: run a dry run over all opportunity candidates that writes local artifacts only, with low-confidence, residential-only, unknown-relevance, broad/custom, tax-complex, financing-unclear, policy, and market-credit rows queued for manual review."
   ];
   fs.writeFileSync(path.join(dataDir, filename), `${lines.join("\n")}\n`);
 }
