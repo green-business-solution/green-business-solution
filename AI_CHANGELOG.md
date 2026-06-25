@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) opportunity source links in matching results
+
+- Preserved source, application, and website URLs in deterministic match results and summarized sample matching output.
+- Added source-link chips to admin matching test-case opportunity cards, labeling DSIRE records as `DSIRE source`.
+- Confirmed DSIRE ingestion already stores DSIRE detail URLs as `sourceUrl` and flags missing source URLs during data-quality checks.
+
 ## 2026-06-25 - Codex (GPT-5) real-address matching test cases
 
 - Replaced the sample matching test-case site addresses with ten real California addresses supplied by the user.

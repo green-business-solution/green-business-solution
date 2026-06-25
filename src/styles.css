@@ -862,6 +862,10 @@ dd {
   margin: 0;
 }
 
+.match-link-list {
+  margin-top: -2px;
+}
+
 .match-detail-grid {
   display: grid;
   gap: 10px;

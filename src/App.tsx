@@ -216,6 +216,9 @@ type SampleMatchResult = {
   opportunityId: string;
   opportunityName: string;
   offerId?: string | null;
+  sourceUrl?: string | null;
+  websiteUrl?: string | null;
+  applicationUrl?: string | null;
   eligibilityStatus: string;
   rankScore: number;
   opportunityDataConfidence: number;
@@ -3277,6 +3280,7 @@ function AdminTestCasesPanel() {
 
 function SampleMatchCard({ result }: { result: SampleMatchResult }) {
   const sourceSummary = result.sourceSummary || {};
+  const sourceLinkLabel = sourceSummary.sourceName === "DSIRE" ? "DSIRE source" : "Source page";
   const nextQuestion = result.nextQuestion?.prompt
     ? [`${result.nextQuestion.prompt}${result.nextQuestion.criterionId ? ` (${result.nextQuestion.criterionId})` : ""}`]
     : [];
@@ -3300,6 +3304,26 @@ function SampleMatchCard({ result }: { result: SampleMatchResult }) {
         <DetailItem label="State" value={sampleValue(sourceSummary.state)} />
         <DetailItem label="Confidence" value={`${Math.round(result.opportunityDataConfidence * 100)}% data / ${Math.round(result.userProfileCompleteness * 100)}% profile`} />
       </div>
+
+      {result.sourceUrl || result.applicationUrl || (result.websiteUrl && result.websiteUrl !== result.sourceUrl) ? (
+        <div className="link-list match-link-list">
+          {result.sourceUrl ? (
+            <a href={result.sourceUrl} rel="noreferrer" target="_blank">
+              {sourceLinkLabel}
+            </a>
+          ) : null}
+          {result.applicationUrl ? (
+            <a href={result.applicationUrl} rel="noreferrer" target="_blank">
+              Application
+            </a>
+          ) : null}
+          {result.websiteUrl && result.websiteUrl !== result.sourceUrl ? (
+            <a href={result.websiteUrl} rel="noreferrer" target="_blank">
+              Program website
+            </a>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="match-detail-grid">
         <SampleTextList title="Matched reasons" values={result.matchedReasons} emptyMessage="No matched reasons generated." />
@@ -3753,6 +3777,7 @@ function OpportunityDetailPanel({
   const businessClassifications = getOpportunityBusinessClassifications(opportunity);
   const technologies = getOpportunityTechnologies(opportunity);
   const evidence = Array.isArray(opportunity.evidence) ? opportunity.evidence : [];
+  const sourceLinkLabel = opportunity.sourceName === "DSIRE" || opportunity.sourceKey === "SOURCE_DSIRE" ? "DSIRE source" : "Source page";
   const dsireMetadata = {
     IUID: opportunity.IUID,
     sourceRecords: opportunity.sourceRecords,
@@ -3898,7 +3923,7 @@ function OpportunityDetailPanel({
         <div className="link-list">
           {opportunity.sourceUrl ? (
             <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">
-              Source page
+              {sourceLinkLabel}
             </a>
           ) : null}
           {opportunity.applicationUrl ? (

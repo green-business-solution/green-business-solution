@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildOpportunityMatchProfile } from "./buildOpportunityMatchProfile.mjs";
 import { evaluateOpportunityForUser } from "./evaluateRules.mjs";
+import { summarizeMatchResult } from "./explainMatch.mjs";
 import { normalizeUserProfile } from "./normalizeUserProfile.mjs";
 
 const now = new Date("2026-06-25T12:00:00Z");
@@ -101,6 +102,41 @@ describe("matching pipeline", () => {
 
     expect(result.eligibilityStatus).not.toBe("ineligible");
     expect(result.unresolvedRequirements.join(" ")).toMatch(/utility restriction/);
+  });
+
+  it("preserves source links in summarized match results", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 Infinite Loop, Cupertino, CA 95014, USA",
+      electricUtilityProvider: "PG&E",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["EV charging"]
+    });
+    const opportunity = {
+      opportunityId: "test-dsire-source-link",
+      canonicalTitle: "PG&E EV Fleet Program",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      sourceUrl: "https://programs.dsireusa.org/system/program/detail/22283/pge-ev-fleet-program",
+      websiteUrl: "https://example.com/pge-ev-fleet",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Commercial customers can receive EV fleet infrastructure incentives.",
+      technologies: ["EV charging"],
+      sectors: ["Commercial"],
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+    const summary = summarizeMatchResult(result);
+
+    expect(summary.sourceUrl).toBe(opportunity.sourceUrl);
+    expect(summary.websiteUrl).toBe(opportunity.websiteUrl);
   });
 
   it("does not classify battery electric vehicle text as battery storage", () => {
