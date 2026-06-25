@@ -1218,7 +1218,7 @@ function Footer({ navigate }: { navigate: (route: Route) => void }) {
         {[
           ["How It Works", "how-it-works"],
           ["Pricing", "pricing"],
-          ["Create My Report", "scan"]
+          ["Get Started", "scan"]
         ].map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route as Route)} type="button">
             {label}
@@ -2543,7 +2543,7 @@ function IntakePage({ navigate }: { navigate: (route: Route) => void }) {
             {isSubmitting ? (
               "Submitting..."
             ) : (
-              "Create My Report"
+              "Get Started"
             )}
           </button>
         </form>
