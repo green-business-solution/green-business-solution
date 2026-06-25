@@ -1570,7 +1570,7 @@ function HomePage({
           title="How RetroFi works"
         />
         <div className="step-grid">
-          {["Tell us about your business", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
+          {["Tell us about your facility", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
             (step, index) => (
               <article className="step-card" key={step}>
                 <span>{index + 1}</span>
@@ -2632,7 +2632,7 @@ function IntakePage({
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="scan-page form-shell">
         <div className="form-intro">
-          <h1>Tell us about your business</h1>
+          <h1>Tell us about your facility</h1>
           <p>We&apos;ll use this information to tailor your recommendations.</p>
         </div>
 
