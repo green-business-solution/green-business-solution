@@ -577,3 +577,5 @@
 # 2026-06-25
 
 - Updated the conversational intake review step so step 14 now shows `Submit` instead of `Get Started` on the bottom-right action button.
+- Added intake-bound utility ingestion for Green Button XML/CSV and utility PDF uploads, storing uploaded file metadata, extracted bill fields, and site energy summaries on the client intake record instead of opportunity records.
+- Updated the client/admin utility data views and upload flow to show file processing status, extracted bill fields, and site energy profile summaries.

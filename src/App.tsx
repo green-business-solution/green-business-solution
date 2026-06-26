@@ -46,6 +46,58 @@ type PublicAuthState = {
   onSignOut: () => void;
 };
 
+type UtilityFileType = "green_button_xml" | "green_button_csv" | "utility_pdf" | "unknown";
+
+type UploadedUtilityFile = {
+  fileId: string;
+  clientIntakeId: string;
+  siteId: string | null;
+  originalFilename: string;
+  fileType: UtilityFileType;
+  utilityProvider: string | null;
+  s3Key: string;
+  processingStatus: "uploaded" | "processing" | "processed" | "needs_review" | "failed";
+  uploadedAt: string;
+  processedAt: string | null;
+  errorMessage: string | null;
+};
+
+type UtilityExtractedValue = {
+  extractedValueId: string;
+  clientIntakeId: string;
+  fileId: string;
+  fieldId: string;
+  fieldDisplayName: string;
+  value: string | number | null;
+  unit: string | null;
+  periodStart: string | null;
+  periodEnd: string | null;
+  confidence: string | null;
+  sourceType: UtilityFileType;
+  sourceText: string | null;
+  sourcePath: string | null;
+};
+
+type SiteEnergyProfile = {
+  siteId: string;
+  uploadedFileCount: number;
+  processedFileCount: number;
+  availableFieldIds: string[];
+  latestUtilityProvider: string | null;
+  latestBillingPeriodStart: string | null;
+  latestBillingPeriodEnd: string | null;
+  annualKwh: number | null;
+  annualElectricCost: number | null;
+  averageCostPerKwh: number | null;
+  monthlySummaries: Array<{
+    periodStart: string | null;
+    periodEnd: string | null;
+    kwh: number | null;
+    cost: number | null;
+  }>;
+  lastUpdatedAt: string | null;
+};
+
 type IntakeRecord = {
   userId: string;
   submissionId: string;
@@ -82,6 +134,9 @@ type IntakeRecord = {
     timeline: string;
     notes: string | null;
   };
+  uploadedUtilityFiles: UploadedUtilityFile[];
+  utilityExtractedValues: UtilityExtractedValue[];
+  siteEnergyProfile: SiteEnergyProfile | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -98,45 +153,19 @@ type EnergyDataUploadSession = {
   expiresAt: string;
 };
 
-type EnergyInterval = {
-  start: string;
-  end: string;
-  kwh: number;
-};
-
-type EnergyMonthlyTotal = {
-  month: string;
-  kwh: number;
-  cost: number | null;
-};
-
-type EnergyDataRecord = {
-  userId: string;
-  energyDataId: string;
-  submissionId: string;
-  sourceType: "bill_pdf" | "bill_image" | "green_button_xml" | "green_button_csv";
-  fileName: string;
-  contentType: string;
-  utilityName: string | null;
-  uploadStatus: "pending" | "uploaded" | "parsed" | "failed";
-  parseStatus: "not_started" | "processing" | "success" | "failed";
-  parseErrors: string[];
-  coverageStart: string | null;
-  coverageEnd: string | null;
-  accountNumberMasked: string | null;
-  meterIds: string[];
-  normalizedUsage: {
-    intervals: EnergyInterval[];
-    monthlyTotals: EnergyMonthlyTotal[];
-  };
-  createdAt: string;
-  updatedAt: string;
+type EnergyDataRegisterResponse = {
+  intake: IntakeRecord;
+  uploadedUtilityFile: UploadedUtilityFile;
+  utilityExtractedValues: UtilityExtractedValue[];
+  siteEnergyProfile: SiteEnergyProfile | null;
 };
 
 type EnergyDataSessionPayload = {
   intake: IntakeRecord | null;
   uploadSession: Omit<EnergyDataUploadSession, "token"> | null;
-  records: EnergyDataRecord[];
+  uploadedUtilityFiles: UploadedUtilityFile[];
+  utilityExtractedValues: UtilityExtractedValue[];
+  siteEnergyProfile: SiteEnergyProfile | null;
 };
 
 type IntakeSubmissionPayload = PortalPayload & {
@@ -3252,12 +3281,40 @@ function DatabaseProgramDetail({ isLoading, program }: { isLoading: boolean; pro
   );
 }
 
-const energyDataSourceTypeLabels: Record<EnergyDataRecord["sourceType"], string> = {
-  bill_pdf: "Utility bill PDF",
-  bill_image: "Utility bill image",
+const energyDataSourceTypeLabels: Record<UtilityFileType, string> = {
+  utility_pdf: "Utility bill PDF",
   green_button_xml: "Green Button XML",
-  green_button_csv: "Utility export CSV"
+  green_button_csv: "Utility export CSV",
+  unknown: "Unknown utility file"
 };
+
+function formatProcessingStatus(status: UploadedUtilityFile["processingStatus"]) {
+  return status
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function formatUtilityFieldValue(value: UtilityExtractedValue) {
+  if (value.value == null || value.value === "") {
+    return "Missing";
+  }
+
+  const base = typeof value.value === "number" ? value.value.toLocaleString() : String(value.value);
+  return value.unit ? `${base} ${value.unit}` : base;
+}
+
+function formatUtilityPeriod(start: string | null, end: string | null) {
+  if (!start && !end) {
+    return "Not provided";
+  }
+
+  if (start && end) {
+    return formatEnergyCoverage(start, end);
+  }
+
+  return start || end || "Not provided";
+}
 
 function formatEnergyCoverage(start: string | null, end: string | null) {
   if (!start && !end) {
@@ -3326,13 +3383,15 @@ function ScanResultsPage({
     };
   }, []);
 
-  const latestRecord = sessionPayload?.records?.[0] || null;
+  const latestRecord = sessionPayload?.uploadedUtilityFiles?.[0] || null;
   const nextStepValue = latestRecord
-    ? latestRecord.parseStatus === "success"
+    ? latestRecord.processingStatus === "processed"
       ? "Energy data uploaded. Detailed analysis can begin."
-      : latestRecord.parseStatus === "failed"
+      : latestRecord.processingStatus === "failed"
         ? "Upload another file or review the failed import."
-        : "Energy data uploaded and awaiting review."
+        : latestRecord.processingStatus === "needs_review"
+          ? "File uploaded and queued for manual review."
+          : "Energy data uploaded and awaiting review."
     : "Upload utility bills or a Green Button export for detailed savings and ROI";
 
   return (
@@ -3359,11 +3418,17 @@ function ScanResultsPage({
         {latestRecord ? (
           <article className="feature-card energy-status-card">
             <span className="eyebrow">Latest energy data</span>
-            <h3>{latestRecord.fileName}</h3>
+            <h3>{latestRecord.originalFilename}</h3>
             <p>
-              {energyDataSourceTypeLabels[latestRecord.sourceType]} · {latestRecord.parseStatus === "success" ? "Parsed" : latestRecord.parseStatus === "failed" ? "Needs another upload" : "Stored"}
+              {energyDataSourceTypeLabels[latestRecord.fileType]} · {formatProcessingStatus(latestRecord.processingStatus)}
             </p>
-            <p>Coverage: {formatEnergyCoverage(latestRecord.coverageStart, latestRecord.coverageEnd)}</p>
+            <p>
+              Coverage:{" "}
+              {formatUtilityPeriod(
+                sessionPayload?.siteEnergyProfile?.latestBillingPeriodStart || null,
+                sessionPayload?.siteEnergyProfile?.latestBillingPeriodEnd || null
+              )}
+            </p>
           </article>
         ) : null}
         {error ? <p className="error-message">{error}</p> : null}
@@ -3387,7 +3452,7 @@ function EnergyDataUploadPage({
 }) {
   const [storedSession, setStoredSession] = useState<EnergyDataUploadSession | null>(() => readStoredEnergyDataUploadSession());
   const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
-  const [selectedSourceType, setSelectedSourceType] = useState<EnergyDataRecord["sourceType"]>("green_button_xml");
+  const [selectedSourceType, setSelectedSourceType] = useState<UtilityFileType>("green_button_xml");
   const [utilityName, setUtilityName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -3437,7 +3502,7 @@ function EnergyDataUploadPage({
           energyDataId: string;
           s3Key: string;
           uploadUrl: string;
-          sourceType: EnergyDataRecord["sourceType"];
+          sourceType: UtilityFileType;
           contentType: string;
           expiresAt: string;
         }>("/api/energy-data/upload-url", {
@@ -3450,7 +3515,7 @@ function EnergyDataUploadPage({
 
         await uploadFileToSignedUrl(uploadDescriptor.uploadUrl, file);
 
-        await apiPost<{ record: EnergyDataRecord }>("/api/energy-data/register", {
+        await apiPost<EnergyDataRegisterResponse>("/api/energy-data/register", {
           userId: storedSession.userId,
           uploadToken: storedSession.token,
           energyDataId: uploadDescriptor.energyDataId,
@@ -3496,13 +3561,12 @@ function EnergyDataUploadPage({
                 <label className="field">
                   <span>Energy data format</span>
                   <select
-                    onChange={(event) => setSelectedSourceType(event.target.value as EnergyDataRecord["sourceType"])}
+                    onChange={(event) => setSelectedSourceType(event.target.value as UtilityFileType)}
                     value={selectedSourceType}
                   >
                     <option value="green_button_xml">Green Button XML</option>
                     <option value="green_button_csv">Utility export CSV</option>
-                    <option value="bill_pdf">Utility bill PDF</option>
-                    <option value="bill_image">Utility bill image</option>
+                    <option value="utility_pdf">Utility bill PDF</option>
                   </select>
                 </label>
                 <label className="field">
@@ -3522,9 +3586,7 @@ function EnergyDataUploadPage({
                         ? ".xml,application/xml,text/xml,application/atom+xml"
                         : selectedSourceType === "green_button_csv"
                           ? ".csv,text/csv,application/csv"
-                          : selectedSourceType === "bill_pdf"
-                            ? ".pdf,application/pdf"
-                            : "image/png,image/jpeg,image/webp,image/heic,image/heif"
+                          : ".pdf,application/pdf"
                     }
                     disabled={isUploading}
                     multiple
@@ -3533,8 +3595,8 @@ function EnergyDataUploadPage({
                   />
                 </label>
                 <p className="field-note">
-                  Green Button XML and CSV files are parsed automatically. Bill PDFs and images are stored now and can
-                  be reviewed or parsed later.
+                  Green Button XML and CSV files are parsed automatically. PDFs are accepted and stored with a
+                  manual-review placeholder until extraction is implemented.
                 </p>
               </article>
               <article className="feature-card energy-upload-form-card">
@@ -3550,26 +3612,92 @@ function EnergyDataUploadPage({
             <section className="energy-upload-results">
               <div className="energy-upload-header">
                 <h2>Uploaded files</h2>
-                <p>{isUploading ? "Uploading and processing files…" : `${sessionPayload?.records.length || 0} file(s) stored`}</p>
+                <p>
+                  {isUploading
+                    ? "Uploading and processing files…"
+                    : `${sessionPayload?.uploadedUtilityFiles.length || 0} file(s) stored`}
+                </p>
               </div>
               <div className="energy-upload-records">
-                {(sessionPayload?.records || []).map((record) => (
-                  <article className="feature-card energy-upload-record" key={record.energyDataId}>
-                    <span className="eyebrow">{energyDataSourceTypeLabels[record.sourceType]}</span>
-                    <h3>{record.fileName}</h3>
-                    <p>Status: {record.parseStatus === "success" ? "Parsed" : record.parseStatus === "failed" ? "Failed to parse" : "Stored"}</p>
-                    <p>Coverage: {formatEnergyCoverage(record.coverageStart, record.coverageEnd)}</p>
-                    <p>Intervals: {record.normalizedUsage.intervals.length || 0}</p>
-                    <p>Monthly totals: {record.normalizedUsage.monthlyTotals.length || 0}</p>
-                    {record.parseErrors.length > 0 ? <p className="error-message">{record.parseErrors.join(" ")}</p> : null}
-                  </article>
-                ))}
-                {sessionPayload && sessionPayload.records.length === 0 ? (
+                {(sessionPayload?.uploadedUtilityFiles || []).map((record) => {
+                  const extractedValues = (sessionPayload?.utilityExtractedValues || []).filter(
+                    (value) => value.fileId === record.fileId
+                  );
+                  const billingStart = extractedValues.find((value) => value.fieldId === "billing_period_start");
+                  const billingEnd = extractedValues.find((value) => value.fieldId === "billing_period_end");
+
+                  return (
+                    <article className="feature-card energy-upload-record" key={record.fileId}>
+                      <span className="eyebrow">{energyDataSourceTypeLabels[record.fileType]}</span>
+                      <h3>{record.originalFilename}</h3>
+                      <p>Status: {formatProcessingStatus(record.processingStatus)}</p>
+                      <p>Utility: {record.utilityProvider || "Not detected"}</p>
+                      <p>Coverage: {formatUtilityPeriod((billingStart?.value as string | null) || null, (billingEnd?.value as string | null) || null)}</p>
+                      <p>Extracted fields: {extractedValues.length}</p>
+                      {record.errorMessage ? <p className="error-message">{record.errorMessage}</p> : null}
+                    </article>
+                  );
+                })}
+                {sessionPayload && sessionPayload.uploadedUtilityFiles.length === 0 ? (
                   <article className="feature-card energy-empty-state">
                     <h3>No files uploaded yet</h3>
                     <p>Start with a Green Button XML export if you have one. It gives the cleanest automated usage summary.</p>
                   </article>
                 ) : null}
+              </div>
+            </section>
+            <section className="energy-upload-results">
+              <div className="energy-upload-header">
+                <h2>Extracted utility fields</h2>
+                <p>{`${sessionPayload?.utilityExtractedValues.length || 0} field value(s) extracted`}</p>
+              </div>
+              <div className="energy-upload-records">
+                {(sessionPayload?.utilityExtractedValues || []).map((value) => (
+                  <article className="feature-card energy-upload-record" key={value.extractedValueId}>
+                    <span className="eyebrow">{value.fieldDisplayName}</span>
+                    <h3>{formatUtilityFieldValue(value)}</h3>
+                    <p>Field ID: {value.fieldId}</p>
+                    <p>Period: {formatUtilityPeriod(value.periodStart, value.periodEnd)}</p>
+                    <p>Confidence: {value.confidence || "Not scored"}</p>
+                  </article>
+                ))}
+                {sessionPayload && sessionPayload.utilityExtractedValues.length === 0 ? (
+                  <article className="feature-card energy-empty-state">
+                    <h3>No extracted values yet</h3>
+                    <p>XML and CSV uploads will populate bill and usage fields here when they are processed successfully.</p>
+                  </article>
+                ) : null}
+              </div>
+            </section>
+            <section className="energy-upload-results">
+              <div className="energy-upload-header">
+                <h2>Site energy profile</h2>
+                <p>Aggregated from the utility files attached to this intake record.</p>
+              </div>
+              <div className="energy-upload-records">
+                <article className="feature-card energy-upload-record">
+                  <span className="eyebrow">Summary</span>
+                  <h3>{sessionPayload?.siteEnergyProfile?.latestUtilityProvider || "Utility pending"}</h3>
+                  <p>
+                    Billing period:{" "}
+                    {formatUtilityPeriod(
+                      sessionPayload?.siteEnergyProfile?.latestBillingPeriodStart || null,
+                      sessionPayload?.siteEnergyProfile?.latestBillingPeriodEnd || null
+                    )}
+                  </p>
+                  <p>
+                    Annual usage:{" "}
+                    {sessionPayload?.siteEnergyProfile?.annualKwh != null
+                      ? `${sessionPayload.siteEnergyProfile.annualKwh.toLocaleString()} kWh`
+                      : "Not available"}
+                  </p>
+                  <p>
+                    Annual cost:{" "}
+                    {sessionPayload?.siteEnergyProfile?.annualElectricCost != null
+                      ? `$${sessionPayload.siteEnergyProfile.annualElectricCost.toLocaleString()}`
+                      : "Not available"}
+                  </p>
+                </article>
               </div>
             </section>
             <div className="hero-actions">
@@ -4848,7 +4976,7 @@ function AdminUsersPanel({
           <span role="columnheader">Company</span>
           <span role="columnheader">Site</span>
           <span role="columnheader">Building</span>
-          <span role="columnheader">Improvements and goals</span>
+          <span role="columnheader">Utility data</span>
           <span role="columnheader">Created</span>
         </div>
         {rows.length === 0 ? (
@@ -4883,8 +5011,14 @@ function AdminUsersPanel({
               <small>{[intake?.site?.numberOfUnits ? `${intake.site.numberOfUnits} units` : "", intake?.site?.squareFootage].filter(Boolean).join(" / ") || "No size details"}</small>
             </span>
             <span role="cell">
-              {intake?.sustainability.interestedImprovements?.join(", ") || intake?.sustainability.notes || "No notes provided"}
-              <small>{intake?.sustainability.goals || "Conversational intake"}</small>
+              {intake?.uploadedUtilityFiles?.length
+                ? `${intake.uploadedUtilityFiles.length} file(s), ${intake.utilityExtractedValues.length} extracted field(s)`
+                : "No utility data uploaded"}
+              <small>
+                {intake?.siteEnergyProfile?.latestUtilityProvider
+                  ? `${intake.siteEnergyProfile.latestUtilityProvider} · ${intake.siteEnergyProfile.availableFieldIds.length} field types available`
+                  : intake?.sustainability.goals || "Conversational intake"}
+              </small>
             </span>
             <span role="cell">{formatDate(user.createdAt)}</span>
           </div>
@@ -5537,6 +5671,56 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dt>Notes</dt>
           <dd>{intake.sustainability.notes || "No additional notes"}</dd>
         </dl>
+      </article>
+      <article className="profile-wide">
+        <p className="eyebrow">Utility Data</p>
+        <dl>
+          <dt>Uploaded files</dt>
+          <dd>{intake.uploadedUtilityFiles.length ? `${intake.uploadedUtilityFiles.length} file(s)` : "None uploaded"}</dd>
+          <dt>Processed files</dt>
+          <dd>{intake.siteEnergyProfile?.processedFileCount ?? 0}</dd>
+          <dt>Latest utility</dt>
+          <dd>{intake.siteEnergyProfile?.latestUtilityProvider || "Not detected"}</dd>
+          <dt>Billing period</dt>
+          <dd>{formatUtilityPeriod(intake.siteEnergyProfile?.latestBillingPeriodStart || null, intake.siteEnergyProfile?.latestBillingPeriodEnd || null)}</dd>
+          <dt>Available bill fields</dt>
+          <dd>{intake.siteEnergyProfile?.availableFieldIds.join(", ") || "None extracted yet"}</dd>
+        </dl>
+        <div className="card-grid three compact-cards">
+          {intake.uploadedUtilityFiles.map((file) => (
+            <article className="feature-card" key={file.fileId}>
+              <span className="eyebrow">{energyDataSourceTypeLabels[file.fileType]}</span>
+              <h3>{file.originalFilename}</h3>
+              <p>Status: {formatProcessingStatus(file.processingStatus)}</p>
+              <p>{file.utilityProvider || "Utility pending"}</p>
+              {file.errorMessage ? <p className="error-message">{file.errorMessage}</p> : null}
+            </article>
+          ))}
+          {intake.uploadedUtilityFiles.length === 0 ? (
+            <article className="feature-card">
+              <span className="eyebrow">Uploads</span>
+              <h3>No utility files</h3>
+              <p>Green Button XML, CSV, and utility PDF uploads will appear here.</p>
+            </article>
+          ) : null}
+        </div>
+        <div className="card-grid three compact-cards">
+          {intake.utilityExtractedValues.map((value) => (
+            <article className="feature-card" key={value.extractedValueId}>
+              <span className="eyebrow">{value.fieldDisplayName}</span>
+              <h3>{formatUtilityFieldValue(value)}</h3>
+              <p>Period: {formatUtilityPeriod(value.periodStart, value.periodEnd)}</p>
+              <p>Confidence: {value.confidence || "Not scored"}</p>
+            </article>
+          ))}
+          {intake.utilityExtractedValues.length === 0 ? (
+            <article className="feature-card">
+              <span className="eyebrow">Extracted values</span>
+              <h3>No values extracted</h3>
+              <p>Processed Green Button files will populate bill and usage values here.</p>
+            </article>
+          ) : null}
+        </div>
       </article>
     </section>
   );

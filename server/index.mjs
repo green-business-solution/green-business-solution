@@ -6,7 +6,6 @@ import {
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand,
-  QueryCommand,
   ScanCommand,
   TransactWriteCommand,
   UpdateCommand
@@ -14,7 +13,11 @@ import {
 import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
-import { parseEnergyDataFile } from "./energyData/parseEnergyData.mjs";
+import {
+  buildSiteEnergyProfile,
+  processUtilityDataUpload,
+  supportedUtilityFileTypes
+} from "./energyData/parseEnergyData.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -91,12 +94,14 @@ const oauthRedirectErrorStorageKey = "gbs-oauth-redirect-error";
 const googleOAuthCookieMaxAgeMs = 10 * 60 * 1000;
 const publicEnergyUploadSessionDurationMs = 30 * 24 * 60 * 60 * 1000;
 const uploadUrlDurationSeconds = 15 * 60;
-const supportedEnergyDataSourceTypes = new Set(["bill_pdf", "bill_image", "green_button_xml", "green_button_csv"]);
+const supportedEnergyDataSourceTypes = new Set(
+  [...supportedUtilityFileTypes].filter((sourceType) => sourceType !== "unknown")
+);
 const energyDataSourceMimeTypes = {
-  bill_pdf: new Set(["application/pdf"]),
-  bill_image: new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]),
+  utility_pdf: new Set(["application/pdf"]),
   green_button_xml: new Set(["application/xml", "text/xml", "application/atom+xml"]),
-  green_button_csv: new Set(["text/csv", "application/csv", "application/vnd.ms-excel"])
+  green_button_csv: new Set(["text/csv", "application/csv", "application/vnd.ms-excel"]),
+  unknown: new Set()
 };
 
 let googleKeysCache = {
@@ -677,12 +682,89 @@ function publicUser(user) {
   };
 }
 
+function deriveSiteId(userId, intake) {
+  const submissionId = cleanText(intake?.submissionId) || `intake_${userId}`;
+  return `${submissionId}:primary_site`;
+}
+
+function normalizeUploadedUtilityFiles(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .filter((item) => item && typeof item === "object")
+    .map((item) => ({
+      fileId: cleanText(item.fileId),
+      clientIntakeId: cleanText(item.clientIntakeId),
+      siteId: cleanOptional(item.siteId),
+      originalFilename: cleanText(item.originalFilename),
+      fileType: supportedUtilityFileTypes.has(cleanText(item.fileType)) ? cleanText(item.fileType) : "unknown",
+      utilityProvider: cleanOptional(item.utilityProvider),
+      s3Key: cleanText(item.s3Key),
+      processingStatus: cleanText(item.processingStatus) || "uploaded",
+      uploadedAt: cleanText(item.uploadedAt),
+      processedAt: cleanOptional(item.processedAt),
+      errorMessage: cleanOptional(item.errorMessage)
+    }))
+    .filter((item) => item.fileId && item.originalFilename && item.s3Key);
+}
+
+function normalizeUtilityExtractedValues(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .filter((item) => item && typeof item === "object")
+    .map((item) => ({
+      extractedValueId: cleanText(item.extractedValueId),
+      clientIntakeId: cleanText(item.clientIntakeId),
+      fileId: cleanText(item.fileId),
+      fieldId: cleanText(item.fieldId),
+      fieldDisplayName: cleanOptional(item.fieldDisplayName),
+      value: item.value ?? null,
+      unit: cleanOptional(item.unit),
+      periodStart: cleanOptional(item.periodStart),
+      periodEnd: cleanOptional(item.periodEnd),
+      confidence: cleanOptional(item.confidence),
+      sourceType: supportedUtilityFileTypes.has(cleanText(item.sourceType)) ? cleanText(item.sourceType) : "unknown",
+      sourceText: cleanOptional(item.sourceText),
+      sourcePath: cleanOptional(item.sourcePath)
+    }))
+    .filter((item) => item.extractedValueId && item.fileId && item.fieldId);
+}
+
+function normalizeIntakeRecord(item) {
+  if (!item) {
+    return null;
+  }
+
+  const uploadedUtilityFiles = normalizeUploadedUtilityFiles(item.uploadedUtilityFiles);
+  const utilityExtractedValues = normalizeUtilityExtractedValues(item.utilityExtractedValues);
+  const siteId = deriveSiteId(item.userId, item);
+
+  return {
+    ...item,
+    uploadedUtilityFiles,
+    utilityExtractedValues,
+    siteEnergyProfile:
+      item.siteEnergyProfile ||
+      buildSiteEnergyProfile({
+        siteId,
+        uploadedUtilityFiles,
+        utilityExtractedValues
+      })
+  };
+}
+
 function createIntakeRecord(userId, input, now, energyDataUploadSession) {
   const contactName = cleanText(input.contactName || input.fullName);
+  const submissionId = `intake_${userId}`;
 
   return {
     userId,
-    submissionId: `intake_${userId}`,
+    submissionId,
     contact: {
       fullName: contactName,
       email: cleanText(input.email).toLowerCase(),
@@ -717,6 +799,13 @@ function createIntakeRecord(userId, input, now, energyDataUploadSession) {
       notes: cleanOptional(input.notes)
     },
     energyDataUploadSession,
+    uploadedUtilityFiles: [],
+    utilityExtractedValues: [],
+    siteEnergyProfile: buildSiteEnergyProfile({
+      siteId: `${submissionId}:primary_site`,
+      uploadedUtilityFiles: [],
+      utilityExtractedValues: []
+    }),
     createdAt: now,
     updatedAt: now
   };
@@ -729,7 +818,7 @@ async function getIntake(userId) {
       Key: { userId }
     })
   );
-  return result.Item || null;
+  return normalizeIntakeRecord(result.Item || null);
 }
 
 function publicEnergyUploadSession(userId, intake) {
@@ -767,6 +856,40 @@ function publicEnergyDataRecord(record) {
   };
 }
 
+function publicUploadedUtilityFile(record) {
+  return {
+    fileId: record.fileId,
+    clientIntakeId: record.clientIntakeId,
+    siteId: record.siteId || null,
+    originalFilename: record.originalFilename,
+    fileType: record.fileType,
+    utilityProvider: record.utilityProvider || null,
+    s3Key: record.s3Key,
+    processingStatus: record.processingStatus,
+    uploadedAt: record.uploadedAt,
+    processedAt: record.processedAt || null,
+    errorMessage: record.errorMessage || null
+  };
+}
+
+function publicUtilityExtractedValue(record) {
+  return {
+    extractedValueId: record.extractedValueId,
+    clientIntakeId: record.clientIntakeId,
+    fileId: record.fileId,
+    fieldId: record.fieldId,
+    fieldDisplayName: record.fieldDisplayName || record.fieldId,
+    value: record.value ?? null,
+    unit: record.unit || null,
+    periodStart: record.periodStart || null,
+    periodEnd: record.periodEnd || null,
+    confidence: record.confidence || null,
+    sourceType: record.sourceType,
+    sourceText: record.sourceText || null,
+    sourcePath: record.sourcePath || null
+  };
+}
+
 async function verifyEnergyUploadSession(userId, uploadToken) {
   const intake = await getIntake(userId);
   if (!intake) {
@@ -797,21 +920,6 @@ async function verifyEnergyUploadSession(userId, uploadToken) {
   return intake;
 }
 
-async function listEnergyDataRecords(userId) {
-  const result = await db.send(
-    new QueryCommand({
-      TableName: energyDataTable,
-      KeyConditionExpression: "userId = :userId",
-      ExpressionAttributeValues: {
-        ":userId": userId
-      },
-      ScanIndexForward: false
-    })
-  );
-
-  return result.Items || [];
-}
-
 async function readEnergyDataObjectAsText(s3Key) {
   const response = await s3.send(
     new GetObjectCommand({
@@ -823,76 +931,58 @@ async function readEnergyDataObjectAsText(s3Key) {
   return response.Body?.transformToString("utf-8") || "";
 }
 
-async function buildEnergyDataRecordFromUpload({
-  intake,
-  userId,
-  energyDataId,
-  fileName,
-  contentType,
-  sourceType,
-  s3Key,
-  utilityName
-}) {
-  const now = new Date().toISOString();
-  const baseRecord = {
-    userId,
-    energyDataId,
-    submissionId: intake.submissionId,
-    sourceType,
-    fileName,
-    contentType,
-    utilityName: cleanOptional(utilityName),
-    s3Key,
-    uploadStatus: "uploaded",
-    parseStatus: "not_started",
-    parseErrors: [],
-    coverageStart: null,
-    coverageEnd: null,
-    accountNumberMasked: null,
-    meterIds: [],
-    normalizedUsage: {
-      intervals: [],
-      monthlyTotals: []
-    },
-    rawExtract: null,
-    createdAt: now,
-    updatedAt: now
+function mergeUtilityDataIntoIntake(intake, uploadResult) {
+  const nextFiles = [
+    uploadResult.uploadedUtilityFile,
+    ...(intake.uploadedUtilityFiles || []).filter((item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId)
+  ].sort((left, right) => String(right.uploadedAt || "").localeCompare(String(left.uploadedAt || "")));
+
+  const nextExtractedValues = [
+    ...uploadResult.utilityExtractedValues,
+    ...(intake.utilityExtractedValues || []).filter((item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId)
+  ].sort((left, right) =>
+    String(right.periodEnd || right.periodStart || "").localeCompare(String(left.periodEnd || left.periodStart || ""))
+  );
+
+  return {
+    uploadedUtilityFiles: nextFiles,
+    utilityExtractedValues: nextExtractedValues,
+    siteEnergyProfile: buildSiteEnergyProfile({
+      siteId: uploadResult.uploadedUtilityFile.siteId || deriveSiteId(intake.userId, intake),
+      uploadedUtilityFiles: nextFiles,
+      utilityExtractedValues: nextExtractedValues
+    })
   };
+}
 
-  if (sourceType === "bill_pdf" || sourceType === "bill_image") {
-    return {
-      ...baseRecord,
-      rawExtract: {
-        format: sourceType,
-        note: "Stored for later manual review or OCR parsing."
-      }
-    };
-  }
-
-  try {
-    const text = await readEnergyDataObjectAsText(s3Key);
-    const parsed = parseEnergyDataFile({ sourceType, text });
-
-    return {
-      ...baseRecord,
-      utilityName: parsed.utilityName || baseRecord.utilityName,
-      uploadStatus: "parsed",
-      parseStatus: "success",
-      coverageStart: parsed.coverageStart,
-      coverageEnd: parsed.coverageEnd,
-      accountNumberMasked: parsed.accountNumberMasked,
-      meterIds: parsed.meterIds,
-      normalizedUsage: parsed.normalizedUsage,
-      rawExtract: parsed.rawExtract
-    };
-  } catch (error) {
-    return {
-      ...baseRecord,
-      uploadStatus: "failed",
-      parseStatus: "failed",
-      parseErrors: [error instanceof Error ? error.message : "Could not parse the uploaded energy data file."]
-    };
-  }
+function buildFailedUtilityUploadResult({
+  clientIntakeId,
+  fileId,
+  originalFilename,
+  s3Key,
+  siteId,
+  sourceType,
+  uploadedAt,
+  utilityProvider,
+  errorMessage
+}) {
+  return {
+    uploadedUtilityFile: {
+      fileId,
+      clientIntakeId,
+      siteId,
+      originalFilename,
+      fileType: supportedUtilityFileTypes.has(sourceType) ? sourceType : "unknown",
+      utilityProvider: cleanOptional(utilityProvider),
+      s3Key,
+      processingStatus: "failed",
+      uploadedAt,
+      processedAt: uploadedAt,
+      errorMessage
+    },
+    utilityExtractedValues: [],
+    siteEnergyProfilePatch: null
+  };
 }
 
 async function scanAll(TableName) {
@@ -1913,7 +2003,7 @@ function buildAdminShellPayload(admin) {
 
 async function buildAdminUserRows() {
   const [users, intakes] = await Promise.all([scanAll(usersTable), scanAll(intakeTable)]);
-  const intakeByUser = new Map(intakes.map((intake) => [intake.userId, intake]));
+  const intakeByUser = new Map(intakes.map((intake) => [intake.userId, normalizeIntakeRecord(intake)]));
   const sortedUsers = users
     .filter(isActiveUserRecord)
     .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
@@ -1939,7 +2029,9 @@ async function buildAdminTableSnapshot(tableName) {
     const intakes = await scanAll(intakeTable);
     return tableSnapshot(
       intakeTable,
-      [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+      [...intakes]
+        .map(normalizeIntakeRecord)
+        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
     );
   }
 
@@ -2456,12 +2548,13 @@ app.post("/api/energy-data/session", async (req, res) => {
     const userId = cleanText(req.body?.userId);
     const uploadToken = cleanText(req.body?.uploadToken);
     const intake = await verifyEnergyUploadSession(userId, uploadToken);
-    const records = await listEnergyDataRecords(userId);
 
     res.json({
       intake,
       uploadSession: publicEnergyUploadSession(userId, intake),
-      records: records.map(publicEnergyDataRecord)
+      uploadedUtilityFiles: (intake.uploadedUtilityFiles || []).map(publicUploadedUtilityFile),
+      utilityExtractedValues: (intake.utilityExtractedValues || []).map(publicUtilityExtractedValue),
+      siteEnergyProfile: intake.siteEnergyProfile || null
     });
   } catch (error) {
     handleError(res, error);
@@ -2526,27 +2619,73 @@ app.post("/api/energy-data/register", async (req, res) => {
       throw error;
     }
 
-    const record = await buildEnergyDataRecordFromUpload({
-      intake,
-      userId,
-      energyDataId,
-      fileName,
-      contentType,
-      sourceType,
-      s3Key,
-      utilityName: req.body?.utilityName
-    });
+    const uploadedAt = new Date().toISOString();
+    const text =
+      sourceType === "green_button_xml" || sourceType === "green_button_csv"
+        ? await readEnergyDataObjectAsText(s3Key)
+        : "";
+    let uploadResult;
+    try {
+      uploadResult = processUtilityDataUpload({
+        clientIntakeId: intake.submissionId,
+        fileId: energyDataId,
+        originalFilename: fileName,
+        s3Key,
+        siteId: deriveSiteId(userId, intake),
+        sourceType,
+        text,
+        uploadedAt,
+        utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider
+      });
+    } catch (error) {
+      uploadResult = buildFailedUtilityUploadResult({
+        clientIntakeId: intake.submissionId,
+        fileId: energyDataId,
+        originalFilename: fileName,
+        s3Key,
+        siteId: deriveSiteId(userId, intake),
+        sourceType,
+        uploadedAt,
+        utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider,
+        errorMessage:
+          error instanceof Error ? error.message : "Could not parse the uploaded utility data file."
+      });
+    }
+    const mergedUtilityData = mergeUtilityDataIntoIntake(intake, uploadResult);
 
     await db.send(
-      new PutCommand({
-        TableName: energyDataTable,
-        Item: record,
-        ConditionExpression: "attribute_not_exists(userId) AND attribute_not_exists(energyDataId)"
+      new UpdateCommand({
+        TableName: intakeTable,
+        Key: { userId },
+        UpdateExpression:
+          "SET #uploadedUtilityFiles = :uploadedUtilityFiles, #utilityExtractedValues = :utilityExtractedValues, #siteEnergyProfile = :siteEnergyProfile, #updatedAt = :updatedAt",
+        ExpressionAttributeNames: {
+          "#uploadedUtilityFiles": "uploadedUtilityFiles",
+          "#utilityExtractedValues": "utilityExtractedValues",
+          "#siteEnergyProfile": "siteEnergyProfile",
+          "#updatedAt": "updatedAt"
+        },
+        ExpressionAttributeValues: {
+          ":uploadedUtilityFiles": mergedUtilityData.uploadedUtilityFiles,
+          ":utilityExtractedValues": mergedUtilityData.utilityExtractedValues,
+          ":siteEnergyProfile": mergedUtilityData.siteEnergyProfile,
+          ":updatedAt": uploadedAt
+        },
+        ConditionExpression: "attribute_exists(userId)"
       })
     );
 
+    const nextIntake = normalizeIntakeRecord({
+      ...intake,
+      ...mergedUtilityData,
+      updatedAt: uploadedAt
+    });
+
     res.status(201).json({
-      record: publicEnergyDataRecord(record)
+      intake: nextIntake,
+      uploadedUtilityFile: publicUploadedUtilityFile(uploadResult.uploadedUtilityFile),
+      utilityExtractedValues: uploadResult.utilityExtractedValues.map(publicUtilityExtractedValue),
+      siteEnergyProfile: nextIntake.siteEnergyProfile
     });
   } catch (error) {
     handleError(res, error);
