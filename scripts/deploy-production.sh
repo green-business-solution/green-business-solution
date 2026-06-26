@@ -7,6 +7,7 @@ DOMAIN_NAME="${DOMAIN_NAME:-retrofi.org}"
 HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z04402863EVV8FUF4EWUX}"
 REGION="${AWS_DEPLOY_REGION:-us-east-1}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
+ENERGY_DATA_TABLE="${GBS_ENERGY_DATA_TABLE:-gbs-energy-data}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI:-https://${DOMAIN_NAME}/api/auth/google/callback}"
@@ -24,12 +25,35 @@ aws_region() {
   aws --profile "${PROFILE}" --region "${REGION}" "$@"
 }
 
+aws_data_region() {
+  aws --profile "${PROFILE}" --region "${DATA_REGION}" "$@"
+}
+
 stack_output() {
   local key="$1"
   aws_region cloudformation describe-stacks \
     --stack-name "${STACK_NAME}" \
     --query "Stacks[0].Outputs[?OutputKey=='${key}'].OutputValue | [0]" \
     --output text
+}
+
+ensure_energy_data_table() {
+  if aws_data_region dynamodb describe-table --table-name "${ENERGY_DATA_TABLE}" >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "Creating DynamoDB table ${ENERGY_DATA_TABLE} in ${DATA_REGION}..."
+  aws_data_region dynamodb create-table \
+    --table-name "${ENERGY_DATA_TABLE}" \
+    --attribute-definitions \
+      AttributeName=userId,AttributeType=S \
+      AttributeName=energyDataId,AttributeType=S \
+    --key-schema \
+      AttributeName=userId,KeyType=HASH \
+      AttributeName=energyDataId,KeyType=RANGE \
+    --billing-mode PAY_PER_REQUEST >/dev/null
+
+  aws_data_region dynamodb wait table-exists --table-name "${ENERGY_DATA_TABLE}"
 }
 
 cd "${ROOT_DIR}"
@@ -69,6 +93,8 @@ fi
 
 aws_region s3 cp "${LAMBDA_ZIP}" "s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}"
 
+ensure_energy_data_table
+
 echo "Deploying CloudFormation stack ${STACK_NAME}..."
 aws_region cloudformation deploy \
   --stack-name "${STACK_NAME}" \
@@ -83,7 +109,8 @@ aws_region cloudformation deploy \
     GoogleClientSecret="${GOOGLE_CLIENT_SECRET}" \
     GoogleRedirectUri="${GOOGLE_REDIRECT_URI}" \
     AdminEmails="${ADMIN_EMAILS}" \
-    DataRegion="${DATA_REGION}"
+    DataRegion="${DATA_REGION}" \
+    EnergyDataTable="${ENERGY_DATA_TABLE}"
 
 FRONTEND_BUCKET="$(stack_output FrontendBucketName)"
 DISTRIBUTION_ID="$(stack_output CloudFrontDistributionId)"

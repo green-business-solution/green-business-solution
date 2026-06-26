@@ -9,6 +9,7 @@ Production hosting is defined in `infra/production-hosting.yaml` and deployed by
 The stack creates:
 
 - S3 bucket for the built Vite frontend.
+- Private S3 bucket for uploaded utility bills and Green Button files.
 - CloudFront distribution for `https://retrofi.org` and `https://www.retrofi.org`.
 - ACM certificate validated through the Route 53 hosted zone.
 - HTTP API Gateway route for `/api/*`.
@@ -28,9 +29,10 @@ The script:
 1. Builds the Vite frontend.
 2. Packages the Express API as a Lambda zip.
 3. Uploads the Lambda package to an artifact S3 bucket.
-4. Deploys or updates the CloudFormation stack.
-5. Syncs `dist/` to the frontend S3 bucket.
-6. Invalidates CloudFront.
+4. Ensures the `gbs-energy-data` DynamoDB table exists in the data region.
+5. Deploys or updates the CloudFormation stack.
+6. Syncs `dist/` to the frontend S3 bucket.
+7. Invalidates CloudFront.
 
 ## Google OAuth
 

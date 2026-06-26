@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) public energy-data upload flow
+
+- Added a post-scan energy-data upload flow with a new `/scan/energy-data` route, a live upload CTA from scan results, and browser-stored upload session handling tied to each new intake.
+- Added presigned S3 upload, energy-data registration, upload-session validation, parsed file listing, and admin table visibility for a new `gbs-energy-data` metadata store.
+- Implemented first-pass Green Button XML and CSV parsing plus AWS deployment updates for a private energy-data upload bucket and production table bootstrap.
+
 ## 2026-06-25 - Codex (GPT-5) real public matching test cases
 
 - Replaced the synthetic matching sample profiles with 10 real public California business and institutional sites supplied from GPT Pro research.

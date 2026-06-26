@@ -9,6 +9,7 @@ export type Route =
   | "about-contact"
   | "scan"
   | "scan-results"
+  | "scan-energy-data"
   | "sign-in"
   | "portal"
   | "admin";
@@ -32,6 +33,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/about/contact") return "about-contact";
   if (pathname === "/scan" || pathname === "/get-started") return "scan";
   if (pathname === "/scan/results") return "scan-results";
+  if (pathname === "/scan/energy-data") return "scan-energy-data";
   if (pathname === "/sign-in") return "sign-in";
   if (pathname === "/portal") return "portal";
   if (pathname === "/admin") return "admin";
@@ -45,5 +47,6 @@ export function pathForRoute(route: Route) {
   if (route === "about-trust") return "/about/trust";
   if (route === "about-contact") return "/about/contact";
   if (route === "scan-results") return "/scan/results";
+  if (route === "scan-energy-data") return "/scan/energy-data";
   return `/${route}`;
 }

@@ -8,6 +8,83 @@
   text-rendering: optimizeLegibility;
 }
 
+.energy-status-card,
+.energy-upload-form-card,
+.energy-upload-record,
+.energy-empty-state {
+  text-align: left;
+}
+
+.energy-status-card p,
+.energy-upload-form-card p,
+.energy-upload-record p,
+.energy-empty-state p {
+  margin: 0;
+}
+
+.energy-upload-page {
+  gap: 24px;
+}
+
+.energy-upload-grid {
+  align-items: stretch;
+}
+
+.energy-upload-form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.upload-field input[type="file"] {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px dashed rgba(16, 86, 58, 0.28);
+  border-radius: 18px;
+  color: #183329;
+  min-height: 72px;
+  padding: 18px;
+}
+
+.field-note {
+  color: rgba(24, 51, 41, 0.7);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.energy-upload-results {
+  display: grid;
+  gap: 18px;
+}
+
+.energy-upload-header {
+  align-items: end;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.energy-upload-header h2,
+.energy-upload-header p {
+  margin: 0;
+}
+
+.energy-upload-records {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.energy-upload-record {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .energy-upload-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

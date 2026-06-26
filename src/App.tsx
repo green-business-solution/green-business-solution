@@ -1,8 +1,9 @@
-import { FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
+  ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY,
   OAUTH_REDIRECT_ERROR_KEY,
   OAUTH_REDIRECT_RESULT_KEY,
   OPPORTUNITIES_TABLE_NAME,
@@ -88,6 +89,58 @@ type IntakeRecord = {
 type PortalPayload = {
   user: UserRecord;
   intake: IntakeRecord | null;
+};
+
+type EnergyDataUploadSession = {
+  userId: string;
+  submissionId: string;
+  token: string;
+  expiresAt: string;
+};
+
+type EnergyInterval = {
+  start: string;
+  end: string;
+  kwh: number;
+};
+
+type EnergyMonthlyTotal = {
+  month: string;
+  kwh: number;
+  cost: number | null;
+};
+
+type EnergyDataRecord = {
+  userId: string;
+  energyDataId: string;
+  submissionId: string;
+  sourceType: "bill_pdf" | "bill_image" | "green_button_xml" | "green_button_csv";
+  fileName: string;
+  contentType: string;
+  utilityName: string | null;
+  uploadStatus: "pending" | "uploaded" | "parsed" | "failed";
+  parseStatus: "not_started" | "processing" | "success" | "failed";
+  parseErrors: string[];
+  coverageStart: string | null;
+  coverageEnd: string | null;
+  accountNumberMasked: string | null;
+  meterIds: string[];
+  normalizedUsage: {
+    intervals: EnergyInterval[];
+    monthlyTotals: EnergyMonthlyTotal[];
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+type EnergyDataSessionPayload = {
+  intake: IntakeRecord | null;
+  uploadSession: Omit<EnergyDataUploadSession, "token"> | null;
+  records: EnergyDataRecord[];
+};
+
+type IntakeSubmissionPayload = PortalPayload & {
+  uploadSession: EnergyDataUploadSession | null;
 };
 
 type AdminRow = {
@@ -1054,6 +1107,67 @@ function clearStoredIntakeFormDraft() {
     window.localStorage.removeItem(intakeFormDraftStorageKey);
   } catch {
     // Ignore local storage failures so successful submission can continue.
+  }
+}
+
+function readStoredEnergyDataUploadSession(): EnergyDataUploadSession | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const rawValue = window.localStorage.getItem(ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY);
+    if (!rawValue) {
+      return null;
+    }
+
+    const parsed = JSON.parse(rawValue) as Partial<EnergyDataUploadSession>;
+    if (
+      typeof parsed.userId === "string" &&
+      typeof parsed.submissionId === "string" &&
+      typeof parsed.token === "string" &&
+      typeof parsed.expiresAt === "string"
+    ) {
+      return {
+        userId: parsed.userId,
+        submissionId: parsed.submissionId,
+        token: parsed.token,
+        expiresAt: parsed.expiresAt
+      };
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function storeEnergyDataUploadSession(session: EnergyDataUploadSession | null) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    if (!session) {
+      window.localStorage.removeItem(ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY, JSON.stringify(session));
+  } catch {
+    // Ignore storage failures so upload flow can still continue in-memory.
+  }
+}
+
+function clearStoredEnergyDataUploadSession() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY);
+  } catch {
+    // Ignore storage failures so reset actions still work.
   }
 }
 
@@ -3138,6 +3252,41 @@ function DatabaseProgramDetail({ isLoading, program }: { isLoading: boolean; pro
   );
 }
 
+const energyDataSourceTypeLabels: Record<EnergyDataRecord["sourceType"], string> = {
+  bill_pdf: "Utility bill PDF",
+  bill_image: "Utility bill image",
+  green_button_xml: "Green Button XML",
+  green_button_csv: "Utility export CSV"
+};
+
+function formatEnergyCoverage(start: string | null, end: string | null) {
+  if (!start && !end) {
+    return "Pending";
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+
+  const startLabel = start ? formatter.format(new Date(start)) : "Unknown";
+  const endLabel = end ? formatter.format(new Date(end)) : "Unknown";
+  return `${startLabel} to ${endLabel}`;
+}
+
+async function uploadFileToSignedUrl(uploadUrl: string, file: File) {
+  const response = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: file.type ? { "Content-Type": file.type } : undefined,
+    body: file
+  });
+
+  if (!response.ok) {
+    throw new Error(`File upload failed with HTTP ${response.status}.`);
+  }
+}
+
 function ScanResultsPage({
   navigate,
   publicAuth
@@ -3145,6 +3294,47 @@ function ScanResultsPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedSession = readStoredEnergyDataUploadSession();
+    if (!storedSession) {
+      setSessionPayload(null);
+      return;
+    }
+
+    let isMounted = true;
+    apiPost<EnergyDataSessionPayload>("/api/energy-data/session", {
+      userId: storedSession.userId,
+      uploadToken: storedSession.token
+    })
+      .then((payload) => {
+        if (!isMounted) return;
+        setSessionPayload(payload);
+        setError(null);
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        clearStoredEnergyDataUploadSession();
+        setSessionPayload(null);
+        setError(requestError instanceof Error ? requestError.message : "Could not load your upload session.");
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const latestRecord = sessionPayload?.records?.[0] || null;
+  const nextStepValue = latestRecord
+    ? latestRecord.parseStatus === "success"
+      ? "Energy data uploaded. Detailed analysis can begin."
+      : latestRecord.parseStatus === "failed"
+        ? "Upload another file or review the failed import."
+        : "Energy data uploaded and awaiting review."
+    : "Upload utility bills or a Green Button export for detailed savings and ROI";
+
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="results-panel">
@@ -3158,7 +3348,7 @@ function ScanResultsPage({
           {[
             ["Estimated opportunity range", "Coming soon"],
             ["Likely categories", "Pending analysis"],
-            ["Recommended next step", "Upload utility bills for detailed savings and ROI"]
+            ["Recommended next step", nextStepValue]
           ].map(([label, value]) => (
             <article className="feature-card" key={label}>
               <span className="eyebrow">{label}</span>
@@ -3166,10 +3356,227 @@ function ScanResultsPage({
             </article>
           ))}
         </div>
+        {latestRecord ? (
+          <article className="feature-card energy-status-card">
+            <span className="eyebrow">Latest energy data</span>
+            <h3>{latestRecord.fileName}</h3>
+            <p>
+              {energyDataSourceTypeLabels[latestRecord.sourceType]} · {latestRecord.parseStatus === "success" ? "Parsed" : latestRecord.parseStatus === "failed" ? "Needs another upload" : "Stored"}
+            </p>
+            <p>Coverage: {formatEnergyCoverage(latestRecord.coverageStart, latestRecord.coverageEnd)}</p>
+          </article>
+        ) : null}
+        {error ? <p className="error-message">{error}</p> : null}
         <div className="hero-actions">
           <CTAButton navigate={navigate} route="home" variant="secondary">Back to Home</CTAButton>
-          <button disabled type="button">Upload Utility Bills</button>
+          <button onClick={() => navigate("scan-energy-data")} type="button">
+            Upload Energy Data
+          </button>
         </div>
+      </section>
+    </PublicShell>
+  );
+}
+
+function EnergyDataUploadPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
+  const [storedSession, setStoredSession] = useState<EnergyDataUploadSession | null>(() => readStoredEnergyDataUploadSession());
+  const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
+  const [selectedSourceType, setSelectedSourceType] = useState<EnergyDataRecord["sourceType"]>("green_button_xml");
+  const [utilityName, setUtilityName] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+
+  async function refreshSession(session = storedSession) {
+    if (!session) {
+      setSessionPayload(null);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const payload = await apiPost<EnergyDataSessionPayload>("/api/energy-data/session", {
+        userId: session.userId,
+        uploadToken: session.token
+      });
+      setSessionPayload(payload);
+      setError(null);
+    } catch (requestError) {
+      clearStoredEnergyDataUploadSession();
+      setStoredSession(null);
+      setSessionPayload(null);
+      setError(requestError instanceof Error ? requestError.message : "Could not load the energy data upload session.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    refreshSession();
+  }, []);
+
+  async function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files || []);
+    if (!storedSession || files.length === 0) {
+      return;
+    }
+
+    setIsUploading(true);
+    setError(null);
+
+    try {
+      for (const file of files) {
+        const uploadDescriptor = await apiPost<{
+          energyDataId: string;
+          s3Key: string;
+          uploadUrl: string;
+          sourceType: EnergyDataRecord["sourceType"];
+          contentType: string;
+          expiresAt: string;
+        }>("/api/energy-data/upload-url", {
+          userId: storedSession.userId,
+          uploadToken: storedSession.token,
+          fileName: file.name,
+          contentType: file.type || "application/octet-stream",
+          sourceType: selectedSourceType
+        });
+
+        await uploadFileToSignedUrl(uploadDescriptor.uploadUrl, file);
+
+        await apiPost<{ record: EnergyDataRecord }>("/api/energy-data/register", {
+          userId: storedSession.userId,
+          uploadToken: storedSession.token,
+          energyDataId: uploadDescriptor.energyDataId,
+          s3Key: uploadDescriptor.s3Key,
+          fileName: file.name,
+          contentType: file.type || uploadDescriptor.contentType,
+          sourceType: selectedSourceType,
+          utilityName
+        });
+      }
+
+      await refreshSession(storedSession);
+      event.target.value = "";
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not upload the selected files.");
+    } finally {
+      setIsUploading(false);
+    }
+  }
+
+  return (
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+      <section className="results-panel energy-upload-page">
+        <p className="eyebrow">Detailed analysis</p>
+        <h1>Upload energy data</h1>
+        <p>
+          Add utility bills, Green Button XML, or a utility-export CSV so RetroFi can estimate
+          savings, ROI, payback, and project priority with real usage data.
+        </p>
+        {!storedSession ? (
+          <article className="feature-card energy-empty-state">
+            <h3>No active upload session</h3>
+            <p>Start with a free scan in this browser first, then return here to upload your utility data.</p>
+            <div className="hero-actions">
+              <CTAButton navigate={navigate} route="scan">Start Free Scan</CTAButton>
+            </div>
+          </article>
+        ) : (
+          <>
+            <div className="card-grid two energy-upload-grid">
+              <article className="feature-card energy-upload-form-card">
+                <span className="eyebrow">1. Choose data type</span>
+                <label className="field">
+                  <span>Energy data format</span>
+                  <select
+                    onChange={(event) => setSelectedSourceType(event.target.value as EnergyDataRecord["sourceType"])}
+                    value={selectedSourceType}
+                  >
+                    <option value="green_button_xml">Green Button XML</option>
+                    <option value="green_button_csv">Utility export CSV</option>
+                    <option value="bill_pdf">Utility bill PDF</option>
+                    <option value="bill_image">Utility bill image</option>
+                  </select>
+                </label>
+                <label className="field">
+                  <span>Utility name</span>
+                  <input
+                    onChange={(event) => setUtilityName(event.target.value)}
+                    placeholder="PG&E, SCE, SVP, or leave blank"
+                    type="text"
+                    value={utilityName}
+                  />
+                </label>
+                <label className="field upload-field">
+                  <span>Upload one or more files</span>
+                  <input
+                    accept={
+                      selectedSourceType === "green_button_xml"
+                        ? ".xml,application/xml,text/xml,application/atom+xml"
+                        : selectedSourceType === "green_button_csv"
+                          ? ".csv,text/csv,application/csv"
+                          : selectedSourceType === "bill_pdf"
+                            ? ".pdf,application/pdf"
+                            : "image/png,image/jpeg,image/webp,image/heic,image/heif"
+                    }
+                    disabled={isUploading}
+                    multiple
+                    onChange={handleFilesSelected}
+                    type="file"
+                  />
+                </label>
+                <p className="field-note">
+                  Green Button XML and CSV files are parsed automatically. Bill PDFs and images are stored now and can
+                  be reviewed or parsed later.
+                </p>
+              </article>
+              <article className="feature-card energy-upload-form-card">
+                <span className="eyebrow">2. Current session</span>
+                <h3>{sessionPayload?.intake?.business.companyName || "Recent free scan"}</h3>
+                <p>Address: {sessionPayload?.intake?.site?.address || "Not available"}</p>
+                <p>Upload access expires: {new Date(storedSession.expiresAt).toLocaleString()}</p>
+                <p>Latest next step: detailed savings and ROI analysis once usable energy data is attached.</p>
+              </article>
+            </div>
+            {error ? <p className="error-message">{error}</p> : null}
+            {isLoading ? <p>Loading your uploaded files…</p> : null}
+            <section className="energy-upload-results">
+              <div className="energy-upload-header">
+                <h2>Uploaded files</h2>
+                <p>{isUploading ? "Uploading and processing files…" : `${sessionPayload?.records.length || 0} file(s) stored`}</p>
+              </div>
+              <div className="energy-upload-records">
+                {(sessionPayload?.records || []).map((record) => (
+                  <article className="feature-card energy-upload-record" key={record.energyDataId}>
+                    <span className="eyebrow">{energyDataSourceTypeLabels[record.sourceType]}</span>
+                    <h3>{record.fileName}</h3>
+                    <p>Status: {record.parseStatus === "success" ? "Parsed" : record.parseStatus === "failed" ? "Failed to parse" : "Stored"}</p>
+                    <p>Coverage: {formatEnergyCoverage(record.coverageStart, record.coverageEnd)}</p>
+                    <p>Intervals: {record.normalizedUsage.intervals.length || 0}</p>
+                    <p>Monthly totals: {record.normalizedUsage.monthlyTotals.length || 0}</p>
+                    {record.parseErrors.length > 0 ? <p className="error-message">{record.parseErrors.join(" ")}</p> : null}
+                  </article>
+                ))}
+                {sessionPayload && sessionPayload.records.length === 0 ? (
+                  <article className="feature-card energy-empty-state">
+                    <h3>No files uploaded yet</h3>
+                    <p>Start with a Green Button XML export if you have one. It gives the cleanest automated usage summary.</p>
+                  </article>
+                ) : null}
+              </div>
+            </section>
+            <div className="hero-actions">
+              <CTAButton navigate={navigate} route="scan-results" variant="secondary">Back to Scan Results</CTAButton>
+            </div>
+          </>
+        )}
       </section>
     </PublicShell>
   );
@@ -3394,7 +3801,7 @@ function IntakePage({
     setIsSubmitting(true);
 
     try {
-      await apiPost<PortalPayload>("/api/intake", {
+      const payload = await apiPost<IntakeSubmissionPayload>("/api/intake", {
         fullName: form.contactName,
         contactName: form.contactName,
         email: form.email,
@@ -3422,6 +3829,7 @@ function IntakePage({
         notes: form.notes
       });
       clearStoredIntakeFormDraft();
+      storeEnergyDataUploadSession(payload.uploadSession);
       navigate("scan-results");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
@@ -5223,6 +5631,7 @@ export function App() {
 
   function signOut() {
     clearStoredAuthCredential();
+    clearStoredEnergyDataUploadSession();
     setAuthPayload(null);
     setAuthCredential(null);
     setSignInMessage(null);
@@ -5274,6 +5683,10 @@ export function App() {
 
   if (effectiveRoute === "scan-results") {
     return <ScanResultsPage navigate={navigate} publicAuth={publicAuth} />;
+  }
+
+  if (effectiveRoute === "scan-energy-data") {
+    return <EnergyDataUploadPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
   if (effectiveRoute === "sign-in") {

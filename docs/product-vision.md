@@ -188,6 +188,7 @@ Later planned page concept:
 Utility bill upload should be the next step after the preview:
 
 - Prompt users to upload multiple utility bills.
+- Support Green Button XML and utility-export CSV uploads before OCR-heavy bill parsing.
 - Bills will support rankings, savings estimates, and implementation planning.
 - Upload should support multiple files, starting with PDFs and images.
 

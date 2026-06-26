@@ -3,6 +3,7 @@ export const GOOGLE_SIGN_IN_START_PATH = "/api/auth/google/start";
 export const OAUTH_REDIRECT_RESULT_KEY = "gbs-oauth-redirect-result";
 export const OAUTH_REDIRECT_ERROR_KEY = "gbs-oauth-redirect-error";
 export const AUTH_CREDENTIAL_STORAGE_KEY = "gbs-auth-credential-v1";
+export const ENERGY_DATA_UPLOAD_SESSION_STORAGE_KEY = "gbs-energy-upload-session-v1";
 
 export const OPPORTUNITIES_TABLE_NAME = "gbs-opportunity-candidates";
 

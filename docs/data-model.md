@@ -157,6 +157,38 @@ Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. R
 raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`
 because the feed can contain repeated program codes with different titles.
 
+### `gbs-energy-data`
+
+Upload metadata and normalized energy-usage records tied to a scan submission.
+
+Primary key:
+
+- `userId` string, matching the user and intake tables
+- `energyDataId` string, unique per uploaded file
+
+Representative fields:
+
+- `submissionId`
+- `sourceType`: `bill_pdf`, `bill_image`, `green_button_xml`, or `green_button_csv`
+- `fileName`
+- `contentType`
+- `utilityName`
+- `s3Key`
+- `uploadStatus`
+- `parseStatus`
+- `parseErrors`
+- `coverageStart`
+- `coverageEnd`
+- `accountNumberMasked`
+- `meterIds`
+- `normalizedUsage`
+- `rawExtract`
+- `createdAt`
+- `updatedAt`
+
+The browser uploads files directly to a private S3 bucket using a presigned URL returned by the API. The
+API stores only metadata and parsed summaries in DynamoDB; the original documents stay in S3.
+
 ## Public DSIRE Clone
 
 The public DSIRE-sourced database browser is available at:

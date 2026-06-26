@@ -1,16 +1,20 @@
 import crypto from "node:crypto";
 import express from "express";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import {
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand,
+  QueryCommand,
   ScanCommand,
   TransactWriteCommand,
   UpdateCommand
 } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
+import { parseEnergyDataFile } from "./energyData/parseEnergyData.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -19,6 +23,8 @@ const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
+const energyDataTable = process.env.GBS_ENERGY_DATA_TABLE || "gbs-energy-data";
+const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
@@ -50,6 +56,10 @@ const client = new DynamoDBClient({
   credentials: profile ? fromIni({ profile }) : undefined
 });
 const db = DynamoDBDocumentClient.from(client);
+const s3 = new S3Client({
+  region,
+  credentials: profile ? fromIni({ profile }) : undefined
+});
 export const app = express();
 let activeServer = null;
 
@@ -79,6 +89,15 @@ const googleOAuthStateCookie = "gbs_google_oauth_state";
 const oauthRedirectResultStorageKey = "gbs-oauth-redirect-result";
 const oauthRedirectErrorStorageKey = "gbs-oauth-redirect-error";
 const googleOAuthCookieMaxAgeMs = 10 * 60 * 1000;
+const publicEnergyUploadSessionDurationMs = 30 * 24 * 60 * 60 * 1000;
+const uploadUrlDurationSeconds = 15 * 60;
+const supportedEnergyDataSourceTypes = new Set(["bill_pdf", "bill_image", "green_button_xml", "green_button_csv"]);
+const energyDataSourceMimeTypes = {
+  bill_pdf: new Set(["application/pdf"]),
+  bill_image: new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]),
+  green_button_xml: new Set(["application/xml", "text/xml", "application/atom+xml"]),
+  green_button_csv: new Set(["text/csv", "application/csv", "application/vnd.ms-excel"])
+};
 
 let googleKeysCache = {
   expiresAt: 0,
@@ -108,6 +127,69 @@ function cleanEmail(value) {
 
 function cleanUsername(value) {
   return cleanText(value).toLowerCase();
+}
+
+function hashPublicUploadToken(value) {
+  return crypto.createHash("sha256").update(cleanText(value)).digest("hex");
+}
+
+function createEnergyDataUploadSession(now) {
+  const issuedAt = now;
+  const expiresAt = new Date(new Date(now).getTime() + publicEnergyUploadSessionDurationMs).toISOString();
+  const token = crypto.randomBytes(24).toString("base64url");
+
+  return {
+    token,
+    record: {
+      tokenHash: hashPublicUploadToken(token),
+      issuedAt,
+      expiresAt
+    }
+  };
+}
+
+function cleanFileName(value) {
+  return cleanText(value).replace(/[^\w.\-]+/g, "_").slice(0, 160);
+}
+
+function cleanSourceType(value) {
+  const sourceType = cleanText(value);
+  return supportedEnergyDataSourceTypes.has(sourceType) ? sourceType : "";
+}
+
+function normalizeUploadedContentType(value) {
+  return cleanText(value).toLowerCase();
+}
+
+function validateEnergyDataFile({ sourceType, contentType, fileName }) {
+  const normalizedSourceType = cleanSourceType(sourceType);
+  if (!normalizedSourceType) {
+    const error = new Error("Energy data source type is not supported.");
+    error.status = 400;
+    throw error;
+  }
+
+  const normalizedContentType = normalizeUploadedContentType(contentType);
+  const allowedMimeTypes = energyDataSourceMimeTypes[normalizedSourceType] || new Set();
+  const normalizedFileName = cleanFileName(fileName);
+
+  if (!normalizedFileName) {
+    const error = new Error("A file name is required.");
+    error.status = 400;
+    throw error;
+  }
+
+  if (normalizedContentType && !allowedMimeTypes.has(normalizedContentType)) {
+    const error = new Error(`Files for ${normalizedSourceType} must use a supported content type.`);
+    error.status = 400;
+    throw error;
+  }
+
+  return {
+    sourceType: normalizedSourceType,
+    contentType: normalizedContentType,
+    fileName: normalizedFileName
+  };
 }
 
 function isValidEmail(value) {
@@ -595,7 +677,7 @@ function publicUser(user) {
   };
 }
 
-function createIntakeRecord(userId, input, now) {
+function createIntakeRecord(userId, input, now, energyDataUploadSession) {
   const contactName = cleanText(input.contactName || input.fullName);
 
   return {
@@ -634,6 +716,7 @@ function createIntakeRecord(userId, input, now) {
       timeline: cleanText(input.timeline),
       notes: cleanOptional(input.notes)
     },
+    energyDataUploadSession,
     createdAt: now,
     updatedAt: now
   };
@@ -647,6 +730,169 @@ async function getIntake(userId) {
     })
   );
   return result.Item || null;
+}
+
+function publicEnergyUploadSession(userId, intake) {
+  const session = intake?.energyDataUploadSession;
+  if (!session?.expiresAt) {
+    return null;
+  }
+
+  return {
+    userId,
+    submissionId: cleanText(intake?.submissionId),
+    expiresAt: session.expiresAt
+  };
+}
+
+function publicEnergyDataRecord(record) {
+  return {
+    userId: record.userId,
+    energyDataId: record.energyDataId,
+    submissionId: record.submissionId,
+    sourceType: record.sourceType,
+    fileName: record.fileName,
+    contentType: record.contentType,
+    utilityName: record.utilityName || null,
+    uploadStatus: record.uploadStatus,
+    parseStatus: record.parseStatus,
+    parseErrors: Array.isArray(record.parseErrors) ? record.parseErrors : [],
+    coverageStart: record.coverageStart || null,
+    coverageEnd: record.coverageEnd || null,
+    accountNumberMasked: record.accountNumberMasked || null,
+    meterIds: Array.isArray(record.meterIds) ? record.meterIds : [],
+    normalizedUsage: record.normalizedUsage || { intervals: [], monthlyTotals: [] },
+    createdAt: record.createdAt,
+    updatedAt: record.updatedAt
+  };
+}
+
+async function verifyEnergyUploadSession(userId, uploadToken) {
+  const intake = await getIntake(userId);
+  if (!intake) {
+    const error = new Error("No intake record was found for this upload session.");
+    error.status = 404;
+    throw error;
+  }
+
+  const session = intake.energyDataUploadSession;
+  if (!session?.tokenHash || !session?.expiresAt) {
+    const error = new Error("This intake record does not have an active upload session.");
+    error.status = 403;
+    throw error;
+  }
+
+  if (new Date(session.expiresAt).getTime() < Date.now()) {
+    const error = new Error("This upload session has expired. Start a new free scan to upload energy data.");
+    error.status = 403;
+    throw error;
+  }
+
+  if (hashPublicUploadToken(uploadToken) !== session.tokenHash) {
+    const error = new Error("The upload session is not valid for this intake.");
+    error.status = 403;
+    throw error;
+  }
+
+  return intake;
+}
+
+async function listEnergyDataRecords(userId) {
+  const result = await db.send(
+    new QueryCommand({
+      TableName: energyDataTable,
+      KeyConditionExpression: "userId = :userId",
+      ExpressionAttributeValues: {
+        ":userId": userId
+      },
+      ScanIndexForward: false
+    })
+  );
+
+  return result.Items || [];
+}
+
+async function readEnergyDataObjectAsText(s3Key) {
+  const response = await s3.send(
+    new GetObjectCommand({
+      Bucket: energyDataBucket,
+      Key: s3Key
+    })
+  );
+
+  return response.Body?.transformToString("utf-8") || "";
+}
+
+async function buildEnergyDataRecordFromUpload({
+  intake,
+  userId,
+  energyDataId,
+  fileName,
+  contentType,
+  sourceType,
+  s3Key,
+  utilityName
+}) {
+  const now = new Date().toISOString();
+  const baseRecord = {
+    userId,
+    energyDataId,
+    submissionId: intake.submissionId,
+    sourceType,
+    fileName,
+    contentType,
+    utilityName: cleanOptional(utilityName),
+    s3Key,
+    uploadStatus: "uploaded",
+    parseStatus: "not_started",
+    parseErrors: [],
+    coverageStart: null,
+    coverageEnd: null,
+    accountNumberMasked: null,
+    meterIds: [],
+    normalizedUsage: {
+      intervals: [],
+      monthlyTotals: []
+    },
+    rawExtract: null,
+    createdAt: now,
+    updatedAt: now
+  };
+
+  if (sourceType === "bill_pdf" || sourceType === "bill_image") {
+    return {
+      ...baseRecord,
+      rawExtract: {
+        format: sourceType,
+        note: "Stored for later manual review or OCR parsing."
+      }
+    };
+  }
+
+  try {
+    const text = await readEnergyDataObjectAsText(s3Key);
+    const parsed = parseEnergyDataFile({ sourceType, text });
+
+    return {
+      ...baseRecord,
+      utilityName: parsed.utilityName || baseRecord.utilityName,
+      uploadStatus: "parsed",
+      parseStatus: "success",
+      coverageStart: parsed.coverageStart,
+      coverageEnd: parsed.coverageEnd,
+      accountNumberMasked: parsed.accountNumberMasked,
+      meterIds: parsed.meterIds,
+      normalizedUsage: parsed.normalizedUsage,
+      rawExtract: parsed.rawExtract
+    };
+  } catch (error) {
+    return {
+      ...baseRecord,
+      uploadStatus: "failed",
+      parseStatus: "failed",
+      parseErrors: [error instanceof Error ? error.message : "Could not parse the uploaded energy data file."]
+    };
+  }
 }
 
 async function scanAll(TableName) {
@@ -1661,7 +1907,7 @@ function buildAdminShellPayload(admin) {
   return {
     admin: publicUser(admin),
     users: [],
-    dataTables: [usersTable, intakeTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
+    dataTables: [usersTable, intakeTable, energyDataTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
   };
 }
 
@@ -1694,6 +1940,16 @@ async function buildAdminTableSnapshot(tableName) {
     return tableSnapshot(
       intakeTable,
       [...intakes].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+    );
+  }
+
+  if (cleanTableName === energyDataTable) {
+    const records = await scanAll(energyDataTable);
+    return tableSnapshot(
+      energyDataTable,
+      [...records]
+        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+        .map(publicEnergyDataRecord)
     );
   }
 
@@ -1732,6 +1988,7 @@ async function createClientUser(input) {
   const users = await scanAll(usersTable);
   const existing = requireSingleEmailAccount(users, email);
   const now = new Date().toISOString();
+  const uploadSession = createEnergyDataUploadSession(now);
 
   if (existing) {
     if (existing.role !== "client") {
@@ -1743,7 +2000,7 @@ async function createClientUser(input) {
       throw createDuplicateEmailError(email);
     }
 
-    const intake = createIntakeRecord(existing.userId, input, now);
+    const intake = createIntakeRecord(existing.userId, input, now, uploadSession.record);
     const user = {
       ...existing,
       fullName: intake.contact.fullName || intake.business.companyName,
@@ -1788,7 +2045,17 @@ async function createClientUser(input) {
         })
       );
 
-      return { user, intake };
+      const publicSession = publicEnergyUploadSession(existing.userId, intake);
+      return {
+        user,
+        intake,
+        uploadSession: publicSession
+          ? {
+              ...publicSession,
+              token: uploadSession.token
+            }
+          : null
+      };
     } catch (error) {
       if (error.name === "TransactionCanceledException") {
         throw createDuplicateEmailError(email);
@@ -1798,7 +2065,7 @@ async function createClientUser(input) {
   }
 
   const userId = createAccountUserId(email);
-  const intake = createIntakeRecord(userId, input, now);
+  const intake = createIntakeRecord(userId, input, now, uploadSession.record);
   const user = {
     userId,
     role: "client",
@@ -1834,7 +2101,17 @@ async function createClientUser(input) {
       })
     );
 
-    return { user, intake };
+    const publicSession = publicEnergyUploadSession(userId, intake);
+    return {
+      user,
+      intake,
+      uploadSession: publicSession
+        ? {
+            ...publicSession,
+            token: uploadSession.token
+          }
+        : null
+    };
   } catch (error) {
     if (error.name === "TransactionCanceledException") {
       throw createDuplicateEmailError(email);
@@ -1899,7 +2176,9 @@ app.get("/api/health", (_req, res) => {
     region,
     usersTable,
     intakeTable,
+    energyDataTable,
     opportunitiesTable,
+    energyDataBucket: energyDataBucket || null,
     googleClientConfigured: Boolean(googleClientId),
     googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
     googleRedirectUri: googleRedirectUri || null,
@@ -1925,7 +2204,9 @@ app.get("/api/diagnostics", async (_req, res) => {
       profile,
       usersTable,
       intakeTable,
+      energyDataTable,
       opportunitiesTable,
+      energyDataBucket: energyDataBucket || null,
       googleClientConfigured: Boolean(googleClientId),
       googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
       googleRedirectUri: googleRedirectUri || null,
@@ -2162,7 +2443,110 @@ app.post("/api/intake", async (req, res) => {
     const result = await createClientUser(req.body || {});
     res.status(201).json({
       user: publicUser(result.user),
-      intake: result.intake
+      intake: result.intake,
+      uploadSession: result.uploadSession
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/energy-data/session", async (req, res) => {
+  try {
+    const userId = cleanText(req.body?.userId);
+    const uploadToken = cleanText(req.body?.uploadToken);
+    const intake = await verifyEnergyUploadSession(userId, uploadToken);
+    const records = await listEnergyDataRecords(userId);
+
+    res.json({
+      intake,
+      uploadSession: publicEnergyUploadSession(userId, intake),
+      records: records.map(publicEnergyDataRecord)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/energy-data/upload-url", async (req, res) => {
+  try {
+    if (!energyDataBucket) {
+      const error = new Error("Energy data uploads are not configured on the server.");
+      error.status = 503;
+      throw error;
+    }
+
+    const userId = cleanText(req.body?.userId);
+    const uploadToken = cleanText(req.body?.uploadToken);
+    await verifyEnergyUploadSession(userId, uploadToken);
+
+    const { sourceType, contentType, fileName } = validateEnergyDataFile({
+      sourceType: req.body?.sourceType,
+      contentType: req.body?.contentType,
+      fileName: req.body?.fileName
+    });
+    const energyDataId = `energy_${crypto.randomUUID()}`;
+    const s3Key = `energy-data/${userId}/${energyDataId}/${fileName}`;
+    const command = new PutObjectCommand({
+      Bucket: energyDataBucket,
+      Key: s3Key,
+      ContentType: contentType || undefined
+    });
+    const uploadUrl = await getSignedUrl(s3, command, { expiresIn: uploadUrlDurationSeconds });
+
+    res.status(201).json({
+      energyDataId,
+      s3Key,
+      uploadUrl,
+      sourceType,
+      contentType,
+      expiresAt: new Date(Date.now() + uploadUrlDurationSeconds * 1000).toISOString()
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/energy-data/register", async (req, res) => {
+  try {
+    const userId = cleanText(req.body?.userId);
+    const uploadToken = cleanText(req.body?.uploadToken);
+    const intake = await verifyEnergyUploadSession(userId, uploadToken);
+    const { sourceType, contentType, fileName } = validateEnergyDataFile({
+      sourceType: req.body?.sourceType,
+      contentType: req.body?.contentType,
+      fileName: req.body?.fileName
+    });
+    const energyDataId = cleanText(req.body?.energyDataId);
+    const s3Key = cleanText(req.body?.s3Key);
+
+    if (!energyDataId || !s3Key) {
+      const error = new Error("Energy data registration requires an upload identifier and storage key.");
+      error.status = 400;
+      throw error;
+    }
+
+    const record = await buildEnergyDataRecordFromUpload({
+      intake,
+      userId,
+      energyDataId,
+      fileName,
+      contentType,
+      sourceType,
+      s3Key,
+      utilityName: req.body?.utilityName
+    });
+
+    await db.send(
+      new PutCommand({
+        TableName: energyDataTable,
+        Item: record,
+        ConditionExpression: "attribute_not_exists(userId) AND attribute_not_exists(energyDataId)"
+      })
+    );
+
+    res.status(201).json({
+      record: publicEnergyDataRecord(record)
     });
   } catch (error) {
     handleError(res, error);

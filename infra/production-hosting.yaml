@@ -39,6 +39,9 @@ Parameters:
   OpportunitiesTable:
     Type: String
     Default: gbs-opportunity-candidates
+  EnergyDataTable:
+    Type: String
+    Default: gbs-energy-data
 
 Resources:
   FrontendBucket:
@@ -53,6 +56,34 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
+  EnergyDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub gbs-retrofi-org-energy-data-${AWS::AccountId}
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - PUT
+            AllowedOrigins:
+              - https://retrofi.org
+              - https://www.retrofi.org
+              - http://localhost:5173
+              - http://127.0.0.1:5173
+            ExposedHeaders:
+              - ETag
+            MaxAge: 3600
 
   FrontendOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
@@ -86,6 +117,7 @@ Resources:
                   - dynamodb:BatchWriteItem
                   - dynamodb:DescribeTable
                   - dynamodb:GetItem
+                  - dynamodb:Query
                   - dynamodb:PutItem
                   - dynamodb:Scan
                   - dynamodb:TransactWriteItems
@@ -93,7 +125,17 @@ Resources:
                 Resource:
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${UsersTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${IntakeTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${EnergyDataTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${OpportunitiesTable}
+        - PolicyName: EnergyDataBucketAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub ${EnergyDataBucket.Arn}/*
 
   ApiFunction:
     Type: AWS::Lambda::Function
@@ -109,7 +151,9 @@ Resources:
           GBS_AWS_REGION: !Ref DataRegion
           GBS_USERS_TABLE: !Ref UsersTable
           GBS_INTAKE_TABLE: !Ref IntakeTable
+          GBS_ENERGY_DATA_TABLE: !Ref EnergyDataTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
+          GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucket
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
           GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
@@ -312,6 +356,8 @@ Outputs:
     Value: !GetAtt CloudFrontDistribution.DomainName
   FrontendBucketName:
     Value: !Ref FrontendBucket
+  EnergyDataBucketName:
+    Value: !Ref EnergyDataBucket
   SiteUrl:
     Value: !Sub https://${DomainName}
   WwwSiteUrl:
