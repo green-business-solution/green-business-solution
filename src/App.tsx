@@ -3524,11 +3524,11 @@ function IntakePage({
             </div>
           </div>
           {error ? <p className="error-message">{error}</p> : null}
-          <div className="privacy-line">
-            <LockIcon />
-            <span>Your information is kept private and used only to prepare your recommendations.</span>
-          </div>
           <div className="conversational-footer">
+            <div className="privacy-line">
+              <LockIcon />
+              <span>Your information is kept private and used only to prepare your recommendations.</span>
+            </div>
             <div className="conversational-actions">
               <div className="conversational-action-group">
                 {currentStep?.kind === "choice" && currentStep.optional ? (

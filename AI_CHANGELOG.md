@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) conversational intake footer stabilization
+
+- Grouped the privacy note, primary action area, and progress bar into a single footer container for the public intake flow.
+- Converted the intake form to a column layout so the footer stays anchored at the bottom instead of shifting vertically between steps.
+- Reserved consistent action-row and button sizing across step types, with full-width mobile controls for stable responsive behavior.
+
 ## 2026-06-25 - Codex (GPT-5) utility review DynamoDB writeback
 
 - Added a DynamoDB writeback script for storing the generated utility restriction review artifact on canonical opportunity records.

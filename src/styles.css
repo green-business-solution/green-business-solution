@@ -2287,10 +2287,13 @@ body {
   gap: 8px;
   justify-content: center;
   margin-top: 0;
+  min-height: 24px;
   text-align: center;
 }
 
 .conversational-intake-form {
+  display: flex;
+  flex-direction: column;
   gap: 0;
   margin: 0 auto;
   max-width: 960px;
@@ -2301,6 +2304,7 @@ body {
 .conversational-step-shell {
   align-content: start;
   display: grid;
+  flex: 1 1 auto;
   gap: 18px;
   min-height: 0;
 }
@@ -2583,10 +2587,11 @@ body {
   border-top: 0;
   bottom: 0;
   display: grid;
-  gap: 10px;
-  margin: 14px auto 0;
+  gap: 14px;
+  grid-template-rows: minmax(24px, auto) minmax(52px, auto) auto;
+  margin: auto auto 0;
   max-width: 880px;
-  padding-top: 0;
+  padding-top: 20px;
   width: 100%;
 }
 
@@ -2595,13 +2600,14 @@ body {
   display: flex;
   gap: 14px;
   justify-content: flex-end;
-  min-height: 42px;
+  min-height: 52px;
 }
 
 .conversational-action-group {
   display: flex;
   gap: 12px;
   justify-content: end;
+  min-height: 52px;
 }
 
 .step-next-button {
@@ -2612,8 +2618,9 @@ body {
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
-  min-height: 42px;
-  padding: 0 20px;
+  min-height: 52px;
+  min-width: 184px;
+  padding: 0 28px;
 }
 
 .step-next-button:hover {
@@ -3569,6 +3576,10 @@ body {
     padding: 8px 0 6px;
   }
 
+  .conversational-footer {
+    grid-template-rows: minmax(24px, auto) minmax(52px, auto) auto;
+  }
+
   .conversational-actions,
   .conversational-action-group {
     align-items: stretch;
@@ -3611,6 +3622,25 @@ body {
 
   .about-subnav {
     grid-template-columns: 1fr;
+  }
+
+  .conversational-footer {
+    gap: 12px;
+    padding-top: 18px;
+  }
+
+  .conversational-actions {
+    justify-content: stretch;
+  }
+
+  .conversational-action-group {
+    width: 100%;
+  }
+
+  .step-next-button,
+  .secondary-button {
+    min-width: 0;
+    width: 100%;
   }
 
   .conversational-step-meta {
