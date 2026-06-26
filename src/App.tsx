@@ -1676,11 +1676,9 @@ function OptionCard({
         <strong>{option.label}</strong>
         {option.description ? <small>{option.description}</small> : null}
       </span>
-      {isSelected ? (
-        <span className="choice-card-check" aria-hidden="true">
-          <CheckIcon />
-        </span>
-      ) : null}
+      <span className="choice-card-check" aria-hidden="true">
+        {isSelected ? <CheckIcon /> : null}
+      </span>
     </button>
   );
 }
@@ -3366,13 +3364,15 @@ function IntakePage({
 
   function handleChoiceSelection(field: keyof IntakeFormState, value: string) {
     setError(null);
+    const currentValue = form[field];
+    const nextValue = currentValue === value ? "" : value;
 
     if (field === "organizationType") {
-      resetPathSpecificFields(value);
+      resetPathSpecificFields(nextValue);
       return;
     }
 
-    updateField(field, value);
+    updateField(field, nextValue);
   }
 
   async function submitForm(event: FormEvent) {

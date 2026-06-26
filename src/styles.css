@@ -2411,9 +2411,9 @@ body {
   border-radius: 16px;
   box-shadow: none;
   color: #15241d;
-  display: flex;
+  display: grid;
   gap: 16px;
-  justify-content: flex-start;
+  grid-template-columns: 44px minmax(0, 1fr) 28px;
   min-height: 84px;
   padding: 20px 24px;
   text-align: left;
@@ -2474,7 +2474,6 @@ body {
 
 .choice-card-copy {
   display: grid;
-  flex: 1;
   gap: 4px;
   min-width: 0;
 }
@@ -2499,11 +2498,18 @@ body {
   border-radius: 999px;
   color: #ffffff;
   display: inline-flex;
-  flex: 0 0 auto;
   height: 28px;
   justify-content: center;
   margin-left: auto;
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 160ms ease, transform 160ms ease;
   width: 28px;
+}
+
+.choice-card.is-selected .choice-card-check {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .choice-card-check svg {
