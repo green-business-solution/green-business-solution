@@ -3066,6 +3066,7 @@ function IntakePage({
   const currentStep = steps[stepIndex];
   const flow = intakeFlowForOrganizationType(form.organizationType);
   const progressPercent = steps.length > 0 ? Math.round(((stepIndex + 1) / steps.length) * 100) : 0;
+  const showFlowProgress = flow !== "unselected" && steps.length > 1;
 
   const reviewRows = useMemo(() => {
     const rows: Array<{ label: string; value: string }> = [
@@ -3339,20 +3340,19 @@ function IntakePage({
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="scan-page form-shell">
-        <div className="form-intro">
-          <h1>Tell us about your facility</h1>
-          <p>Answer a few quick questions and RetroFi will tailor your next steps automatically.</p>
-        </div>
-
         <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
           <div className="conversational-step-shell">
-            <div className="conversational-step-meta">
-              <span className="eyebrow">Free scan intake</span>
-              <span>{steps.length > 0 ? `Step ${stepIndex + 1} of ${steps.length}` : ""}</span>
-            </div>
+            {showFlowProgress ? (
+              <div className="conversational-step-meta">
+                <span>{`Step ${stepIndex + 1} of ${steps.length}`}</span>
+              </div>
+            ) : null}
             <div className="conversational-step-body">
               <h2>{currentStep?.question}</h2>
               {currentStep?.description ? <p>{currentStep.description}</p> : null}
+              {currentStep?.id === "organizationType" ? (
+                <p>We&apos;ll use this to personalize your recommendations.</p>
+              ) : null}
               {currentStep?.optional ? <p className="required-note">Optional</p> : null}
               {renderStepBody()}
             </div>
@@ -3364,9 +3364,13 @@ function IntakePage({
           </div>
           <div className="conversational-footer">
             <div className="conversational-actions">
-              <button className="secondary-button" disabled={stepIndex === 0 || isSubmitting} onClick={goBack} type="button">
-                Back
-              </button>
+              {stepIndex > 0 ? (
+                <button className="secondary-button" disabled={isSubmitting} onClick={goBack} type="button">
+                  Back
+                </button>
+              ) : (
+                <span />
+              )}
               <div className="conversational-action-group">
                 {currentStep?.kind === "choice" && currentStep.optional ? (
                   <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
@@ -3385,18 +3389,20 @@ function IntakePage({
                 ) : null}
               </div>
             </div>
-            <div className="conversational-progress">
-              <div
-                aria-label="Intake progress"
-                aria-valuemax={100}
-                aria-valuemin={0}
-                aria-valuenow={progressPercent}
-                className="conversational-progress-track"
-                role="progressbar"
-              >
-                <span style={{ width: `${progressPercent}%` }} />
+            {showFlowProgress ? (
+              <div className="conversational-progress">
+                <div
+                  aria-label="Intake progress"
+                  aria-valuemax={100}
+                  aria-valuemin={0}
+                  aria-valuenow={progressPercent}
+                  className="conversational-progress-track"
+                  role="progressbar"
+                >
+                  <span style={{ width: `${progressPercent}%` }} />
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </form>
       </section>
