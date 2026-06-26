@@ -2521,6 +2521,7 @@ body {
 }
 
 .conversational-input-shell {
+  display: block;
   margin-top: 32px;
   width: 100%;
   max-width: 880px;

@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) conversational intake width wrapper fix
+
+- Fixed the single-field intake wrapper rendering inline, which prevented the shared full-width layout from applying on later steps.
+- Standardized the effective content width across all 14 intake pages by making the field shell honor the same `880px` frame as step 1.
+
 ## 2026-06-25 - Codex (GPT-5) conversational intake width normalization
 
 - Unified the public intake step body to a single shared content width so choice, input, and review steps no longer alternate between wide and narrow layouts.
