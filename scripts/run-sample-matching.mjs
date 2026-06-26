@@ -26,8 +26,21 @@ const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candid
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
 const now = new Date(process.env.MATCHING_NOW || Date.now());
+const writeFullOutput = process.env.MATCHING_WRITE_FULL_OUTPUT !== "0";
+const writeRetrofitIndex = process.env.MATCHING_WRITE_RETROFIT_INDEX !== "0";
+const patchExistingTestCases = process.env.MATCHING_PATCH_EXISTING_TEST_CASES === "1";
+const requestedSampleUserIds = new Set(
+  (process.env.SAMPLE_USER_IDS || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+);
 
-const sampleUsers = readJson(sampleUsersPath);
+const allSampleUsers = readJson(sampleUsersPath);
+const sampleUsers =
+  requestedSampleUserIds.size > 0
+    ? allSampleUsers.filter((sample) => requestedSampleUserIds.has(sample.sampleUserId))
+    : allSampleUsers;
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
@@ -49,7 +62,7 @@ const opportunityProfiles = opportunities.map((opportunity) => ({
 const allResults = [];
 const userReports = [];
 const generatedAt = new Date().toISOString();
-const retrofitRows = buildRetrofitOpportunityIndex(opportunityProfiles);
+const retrofitRows = writeRetrofitIndex ? buildRetrofitOpportunityIndex(opportunityProfiles) : [];
 
 for (const userProfile of userProfiles) {
   const results = opportunityProfiles
@@ -57,10 +70,12 @@ for (const userProfile of userProfiles) {
       evaluateOpportunityForUser(userProfile.userMatchProfile, opportunity, matchProfile, { now })
     )
     .sort(compareResults);
-  allResults.push({
-    sampleUserId: userProfile.sampleUserId,
-    results: results.map(summarizeMatchResult)
-  });
+  if (writeFullOutput) {
+    allResults.push({
+      sampleUserId: userProfile.sampleUserId,
+      results: results.map(summarizeMatchResult)
+    });
+  }
   userReports.push(buildUserReport(userProfile, results));
 }
 
@@ -78,46 +93,57 @@ const output = {
   utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
   sampleUsers: userProfiles,
-  results: allResults
+  fullResultsOmitted: !writeFullOutput,
+  results: writeFullOutput ? allResults : []
 };
+const existingAdminTestCases =
+  patchExistingTestCases && fs.existsSync(testCasesPath) ? readJson(testCasesPath) : null;
+const adminTestCaseRows = existingAdminTestCases
+  ? patchTestCases(existingAdminTestCases.testCases || [], userReports)
+  : userReports;
 const adminTestCases = {
   generatedAt: output.generatedAt,
   matchingNow: output.matchingNow,
   opportunityCount: output.opportunityCount,
   totalOpportunityRecordCount: output.totalOpportunityRecordCount,
   archivedOpportunityCount: output.archivedOpportunityCount,
-  sampleUserCount: output.sampleUserCount,
+  sampleUserCount: existingAdminTestCases?.sampleUserCount || output.sampleUserCount,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
-  testCases: userReports
-};
-const retrofitIndex = {
-  schemaVersion: "retrofit-opportunity-index-v1",
-  taxonomyVersion: RETROFIT_TAXONOMY_VERSION,
-  generatedAt,
-  matchingNow: now.toISOString(),
-  opportunityCount: opportunities.length,
-  totalOpportunityRecordCount: opportunityRecords.length,
-  archivedOpportunityCount,
-  retrofitCount: retrofitRows.length,
-  retrofits: retrofitRows
+  testCases: adminTestCaseRows
 };
 
 fs.writeFileSync(outputPath, `${JSON.stringify(output, null, 2)}\n`);
 fs.writeFileSync(reportPath, buildReport({ userReports, opportunities, outputPath }), "utf8");
 fs.mkdirSync(path.dirname(testCasesPath), { recursive: true });
 fs.writeFileSync(testCasesPath, `${JSON.stringify(adminTestCases, null, 2)}\n`);
-fs.mkdirSync(path.dirname(retrofitIndexPath), { recursive: true });
-fs.writeFileSync(retrofitIndexPath, `${JSON.stringify(retrofitIndex, null, 2)}\n`);
+if (writeRetrofitIndex) {
+  const retrofitIndex = {
+    schemaVersion: "retrofit-opportunity-index-v1",
+    taxonomyVersion: RETROFIT_TAXONOMY_VERSION,
+    generatedAt,
+    matchingNow: now.toISOString(),
+    opportunityCount: opportunities.length,
+    totalOpportunityRecordCount: opportunityRecords.length,
+    archivedOpportunityCount,
+    retrofitCount: retrofitRows.length,
+    retrofits: retrofitRows
+  };
+  fs.mkdirSync(path.dirname(retrofitIndexPath), { recursive: true });
+  fs.writeFileSync(retrofitIndexPath, `${JSON.stringify(retrofitIndex, null, 2)}\n`);
+}
 
 console.log(`Sample matching complete.`);
 console.log(`Opportunities evaluated: ${opportunities.length}`);
 console.log(`Archived opportunities skipped: ${archivedOpportunityCount}`);
 console.log(`Sample users: ${sampleUsers.length}`);
+console.log(`Requested sample user filter: ${requestedSampleUserIds.size > 0 ? [...requestedSampleUserIds].join(", ") : "none"}`);
 console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
 console.log(`Results: ${outputPath}`);
+console.log(`Full pair result output: ${writeFullOutput ? "yes" : "no"}`);
 console.log(`Report: ${reportPath}`);
 console.log(`Admin test cases: ${testCasesPath}`);
-console.log(`Retrofit opportunity index: ${retrofitIndexPath}`);
+console.log(`Patch existing admin test cases: ${patchExistingTestCases ? "yes" : "no"}`);
+console.log(`Retrofit opportunity index: ${writeRetrofitIndex ? retrofitIndexPath : "not written"}`);
 console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`);
 console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
 
@@ -152,6 +178,21 @@ function applyUtilityReview(opportunity) {
     ...opportunity,
     utilityRestrictionReview
   };
+}
+
+function patchTestCases(existingRows, replacements) {
+  const replacementsById = new Map(replacements.map((row) => [row.sampleUserId, row]));
+  const seen = new Set();
+  const patched = existingRows.map((row) => {
+    const replacement = replacementsById.get(row.sampleUserId);
+    if (!replacement) return row;
+    seen.add(row.sampleUserId);
+    return replacement;
+  });
+  for (const replacement of replacements) {
+    if (!seen.has(replacement.sampleUserId)) patched.push(replacement);
+  }
+  return patched;
 }
 
 function readOpportunitySource(filePath) {
@@ -255,7 +296,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.",
     "The script evaluates every current opportunity against each sample profile, then reports the strongest matches and the most common unknowns/blockers.",
-    `Full JSON output: \`${outputPath}\``,
+    writeFullOutput ? `Full JSON output: \`${outputPath}\`` : "Full pair-level JSON output was skipped for this run.",
     "",
     "## Global Notes",
     "",

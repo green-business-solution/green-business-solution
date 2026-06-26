@@ -6,6 +6,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { buildExtractionCorpus } from "../server/matching/buildOpportunityMatchProfile.mjs";
 import { AVAILABILITY_REVIEW_SCHEMA_VERSION, inferAvailabilityReview } from "../server/matching/availabilityReview.mjs";
+import { fetchSourceTextWithRetry } from "./reviewFetch.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -17,6 +18,8 @@ const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-
 const profile = process.env.AWS_PROFILE || "gbs";
 const fetchSources = process.env.AVAILABILITY_REVIEW_FETCH !== "0";
 const fetchTimeoutMs = Number(process.env.AVAILABILITY_REVIEW_FETCH_TIMEOUT_MS || 12000);
+const fetchAttempts = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_FETCH_ATTEMPTS || 3));
+const fetchRetryDelayMs = Math.max(0, Number(process.env.AVAILABILITY_REVIEW_FETCH_RETRY_DELAY_MS || 30000));
 const concurrency = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_CONCURRENCY || 8));
 const writeDynamoDb = process.argv.includes("--write-dynamodb");
 const generatedAt = new Date().toISOString();
@@ -36,6 +39,8 @@ const output = {
   opportunityCount: opportunities.length,
   fetchSources,
   fetchTimeoutMs,
+  fetchAttempts,
+  fetchRetryDelayMs,
   statusCounts,
   reviews
 };
@@ -131,46 +136,12 @@ function sourceUrlsFor(opportunity) {
 }
 
 async function fetchSourceText(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), fetchTimeoutMs);
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "user-agent": "RetroFi availability review/1.0"
-      },
-      signal: controller.signal
-    });
-    if (!response.ok) return { ok: false, url, error: `HTTP ${response.status}` };
-    const contentType = response.headers.get("content-type") || "";
-    const body = await response.text();
-    return {
-      ok: true,
-      url,
-      contentType,
-      text: stripHtml(body).slice(0, 250000)
-    };
-  } catch (error) {
-    return {
-      ok: false,
-      url,
-      error: error instanceof Error ? error.message : "fetch failed"
-    };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-function stripHtml(value) {
-  return String(value || "")
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&#39;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/\s+/g, " ")
-    .trim();
+  return fetchSourceTextWithRetry(url, {
+    attempts: fetchAttempts,
+    baseDelayMs: fetchRetryDelayMs,
+    timeoutMs: fetchTimeoutMs,
+    userAgent: "RetroFi availability review/1.0"
+  });
 }
 
 function buildReport(output) {
@@ -180,6 +151,8 @@ function buildReport(output) {
     `Generated: ${output.generatedAt}`,
     `Opportunities reviewed: ${output.opportunityCount}`,
     `Source-page fetch enabled: ${output.fetchSources ? "yes" : "no"}`,
+    `Source fetch attempts: ${output.fetchAttempts}`,
+    `Source fetch retry delay: ${output.fetchRetryDelayMs} ms`,
     "",
     "## Status Counts",
     "",
@@ -193,7 +166,7 @@ function buildReport(output) {
     "- `rolling`: source text explicitly says no deadline, no time limit, first-come first-served, or open until funds are exhausted.",
     "- `upcoming`: source text indicates a future opening.",
     "- `unavailable`: source text or dates indicate the program is closed, fully subscribed, expired, cancelled, or no longer accepting applications.",
-    "- `uncertain`: reviewed source text did not contain enough supported availability evidence.",
+    "- `uncertain`: reviewed source text did not contain enough supported availability evidence. If source fetches were rate-limited, wait for the retry window and rerun the review before accepting this status.",
     "",
     "## Sample Rows",
     ""
@@ -259,6 +232,8 @@ Environment:
   AVAILABILITY_REVIEW_FETCH=0             Skip source-page fetches.
   AVAILABILITY_REVIEW_CONCURRENCY=8       Opportunity review concurrency.
   AVAILABILITY_REVIEW_FETCH_TIMEOUT_MS=12000 Source fetch timeout in milliseconds.
+  AVAILABILITY_REVIEW_FETCH_ATTEMPTS=3    Attempts per source URL. HTTP 429/5xx and timeouts are retried.
+  AVAILABILITY_REVIEW_FETCH_RETRY_DELAY_MS=30000 Base delay before retrying rate-limited or transient fetches.
 
 Options:
   --write-dynamodb                        Store availabilityReview on each DynamoDB opportunity.

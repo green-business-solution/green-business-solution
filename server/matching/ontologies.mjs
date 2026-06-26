@@ -204,6 +204,23 @@ export const UTILITY_ALIASES = {
     "memphis light, gas and water",
     "memphis light gas & water",
     "mlgw"
+  ],
+  UTIL_PENINSULA_LIGHT: [
+    "peninsula light company",
+    "peninsula light",
+    "penlight"
+  ],
+  UTIL_RICHLAND_ENERGY_SERVICES: [
+    "richland energy services",
+    "city of richland energy services"
+  ],
+  UTIL_WEST_PENN_POWER: [
+    "west penn power",
+    "west penn power company"
+  ],
+  UTIL_CONCORD_MLP: [
+    "concord municipal light plant",
+    "cmlp"
   ]
 };
 
@@ -253,7 +270,11 @@ export const UTILITY_DISPLAY_NAMES = {
   UTIL_VERNON_ELECTRIC_COOP: "Vernon Electric Cooperative",
   UTIL_TIDELAND_EMC: "Tideland EMC",
   UTIL_NTUA: "Navajo Tribal Utility Authority",
-  UTIL_MLGW: "Memphis Light, Gas and Water"
+  UTIL_MLGW: "Memphis Light, Gas and Water",
+  UTIL_PENINSULA_LIGHT: "Peninsula Light Company",
+  UTIL_RICHLAND_ENERGY_SERVICES: "Richland Energy Services",
+  UTIL_WEST_PENN_POWER: "West Penn Power",
+  UTIL_CONCORD_MLP: "Concord Municipal Light Plant"
 };
 
 export const TECHNOLOGY_ALIASES = {

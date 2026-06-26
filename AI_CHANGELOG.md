@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) targeted matching review repair
+
+- Repaired the current availability and utility-review gaps that were still producing `likely_eligible` sample matches, with DynamoDB writeback and a new repeatable targeted repair script.
+- Added shared source-fetch retry/backoff handling for availability, utility, and facility research scripts so HTTP 429, HTTP 5xx, and timeout failures are retried before accepting unresolved data.
+- Reconciled the admin sample matching fixture and report so the 50 public test profiles now show zero `likely_eligible` pairings and no stale nested likely opportunity cards.
+
 ## 2026-06-26 - Codex (GPT-5) Lambda packaging fix
 
 - Updated the production deploy package to include the bill-field dictionary required by the energy-data parser so the API Lambda can import the merged server bundle.

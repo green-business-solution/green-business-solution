@@ -1,14 +1,14 @@
 {
   "schemaVersion": "utility-restriction-review-v1",
-  "generatedAt": "2026-06-26T01:07:46.127Z",
+  "generatedAt": "2026-06-26T20:39:52.568Z",
   "opportunityCount": 2096,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
   "statusCounts": {
-    "required": 1147,
-    "not_applicable": 502,
+    "required": 1154,
+    "not_applicable": 504,
     "none_found_after_review": 202,
-    "unknown": 72,
+    "unknown": 63,
     "none": 173
   },
   "reviews": [
@@ -9172,21 +9172,40 @@
       "state": "MI",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4581/energy-smart-commercial-and-industrial-energy-efficiency-rebate-program-17-municipalities",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "required",
         "requiredUtilityIds": [],
-        "requiredUtilityNames": [],
+        "requiredUtilityNames": [
+          "Bay City",
+          "Charlevoix",
+          "Chelsea",
+          "Eaton Rapids",
+          "Escanaba",
+          "Harbor Springs",
+          "Hart",
+          "Lowell",
+          "Niles",
+          "Paw Paw",
+          "Petoskey",
+          "Portland",
+          "Sebewaing",
+          "South Haven",
+          "St. Louis",
+          "Sturgis",
+          "Wyandotte",
+          "Zeeland"
+        ],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "t Commercial and Industrial Energy Efficiency Rebate Program. Eligible business electric customers served by one of the 17 participating utilities may receive rebates on energy efficient lighting, controls, refrigerat",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "DSIRE states eligible business electric customers must be served by participating utilities; Energy Smart's current cities page lists the participating municipal programs.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/4581/energy-smart-commercial-and-industrial-energy-efficiency-rebate-program-17-municipalities",
           "https://mienergysmart.com/cities/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -20648,21 +20667,21 @@
       "state": "VT",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22250/electric-vehicle-charging-station-loan-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "not_applicable",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "Electric Vehicle Charging Station Loan Program / Vermont Economic Development Authority",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "VEDA describes this as a State Infrastructure Bank financing program for public-use EV charging and natural-gas refueling stations, with eligibility based on applicant/project type rather than electric distribution utility.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/22250/electric-vehicle-charging-station-loan-program",
           "https://www.veda.org/financing-options/vermont-commercial-financing/electric-vehicle-charging-station-loan-program/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.82
       }
     },
     {
@@ -30139,21 +30158,23 @@
       "state": "WA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4532/peninsula-light-company-commercial-efficient-lighting-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_PENINSULA_LIGHT"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "o wish to upgrade to energy efficient lighting. Participating customers must be served by PLC commercial service. These retrofits improve light quality and reduce energy costs in participating facilities. PLC",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Program title and reviewed source text state that participating customers must be served by PLC commercial service.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/4532/peninsula-light-company-commercial-efficient-lighting-rebate-program",
           "https://www.penlight.org/energy-efficiency/incentives/commercial-incentives/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -30163,21 +30184,23 @@
       "state": "WA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2813/richland-energy-services-energy-efficient-commercial-lighting-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_RICHLAND_ENERGY_SERVICES"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "The City of Richland (COR) provides rebates to encourage commercial utility customers to increase the energy efficiency of facilities by replacing existing lighting systems with more efficient equipment.",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Richland Energy Services says commercial and industrial projects must be served by Richland Energy Services for non-residential accounts.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/2813/richland-energy-services-energy-efficient-commercial-lighting-program",
-          "https://www.ci.richland.wa.us/departments/energy-services/energy-efficiency/commercial-industrial-programs"
+          "https://www.richlandwa.gov/departments/energy-services/energy-efficiency/commercial-industrial-programs"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -48905,21 +48928,23 @@
       "state": "MA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3728/concord-municipal-light-plant-solar-photovoltaic-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_CONCORD_MLP"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "Concord Municipal Light Plant - Solar Photovoltaic Rebate Program / Concord Municipal Light Plant",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Concord's solar page identifies the CMLP Solar PV Rebate, lets CMLP issue the rebate to the electric account holder, and describes CMLP interconnection and approval steps.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/3728/concord-municipal-light-plant-solar-photovoltaic-rebate-program",
           "https://concordma.gov/2029/Solar-Panels"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -49833,21 +49858,24 @@
       "state": "WA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4227/peninsula-light-company-residential-energy-efficiency-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_PENINSULA_LIGHT"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "ty Partners About Us Who We Are Voices for Cooperative Power Board of Directors Service Territory Lights Newsletters Power Resources Company Documents &#038; Forms Facilities Evaluation Frequently Asked Questions Care",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Peninsula Light Company residential efficiency incentive pages identify PenLight energy-efficiency rebates and program requirements for existing electric-heated residences.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/4227/peninsula-light-company-residential-energy-efficiency-rebate-program",
-          "https://www.penlight.org/energy-efficiency/incentives/"
+          "https://www.penlight.org/energy-efficiency/incentives/",
+          "https://www.penlight.org/energy-efficiency/incentives/heat-pump-incentives/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -52043,21 +52071,23 @@
       "state": "PA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/682/west-penn-power-sef-commercial-loan-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_WEST_PENN_POWER"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "should be aligned with WPPSEF's mission and should benefit the West Penn Power ratepayers. Funding for eligible projects may include commercial loans, equity investment, subordinated debt, and royalty financi",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "West Penn Energy Fund says projects must benefit West Penn Power ratepayers and ACT 129 Energy Micro Loan applicants must attach a West Penn Power pre-approval letter.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/682/west-penn-power-sef-commercial-loan-program",
-          "http://www.wppsef.org/need-financing.php"
+          "https://www.westpennenergyfund.org/get-funding"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {
@@ -52619,21 +52649,21 @@
       "state": "ME",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22181/electric-vehicle-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "not_applicable",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "Electric Vehicle Rebate Program / Efficiency Maine",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Efficiency Maine's EV rebate program is administered by Efficiency Maine for eligible Maine businesses, nonprofits, and organizations; reviewed terms do not gate eligibility by electric distribution utility.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/22181/electric-vehicle-rebate-program",
-          "https://www.efficiencymaine.com/electric-vehicle-rebates/"
+          "https://www.efficiencymaine.com/electric-vehicle-incentives-for-businesses-and-organizations/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.82
       }
     },
     {
@@ -53780,26 +53810,24 @@
       "state": "MT",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1655/northwestern-energy-custom-business-efficiency-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_NORTHWESTERN"
+        ],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "cultural, and multi-family residential facilities/systems. Both natural gas and electric customers are eligible for this program. It is not available for businesses already enrolled in the electric or natural gas “Cho",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "NorthWestern Energy's business rebates page says commercial electric rebates are available to NorthWestern Energy commercial electric supply customers and custom Business Partners incentives are available for electric and/or natural gas efficiency projects.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/1655/northwestern-energy-custom-business-efficiency-program",
-          "https://www.northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/rebates-incentives/e-business-partners"
+          "https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/rebates-incentives",
+          "https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/rebates-incentives/e-business-partners"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://www.northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/rebates-incentives/e-business-partners"
-          }
-        ],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "confidence": 0.9
       }
     },
     {

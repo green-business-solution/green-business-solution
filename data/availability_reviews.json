@@ -1,11 +1,11 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-26T06:02:54.556Z",
-  "opportunityCount": 11,
+  "generatedAt": "2026-06-26T20:39:52.568Z",
+  "opportunityCount": 12,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
   "statusCounts": {
-    "active": 9,
+    "active": 10,
     "rolling": 1,
     "unavailable": 1
   },
@@ -326,6 +326,35 @@
         "fetchErrors": [],
         "reviewedAt": "2026-06-26T06:02:54.556Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_code_title_hash:NY98F:8923b34ebfda",
+      "opportunityName": "New York City - Residential Solar Sales Tax Exemption",
+      "sourceName": "DSIRE",
+      "state": "NY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4703/new-york-city-residential-solar-sales-tax-exemption",
+      "websiteUrl": "https://www.nysolarmap.com/financing-solar/incentives/residential/",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "DSIRE currently publishes the New York City residential solar sales tax exemption, and NY Solar Map describes New York City/local sales-tax exemption availability in present tense for residential solar energy systems.",
+        "reasons": [
+          "current_source_present_tense_program"
+        ],
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4703/new-york-city-residential-solar-sales-tax-exemption",
+          "https://www.nysolarmap.com/financing-solar/incentives/residential/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T20:39:52.568Z",
+        "reviewMethod": "manual_source_research_repair",
         "confidence": 0.82
       }
     }

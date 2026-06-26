@@ -19,6 +19,7 @@
     "matching:utility-reviews:write": "node scripts/write-utility-restriction-reviews.mjs",
     "matching:availability-reviews": "node scripts/research-availability.mjs",
     "matching:archive-unavailable": "node scripts/archive-unavailable-opportunities.mjs",
+    "matching:review-repairs": "node scripts/apply-targeted-review-repairs.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"
