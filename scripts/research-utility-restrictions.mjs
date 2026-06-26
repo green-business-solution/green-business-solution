@@ -77,7 +77,7 @@ async function reviewOpportunity(opportunity) {
       new UpdateCommand({
         TableName: tableName,
         Key: { opportunityId: opportunity.opportunityId },
-        UpdateExpression: "SET utilityRestrictionReview = :review, updatedAt = :updatedAt",
+        UpdateExpression: "SET utilityRestrictionReview = :review, utilityRestrictionReviewUpdatedAt = :updatedAt",
         ExpressionAttributeValues: {
           ":review": utilityRestrictionReview,
           ":updatedAt": generatedAt

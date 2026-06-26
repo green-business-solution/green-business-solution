@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) utility review DynamoDB writeback
+
+- Added a DynamoDB writeback script for storing the generated utility restriction review artifact on canonical opportunity records.
+- Stored utility review metadata under dedicated `utilityRestrictionReview*` fields instead of mutating source-ingestion `updatedAt`.
+- Updated the utility restriction runbook to include the DynamoDB writeback step in the repeatable cron workflow.
+
 ## 2026-06-25 - Codex (GPT-5) utility restriction review pipeline
 
 - Added a repeatable utility-restriction research script that reviews stored opportunity data plus source pages and writes a reusable review artifact/report.

@@ -14,6 +14,7 @@
     "gather:dsire:aws": "node scripts/gather-dsire-opportunities.mjs --mode public-table --public-category financial --write-dynamodb",
     "gather:dsire:aws:rss": "node scripts/gather-dsire-opportunities.mjs --mode rss --write-dynamodb",
     "matching:utility-reviews": "node scripts/research-utility-restrictions.mjs",
+    "matching:utility-reviews:write": "node scripts/write-utility-restriction-reviews.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"

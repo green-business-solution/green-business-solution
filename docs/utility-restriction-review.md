@@ -33,7 +33,15 @@ The matcher treats `required` as a real eligibility gate, treats `none`, `not_ap
    - `data/utility_restriction_reviews.json`
    - `data/utility_restriction_review_report.md`
 
-3. Regenerate sample matching fixtures.
+3. Write the accepted normalized utility review layer to DynamoDB.
+
+   ```sh
+   npm run matching:utility-reviews:write
+   ```
+
+   This stores `utilityRestrictionReview`, `utilityRestrictionReviewUpdatedAt`, and `utilityRestrictionReviewSchemaVersion` on each opportunity without changing the opportunity's source-ingestion `updatedAt`.
+
+4. Regenerate sample matching fixtures.
 
    ```sh
    npm run matching:sample
@@ -41,14 +49,14 @@ The matcher treats `required` as a real eligibility gate, treats `none`, `not_ap
 
    The sample matcher automatically loads `data/utility_restriction_reviews.json` and applies reviews before building match profiles.
 
-4. Run quick checks.
+5. Run quick checks.
 
    ```sh
    npm test
    npm run build
    ```
 
-5. Commit, push, and deploy the updated app/fixtures when the generated admin output changes.
+6. Commit, push, and deploy the updated app/fixtures when the generated admin output changes.
 
 ## Useful Environment Variables
 
@@ -66,7 +74,7 @@ Optional DynamoDB writeback:
 npm run matching:utility-reviews -- --write-dynamodb
 ```
 
-Use writeback only when the generated review has been accepted as the current production normalization layer. Git remains the source of truth for code; AWS is only the deployment/data target.
+Use `npm run matching:utility-reviews:write` when writing an already-reviewed artifact. Use `--write-dynamodb` only when you want the research script to regenerate reviews and write them in one pass. Git remains the source of truth for code; AWS is the canonical copy of production opportunity data.
 
 ## Review Method
 
@@ -88,6 +96,7 @@ A scheduled Codex-style job can run:
 git pull --ff-only
 npm run gather:dsire:aws
 npm run matching:utility-reviews
+npm run matching:utility-reviews:write
 npm run matching:sample
 npm test
 npm run build
