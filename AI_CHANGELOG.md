@@ -540,3 +540,6 @@
 ## 2026-06-22 - Codex (GPT-5) production domain documentation
 
 - Added `https://retrofi.org` to the product vision document as the production website domain.
+# 2026-06-25
+
+- Updated the conversational intake review step so step 14 now shows `Submit` instead of `Get Started` on the bottom-right action button.

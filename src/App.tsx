@@ -976,7 +976,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
       question: "Review and submit",
       description: "Use Back to make changes before you submit."
       ,
-      ctaLabel: "Get Started",
+      ctaLabel: "Submit",
       section: "Review"
     });
   }
