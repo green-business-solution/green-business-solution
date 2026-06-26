@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) nationwide matching test cases
+
+- Added 40 nationwide sample matching profiles covering residential, multifamily, small business, nonprofit, public-sector, industrial, data-center, tribal, island, rural, and cooperative-utility edge cases.
+- Expanded electric distribution utility aliases for the new sample profiles and fixed address state parsing so city names like `La Farge, WI` do not get mistaken for Louisiana.
+- Regenerated the admin matching and retrofit fixtures across 50 sample profiles, surfacing 12 remaining `likely_eligible` pairings for follow-up data repair.
+
 ## 2026-06-25 - Codex (GPT-5) availability review repair
 
 - Added a repeatable availability-review pipeline that fetches source pages, stores canonical `availabilityReview` records on DynamoDB opportunities, and documents future cron automation.

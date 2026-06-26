@@ -62,6 +62,7 @@ export const UTILITY_ALIASES = {
     "con ed",
     "con edison",
     "consolidated edison",
+    "consolidated edison company of new york",
     "conedison"
   ],
   UTIL_XCEL: [
@@ -70,10 +71,139 @@ export const UTILITY_ALIASES = {
   ],
   UTIL_DUKE: [
     "duke",
-    "duke energy"
+    "duke energy",
+    "duke energy progress",
+    "duke energy carolinas"
   ],
   UTIL_AUSTIN_ENERGY: [
     "austin energy"
+  ],
+  UTIL_SEATTLE_CITY_LIGHT: [
+    "seattle city light"
+  ],
+  UTIL_HAWAIIAN_ELECTRIC: [
+    "hawaiian electric",
+    "hawaiian electric company",
+    "heco"
+  ],
+  UTIL_PEPCO: [
+    "pepco",
+    "potomac electric power company"
+  ],
+  UTIL_DTE: [
+    "dte",
+    "dte electric",
+    "dte energy"
+  ],
+  UTIL_NORTHWESTERN: [
+    "northwestern energy",
+    "northwestern corporation"
+  ],
+  UTIL_BURLINGTON_ELECTRIC: [
+    "burlington electric",
+    "burlington electric department"
+  ],
+  UTIL_NES: [
+    "nashville electric service"
+  ],
+  UTIL_PNM: [
+    "pnm",
+    "public service company of new mexico"
+  ],
+  UTIL_OGE: [
+    "og&e",
+    "oklahoma gas and electric",
+    "oklahoma gas & electric"
+  ],
+  UTIL_GEORGIA_POWER: [
+    "georgia power"
+  ],
+  UTIL_CMP: [
+    "central maine power",
+    "cmp"
+  ],
+  UTIL_DUQUESNE_LIGHT: [
+    "duquesne light",
+    "duquesne light company"
+  ],
+  UTIL_IDAHO_POWER: [
+    "idaho power"
+  ],
+  UTIL_AMEREN_IL: [
+    "ameren illinois",
+    "ameren"
+  ],
+  UTIL_SNOHOMISH_PUD: [
+    "snohomish county public utility district",
+    "snohomish county pud",
+    "snohomish pud"
+  ],
+  UTIL_SRP: [
+    "salt river project",
+    "srp"
+  ],
+  UTIL_CLYDE_LIGHT_POWER: [
+    "clyde light and power",
+    "clyde light & power"
+  ],
+  UTIL_GRANT_COUNTY_PUD: [
+    "grant county public utility district",
+    "grant county pud"
+  ],
+  UTIL_DOMINION_VA: [
+    "dominion energy virginia",
+    "dominion virginia power"
+  ],
+  UTIL_PPL: [
+    "ppl electric utilities",
+    "ppl electric"
+  ],
+  UTIL_ALLIANT: [
+    "alliant energy",
+    "interstate power and light",
+    "interstate power & light"
+  ],
+  UTIL_MGE: [
+    "madison gas and electric",
+    "madison gas & electric",
+    "mge"
+  ],
+  UTIL_EVERSOURCE: [
+    "eversource"
+  ],
+  UTIL_GVEA: [
+    "golden valley electric association",
+    "gvea"
+  ],
+  UTIL_ROCKY_MOUNTAIN_POWER: [
+    "rocky mountain power",
+    "pacificorp"
+  ],
+  UTIL_KIUC: [
+    "kauai island utility cooperative",
+    "kiuc"
+  ],
+  UTIL_TAHLEQUAH_PWA: [
+    "tahlequah public works authority",
+    "tahlequah pwa"
+  ],
+  UTIL_VERNON_ELECTRIC_COOP: [
+    "vernon electric cooperative",
+    "vernon electric coop"
+  ],
+  UTIL_TIDELAND_EMC: [
+    "tideland electric membership corporation",
+    "tideland emc"
+  ],
+  UTIL_NTUA: [
+    "navajo tribal utility authority",
+    "ntua"
+  ],
+  UTIL_MLGW: [
+    "memphis light gas and water",
+    "memphis light, gas and water",
+    "memphis light gas & water",
+    "mlgw"
   ]
 };
 
@@ -92,7 +222,38 @@ export const UTILITY_DISPLAY_NAMES = {
   UTIL_CONED: "ConEd",
   UTIL_XCEL: "Xcel Energy",
   UTIL_DUKE: "Duke Energy",
-  UTIL_AUSTIN_ENERGY: "Austin Energy"
+  UTIL_AUSTIN_ENERGY: "Austin Energy",
+  UTIL_SEATTLE_CITY_LIGHT: "Seattle City Light",
+  UTIL_HAWAIIAN_ELECTRIC: "Hawaiian Electric",
+  UTIL_PEPCO: "Pepco",
+  UTIL_DTE: "DTE Electric",
+  UTIL_NORTHWESTERN: "NorthWestern Energy",
+  UTIL_BURLINGTON_ELECTRIC: "Burlington Electric Department",
+  UTIL_NES: "Nashville Electric Service",
+  UTIL_PNM: "Public Service Company of New Mexico",
+  UTIL_OGE: "Oklahoma Gas & Electric",
+  UTIL_GEORGIA_POWER: "Georgia Power",
+  UTIL_CMP: "Central Maine Power",
+  UTIL_DUQUESNE_LIGHT: "Duquesne Light",
+  UTIL_IDAHO_POWER: "Idaho Power",
+  UTIL_AMEREN_IL: "Ameren Illinois",
+  UTIL_SNOHOMISH_PUD: "Snohomish County PUD",
+  UTIL_SRP: "Salt River Project",
+  UTIL_CLYDE_LIGHT_POWER: "Clyde Light & Power",
+  UTIL_GRANT_COUNTY_PUD: "Grant County PUD",
+  UTIL_DOMINION_VA: "Dominion Energy Virginia",
+  UTIL_PPL: "PPL Electric Utilities",
+  UTIL_ALLIANT: "Alliant Energy / Interstate Power and Light",
+  UTIL_MGE: "Madison Gas and Electric",
+  UTIL_EVERSOURCE: "Eversource",
+  UTIL_GVEA: "Golden Valley Electric Association",
+  UTIL_ROCKY_MOUNTAIN_POWER: "Rocky Mountain Power",
+  UTIL_KIUC: "Kauai Island Utility Cooperative",
+  UTIL_TAHLEQUAH_PWA: "Tahlequah Public Works Authority",
+  UTIL_VERNON_ELECTRIC_COOP: "Vernon Electric Cooperative",
+  UTIL_TIDELAND_EMC: "Tideland EMC",
+  UTIL_NTUA: "Navajo Tribal Utility Authority",
+  UTIL_MLGW: "Memphis Light, Gas and Water"
 };
 
 export const TECHNOLOGY_ALIASES = {
@@ -311,6 +472,7 @@ export const STATE_NAMES = {
 export const STATE_CODES_BY_NAME = Object.fromEntries(
   Object.entries(STATE_NAMES).map(([code, name]) => [normalizeText(name), code])
 );
+const STATE_CODE_SET = new Set(Object.keys(STATE_NAMES));
 
 export function normalizeText(value) {
   return String(value || "")
@@ -384,13 +546,19 @@ export function canonicalTechnologiesFromImprovements(values) {
 export function extractStateCode(value) {
   const text = String(value || "");
   const upper = text.toUpperCase();
-  const explicitCode = upper.match(/(?:^|[^A-Z])(A[LKZR]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[A]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])(?:[^A-Z]|$)/);
-  if (explicitCode) return explicitCode[1];
+  const codeBeforeZip = upper.match(/(?:^|[^A-Z])([A-Z]{2})\s+\d{5}(?:-\d{4})?(?:[^0-9]|$)/);
+  if (codeBeforeZip && STATE_CODE_SET.has(codeBeforeZip[1])) return codeBeforeZip[1];
+
+  const commaDelimitedCode = upper.match(/,\s*([A-Z]{2})(?:\s*,|\s*$)/);
+  if (commaDelimitedCode && STATE_CODE_SET.has(commaDelimitedCode[1])) return commaDelimitedCode[1];
 
   const normalized = normalizeText(text);
   for (const [stateName, stateCode] of Object.entries(STATE_CODES_BY_NAME)) {
     if (normalized.includes(stateName)) return stateCode;
   }
+
+  const explicitCode = upper.match(/(?:^|[^A-Z])(A[LKZR]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[A]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])(?:[^A-Z]|$)/);
+  if (explicitCode) return explicitCode[1];
 
   return null;
 }

@@ -3,11 +3,17 @@ import { buildOpportunityMatchProfile } from "./buildOpportunityMatchProfile.mjs
 import { evaluateOpportunityForUser } from "./evaluateRules.mjs";
 import { summarizeMatchResult } from "./explainMatch.mjs";
 import { normalizeUserProfile } from "./normalizeUserProfile.mjs";
+import { extractStateCode } from "./ontologies.mjs";
 import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
 
 const now = new Date("2026-06-25T12:00:00Z");
 
 describe("matching pipeline", () => {
+  it("prefers address state codes over city-name state-like prefixes", () => {
+    expect(extractStateCode("One Organic Way, La Farge, WI 54639, USA")).toBe("WI");
+    expect(extractStateCode("1213 U Street NW, Washington, DC 20009, USA")).toBe("DC");
+  });
+
   it("matches an SDG&E EV charging user to an SDG&E EV charging opportunity", () => {
     const user = normalizeUserProfile({
       organizationType: "Agricultural Operation",
