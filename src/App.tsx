@@ -3525,10 +3525,6 @@ function IntakePage({
               {renderStepBody()}
             </div>
             {error ? <p className="error-message intake-error">{error}</p> : null}
-            <div className="privacy-line">
-              <LockIcon />
-              <span>Your information is kept private and used only to prepare your recommendations.</span>
-            </div>
             <div className="step-bottom-area">
               <div className="bottom-controls">
                 <div className="conversational-action-group">
@@ -3550,6 +3546,10 @@ function IntakePage({
                 </div>
               </div>
               <ProgressBar current={displayStepCurrent} total={displayStepTotal} />
+              <div className="privacy-line">
+                <LockIcon />
+                <span>Your information is kept private and used only to prepare your recommendations.</span>
+              </div>
             </div>
           </div>
         </form>

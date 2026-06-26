@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) intake privacy note reposition
+
+- Moved the conversational intake privacy note below the progress bar and step count so it sits with the lower progress section instead of above the controls.
+
 ## 2026-06-25 - Codex (GPT-5) persistent intake next button
 
 - Changed the conversational intake footer so the primary `Next` button is always visible on non-review steps instead of appearing only after selection or text entry.

@@ -2606,8 +2606,8 @@ body {
 
 .step-bottom-area {
   display: grid;
-  gap: 14px;
-  grid-template-rows: minmax(52px, auto) auto;
+  gap: 12px;
+  grid-template-rows: minmax(52px, auto) auto minmax(24px, auto);
   margin: auto auto 0;
   max-width: 880px;
   padding-top: 20px;
