@@ -3500,22 +3500,6 @@ function IntakePage({
       <section className="scan-page form-shell">
         <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
           <div className="intake-shell">
-            <div className="step-top-row">
-              <div className="conversational-step-meta">
-                {stepIndex > 0 ? (
-                  <button className="step-back-link" disabled={isSubmitting} onClick={goBack} type="button">
-                    ← Back
-                  </button>
-                ) : (
-                  <span />
-                )}
-                <span className="step-chip">
-                  <span className="step-chip-label">{`STEP ${displayStepCurrent}`}</span>
-                  <span className="step-chip-dot" />
-                  <span className="step-chip-section">{currentStep?.section}</span>
-                </span>
-              </div>
-            </div>
             <section className="step-question-area" key={currentStep?.id}>
               <h2>{currentStep?.question}</h2>
               {currentStep?.description ? <p>{currentStep.description}</p> : null}

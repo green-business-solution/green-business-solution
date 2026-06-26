@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) intake top chip removal
+
+- Removed the top `STEP X • section` chip row from the conversational intake flow and tightened the shell spacing so the question area sits higher on every step.
+
 ## 2026-06-25 - Codex (GPT-5) intake privacy note reposition
 
 - Moved the conversational intake privacy note below the progress bar and step count so it sits with the lower progress section instead of above the controls.
