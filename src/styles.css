@@ -791,6 +791,7 @@ dd {
 
 .admin-intake-summary-table {
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .admin-row {
@@ -810,6 +811,8 @@ dd {
     minmax(120px, 0.55fr)
     minmax(140px, 0.65fr)
     150px;
+  min-width: 1480px;
+  width: max-content;
 }
 
 .admin-row + .admin-row {
@@ -861,6 +864,12 @@ dd {
   font: inherit;
   text-align: left;
   width: 100%;
+}
+
+.admin-clickable-row.admin-intake-summary-row {
+  min-width: 1480px;
+  padding-left: 48px;
+  width: max-content;
 }
 
 .admin-clickable-row:hover {
