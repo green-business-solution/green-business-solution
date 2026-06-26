@@ -3220,6 +3220,7 @@ function IntakePage({
   const flow = intakeFlowForOrganizationType(form.organizationType);
   const displayStepTotal = flow === "unselected" ? 12 : steps.length;
   const displayStepCurrent = Math.min(stepIndex + 1, displayStepTotal);
+  const isLastVisibleStep = displayStepCurrent === displayStepTotal;
   const currentChoiceValue =
     currentStep?.field && typeof form[currentStep.field] === "string" ? form[currentStep.field] : "";
 
@@ -3532,12 +3533,12 @@ function IntakePage({
                   ) : null}
                   {currentStep && currentStep.kind !== "review" ? (
                     <button className="step-next-button" disabled={isSubmitting} type="submit">
-                      Next →
+                      {isLastVisibleStep ? "Submit" : "Next →"}
                     </button>
                   ) : null}
                   {currentStep?.kind === "review" ? (
                     <button className="step-next-button" disabled={isSubmitting} type="submit">
-                      {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Get Started"}
+                      {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Submit"}
                     </button>
                   ) : null}
                 </div>

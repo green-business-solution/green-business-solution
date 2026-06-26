@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) final intake step CTA
+
+- Updated the bottom-right conversational intake button to show `Submit` on the final visible step above the progress bar.
+- Preserved the existing `Next →` label on all earlier steps.
+
 ## 2026-06-25 - Codex (GPT-5) unavailable opportunity archiving
 
 - Added opportunity lifecycle archiving for normalized unavailable opportunities, with a repeatable script and report artifacts.
