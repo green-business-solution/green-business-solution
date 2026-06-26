@@ -73,7 +73,7 @@ describe("matching pipeline", () => {
     expect(result.blockers.join(" ")).toMatch(/does not match required utility/);
   });
 
-  it("does not treat missing utility restriction as a hard failure", () => {
+  it("treats reviewed opportunities with no utility restriction language as pass", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",
       siteAddress: "1 City Hall Square, Boston, MA 02201",
@@ -101,8 +101,84 @@ describe("matching pipeline", () => {
     const profile = buildOpportunityMatchProfile(opportunity, { now });
     const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
 
+    expect(profile.utilityRequirements.restrictionStatus).toBe("none_found_after_review");
     expect(result.eligibilityStatus).not.toBe("ineligible");
-    expect(result.unresolvedRequirements.join(" ")).toMatch(/utility restriction/);
+    expect(result.unresolvedRequirements.join(" ")).not.toMatch(/utility restriction/i);
+    expect(result.matchedReasons.join(" ")).toMatch(/No utility restriction was found after source review/);
+  });
+
+  it("hard-fails utility-like requirements that are not in the utility ontology", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 Infinite Loop, Cupertino, CA 95014, USA",
+      electricUtilityProvider: "PG&E",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-lodi-lighting",
+      canonicalTitle: "Lodi Electric Utility - Commercial Energy Efficiency Rebate Program",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Commercial customers may receive lighting incentives.",
+      technologies: ["LED Lighting"],
+      sectors: ["Commercial"],
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(profile.utilityRequirements.restrictionStatus).toBe("required");
+    expect(profile.utilityRequirements.requiredUtilityNames).toContain("Lodi Electric Utility");
+    expect(result.eligibilityStatus).toBe("ineligible");
+    expect(result.blockers.join(" ")).toMatch(/Lodi Electric Utility/);
+  });
+
+  it("uses stored utility review artifacts before deterministic inference", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 Infinite Loop, Cupertino, CA 95014, USA",
+      electricUtilityProvider: "PG&E",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["EV charging"]
+    });
+    const opportunity = {
+      opportunityId: "test-reviewed-any-utility",
+      canonicalTitle: "SDG&E EV Charging Program",
+      sourceKey: "SOURCE_SDGE_BUSINESS",
+      sourceName: "San Diego Gas & Electric Business Programs",
+      state: "CA",
+      status: "active",
+      category: "EV Charging Programs for Businesses",
+      programType: "Rebate Program",
+      summary: "Commercial customers can receive EV charging incentives.",
+      technologies: ["Level-2 Electric Vehicle Service Equipment"],
+      sectors: ["Commercial"],
+      utilityRestrictionReview: {
+        restrictionStatus: "none",
+        requiredUtilityIds: [],
+        evidenceText: "Reviewed source rules indicate any electric utility customer is eligible.",
+        confidence: 0.86
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(profile.utilityRequirements.restrictionStatus).toBe("none");
+    expect(profile.utilityRequirements.requiredUtilityIds).toEqual([]);
+    expect(result.eligibilityStatus).not.toBe("ineligible");
+    expect(result.blockers.join(" ")).not.toMatch(/utility/i);
   });
 
   it("preserves source links in summarized match results", () => {

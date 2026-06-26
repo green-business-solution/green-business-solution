@@ -4,11 +4,11 @@ import {
   canonicalBuildingType,
   canonicalOrganizationType,
   canonicalTechnologiesFromText,
-  canonicalUtilityId,
   extractStateCode,
   normalizeText,
   unique
 } from "./ontologies.mjs";
+import { extractUtilityRequirements } from "./utilityRestrictions.mjs";
 
 export const MATCH_PROFILE_SCHEMA_VERSION = "opportunity-match-profile-v1";
 export const MATCH_PROFILE_EXTRACTOR_VERSION = "rules-2026-06-25-v1";
@@ -43,10 +43,10 @@ export function buildOpportunityMatchProfile(opportunity, { now = new Date() } =
     ...factsFromValues("site.geo.stateCode", geography.include.map((item) => item.id), "geography", opportunity, "state"),
     ...factsFromValues(
       "site.utility.electric.distributionUtilityId",
-      utilityRequirements.requiredUtilityIds,
+      [...utilityRequirements.requiredUtilityIds, ...utilityRequirements.requiredUtilityNames],
       "utility",
       opportunity,
-      "matchingParameters.utilityProvider"
+      utilityRequirements.evidenceText || "matchingParameters.utilityProvider"
     ),
     ...factsFromValues("business.organizationTypes", applicant.eligibleOrganizationTypes, "eligibility", opportunity, "sectors"),
     ...factsFromValues("project.technologyIds", project.technologyIds, "eligibility", opportunity, "technologies")
@@ -181,28 +181,6 @@ function extractGeography(opportunity, searchableText) {
     exclude: [],
     scopeStatus: include.length > 0 ? "known" : "unknown",
     confidence: include.length > 0 ? Math.max(...include.map((item) => item.confidence)) : 0.35
-  };
-}
-
-function extractUtilityRequirements(opportunity, searchableText) {
-  const explicitValues = asArray(opportunity.matchingParameters?.utilityProvider?.values)
-    .filter((value) => normalizeText(value) !== "any")
-    .map(canonicalUtilityId)
-    .filter(Boolean);
-  const sourceUtility = utilityIdFromSource(opportunity.sourceKey);
-  const textUtilities = unique([
-    canonicalUtilityId(opportunity.administrator),
-    canonicalUtilityId(opportunity.canonicalTitle),
-    canonicalUtilityId(searchableText.length < 8000 ? searchableText : "")
-  ].filter(Boolean));
-  const requiredUtilityIds = unique([...explicitValues, sourceUtility, ...textUtilities]);
-
-  return {
-    requiredUtilityIds,
-    allowedSupplierIds: [],
-    rateClasses: [],
-    customerRelationshipRequired: /customer of record|account holder|electric customer|utility customer/i.test(searchableText),
-    confidence: explicitValues.length > 0 || sourceUtility ? 0.86 : requiredUtilityIds.length > 0 ? 0.62 : 0.42
   };
 }
 
@@ -349,7 +327,7 @@ function buildOffers(opportunity, fallback) {
 function buildRuleGroups({ geography, utilityRequirements, applicant, site, project, constraints }) {
   const required = [];
   if (geography.scopeStatus === "known") required.push("site.geo.stateCode");
-  if (utilityRequirements.requiredUtilityIds.length > 0) required.push("site.utility.electric.distributionUtilityId");
+  if (utilityRequirements.restrictionStatus === "required") required.push("site.utility.electric.distributionUtilityId");
   if (applicant.eligibleOrganizationTypes.length > 0) required.push("business.organizationTypes");
   if (site.eligibleBuildingTypes.length > 0) required.push("site.buildingTypes");
   if (project.technologyIds.length > 0) required.push("project.technologyIds");
@@ -440,13 +418,6 @@ function inferBuildingTypesFromText(value) {
   const text = normalizeText(value);
   const buildingWords = ["restaurant", "grocery", "hotel", "hospitality", "warehouse", "office", "retail", "multifamily", "medical", "dental"];
   return unique(buildingWords.map((word) => (text.includes(word) ? canonicalBuildingType(word) : null)).filter(Boolean));
-}
-
-function utilityIdFromSource(sourceKey) {
-  if (sourceKey === "SOURCE_SDGE_BUSINESS") return "UTIL_SDGE";
-  if (sourceKey === "SOURCE_SCE_BUSINESS") return "UTIL_SCE";
-  if (sourceKey === "SOURCE_SILICON_VALLEY_POWER") return "UTIL_SVP";
-  return null;
 }
 
 function lookupNames(value) {

@@ -19,13 +19,15 @@ const outputPath = process.env.MATCHING_OUTPUT_PATH || "/tmp/retrofi-sample-matc
 const reportPath = process.env.MATCHING_REPORT_PATH || path.join(dataDir, "sample_matching_report.md");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
 const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
+const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
 const now = new Date(process.env.MATCHING_NOW || Date.now());
 
 const sampleUsers = readJson(sampleUsersPath);
-const opportunities = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
+const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
+const opportunities = (sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws()).map(applyUtilityReview);
 const userProfiles = sampleUsers.map((sample) => ({
   sampleUserId: sample.sampleUserId,
   description: sample.description,
@@ -61,6 +63,8 @@ const output = {
   sampleUserCount: sampleUsers.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   retrofitIndexPath,
+  utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
+  utilityReviewCount: utilityReviewsByOpportunityId.size,
   sampleUsers: userProfiles,
   results: allResults
 };
@@ -97,6 +101,27 @@ console.log(`Results: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
 console.log(`Admin test cases: ${testCasesPath}`);
 console.log(`Retrofit opportunity index: ${retrofitIndexPath}`);
+console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
+
+function readUtilityReviews(filePath) {
+  if (!fs.existsSync(filePath)) return new Map();
+  const source = readJson(filePath);
+  const rows = Array.isArray(source) ? source : source.reviews || [];
+  return new Map(
+    rows
+      .filter((row) => row?.opportunityId && row?.utilityRestrictionReview)
+      .map((row) => [row.opportunityId, row.utilityRestrictionReview])
+  );
+}
+
+function applyUtilityReview(opportunity) {
+  const utilityRestrictionReview = utilityReviewsByOpportunityId.get(opportunity.opportunityId);
+  if (!utilityRestrictionReview) return opportunity;
+  return {
+    ...opportunity,
+    utilityRestrictionReview
+  };
+}
 
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
@@ -203,7 +228,9 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "## Global Notes",
     "",
     "- Hard failures are limited to explicit unavailable status/deadline, state mismatch, utility mismatch, residential-only mismatch, applicant mismatch, technology mismatch, and parsed numeric threshold failure.",
-    "- Missing utility restriction, missing building specificity, and ambiguous opportunity geography return `unknown` rather than a false rejection.",
+    "- Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.",
+    `- Utility review artifact: ${utilityReviewsByOpportunityId.size > 0 ? `\`${utilityReviewsPath}\` (${utilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
+    "- Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.",
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
     "",

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) utility restriction review pipeline
+
+- Added a repeatable utility-restriction research script that reviews stored opportunity data plus source pages and writes a reusable review artifact/report.
+- Updated opportunity match profiles and rule evaluation to distinguish required utility restrictions from explicit no restriction, utility-not-applicable programs, reviewed-none-found programs, and unresolved unknowns.
+- Wired sample matching to consume the generated utility review artifact and documented the workflow for future Codex/cron reruns.
+
 ## 2026-06-25 - Codex (GPT-5) admin retrofit relationship graph
 
 - Added a scrollable two-column SVG graph to each admin matching test case showing retrofit types, unique opportunities, and every connection between them.

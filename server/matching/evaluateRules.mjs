@@ -110,10 +110,22 @@ function evaluateGeography(user, geography) {
 }
 
 function evaluateUtility(user, utilityRequirements) {
-  const required = utilityRequirements.requiredUtilityIds || [];
-  if (required.length === 0) {
-    return unknown("No explicit utility restriction was normalized.");
+  const restrictionStatus = utilityRequirements.restrictionStatus || "unknown";
+  if (restrictionStatus === "none") {
+    return pass("Opportunity explicitly has no electric utility restriction.");
   }
+  if (restrictionStatus === "not_applicable") {
+    return pass("Utility provider is not applicable to this opportunity.");
+  }
+  if (restrictionStatus === "none_found_after_review") {
+    return pass("No utility restriction was found after source review.");
+  }
+  if (restrictionStatus !== "required") {
+    return unknown("Utility restriction is still unknown after review.");
+  }
+  const required = utilityRequirements.requiredUtilityIds || [];
+  const requiredNames = utilityRequirements.requiredUtilityNames || [];
+  if (required.length === 0 && requiredNames.length === 0) return unknown("Utility restriction is required but no utility could be normalized.");
   const userUtilityId = user.site.utility.electric.distributionUtilityId;
   if (!userUtilityId) {
     return unknown("User electric distribution utility is unknown.");
@@ -121,11 +133,22 @@ function evaluateUtility(user, utilityRequirements) {
   if (required.includes(userUtilityId)) {
     return pass(`Self-reported utility matches ${UTILITY_DISPLAY_NAMES[userUtilityId] || userUtilityId}.`);
   }
+  const userUtilityName = UTILITY_DISPLAY_NAMES[userUtilityId] || userUtilityId;
+  if (requiredNames.some((name) => normalizedUtilityNameMatches(name, userUtilityName))) {
+    return pass(`Self-reported utility matches ${userUtilityName}.`);
+  }
   return fail(
     `Self-reported utility ${UTILITY_DISPLAY_NAMES[userUtilityId] || userUtilityId} does not match required utility ${required
       .map((utilityId) => UTILITY_DISPLAY_NAMES[utilityId] || utilityId)
+      .concat(requiredNames)
       .join(", ")}.`
   );
+}
+
+function normalizedUtilityNameMatches(requiredName, userUtilityName) {
+  const required = String(requiredName || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const user = String(userUtilityName || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  return Boolean(required && user && (required.includes(user) || user.includes(required)));
 }
 
 function evaluateApplicant(user, applicant, offer) {
