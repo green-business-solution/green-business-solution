@@ -11,6 +11,12 @@
 - Added presigned S3 upload, energy-data registration, upload-session validation, parsed file listing, and admin table visibility for a new `gbs-energy-data` metadata store.
 - Implemented first-pass Green Button XML and CSV parsing plus AWS deployment updates for a private energy-data upload bucket and production table bootstrap.
 
+## 2026-06-25 - Codex (GPT-5) facility eligibility repair
+
+- Repaired opportunity facility eligibility reviews with source-page fetching and DynamoDB writeback, reducing stored `unknown` facility statuses to 0 of 2,096 opportunities.
+- Tightened rule evaluation so high-confidence broad or specific facility mismatches become hard ineligible blockers instead of `likely_eligible` unknowns.
+- Regenerated sample matching fixtures, reducing current real-profile `likely_eligible` pairings from 211 to 12, all due to availability uncertainty rather than facility eligibility.
+
 ## 2026-06-25 - Codex (GPT-5) real public matching test cases
 
 - Replaced the synthetic matching sample profiles with 10 real public California business and institutional sites supplied from GPT Pro research.

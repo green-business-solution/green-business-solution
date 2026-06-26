@@ -45,7 +45,7 @@ export function inferFacilityRequirements(
   const reviewText = [sourceText, searchableText.slice(0, 16000)].filter(Boolean).join("\n");
   const eligibleBuildingTypes = unique([
     ...facilityTypesFromBusinessClassifications(classificationValues),
-    ...inferFacilityTypesFromText(sourceText)
+    ...inferFacilityTypesFromText(reviewText)
   ]);
   const hasSpecificFacilityTypes = eligibleBuildingTypes.length > 0;
   const eligibilityStatus = facilityStatusFor({
@@ -60,7 +60,7 @@ export function inferFacilityRequirements(
   return {
     eligibilityStatus,
     eligibleBuildingTypes,
-    evidenceText: evidenceTextFor({ classificationValues, eligibleBuildingTypes, eligibilityStatus, opportunity, sourceText }),
+    evidenceText: evidenceTextFor({ classificationValues, eligibleBuildingTypes, eligibilityStatus, opportunity, sourceText: reviewText }),
     reviewMethod,
     sourceUrlsChecked,
     fetchErrors,
@@ -156,8 +156,8 @@ function facilityStatusFor({ classificationValues, eligibleBuildingTypes, opport
   if (broadStatus) return broadStatus;
   if (eligibleBuildingTypes.length > 0) return "required";
   if (isStronglyFacilityNotApplicableProgram(opportunity, searchableText)) return "not_applicable";
-  if (ambiguousFacilityLanguage(reviewText)) return "unknown";
   if (isFacilityNotApplicableProgram(opportunity, searchableText)) return "not_applicable";
+  if (ambiguousFacilityLanguage(reviewText)) return "unknown";
   return "none_found_after_review";
 }
 
@@ -178,7 +178,10 @@ function broadFacilityStatusFor({ classificationValues, opportunity, sourceText 
   if (/\b(commercial|business)\b/i.test(title) && !/\b(residential|multifamily|multi-family|multi family)\b/i.test(title)) {
     return "broad_commercial";
   }
-  if (classificationValues.includes("commercial") || /\bcommercial(?: \w+){0,3} (customers?|buildings?|properties|facilities|sites?)\b/i.test(sourceText)) {
+  if (
+    classificationValues.includes("commercial") ||
+    /\b(commercial|business)(?: \w+){0,3} (customers?|buildings?|properties|facilities|sites?|owners?)\b/i.test(sourceText)
+  ) {
     return "broad_commercial";
   }
   if (/\b(residential(?: \w+){0,3} customers?|residential program|homeowners?|single family homes?)\b/i.test(sourceText)) {
@@ -192,7 +195,7 @@ function explicitlyNoFacilityRestriction(value) {
 }
 
 function ambiguousFacilityLanguage(value) {
-  return /\b(eligible facilit(?:y|ies)|facility type|building type|property type|site type)\b/i.test(value);
+  return /\b(facility type|building type|property type|site type)\b/i.test(value);
 }
 
 function isFacilityNotApplicableProgram(opportunity, searchableText) {

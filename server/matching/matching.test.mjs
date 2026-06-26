@@ -141,6 +141,82 @@ describe("matching pipeline", () => {
     expect(result.blockers.join(" ")).toMatch(/Lodi Electric Utility/);
   });
 
+  it("hard-fails high-confidence specific facility mismatches", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "100 N Alameda Street, Los Angeles, CA 90012, USA",
+      electricUtilityProvider: "LADWP",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["EV charging"]
+    });
+    const opportunity = {
+      opportunityId: "test-school-bus-site",
+      canonicalTitle: "School Bus Charging Site Program",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Eligible school sites may receive incentives for EV charging.",
+      technologies: ["EV charging"],
+      sectors: ["Commercial"],
+      facilityEligibilityReview: {
+        eligibilityStatus: "required",
+        eligibleBuildingTypes: ["education_campus"],
+        evidenceText: "Eligible school sites may receive incentives.",
+        confidence: 0.86
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(result.eligibilityStatus).toBe("ineligible");
+    expect(result.blockers.join(" ")).toMatch(/does not match the user's site type/);
+  });
+
+  it("hard-fails high-confidence broad residential facility mismatches", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "600 S IKEA Way, Burbank, CA 91502, USA",
+      electricUtilityProvider: "Burbank Water and Power",
+      ownershipStatus: "Lease",
+      buildingType: "Retail / Storefront",
+      squareFootage: "456000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-residential-rebate",
+      canonicalTitle: "Residential Energy Efficiency Rebate Program",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Residential customers may receive incentives for lighting and HVAC.",
+      technologies: ["LED Lighting"],
+      sectors: ["Commercial"],
+      facilityEligibilityReview: {
+        eligibilityStatus: "broad_residential",
+        eligibleBuildingTypes: [],
+        evidenceText: "Residential customers may receive incentives.",
+        confidence: 0.82
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(result.eligibilityStatus).toBe("ineligible");
+    expect(result.blockers.join(" ")).toMatch(/broad_residential eligibility/);
+  });
+
   it("uses stored utility review artifacts before deterministic inference", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",

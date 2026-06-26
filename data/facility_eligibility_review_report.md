@@ -1,6 +1,6 @@
 # Facility Eligibility Review
 
-Generated: 2026-06-26T02:19:24.958Z
+Generated: 2026-06-26T05:37:26.016Z
 Opportunities reviewed: 2096
 Source-page fetch enabled: yes
 
@@ -9,13 +9,12 @@ Source-page fetch enabled: yes
 ```json
 {
   "broad_nonresidential": 255,
-  "none_found_after_review": 333,
-  "required": 185,
-  "broad_residential": 606,
-  "not_applicable": 229,
-  "broad_commercial": 478,
-  "unknown": 8,
-  "none": 2
+  "none_found_after_review": 211,
+  "required": 381,
+  "broad_residential": 596,
+  "broad_commercial": 496,
+  "not_applicable": 153,
+  "none": 4
 }
 ```
 
@@ -33,8 +32,8 @@ Source-page fetch enabled: yes
 ## Sample Rows
 
 - broad_nonresidential: Chicopee Electric Light - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5239)
-  - types: none
-  - evidence: e energy saving measures and install energy efficient lighting and equipment in eligible facilities. CELD offers technical assistance, incentives, and low-interest financing through this program. Incentives are provided
+  - types: multifamily_residential
+  - evidence: --> Commercial/Industrial Programs & Incenti | Chicopee Electric top of page We&#39;re Hiring! Click Here to View Open Positions PAY BILL / AUTO
 - none_found_after_review: NextZero EV Charger Program (SOURCE_DSIRE:dsire_program_id:22328)
   - types: none
   - evidence: No facility-type restriction language was found in the reviewed source corpus.
@@ -51,35 +50,35 @@ Source-page fetch enabled: yes
   - types: none
   - evidence: Residential customers of Taunton Municipal Lighting Plant (TMLP) are eligible for the TMLP Saves™ -Heat Pump and Zero-Interest Loan Program,
 - broad_residential: Consumers Energy (Gas) - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4300)
-  - types: none
+  - types: multifamily_residential
   - evidence: Consumers Energy residential gas customers are eligible to apply for a variety of rebates on energy efficient equipment. Furnaces, boilers, water heating units, i
 - none_found_after_review: Duke Energy Indiana Off-Peak Charging Credit (SOURCE_DSIRE:dsire_program_id:22551)
   - types: none
   - evidence: No facility-type restriction language was found in the reviewed source corpus.
 - required: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+  - types: multifamily_residential, industrial_manufacturing, agricultural_facility
+  - evidence: Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility
+- required: Illinois - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22643)
   - types: industrial_manufacturing, agricultural_facility
   - evidence: Facility types inferred: industrial_manufacturing, agricultural_facility
-- not_applicable: Illinois - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22643)
-  - types: none
-  - evidence: Program type/source appears not facility-type gated.
 - broad_commercial: Connexus Energy - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2448)
-  - types: none
-  - evidence: Connexus Energy - Commercial Energy Efficiency Rebate Programs / Connexus Energy
+  - types: restaurant_foodservice
+  - evidence: ose initiatives is the right thing to do. With a wide variety of commercial and residential programs, we will partner with you in your efforts to go green, whether at home or at work. SolarWise Generate Your Own Energy
 - broad_nonresidential: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
-  - types: none
+  - types: agricultural_facility
   - evidence: Pacific Gas and Electric Company (PG&E) offers a variety of incentives to non-residential customers to increase energy efficiency. These include rebates for upgrading equipment for agricultural and food processing, HVAC
 - broad_residential: Minnesota Energy Resources (Gas) - Home Energy Excellence Program for Builders or Homeowners (SOURCE_DSIRE:dsire_program_id:3312)
-  - types: none
+  - types: education_campus, agricultural_facility
   - evidence: nnesota Energy Resources (Gas) - Home Energy Excellence Program for Builders or Homeowners
 - required: Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program (SOURCE_DSIRE:dsire_program_id:4054)
   - types: industrial_manufacturing
   - evidence: Facility types inferred: industrial_manufacturing
-- unknown: NYSERDA - New York Truck Voucher Incentive Program (SOURCE_DSIRE:dsire_program_id:22214)
-  - types: none
-  - evidence: NYSERDA - New York Truck Voucher Incentive Program / NYSERDA
-- none_found_after_review: Oregon Clean Vehicle Rebate Program (SOURCE_DSIRE:dsire_program_id:22224)
-  - types: none
-  - evidence: No facility-type restriction language was found in the reviewed source corpus.
+- required: NYSERDA - New York Truck Voucher Incentive Program (SOURCE_DSIRE:dsire_program_id:22214)
+  - types: multifamily_residential, healthcare, education_campus, agricultural_facility, mixed_use
+  - evidence: Facility types inferred: multifamily_residential, healthcare, education_campus, agricultural_facility, mixed_use
+- required: Oregon Clean Vehicle Rebate Program (SOURCE_DSIRE:dsire_program_id:22224)
+  - types: agricultural_facility
+  - evidence: Facility types inferred: agricultural_facility
 - broad_residential: Marshall County REMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2684)
   - types: none
   - evidence: The Power Moves Residential Rebates program offers homeowners incentives through their local electric cooperative to upgrade high-energy systems in their homes—especially heating, c
@@ -89,9 +88,9 @@ Source-page fetch enabled: yes
 - required: Energy Efficient Schools Initiative - Loans (SOURCE_DSIRE:dsire_program_id:3801)
   - types: education_campus
   - evidence: Facility types inferred: education_campus
-- none_found_after_review: Questar Gas - Home Builder Gas Appliance Rebate Program (SOURCE_DSIRE:dsire_program_id:4786)
-  - types: none
-  - evidence: No facility-type restriction language was found in the reviewed source corpus.
+- required: Questar Gas - Home Builder Gas Appliance Rebate Program (SOURCE_DSIRE:dsire_program_id:4786)
+  - types: multifamily_residential
+  - evidence: Facility types inferred: multifamily_residential
 - none_found_after_review: Clean Fleet EV Incentive Program (SOURCE_DSIRE:dsire_program_id:22200)
   - types: none
   - evidence: No facility-type restriction language was found in the reviewed source corpus.
@@ -104,35 +103,35 @@ Source-page fetch enabled: yes
 - broad_residential: Duke Energy Progress - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3968)
   - types: none
   - evidence: Progress Energy provides incentives for residential customers to increase home energy efficiency. To qualify, the equipment must meet the efficiency requirements outlined on the pro
-- not_applicable: C-PACE: Efficiency Maine (SOURCE_DSIRE:dsire_program_id:22591)
-  - types: none
-  - evidence: Program type/source appears not facility-type gated.
+- broad_commercial: C-PACE: Efficiency Maine (SOURCE_DSIRE:dsire_program_id:22591)
+  - types: multifamily_residential, restaurant_foodservice, grocery_food_retail, hospitality_lodging, warehouse_logistics, industrial_manufacturing, healthcare
+  - evidence: Qualified Partner Business Customer Consultations Commercial Heating Calculator Commercial and Industrial Prescriptive Incentives Commercial and Industrial Custom Commercial Property Assessed Clean Energy (C-PACE) Find a Qual
 - not_applicable: Local Option - Property Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:5109)
   - types: none
   - evidence: Program type/source appears not facility-type gated.
-- none_found_after_review: Entergy Arkansas - Agricultural Energy Solutions Program Rebates (SOURCE_DSIRE:dsire_program_id:5532)
-  - types: none
-  - evidence: No facility-type restriction language was found in the reviewed source corpus.
+- required: Entergy Arkansas - Agricultural Energy Solutions Program Rebates (SOURCE_DSIRE:dsire_program_id:5532)
+  - types: agricultural_facility
+  - evidence: Facility types inferred: agricultural_facility
 - broad_residential: Cowlitz County PUD - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2075)
   - types: none
-  - evidence: Cowlitz County PUD - Residential Energy Efficiency Rebate Program / Cowlitz County Public Utility District
+  - evidence: quest Drone Program Vegetation Management Wildfire Mitigation Energy Efficiency Residential Programs Commercial Programs Industrial Efficiency Programs Community Solar Conservation Potential Assessment Renewable Energy
 - broad_residential: Evergy - Residential Programmable Thermostat Program (SOURCE_DSIRE:dsire_program_id:1467)
   - types: none
   - evidence: Evergy - Residential Programmable Thermostat Program
 - required: Solar Energy Loan Program (SOURCE_DSIRE:dsire_program_id:5945)
-  - types: industrial_manufacturing, education_campus
-  - evidence: Facility types inferred: industrial_manufacturing, education_campus
+  - types: industrial_manufacturing, education_campus, agricultural_facility, data_center
+  - evidence: Facility types inferred: industrial_manufacturing, education_campus, agricultural_facility, data_center
 - broad_residential: Energy Smart - Residential Energy Efficiency Rebate Program (19 Municipalities) (SOURCE_DSIRE:dsire_program_id:3947)
   - types: none
   - evidence: lities, to offer the Energy Smart Residential Energy Efficiency Rebate Program. Residential electric customers served by one of the 19 participating utilities are eligible for rebates on energy efficient upgrades. Purchased produc
 - required: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:5417)
-  - types: education_campus
-  - evidence: Facility types inferred: education_campus
+  - types: multifamily_residential, education_campus
+  - evidence: Facility types inferred: multifamily_residential, education_campus
 - broad_commercial: MassSAVE (Electric) - Commercial New Construction/Major Renovation Program (SOURCE_DSIRE:dsire_program_id:4791)
-  - types: restaurant_foodservice, industrial_manufacturing
-  - evidence: Facility types inferred: restaurant_foodservice, industrial_manufacturing
+  - types: restaurant_foodservice, grocery_food_retail, industrial_manufacturing, agricultural_facility
+  - evidence: s. Back to Explore Rebates, Offers and Services The Sponsors of Mass Save offer commercial and industrial customers a variety of incentives toward the purchase and installation of specialty equipment, including, but not limited to, com
 - broad_commercial: Lodi Electric Utility - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4583)
-  - types: multifamily_residential
+  - types: multifamily_residential, restaurant_foodservice
   - evidence: Lodi Electric Utility (LEU) offers energy efficiency incentives to eligible commercial and multifamily residential customers. More information regarding the rebate programs, including application materials and equipment requirements, can be fou
 - broad_residential: Forest Grove Light & Power -  Residential Solar Rebate Program (SOURCE_DSIRE:dsire_program_id:22703)
   - types: none
@@ -143,9 +142,9 @@ Source-page fetch enabled: yes
 - broad_nonresidential: PSEG Long Island - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2004)
   - types: none
   - evidence: PSEG Long Island offers a variety of incentives for its non-residential customers to increase the energy efficiency of facilities through the Commercial Efficiency Program. Major renovations of existin
-- not_applicable: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:160)
-  - types: none
-  - evidence: Program type/source appears not facility-type gated.
+- required: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:160)
+  - types: industrial_manufacturing, education_campus, agricultural_facility
+  - evidence: Facility types inferred: industrial_manufacturing, education_campus, agricultural_facility
 - not_applicable: Property Tax Exemption for Renewable Energy Generation Facilities (SOURCE_DSIRE:dsire_program_id:4946)
   - types: none
   - evidence: Program type/source appears not facility-type gated.
@@ -153,7 +152,7 @@ Source-page fetch enabled: yes
   - types: none
   - evidence: Waverly Light & Power - Residential Energy Efficiency Rebates / Waverly Light & Power
 - broad_commercial: Florida Public Utilities (Gas) - Commercial Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:5817)
-  - types: none
+  - types: multifamily_residential, restaurant_foodservice, hospitality_lodging
   - evidence: Florida Public Utilities offers commercial natural gas customers energy efficiency rebates to save energy in facilities. Rebates are available for water hears, dryers, fryers, cooking
 - broad_nonresidential: Small Business & Municipal Loan Program (SOURCE_DSIRE:dsire_program_id:5735)
   - types: none
@@ -164,15 +163,15 @@ Source-page fetch enabled: yes
 - broad_residential: Residential Wood Heating Fuel Exemption (SOURCE_DSIRE:dsire_program_code_title_hash:NY101F:a3be869e7f79)
   - types: none
   - evidence: Residential Wood Heating Fuel Exemption
-- not_applicable: Sustainable Energy Fund (SEF) Loan Program (PPL Territory) (SOURCE_DSIRE:dsire_program_id:679)
-  - types: none
-  - evidence: Program type/source appears not facility-type gated.
+- required: Sustainable Energy Fund (SEF) Loan Program (PPL Territory) (SOURCE_DSIRE:dsire_program_id:679)
+  - types: office_admin
+  - evidence: Facility types inferred: office_admin
 - broad_commercial: Utah Commercial PACE financing program (SOURCE_DSIRE:dsire_program_id:5406)
   - types: none
   - evidence: Utah Commercial PACE financing program / Sustainable Real Estate Solutions, Inc. (SRS)
-- not_applicable: Local Option- Renewable Energy Machinery and Tools Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:5723)
-  - types: none
-  - evidence: Program type/source appears not facility-type gated.
+- required: Local Option- Renewable Energy Machinery and Tools Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:5723)
+  - types: agricultural_facility, data_center
+  - evidence: Facility types inferred: agricultural_facility, data_center
 - broad_residential: Lake Region Electric Cooperative - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3576)
   - types: none
   - evidence: Lake Region Electric Cooperative (LREC) offers rebates for residential customers to improve the energy efficiency of homes. Rebates are available for air-source heat pumps and central air conditioning

@@ -41,7 +41,7 @@ Each opportunity can store a generated `facilityEligibilityReview` object:
 - `none_found_after_review`: source corpus and fetched source pages were checked and no facility-type restriction language was found.
 - `unknown`: source references facility/property/building type but no supported value could be normalized.
 
-The matcher treats `none`, `not_applicable`, and `none_found_after_review` as a site/facility pass. Broad statuses pass when the user's canonical facility type falls under that broad category.
+The matcher treats `none`, `not_applicable`, and `none_found_after_review` as a site/facility pass. Broad statuses pass when the user's canonical facility type falls under that broad category. High-confidence broad or specific facility mismatches are hard blockers; low-confidence mismatches remain `unknown` for review.
 
 ## Repeatable Workflow
 
@@ -108,5 +108,7 @@ The review script:
 4. Separates applicant-only values from facility values.
 5. Converts broad commercial/nonresidential/residential eligibility into broad statuses instead of fake concrete building types.
 6. Stores evidence text, reviewed URLs, fetch errors, confidence, review method, and timestamp.
+
+Fetched source-page text is part of the reviewed extraction corpus, not just an audit attachment. This matters for opportunities where DSIRE's short record says only "eligible facilities" but the linked program page clarifies "multifamily properties", "commercial customers", "school-bus sites", or another canonical facility scope.
 
 For future automation, review only opportunities whose `contentHash` changed or whose stored `facilityEligibilityReviewSchemaVersion` is stale.

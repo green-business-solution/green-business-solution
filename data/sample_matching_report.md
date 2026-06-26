@@ -1,7 +1,7 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T05:01:05.367Z
-Matcher clock: 2026-06-26T04:58:19.117Z
+Generated: 2026-06-26T05:44:25.639Z
+Matcher clock: 2026-06-26T05:41:37.982Z
 Opportunities evaluated: 1887
 Archived opportunities skipped: 209
 Sample users evaluated: 10
@@ -70,11 +70,11 @@ Status counts:
 ```json
 {
   "eligible_active": 20,
-  "likely_eligible": 14,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 10,
-  "ineligible": 1822,
+  "upcoming": 18,
+  "manual_review": 6,
+  "ineligible": 1843,
   "unavailable": 0
 }
 ```
@@ -100,38 +100,34 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Weatherization Assistance Program (WAP) (SOURCE_DSIRE:dsire_program_id:5725)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 21
-- Site or facility type restriction is still unknown after review.: 9
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 18
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- EV charger installation: 7
-- Ground-source / geothermal heat pump: 7
-- High-efficiency HVAC replacement: 7
-- LED lighting retrofit: 6
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- Ground-source / geothermal heat pump: 6
+- Battery storage system: 5
+- Biomass / biogas energy system: 5
+- EV charger installation: 5
+- High-efficiency HVAC replacement: 5
+- LED lighting retrofit: 5
+- Solar water heating system: 3
+- Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (office_admin) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (office_admin).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type nonprofit does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### ikea-burbank
 
@@ -180,11 +176,11 @@ Status counts:
 ```json
 {
   "eligible_active": 18,
-  "likely_eligible": 15,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 10,
-  "ineligible": 1823,
+  "upcoming": 18,
+  "manual_review": 5,
+  "ineligible": 1846,
   "unavailable": 0
 }
 ```
@@ -210,38 +206,34 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Burbank Water and Power - Electric Vehicle Charger Rebate (SOURCE_DSIRE:dsire_program_id:22279)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Burbank Water and Power.
 - eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 21
-- Site or facility type restriction is still unknown after review.: 9
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 18
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- Battery storage system: 8
-- EV charger installation: 8
-- High-efficiency HVAC replacement: 8
-- Biomass / biogas energy system: 7
-- Ground-source / geothermal heat pump: 7
-- LED lighting retrofit: 6
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- Battery storage system: 6
+- Ground-source / geothermal heat pump: 6
+- High-efficiency HVAC replacement: 6
+- Biomass / biogas energy system: 5
+- EV charger installation: 5
+- LED lighting retrofit: 5
+- Solar water heating system: 3
+- Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (retail_storefront) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (retail_storefront).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type commercial does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### juniper-and-ivy-san-diego
 
@@ -287,12 +279,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 18,
-  "likely_eligible": 22,
+  "eligible_active": 19,
+  "likely_eligible": 10,
   "needs_information": 0,
-  "upcoming": 18,
-  "manual_review": 10,
-  "ineligible": 1819,
+  "upcoming": 15,
+  "manual_review": 6,
+  "ineligible": 1837,
   "unavailable": 0
 }
 ```
@@ -324,32 +316,29 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 18
-- Availability is uncertain.: 11
-- No project technology was normalized.: 7
-- Site or facility type restriction is still unknown after review.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
+- Opportunity appears upcoming; application timing should be verified.: 15
+- Availability is uncertain.: 10
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 10
-- Biomass / biogas energy system: 6
-- Ground-source / geothermal heat pump: 6
-- LED lighting retrofit: 6
-- Battery storage system: 5
-- Combined heat and power system: 4
+- High-efficiency HVAC replacement: 8
+- Ground-source / geothermal heat pump: 5
+- LED lighting retrofit: 5
+- Biomass / biogas energy system: 4
 - Automated demand response controls: 3
-- Energy audit: 2
+- Battery storage system: 3
+- Combined heat and power system: 2
+- Resilience / backup power system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Selected improvements do not match opportunity technologies (solar).: 158
 - Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
-- Project site state CA does not match opportunity geography OR.: 59
 
 ### northgate-market-anaheim
 
@@ -397,12 +386,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 21,
-  "likely_eligible": 16,
+  "eligible_active": 22,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 9,
-  "ineligible": 1820,
+  "upcoming": 18,
+  "manual_review": 5,
+  "ineligible": 1842,
   "unavailable": 0
 }
 ```
@@ -422,6 +411,8 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: Anaheim Public Utilities - Personal Use EV Charger Rebates (SOURCE_DSIRE:dsire_program_id:22275)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Anaheim Public Utilities.
 - eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Anaheim Public Utilities - EV Fleet Charger and Infrastructure Rebate (SOURCE_DSIRE:dsire_program_id:22277)
@@ -430,36 +421,30 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Anaheim Public Utilities.
 - eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 21
-- Site or facility type restriction is still unknown after review.: 10
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 18
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- EV charger installation: 11
-- High-efficiency HVAC replacement: 9
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- Ground-source / geothermal heat pump: 7
-- LED lighting retrofit: 7
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- EV charger installation: 8
+- High-efficiency HVAC replacement: 7
+- Ground-source / geothermal heat pump: 6
+- LED lighting retrofit: 6
+- Battery storage system: 5
+- Biomass / biogas energy system: 5
+- Level 2 EV charger installation: 3
+- Solar water heating system: 3
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (grocery_food_retail).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type commercial does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### melissas-vernon-distribution
 
@@ -506,12 +491,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 16,
-  "likely_eligible": 16,
+  "eligible_active": 17,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 20,
-  "manual_review": 8,
-  "ineligible": 1827,
+  "upcoming": 17,
+  "manual_review": 5,
+  "ineligible": 1848,
   "unavailable": 0
 }
 ```
@@ -539,35 +524,32 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 20
-- Site or facility type restriction is still unknown after review.: 11
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 17
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- Ground-source / geothermal heat pump: 8
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- EV charger installation: 7
-- High-efficiency HVAC replacement: 7
-- LED lighting retrofit: 6
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- Ground-source / geothermal heat pump: 6
+- Battery storage system: 5
+- Biomass / biogas energy system: 5
+- EV charger installation: 5
+- High-efficiency HVAC replacement: 4
+- LED lighting retrofit: 4
+- Solar water heating system: 3
+- Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (warehouse_logistics).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type industrial does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### fender-corona-plant
 
@@ -613,12 +595,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 11,
-  "likely_eligible": 36,
+  "eligible_active": 12,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 10,
-  "ineligible": 1809,
+  "upcoming": 5,
+  "manual_review": 7,
+  "ineligible": 1863,
   "unavailable": 0
 }
 ```
@@ -636,6 +618,8 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
@@ -646,37 +630,30 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Southern California Edison.
 - eligible_active / 100: Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- likely_eligible / 96: HVAC Optimization Program (SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:hvac-optimization-program)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Southern California Edison.
-  - unresolved: Site or facility type restriction is still unknown after review.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 2
 
 Common unresolved requirements among promising matches:
-- Site or facility type restriction is still unknown after review.: 45
-- Opportunity appears upcoming; application timing should be verified.: 21
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Availability is uncertain.: 2
+- Opportunity appears upcoming; application timing should be verified.: 5
+- No project technology was normalized.: 2
 
 Retrofit types inferred from promising matches:
-- EV charger installation: 12
-- High-efficiency HVAC replacement: 12
-- Battery storage system: 8
-- Biomass / biogas energy system: 8
-- Ground-source / geothermal heat pump: 8
-- LED lighting retrofit: 7
-- Combined heat and power system: 5
-- Energy management system: 5
+- Biomass / biogas energy system: 6
+- Ground-source / geothermal heat pump: 5
+- Battery storage system: 4
+- Combined heat and power system: 2
+- High-efficiency HVAC replacement: 2
+- Small wind turbine: 2
+- Solar water heating system: 2
+- Energy audit: 1
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 396
 - Project site state CA does not match opportunity geography MN.: 86
-- Project site state CA does not match opportunity geography OR.: 59
-- Applicant type industrial does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (industrial_manufacturing).: 71
 
 ### westin-pasadena
 
@@ -724,12 +701,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 18,
-  "likely_eligible": 16,
+  "eligible_active": 19,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 9,
-  "ineligible": 1823,
+  "upcoming": 18,
+  "manual_review": 5,
+  "ineligible": 1845,
   "unavailable": 0
 }
 ```
@@ -761,32 +738,28 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 21
-- Site or facility type restriction is still unknown after review.: 10
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 18
+- No project technology was normalized.: 6
 
 Retrofit types inferred from promising matches:
-- EV charger installation: 9
-- High-efficiency HVAC replacement: 9
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- Ground-source / geothermal heat pump: 7
-- LED lighting retrofit: 6
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- EV charger installation: 6
+- Ground-source / geothermal heat pump: 6
+- High-efficiency HVAC replacement: 6
+- Battery storage system: 5
+- Biomass / biogas energy system: 5
+- LED lighting retrofit: 5
+- Solar water heating system: 3
+- Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (hospitality_lodging) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (hospitality_lodging).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type commercial does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### one-community-health-midtown
 
@@ -834,12 +807,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 19,
-  "likely_eligible": 15,
+  "eligible_active": 20,
+  "likely_eligible": 1,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 10,
-  "ineligible": 1822,
+  "upcoming": 18,
+  "manual_review": 6,
+  "ineligible": 1842,
   "unavailable": 0
 }
 ```
@@ -863,40 +836,37 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Weatherization Assistance Program (WAP) (SOURCE_DSIRE:dsire_program_id:5725)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 6
 
 Common unresolved requirements among promising matches:
-- Opportunity appears upcoming; application timing should be verified.: 21
-- Site or facility type restriction is still unknown after review.: 9
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 18
+- No project technology was normalized.: 6
+- Availability is uncertain.: 1
 
 Retrofit types inferred from promising matches:
-- EV charger installation: 8
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- Ground-source / geothermal heat pump: 7
-- High-efficiency HVAC replacement: 7
+- EV charger installation: 7
+- Battery storage system: 6
+- Ground-source / geothermal heat pump: 6
+- High-efficiency HVAC replacement: 6
+- Biomass / biogas energy system: 5
 - LED lighting retrofit: 5
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- Combined heat and power system: 3
+- Solar water heating system: 3
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (healthcare) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
 - Project site state CA does not match opportunity geography MN.: 86
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (healthcare).: 71
 - Project site state CA does not match opportunity geography OR.: 59
-- Applicant type nonprofit does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
 
 ### santa-clara-university-campus
 
@@ -945,11 +915,11 @@ Status counts:
 ```json
 {
   "eligible_active": 17,
-  "likely_eligible": 38,
+  "likely_eligible": 1,
   "needs_information": 0,
-  "upcoming": 21,
-  "manual_review": 11,
-  "ineligible": 1800,
+  "upcoming": 5,
+  "manual_review": 5,
+  "ineligible": 1859,
   "unavailable": 0
 }
 ```
@@ -973,40 +943,37 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
 - eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Weatherization Assistance Program (WAP) (SOURCE_DSIRE:dsire_program_id:5725)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- project.technologyIds: 7
-- site.utility.electric.distributionUtilityId: 1
+- project.technologyIds: 2
 
 Common unresolved requirements among promising matches:
-- Site or facility type restriction is still unknown after review.: 48
-- Opportunity appears upcoming; application timing should be verified.: 21
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 5
+- No project technology was normalized.: 2
 - Availability is uncertain.: 1
 
 Retrofit types inferred from promising matches:
-- Low-flow fixture retrofit: 22
-- High-efficiency HVAC replacement: 21
-- LED lighting retrofit: 10
-- Heat pump HVAC retrofit: 8
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- Combined heat and power system: 7
-- EV charger installation: 7
+- High-efficiency HVAC replacement: 9
+- Low-flow fixture retrofit: 6
+- Ground-source / geothermal heat pump: 5
+- LED lighting retrofit: 5
+- Battery storage system: 4
+- Biomass / biogas energy system: 4
+- Combined heat and power system: 3
+- Energy management system: 2
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (education_campus) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 396
 - Project site state CA does not match opportunity geography MN.: 86
-- Project site state CA does not match opportunity geography OR.: 59
-- Applicant type nonprofit does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (education_campus).: 71
 
 ### seghesio-healdsburg-winery
 
@@ -1053,12 +1020,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 8,
-  "likely_eligible": 23,
+  "eligible_active": 9,
+  "likely_eligible": 0,
   "needs_information": 0,
-  "upcoming": 20,
-  "manual_review": 8,
-  "ineligible": 1828,
+  "upcoming": 5,
+  "manual_review": 6,
+  "ineligible": 1867,
   "unavailable": 0
 }
 ```
@@ -1074,51 +1041,47 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Site or facility type restriction is still unknown after review.
-- likely_eligible / 96: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Site or facility type restriction is still unknown after review.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Site or facility type restriction is still unknown after review.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
+- upcoming / 100: Lithium-ion Battery Reuse and Recycling (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:d308e28f76570b57)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Nonresidential applicant is compatible with broad commercial eligibility.
-  - unresolved: Availability is uncertain.; Opportunity site or facility specificity (education_campus, healthcare) does not directly match the user's site type.
+  - unresolved: Opportunity appears upcoming; application timing should be verified.
+- upcoming / 100: Food Production Investment Program (FPIP) 2026 (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:101687e9640f6a8c)
+  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: agricultural.
+  - unresolved: Opportunity appears upcoming; application timing should be verified.
+- upcoming / 100: Developing and Demonstrating Advanced Combustion Systems for the Industrial Sector Round 2 (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:d8a7ede4eb110628)
+  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Nonresidential applicant is compatible with broad commercial eligibility.
+  - unresolved: Opportunity appears upcoming; application timing should be verified.
 
 Common next questions:
-- project.technologyIds: 7
+- project.technologyIds: 2
 
 Common unresolved requirements among promising matches:
-- Site or facility type restriction is still unknown after review.: 31
-- Opportunity appears upcoming; application timing should be verified.: 20
-- No project technology was normalized.: 7
-- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
-- Opportunity site or facility specificity (agricultural_facility) does not directly match the user's site type.: 2
+- Opportunity appears upcoming; application timing should be verified.: 5
+- No project technology was normalized.: 2
 
 Retrofit types inferred from promising matches:
-- Battery storage system: 7
-- Biomass / biogas energy system: 7
-- EV charger installation: 7
-- Ground-source / geothermal heat pump: 7
-- High-efficiency HVAC replacement: 5
-- LED lighting retrofit: 5
-- Solar water heating system: 5
-- Combined heat and power system: 4
+- Biomass / biogas energy system: 5
+- Ground-source / geothermal heat pump: 5
+- Battery storage system: 3
+- High-efficiency HVAC replacement: 2
+- Solar water heating system: 2
+- Combined heat and power system: 1
+- Engineering feasibility study: 1
+- Insulation upgrade: 1
 
 Common blockers across rejected/unavailable opportunities:
+- User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 581
 - Opportunity appears residential-only and the user profile is nonresidential.: 438
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 396
 - Project site state CA does not match opportunity geography MN.: 86
-- Project site state CA does not match opportunity geography OR.: 59
-- Applicant type agricultural does not match eligible sectors residential, other, multifamily.: 54
-- Project site state CA does not match opportunity geography CO.: 52
+- Opportunity site or facility specificity (multifamily_residential) does not match the user's site type (industrial_manufacturing).: 71
 
 ## Immediate Iteration Targets
 

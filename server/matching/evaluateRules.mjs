@@ -174,6 +174,7 @@ function evaluateSite(user, site) {
   const userBuildingTypes = user.site.buildingTypes || [];
   const eligibleBuildingTypes = site.eligibleBuildingTypes || [];
   const facilityEligibilityStatus = site.facilityEligibilityStatus || "unknown";
+  const facilityConfidence = typeof site.confidence === "number" ? site.confidence : 0;
   if (facilityEligibilityStatus === "none") {
     return pass("Opportunity explicitly has no site or facility type restriction.");
   }
@@ -192,6 +193,15 @@ function evaluateSite(user, site) {
   if (facilityEligibilityStatus === "broad_residential" && buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
     return pass("User site is compatible with broad residential facility eligibility.");
   }
+  if (["broad_nonresidential", "broad_commercial", "broad_residential"].includes(facilityEligibilityStatus)) {
+    if (userBuildingTypes.length === 0) {
+      return unknown("User site or facility type is missing.");
+    }
+    if (facilityConfidence >= 0.7) {
+      return fail(`User site or facility type (${userBuildingTypes.join(", ")}) does not match ${facilityEligibilityStatus} eligibility.`);
+    }
+    return unknown(`Opportunity site or facility scope (${facilityEligibilityStatus}) does not directly match the user's site type.`);
+  }
   if (facilityEligibilityStatus !== "required") {
     return unknown("Site or facility type restriction is still unknown after review.");
   }
@@ -200,6 +210,12 @@ function evaluateSite(user, site) {
   }
   if (buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
     return pass(`Site or facility type matches: ${userBuildingTypes.filter((type) => eligibleBuildingTypes.includes(type)).join(", ") || userBuildingTypes.join(", ")}.`);
+  }
+  if (userBuildingTypes.length === 0) {
+    return unknown("User site or facility type is missing.");
+  }
+  if (facilityConfidence >= 0.7) {
+    return fail(`Opportunity site or facility specificity (${eligibleBuildingTypes.join(", ")}) does not match the user's site type (${userBuildingTypes.join(", ")}).`);
   }
   return unknown(`Opportunity site or facility specificity (${eligibleBuildingTypes.join(", ")}) does not directly match the user's site type.`);
 }
