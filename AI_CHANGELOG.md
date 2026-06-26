@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) intake back button text color
+
+- Updated the conversational intake footer back button to use white label text.
+
 ## 2026-06-25 - Codex (GPT-5) intake footer back button
 
 - Added a footer back button that appears from step 2 onward, matches the primary button height, and uses the existing conversational intake step navigation to move backward.
