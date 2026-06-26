@@ -9,6 +9,7 @@ import {
 } from "./ontologies.mjs";
 import { extractFacilityRequirements } from "./facilityEligibility.mjs";
 import { extractUtilityRequirements } from "./utilityRestrictions.mjs";
+import { availabilityFromReview } from "./availabilityReview.mjs";
 
 export const MATCH_PROFILE_SCHEMA_VERSION = "opportunity-match-profile-v1";
 export const MATCH_PROFILE_EXTRACTOR_VERSION = "rules-2026-06-25-v1";
@@ -117,6 +118,9 @@ export function buildExtractionCorpus(opportunity) {
 }
 
 function normalizeAvailability(opportunity, searchableText, now) {
+  const reviewedAvailability = availabilityFromReview(opportunity.availabilityReview, opportunity);
+  if (reviewedAvailability) return reviewedAvailability;
+
   const statusText = normalizeText([opportunity.status, opportunity.sourceStatus, opportunity.reviewStatus].join(" "));
   const availabilityText = normalizeText(searchableText);
   const deadline = parseDate(opportunity.deadlineDate) || parseDate(opportunity.endDate);

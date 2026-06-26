@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-26T05:41:58.458Z",
-  "matchingNow": "2026-06-26T05:41:37.982Z",
-  "opportunityCount": 1887,
+  "generatedAt": "2026-06-26T06:03:56.327Z",
+  "matchingNow": "2026-06-26T06:03:35.952Z",
+  "opportunityCount": 1886,
   "totalOpportunityRecordCount": 2096,
-  "archivedOpportunityCount": 209,
+  "archivedOpportunityCount": 210,
   "sampleUserCount": 10,
   "retrofitTaxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
   "testCases": [
@@ -139,7 +139,7 @@
         "needs_information": 0,
         "upcoming": 18,
         "manual_review": 6,
-        "ineligible": 1843,
+        "ineligible": 1842,
         "unavailable": 0
       },
       "retrofits": [
@@ -5133,7 +5133,7 @@
         },
         {
           "value": "Self-reported utility LADWP does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -8553,7 +8553,7 @@
         "needs_information": 0,
         "upcoming": 18,
         "manual_review": 5,
-        "ineligible": 1846,
+        "ineligible": 1845,
         "unavailable": 0
       },
       "retrofits": [
@@ -14341,7 +14341,7 @@
         },
         {
           "value": "Self-reported utility Burbank Water and Power does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -17816,8 +17816,8 @@
         }
       },
       "statusCounts": {
-        "eligible_active": 19,
-        "likely_eligible": 10,
+        "eligible_active": 28,
+        "likely_eligible": 0,
         "needs_information": 0,
         "upcoming": 15,
         "manual_review": 6,
@@ -18058,6 +18058,49 @@
                 "Applicant type overlaps eligible sector: commercial.",
                 "User site is compatible with broad commercial facility eligibility.",
                 "Technology interest matches: commercial_kitchen, hvac, lighting."
+              ],
+              "unresolvedRequirements": [],
+              "blockers": [],
+              "nextQuestion": null,
+              "sourceSummary": {
+                "state": "CA",
+                "sourceName": "San Diego Gas & Electric Business Programs",
+                "programType": "rebate",
+                "administrator": "SDG&E"
+              }
+            },
+            {
+              "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
+              "opportunityName": "Statewide Midstream Water Heating",
+              "offerId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com:default",
+              "retrofitTypeIds": [
+                "high_efficiency_hvac_replacement"
+              ],
+              "retrofitTypes": [
+                {
+                  "retrofitTypeId": "high_efficiency_hvac_replacement",
+                  "displayName": "High-efficiency HVAC replacement",
+                  "parentCategory": "hvac_space_conditioning",
+                  "isPhysicalRetrofit": true,
+                  "confidence": 0.68,
+                  "matchBasis": "canonical_technology_fallback",
+                  "matchedTerms": []
+                }
+              ],
+              "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+              "websiteUrl": "https://www.statewide-waterheating.com/",
+              "applicationUrl": "https://www.statewide-waterheating.com/",
+              "eligibilityStatus": "eligible_active",
+              "rankScore": 100,
+              "opportunityDataConfidence": 0.79,
+              "userProfileCompleteness": 1,
+              "matchedReasons": [
+                "Opportunity appears active.",
+                "Project site state CA matches opportunity geography.",
+                "Self-reported utility matches SDG&E.",
+                "Applicant type overlaps eligible sector: commercial.",
+                "User site is compatible with broad commercial facility eligibility.",
+                "Technology interest matches: hvac."
               ],
               "unresolvedRequirements": [],
               "blockers": [],
@@ -18327,51 +18370,6 @@
                 "sourceName": "DSIRE",
                 "programType": "Corporate Depreciation",
                 "administrator": "U.S. Internal Revenue Service"
-              }
-            },
-            {
-              "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
-              "opportunityName": "Statewide Midstream Water Heating",
-              "offerId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com:default",
-              "retrofitTypeIds": [
-                "high_efficiency_hvac_replacement"
-              ],
-              "retrofitTypes": [
-                {
-                  "retrofitTypeId": "high_efficiency_hvac_replacement",
-                  "displayName": "High-efficiency HVAC replacement",
-                  "parentCategory": "hvac_space_conditioning",
-                  "isPhysicalRetrofit": true,
-                  "confidence": 0.68,
-                  "matchBasis": "canonical_technology_fallback",
-                  "matchedTerms": []
-                }
-              ],
-              "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
-              "websiteUrl": "https://www.statewide-waterheating.com/",
-              "applicationUrl": "https://www.statewide-waterheating.com/",
-              "eligibilityStatus": "likely_eligible",
-              "rankScore": 100,
-              "opportunityDataConfidence": 0.73,
-              "userProfileCompleteness": 1,
-              "matchedReasons": [
-                "Project site state CA matches opportunity geography.",
-                "Self-reported utility matches SDG&E.",
-                "Applicant type overlaps eligible sector: commercial.",
-                "User site is compatible with broad commercial facility eligibility.",
-                "Technology interest matches: hvac.",
-                "No numeric constraints were extracted."
-              ],
-              "unresolvedRequirements": [
-                "Availability is uncertain."
-              ],
-              "blockers": [],
-              "nextQuestion": null,
-              "sourceSummary": {
-                "state": "CA",
-                "sourceName": "San Diego Gas & Electric Business Programs",
-                "programType": "rebate",
-                "administrator": "SDG&E"
               }
             },
             {
@@ -22046,6 +22044,80 @@
           }
         },
         {
+          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
+          "opportunityName": "Statewide Midstream Water Heating",
+          "offerId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com:default",
+          "retrofitTypeIds": [
+            "high_efficiency_hvac_replacement"
+          ],
+          "retrofitTypes": [
+            {
+              "retrofitTypeId": "high_efficiency_hvac_replacement",
+              "displayName": "High-efficiency HVAC replacement",
+              "parentCategory": "hvac_space_conditioning",
+              "isPhysicalRetrofit": true,
+              "confidence": 0.68,
+              "matchBasis": "canonical_technology_fallback",
+              "matchedTerms": []
+            }
+          ],
+          "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+          "websiteUrl": "https://www.statewide-waterheating.com/",
+          "applicationUrl": "https://www.statewide-waterheating.com/",
+          "eligibilityStatus": "eligible_active",
+          "rankScore": 100,
+          "opportunityDataConfidence": 0.79,
+          "userProfileCompleteness": 1,
+          "matchedReasons": [
+            "Opportunity appears active.",
+            "Project site state CA matches opportunity geography.",
+            "Self-reported utility matches SDG&E.",
+            "Applicant type overlaps eligible sector: commercial.",
+            "User site is compatible with broad commercial facility eligibility.",
+            "Technology interest matches: hvac."
+          ],
+          "unresolvedRequirements": [],
+          "blockers": [],
+          "nextQuestion": null,
+          "sourceSummary": {
+            "state": "CA",
+            "sourceName": "San Diego Gas & Electric Business Programs",
+            "programType": "rebate",
+            "administrator": "SDG&E"
+          }
+        },
+        {
+          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program",
+          "opportunityName": "Higher Education Efficiency Performance (HEEP)",
+          "offerId": "SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program:default",
+          "retrofitTypeIds": [],
+          "retrofitTypes": [],
+          "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+          "websiteUrl": "https://pep.clearesult.com/pep/heep-program",
+          "applicationUrl": "https://pep.clearesult.com/pep/heep-program",
+          "eligibilityStatus": "eligible_active",
+          "rankScore": 100,
+          "opportunityDataConfidence": 0.79,
+          "userProfileCompleteness": 1,
+          "matchedReasons": [
+            "Opportunity appears active.",
+            "Project site state CA matches opportunity geography.",
+            "Self-reported utility matches SDG&E.",
+            "Applicant type overlaps eligible sector: commercial.",
+            "Site or facility type matches: restaurant_foodservice.",
+            "Broad energy-efficiency opportunity may cover selected efficiency improvements."
+          ],
+          "unresolvedRequirements": [],
+          "blockers": [],
+          "nextQuestion": null,
+          "sourceSummary": {
+            "state": "CA",
+            "sourceName": "San Diego Gas & Electric Business Programs",
+            "programType": "technical_assistance",
+            "administrator": "SDG&E"
+          }
+        },
+        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1105",
           "opportunityName": "San Diego County - Green Building Program",
           "offerId": "SOURCE_DSIRE:dsire_program_id:1105:default",
@@ -22074,6 +22146,37 @@
             "sourceName": "DSIRE",
             "programType": "Green Building Incentive",
             "administrator": "County of San Diego"
+          }
+        },
+        {
+          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home",
+          "opportunityName": "GRID-MAP",
+          "offerId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home:default",
+          "retrofitTypeIds": [],
+          "retrofitTypes": [],
+          "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+          "websiteUrl": "https://mendotagroup.com/sdge-grid-map-home",
+          "applicationUrl": "https://mendotagroup.com/sdge-grid-map-home",
+          "eligibilityStatus": "eligible_active",
+          "rankScore": 100,
+          "opportunityDataConfidence": 0.83,
+          "userProfileCompleteness": 1,
+          "matchedReasons": [
+            "Opportunity appears active.",
+            "Project site state CA matches opportunity geography.",
+            "Self-reported utility matches SDG&E.",
+            "Applicant type overlaps eligible sector: commercial.",
+            "User site is compatible with broad commercial facility eligibility.",
+            "Technology interest matches: commercial_kitchen."
+          ],
+          "unresolvedRequirements": [],
+          "blockers": [],
+          "nextQuestion": null,
+          "sourceSummary": {
+            "state": "CA",
+            "sourceName": "San Diego Gas & Electric Business Programs",
+            "programType": "rebate",
+            "administrator": "SDG&E"
           }
         },
         {
@@ -22182,125 +22285,6 @@
             "sourceName": "DSIRE",
             "programType": "Rebate Program",
             "administrator": "Plumas-Sierra REC"
-          }
-        },
-        {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305",
-          "opportunityName": "GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program",
-          "offerId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305:default",
-          "retrofitTypeIds": [],
-          "retrofitTypes": [],
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-305-non-energy-impacts-integrated-energy-retrofit-packages-equitable",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-305-non-energy-impacts-integrated-energy-retrofit-packages-equitable",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "eligibilityStatus": "eligible_active",
-          "rankScore": 100,
-          "opportunityDataConfidence": 0.79,
-          "userProfileCompleteness": 1,
-          "matchedReasons": [
-            "Opportunity appears active.",
-            "Project site state CA matches opportunity geography.",
-            "Opportunity explicitly has no electric utility restriction.",
-            "Applicant type overlaps eligible sector: commercial.",
-            "User site is compatible with broad commercial facility eligibility.",
-            "Broad energy-efficiency opportunity may cover selected efficiency improvements."
-          ],
-          "unresolvedRequirements": [],
-          "blockers": [],
-          "nextQuestion": null,
-          "sourceSummary": {
-            "state": "CA",
-            "sourceName": "California Energy Commission",
-            "programType": "grant",
-            "administrator": "California Energy Commission"
-          }
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:caenergywise_com_instant_rebates",
-          "opportunityName": "California Foodservice Instant Rebates",
-          "offerId": "SOURCE_SDGE_BUSINESS:program_url:caenergywise_com_instant_rebates:default",
-          "retrofitTypeIds": [],
-          "retrofitTypes": [],
-          "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
-          "websiteUrl": "https://caenergywise.com/instant-rebates",
-          "applicationUrl": "https://caenergywise.com/instant-rebates",
-          "eligibilityStatus": "eligible_active",
-          "rankScore": 100,
-          "opportunityDataConfidence": 0.79,
-          "userProfileCompleteness": 1,
-          "matchedReasons": [
-            "Opportunity appears active.",
-            "Project site state CA matches opportunity geography.",
-            "Self-reported utility matches SDG&E.",
-            "Applicant type overlaps eligible sector: commercial.",
-            "User site is compatible with broad commercial facility eligibility.",
-            "Technology interest matches: commercial_kitchen."
-          ],
-          "unresolvedRequirements": [],
-          "blockers": [],
-          "nextQuestion": null,
-          "sourceSummary": {
-            "state": "CA",
-            "sourceName": "San Diego Gas & Electric Business Programs",
-            "programType": "rebate",
-            "administrator": "SDG&E"
-          }
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
-          "opportunityName": "USDA - Rural Energy for America Program (REAP) Grants",
-          "offerId": "SOURCE_DSIRE:dsire_program_id:917:parameter-set-9503",
-          "retrofitTypeIds": [
-            "ground_source_geothermal_heat_pump",
-            "biomass_biogas_energy_system"
-          ],
-          "retrofitTypes": [
-            {
-              "retrofitTypeId": "ground_source_geothermal_heat_pump",
-              "displayName": "Ground-source / geothermal heat pump",
-              "parentCategory": "hvac_space_conditioning",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "geothermal"
-              ]
-            },
-            {
-              "retrofitTypeId": "biomass_biogas_energy_system",
-              "displayName": "Biomass / biogas energy system",
-              "parentCategory": "solar_renewable_electricity",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "biomass"
-              ]
-            }
-          ],
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
-          "websiteUrl": "http://www.rd.usda.gov/reap",
-          "applicationUrl": null,
-          "eligibilityStatus": "eligible_active",
-          "rankScore": 100,
-          "opportunityDataConfidence": 0.81,
-          "userProfileCompleteness": 1,
-          "matchedReasons": [
-            "Opportunity appears active.",
-            "Opportunity appears nationwide.",
-            "Utility provider is not applicable to this opportunity.",
-            "Applicant type overlaps eligible sector: commercial.",
-            "User site is compatible with broad nonresidential facility eligibility.",
-            "Broad energy-efficiency opportunity may cover selected efficiency improvements."
-          ],
-          "unresolvedRequirements": [],
-          "blockers": [],
-          "nextQuestion": null,
-          "sourceSummary": {
-            "state": "US",
-            "sourceName": "DSIRE",
-            "programType": "Grant Program",
-            "administrator": "U.S. Department of Agriculture"
           }
         }
       ],
@@ -25746,10 +25730,6 @@
           "count": 15
         },
         {
-          "value": "Availability is uncertain.",
-          "count": 10
-        },
-        {
           "value": "No project technology was normalized.",
           "count": 6
         }
@@ -25887,7 +25867,7 @@
         "needs_information": 0,
         "upcoming": 18,
         "manual_review": 5,
-        "ineligible": 1842,
+        "ineligible": 1841,
         "unavailable": 0
       },
       "retrofits": [
@@ -32982,7 +32962,7 @@
         },
         {
           "value": "Self-reported utility Anaheim Public Utilities does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -33761,10 +33741,6 @@
           "count": 3
         },
         {
-          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
-          "count": 3
-        },
-        {
           "value": "Self-reported utility Anaheim Public Utilities does not match required utility Alabama Power, Alabama Power Co..",
           "count": 3
         },
@@ -34094,6 +34070,10 @@
         },
         {
           "value": "Project site state CA does not match opportunity geography WY, IN.",
+          "count": 2
+        },
+        {
+          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
           "count": 2
         },
         {
@@ -36435,7 +36415,7 @@
         "needs_information": 0,
         "upcoming": 17,
         "manual_review": 5,
-        "ineligible": 1848,
+        "ineligible": 1847,
         "unavailable": 0
       },
       "retrofits": [
@@ -41281,7 +41261,7 @@
         },
         {
           "value": "Self-reported utility Vernon Public Utilities does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -42056,10 +42036,6 @@
           "count": 3
         },
         {
-          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
-          "count": 3
-        },
-        {
           "value": "Self-reported utility Vernon Public Utilities does not match required utility Alabama Power, Alabama Power Co..",
           "count": 3
         },
@@ -42377,6 +42353,10 @@
         },
         {
           "value": "Project site state CA does not match opportunity geography WY, IN.",
+          "count": 2
+        },
+        {
+          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
           "count": 2
         },
         {
@@ -44697,7 +44677,7 @@
         "needs_information": 0,
         "upcoming": 5,
         "manual_review": 7,
-        "ineligible": 1863,
+        "ineligible": 1862,
         "unavailable": 0
       },
       "retrofits": [
@@ -47886,7 +47866,7 @@
         },
         {
           "value": "User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.",
-          "count": 396
+          "count": 395
         },
         {
           "value": "Project site state CA does not match opportunity geography MN.",
@@ -47946,7 +47926,7 @@
         },
         {
           "value": "Self-reported utility Southern California Edison does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -48693,10 +48673,6 @@
           "count": 3
         },
         {
-          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
-          "count": 3
-        },
-        {
           "value": "Self-reported utility Southern California Edison does not match required utility Alabama Power, Alabama Power Co..",
           "count": 3
         },
@@ -48998,6 +48974,10 @@
         },
         {
           "value": "Project site state CA does not match opportunity geography WY, IN.",
+          "count": 2
+        },
+        {
+          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
           "count": 2
         },
         {
@@ -51274,7 +51254,7 @@
         "needs_information": 0,
         "upcoming": 18,
         "manual_review": 5,
-        "ineligible": 1845,
+        "ineligible": 1844,
         "unavailable": 0
       },
       "retrofits": [
@@ -60042,7 +60022,7 @@
         },
         {
           "value": "Self-reported utility Pasadena Water and Power does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -63471,12 +63451,12 @@
         }
       },
       "statusCounts": {
-        "eligible_active": 20,
-        "likely_eligible": 1,
+        "eligible_active": 21,
+        "likely_eligible": 0,
         "needs_information": 0,
         "upcoming": 18,
         "manual_review": 6,
-        "ineligible": 1842,
+        "ineligible": 1841,
         "unavailable": 0
       },
       "retrofits": [
@@ -69485,6 +69465,37 @@
           }
         },
         {
+          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401",
+          "opportunityName": "PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects",
+          "offerId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401:default",
+          "retrofitTypeIds": [],
+          "retrofitTypes": [],
+          "sourceUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+          "websiteUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
+          "eligibilityStatus": "eligible_active",
+          "rankScore": 100,
+          "opportunityDataConfidence": 0.8,
+          "userProfileCompleteness": 1,
+          "matchedReasons": [
+            "Opportunity appears rolling or no-deadline.",
+            "Project site state CA matches opportunity geography.",
+            "Opportunity explicitly has no electric utility restriction.",
+            "Nonresidential applicant is compatible with broad commercial eligibility.",
+            "Site or facility type matches: healthcare.",
+            "Broad energy-efficiency opportunity may cover selected efficiency improvements."
+          ],
+          "unresolvedRequirements": [],
+          "blockers": [],
+          "nextQuestion": null,
+          "sourceSummary": {
+            "state": "CA",
+            "sourceName": "California Energy Commission",
+            "programType": "solicitation",
+            "administrator": "California Energy Commission"
+          }
+        },
+        {
           "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
           "opportunityName": "GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
           "offerId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605:default",
@@ -69884,63 +69895,6 @@
             "programType": "grant",
             "administrator": "California Energy Commission"
           }
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
-          "opportunityName": "USDA - Rural Energy for America Program (REAP) Grants",
-          "offerId": "SOURCE_DSIRE:dsire_program_id:917:parameter-set-9503",
-          "retrofitTypeIds": [
-            "ground_source_geothermal_heat_pump",
-            "biomass_biogas_energy_system"
-          ],
-          "retrofitTypes": [
-            {
-              "retrofitTypeId": "ground_source_geothermal_heat_pump",
-              "displayName": "Ground-source / geothermal heat pump",
-              "parentCategory": "hvac_space_conditioning",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "geothermal"
-              ]
-            },
-            {
-              "retrofitTypeId": "biomass_biogas_energy_system",
-              "displayName": "Biomass / biogas energy system",
-              "parentCategory": "solar_renewable_electricity",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "biomass"
-              ]
-            }
-          ],
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
-          "websiteUrl": "http://www.rd.usda.gov/reap",
-          "applicationUrl": null,
-          "eligibilityStatus": "eligible_active",
-          "rankScore": 100,
-          "opportunityDataConfidence": 0.81,
-          "userProfileCompleteness": 1,
-          "matchedReasons": [
-            "Opportunity appears active.",
-            "Opportunity appears nationwide.",
-            "Utility provider is not applicable to this opportunity.",
-            "Nonresidential applicant is compatible with broad commercial eligibility.",
-            "User site is compatible with broad nonresidential facility eligibility.",
-            "Technology interest matches: solar."
-          ],
-          "unresolvedRequirements": [],
-          "blockers": [],
-          "nextQuestion": null,
-          "sourceSummary": {
-            "state": "US",
-            "sourceName": "DSIRE",
-            "programType": "Grant Program",
-            "administrator": "U.S. Department of Agriculture"
-          }
         }
       ],
       "commonQuestions": [
@@ -70024,7 +69978,7 @@
         },
         {
           "value": "Self-reported utility SMUD does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -70787,10 +70741,6 @@
           "count": 3
         },
         {
-          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
-          "count": 3
-        },
-        {
           "value": "Self-reported utility SMUD does not match required utility Alabama Power, Alabama Power Co..",
           "count": 3
         },
@@ -71104,6 +71054,10 @@
         },
         {
           "value": "Project site state CA does not match opportunity geography WY, IN.",
+          "count": 2
+        },
+        {
+          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
           "count": 2
         },
         {
@@ -73271,10 +73225,6 @@
         {
           "value": "No project technology was normalized.",
           "count": 6
-        },
-        {
-          "value": "Availability is uncertain.",
-          "count": 1
         }
       ]
     },
@@ -73405,12 +73355,12 @@
         }
       },
       "statusCounts": {
-        "eligible_active": 17,
-        "likely_eligible": 1,
+        "eligible_active": 18,
+        "likely_eligible": 0,
         "needs_information": 0,
         "upcoming": 5,
         "manual_review": 5,
-        "ineligible": 1859,
+        "ineligible": 1858,
         "unavailable": 0
       },
       "retrofits": [
@@ -78066,6 +78016,37 @@
           }
         },
         {
+          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401",
+          "opportunityName": "PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects",
+          "offerId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401:default",
+          "retrofitTypeIds": [],
+          "retrofitTypes": [],
+          "sourceUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+          "websiteUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
+          "eligibilityStatus": "eligible_active",
+          "rankScore": 100,
+          "opportunityDataConfidence": 0.8,
+          "userProfileCompleteness": 1,
+          "matchedReasons": [
+            "Opportunity appears rolling or no-deadline.",
+            "Project site state CA matches opportunity geography.",
+            "Opportunity explicitly has no electric utility restriction.",
+            "Nonresidential applicant is compatible with broad commercial eligibility.",
+            "Site or facility type matches: education_campus.",
+            "Broad energy-efficiency opportunity may cover selected efficiency improvements."
+          ],
+          "unresolvedRequirements": [],
+          "blockers": [],
+          "nextQuestion": null,
+          "sourceSummary": {
+            "state": "CA",
+            "sourceName": "California Energy Commission",
+            "programType": "solicitation",
+            "administrator": "California Energy Commission"
+          }
+        },
+        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22068",
           "opportunityName": "Silicon Valley Power - Emerging Technologies Grant Program",
           "offerId": "SOURCE_DSIRE:dsire_program_id:22068:default",
@@ -78676,120 +78657,6 @@
             "programType": "PACE Financing",
             "administrator": "California Energy Commission"
           }
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
-          "opportunityName": "Modified Accelerated Cost-Recovery System (MACRS)",
-          "offerId": "SOURCE_DSIRE:dsire_program_id:676:default",
-          "retrofitTypeIds": [
-            "led_lighting_retrofit",
-            "high_efficiency_hvac_replacement",
-            "ground_source_geothermal_heat_pump",
-            "solar_water_heating_system",
-            "small_wind_turbine",
-            "combined_heat_and_power_system",
-            "biomass_biogas_energy_system"
-          ],
-          "retrofitTypes": [
-            {
-              "retrofitTypeId": "led_lighting_retrofit",
-              "displayName": "LED lighting retrofit",
-              "parentCategory": "lighting",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.68,
-              "matchBasis": "canonical_technology_fallback",
-              "matchedTerms": []
-            },
-            {
-              "retrofitTypeId": "high_efficiency_hvac_replacement",
-              "displayName": "High-efficiency HVAC replacement",
-              "parentCategory": "hvac_space_conditioning",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.68,
-              "matchBasis": "canonical_technology_fallback",
-              "matchedTerms": []
-            },
-            {
-              "retrofitTypeId": "ground_source_geothermal_heat_pump",
-              "displayName": "Ground-source / geothermal heat pump",
-              "parentCategory": "hvac_space_conditioning",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "geothermal"
-              ]
-            },
-            {
-              "retrofitTypeId": "solar_water_heating_system",
-              "displayName": "Solar water heating system",
-              "parentCategory": "water_heating",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "solar thermal"
-              ]
-            },
-            {
-              "retrofitTypeId": "small_wind_turbine",
-              "displayName": "Small wind turbine",
-              "parentCategory": "solar_renewable_electricity",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "small wind"
-              ]
-            },
-            {
-              "retrofitTypeId": "combined_heat_and_power_system",
-              "displayName": "Combined heat and power system",
-              "parentCategory": "solar_renewable_electricity",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "combined heat and power",
-                "chp"
-              ]
-            },
-            {
-              "retrofitTypeId": "biomass_biogas_energy_system",
-              "displayName": "Biomass / biogas energy system",
-              "parentCategory": "solar_renewable_electricity",
-              "isPhysicalRetrofit": true,
-              "confidence": 0.86,
-              "matchBasis": "text_or_source_technology",
-              "matchedTerms": [
-                "biomass"
-              ]
-            }
-          ],
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/676/modified-accelerated-cost-recovery-system-macrs",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "eligibilityStatus": "eligible_active",
-          "rankScore": 100,
-          "opportunityDataConfidence": 0.81,
-          "userProfileCompleteness": 1,
-          "matchedReasons": [
-            "Opportunity appears active.",
-            "Opportunity appears nationwide.",
-            "Utility provider is not applicable to this opportunity.",
-            "Nonresidential applicant is compatible with broad commercial eligibility.",
-            "Site or facility type is not applicable to this opportunity.",
-            "Technology interest matches: hvac, lighting, solar."
-          ],
-          "unresolvedRequirements": [],
-          "blockers": [],
-          "nextQuestion": null,
-          "sourceSummary": {
-            "state": "US",
-            "sourceName": "DSIRE",
-            "programType": "Corporate Depreciation",
-            "administrator": "U.S. Internal Revenue Service"
-          }
         }
       ],
       "commonQuestions": [
@@ -78809,7 +78676,7 @@
         },
         {
           "value": "User site or facility type (education_campus) does not match broad_commercial eligibility.",
-          "count": 396
+          "count": 395
         },
         {
           "value": "Project site state CA does not match opportunity geography MN.",
@@ -78873,7 +78740,7 @@
         },
         {
           "value": "Self-reported utility Silicon Valley Power does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -82084,10 +81951,6 @@
         {
           "value": "No project technology was normalized.",
           "count": 2
-        },
-        {
-          "value": "Availability is uncertain.",
-          "count": 1
         }
       ]
     },
@@ -82222,7 +82085,7 @@
         "needs_information": 0,
         "upcoming": 5,
         "manual_review": 6,
-        "ineligible": 1867,
+        "ineligible": 1866,
         "unavailable": 0
       },
       "retrofits": [
@@ -84827,7 +84690,7 @@
         },
         {
           "value": "User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.",
-          "count": 396
+          "count": 395
         },
         {
           "value": "Project site state CA does not match opportunity geography MN.",
@@ -84895,7 +84758,7 @@
         },
         {
           "value": "Self-reported utility City of Healdsburg Electric Utility does not match required utility SDG&E.",
-          "count": 34
+          "count": 33
         },
         {
           "value": "Project site state CA does not match opportunity geography FL.",
@@ -85650,10 +85513,6 @@
           "count": 3
         },
         {
-          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
-          "count": 3
-        },
-        {
           "value": "Self-reported utility City of Healdsburg Electric Utility does not match required utility Alabama Power, Alabama Power Co..",
           "count": 3
         },
@@ -85971,6 +85830,10 @@
         },
         {
           "value": "Project site state CA does not match opportunity geography WY, IN.",
+          "count": 2
+        },
+        {
+          "value": "Selected improvements do not match opportunity technologies (commercial_kitchen).",
           "count": 2
         },
         {

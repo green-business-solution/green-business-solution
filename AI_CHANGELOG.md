@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) availability review repair
+
+- Added a repeatable availability-review pipeline that fetches source pages, stores canonical `availabilityReview` records on DynamoDB opportunities, and documents future cron automation.
+- Repaired the 11 unique opportunities causing 12 sample `likely_eligible` results, classifying 9 active, 1 rolling, and 1 unavailable based on source evidence.
+- Archived the newly unavailable MAP opportunity and regenerated admin matching fixtures, reducing current real-profile `likely_eligible` pairings from 12 to 0.
+
 ## 2026-06-25 - Codex (GPT-5) admin allowlist update
 
 - Added `rshen0210@gmail.com` to the default RetroFi production admin allowlist in the API server, CloudFormation template, and production deploy script.

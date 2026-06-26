@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "availability-review-v1",
+  "generatedAt": "2026-06-26T06:02:54.556Z",
+  "opportunityCount": 11,
+  "fetchSources": true,
+  "fetchTimeoutMs": 12000,
+  "statusCounts": {
+    "active": 9,
+    "rolling": 1,
+    "unavailable": 1
+  },
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_589",
+      "opportunityName": "San Diego LEARN Program",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/savings-center/business-winter-savings-safety-and-solutions",
+      "websiteUrl": "https://www.sdge.com/node/589",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "n Business Programs Energy Efficiency Programs We offer a variety of programs to help your business save energy and money. Learn more about savings programs Demand Response Programs If your business can conserve energy when demand is highest, we have a program for you. Explore Dem",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/savings-center/business-winter-savings-safety-and-solutions",
+          "https://www.sdge.com/node/589"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
+      "opportunityName": "Statewide Midstream Water Heating",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://www.statewide-waterheating.com/",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://www.statewide-waterheating.com/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program",
+      "opportunityName": "Higher Education Efficiency Performance (HEEP)",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://pep.clearesult.com/pep/heep-program",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://pep.clearesult.com/pep/heep-program"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home",
+      "opportunityName": "GRID-MAP",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://mendotagroup.com/sdge-grid-map-home",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://mendotagroup.com/sdge-grid-map-home"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:lincusenergy_com_wise",
+      "opportunityName": "Water Infrastructure and System Efficiency",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://lincusenergy.com/wise",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://lincusenergy.com/wise"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401",
+      "opportunityName": "PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects",
+      "sourceName": "California Energy Commission",
+      "state": "CA",
+      "sourceUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+      "websiteUrl": "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+      "availabilityReview": {
+        "normalizedStatus": "rolling",
+        "applicationOpenAt": "2019-04-30T12:00:00.000Z",
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": true,
+        "evidenceText": "m\":null,\"solicitationNumber\":\"PON-17-401\",\"solicitationType\":\"Program Opportunity Notice\",\"status\":\"No Time Limit\"} PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects Skip to main content CA.gov Share via Facebook Share via Twitter Share",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.energy.ca.gov/solicitations/2019-04/pon-17-401-financing-energy-efficiency-and-renewable-energy-generation",
+          "https://ecams.energy.ca.gov/s/login/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.88
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_residential_savings_center_energy_saving_programs_market_access_program",
+      "opportunityName": "Market Access Program (MAP)",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://www.sdge.com/residential/savings-center/energy-saving-programs/market-access-program",
+      "availabilityReview": {
+        "normalizedStatus": "unavailable",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "reduce your electric use and save on your energy bill. As of June 1, 2025, the CORE MAP program is officially closed. Aggregators must install all projects by June 30, 2025, as originally stated. Please reach out to [email&#160;protected] with any questions. How Does MAP Work",
+        "reasons": [
+          "source_status_unavailable"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://www.sdge.com/residential/savings-center/energy-saving-programs/market-access-program"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.9
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_18746",
+      "opportunityName": "Energy Efficiency Programs",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/savings-center/business-winter-savings-safety-and-solutions",
+      "websiteUrl": "https://www.sdge.com/node/18746",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Energy Efficiency Programs We offer a variety of programs to help your business save energy and money. SDG&E Business Programs rebate CA California {\"zipCodeMode\":\"sdge_service_territory\",\"state\":\"CA\",\"geographyType\":\"sdge_service_territory\",\"utilityProvider\":[",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/savings-center/business-winter-savings-safety-and-solutions",
+          "https://www.sdge.com/node/18746"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_pih",
+      "opportunityName": "GRID-PIH",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://mendotagroup.com/SDGE-GRID-PIH",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://mendotagroup.com/SDGE-GRID-PIH"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:ag_easy_com",
+      "opportunityName": "Ag-Easy",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://www.ag-easy.com/",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://www.ag-easy.com/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_soc_ess_program",
+      "opportunityName": "State of California Energy Strategy and Support (SOC ESS)",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://aesc-inc.com/soc-ess-program",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Image Start your energy efficiency journey today! We offer a variety of programs to help businesses save energy and money. These programs assist customers with no-cost energy audits, along with incentives and rebates for energy-efficient upgrades. Program eligibility is based on b",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/save-energy-and-money",
+          "https://aesc-inc.com/soc-ess-program"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T06:02:54.556Z",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "confidence": 0.82
+      }
+    }
+  ]
+}

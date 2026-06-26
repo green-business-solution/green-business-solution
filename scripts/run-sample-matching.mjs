@@ -321,7 +321,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "1. Improve utility resolution for `Other / Not sure` users by geocoding and service-territory lookup instead of relying on the current form option.",
     "2. Split offer-level sectors/technologies more carefully for DSIRE parameter sets to reduce residential/commercial leakage.",
-    "3. Add source-specific availability handling for CEC awarded solicitations and utility pages with no explicit deadline.",
+    "3. Continue availability review on opportunities that still produce uncertain availability after source-page research.",
     "4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all 20,960 pairings were manually adjudicated."
   );
 

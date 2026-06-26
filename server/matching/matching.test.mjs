@@ -257,6 +257,99 @@ describe("matching pipeline", () => {
     expect(result.blockers.join(" ")).not.toMatch(/utility/i);
   });
 
+  it("uses stored rolling availability reviews before deterministic inference", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 Infinite Loop, Cupertino, CA 95014, USA",
+      electricUtilityProvider: "PG&E",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-reviewed-rolling-availability",
+      canonicalTitle: "Commercial Lighting Rebate",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "unknown",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Commercial customers can receive lighting incentives.",
+      technologies: ["LED Lighting"],
+      sectors: ["Commercial"],
+      utilityRestrictionReview: {
+        restrictionStatus: "none_found_after_review",
+        requiredUtilityIds: [],
+        requiredUtilityNames: [],
+        evidenceText: "No utility restriction language was found in the reviewed source corpus.",
+        confidence: 0.7
+      },
+      facilityEligibilityReview: {
+        eligibilityStatus: "broad_commercial",
+        eligibleBuildingTypes: [],
+        evidenceText: "Commercial customers can receive lighting incentives.",
+        confidence: 0.82
+      },
+      availabilityReview: {
+        normalizedStatus: "rolling",
+        noDeadlineExplicit: true,
+        evidenceText: "Rebates are available on a first-come, first-served basis until funds are exhausted.",
+        reasons: ["rolling_or_no_deadline_language"],
+        reviewedAt: "2026-06-25T12:00:00.000Z",
+        confidence: 0.88
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(profile.availability.normalizedStatus).toBe("rolling");
+    expect(result.eligibilityStatus).toBe("eligible_active");
+    expect(result.matchedReasons.join(" ")).toMatch(/rolling or no-deadline/);
+  });
+
+  it("uses stored unavailable availability reviews before source status inference", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 Infinite Loop, Cupertino, CA 95014, USA",
+      electricUtilityProvider: "PG&E",
+      ownershipStatus: "Lease",
+      buildingType: "Office",
+      squareFootage: "12000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-reviewed-unavailable-availability",
+      canonicalTitle: "Closed Commercial Lighting Rebate",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Commercial customers can receive lighting incentives.",
+      technologies: ["LED Lighting"],
+      sectors: ["Commercial"],
+      availabilityReview: {
+        normalizedStatus: "unavailable",
+        evidenceText: "As of June 1, 2025, the program is officially closed.",
+        reasons: ["source_status_unavailable"],
+        reviewedAt: "2026-06-25T12:00:00.000Z",
+        confidence: 0.9
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(profile.availability.normalizedStatus).toBe("unavailable");
+    expect(result.eligibilityStatus).toBe("unavailable");
+  });
+
   it("preserves source links in summarized match results", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",

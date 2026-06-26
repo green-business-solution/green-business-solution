@@ -17,6 +17,7 @@
     "matching:facility-reviews:write": "node scripts/write-facility-eligibility-reviews.mjs",
     "matching:utility-reviews": "node scripts/research-utility-restrictions.mjs",
     "matching:utility-reviews:write": "node scripts/write-utility-restriction-reviews.mjs",
+    "matching:availability-reviews": "node scripts/research-availability.mjs",
     "matching:archive-unavailable": "node scripts/archive-unavailable-opportunities.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "test": "vitest run",

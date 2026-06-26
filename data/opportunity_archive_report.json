@@ -1,13 +1,14 @@
 {
   "schemaVersion": "opportunity-archive-report-v1",
-  "generatedAt": "2026-06-26T03:47:16.410Z",
-  "matcherClock": "2026-06-26T03:47:16.410Z",
+  "generatedAt": "2026-06-26T06:03:09.960Z",
+  "matcherClock": "2026-06-26T06:03:09.960Z",
   "opportunityCount": 2096,
   "writeDynamoDb": true,
   "unarchiveRestored": false,
   "actionCounts": {
-    "keep_active": 1887,
-    "archive": 209
+    "keep_active": 1886,
+    "already_archived": 209,
+    "archive": 1
   },
   "rows": [
     {
@@ -287,8 +288,8 @@
       "opportunityName": "Marshall County REMC - Residential Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
       "state": "IN",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -610,8 +611,8 @@
       "opportunityName": "GFO-23-404 - Equitable Building Decarbonization Program Direct Install",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -644,8 +645,8 @@
       "opportunityName": "Renewable Energy Property Tax Exemption",
       "sourceName": "DSIRE",
       "state": "ND",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -729,8 +730,8 @@
       "opportunityName": "GFO-23-318 - BRIDGE 2024: Bringing Rapid Innovation Development to Green Energy",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1118,8 +1119,8 @@
       "opportunityName": "GFO-22-304 - Assessing the Role of Hydrogen in California’s Decarbonizing Electric System",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1169,8 +1170,8 @@
       "opportunityName": "GFO-24-307 - Advancing Designs and Analysis of High Voltage Direct Current Substations and Environmental Monitoring for Floating Offshore Wind",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1254,8 +1255,8 @@
       "opportunityName": "GFO-23-308 - DC HVAC Nanogrid Module Development and Demonstration",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1475,8 +1476,8 @@
       "opportunityName": "GFO-23-604 - Improvements in Maintenance Processes for Reliable Operations that are Verifiable and Effective for Hydrogen Refueling Stations (IMPROVE for H2)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1611,8 +1612,8 @@
       "opportunityName": "PON-22-001 - Energy Conservation Assistance Act-Education Subaccount (ECAA-Ed) Zero-Interest Loan Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1662,8 +1663,8 @@
       "opportunityName": "GFO-24-612 - Depot Charging and Hydrogen Refueling Infrastructure for Medium- and Heavy-Duty On-Road Zero-Emission Vehicles",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -1798,8 +1799,8 @@
       "opportunityName": "GFO-23-309 - Virtual Power Plant Approaches for Demand Flexibility (VPP-FLEX)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -2876,8 +2877,8 @@
       "opportunityName": "GFO-23-310 - Non-Energy Impacts and Process Evaluation of Integrated Energy Retrofit Packages in California’s Residential Buildings",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3129,8 +3130,8 @@
       "opportunityName": "GFO-25-602 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 3",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3163,8 +3164,8 @@
       "opportunityName": "GFO-25-301 - Distributed Resources for Innovative Vehicle Energization Strategies (DRIVES)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3299,8 +3300,8 @@
       "opportunityName": "GFO-22-607- Light-Duty Vehicle and Multi-Use Hydrogen Refueling Infrastructure",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3469,8 +3470,8 @@
       "opportunityName": "RFP-24-401 - Building Energy Performance Strategy Report & Benchmarking Support",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3605,8 +3606,8 @@
       "opportunityName": "RFQ-22-401 - Flexible Demand Appliance Standards Advanced Research and Proposal Development",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -3673,8 +3674,8 @@
       "opportunityName": "RFP-22-801 - Energy Efficiency Technical Support 2023",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4298,8 +4299,8 @@
       "opportunityName": "GFO-22-610 Convenient, High-Visibility, Low-Cost, Level 2 Charging (CHiLL-2)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4723,8 +4724,8 @@
       "opportunityName": "GFO-24-602 - Charging and Refueling Infrastructure for Transport in California Provided Along Targeted Highway Segments (CRITICAL PATHS) 2.0",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4757,8 +4758,8 @@
       "opportunityName": "GFO-20-609 Renewable Hydrogen Transportation Fuel Production",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4825,8 +4826,8 @@
       "opportunityName": "Cedarburg Light & Water Utility - Commercial Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
       "state": "WI",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4859,8 +4860,8 @@
       "opportunityName": "GFO-25-606 - California’s National Electric Vehicle Infrastructure Formula Program - Solicitation 5 (South)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -4927,8 +4928,8 @@
       "opportunityName": "​​​​GFO-22-303 – Food Production Investment Program 2022",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -5131,8 +5132,8 @@
       "opportunityName": "​​​​​​​GFO-25-604 – California’s National Electric Vehicle Infrastructure Formula Program - Solicitation 4",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -5386,8 +5387,8 @@
       "opportunityName": "Rochester Gas and Electric - Electric Vehicle Charger Make-Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -5709,8 +5710,8 @@
       "opportunityName": "Burlington Electric Department - Residential EV Charging Station Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -5828,8 +5829,8 @@
       "opportunityName": "RFP-25-802 - Enhancing Behind-the-Meter PV and Storage Adoption Modeling in California",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -6168,8 +6169,8 @@
       "opportunityName": "Local Option - Property Tax Exemption for Renewable Energy Systems",
       "sourceName": "DSIRE",
       "state": "CO",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -6202,8 +6203,8 @@
       "opportunityName": "GFO-22-308 - Decarbonizing Heating, Ventilation, and Air Conditioning Systems in Large Buildings",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -6451,8 +6452,8 @@
       "opportunityName": "RFP-22-802 - Commercial Forecast Model Update",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -6536,8 +6537,8 @@
       "opportunityName": "Dubois REC - Residential Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
       "state": "IN",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -6978,8 +6979,8 @@
       "opportunityName": "Vermont Public Power Supply Authority - Electric Forklift Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7078,8 +7079,8 @@
       "opportunityName": "Central Hudson Gas & Electric (Gas) - Residential Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7231,8 +7232,8 @@
       "opportunityName": "Chippewa Valley Electric Cooperative - Electric Vehicle Charging Station Rebate",
       "sourceName": "DSIRE",
       "state": "WI",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7365,8 +7366,8 @@
       "opportunityName": "GFO-24-310 - Retrofitting Existing Residential Buildings with Innovative Envelope Solutions",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7399,8 +7400,8 @@
       "opportunityName": "Residential Energy Efficiency Tax Credit",
       "sourceName": "DSIRE",
       "state": "US",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7620,8 +7621,8 @@
       "opportunityName": "GFO-23-317 - Energy Storage Innovations to Support Grid Reliability",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7705,8 +7706,8 @@
       "opportunityName": "GFO-22-301 – Commercialization Industrial Decarbonization (2022 CID Program)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -7960,8 +7961,8 @@
       "opportunityName": "IFB-25-001 – Translation/Interpretation Services",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -8181,8 +8182,8 @@
       "opportunityName": "GFO-19-602 - Hydrogen Refueling Infrastructure",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -8334,8 +8335,8 @@
       "opportunityName": "PSEG Long Island - EV Make Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -8521,8 +8522,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Transit Set-Aside Funding Lane - Rollover",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -8757,8 +8758,8 @@
       "opportunityName": "Solar Electric Incentive Program",
       "sourceName": "DSIRE",
       "state": "OR",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -8910,8 +8911,8 @@
       "opportunityName": "Local Government Energy Modernization Program (L-GEM)",
       "sourceName": "DSIRE",
       "state": "MD",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9029,8 +9030,8 @@
       "opportunityName": "GFO-23-301 - Energy Efficiency and Load Flexibility in Industrial and Commercial Cold Storage Facilities",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9114,8 +9115,8 @@
       "opportunityName": "GFO-23-316 - Industrial, Agricultural, and Water Demand Flexibility Research and Deployment Hub (IAW FlexHub)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9148,8 +9149,8 @@
       "opportunityName": "Granite State Clean Fleets (GSCF)",
       "sourceName": "DSIRE",
       "state": "NH",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9267,8 +9268,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) – Drayage Fleet Set-Aside Funding Lane - Round 1",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9372,11 +9373,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -9622,8 +9625,8 @@
       "opportunityName": "GFO-21-304 - Realizing Accelerated Manufacturing and Production for Clean Energy Technologies",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9741,8 +9744,8 @@
       "opportunityName": "Wabash Valley Power Association (28 Member Cooperatives) - Residential Energy Efficiency Program",
       "sourceName": "DSIRE",
       "state": "IN",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -9894,8 +9897,8 @@
       "opportunityName": "RFQ-24-701 - Delegate Chief Building Official Services Site Specific",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10132,8 +10135,8 @@
       "opportunityName": "GFO-23-608 - Military Electric Vehicle Chargers",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10370,8 +10373,8 @@
       "opportunityName": "GFO-24-605 - Technical Assistance for Zero-Emission Vehicle (ZEV) Infrastructure Funding",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10387,8 +10390,8 @@
       "opportunityName": "RFP-24-802 - Technical Support for Low-Carbon Fuel Potential in California",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10421,8 +10424,8 @@
       "opportunityName": "California Electric Vehicle Infrastructure Project 2.0 (CALeVIP 2.0) – Fast Charge California Project",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10438,8 +10441,8 @@
       "opportunityName": "GFO-22-502 - Innovative Hydrogen Refueling Solutions for Heavy Transport",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10557,8 +10560,8 @@
       "opportunityName": "Small-Scale Renewable Energy Incentive Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10574,8 +10577,8 @@
       "opportunityName": "GFO-23-311 - Advancing Precipitation Enhancement in California",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10727,8 +10730,8 @@
       "opportunityName": "GFO-24-306 - Applications of Open Data to Support Climate Resilience in California’s Electricity Sector",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10744,8 +10747,8 @@
       "opportunityName": "Vermont Public Power Supply Authority - Electric Bicycle and Retrofit Kit Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10846,8 +10849,8 @@
       "opportunityName": "GFO-24-608 - Rural Electric Vehicle Charging 2.0 (REV 2.0)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -10880,8 +10883,8 @@
       "opportunityName": "Burlington Electric Department - Electric Vehicle Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11002,11 +11005,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:14:03.905Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -11048,8 +11053,8 @@
       "opportunityName": "Shared Fleet Charging Rebate",
       "sourceName": "Southern California Edison Business Programs",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11221,11 +11226,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -11420,8 +11427,8 @@
       "opportunityName": "GFO-22-608 - Ultra-Low-Carbon Fuel: Demonstration- and Commercial-Scale Production Facilities Utilizing Forest Biomass",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11556,8 +11563,8 @@
       "opportunityName": "GFO-23-501 - Quantifying Exposures to Indoor Air Pollutants in Multifamily Homes that Cook with Gas or Alternatives",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11590,8 +11597,8 @@
       "opportunityName": "GFO-22-402 - Advancing Designs for Floating Offshore Wind Mooring Lines and Anchors",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11624,8 +11631,8 @@
       "opportunityName": "Burlington Electric Department - Electric Bicycle Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11675,8 +11682,8 @@
       "opportunityName": "Successor Solar Incentive (SuSI) Program - Administratively Determined Incentive",
       "sourceName": "DSIRE",
       "state": "NJ",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11709,8 +11716,8 @@
       "opportunityName": "PON-22-002 - Energy Conservation Assistance Act (ECAA) Low-Interest Loan Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11828,8 +11835,8 @@
       "opportunityName": "GFO-25-901 - California Training for Residential Energy Contractors (CA-TREC)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -11879,8 +11886,8 @@
       "opportunityName": "GFO-20-305 - The Next EPIC Challenge: Reimagining Affordable Mixed-Use Development in a Carbon-Constrained Future",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12049,8 +12056,8 @@
       "opportunityName": "Price Electric Cooperative - Electric Vehicle Charging Station and Efficiency Rebates",
       "sourceName": "DSIRE",
       "state": "WI",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12083,8 +12090,8 @@
       "opportunityName": "Black Hills Energy (Gas) - Commercial Energy Efficiency Program",
       "sourceName": "DSIRE",
       "state": "CO",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12474,8 +12481,8 @@
       "opportunityName": "GFO-23-602 - Charging and Refueling Infrastructure for Transport in CALifornia Provided Along Targeted Highway Segments (CRITICAL PATHS)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12676,8 +12683,8 @@
       "opportunityName": "Methane Gas Conversion Property Tax Exemption",
       "sourceName": "DSIRE",
       "state": "IA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12693,8 +12700,8 @@
       "opportunityName": "RFP-21-801 - Technical Support to SB 100 Modeling",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12764,11 +12771,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -12776,8 +12785,8 @@
       "opportunityName": "IFB-23-142 - Hearing Reporter Services for CEC Business Meetings, Hearings and Events",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -12912,8 +12921,8 @@
       "opportunityName": "Burlington Electric - Workplace EV Charging Station Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13150,8 +13159,8 @@
       "opportunityName": "GFO-23-606 - Charging Infrastructure for Government Fleets",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13182,8 +13191,8 @@
       "opportunityName": "GFO-22-503 - Gas Pipeline Safety and Integrity Research to Support Decarbonization",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13335,8 +13344,8 @@
       "opportunityName": "ConEd - Electric Vehicle Charging Station Make-Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13369,8 +13378,8 @@
       "opportunityName": "GFO-23-315 - Clean, Dispatchable Generation",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13539,8 +13548,8 @@
       "opportunityName": "GFO-23-305 - Food Production Investment Program (FPIP) 2024",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13607,8 +13616,8 @@
       "opportunityName": "GFO-22-401 - Advancing Environmental Monitoring Technologies for Floating Offshore Wind",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13811,8 +13820,8 @@
       "opportunityName": "RFP-24-601 – Technical Assistance for Medium- and Heavy-Duty (MDHD) Zero-Emission Vehicle (ZEV) Infrastructure Blueprint Development",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13828,8 +13837,8 @@
       "opportunityName": "GFO-23-306 - Grid-Supportive Transportation Electrification",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13879,8 +13888,8 @@
       "opportunityName": "NY-Sun PV Incentive Program (Commercial and Industrial)",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -13947,8 +13956,8 @@
       "opportunityName": "GFO-23-701 - California’s Fifth Climate Change Assessment Tribal Research Grant Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14132,8 +14141,8 @@
       "opportunityName": "GFO-25-302 - Coordinated Holistic Orchestration of Inverter-based Resources (CHOIR)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14166,8 +14175,8 @@
       "opportunityName": "GFO-24-304 - California Battery Pilot Manufacturing Line",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14336,8 +14345,8 @@
       "opportunityName": "PSEG Long Island- Commercial Solar PV Feed-in Tariff",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14523,8 +14532,8 @@
       "opportunityName": "Burlington Electric Department - Multi-Family EV Charging Station Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14608,8 +14617,8 @@
       "opportunityName": "GFO-23-402 - Geothermal Grant and Loan Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14827,8 +14836,8 @@
       "opportunityName": "Central Hudson - Electric Vehicle Infrastructure Make-Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14861,8 +14870,8 @@
       "opportunityName": "GFO-22-504 - Hydrogen Blending and Lower Oxides of Nitrogen Emissions in Gas-Fired Generation (HyBLOX)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -14895,8 +14904,8 @@
       "opportunityName": "GFO-22-901 - Cost Share for Federal Clean Energy Funding Opportunities, Carbon Removal Innovation Support Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -15150,8 +15159,8 @@
       "opportunityName": "RFP-23-802 - Technical Support For Energy Assessments",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -15507,8 +15516,8 @@
       "opportunityName": "GFO-24-607 - FAST 2.0 - Fast and Available Charging for All Californians",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -15592,8 +15601,8 @@
       "opportunityName": "Residential Renewable Energy Tax Credit",
       "sourceName": "DSIRE",
       "state": "US",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -15816,11 +15825,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -15845,8 +15856,8 @@
       "opportunityName": "RFQ-24-401 - Energy Code Development Support",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -15896,8 +15907,8 @@
       "opportunityName": "GFO-22-902 - Cost Share for Federal Funding Opportunities Industrial Decarbonization and Improvement of Grid Operations (INDIGO) Program and Food Production Investment Program (FPIP)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16066,8 +16077,8 @@
       "opportunityName": "GFO-23-312 - Community Energy Reliability and Resilience Investment (CERRI) Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16455,8 +16466,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) – Drayage Public Set-Aside Funding Lane",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16608,8 +16619,8 @@
       "opportunityName": "GFO-22-306 - Precipitation Enhancement and Environmental Research for Hydropower Generation (PEER-Hydro)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16693,8 +16704,8 @@
       "opportunityName": "GFO-23-313 - Deployment of Decarbonization Technologies and Strategies for California Industrial Facilities (INDIGO Program)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16744,8 +16755,8 @@
       "opportunityName": "GFO-22-609 - Responsive, Easy Charging Products with Dynamic Signals (REDWDS)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -16965,8 +16976,8 @@
       "opportunityName": "GFO-23-603 - Implementation of Medium- and Heavy-Duty Zero-Emission Vehicle Infrastructure Blueprints",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17237,8 +17248,8 @@
       "opportunityName": "IFB-22-402 - Translations and Interpretation Contract",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17254,8 +17265,8 @@
       "opportunityName": "RFP-22-301 - Technical Assistance for the Energy Research and Development Division",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17339,8 +17350,8 @@
       "opportunityName": "GFO-24-312 - Advanced Grid Technology Acceleration Projects",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17424,8 +17435,8 @@
       "opportunityName": "RFP-22-803 - Demand Scenarios Project",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17526,8 +17537,8 @@
       "opportunityName": "Credit for Renewable Energy Investment and Production for Self-Consumption by International Operations Centers (Corporate)",
       "sourceName": "DSIRE",
       "state": "AZ",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17747,8 +17758,8 @@
       "opportunityName": "GFO-24-311 - Food Production Investment Program (FPIP) 2025",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -17764,8 +17775,8 @@
       "opportunityName": "GFO-25-303 - Improving Net Load Forecasting Models by Integrating Data on Behind-the-Meter Resources",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18053,8 +18064,8 @@
       "opportunityName": "GFO-23-403 - Local Government Building Decarbonization Challenge",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18090,11 +18101,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -18236,8 +18249,8 @@
       "opportunityName": "National Grid - Electric Vehicle Charging Station Make-Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18253,8 +18266,8 @@
       "opportunityName": "GFO-23-702 - California Clean Energy Planning Program (first-come, first-served)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18470,8 +18483,8 @@
       "opportunityName": "Communities in Charge Funding - Wave 4",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18623,8 +18636,8 @@
       "opportunityName": "GFO-22-611 - FAST - Fast and Available Charging for All Californians",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18689,8 +18702,8 @@
       "opportunityName": "Renewable Energy System Incentive Program",
       "sourceName": "DSIRE",
       "state": "WA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18740,8 +18753,8 @@
       "opportunityName": "Energy Loan Program",
       "sourceName": "DSIRE",
       "state": "MO",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18757,8 +18770,8 @@
       "opportunityName": "RFP-24-301 - Compliance, Monitoring, and Reporting Support for Federal Funding",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18825,8 +18838,8 @@
       "opportunityName": "GFO-21-605 - Zero-Emission Transportation Manufacturing",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -18859,8 +18872,8 @@
       "opportunityName": "Vermont Public Power Supply Authority - Electric Vehicle Charging Station Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -19284,8 +19297,8 @@
       "opportunityName": "RFP-22-806 - Distributed Energy Resource Programmatic and Technical Analysis",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -19420,8 +19433,8 @@
       "opportunityName": "GFO-22-307 - Optimizing Long-Duration Energy Storage to Improve Resilience and Reliability in Disadvantaged and Low-Income Communities and Native American Tribes",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -19488,8 +19501,8 @@
       "opportunityName": "GFO-24-611 - Implementation of Medium- and Heavy Duty Zero-Emission Vehicle Infrastructure Blueprints 2.0",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -19892,8 +19905,8 @@
       "opportunityName": "Vermont Public Power Supply Authority - Electric Golf Cart Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -19994,8 +20007,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) – Transit Set-Aside Funding Lane - Round 1",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20147,8 +20160,8 @@
       "opportunityName": "Load Development Fee Credit Program",
       "sourceName": "Silicon Valley Power Business Programs",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20266,8 +20279,8 @@
       "opportunityName": "GFO-23-304 - Geothermal Energy Operations and Lithium Innovation (GEO/LI)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20419,8 +20432,8 @@
       "opportunityName": "GFO-22-305 - Advanced Prefabricated Zero Carbon Homes",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20757,8 +20770,8 @@
       "opportunityName": "Energy Storage Sales and Use Tax Reimbursement",
       "sourceName": "DSIRE",
       "state": "ME",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20808,8 +20821,8 @@
       "opportunityName": "GFO-22-302 - Valuation of Investments in Electricity Sector Resilience",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20825,8 +20838,8 @@
       "opportunityName": "GFO-24-604 – Reliable, Equitable, and Accessible Charging for Multi-family Housing 3.0",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -20927,8 +20940,8 @@
       "opportunityName": "National Grid (Gas)  - Residential Energy Efficiency Rebate Programs (Upstate New York)",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -21012,8 +21025,8 @@
       "opportunityName": "GFO-21-402 - California Automated Permit Processing Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -21248,8 +21261,8 @@
       "opportunityName": "GFO-22-615 - Innovative Charging Solutions for Medium- and Heavy-Duty Electric Vehicles",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -21299,8 +21312,8 @@
       "opportunityName": "GFO-25-304 - Modeling and Monitoring Air Quality and Co-Benefits of Energy Interventions",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -21503,8 +21516,8 @@
       "opportunityName": "RFP-25-803 – Improvements to Modeling Climate Data in Demand Forecasting",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -21911,8 +21924,8 @@
       "opportunityName": "GFO-23-401 - Bulk Grid Asset Enhancements for Grid Reliability",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22047,8 +22060,8 @@
       "opportunityName": "Refundable Clean Heating Fuel Tax Credit (Personal)",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22115,8 +22128,8 @@
       "opportunityName": "Partial Sales and Use Tax Exemption for Zero-Emission Transit Buses",
       "sourceName": "DSIRE",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22234,8 +22247,8 @@
       "opportunityName": "GFO-23-605-Zero-Emission School Bus Charging and Fueling Infrastructure Block Grant",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22455,8 +22468,8 @@
       "opportunityName": "Electric Vehicle Supply Equipment (EVSE) Program",
       "sourceName": "DSIRE",
       "state": "ID",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22574,8 +22587,8 @@
       "opportunityName": "RFQ-24-702 - Delegate Chief Building Official Services Willow Rock Energy Center",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -22625,8 +22638,8 @@
       "opportunityName": "GFO-24-606 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 2",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -23543,8 +23556,8 @@
       "opportunityName": "Green Mountain Power EV Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -23694,8 +23707,8 @@
       "opportunityName": "Qualified Commercial Clean Vehicle Tax Credit",
       "sourceName": "DSIRE",
       "state": "US",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -23711,8 +23724,8 @@
       "opportunityName": "RFP-22-804 - 2023 California Vehicle Survey",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -24661,8 +24674,8 @@
       "opportunityName": "RFP-25-801 - Energy Efficiency Technical Support 2026",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -24780,8 +24793,8 @@
       "opportunityName": "Electric Vehicle Tax Exemption",
       "sourceName": "DSIRE",
       "state": "NJ",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -24899,8 +24912,8 @@
       "opportunityName": "RFP-24-801 - Distributed Energy and Electrification Analysis",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -24933,8 +24946,8 @@
       "opportunityName": "Black Hills Energy (Gas) - Commercial Energy Efficiency Rebate Programs",
       "sourceName": "DSIRE",
       "state": "IA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -25067,8 +25080,8 @@
       "opportunityName": "GFO-23-601 - California’s National Electric Vehicle Infrastructure Formula Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -25084,8 +25097,8 @@
       "opportunityName": "GFO-24-501 - Paving the Way for California’s Gas Transition",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -25560,8 +25573,8 @@
       "opportunityName": "GFO-22-613 - Signage and Other Measures to Increase the Visibility of Electric Vehicle Charging and Hydrogen Refueling Stations",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -25577,8 +25590,8 @@
       "opportunityName": "GFO-24-305 - Developing Next Generation, All Electric Heat Pumps Using Low Global Warming Potential Refrigerants",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -26238,8 +26251,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Drayage Set-Aside Funding Lane - Round 2",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -26544,8 +26557,8 @@
       "opportunityName": "Vermont Gas - Commercial Energy Services",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -26612,8 +26625,8 @@
       "opportunityName": "GFO-21-901 - Cost Share for Federal Clean Energy Funding Opportunities",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -26663,8 +26676,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Fast Track 2025",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -26797,8 +26810,8 @@
       "opportunityName": "GFO-25-306 – Solar PV Located in Non-traditional Terrain (SPLINT)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -27086,8 +27099,8 @@
       "opportunityName": "PSEG Long Island- Fuel Cell Resource Feed-in Tariff",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -27409,8 +27422,8 @@
       "opportunityName": "RFP-22-805 SB 100 Technical Support",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -27528,8 +27541,8 @@
       "opportunityName": "GFO-23-502 - Industrial Carbon Dioxide Utilization for Value Added Products",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28121,8 +28134,8 @@
       "opportunityName": "Golden State Priority Project: Northern & Southern Regions (CALeVIP 2.0)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28325,8 +28338,8 @@
       "opportunityName": "Orange and Rockland Utilities - Electric Vehicle Make-Ready Program (POWERREADY)",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28393,8 +28406,8 @@
       "opportunityName": "Jane E. Lawton Conservation Loan Program",
       "sourceName": "DSIRE",
       "state": "MD",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28444,8 +28457,8 @@
       "opportunityName": "GFO-24-603 - California’s Electric Vehicle Charger Reliability and Accessibility Accelerator (EVC RAA) Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28495,8 +28508,8 @@
       "opportunityName": "GFO-24-610 – Medium- and Heavy-Duty Zero-Emission Vehicle Port Infrastructure",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28529,8 +28542,8 @@
       "opportunityName": "GFO-22-612 - Electric School Bus Bi-Directional Infrastructure",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28748,8 +28761,8 @@
       "opportunityName": "RFP-23-801 - Social Costs and Non-energy Benefits",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28765,8 +28778,8 @@
       "opportunityName": "GFO-22-614 - Reliable, Equitable, and Accessible Charging for Multi-family Housing 2.0 (REACH 2.0)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -28782,8 +28795,8 @@
       "opportunityName": "Multifamily Residential and Commercial EV Charging Station Incentive Program",
       "sourceName": "Silicon Valley Power Business Programs",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -29037,8 +29050,8 @@
       "opportunityName": "Vermont Public Power Supply Authority - Electric Vehicle Purchase Rebate",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -29156,8 +29169,8 @@
       "opportunityName": "NY-Sun PV Incentive Program (Residential, Low-Income, and Small Business)",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -29868,8 +29881,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Transit Set-Aside Funding Lane - Round 2",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -29936,8 +29949,8 @@
       "opportunityName": "ConEd - Residential Energy Efficiency Incentives Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30140,8 +30153,8 @@
       "opportunityName": "GFO-24-701 - Offshore Wind Energy Waterfront Facility Improvement Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30376,8 +30389,8 @@
       "opportunityName": "GFO-23-503 - Feasibility of Underground Hydrogen Storage in California",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30512,8 +30525,8 @@
       "opportunityName": "Commercial Zero-Emission Vehicle Fleet Rebate",
       "sourceName": "Silicon Valley Power Business Programs",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30767,8 +30780,8 @@
       "opportunityName": "GFO-23-312r2 - Round 2 Community Energy Reliability and Resilience Investment (CERRI) Program",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30852,8 +30865,8 @@
       "opportunityName": "Pierce Pepin Coop - Electric Vehicle Charging Station Rebate",
       "sourceName": "DSIRE",
       "state": "WI",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -30889,11 +30902,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -30919,13 +30934,15 @@
       "sourceName": "San Diego Gas & Electric Business Programs",
       "state": "CA",
       "currentLifecycleStatus": null,
-      "action": "keep_active",
+      "action": "archive",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "unavailable",
+        "reasons": [
+          "source_status_unavailable"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -31120,8 +31137,8 @@
       "opportunityName": "GFO-23-302 - Power Electronics for Zero-Emission Residential Resilience (PEZERR)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -31290,8 +31307,8 @@
       "opportunityName": "RFQ-23-701 - On-Call DCBO Services for the Siting, Transmission and Environmental Protection (STEP) Division",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -31664,8 +31681,8 @@
       "opportunityName": "Zero-Emission School Bus and Infrastructure (ZESBI) Incentive Project",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -31715,8 +31732,8 @@
       "opportunityName": "Plug-In Electric Drive Vehicle Tax Credit",
       "sourceName": "DSIRE",
       "state": "US",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32293,8 +32310,8 @@
       "opportunityName": "New York State Electric and Gas - Electric Vehicle Make-Ready Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32344,8 +32361,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) – EV Public Charging Station Funding Lane",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32514,8 +32531,8 @@
       "opportunityName": "GFO-23-607 - Tribal Electric Vehicle Infrastructure, Planning, and Workforce Training and Development",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32599,8 +32616,8 @@
       "opportunityName": "GFO-23-303 - A Decision Tool to Electrify Homes with Limited Electrical Panel Capacity",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32922,8 +32939,8 @@
       "opportunityName": "Advanced Technology Demonstration and Pilot Projects Solicitation",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -32942,11 +32959,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -33073,8 +33092,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Drayage Set-Aside Funding Lane - Rollover",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33583,8 +33602,8 @@
       "opportunityName": "Municipal Government and Nonprofit EV Charging Station Grant",
       "sourceName": "Silicon Valley Power Business Programs",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33700,8 +33719,8 @@
       "opportunityName": "Stowe Electric - Electric Bicycles",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33734,8 +33753,8 @@
       "opportunityName": "ConEd (Electric) - Commercial and Industrial Energy Efficiency Program",
       "sourceName": "DSIRE",
       "state": "NY",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33819,8 +33838,8 @@
       "opportunityName": "Green Mountain Power Electric Bicycle Rebate Program",
       "sourceName": "DSIRE",
       "state": "VT",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33870,8 +33889,8 @@
       "opportunityName": "GFO-24-302 - Enabling Electric Vehicles as Distributed Energy Resources",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -33924,11 +33943,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -34004,8 +34025,8 @@
       "opportunityName": "GFO-24-303 - Direct Air Capture Research, Demonstration, and Community Engagement",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34106,8 +34127,8 @@
       "opportunityName": "Atmos Energy (Gas) - Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
       "state": "CO",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34276,8 +34297,8 @@
       "opportunityName": "GFO-24-601 - Light-Duty Hydrogen Infrastructure Build-Out",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34293,8 +34314,8 @@
       "opportunityName": "GFO-24-301 - Environmental Sustainability of a Clean Energy Transition (Enviro-SET)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34361,8 +34382,8 @@
       "opportunityName": "EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) - EV Jump Start Funding Lane",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34599,8 +34620,8 @@
       "opportunityName": "LADWP - Charge up LA Electric Vehicle Charger Rebate Program",
       "sourceName": "DSIRE",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -34835,8 +34856,8 @@
       "opportunityName": "GFO-24-609 - Charging Interoperability and Collaboration Yard (“Charge Yard”)",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -35039,8 +35060,8 @@
       "opportunityName": "GFO-23-701r2 - California’s Fifth Climate Change Assessment Tribal Research Grant Program Round 2",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
@@ -35059,11 +35080,13 @@
       "currentLifecycleStatus": null,
       "action": "keep_active",
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-22T04:13:22.296Z"
+        "lastVerifiedAt": "2026-06-26T06:02:54.556Z"
       }
     },
     {
@@ -35156,8 +35179,8 @@
       "opportunityName": "GFO-22-501 - Advancing Window Retrofits and Reducing Fireplace Air Leaks to Improve Energy Efficiency in Existing Buildings",
       "sourceName": "California Energy Commission",
       "state": "CA",
-      "currentLifecycleStatus": null,
-      "action": "archive",
+      "currentLifecycleStatus": "archived",
+      "action": "already_archived",
       "availability": {
         "normalizedStatus": "unavailable",
         "reasons": [
