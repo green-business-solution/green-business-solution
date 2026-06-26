@@ -1,7 +1,7 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T01:14:15.295Z
-Matcher clock: 2026-06-26T01:11:26.692Z
+Generated: 2026-06-26T01:31:34.403Z
+Matcher clock: 2026-06-26T01:28:45.307Z
 Opportunities evaluated: 2096
 Sample users evaluated: 10
 Pairings evaluated: 20960
@@ -14,7 +14,7 @@ Full JSON output: `/tmp/retrofi-sample-matching-results.json`
 
 - Hard failures are limited to explicit unavailable status/deadline, state mismatch, utility mismatch, residential-only mismatch, applicant mismatch, technology mismatch, and parsed numeric threshold failure.
 - Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.
-- Utility review artifact: `/Users/neer_kuchlous/Code/Green Business Solution/data/utility_restriction_reviews.json` (2096 reviewed opportunities).
+- Utility review artifact: not loaded.
 - Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.
 - Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.
 - This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.
