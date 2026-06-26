@@ -3537,12 +3537,7 @@ function IntakePage({
                       Skip for now
                     </button>
                   ) : null}
-                  {currentStep?.kind === "choice" && canAdvanceCurrentStep() ? (
-                    <button className="step-next-button" disabled={isSubmitting} type="submit">
-                      Next →
-                    </button>
-                  ) : null}
-                  {(currentStep?.kind === "input" || currentStep?.kind === "textarea") && canAdvanceCurrentStep() ? (
+                  {currentStep && currentStep.kind !== "review" ? (
                     <button className="step-next-button" disabled={isSubmitting} type="submit">
                       Next →
                     </button>

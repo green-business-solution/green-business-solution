@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) persistent intake next button
+
+- Changed the conversational intake footer so the primary `Next` button is always visible on non-review steps instead of appearing only after selection or text entry.
+- Kept the existing validation flow intact by letting submission surface step errors while preserving stable footer layout across steps.
+
 ## 2026-06-25 - Codex (GPT-5) unified conversational intake shell
 
 - Replaced the stepper's mixed-width layout with one shared `960px` intake shell that now contains the header row, question area, body, privacy note, controls, and progress UI on every step.
