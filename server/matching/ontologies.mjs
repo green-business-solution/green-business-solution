@@ -31,6 +31,32 @@ export const UTILITY_ALIASES = {
     "smud",
     "sacramento municipal utility district"
   ],
+  UTIL_BWP: [
+    "bwp",
+    "burbank water and power",
+    "burbank water & power"
+  ],
+  UTIL_ANAHEIM: [
+    "anaheim public utilities",
+    "anaheim utilities",
+    "city of anaheim public utilities"
+  ],
+  UTIL_VPU: [
+    "vpu",
+    "vernon public utilities",
+    "city of vernon public utilities"
+  ],
+  UTIL_PWP: [
+    "pwp",
+    "pasadena water and power",
+    "pasadena water & power"
+  ],
+  UTIL_HEALDSBURG: [
+    "city of healdsburg electric utility",
+    "healdsburg electric utility",
+    "healdsburg electric",
+    "city of healdsburg electric department"
+  ],
   UTIL_CONED: [
     "coned",
     "con ed",
@@ -58,6 +84,11 @@ export const UTILITY_DISPLAY_NAMES = {
   UTIL_SVP: "Silicon Valley Power",
   UTIL_LADWP: "LADWP",
   UTIL_SMUD: "SMUD",
+  UTIL_BWP: "Burbank Water and Power",
+  UTIL_ANAHEIM: "Anaheim Public Utilities",
+  UTIL_VPU: "Vernon Public Utilities",
+  UTIL_PWP: "Pasadena Water and Power",
+  UTIL_HEALDSBURG: "City of Healdsburg Electric Utility",
   UTIL_CONED: "ConEd",
   UTIL_XCEL: "Xcel Energy",
   UTIL_DUKE: "Duke Energy",

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) real public matching test cases
+
+- Replaced the synthetic matching sample profiles with 10 real public California business and institutional sites supplied from GPT Pro research.
+- Added canonical utility aliases for Burbank Water and Power, Anaheim Public Utilities, Vernon Public Utilities, Pasadena Water and Power, and City of Healdsburg Electric Utility.
+- Regenerated the admin matching test-case and retrofit fixtures from the 1,887 visible opportunities with archived opportunities excluded.
+
 ## 2026-06-25 - Codex (GPT-5) final intake step CTA
 
 - Updated the bottom-right conversational intake button to show `Submit` on the final visible step above the progress bar.

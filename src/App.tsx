@@ -3950,11 +3950,18 @@ function AdminTestCasesPanel() {
             <DetailItem label="Size" value={sampleValue(sourceForm.organizationSize)} />
             <DetailItem label="Site" value={sampleValue(sourceForm.siteAddress)} />
             <DetailItem label="Utility" value={sampleValue(sourceForm.electricUtilityProvider)} />
+            <DetailItem label="Gas utility" value={sampleValue(sourceForm.gasUtilityProvider)} />
             <DetailItem label="Ownership" value={sampleValue(sourceForm.ownershipStatus)} />
             <DetailItem label="Building" value={sampleValue(sourceForm.buildingType)} />
             <DetailItem label="Square feet" value={sampleValue(sourceForm.squareFootage)} />
             <DetailItem label="Improvements" value={sampleList(toStringArray(sourceForm.interestedImprovements))} />
           </div>
+          {sourceForm.publicSourceNotes ? (
+            <section className="detail-section">
+              <h4>Public source notes</h4>
+              <p className="muted-message">{sampleValue(sourceForm.publicSourceNotes)}</p>
+            </section>
+          ) : null}
           <section className="detail-section">
             <h4>Normalized matcher profile</h4>
             <div className="opportunity-summary-grid test-case-profile-grid">
