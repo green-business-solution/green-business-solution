@@ -43,7 +43,7 @@ const recommendedGoogleRedirectUris = [
   "https://retrofi.org/api/auth/google/callback",
   "https://www.retrofi.org/api/auth/google/callback"
 ];
-const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com"];
+const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com", "rshen0210@gmail.com"];
 const adminEmails = new Set(
   (process.env.GBS_ADMIN_EMAILS || defaultAdminEmails.join(","))
     .split(",")

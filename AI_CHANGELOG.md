@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) admin allowlist update
+
+- Added `rshen0210@gmail.com` to the default RetroFi production admin allowlist in the API server, CloudFormation template, and production deploy script.
+- This allows the production app to create or promote that account as an admin on sign-in after the AWS stack configuration is updated.
+
 ## 2026-06-25 - Codex (GPT-5) public energy-data upload flow
 
 - Added a post-scan energy-data upload flow with a new `/scan/energy-data` route, a live upload CTA from scan results, and browser-stored upload session handling tied to each new intake.
