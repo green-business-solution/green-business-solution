@@ -408,6 +408,7 @@ type SampleMatchingTestCasesData = {
   opportunityCount: number;
   totalOpportunityRecordCount?: number;
   archivedOpportunityCount?: number;
+  hiddenUpcomingOpportunityCount?: number;
   sampleUserCount: number;
   retrofitTaxonomyVersion?: string;
   testCases: SampleMatchingTestCase[];
@@ -4150,7 +4151,6 @@ const SAMPLE_MATCH_STATUS_ORDER = [
   "eligible_active",
   "likely_eligible",
   "needs_information",
-  "upcoming",
   "manual_review",
   "ineligible",
   "unavailable"
@@ -4457,6 +4457,9 @@ function AdminTestCasesPanel() {
           <h2>Sample profile results</h2>
           <p className="muted-message">
             Generated {formatDate(dataset?.generatedAt || null)} from {dataset?.opportunityCount.toLocaleString() || "0"} opportunities.
+            {dataset?.hiddenUpcomingOpportunityCount
+              ? ` ${dataset.hiddenUpcomingOpportunityCount.toLocaleString()} upcoming opportunities are hidden until their opening window is verified.`
+              : ""}
           </p>
         </div>
       </div>

@@ -7,7 +7,7 @@ export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchP
   const bestResult = offerResults.slice().sort(compareOfferResults)[0] || null;
 
   if (!bestResult) {
-    const retrofitTypes = classifyRetrofitsForOpportunity(opportunity, matchProfile);
+    const retrofitTypes = retrofitTypesFor(opportunity, matchProfile);
     return {
       opportunityId: opportunity.opportunityId,
       opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
@@ -38,7 +38,7 @@ export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchP
 }
 
 function evaluateOffer(user, opportunity, profile, offer, { now }) {
-  const retrofitTypes = classifyRetrofitsForOpportunity(opportunity, profile);
+  const retrofitTypes = retrofitTypesFor(opportunity, profile);
   const checks = {
     availability: evaluateAvailability(profile.availability, now),
     geography: evaluateGeography(user, profile.geography),
@@ -79,6 +79,10 @@ function evaluateOffer(user, opportunity, profile, offer, { now }) {
       administrator: opportunity.administrator || null
     }
   };
+}
+
+function retrofitTypesFor(opportunity, profile) {
+  return Array.isArray(profile.retrofitTypes) ? profile.retrofitTypes : classifyRetrofitsForOpportunity(opportunity, profile);
 }
 
 function evaluateAvailability(availability, now) {

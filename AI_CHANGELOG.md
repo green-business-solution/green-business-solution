@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) upcoming hide and manual-review lifecycle repair
+
+- Hid upcoming opportunities from admin database browsing and generated sample matching fixtures while keeping them unarchived for future availability reclassification.
+- Repaired remaining visible opportunity-level `manual_review` causes with broader deterministic technology/applicant normalization and archived low-information DSIRE update-note records.
+- Wrote targeted unavailable availability reviews and lifecycle archive updates to DynamoDB, raising archived records from 210 to 243 and reducing visible opportunity-level manual review to 0.
+- Regenerated the admin sample matching fixture from 1,812 visible opportunities, with 41 upcoming records hidden and no `upcoming` status bucket rendered.
+
 ## 2026-06-26 - Codex (GPT-5) targeted matching review repair
 
 - Repaired the current availability and utility-review gaps that were still producing `likely_eligible` sample matches, with DynamoDB writeback and a new repeatable targeted repair script.

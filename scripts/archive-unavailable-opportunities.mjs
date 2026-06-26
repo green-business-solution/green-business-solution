@@ -5,7 +5,11 @@ import { DynamoDBDocumentClient, ScanCommand, UpdateCommand } from "@aws-sdk/lib
 import { fromIni } from "@aws-sdk/credential-providers";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunityMatchProfile.mjs";
-import { isArchivedOpportunity, OPPORTUNITY_LIFECYCLE_STATUS } from "../server/matching/opportunityLifecycle.mjs";
+import {
+  isArchivedOpportunity,
+  isLowInformationOpportunity,
+  OPPORTUNITY_LIFECYCLE_STATUS
+} from "../server/matching/opportunityLifecycle.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -17,10 +21,11 @@ const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-
 const profile = process.env.AWS_PROFILE || "gbs";
 const writeDynamoDb = process.argv.includes("--write-dynamodb");
 const unarchiveRestored = process.argv.includes("--unarchive-restored");
+const archiveLowInformation = process.argv.includes("--archive-low-information");
 const concurrency = Math.max(1, Number(process.env.OPPORTUNITY_ARCHIVE_CONCURRENCY || 6));
 const now = new Date(process.env.MATCHING_NOW || Date.now());
 const generatedAt = new Date().toISOString();
-const updatedBy = "archive-unavailable-opportunities-v1";
+const updatedBy = "archive-unavailable-opportunities-v2";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   printHelp();
@@ -47,6 +52,7 @@ const output = {
   opportunityCount: opportunities.length,
   writeDynamoDb,
   unarchiveRestored,
+  archiveLowInformation,
   actionCounts,
   rows
 };
@@ -59,6 +65,7 @@ console.log("Opportunity lifecycle archive review complete.");
 console.log(`Opportunities reviewed: ${opportunities.length}`);
 console.log(`DynamoDB writes: ${writeDynamoDb ? "yes" : "no"}`);
 console.log(`Unarchive restored opportunities: ${unarchiveRestored ? "yes" : "no"}`);
+console.log(`Archive low-information records: ${archiveLowInformation ? "yes" : "no"}`);
 console.log(`Wrote: ${outputPath}`);
 console.log(`Report: ${markdownPath}`);
 console.log(JSON.stringify(actionCounts, null, 2));
@@ -67,15 +74,22 @@ function reviewOpportunity(opportunity) {
   const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
   const availability = matchProfile.availability;
   const isUnavailable = availability.normalizedStatus === "unavailable";
+  const isLowInformation = isLowInformationOpportunity(opportunity);
+  const shouldArchiveLowInformation =
+    archiveLowInformation &&
+    isLowInformation &&
+    (matchProfile.matchability !== "automatic" || availability.normalizedStatus === "uncertain");
   const isArchived = isArchivedOpportunity(opportunity);
+  const archiveReason = isUnavailable ? "availability_unavailable" : shouldArchiveLowInformation ? "low_information_update_record" : null;
+  const isRestored = !archiveReason && ["active", "rolling"].includes(availability.normalizedStatus);
   const action =
-    isUnavailable && !isArchived
+    archiveReason && !isArchived
       ? "archive"
-      : isUnavailable && isArchived
+      : archiveReason && isArchived
         ? "already_archived"
-        : !isUnavailable && isArchived && unarchiveRestored
+        : isRestored && isArchived && unarchiveRestored
           ? "unarchive"
-          : !isUnavailable && isArchived
+          : isArchived
             ? "archived_but_not_reopened"
             : "keep_active";
 
@@ -86,6 +100,8 @@ function reviewOpportunity(opportunity) {
     state: opportunity.state || null,
     currentLifecycleStatus: opportunity.lifecycleStatus || null,
     action,
+    archiveReason,
+    isLowInformation,
     availability: {
       normalizedStatus: availability.normalizedStatus,
       reasons: availability.reasons || [],
@@ -107,8 +123,12 @@ async function writeLifecycleRow(row) {
         ExpressionAttributeValues: {
           ":archived": OPPORTUNITY_LIFECYCLE_STATUS.ARCHIVED,
           ":now": generatedAt,
-          ":reason": "availability_unavailable",
-          ":details": row.availability,
+          ":reason": row.archiveReason || "availability_unavailable",
+          ":details": {
+            archiveReason: row.archiveReason || "availability_unavailable",
+            lowInformation: Boolean(row.isLowInformation),
+            availability: row.availability
+          },
           ":updatedBy": updatedBy
         }
       })
@@ -199,6 +219,7 @@ function buildMarkdownReport(output) {
     `Opportunities reviewed: ${output.opportunityCount}`,
     `DynamoDB writes: ${output.writeDynamoDb ? "yes" : "no"}`,
     `Unarchive restored opportunities: ${output.unarchiveRestored ? "yes" : "no"}`,
+    `Archive low-information records: ${output.archiveLowInformation ? "yes" : "no"}`,
     "",
     "## Action Counts",
     "",
@@ -214,6 +235,7 @@ function buildMarkdownReport(output) {
   for (const row of archivedRows.slice(0, 100)) {
     lines.push(
       `- ${row.action}: ${row.opportunityName} (${row.opportunityId})`,
+      `  - archive reason: ${row.archiveReason || "already archived"}`,
       `  - availability reasons: ${row.availability.reasons.join(", ") || "none"}`
     );
   }
@@ -226,13 +248,15 @@ function buildMarkdownReport(output) {
 }
 
 function printHelp() {
-  console.log(`Usage: npm run matching:archive-unavailable [-- --write-dynamodb] [-- --unarchive-restored]
+  console.log(`Usage: npm run matching:archive-unavailable [-- --write-dynamodb] [-- --unarchive-restored] [-- --archive-low-information]
 
-Archive opportunities whose normalized matcher availability is unavailable.
+Archive opportunities whose normalized matcher availability is unavailable. Optionally archive DSIRE update-note records that do not contain enough program detail to match safely.
 
 Options:
   --write-dynamodb      Persist lifecycle updates to DynamoDB. Without this, the script is a dry run.
   --unarchive-restored  Also mark currently archived records active when normalized availability is no longer unavailable.
+  --archive-low-information
+                        Also archive DSIRE changelog/update records that have no detail URL or useful program corpus.
 
 Environment:
   OPPORTUNITY_SOURCE_PATH              Read opportunities from local JSON instead of DynamoDB.

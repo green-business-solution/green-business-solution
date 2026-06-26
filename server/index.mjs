@@ -12,7 +12,8 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
+import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
+import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -1597,7 +1598,10 @@ function tableSnapshot(name, records, { recordCount = records.length, note = nul
 }
 
 function isDatabaseCloneRecord(record) {
-  return isDsireOpportunityRecord(record) && record?.ingestionMode !== "rss_delta_feed" && isVisibleOpportunity(record);
+  if (!isDsireOpportunityRecord(record) || record?.ingestionMode === "rss_delta_feed" || !isVisibleOpportunity(record)) {
+    return false;
+  }
+  return isVisibleAvailability(buildOpportunityMatchProfile(record).availability);
 }
 
 function slugify(value) {

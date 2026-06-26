@@ -66,11 +66,21 @@ export function inferAvailabilityReview(
   const reasons = [];
   const noDeadlineExplicit = /\b(no deadline|no expiration|no time limit|rolling|open until funds|until funds (?:are )?(?:exhausted|no longer available)|first[- ]come[, -]first[- ]served)\b/i.test(compactText) ||
     /\b(no_time_limit|no time limit)\b/i.test(statusText);
+  const upcomingOrReopening = /\b(currently closed|not currently open|temporarily closed|expected to (?:open|reopen)|anticipated to (?:open|reopen)|expected to open again|will open again|next cycle is expected|future funding|unveiled later this year)\b/i.test(compactText);
+  const stalePastCycle = /\b(most recent application (?:deadline|period)|most recent funding round|most recent [^.]{0,60}(?:solicitation|round)[^.]{0,60}closed|previous application (?:deadline|period)|applications? closed (?:on|in)|round [^.]{0,40}deadline (?:was|is) [^.]{0,40}\b(?:2020|2021|2022|2023|2024|2025|january 2026|february 2026|march 2026|april 2026|may 2026|june 2026))\b/i.test(compactText);
+  const closedUntilFurtherNotice = /\b(?:applications?|grant applications?) (?:are )?(?:currently )?not being accepted until further notice\b/i.test(compactText);
   let normalizedStatus = "uncertain";
 
-  if (
+  if (closedUntilFurtherNotice) {
+    normalizedStatus = "unavailable";
+    reasons.push("closed_until_further_notice");
+  } else if (upcomingOrReopening) {
+    normalizedStatus = "upcoming";
+    reasons.push("upcoming_or_reopening_language");
+  } else if (
     /\b(closed|officially closed|no longer accepting|not accepting new applications|fully subscribed|funding exhausted|program is closed|applications? closed)\b/i.test(compactText) ||
-    /\b(closed|cancelled|canceled|awarded|fully_subscribed|unavailable)\b/i.test(statusText)
+    /\b(closed|cancelled|canceled|awarded|fully_subscribed|unavailable)\b/i.test(statusText) ||
+    stalePastCycle
   ) {
     normalizedStatus = "unavailable";
     reasons.push("source_status_unavailable");
@@ -113,10 +123,10 @@ export function inferAvailabilityReview(
 function evidenceTextFor(normalizedStatus, text) {
   const patterns = {
     unavailable:
-      /(closed|officially closed|no longer accepting|not accepting new applications|fully subscribed|funding exhausted|program is closed|applications? closed|install all projects by [^.]{3,40})/i,
+      /(closed|officially closed|no longer accepting|not accepting new applications|not being accepted until further notice|fully subscribed|funding exhausted|program is closed|applications? closed|most recent application (?:deadline|period)|most recent [^.]{0,60}round[^.]{0,60}closed|application deadline was|install all projects by [^.]{3,40})/i,
     rolling:
       /(no deadline|no expiration|no time limit|rolling|open until funds|until funds (?:are )?(?:exhausted|no longer available)|first[- ]come[, -]first[- ]served)/i,
-    upcoming: /(upcoming|coming soon|opens? (?:on|in)|future funding)/i,
+    upcoming: /(upcoming|coming soon|opens? (?:on|in)|future funding|currently closed|not currently open|expected to (?:open|reopen)|anticipated to (?:open|reopen)|next cycle is expected|unveiled later this year)/i,
     active:
       /(enroll today|enroll now|enroll in|get started|apply online|fill out (?:the )?form|start saving|save energy and money|program is available|may qualify|you may qualify|are eligible|offers? (?:rebates?|incentives?|free|no-cost)|receive incentives|earn incentives)/i
   };

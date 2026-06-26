@@ -8,8 +8,12 @@ import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunit
 import { evaluateOpportunityForUser } from "../server/matching/evaluateRules.mjs";
 import { summarizeMatchResult } from "../server/matching/explainMatch.mjs";
 import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
-import { isVisibleOpportunity } from "../server/matching/opportunityLifecycle.mjs";
-import { RETROFIT_TAXONOMY_VERSION, buildRetrofitOpportunityIndex } from "../server/matching/retrofitTaxonomy.mjs";
+import { isVisibleAvailability, isVisibleOpportunity } from "../server/matching/opportunityLifecycle.mjs";
+import {
+  RETROFIT_TAXONOMY_VERSION,
+  buildRetrofitOpportunityIndex,
+  classifyRetrofitsForOpportunity
+} from "../server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -45,7 +49,7 @@ const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facil
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
 const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
-const opportunities = opportunityRecords
+const candidateOpportunities = opportunityRecords
   .filter(isVisibleOpportunity)
   .map(applyFacilityReview)
   .map(applyUtilityReview);
@@ -55,10 +59,23 @@ const userProfiles = sampleUsers.map((sample) => ({
   sourceForm: sample,
   userMatchProfile: normalizeUserProfile(sample)
 }));
-const opportunityProfiles = opportunities.map((opportunity) => ({
-  opportunity,
-  matchProfile: buildOpportunityMatchProfile(opportunity, { now })
-}));
+const allVisibleOpportunityProfiles = candidateOpportunities.map((opportunity) => {
+  const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
+  return {
+    opportunity,
+    matchProfile: {
+      ...matchProfile,
+      retrofitTypes: classifyRetrofitsForOpportunity(opportunity, matchProfile)
+    }
+  };
+});
+const hiddenUpcomingOpportunityCount = allVisibleOpportunityProfiles.filter(
+  ({ matchProfile }) => matchProfile.availability.normalizedStatus === "upcoming"
+).length;
+const opportunityProfiles = allVisibleOpportunityProfiles.filter(({ matchProfile }) =>
+  isVisibleAvailability(matchProfile.availability)
+);
+const opportunities = opportunityProfiles.map(({ opportunity }) => opportunity);
 const allResults = [];
 const userReports = [];
 const generatedAt = new Date().toISOString();
@@ -85,6 +102,7 @@ const output = {
   opportunityCount: opportunities.length,
   totalOpportunityRecordCount: opportunityRecords.length,
   archivedOpportunityCount,
+  hiddenUpcomingOpportunityCount,
   sampleUserCount: sampleUsers.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   retrofitIndexPath,
@@ -107,6 +125,7 @@ const adminTestCases = {
   opportunityCount: output.opportunityCount,
   totalOpportunityRecordCount: output.totalOpportunityRecordCount,
   archivedOpportunityCount: output.archivedOpportunityCount,
+  hiddenUpcomingOpportunityCount: output.hiddenUpcomingOpportunityCount,
   sampleUserCount: existingAdminTestCases?.sampleUserCount || output.sampleUserCount,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   testCases: adminTestCaseRows
@@ -135,6 +154,7 @@ if (writeRetrofitIndex) {
 console.log(`Sample matching complete.`);
 console.log(`Opportunities evaluated: ${opportunities.length}`);
 console.log(`Archived opportunities skipped: ${archivedOpportunityCount}`);
+console.log(`Upcoming opportunities hidden: ${hiddenUpcomingOpportunityCount}`);
 console.log(`Sample users: ${sampleUsers.length}`);
 console.log(`Requested sample user filter: ${requestedSampleUserIds.size > 0 ? [...requestedSampleUserIds].join(", ") : "none"}`);
 console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
@@ -223,13 +243,13 @@ async function scanOpportunitiesFromAws() {
 function buildUserReport(userProfile, results) {
   const grouped = groupBy(results, (result) => result.eligibilityStatus);
   const statusCounts = Object.fromEntries(
-    ["eligible_active", "likely_eligible", "needs_information", "upcoming", "manual_review", "ineligible", "unavailable"].map((status) => [
+    ["eligible_active", "likely_eligible", "needs_information", "manual_review", "ineligible", "unavailable"].map((status) => [
       status,
       grouped.get(status)?.length || 0
     ])
   );
   const promising = results.filter((result) =>
-    ["eligible_active", "likely_eligible", "needs_information", "upcoming"].includes(result.eligibilityStatus)
+    ["eligible_active", "likely_eligible", "needs_information"].includes(result.eligibilityStatus)
   );
   const topResults = promising.slice(0, 12).map(summarizeMatchResult);
   const commonQuestions = topCounts(
@@ -291,6 +311,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     `Matcher clock: ${now.toISOString()}`,
     `Opportunities evaluated: ${opportunities.length}`,
     `Archived opportunities skipped: ${archivedOpportunityCount}`,
+    `Upcoming opportunities hidden: ${hiddenUpcomingOpportunityCount}`,
     `Sample users evaluated: ${userReports.length}`,
     `Pairings evaluated: ${opportunities.length * userReports.length}`,
     "",
@@ -363,7 +384,8 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "1. Improve utility resolution for `Other / Not sure` users by geocoding and service-territory lookup instead of relying on the current form option.",
     "2. Split offer-level sectors/technologies more carefully for DSIRE parameter sets to reduce residential/commercial leakage.",
     "3. Continue availability review on opportunities that still produce uncertain availability after source-page research.",
-    "4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all 20,960 pairings were manually adjudicated."
+    "4. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.",
+    "5. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated."
   );
 
   return `${lines.join("\n")}\n`;
@@ -397,10 +419,9 @@ function statusRank(status) {
     eligible_active: 0,
     likely_eligible: 1,
     needs_information: 2,
-    upcoming: 3,
-    manual_review: 4,
-    ineligible: 5,
-    unavailable: 6
+    manual_review: 3,
+    ineligible: 4,
+    unavailable: 5
   }[status] ?? 9;
 }
 

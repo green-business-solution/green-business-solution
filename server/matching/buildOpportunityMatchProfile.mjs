@@ -12,7 +12,7 @@ import { extractUtilityRequirements } from "./utilityRestrictions.mjs";
 import { availabilityFromReview } from "./availabilityReview.mjs";
 
 export const MATCH_PROFILE_SCHEMA_VERSION = "opportunity-match-profile-v1";
-export const MATCH_PROFILE_EXTRACTOR_VERSION = "rules-2026-06-25-v1";
+export const MATCH_PROFILE_EXTRACTOR_VERSION = "rules-2026-06-26-v2";
 
 const UNAVAILABLE_STATUS_VALUES = new Set([
   "awarded",
@@ -126,18 +126,36 @@ function normalizeAvailability(opportunity, searchableText, now) {
   const deadline = parseDate(opportunity.deadlineDate) || parseDate(opportunity.endDate);
   const startDate = parseDate(opportunity.startDate) || parseDate(opportunity.releaseDate);
   const noDeadlineExplicit = /no deadline|no expiration|rolling|open until funds|until funds are exhausted/i.test(searchableText);
+  const upcomingOrReopening =
+    /\b(currently closed|not currently open|temporarily closed|expected to (?:open|reopen)|anticipated to (?:open|reopen)|expected to open again|will open again|next cycle is expected|future funding|unveiled later this year)\b/i.test(
+      searchableText
+    );
+  const stalePastCycle =
+    /\b(most recent application (?:deadline|period)|most recent funding round|most recent [^.]{0,60}(?:solicitation|round)[^.]{0,60}closed|previous application (?:deadline|period)|applications? closed (?:on|in)|round [^.]{0,40}deadline (?:was|is) [^.]{0,40}\b(?:2020|2021|2022|2023|2024|2025|january 2026|february 2026|march 2026|april 2026|may 2026|june 2026))\b/i.test(
+      searchableText
+    );
+  const closedUntilFurtherNotice = /\b(?:applications?|grant applications?) (?:are )?(?:currently )?not being accepted until further notice\b/i.test(searchableText);
   const deadlineHasPassed =
     Boolean(opportunity.matchingParameters?.deadlineHasPassed) ||
     Boolean(deadline && deadline.getTime() < now.getTime());
   let normalizedStatus = "uncertain";
   const reasons = [];
 
-  if (
+  if (closedUntilFurtherNotice) {
+    normalizedStatus = "unavailable";
+    reasons.push("closed_until_further_notice");
+  } else if (upcomingOrReopening) {
+    normalizedStatus = "upcoming";
+    reasons.push("upcoming_or_reopening_language");
+  } else if (
     [...UNAVAILABLE_STATUS_VALUES].some((value) => statusText.includes(value)) ||
     availabilityText.includes("fully subscribed") ||
     availabilityText.includes("closed as of") ||
     availabilityText.includes("no longer accepting new applications") ||
-    availabilityText.includes("not accepting new applications")
+    availabilityText.includes("not accepting new applications") ||
+    availabilityText.includes("currently closed") ||
+    availabilityText.includes("not currently open") ||
+    stalePastCycle
   ) {
     normalizedStatus = "unavailable";
     reasons.push("source_status_unavailable");
@@ -197,7 +215,8 @@ function extractApplicant(opportunity, searchableText) {
   ];
   const fromSource = sourceValues.map(canonicalOrganizationType).filter(Boolean);
   const fromText = inferApplicantTypesFromText(searchableText);
-  const eligibleOrganizationTypes = unique([...fromSource, ...fromText]);
+  const fromProgramFallback = fromSource.length === 0 && fromText.length === 0 ? inferApplicantTypesFromProgram(opportunity, searchableText) : [];
+  const eligibleOrganizationTypes = unique([...fromSource, ...fromText, ...fromProgramFallback]);
   const residentialOnly =
     eligibleOrganizationTypes.includes("residential") &&
     !eligibleOrganizationTypes.some((type) => ["commercial", "industrial", "agricultural", "multifamily", "nonprofit", "government"].includes(type));
@@ -246,15 +265,23 @@ function extractProject(opportunity, searchableText) {
     opportunity.cec?.program
   ].join(" ");
   const technologyIds = refineTechnologyIds(unique([
-    ...canonicalTechnologiesFromText(technologyText)
+    ...canonicalTechnologiesFromText(technologyText),
+    ...inferAdditionalTechnologiesFromText(technologyText)
   ]), technologyText);
+  const fallbackTechnologyIds =
+    technologyIds.length > 0
+      ? technologyIds
+      : refineTechnologyIds(unique([
+          ...canonicalTechnologiesFromText(searchableText),
+          ...inferAdditionalTechnologiesFromText(searchableText)
+        ]), searchableText);
   const preapprovalRequired = /preapproval|pre-approval|before purchase|prior to purchase|before installation/i.test(searchableText);
 
   return {
-    technologyIds,
+    technologyIds: fallbackTechnologyIds,
     stageRequirements: preapprovalRequired ? ["preapproval_before_purchase"] : [],
     preapprovalRequired,
-    confidence: technologyIds.length > 0 ? 0.74 : 0.34
+    confidence: fallbackTechnologyIds.length > 0 ? 0.72 : 0.34
   };
 }
 
@@ -272,6 +299,14 @@ function refineTechnologyIds(technologyIds, technologyText) {
 
   if (refined.includes("lighting") && !/(^|\s)(lighting|led|light emitting diode)(\s|$)/.test(normalized)) {
     refined = refined.filter((technologyId) => technologyId !== "lighting");
+  }
+
+  if (
+    refined.includes("energy_efficiency") &&
+    !/(energy efficiency|energy efficient|energy conservation|weatherization|home performance|whole building|custom measure|retrofit|comprehensive measures|efficient equipment|equipment efficiency)/i.test(technologyText) &&
+    refined.some((technologyId) => ["ev_charging", "fleet_electrification", "clean_transportation"].includes(technologyId))
+  ) {
+    refined = refined.filter((technologyId) => technologyId !== "energy_efficiency");
   }
 
   return refined;
@@ -413,12 +448,135 @@ function evidenceSnippet(opportunity, sourcePath) {
 function inferApplicantTypesFromText(value) {
   const text = normalizeText(value);
   const types = [];
-  for (const candidate of ["commercial", "industrial", "agricultural", "multifamily", "nonprofit", "government", "residential"]) {
-    if (text.includes(candidate)) types.push(candidate);
+  if (/\b(commercial|business|businesses|company|companies|customers?|site hosts?|owners? and operators?|workplace|building owners?|property owners?)\b/.test(text)) {
+    types.push("commercial");
   }
-  if (text.includes("business")) types.push("commercial");
-  if (text.includes("school") || text.includes("public agency")) types.push("government");
+  if (/\b(industrial|manufacturing|manufacturer|manufacturers|factory|plant|process|production)\b/.test(text)) types.push("industrial");
+  if (/\b(agricultural|agriculture|farm|farms|farmer|ranch|greenhouse)\b/.test(text)) types.push("agricultural");
+  if (/\b(multifamily|multi family|multi unit|multiunit|apartment|apartments|condominium|condo|rental apartment|homeowners association|hoa)\b/.test(text)) {
+    types.push("multifamily");
+  }
+  if (/\b(nonprofit|non profit|not for profit|501 c 3|charitable)\b/.test(text)) types.push("nonprofit");
+  if (/\b(government|public agency|municipal|municipality|municipalities|city|county|state agency|local government|public school|school district|transit agency|tribal)\b/.test(text)) {
+    types.push("government");
+  }
+  if (/\b(school|schools|charter school|intermediate unit|university|college)\b/.test(text)) {
+    types.push("government", "nonprofit");
+  }
+  if (/\b(fleet|fleets|fleet owner|fleet owners|vehicle owner|vehicle owners|transit|port authority|transportation provider|site host|site hosts)\b/.test(text)) {
+    types.push("commercial", "government");
+  }
+  if (/\b(residential|resident|residents|homeowner|homeowners|renter|renters|household|households|single family|single family home|owner occupied|manufactured home|mobile home)\b/.test(text)) {
+    types.push("residential");
+  }
+  if (/\b(home|homes|house|houses)\b/.test(text) && /\b(energy|weatherization|electrification|heat pump|appliance|rebate|loan)\b/.test(text)) {
+    types.push("residential");
+  }
+  if (/\b(corporate tax|corporation|corporations)\b/.test(text)) types.push("commercial");
+  if (/\b(personal tax|individual taxpayer|taxpayer|taxpayers)\b/.test(text)) types.push("residential");
+  if (/\b(eligible applicants?|applicants?|borrowers?|members?)\b/.test(text) && /\b(business|commercial|industrial|agricultural|nonprofit|government|residential|homeowner)\b/.test(text)) {
+    if (text.includes("business") || text.includes("commercial")) types.push("commercial");
+    if (text.includes("industrial")) types.push("industrial");
+    if (text.includes("agricultural")) types.push("agricultural");
+    if (text.includes("nonprofit") || text.includes("non profit")) types.push("nonprofit");
+    if (text.includes("government")) types.push("government");
+    if (text.includes("residential") || text.includes("homeowner")) types.push("residential");
+  }
   return unique(types);
+}
+
+function inferApplicantTypesFromProgram(opportunity, searchableText) {
+  const text = normalizeText([
+    opportunity.canonicalTitle,
+    opportunity.normalizedTitle,
+    opportunity.programType,
+    opportunity.administrator,
+    searchableText
+  ].join(" "));
+  const types = [];
+
+  if (/\b(national electric vehicle infrastructure|nevi|clean transportation|clean diesel|diesel emission|diesel emissions|alternative fuel|clean fleet|vehicle infrastructure|public charger|qualified bidders|site hosts?|park and plug|dcfc)\b/.test(text)) {
+    types.push("commercial", "government", "nonprofit");
+  }
+  if (/\b(?:people who purchase|individuals? who purchase|taxpayers? who purchase|motor vehicle purchase|light duty motor vehicle|buy a new or used ev|new or used ev|hybrid vehicles?)\b/.test(text)) {
+    types.push("residential", "commercial");
+  }
+  if (/\b(home|residential|household|homeowner|renter|wood heating fuel|personal tax)\b/.test(text)) {
+    types.push("residential");
+  }
+  if (/\b(corporate tax|industry recruitment|manufactur|new and expanded industry|production|assembly)\b/.test(text)) {
+    types.push("commercial", "industrial");
+  }
+  if (/\b(property tax|sales tax|use tax|tax exemption|tax credit|tax deduction|tax incentive)\b/.test(text)) {
+    types.push("residential", "commercial", "industrial", "agricultural", "nonprofit", "government");
+  }
+  if (/\b(pace financing|c pace|energy project financing|loan program|on bill financing|sustainable energy fund)\b/.test(text)) {
+    types.push("commercial", "government", "nonprofit", "residential");
+  }
+  if (/\b(school|schools|university|college)\b/.test(text)) {
+    types.push("government", "nonprofit");
+  }
+
+  return unique(types);
+}
+
+function inferAdditionalTechnologiesFromText(value) {
+  const text = normalizeText(value);
+  const technologies = [];
+  if (/\b(renewable energy|renewables|alternative energy|clean energy|electric power generation|generation equipment|wind energy|solar energy|hydroelectric|geothermal energy|biogas|biomass|on farm energy production)\b/.test(text)) {
+    technologies.push("renewable_energy", "solar");
+  }
+  if (/\b(wind energy|wind power|wind turbine)\b/.test(text)) technologies.push("wind", "renewable_energy");
+  if (/\b(biogas|biomass|methane digester|anaerobic digester|wood biomass|forest derived biomass)\b/.test(text)) {
+    technologies.push("biomass_biogas", "renewable_energy");
+  }
+  if (/\b(wood heating|heating fuel|refuse derived fuel)\b/.test(text)) technologies.push("wood_heating");
+  if (/\b(home electrification|building electrification|electrify|electrification|steam to electric|heat pump|appliance rebate)\b/.test(text)) {
+    technologies.push("hvac", "energy_efficiency");
+  }
+  if (/\b(energy conservation|energy conserving|energy efficient|energy efficiency|efficiency of homes|weatherization|home performance|energy audit|retro commissioning|retrocommissioning|farm wiring|business energy financing|gogreen business|energy financing)\b/.test(text)) {
+    technologies.push("energy_efficiency");
+  }
+  if (/\b(green building|leed|energy star|efficient building|building performance|density bonus)\b/.test(text)) {
+    technologies.push("energy_efficiency", "building_envelope");
+  }
+  if (/\b(alternative fuel|clean fuel|clean diesel|clean fleet|clean transportation|emission reduction|emissions reduction|diesel emission|diesel emissions|low emission vehicle|ultra low emission|hybrid vehicles?|zero emission|zero emission vehicle|zero tailpipe emission|motor vehicle purchase|vehicle rebate|electric transit bus|electric transit buses|passenger electric vehicle|light duty motor vehicle|replacement bus|school bus|shuttle bus|transit bus|port drayage|shore power|freight switcher|cargo handling equipment|airport ground support|electric forklift|forklift)\b/.test(text)) {
+    technologies.push("fleet_electrification", "clean_transportation");
+  }
+  if (/\b(ev|electric vehicle|charging corridor|charging infrastructure|charging station|evse|dcfc|public charger|public dcfc|park and plug)\b/.test(text)) {
+    technologies.push("ev_charging");
+  }
+  if (/\b(appliance|efficient appliances|water heater|water heating)\b/.test(text)) {
+    technologies.push("energy_efficiency");
+  }
+  if (/\b(storage|battery)\b/.test(text) && /\b(energy|solar|electric|behind the meter)\b/.test(text)) {
+    technologies.push("battery_storage");
+  }
+  if (/\b(hydrogen fuel cell|hydrogen fuel cells|fuel cell|fuel cells|hydrogen refueling|clean hydrogen)\b/.test(text)) {
+    technologies.push("fuel_cell_system", "clean_transportation");
+  }
+  if (/\b(wood stove|wood fireplace|gas fired fireplace|gas fireplace|wood heater|wood heating|qualified fireplace)\b/.test(text)) {
+    technologies.push("wood_heating", "hvac");
+  }
+  if (/\b(pace financing|c pace|property assessed capital expenditure|qualifying improvements|sustainable energy fund|energy project financing|on bill financing)\b/.test(text)) {
+    technologies.push("energy_efficiency", "solar", "battery_storage");
+  }
+  if (/\b(economic development rate|rate discount|monthly bill discount|electric portion of the monthly bill)\b/.test(text)) {
+    technologies.push("business_support", "demand_response");
+  }
+  if (/\b(gas processing facilities|gas processing facility|natural gas processing)\b/.test(text)) {
+    technologies.push("natural_gas_processing");
+  }
+  if (/\b(direct air capture|carbon dioxide removal|carbon removal|carbon capture|carbon management)\b/.test(text)) {
+    technologies.push("carbon_management");
+  }
+  if (/\b(economic development services|competitive edge|specialized consulting services|community development financial institution|cdfi|capital coaching and connections|business loan|sustainable businesses that generate jobs)\b/.test(text)) {
+    technologies.push("business_support");
+  }
+  if (/\b(equipment upgrades|operations and maintenance practices|improving operations)\b/.test(text)) {
+    technologies.push("energy_efficiency");
+  }
+  return unique(technologies);
 }
 
 function lookupNames(value) {
