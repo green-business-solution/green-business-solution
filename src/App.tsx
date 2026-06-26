@@ -10,7 +10,20 @@ import {
 } from "./config";
 import { databaseProgramMatchesSearch } from "./databaseSearch";
 import { GoogleSignInButton } from "./googleSignIn";
-import { EyeIcon, LockIcon } from "./icons";
+import {
+  BuildingOutlineIcon,
+  CheckIcon,
+  EyeIcon,
+  FactoryOutlineIcon,
+  GraduationCapOutlineIcon,
+  HandHeartOutlineIcon,
+  HomeOutlineIcon,
+  LandmarkOutlineIcon,
+  LeafOutlineIcon,
+  LockIcon,
+  MoreHorizontalOutlineIcon,
+  StoreOutlineIcon
+} from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
 
 type UserRecord = {
@@ -551,6 +564,7 @@ type IntakeFlowId = "unselected" | "homeowner" | "multifamily" | "business" | "o
 
 type StepOption = {
   description?: string;
+  icon?: "building" | "factory" | "government" | "graduation" | "handHeart" | "home" | "leaf" | "more" | "store";
   label: string;
   value: string;
 };
@@ -571,15 +585,15 @@ type ConversationalStep = {
 };
 
 const organizationTypeChoices: StepOption[] = [
-  { label: "Homeowner", description: "Own and live in a home", value: "homeowner" },
-  { label: "Multifamily Property Owner / Manager", description: "Own or manage a residential property", value: "multifamily_property_owner_manager" },
-  { label: "Business / Commercial", description: "Operate or own a commercial property", value: "business_commercial" },
-  { label: "Nonprofit", description: "Mission-driven organization or association", value: "nonprofit" },
-  { label: "Government / Public Agency", description: "City, county, state, or federal agency", value: "government_public_agency" },
-  { label: "School / Education", description: "K-12, college, university, or campus", value: "school_education" },
-  { label: "Agriculture", description: "Farm, ranch, greenhouse, or ag operation", value: "agriculture" },
-  { label: "Industrial / Manufacturing", description: "Production, fabrication, or processing site", value: "industrial_manufacturing" },
-  { label: "Other", description: "Something else not listed here", value: "other" }
+  { label: "Homeowner", description: "Own and live in a home", icon: "home", value: "homeowner" },
+  { label: "Multifamily Property Owner / Manager", description: "Own or manage a residential property", icon: "building", value: "multifamily_property_owner_manager" },
+  { label: "Business / Commercial", description: "Operate or own a commercial property", icon: "store", value: "business_commercial" },
+  { label: "Nonprofit", description: "Mission-driven organization or association", icon: "handHeart", value: "nonprofit" },
+  { label: "Government / Public Agency", description: "City, county, state, or federal agency", icon: "government", value: "government_public_agency" },
+  { label: "School / Education", description: "K-12, college, university, or campus", icon: "graduation", value: "school_education" },
+  { label: "Agriculture", description: "Farm, ranch, greenhouse, or ag operation", icon: "leaf", value: "agriculture" },
+  { label: "Industrial / Manufacturing", description: "Production, fabrication, or processing site", icon: "factory", value: "industrial_manufacturing" },
+  { label: "Other", description: "Something else not listed here", icon: "more", value: "other" }
 ];
 
 const organizationTypeLabelByValue = Object.fromEntries(
@@ -1610,6 +1624,84 @@ function CheckboxGroup({
         ))}
       </div>
     </fieldset>
+  );
+}
+
+function StepperOptionIcon({ icon }: { icon?: StepOption["icon"] }) {
+  switch (icon) {
+    case "home":
+      return <HomeOutlineIcon />;
+    case "building":
+      return <BuildingOutlineIcon />;
+    case "store":
+      return <StoreOutlineIcon />;
+    case "handHeart":
+      return <HandHeartOutlineIcon />;
+    case "government":
+      return <LandmarkOutlineIcon />;
+    case "graduation":
+      return <GraduationCapOutlineIcon />;
+    case "leaf":
+      return <LeafOutlineIcon />;
+    case "factory":
+      return <FactoryOutlineIcon />;
+    case "more":
+      return <MoreHorizontalOutlineIcon />;
+    default:
+      return <MoreHorizontalOutlineIcon />;
+  }
+}
+
+function OptionCard({
+  isSelected,
+  onClick,
+  option
+}: {
+  isSelected: boolean;
+  onClick: () => void;
+  option: StepOption;
+}) {
+  return (
+    <button
+      className={isSelected ? "choice-card is-selected" : "choice-card"}
+      onClick={onClick}
+      type="button"
+    >
+      <span className="choice-card-icon" aria-hidden="true">
+        <span className="choice-card-icon-circle">
+          <StepperOptionIcon icon={option.icon} />
+        </span>
+      </span>
+      <span className="choice-card-copy">
+        <strong>{option.label}</strong>
+        {option.description ? <small>{option.description}</small> : null}
+      </span>
+      {isSelected ? (
+        <span className="choice-card-check" aria-hidden="true">
+          <CheckIcon />
+        </span>
+      ) : null}
+    </button>
+  );
+}
+
+function ProgressBar({ current, total }: { current: number; total: number }) {
+  const width = total > 0 ? Math.round((current / total) * 100) : 0;
+
+  return (
+    <div className="conversational-progress">
+      <div
+        aria-label="Intake progress"
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={width}
+        className="conversational-progress-track"
+        role="progressbar"
+      >
+        <span style={{ width: `${width}%` }} />
+      </div>
+      <p className="conversational-progress-label">{`Step ${current} of ${total}`}</p>
+    </div>
   );
 }
 
@@ -3122,8 +3214,8 @@ function IntakePage({
 
   const currentStep = steps[stepIndex];
   const flow = intakeFlowForOrganizationType(form.organizationType);
-  const progressPercent = steps.length > 0 ? Math.round(((stepIndex + 1) / steps.length) * 100) : 0;
-  const showFlowProgress = flow !== "unselected" && steps.length > 1;
+  const displayStepTotal = flow === "unselected" ? 12 : steps.length;
+  const displayStepCurrent = Math.min(stepIndex + 1, displayStepTotal);
   const currentChoiceValue =
     currentStep?.field && typeof form[currentStep.field] === "string" ? form[currentStep.field] : "";
 
@@ -3245,6 +3337,17 @@ function IntakePage({
     return currentStep.validate?.(value) ?? null;
   }
 
+  function canAdvanceCurrentStep() {
+    if (!currentStep) return false;
+    if (currentStep.kind === "review") return true;
+    if (currentStep.kind === "choice") return currentStep.optional ? true : Boolean(currentChoiceValue);
+    if (!currentStep.field) return false;
+    const value = form[currentStep.field];
+    if (typeof value !== "string") return false;
+    if (currentStep.optional && !value.trim()) return true;
+    return validateCurrentStep() === null;
+  }
+
   function goBack() {
     setError(null);
     setStepIndex((current) => Math.max(current - 1, 0));
@@ -3330,20 +3433,12 @@ function IntakePage({
       return (
         <div className="conversational-choice-grid">
           {currentStep.options.map((option) => (
-            <button
-              className={selectedValue === option.value ? "choice-card is-selected" : "choice-card"}
+            <OptionCard
+              isSelected={selectedValue === option.value}
               key={option.value}
               onClick={() => handleChoiceSelection(currentStep.field as keyof IntakeFormState, option.value)}
-              type="button"
-            >
-              <div className="choice-card-copy">
-                <strong>{option.label}</strong>
-                {option.description ? <small>{option.description}</small> : null}
-              </div>
-              <span className="choice-card-check" aria-hidden="true">
-                {selectedValue === option.value ? "✓" : ""}
-              </span>
-            </button>
+              option={option}
+            />
           ))}
         </div>
       );
@@ -3409,14 +3504,15 @@ function IntakePage({
               <div className="conversational-step-meta">
                 {stepIndex > 0 ? (
                   <button className="step-back-link" disabled={isSubmitting} onClick={goBack} type="button">
-                    Back
+                    ← Back
                   </button>
                 ) : (
                   <span />
                 )}
                 <span className="step-chip">
+                  <span className="step-chip-label">{`STEP ${displayStepCurrent}`}</span>
                   <span className="step-chip-dot" />
-                  {currentStep?.section}
+                  <span className="step-chip-section">{currentStep?.section}</span>
                 </span>
               </div>
             </div>
@@ -3440,37 +3536,24 @@ function IntakePage({
                     Skip for now
                   </button>
                 ) : null}
-                {currentStep?.kind === "choice" ? (
-                  <button disabled={isSubmitting || (!currentChoiceValue && !currentStep.optional)} type="submit">
-                    Next
+                {currentStep?.kind === "choice" && canAdvanceCurrentStep() ? (
+                  <button className="step-next-button" disabled={isSubmitting} type="submit">
+                    Next →
                   </button>
                 ) : null}
-                {currentStep?.kind === "input" || currentStep?.kind === "textarea" ? (
-                  <button disabled={isSubmitting} type="submit">
-                    Next
+                {(currentStep?.kind === "input" || currentStep?.kind === "textarea") && canAdvanceCurrentStep() ? (
+                  <button className="step-next-button" disabled={isSubmitting} type="submit">
+                    Next →
                   </button>
                 ) : null}
                 {currentStep?.kind === "review" ? (
-                  <button disabled={isSubmitting} type="submit">
+                  <button className="step-next-button" disabled={isSubmitting} type="submit">
                     {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Get Started"}
                   </button>
                 ) : null}
               </div>
             </div>
-            {showFlowProgress ? (
-              <div className="conversational-progress">
-                <div
-                  aria-label="Intake progress"
-                  aria-valuemax={100}
-                  aria-valuemin={0}
-                  aria-valuenow={progressPercent}
-                  className="conversational-progress-track"
-                  role="progressbar"
-                >
-                  <span style={{ width: `${progressPercent}%` }} />
-                </div>
-              </div>
-            ) : null}
+            <ProgressBar current={displayStepCurrent} total={displayStepTotal} />
           </div>
         </form>
       </section>
