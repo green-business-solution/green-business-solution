@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) conversational intake width normalization
+
+- Unified the public intake step body to a single shared content width so choice, input, and review steps no longer alternate between wide and narrow layouts.
+- Expanded single-field intake steps to use the same outer frame as the multi-card step while preserving the existing typography scale.
+- Increased field padding instead of shrinking the page, leaving more whitespace around text on simpler steps.
+
 ## 2026-06-25 - Codex (GPT-5) conversational intake footer stabilization
 
 - Grouped the privacy note, primary action area, and progress bar into a single footer container for the public intake flow.

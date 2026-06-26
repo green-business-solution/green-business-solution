@@ -2374,7 +2374,7 @@ body {
   gap: 0;
   justify-items: center;
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 880px;
   text-align: center;
   width: 100%;
 }
@@ -2404,7 +2404,6 @@ body {
   gap: 12px 22px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 22px auto 0;
-  max-width: 880px;
   width: 100%;
 }
 
@@ -2523,7 +2522,8 @@ body {
 
 .conversational-input-shell {
   margin-top: 32px;
-  width: min(100%, 520px);
+  width: 100%;
+  max-width: 880px;
 }
 
 .conversational-input-shell input,
@@ -2534,7 +2534,8 @@ body {
   box-shadow: none;
   font-size: 18px;
   min-height: 52px;
-  padding: 14px 16px;
+  padding: 16px 22px;
+  width: 100%;
 }
 
 .conversational-input-shell input:focus,
