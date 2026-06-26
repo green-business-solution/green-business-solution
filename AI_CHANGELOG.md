@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) unavailable opportunity archiving
+
+- Added opportunity lifecycle archiving for normalized unavailable opportunities, with a repeatable script and report artifacts.
+- Archived 209 unavailable DynamoDB opportunity records and regenerated matching fixtures from the remaining 1,887 visible opportunities.
+- Excluded archived opportunities from sample matching, admin database browsing, and normal opportunity counts while documenting future archive/unarchive automation.
+
 ## 2026-06-25 - Codex (GPT-5) facility taxonomy and eligibility review
 
 - Expanded the public business site/facility type choices while preserving the existing intake step layout.

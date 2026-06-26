@@ -324,6 +324,8 @@ type SampleMatchingTestCasesData = {
   generatedAt: string;
   matchingNow: string;
   opportunityCount: number;
+  totalOpportunityRecordCount?: number;
+  archivedOpportunityCount?: number;
   sampleUserCount: number;
   retrofitTaxonomyVersion?: string;
   testCases: SampleMatchingTestCase[];
@@ -3908,7 +3910,7 @@ function AdminTestCasesPanel() {
   const statusRows = SAMPLE_MATCH_STATUS_ORDER.map((status) => ({
     status,
     count: selectedTestCase.statusCounts[status] || 0
-  }));
+  })).filter((row) => row.status !== "unavailable" || row.count > 0);
 
   return (
     <section className="admin-section">

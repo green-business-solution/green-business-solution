@@ -1,0 +1,221 @@
+# Opportunity Archive Report
+
+Generated: 2026-06-26T03:47:16.410Z
+Matcher clock: 2026-06-26T03:47:16.410Z
+Opportunities reviewed: 2096
+DynamoDB writes: yes
+Unarchive restored opportunities: no
+
+## Action Counts
+
+```json
+{
+  "keep_active": 1887,
+  "archive": 209
+}
+```
+
+## Archived Rows
+
+- archive: Marshall County REMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2684)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-404 - Equitable Building Decarbonization Program Direct Install (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-404)
+  - availability reasons: source_status_unavailable
+- archive: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:160)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-318 - BRIDGE 2024: Bringing Rapid Innovation Development to Green Energy (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-318)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-304 - Assessing the Role of Hydrogen in California’s Decarbonizing Electric System (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-304)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-307 - Advancing Designs and Analysis of High Voltage Direct Current Substations and Environmental Monitoring for Floating Offshore Wind (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-307)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-308 - DC HVAC Nanogrid Module Development and Demonstration (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-308)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-604 - Improvements in Maintenance Processes for Reliable Operations that are Verifiable and Effective for Hydrogen Refueling Stations (IMPROVE for H2) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-604)
+  - availability reasons: source_status_unavailable
+- archive: PON-22-001 - Energy Conservation Assistance Act-Education Subaccount (ECAA-Ed) Zero-Interest Loan Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-22-001)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-612 - Depot Charging and Hydrogen Refueling Infrastructure for Medium- and Heavy-Duty On-Road Zero-Emission Vehicles (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-612)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-309 - Virtual Power Plant Approaches for Demand Flexibility (VPP-FLEX) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-309)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-310 - Non-Energy Impacts and Process Evaluation of Integrated Energy Retrofit Packages in California’s Residential Buildings (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-310)
+  - availability reasons: source_status_unavailable
+- archive: GFO-25-602 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 3 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-602)
+  - availability reasons: deadline_has_passed
+- archive: GFO-25-301 - Distributed Resources for Innovative Vehicle Energization Strategies (DRIVES) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-301)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-607- Light-Duty Vehicle and Multi-Use Hydrogen Refueling Infrastructure (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-607)
+  - availability reasons: source_status_unavailable
+- archive: RFP-24-401 - Building Energy Performance Strategy Report & Benchmarking Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-24-401)
+  - availability reasons: source_status_unavailable
+- archive: RFQ-22-401 - Flexible Demand Appliance Standards Advanced Research and Proposal Development (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-22-401)
+  - availability reasons: source_status_unavailable
+- archive: RFP-22-801 - Energy Efficiency Technical Support 2023 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-22-801)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-610 Convenient, High-Visibility, Low-Cost, Level 2 Charging (CHiLL-2) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-610)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-602 - Charging and Refueling Infrastructure for Transport in California Provided Along Targeted Highway Segments (CRITICAL PATHS) 2.0 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-602)
+  - availability reasons: source_status_unavailable
+- archive: GFO-20-609 Renewable Hydrogen Transportation Fuel Production (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-20-609)
+  - availability reasons: source_status_unavailable
+- archive: Cedarburg Light & Water Utility - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2050)
+  - availability reasons: deadline_has_passed
+- archive: GFO-25-606 - California’s National Electric Vehicle Infrastructure Formula Program - Solicitation 5 (South) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-606)
+  - availability reasons: deadline_has_passed
+- archive: ​​​​GFO-22-303 – Food Production Investment Program 2022 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:​​​​GFO-22-303)
+  - availability reasons: source_status_unavailable
+- archive: ​​​​​​​GFO-25-604 – California’s National Electric Vehicle Infrastructure Formula Program - Solicitation 4 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:​​​​​​​GFO-25-604)
+  - availability reasons: deadline_has_passed
+- archive: Rochester Gas and Electric - Electric Vehicle Charger Make-Ready Program (SOURCE_DSIRE:dsire_program_id:22413)
+  - availability reasons: deadline_has_passed
+- archive: Burlington Electric Department - Residential EV Charging Station Rebate Program (SOURCE_DSIRE:dsire_program_id:22402)
+  - availability reasons: deadline_has_passed
+- archive: RFP-25-802 - Enhancing Behind-the-Meter PV and Storage Adoption Modeling in California (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-25-802)
+  - availability reasons: source_status_unavailable
+- archive: Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:2501)
+  - availability reasons: deadline_has_passed
+- archive: GFO-22-308 - Decarbonizing Heating, Ventilation, and Air Conditioning Systems in Large Buildings (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-308)
+  - availability reasons: source_status_unavailable
+- archive: RFP-22-802 - Commercial Forecast Model Update (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-22-802)
+  - availability reasons: source_status_unavailable
+- archive: Dubois REC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2671)
+  - availability reasons: deadline_has_passed
+- archive: Vermont Public Power Supply Authority - Electric Forklift Rebate (SOURCE_DSIRE:dsire_program_id:22354)
+  - availability reasons: deadline_has_passed
+- archive: Central Hudson Gas & Electric (Gas) - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3475)
+  - availability reasons: deadline_has_passed
+- archive: Chippewa Valley Electric Cooperative - Electric Vehicle Charging Station Rebate (SOURCE_DSIRE:dsire_program_id:22358)
+  - availability reasons: deadline_has_passed
+- archive: GFO-24-310 - Retrofitting Existing Residential Buildings with Innovative Envelope Solutions (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-310)
+  - availability reasons: source_status_unavailable
+- archive: Residential Energy Efficiency Tax Credit (SOURCE_DSIRE:dsire_program_id:1274)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-317 - Energy Storage Innovations to Support Grid Reliability (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-317)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-301 – Commercialization Industrial Decarbonization (2022 CID Program) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-301)
+  - availability reasons: source_status_unavailable
+- archive: IFB-25-001 – Translation/Interpretation Services (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:IFB-25-001)
+  - availability reasons: source_status_unavailable
+- archive: GFO-19-602 - Hydrogen Refueling Infrastructure (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-19-602)
+  - availability reasons: source_status_unavailable
+- archive: PSEG Long Island - EV Make Ready Program (SOURCE_DSIRE:dsire_program_id:22411)
+  - availability reasons: deadline_has_passed
+- archive: EnergIIZE Commercial Vehicles (MDHD ZEV Infrastructure Incentive Block Grant project) – Transit Set-Aside Funding Lane - Rollover (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:d6e38bcfc31b3d6f)
+  - availability reasons: deadline_has_passed
+- archive: Solar Electric Incentive Program (SOURCE_DSIRE:dsire_program_id:936)
+  - availability reasons: source_status_unavailable
+- archive: Local Government Energy Modernization Program (L-GEM) (SOURCE_DSIRE:dsire_program_id:22796)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-301 - Energy Efficiency and Load Flexibility in Industrial and Commercial Cold Storage Facilities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-301)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-316 - Industrial, Agricultural, and Water Demand Flexibility Research and Deployment Hub (IAW FlexHub) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-316)
+  - availability reasons: source_status_unavailable
+- archive: Granite State Clean Fleets (GSCF) (SOURCE_DSIRE:dsire_program_id:22530)
+  - availability reasons: deadline_has_passed
+- archive: EnergIIZE Commercial Vehicles (MD/HD ZEV Infrastructure Incentive Block Grant project) – Drayage Fleet Set-Aside Funding Lane - Round 1 (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:71772765867bd5b6)
+  - availability reasons: source_status_unavailable
+- archive: GFO-21-304 - Realizing Accelerated Manufacturing and Production for Clean Energy Technologies (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-21-304)
+  - availability reasons: source_status_unavailable
+- archive: Wabash Valley Power Association (28 Member Cooperatives) - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:5114)
+  - availability reasons: deadline_has_passed
+- archive: RFQ-24-701 - Delegate Chief Building Official Services Site Specific (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-24-701)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-608 - Military Electric Vehicle Chargers (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-608)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-605 - Technical Assistance for Zero-Emission Vehicle (ZEV) Infrastructure Funding (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-605)
+  - availability reasons: deadline_has_passed
+- archive: RFP-24-802 - Technical Support for Low-Carbon Fuel Potential in California (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-24-802)
+  - availability reasons: source_status_unavailable
+- archive: California Electric Vehicle Infrastructure Project 2.0 (CALeVIP 2.0) – Fast Charge California Project (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:5c082382a1743f59)
+  - availability reasons: deadline_has_passed
+- archive: GFO-22-502 - Innovative Hydrogen Refueling Solutions for Heavy Transport (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-502)
+  - availability reasons: source_status_unavailable
+- archive: Small-Scale Renewable Energy Incentive Program (SOURCE_DSIRE:dsire_program_id:1239)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-311 - Advancing Precipitation Enhancement in California (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-311)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-306 - Applications of Open Data to Support Climate Resilience in California’s Electricity Sector (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-306)
+  - availability reasons: source_status_unavailable
+- archive: Vermont Public Power Supply Authority - Electric Bicycle and Retrofit Kit Rebate (SOURCE_DSIRE:dsire_program_id:22351)
+  - availability reasons: deadline_has_passed
+- archive: GFO-24-608 - Rural Electric Vehicle Charging 2.0 (REV 2.0) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-608)
+  - availability reasons: source_status_unavailable
+- archive: Burlington Electric Department - Electric Vehicle Rebate Program (SOURCE_DSIRE:dsire_program_id:22403)
+  - availability reasons: deadline_has_passed
+- archive: Shared Fleet Charging Rebate (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:shared-fleet-charging-rebate)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-608 - Ultra-Low-Carbon Fuel: Demonstration- and Commercial-Scale Production Facilities Utilizing Forest Biomass (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-608)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-501 - Quantifying Exposures to Indoor Air Pollutants in Multifamily Homes that Cook with Gas or Alternatives (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-501)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-402 - Advancing Designs for Floating Offshore Wind Mooring Lines and Anchors (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-402)
+  - availability reasons: source_status_unavailable
+- archive: Burlington Electric Department - Electric Bicycle Rebate (SOURCE_DSIRE:dsire_program_id:22582)
+  - availability reasons: deadline_has_passed
+- archive: Successor Solar Incentive (SuSI) Program - Administratively Determined Incentive (SOURCE_DSIRE:dsire_program_id:22418)
+  - availability reasons: source_status_unavailable
+- archive: PON-22-002 - Energy Conservation Assistance Act (ECAA) Low-Interest Loan Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-22-002)
+  - availability reasons: source_status_unavailable
+- archive: GFO-25-901 - California Training for Residential Energy Contractors (CA-TREC) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-901)
+  - availability reasons: source_status_unavailable
+- archive: GFO-20-305 - The Next EPIC Challenge: Reimagining Affordable Mixed-Use Development in a Carbon-Constrained Future (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-20-305)
+  - availability reasons: source_status_unavailable
+- archive: Price Electric Cooperative - Electric Vehicle Charging Station and Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:22365)
+  - availability reasons: deadline_has_passed
+- archive: Black Hills Energy (Gas) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3675)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-602 - Charging and Refueling Infrastructure for Transport in CALifornia Provided Along Targeted Highway Segments (CRITICAL PATHS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-602)
+  - availability reasons: source_status_unavailable
+- archive: Methane Gas Conversion Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:185)
+  - availability reasons: deadline_has_passed
+- archive: RFP-21-801 - Technical Support to SB 100 Modeling (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-21-801)
+  - availability reasons: deadline_has_passed
+- archive: IFB-23-142 - Hearing Reporter Services for CEC Business Meetings, Hearings and Events (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:IFB-23-142)
+  - availability reasons: source_status_unavailable
+- archive: Burlington Electric - Workplace EV Charging Station Rebate Program (SOURCE_DSIRE:dsire_program_id:22401)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-606 - Charging Infrastructure for Government Fleets (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-606)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-503 - Gas Pipeline Safety and Integrity Research to Support Decarbonization (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-503)
+  - availability reasons: source_status_unavailable
+- archive: ConEd - Electric Vehicle Charging Station Make-Ready Program (SOURCE_DSIRE:dsire_program_id:22559)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-315 - Clean, Dispatchable Generation (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-315)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-305 - Food Production Investment Program (FPIP) 2024 (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-305)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-401 - Advancing Environmental Monitoring Technologies for Floating Offshore Wind (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-401)
+  - availability reasons: source_status_unavailable
+- archive: RFP-24-601 – Technical Assistance for Medium- and Heavy-Duty (MDHD) Zero-Emission Vehicle (ZEV) Infrastructure Blueprint Development (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-24-601)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-306 - Grid-Supportive Transportation Electrification (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-306)
+  - availability reasons: source_status_unavailable
+- archive: NY-Sun PV Incentive Program (Commercial and Industrial) (SOURCE_DSIRE:dsire_program_id:22562)
+  - availability reasons: source_status_unavailable
+- archive: GFO-23-701 - California’s Fifth Climate Change Assessment Tribal Research Grant Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:​​​​GFO-23-701)
+  - availability reasons: source_status_unavailable
+- archive: GFO-25-302 - Coordinated Holistic Orchestration of Inverter-based Resources (CHOIR) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-302)
+  - availability reasons: deadline_has_passed
+- archive: GFO-24-304 - California Battery Pilot Manufacturing Line (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-304)
+  - availability reasons: source_status_unavailable
+- archive: PSEG Long Island- Commercial Solar PV Feed-in Tariff (SOURCE_DSIRE:dsire_program_id:21865)
+  - availability reasons: source_status_unavailable
+- archive: Burlington Electric Department - Multi-Family EV Charging Station Rebate Program (SOURCE_DSIRE:dsire_program_id:22583)
+  - availability reasons: deadline_has_passed
+- archive: GFO-23-402 - Geothermal Grant and Loan Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-23-402)
+  - availability reasons: source_status_unavailable
+- archive: Central Hudson - Electric Vehicle Infrastructure Make-Ready Program (SOURCE_DSIRE:dsire_program_id:22386)
+  - availability reasons: deadline_has_passed
+- archive: GFO-22-504 - Hydrogen Blending and Lower Oxides of Nitrogen Emissions in Gas-Fired Generation (HyBLOX) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-504)
+  - availability reasons: source_status_unavailable
+- archive: GFO-22-901 - Cost Share for Federal Clean Energy Funding Opportunities, Carbon Removal Innovation Support Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-901)
+  - availability reasons: source_status_unavailable
+- archive: RFP-23-802 - Technical Support For Energy Assessments (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFP-23-802)
+  - availability reasons: source_status_unavailable
+- archive: GFO-24-607 - FAST 2.0 - Fast and Available Charging for All Californians (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-24-607)
+  - availability reasons: source_status_unavailable
+- archive: Residential Renewable Energy Tax Credit (SOURCE_DSIRE:dsire_program_id:1235)
+  - availability reasons: deadline_has_passed
+
+...109 additional archived rows omitted from this summary.

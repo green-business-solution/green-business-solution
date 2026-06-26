@@ -8,6 +8,7 @@ import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunit
 import { evaluateOpportunityForUser } from "../server/matching/evaluateRules.mjs";
 import { summarizeMatchResult } from "../server/matching/explainMatch.mjs";
 import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
+import { isVisibleOpportunity } from "../server/matching/opportunityLifecycle.mjs";
 import { RETROFIT_TAXONOMY_VERSION, buildRetrofitOpportunityIndex } from "../server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -29,7 +30,10 @@ const now = new Date(process.env.MATCHING_NOW || Date.now());
 const sampleUsers = readJson(sampleUsersPath);
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
-const opportunities = (sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws())
+const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
+const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
+const opportunities = opportunityRecords
+  .filter(isVisibleOpportunity)
   .map(applyFacilityReview)
   .map(applyUtilityReview);
 const userProfiles = sampleUsers.map((sample) => ({
@@ -64,6 +68,8 @@ const output = {
   generatedAt,
   matchingNow: now.toISOString(),
   opportunityCount: opportunities.length,
+  totalOpportunityRecordCount: opportunityRecords.length,
+  archivedOpportunityCount,
   sampleUserCount: sampleUsers.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   retrofitIndexPath,
@@ -78,6 +84,8 @@ const adminTestCases = {
   generatedAt: output.generatedAt,
   matchingNow: output.matchingNow,
   opportunityCount: output.opportunityCount,
+  totalOpportunityRecordCount: output.totalOpportunityRecordCount,
+  archivedOpportunityCount: output.archivedOpportunityCount,
   sampleUserCount: output.sampleUserCount,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   testCases: userReports
@@ -88,6 +96,8 @@ const retrofitIndex = {
   generatedAt,
   matchingNow: now.toISOString(),
   opportunityCount: opportunities.length,
+  totalOpportunityRecordCount: opportunityRecords.length,
+  archivedOpportunityCount,
   retrofitCount: retrofitRows.length,
   retrofits: retrofitRows
 };
@@ -101,6 +111,7 @@ fs.writeFileSync(retrofitIndexPath, `${JSON.stringify(retrofitIndex, null, 2)}\n
 
 console.log(`Sample matching complete.`);
 console.log(`Opportunities evaluated: ${opportunities.length}`);
+console.log(`Archived opportunities skipped: ${archivedOpportunityCount}`);
 console.log(`Sample users: ${sampleUsers.length}`);
 console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
 console.log(`Results: ${outputPath}`);
@@ -238,6 +249,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     `Generated: ${new Date().toISOString()}`,
     `Matcher clock: ${now.toISOString()}`,
     `Opportunities evaluated: ${opportunities.length}`,
+    `Archived opportunities skipped: ${archivedOpportunityCount}`,
     `Sample users evaluated: ${userReports.length}`,
     `Pairings evaluated: ${opportunities.length * userReports.length}`,
     "",

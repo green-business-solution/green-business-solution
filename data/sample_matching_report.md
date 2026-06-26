@@ -1,10 +1,11 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T02:34:44.858Z
-Matcher clock: 2026-06-26T02:31:56.933Z
-Opportunities evaluated: 2096
+Generated: 2026-06-26T03:50:43.791Z
+Matcher clock: 2026-06-26T03:47:55.358Z
+Opportunities evaluated: 1887
+Archived opportunities skipped: 209
 Sample users evaluated: 10
-Pairings evaluated: 20960
+Pairings evaluated: 18870
 
 This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.
 The script evaluates every current opportunity against each sample profile, then reports the strongest matches and the most common unknowns/blockers.
@@ -67,7 +68,7 @@ Status counts:
   "upcoming": 9,
   "manual_review": 7,
   "ineligible": 1866,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -121,11 +122,11 @@ Retrofit types inferred from promising matches:
 - Level 2 EV charger installation: 1
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Selected improvements do not match opportunity technologies (energy_efficiency).: 211
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (energy_efficiency).: 192
+- Selected improvements do not match opportunity technologies (solar).: 158
 - Project site state CA does not match opportunity geography MN.: 86
+- Selected improvements do not match opportunity technologies (hvac, energy_efficiency).: 69
 
 ### sample-ca-pge-mountain-view-office-hvac-led
 
@@ -174,7 +175,7 @@ Status counts:
   "upcoming": 18,
   "manual_review": 8,
   "ineligible": 1836,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -226,11 +227,11 @@ Retrofit types inferred from promising matches:
 - Energy audit: 2
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Project site state CA does not match opportunity geography OR.: 59
 
 ### sample-ca-other-burbank-studio-efficiency
 
@@ -277,7 +278,7 @@ Status counts:
   "upcoming": 18,
   "manual_review": 16,
   "ineligible": 1755,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -335,11 +336,11 @@ Retrofit types inferred from promising matches:
 - Insulation upgrade: 11
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Project site state CA does not match opportunity geography OR.: 59
 
 ### sample-ca-pge-menlo-park-office-solar-ev
 
@@ -388,7 +389,7 @@ Status counts:
   "upcoming": 12,
   "manual_review": 9,
   "ineligible": 1849,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -440,11 +441,11 @@ Retrofit types inferred from promising matches:
 - Rooftop solar PV: 4
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Selected improvements do not match opportunity technologies (energy_efficiency).: 211
-- Opportunity appears unavailable or the application deadline has passed.: 209
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (energy_efficiency).: 192
 - Project site state CA does not match opportunity geography MN.: 86
-- Selected improvements do not match opportunity technologies (hvac, energy_efficiency).: 72
+- Selected improvements do not match opportunity technologies (hvac, energy_efficiency).: 69
+- Project site state CA does not match opportunity geography OR.: 59
 
 ### sample-ca-pge-san-francisco-office-lighting-hvac
 
@@ -493,7 +494,7 @@ Status counts:
   "upcoming": 18,
   "manual_review": 8,
   "ineligible": 1836,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -545,11 +546,11 @@ Retrofit types inferred from promising matches:
 - Energy audit: 2
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Project site state CA does not match opportunity geography OR.: 59
 
 ### sample-ca-svp-santa-clara-nonprofit-solar
 
@@ -597,7 +598,7 @@ Status counts:
   "upcoming": 10,
   "manual_review": 9,
   "ineligible": 1855,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -652,11 +653,11 @@ Retrofit types inferred from promising matches:
 - LED lighting retrofit: 3
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Selected improvements do not match opportunity technologies (energy_efficiency).: 211
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (energy_efficiency).: 192
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Selected improvements do not match opportunity technologies (hvac, energy_efficiency).: 69
 
 ### sample-ca-pge-los-gatos-retail-refrigeration
 
@@ -705,7 +706,7 @@ Status counts:
   "upcoming": 17,
   "manual_review": 8,
   "ineligible": 1837,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -757,11 +758,11 @@ Retrofit types inferred from promising matches:
 - Energy audit: 2
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Project site state CA does not match opportunity geography OR.: 59
 
 ### sample-ca-pge-san-ramon-office-water-controls
 
@@ -810,7 +811,7 @@ Status counts:
   "upcoming": 18,
   "manual_review": 8,
   "ineligible": 1833,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -861,11 +862,11 @@ Retrofit types inferred from promising matches:
 - Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
 - Project site state CA does not match opportunity geography MN.: 86
-- Project site state CA does not match opportunity geography OR.: 60
+- Project site state CA does not match opportunity geography OR.: 59
+- Applicant type commercial does not match eligible sectors residential, other, multifamily.: 54
 
 ### sample-ca-svp-santa-clara-office-solar-storage
 
@@ -914,7 +915,7 @@ Status counts:
   "upcoming": 19,
   "manual_review": 8,
   "ineligible": 1813,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -965,11 +966,11 @@ Retrofit types inferred from promising matches:
 - Heat pump HVAC retrofit: 6
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
-- Selected improvements do not match opportunity technologies (ev_charging, fleet_electrification).: 71
+- Project site state CA does not match opportunity geography OR.: 59
+- Applicant type commercial does not match eligible sectors residential, other, multifamily.: 54
 
 ### sample-ca-pge-san-jose-restaurant-kitchen
 
@@ -1017,7 +1018,7 @@ Status counts:
   "upcoming": 16,
   "manual_review": 7,
   "ineligible": 1840,
-  "unavailable": 209
+  "unavailable": 0
 }
 ```
 
@@ -1068,11 +1069,11 @@ Retrofit types inferred from promising matches:
 - Energy audit: 2
 
 Common blockers across rejected/unavailable opportunities:
-- Opportunity appears residential-only and the user profile is nonresidential.: 451
-- Opportunity appears unavailable or the application deadline has passed.: 209
-- Selected improvements do not match opportunity technologies (solar).: 162
-- Selected improvements do not match opportunity technologies (ev_charging).: 153
+- Opportunity appears residential-only and the user profile is nonresidential.: 438
+- Selected improvements do not match opportunity technologies (solar).: 158
+- Selected improvements do not match opportunity technologies (ev_charging).: 140
 - Project site state CA does not match opportunity geography MN.: 86
+- Project site state CA does not match opportunity geography OR.: 59
 
 ## Immediate Iteration Targets
 

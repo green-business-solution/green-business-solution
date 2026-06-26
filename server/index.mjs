@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import express from "express";
-import { DescribeTableCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
@@ -10,6 +10,7 @@ import {
   UpdateCommand
 } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
+import { isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -51,7 +52,6 @@ const client = new DynamoDBClient({
 const db = DynamoDBDocumentClient.from(client);
 export const app = express();
 let activeServer = null;
-const tableItemCountCache = new Map();
 
 app.use(express.json({ limit: "128kb" }));
 
@@ -685,26 +685,6 @@ function decodeScanCursor(value) {
   }
 }
 
-async function getApproximateTableItemCount(TableName) {
-  const cached = tableItemCountCache.get(TableName);
-  const now = Date.now();
-  if (cached && cached.expiresAt > now) {
-    return cached.count;
-  }
-
-  try {
-    const result = await client.send(new DescribeTableCommand({ TableName }));
-    const count = typeof result.Table?.ItemCount === "number" ? result.Table.ItemCount : null;
-    tableItemCountCache.set(TableName, {
-      count,
-      expiresAt: now + 5 * 60 * 1000
-    });
-    return count;
-  } catch {
-    return null;
-  }
-}
-
 function isActiveUserRecord(user) {
   return user?.status === "active" && ["client", "admin"].includes(user.role);
 }
@@ -1229,6 +1209,9 @@ function compactOpportunityRecord(record) {
     ingestionMode: record.ingestionMode,
     ingestRunId: record.ingestRunId,
     origin: record.origin,
+    lifecycleStatus: record.lifecycleStatus || null,
+    archivedAt: record.archivedAt || null,
+    archiveReason: record.archiveReason || null,
     status: record.status,
     reviewStatus: record.reviewStatus,
     reviewNotes: record.reviewNotes || null,
@@ -1278,7 +1261,7 @@ function tableSnapshot(name, records, { recordCount = records.length, note = nul
 }
 
 function isDatabaseCloneRecord(record) {
-  return isDsireOpportunityRecord(record) && record?.ingestionMode !== "rss_delta_feed";
+  return isDsireOpportunityRecord(record) && record?.ingestionMode !== "rss_delta_feed" && isVisibleOpportunity(record);
 }
 
 function slugify(value) {
@@ -1716,7 +1699,7 @@ async function buildAdminTableSnapshot(tableName) {
 
   if (cleanTableName === opportunitiesTable) {
     const opportunities = await scanAll(opportunitiesTable);
-    const sortedOpportunities = opportunities.filter(isDsireOpportunityRecord).sort((a, b) =>
+    const sortedOpportunities = opportunities.filter((opportunity) => isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity)).sort((a, b) =>
       String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
         String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
       )
@@ -2023,10 +2006,7 @@ app.get("/api/database/programs/batch", async (req, res) => {
   try {
     const limit = parsePositiveInteger(req.query.limit, databaseBatchScanLimit, 250);
     const cursor = decodeScanCursor(req.query.cursor);
-    const [batch, estimatedTotal] = await Promise.all([
-      loadDatabaseProgramBatch({ cursor, limit }),
-      getApproximateTableItemCount(opportunitiesTable)
-    ]);
+    const batch = await loadDatabaseProgramBatch({ cursor, limit });
 
     res.json({
       generatedAt: new Date().toISOString(),
@@ -2034,7 +2014,7 @@ app.get("/api/database/programs/batch", async (req, res) => {
       scannedCount: batch.scannedCount,
       rawCount: batch.rawCount,
       matchedCount: batch.programs.length,
-      estimatedTotal,
+      estimatedTotal: null,
       nextCursor: batch.nextCursor,
       isComplete: !batch.nextCursor
     });
