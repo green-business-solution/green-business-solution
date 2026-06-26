@@ -1552,14 +1552,14 @@ body {
   opacity: 0.72;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button) {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.choice-card):not(.step-back-link):not(.step-next-button) {
   background: var(--retrofi-green);
   border-radius: 8px;
   min-height: 46px;
   padding: 0 18px;
 }
 
-.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):hover {
+.public-page button:not(.link-button):not(.brand-link):not(.footer-link):not(.secondary-button):not(.menu-button):not(.dropdown-link):not(.text-link):not(.about-subnav-link):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(.google-loading-button):not(.google-redirect-button):not(.choice-card):not(.step-back-link):not(.step-next-button):hover {
   background: var(--retrofi-green-dark);
 }
 
@@ -2420,6 +2420,15 @@ body {
   transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease, background 200ms ease, color 200ms ease;
 }
 
+.public-page .choice-card {
+  background: #ffffff;
+  border: 1px solid #e3e8e5;
+  border-radius: 16px;
+  color: #15241d;
+  min-height: 84px;
+  padding: 20px 24px;
+}
+
 .choice-card:hover {
   background: #ffffff;
   border-color: #c7d4cd;
@@ -2427,10 +2436,19 @@ body {
   transform: translateY(-1px);
 }
 
+.public-page .choice-card:hover {
+  background: #ffffff;
+}
+
 .choice-card.is-selected {
   background: #f1f8f3;
   border-color: #1e6b4f;
   box-shadow: 0 8px 24px rgba(15, 61, 46, 0.06);
+}
+
+.public-page .choice-card.is-selected {
+  background: #f1f8f3;
+  border-color: #1e6b4f;
 }
 
 .choice-card-icon {
