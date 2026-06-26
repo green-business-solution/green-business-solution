@@ -789,11 +789,27 @@ dd {
   overflow: hidden;
 }
 
+.admin-intake-summary-table {
+  overflow-x: auto;
+}
+
 .admin-row {
   display: grid;
   gap: 14px;
   grid-template-columns: minmax(150px, 0.9fr) minmax(160px, 0.9fr) minmax(190px, 1fr) minmax(150px, 0.8fr) minmax(220px, 1.2fr) 138px;
   padding: 15px 16px;
+}
+
+.admin-intake-summary-row {
+  grid-template-columns:
+    minmax(180px, 1fr)
+    minmax(150px, 0.8fr)
+    minmax(160px, 0.85fr)
+    minmax(140px, 0.7fr)
+    minmax(180px, 0.9fr)
+    minmax(120px, 0.55fr)
+    minmax(140px, 0.65fr)
+    150px;
 }
 
 .admin-row + .admin-row {
@@ -820,6 +836,73 @@ dd {
 .admin-row small {
   display: block;
   margin-top: 4px;
+}
+
+.admin-summary-card-grid {
+  align-items: stretch;
+}
+
+.admin-summary-card {
+  background:
+    radial-gradient(circle at top right, rgba(177, 221, 188, 0.2), transparent 38%),
+    linear-gradient(180deg, #ffffff, #f7faf7);
+}
+
+.admin-summary-card h3 {
+  font-size: 30px;
+}
+
+.admin-clickable-row {
+  appearance: none;
+  background: #ffffff;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+.admin-clickable-row:hover {
+  background: #f5faf6;
+}
+
+.admin-clickable-row:focus-visible {
+  outline: 2px solid #2f6c43;
+  outline-offset: -2px;
+}
+
+.admin-status-pill {
+  background: #edf5ef;
+  border-radius: 999px;
+  color: #28563a;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
+.admin-status-pill.no-utility-data {
+  background: #f1f3f1;
+  color: #5f6e66;
+}
+
+.admin-status-pill.uploaded,
+.admin-status-pill.processing {
+  background: #e7f2ea;
+  color: #24573b;
+}
+
+.admin-status-pill.needs-review {
+  background: #fdf1dd;
+  color: #8a5a15;
+}
+
+.admin-status-pill.ready-for-estimates {
+  background: #dff4e5;
+  color: #1f6a39;
 }
 
 .data-grid {
@@ -1370,6 +1453,10 @@ dd {
   }
 
   .admin-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-intake-summary-row {
     grid-template-columns: 1fr;
   }
 

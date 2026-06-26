@@ -603,3 +603,4 @@
 - Added intake-bound utility ingestion for Green Button XML/CSV and utility PDF uploads, storing uploaded file metadata, extracted bill fields, and site energy summaries on the client intake record instead of opportunity records.
 - Updated the client/admin utility data views and upload flow to show file processing status, extracted bill fields, and site energy profile summaries.
 - Added a local-safe fake client seeding workflow for the 14-step intake plus Green Button fixture uploads, with vendored test fixtures, report generation, and parser/seed tests.
+- Added an admin-only `Client Intake Summary` workspace tab that turns intake utility data into a readable completion dashboard without mutating stored records.

@@ -26,6 +26,7 @@ import {
   StoreOutlineIcon
 } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
+import billFieldDictionary from "../data/bill_field_dictionary.json";
 
 type UserRecord = {
   userId: string;
@@ -175,6 +176,30 @@ type IntakeSubmissionPayload = PortalPayload & {
 type AdminRow = {
   user: UserRecord;
   intake: IntakeRecord | null;
+};
+
+type BillFieldDictionaryEntry = {
+  id: string;
+  display_name: string;
+  unit?: string;
+};
+
+type ClientIntakeSummaryRow = {
+  clientName: string;
+  companyName: string;
+  completionPercent: number;
+  email: string;
+  filledFieldCount: number;
+  lastUpdated: string | null;
+  missingFieldCount: number;
+  missingFieldLabels: string[];
+  organizationType: string;
+  processingStatus: "No utility data" | "Uploaded" | "Processing" | "Needs review" | "Ready for estimates";
+  siteAddress: string;
+  totalExpectedFieldCount: number;
+  uploadedFileCount: number;
+  utilityProvider: string;
+  userId: string;
 };
 
 type DatabaseTableSnapshot = {
@@ -4146,6 +4171,7 @@ function UserDashboard({
 
 const ADMIN_DATABASE_TAB = "Database";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
+const CLIENT_INTAKE_SUMMARY_TAB = "Client Intake Summary";
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const SAMPLE_MATCH_STATUS_ORDER = [
   "eligible_active",
@@ -4155,8 +4181,28 @@ const SAMPLE_MATCH_STATUS_ORDER = [
   "ineligible",
   "unavailable"
 ];
+const utilitySummaryFieldIds = [
+  "utility_provider",
+  "service_address",
+  "account_number_masked",
+  "billing_period_start",
+  "billing_period_end",
+  "monthly_kwh",
+  "annual_kwh",
+  "total_electric_cost",
+  "annual_electric_cost",
+  "average_cost_per_kwh",
+  "rate_schedule",
+  "customer_class"
+] as const;
+const billFieldDictionaryEntries = billFieldDictionary as BillFieldDictionaryEntry[];
+const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) => [field.id, field]));
+const utilitySummaryFields = utilitySummaryFieldIds
+  .map((fieldId) => billFieldDictionaryById.get(fieldId))
+  .filter((field): field is BillFieldDictionaryEntry => Boolean(field));
 
 function adminSectionKey(tab: string) {
+  if (tab === CLIENT_INTAKE_SUMMARY_TAB) return "client-intake-summary";
   if (tab === ADMIN_DATABASE_TAB) return "database";
   if (tab === ADMIN_TEST_CASES_TAB) return "test-cases";
   return tab === "Users" ? "users" : `table:${tab}`;
@@ -4179,12 +4225,13 @@ function AdminDashboard({
   const { admin, users: rows, dataTables } = adminPayload;
   const navItems = [
     "Users",
+    CLIENT_INTAKE_SUMMARY_TAB,
     ADMIN_TEST_CASES_TAB,
     ...dataTables.filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME).map((table) => table.name),
     ADMIN_DATABASE_TAB
   ];
   const selectedDataTable =
-    activeTab === ADMIN_DATABASE_TAB || activeTab === ADMIN_TEST_CASES_TAB
+    activeTab === ADMIN_DATABASE_TAB || activeTab === ADMIN_TEST_CASES_TAB || activeTab === CLIENT_INTAKE_SUMMARY_TAB
       ? null
       : dataTables.find((table) => table.name === activeTab) || null;
   const activeSectionKey = adminSectionKey(activeTab);
@@ -4244,7 +4291,7 @@ function AdminDashboard({
     setLoadingSectionKey(sectionKey);
 
     try {
-      if (tab === "Users") {
+      if (tab === "Users" || tab === CLIENT_INTAKE_SUMMARY_TAB) {
         const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
           headers: adminAuthHeaders(credential)
         });
@@ -4290,6 +4337,7 @@ function AdminDashboard({
 
     if (
       activeTab !== "Users" &&
+      activeTab !== CLIENT_INTAKE_SUMMARY_TAB &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_DATABASE_TAB &&
       !isVisibleDataTable
@@ -4314,6 +4362,13 @@ function AdminDashboard({
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
+      ) : activeTab === CLIENT_INTAKE_SUMMARY_TAB ? (
+        <ClientIntakeSummaryPanel
+          isLoading={isCurrentSectionLoading}
+          onOpenIntakeTable={() => setActiveTab(dataTables.find((table) => table.name.includes("client-intake"))?.name || "gbs-client-intake")}
+          onRefresh={() => void refreshDashboard()}
+          rows={rows}
+        />
       ) : activeTab === ADMIN_TEST_CASES_TAB ? (
         <AdminTestCasesPanel />
       ) : activeTab === ADMIN_DATABASE_TAB ? (
@@ -4952,6 +5007,103 @@ function sampleStatusLabel(status: string) {
     .join(" ");
 }
 
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function deriveClientIntakeProcessingStatus(intake: IntakeRecord | null, filledFieldCount: number, expectedFieldCount: number) {
+  const uploadedFiles = intake?.uploadedUtilityFiles || [];
+
+  if (uploadedFiles.length === 0) {
+    return "No utility data" as const;
+  }
+
+  if (
+    uploadedFiles.some((file) => file.processingStatus === "needs_review" || file.processingStatus === "failed")
+  ) {
+    return "Needs review" as const;
+  }
+
+  if (uploadedFiles.some((file) => file.processingStatus === "processing")) {
+    return "Processing" as const;
+  }
+
+  if (uploadedFiles.some((file) => file.processingStatus === "uploaded")) {
+    return "Uploaded" as const;
+  }
+
+  if (expectedFieldCount > 0 && filledFieldCount >= expectedFieldCount) {
+    return "Ready for estimates" as const;
+  }
+
+  return "Uploaded" as const;
+}
+
+function buildClientIntakeSummaryRows(rows: AdminRow[]): ClientIntakeSummaryRow[] {
+  return rows
+    .filter(({ user, intake }) => user.role === "client" && intake)
+    .map(({ intake, user }) => {
+      const utilityFieldIds = new Set(
+        intake?.utilityExtractedValues
+          .map((value) => value.fieldId)
+          .filter((fieldId) => utilitySummaryFieldIds.includes(fieldId as (typeof utilitySummaryFieldIds)[number])) || []
+      );
+      const filledFieldCount = utilityFieldIds.size;
+      const totalExpectedFieldCount = utilitySummaryFields.length;
+      const missingFieldLabels = utilitySummaryFields
+        .filter((field) => !utilityFieldIds.has(field.id))
+        .map((field) => field.display_name);
+      const completionPercent =
+        totalExpectedFieldCount > 0 ? Math.round((filledFieldCount / totalExpectedFieldCount) * 100) : 0;
+      const latestUploadedAt = (intake?.uploadedUtilityFiles || [])
+        .map((file) => file.processedAt || file.uploadedAt)
+        .filter(Boolean)
+        .sort((left, right) => String(right).localeCompare(String(left)))[0] || null;
+
+      return {
+        clientName: intake?.contact.fullName || user.fullName || "Unknown client",
+        companyName: intake?.business.companyName || user.companyName || "Not provided",
+        completionPercent,
+        email: intake?.contact.email || user.email,
+        filledFieldCount,
+        lastUpdated: latestUploadedAt || intake?.updatedAt || user.createdAt,
+        missingFieldCount: totalExpectedFieldCount - filledFieldCount,
+        missingFieldLabels,
+        organizationType: intake?.business.organizationType || "Not provided",
+        processingStatus: deriveClientIntakeProcessingStatus(intake, filledFieldCount, totalExpectedFieldCount),
+        siteAddress: intake?.site?.address || "Not provided",
+        totalExpectedFieldCount,
+        uploadedFileCount: intake?.uploadedUtilityFiles.length || 0,
+        utilityProvider:
+          intake?.siteEnergyProfile?.latestUtilityProvider ||
+          intake?.site?.electricUtilityProvider ||
+          intake?.uploadedUtilityFiles[0]?.utilityProvider ||
+          "Not provided",
+        userId: user.userId
+      };
+    })
+    .sort((left, right) => String(right.lastUpdated || "").localeCompare(String(left.lastUpdated || "")));
+}
+
+function summarizeClientIntakeSummaryRows(rows: ClientIntakeSummaryRow[]) {
+  const clientsWithUtilityData = rows.filter((row) => row.uploadedFileCount > 0).length;
+  const averageCompletionPercent =
+    rows.length > 0
+      ? Math.round(rows.reduce((sum, row) => sum + row.completionPercent, 0) / rows.length)
+      : 0;
+
+  return {
+    averageCompletionPercent,
+    clientsNeedingReview: rows.filter((row) => row.processingStatus === "Needs review").length,
+    clientsWithNoUtilityData: rows.filter((row) => row.uploadedFileCount === 0).length,
+    clientsWithUtilityData,
+    totalClientRecords: rows.length
+  };
+}
+
 function AdminUsersPanel({
   isLoading,
   onRefresh,
@@ -5025,6 +5177,114 @@ function AdminUsersPanel({
             </span>
             <span role="cell">{formatDate(user.createdAt)}</span>
           </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ClientIntakeSummaryPanel({
+  isLoading,
+  onOpenIntakeTable,
+  onRefresh,
+  rows
+}: {
+  isLoading: boolean;
+  onOpenIntakeTable: (userId: string) => void;
+  onRefresh: () => void;
+  rows: AdminRow[];
+}) {
+  const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows), [rows]);
+  const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
+
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Client intake recap</p>
+          <h2>Client Intake Summary</h2>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      <div className="card-grid three admin-summary-card-grid">
+        <article className="feature-card admin-summary-card">
+          <span className="eyebrow">Total client records</span>
+          <h3>{totals.totalClientRecords.toLocaleString()}</h3>
+          <p>Active client intake records currently available in the admin workspace.</p>
+        </article>
+        <article className="feature-card admin-summary-card">
+          <span className="eyebrow">Utility data coverage</span>
+          <h3>{totals.clientsWithUtilityData.toLocaleString()}</h3>
+          <p>{totals.clientsWithNoUtilityData.toLocaleString()} client record(s) still have no utility uploads.</p>
+        </article>
+        <article className="feature-card admin-summary-card">
+          <span className="eyebrow">Average completion</span>
+          <h3>{totals.averageCompletionPercent}%</h3>
+          <p>{totals.clientsNeedingReview.toLocaleString()} client record(s) currently need review.</p>
+        </article>
+      </div>
+
+      <div className="admin-table admin-intake-summary-table" role="table" aria-label="Client intake summary">
+        <div className="admin-row admin-head admin-intake-summary-row" role="row">
+          <span role="columnheader">Client</span>
+          <span role="columnheader">Type</span>
+          <span role="columnheader">Utility</span>
+          <span role="columnheader">Bill fields filled</span>
+          <span role="columnheader">Missing fields</span>
+          <span role="columnheader">Completion %</span>
+          <span role="columnheader">Status</span>
+          <span role="columnheader">Last updated</span>
+        </div>
+        {summaryRows.length === 0 ? (
+          <div className="admin-row admin-empty-row" role="row">
+            <span role="cell">
+              <strong>{isLoading ? "Loading intake summaries..." : "No client intake summaries available."}</strong>
+              <small>{isLoading ? "This tab is loading after sign-in." : "Refresh after new intake submissions arrive."}</small>
+            </span>
+          </div>
+        ) : summaryRows.map((row) => (
+          <button
+            className="admin-row admin-intake-summary-row admin-clickable-row"
+            key={row.userId}
+            onClick={() => onOpenIntakeTable(row.userId)}
+            type="button"
+          >
+            <span>
+              <strong>{row.clientName}</strong>
+              <small>{row.email}</small>
+              <small>{row.companyName}</small>
+            </span>
+            <span>
+              {row.organizationType}
+              <small>{row.siteAddress}</small>
+            </span>
+            <span>
+              {row.utilityProvider}
+              <small>{row.uploadedFileCount} uploaded file(s)</small>
+            </span>
+            <span>
+              {`${row.filledFieldCount}/${row.totalExpectedFieldCount}`}
+              <small>{utilitySummaryFields.slice(0, 3).map((field) => field.display_name).join(", ")}...</small>
+            </span>
+            <span>
+              {row.missingFieldCount.toLocaleString()}
+              <small>{row.missingFieldLabels.slice(0, 2).join(", ") || "None"}</small>
+            </span>
+            <span>
+              <strong>{row.completionPercent}%</strong>
+              <small>{row.filledFieldCount > 0 ? "Utility fields detected" : "No extracted values yet"}</small>
+            </span>
+            <span>
+              <mark className={`admin-status-pill ${slugify(row.processingStatus)}`}>{row.processingStatus}</mark>
+            </span>
+            <span>
+              {formatDate(row.lastUpdated)}
+              <small>Opens the intake table view</small>
+            </span>
+          </button>
         ))}
       </div>
     </section>
