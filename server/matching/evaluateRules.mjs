@@ -1,13 +1,18 @@
 import { UTILITY_DISPLAY_NAMES, unique } from "./ontologies.mjs";
+import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
 
 export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now = new Date() } = {}) {
   const offerResults = matchProfile.offers.map((offer) => evaluateOffer(userMatchProfile, opportunity, matchProfile, offer, { now }));
   const bestResult = offerResults.slice().sort(compareOfferResults)[0] || null;
 
   if (!bestResult) {
+    const retrofitTypes = classifyRetrofitsForOpportunity(opportunity, matchProfile);
     return {
       opportunityId: opportunity.opportunityId,
+      opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
       offerId: null,
+      retrofitTypeIds: retrofitTypes.map((retrofit) => retrofit.retrofitTypeId),
+      retrofitTypes,
       sourceUrl: opportunity.sourceUrl || null,
       websiteUrl: opportunity.websiteUrl || null,
       applicationUrl: opportunity.applicationUrl || null,
@@ -18,7 +23,13 @@ export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchP
       matchedReasons: [],
       unresolvedRequirements: ["No matchable offer was extracted."],
       blockers: [],
-      nextQuestion: null
+      nextQuestion: null,
+      sourceSummary: {
+        state: opportunity.state || null,
+        sourceName: opportunity.sourceName || null,
+        programType: opportunity.programType || null,
+        administrator: opportunity.administrator || null
+      }
     };
   }
 
@@ -26,6 +37,7 @@ export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchP
 }
 
 function evaluateOffer(user, opportunity, profile, offer, { now }) {
+  const retrofitTypes = classifyRetrofitsForOpportunity(opportunity, profile);
   const checks = {
     availability: evaluateAvailability(profile.availability, now),
     geography: evaluateGeography(user, profile.geography),
@@ -45,6 +57,8 @@ function evaluateOffer(user, opportunity, profile, offer, { now }) {
     opportunityId: opportunity.opportunityId,
     opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
     offerId: offer.offerId,
+    retrofitTypeIds: retrofitTypes.map((retrofit) => retrofit.retrofitTypeId),
+    retrofitTypes,
     sourceUrl: opportunity.sourceUrl || null,
     websiteUrl: opportunity.websiteUrl || null,
     applicationUrl: opportunity.applicationUrl || null,

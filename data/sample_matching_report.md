@@ -1,7 +1,7 @@
 # Sample Matching Report
 
-Generated: 2026-06-25T23:26:55.469Z
-Matcher clock: 2026-06-25T23:26:35.636Z
+Generated: 2026-06-26T00:15:17.804Z
+Matcher clock: 2026-06-26T00:12:25.655Z
 Opportunities evaluated: 2096
 Sample users evaluated: 10
 Pairings evaluated: 20960
@@ -116,6 +116,16 @@ Common unresolved requirements among promising matches:
 - No specific eligible building type was normalized.: 8
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- EV charger installation: 20
+- Level 2 EV charger installation: 14
+- Heat pump HVAC retrofit: 5
+- High-efficiency HVAC replacement: 5
+- High-efficiency refrigeration equipment: 5
+- DC fast charger installation: 4
+- Heat pump water heater: 4
+- LED lighting retrofit: 3
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Selected improvements do not match opportunity technologies (energy_efficiency).: 211
@@ -222,6 +232,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 18
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 28
+- LED lighting retrofit: 18
+- High-efficiency refrigeration equipment: 15
+- Heat pump HVAC retrofit: 14
+- Insulation upgrade: 11
+- Heat pump water heater: 10
+- EV charger installation: 8
+- High-efficiency laundry equipment: 7
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Opportunity appears unavailable or the application deadline has passed.: 209
@@ -325,6 +345,16 @@ Common unresolved requirements among promising matches:
 - User electric distribution utility is unknown.: 50
 - No specific eligible building type was normalized.: 34
 - Opportunity appears upcoming; application timing should be verified.: 18
+
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 47
+- LED lighting retrofit: 26
+- Low-flow fixture retrofit: 24
+- Heat pump HVAC retrofit: 21
+- High-efficiency refrigeration equipment: 20
+- Heat pump water heater: 14
+- Energy management system: 11
+- Insulation upgrade: 11
 
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
@@ -432,6 +462,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 12
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- EV charger installation: 21
+- Level 2 EV charger installation: 14
+- High-efficiency HVAC replacement: 12
+- Battery storage system: 10
+- Solar water heating system: 8
+- Biomass / biogas energy system: 7
+- Ground-source / geothermal heat pump: 7
+- LED lighting retrofit: 7
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Selected improvements do not match opportunity technologies (energy_efficiency).: 211
@@ -538,6 +578,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 18
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 28
+- LED lighting retrofit: 18
+- High-efficiency refrigeration equipment: 15
+- Heat pump HVAC retrofit: 14
+- Insulation upgrade: 11
+- Heat pump water heater: 10
+- EV charger installation: 8
+- High-efficiency laundry equipment: 7
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Opportunity appears unavailable or the application deadline has passed.: 209
@@ -642,6 +692,16 @@ Common unresolved requirements among promising matches:
 - Opportunity building specificity (other) does not directly match the user's site type.: 12
 - Opportunity appears upcoming; application timing should be verified.: 10
 - No project technology was normalized.: 7
+
+Retrofit types inferred from promising matches:
+- Battery storage system: 10
+- Solar water heating system: 8
+- Biomass / biogas energy system: 7
+- Ground-source / geothermal heat pump: 7
+- High-efficiency HVAC replacement: 7
+- Rooftop solar PV: 6
+- Combined heat and power system: 5
+- Insulation upgrade: 4
 
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
@@ -749,6 +809,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 17
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 28
+- LED lighting retrofit: 18
+- High-efficiency refrigeration equipment: 15
+- Heat pump HVAC retrofit: 14
+- Insulation upgrade: 11
+- Heat pump water heater: 10
+- EV charger installation: 8
+- High-efficiency laundry equipment: 7
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Opportunity appears unavailable or the application deadline has passed.: 209
@@ -855,6 +925,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 18
 - Opportunity building specificity (multifamily) does not directly match the user's site type.: 8
 
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 24
+- EV charger installation: 22
+- High-efficiency refrigeration equipment: 16
+- LED lighting retrofit: 16
+- Level 2 EV charger installation: 14
+- Heat pump HVAC retrofit: 13
+- Insulation upgrade: 11
+- Heat pump water heater: 9
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Opportunity appears unavailable or the application deadline has passed.: 209
@@ -960,6 +1040,16 @@ Common unresolved requirements among promising matches:
 - Opportunity appears upcoming; application timing should be verified.: 19
 - No project technology was normalized.: 7
 
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 37
+- Low-flow fixture retrofit: 23
+- LED lighting retrofit: 20
+- Heat pump HVAC retrofit: 18
+- High-efficiency refrigeration equipment: 16
+- Heat pump water heater: 11
+- Battery storage system: 10
+- Insulation upgrade: 10
+
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451
 - Opportunity appears unavailable or the application deadline has passed.: 209
@@ -1064,6 +1154,16 @@ Common unresolved requirements among promising matches:
 - Opportunity building specificity (other) does not directly match the user's site type.: 19
 - Opportunity appears upcoming; application timing should be verified.: 16
 - No project technology was normalized.: 7
+
+Retrofit types inferred from promising matches:
+- High-efficiency HVAC replacement: 26
+- LED lighting retrofit: 18
+- High-efficiency refrigeration equipment: 15
+- Heat pump HVAC retrofit: 13
+- Insulation upgrade: 11
+- Heat pump water heater: 9
+- EV charger installation: 8
+- High-efficiency laundry equipment: 7
 
 Common blockers across rejected/unavailable opportunities:
 - Opportunity appears residential-only and the user profile is nonresidential.: 451

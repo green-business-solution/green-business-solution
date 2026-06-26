@@ -8,6 +8,7 @@ import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunit
 import { evaluateOpportunityForUser } from "../server/matching/evaluateRules.mjs";
 import { summarizeMatchResult } from "../server/matching/explainMatch.mjs";
 import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
+import { RETROFIT_TAXONOMY_VERSION, buildRetrofitOpportunityIndex } from "../server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -17,6 +18,7 @@ const sourcePath = process.env.OPPORTUNITY_SOURCE_PATH || "";
 const outputPath = process.env.MATCHING_OUTPUT_PATH || "/tmp/retrofi-sample-matching-results.json";
 const reportPath = process.env.MATCHING_REPORT_PATH || path.join(dataDir, "sample_matching_report.md");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
+const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
@@ -36,6 +38,8 @@ const opportunityProfiles = opportunities.map((opportunity) => ({
 }));
 const allResults = [];
 const userReports = [];
+const generatedAt = new Date().toISOString();
+const retrofitRows = buildRetrofitOpportunityIndex(opportunityProfiles);
 
 for (const userProfile of userProfiles) {
   const results = opportunityProfiles
@@ -51,10 +55,12 @@ for (const userProfile of userProfiles) {
 }
 
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt,
   matchingNow: now.toISOString(),
   opportunityCount: opportunities.length,
   sampleUserCount: sampleUsers.length,
+  retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
+  retrofitIndexPath,
   sampleUsers: userProfiles,
   results: allResults
 };
@@ -63,13 +69,25 @@ const adminTestCases = {
   matchingNow: output.matchingNow,
   opportunityCount: output.opportunityCount,
   sampleUserCount: output.sampleUserCount,
+  retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   testCases: userReports
+};
+const retrofitIndex = {
+  schemaVersion: "retrofit-opportunity-index-v1",
+  taxonomyVersion: RETROFIT_TAXONOMY_VERSION,
+  generatedAt,
+  matchingNow: now.toISOString(),
+  opportunityCount: opportunities.length,
+  retrofitCount: retrofitRows.length,
+  retrofits: retrofitRows
 };
 
 fs.writeFileSync(outputPath, `${JSON.stringify(output, null, 2)}\n`);
 fs.writeFileSync(reportPath, buildReport({ userReports, opportunities, outputPath }), "utf8");
 fs.mkdirSync(path.dirname(testCasesPath), { recursive: true });
 fs.writeFileSync(testCasesPath, `${JSON.stringify(adminTestCases, null, 2)}\n`);
+fs.mkdirSync(path.dirname(retrofitIndexPath), { recursive: true });
+fs.writeFileSync(retrofitIndexPath, `${JSON.stringify(retrofitIndex, null, 2)}\n`);
 
 console.log(`Sample matching complete.`);
 console.log(`Opportunities evaluated: ${opportunities.length}`);
@@ -78,6 +96,7 @@ console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
 console.log(`Results: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
 console.log(`Admin test cases: ${testCasesPath}`);
+console.log(`Retrofit opportunity index: ${retrofitIndexPath}`);
 
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
@@ -123,6 +142,7 @@ function buildUserReport(userProfile, results) {
   );
   const blockers = topCounts(results.flatMap((result) => result.blockers));
   const unresolved = topCounts(promising.flatMap((result) => result.unresolvedRequirements));
+  const retrofits = buildUserRetrofitGroups(promising);
 
   return {
     sampleUserId: userProfile.sampleUserId,
@@ -130,11 +150,40 @@ function buildUserReport(userProfile, results) {
     sourceForm: userProfile.sourceForm,
     normalizedProfile: userProfile.userMatchProfile,
     statusCounts,
+    retrofits,
     topResults,
     commonQuestions,
     blockers,
     unresolved
   };
+}
+
+function buildUserRetrofitGroups(results) {
+  const groups = new Map();
+
+  for (const result of results) {
+    const summarized = summarizeMatchResult(result);
+    for (const retrofit of result.retrofitTypes || []) {
+      const current = groups.get(retrofit.retrofitTypeId) || {
+        retrofitTypeId: retrofit.retrofitTypeId,
+        displayName: retrofit.displayName,
+        parentCategory: retrofit.parentCategory,
+        isPhysicalRetrofit: retrofit.isPhysicalRetrofit,
+        opportunityCount: 0,
+        opportunities: []
+      };
+      current.opportunityCount += 1;
+      current.opportunities.push(summarized);
+      groups.set(retrofit.retrofitTypeId, current);
+    }
+  }
+
+  return [...groups.values()]
+    .map((group) => ({
+      ...group,
+      opportunities: group.opportunities.sort(compareResults)
+    }))
+    .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
 }
 
 function buildReport({ userReports, opportunities, outputPath }) {
@@ -200,6 +249,8 @@ function buildReport({ userReports, opportunities, outputPath }) {
     for (const item of report.commonQuestions.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
     lines.push("", "Common unresolved requirements among promising matches:");
     for (const item of report.unresolved.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
+    lines.push("", "Retrofit types inferred from promising matches:");
+    for (const retrofit of report.retrofits.slice(0, 8)) lines.push(`- ${retrofit.displayName}: ${retrofit.opportunityCount}`);
     lines.push("", "Common blockers across rejected/unavailable opportunities:");
     for (const item of report.blockers.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
   }

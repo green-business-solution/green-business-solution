@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) retrofit opportunity index
+
+- Added a canonical retrofit taxonomy layer and generated a separate public retrofit-to-opportunity index.
+- Added retrofit classifications to match results so each sample test case can group promising opportunities by retrofit type.
+- Updated the admin `Test Cases` tab to show inferred retrofit groups and let admins click a retrofit to inspect the related opportunities for that sample profile.
+
 ## 2026-06-25 - Codex (GPT-5) opportunity source links in matching results
 
 - Preserved source, application, and website URLs in deterministic match results and summarized sample matching output.

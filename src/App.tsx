@@ -218,6 +218,13 @@ type SampleMatchResult = {
   opportunityId: string;
   opportunityName: string;
   offerId?: string | null;
+  retrofitTypeIds?: string[];
+  retrofitTypes?: Array<{
+    retrofitTypeId: string;
+    displayName: string;
+    parentCategory: string;
+    isPhysicalRetrofit: boolean;
+  }>;
   sourceUrl?: string | null;
   websiteUrl?: string | null;
   applicationUrl?: string | null;
@@ -243,6 +250,15 @@ type SampleMatchResult = {
 type SampleCount = {
   value: string;
   count: number;
+};
+
+type SampleRetrofitGroup = {
+  retrofitTypeId: string;
+  displayName: string;
+  parentCategory: string;
+  isPhysicalRetrofit: boolean;
+  opportunityCount: number;
+  opportunities: SampleMatchResult[];
 };
 
 type SampleNormalizedProfile = {
@@ -284,6 +300,7 @@ type SampleMatchingTestCase = {
   sourceForm: Record<string, unknown>;
   normalizedProfile: SampleNormalizedProfile;
   statusCounts: Record<string, number>;
+  retrofits?: SampleRetrofitGroup[];
   topResults: SampleMatchResult[];
   commonQuestions: SampleCount[];
   blockers: SampleCount[];
@@ -295,6 +312,7 @@ type SampleMatchingTestCasesData = {
   matchingNow: string;
   opportunityCount: number;
   sampleUserCount: number;
+  retrofitTaxonomyVersion?: string;
   testCases: SampleMatchingTestCase[];
 };
 
@@ -3702,10 +3720,15 @@ function AdminDashboard({
 function AdminTestCasesPanel() {
   const [dataset, setDataset] = useState<SampleMatchingTestCasesData | null>(null);
   const [selectedTestCaseId, setSelectedTestCaseId] = useState("");
+  const [selectedRetrofitTypeId, setSelectedRetrofitTypeId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const testCases = dataset?.testCases || [];
   const selectedTestCase = testCases.find((testCase) => testCase.sampleUserId === selectedTestCaseId) || testCases[0];
+  const selectedRetrofit =
+    selectedTestCase?.retrofits?.find((retrofit) => retrofit.retrofitTypeId === selectedRetrofitTypeId) ||
+    selectedTestCase?.retrofits?.[0] ||
+    null;
 
   useEffect(() => {
     let isActive = true;
@@ -3744,6 +3767,18 @@ function AdminTestCasesPanel() {
       isActive = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!selectedTestCase) return;
+    const retrofits = selectedTestCase.retrofits || [];
+    if (retrofits.length === 0) {
+      setSelectedRetrofitTypeId("");
+      return;
+    }
+    if (!retrofits.some((retrofit) => retrofit.retrofitTypeId === selectedRetrofitTypeId)) {
+      setSelectedRetrofitTypeId(retrofits[0].retrofitTypeId);
+    }
+  }, [selectedTestCase, selectedRetrofitTypeId]);
 
   if (isLoading) {
     return (
@@ -3794,6 +3829,7 @@ function AdminTestCasesPanel() {
   const geo = site.geo || {};
   const utility = site.utility?.electric || {};
   const project = normalizedProfile.project || {};
+  const retrofitGroups = selectedTestCase.retrofits || [];
   const statusRows = SAMPLE_MATCH_STATUS_ORDER.map((status) => ({
     status,
     count: selectedTestCase.statusCounts[status] || 0
@@ -3868,14 +3904,50 @@ function AdminTestCasesPanel() {
 
           <article className="data-card">
             <div>
-              <p className="eyebrow">Top matching opportunities</p>
-              <h3>{selectedTestCase.topResults.length} strongest non-blocked results</h3>
+              <p className="eyebrow">Retrofits from matched opportunities</p>
+              <h3>{retrofitGroups.length} retrofit types</h3>
+            </div>
+            <div className="retrofit-button-grid">
+              {retrofitGroups.length === 0 ? (
+                <p className="empty-state">No retrofit types were inferred for this test case.</p>
+              ) : (
+                retrofitGroups.map((retrofit) => (
+                  <button
+                    aria-pressed={retrofit.retrofitTypeId === selectedRetrofit?.retrofitTypeId}
+                    className="retrofit-filter-button"
+                    key={retrofit.retrofitTypeId}
+                    onClick={() => setSelectedRetrofitTypeId(retrofit.retrofitTypeId)}
+                    type="button"
+                  >
+                    <span>{retrofit.displayName}</span>
+                    <small>
+                      {retrofit.opportunityCount.toLocaleString()} {retrofit.opportunityCount === 1 ? "opportunity" : "opportunities"}
+                    </small>
+                  </button>
+                ))
+              )}
+            </div>
+          </article>
+
+          <article className="data-card">
+            <div>
+              <p className="eyebrow">Opportunities for selected retrofit</p>
+              <h3>{selectedRetrofit ? selectedRetrofit.displayName : "No retrofit selected"}</h3>
+              {selectedRetrofit ? (
+                <p className="muted-message">
+                  {selectedRetrofit.opportunityCount.toLocaleString()} matching opportunities for this test case.
+                </p>
+              ) : null}
             </div>
             <div className="match-result-list">
-              {selectedTestCase.topResults.length === 0 ? (
-                <p className="empty-state">No top matches were generated for this test case.</p>
+              {!selectedRetrofit ? (
+                <p className="empty-state">Select a retrofit type to see related opportunities.</p>
+              ) : selectedRetrofit.opportunities.length === 0 ? (
+                <p className="empty-state">No opportunities were generated for this retrofit type.</p>
               ) : (
-                selectedTestCase.topResults.map((result) => <SampleMatchCard key={`${result.opportunityId}:${result.offerId || "offer"}`} result={result} />)
+                selectedRetrofit.opportunities.map((result) => (
+                  <SampleMatchCard key={`${selectedRetrofit.retrofitTypeId}:${result.opportunityId}:${result.offerId || "offer"}`} result={result} />
+                ))
               )}
             </div>
           </article>
@@ -3894,6 +3966,7 @@ function AdminTestCasesPanel() {
 function SampleMatchCard({ result }: { result: SampleMatchResult }) {
   const sourceSummary = result.sourceSummary || {};
   const sourceLinkLabel = sourceSummary.sourceName === "DSIRE" ? "DSIRE source" : "Source page";
+  const retrofitLabels = (result.retrofitTypes || []).map((retrofit) => retrofit.displayName).slice(0, 5);
   const nextQuestion = result.nextQuestion?.prompt
     ? [`${result.nextQuestion.prompt}${result.nextQuestion.criterionId ? ` (${result.nextQuestion.criterionId})` : ""}`]
     : [];
@@ -3917,6 +3990,14 @@ function SampleMatchCard({ result }: { result: SampleMatchResult }) {
         <DetailItem label="State" value={sampleValue(sourceSummary.state)} />
         <DetailItem label="Confidence" value={`${Math.round(result.opportunityDataConfidence * 100)}% data / ${Math.round(result.userProfileCompleteness * 100)}% profile`} />
       </div>
+
+      {retrofitLabels.length > 0 ? (
+        <div className="pill-row match-retrofit-list">
+          {retrofitLabels.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
+        </div>
+      ) : null}
 
       {result.sourceUrl || result.applicationUrl || (result.websiteUrl && result.websiteUrl !== result.sourceUrl) ? (
         <div className="link-list match-link-list">

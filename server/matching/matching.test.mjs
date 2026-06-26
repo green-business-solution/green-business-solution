@@ -3,6 +3,7 @@ import { buildOpportunityMatchProfile } from "./buildOpportunityMatchProfile.mjs
 import { evaluateOpportunityForUser } from "./evaluateRules.mjs";
 import { summarizeMatchResult } from "./explainMatch.mjs";
 import { normalizeUserProfile } from "./normalizeUserProfile.mjs";
+import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
 
 const now = new Date("2026-06-25T12:00:00Z");
 
@@ -137,6 +138,30 @@ describe("matching pipeline", () => {
 
     expect(summary.sourceUrl).toBe(opportunity.sourceUrl);
     expect(summary.websiteUrl).toBe(opportunity.websiteUrl);
+  });
+
+  it("classifies one opportunity into multiple retrofit types", () => {
+    const opportunity = {
+      opportunityId: "test-multi-retrofit",
+      canonicalTitle: "Commercial retrofit bundle",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "CA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Rebates are available for LED lighting, refrigeration equipment, and solar PV systems.",
+      technologies: ["LED Lighting", "Refrigerators/Freezers", "Solar Photovoltaics"],
+      sectors: ["Commercial"],
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const retrofits = classifyRetrofitsForOpportunity(opportunity, profile).map((retrofit) => retrofit.retrofitTypeId);
+
+    expect(retrofits).toContain("led_lighting_retrofit");
+    expect(retrofits).toContain("high_efficiency_refrigeration_equipment");
+    expect(retrofits).toContain("rooftop_solar_pv");
   });
 
   it("does not classify battery electric vehicle text as battery storage", () => {

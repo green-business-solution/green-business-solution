@@ -3,6 +3,8 @@ export function summarizeMatchResult(result) {
     opportunityId: result.opportunityId,
     opportunityName: result.opportunityName,
     offerId: result.offerId,
+    retrofitTypeIds: result.retrofitTypeIds || [],
+    retrofitTypes: result.retrofitTypes || [],
     sourceUrl: result.sourceUrl,
     websiteUrl: result.websiteUrl,
     applicationUrl: result.applicationUrl,

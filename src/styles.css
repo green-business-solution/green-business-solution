@@ -839,6 +839,44 @@ dd {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.retrofit-button-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.retrofit-filter-button {
+  align-items: start;
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  color: #16231b;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  min-height: 74px;
+  padding: 12px;
+  text-align: left;
+}
+
+.retrofit-filter-button:hover,
+.retrofit-filter-button[aria-pressed="true"] {
+  background: #edf5ef;
+  border-color: #a9c8b5;
+}
+
+.retrofit-filter-button span {
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.retrofit-filter-button small {
+  color: #5e6e65;
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .match-result-card {
   background: #ffffff;
   border: 1px solid #dce3dd;
@@ -864,6 +902,10 @@ dd {
 
 .match-link-list {
   margin-top: -2px;
+}
+
+.match-retrofit-list {
+  margin-top: -4px;
 }
 
 .match-detail-grid {
@@ -1184,6 +1226,7 @@ dd {
   .test-case-layout,
   .test-case-stat-grid,
   .test-case-insight-grid,
+  .retrofit-button-grid,
   .match-detail-grid,
   .opportunity-review-layout,
   .opportunity-summary-grid {
