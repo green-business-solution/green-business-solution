@@ -75,6 +75,8 @@ rm -rf "${LAMBDA_PACKAGE_DIR}" "${LAMBDA_ZIP}"
 mkdir -p "${LAMBDA_PACKAGE_DIR}"
 cp package.json package-lock.json "${LAMBDA_PACKAGE_DIR}/"
 cp -R server "${LAMBDA_PACKAGE_DIR}/server"
+mkdir -p "${LAMBDA_PACKAGE_DIR}/data"
+cp data/bill_field_dictionary.json "${LAMBDA_PACKAGE_DIR}/data/"
 
 (
   cd "${LAMBDA_PACKAGE_DIR}"

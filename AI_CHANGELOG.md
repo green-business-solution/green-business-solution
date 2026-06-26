@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) Lambda packaging fix
+
+- Updated the production deploy package to include the bill-field dictionary required by the energy-data parser so the API Lambda can import the merged server bundle.
+
 ## 2026-06-26 - Codex (GPT-5) nationwide matching test cases
 
 - Added 40 nationwide sample matching profiles covering residential, multifamily, small business, nonprofit, public-sector, industrial, data-center, tribal, island, rural, and cooperative-utility edge cases.
