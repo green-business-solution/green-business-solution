@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) intake footer back button
+
+- Added a footer back button that appears from step 2 onward, matches the primary button height, and uses the existing conversational intake step navigation to move backward.
+
 ## 2026-06-25 - Codex (GPT-5) intake top chip removal
 
 - Removed the top `STEP X • section` chip row from the conversational intake flow and tightened the shell spacing so the question area sits higher on every step.

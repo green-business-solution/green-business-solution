@@ -3511,6 +3511,13 @@ function IntakePage({
             {error ? <p className="error-message intake-error">{error}</p> : null}
             <div className="step-bottom-area">
               <div className="bottom-controls">
+                {stepIndex > 0 ? (
+                  <button className="step-back-button" disabled={isSubmitting} onClick={goBack} type="button">
+                    ← Back
+                  </button>
+                ) : (
+                  <span className="step-back-button-placeholder" aria-hidden="true" />
+                )}
                 <div className="conversational-action-group">
                   {currentStep?.kind === "choice" && currentStep.optional ? (
                     <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
