@@ -19,6 +19,7 @@ const outputPath = process.env.MATCHING_OUTPUT_PATH || "/tmp/retrofi-sample-matc
 const reportPath = process.env.MATCHING_REPORT_PATH || path.join(dataDir, "sample_matching_report.md");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
 const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
+const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
 const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
@@ -26,8 +27,11 @@ const profile = process.env.AWS_PROFILE || "gbs";
 const now = new Date(process.env.MATCHING_NOW || Date.now());
 
 const sampleUsers = readJson(sampleUsersPath);
+const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
-const opportunities = (sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws()).map(applyUtilityReview);
+const opportunities = (sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws())
+  .map(applyFacilityReview)
+  .map(applyUtilityReview);
 const userProfiles = sampleUsers.map((sample) => ({
   sampleUserId: sample.sampleUserId,
   description: sample.description,
@@ -63,6 +67,8 @@ const output = {
   sampleUserCount: sampleUsers.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   retrofitIndexPath,
+  facilityReviewsPath: facilityReviewsByOpportunityId.size > 0 ? facilityReviewsPath : null,
+  facilityReviewCount: facilityReviewsByOpportunityId.size,
   utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
   sampleUsers: userProfiles,
@@ -101,17 +107,31 @@ console.log(`Results: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
 console.log(`Admin test cases: ${testCasesPath}`);
 console.log(`Retrofit opportunity index: ${retrofitIndexPath}`);
+console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`);
 console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
 
-function readUtilityReviews(filePath) {
+function readReviewMap(filePath, reviewFieldName) {
   if (!fs.existsSync(filePath)) return new Map();
   const source = readJson(filePath);
   const rows = Array.isArray(source) ? source : source.reviews || [];
   return new Map(
     rows
-      .filter((row) => row?.opportunityId && row?.utilityRestrictionReview)
-      .map((row) => [row.opportunityId, row.utilityRestrictionReview])
+      .filter((row) => row?.opportunityId && row?.[reviewFieldName])
+      .map((row) => [row.opportunityId, row[reviewFieldName]])
   );
+}
+
+function readUtilityReviews(filePath) {
+  return readReviewMap(filePath, "utilityRestrictionReview");
+}
+
+function applyFacilityReview(opportunity) {
+  const facilityEligibilityReview = facilityReviewsByOpportunityId.get(opportunity.opportunityId);
+  if (!facilityEligibilityReview) return opportunity;
+  return {
+    ...opportunity,
+    facilityEligibilityReview
+  };
 }
 
 function applyUtilityReview(opportunity) {
@@ -229,6 +249,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "- Hard failures are limited to explicit unavailable status/deadline, state mismatch, utility mismatch, residential-only mismatch, applicant mismatch, technology mismatch, and parsed numeric threshold failure.",
     "- Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.",
+    `- Facility eligibility uses the generated review artifact when present. Artifact: ${facilityReviewsByOpportunityId.size > 0 ? `\`${facilityReviewsPath}\` (${facilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
     `- Utility review artifact: ${utilityReviewsByOpportunityId.size > 0 ? `\`${utilityReviewsPath}\` (${utilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
     "- Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.",
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",

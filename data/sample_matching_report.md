@@ -1,7 +1,7 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T01:31:34.403Z
-Matcher clock: 2026-06-26T01:28:45.307Z
+Generated: 2026-06-26T02:34:44.858Z
+Matcher clock: 2026-06-26T02:31:56.933Z
 Opportunities evaluated: 2096
 Sample users evaluated: 10
 Pairings evaluated: 20960
@@ -14,6 +14,7 @@ Full JSON output: `/tmp/retrofi-sample-matching-results.json`
 
 - Hard failures are limited to explicit unavailable status/deadline, state mismatch, utility mismatch, residential-only mismatch, applicant mismatch, technology mismatch, and parsed numeric threshold failure.
 - Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.
+- Facility eligibility uses the generated review artifact when present. Artifact: not loaded.
 - Utility review artifact: not loaded.
 - Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.
 - Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.
@@ -44,7 +45,7 @@ Normalized profile:
   },
   "ownershipRelationship": "tenant",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 12000,
@@ -60,8 +61,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 0,
-  "likely_eligible": 5,
+  "eligible_active": 4,
+  "likely_eligible": 1,
   "needs_information": 0,
   "upcoming": 9,
   "manual_review": 7,
@@ -71,51 +72,47 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- likely_eligible / 96: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
+- eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: PG&E - EV Fleet Program (SOURCE_DSIRE:dsire_program_id:22283)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
 - likely_eligible / 96: GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PG&E - EV Fleet Program (SOURCE_DSIRE:dsire_program_id:22283)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- upcoming / 96: Technology Enablers for Using Electric Vehicles as Distributed Energy Resources (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:1d170a7698573135)
+  - unresolved: Opportunity site or facility specificity (education_campus) does not directly match the user's site type.
+- upcoming / 100: Technology Enablers for Using Electric Vehicles as Distributed Energy Resources (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:1d170a7698573135)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.
-- upcoming / 96: Characterizing Non-Driving Electric Vehicle Energy Efficiency (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:ee2970905a6a3bbb)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.
+- upcoming / 100: Characterizing Non-Driving Electric Vehicle Energy Efficiency (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:ee2970905a6a3bbb)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.
-- upcoming / 79: Floating Offshore Wind Environmental Monitoring Technologies (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:710eb522f987205c)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.
+- upcoming / 83: Floating Offshore Wind Environmental Monitoring Technologies (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:710eb522f987205c)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.; No project technology was normalized.
-- upcoming / 79: Location-Specific Analysis of Decommissioning to Support Long-Term Gas Planning (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:2412a914048ed625)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.; No project technology was normalized.
+- upcoming / 83: Location-Specific Analysis of Decommissioning to Support Long-Term Gas Planning (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:2412a914048ed625)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.; No project technology was normalized.
-- upcoming / 79: Supporting Applications of Open Data for Electricity Sector Planning and Outreach (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:a530fbc239afb0af)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.; No project technology was normalized.
+- upcoming / 83: Supporting Applications of Open Data for Electricity Sector Planning and Outreach (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:a530fbc239afb0af)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.; No project technology was normalized.
-- upcoming / 79: Advancing Integrated Planning to Support the Energy Transition (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:9a2dd6f8a9c9eb1f)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.; No project technology was normalized.
+- upcoming / 83: Advancing Integrated Planning to Support the Energy Transition (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:9a2dd6f8a9c9eb1f)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.; No project technology was normalized.
-- upcoming / 79: Scaled-Up Gas Decommissioning Pilots (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:77fb1c936a0c0a6a)
+  - unresolved: Opportunity appears upcoming; application timing should be verified.; No project technology was normalized.
+- upcoming / 83: Scaled-Up Gas Decommissioning Pilots (SOURCE_CA_ENERGY_COMMISSION:cec_url_hash:url_hash:77fb1c936a0c0a6a)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Opportunity appears upcoming; application timing should be verified.; Opportunity building specificity (other) does not directly match the user's site type.; No project technology was normalized.
+  - unresolved: Opportunity appears upcoming; application timing should be verified.; No project technology was normalized.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 13
 - Opportunity appears upcoming; application timing should be verified.: 9
 - No project technology was normalized.: 7
-- No specific eligible building type was normalized.: 1
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 1
+- Site or facility type restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - EV charger installation: 7
@@ -153,7 +150,7 @@ Normalized profile:
   },
   "ownershipRelationship": "property_manager",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 95000,
@@ -171,8 +168,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 3,
-  "likely_eligible": 22,
+  "eligible_active": 13,
+  "likely_eligible": 12,
   "needs_information": 0,
   "upcoming": 18,
   "manual_review": 8,
@@ -182,50 +179,41 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible_active / 100: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible_active / 100: City of San Francisco - GreenFinanceSF (SOURCE_DSIRE:dsire_program_id:4091)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
-  - matched: Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
-  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
-- likely_eligible / 96: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
 
 Common next questions:
 - project.technologyIds: 7
 - site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 22
 - Opportunity appears upcoming; application timing should be verified.: 18
-- No specific eligible building type was normalized.: 12
 - No project technology was normalized.: 7
-- Opportunity building specificity (multifamily) does not directly match the user's site type.: 3
+- Site or facility type restriction is still unknown after review.: 7
+- Availability is uncertain.: 2
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 9
@@ -265,7 +253,7 @@ Normalized profile:
   },
   "ownershipRelationship": "owner",
   "buildingTypes": [
-    "warehouse"
+    "industrial_manufacturing"
   ],
   "squareFootage": {
     "value": 90000,
@@ -283,8 +271,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 0,
-  "likely_eligible": 98,
+  "eligible_active": 6,
+  "likely_eligible": 92,
   "needs_information": 0,
   "upcoming": 18,
   "manual_review": 16,
@@ -294,53 +282,47 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
   - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
+  - unresolved: Availability is uncertain.; Opportunity site or facility specificity (education_campus, healthcare) does not directly match the user's site type.
 - likely_eligible / 96: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: PON-24-002 - K–12 Energy Efficiency Program (KTEP) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-24-002)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (office) does not directly match the user's site type.
-- likely_eligible / 96: CaliforniaFIRST (SOURCE_DSIRE:dsire_program_id:5309)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Opportunity site or facility specificity (education_campus) does not directly match the user's site type.
 
 Common next questions:
 - site.utility.electric.distributionUtilityId: 77
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
+- Site or facility type restriction is still unknown after review.: 76
 - User electric distribution utility is unknown.: 76
-- Opportunity building specificity (other) does not directly match the user's site type.: 51
-- No specific eligible building type was normalized.: 34
 - Opportunity appears upcoming; application timing should be verified.: 18
 - Availability is uncertain.: 10
+- No project technology was normalized.: 7
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 47
@@ -382,7 +364,7 @@ Normalized profile:
   },
   "ownershipRelationship": "owner",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 120000,
@@ -400,8 +382,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 1,
-  "likely_eligible": 16,
+  "eligible_active": 11,
+  "likely_eligible": 6,
   "needs_information": 0,
   "upcoming": 12,
   "manual_review": 9,
@@ -411,51 +393,41 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
+- eligible_active / 100: Self-Generation Incentive Program (SOURCE_DSIRE:dsire_program_id:552)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
+- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: PG&E - EV Fleet Program (SOURCE_DSIRE:dsire_program_id:22283)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
+- eligible_active / 100: Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - likely_eligible / 96: GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Self-Generation Incentive Program (SOURCE_DSIRE:dsire_program_id:552)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: Opportunity building specificity (retail) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (retail, other) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (medical) does not directly match the user's site type.
-- likely_eligible / 96: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Opportunity site or facility specificity (education_campus) does not directly match the user's site type.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 16
 - Opportunity appears upcoming; application timing should be verified.: 12
-- No specific eligible building type was normalized.: 9
 - No project technology was normalized.: 7
-- Opportunity building specificity (medical) does not directly match the user's site type.: 1
+- Site or facility type restriction is still unknown after review.: 4
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
+- Opportunity site or facility specificity (agricultural_facility) does not directly match the user's site type.: 1
 
 Retrofit types inferred from promising matches:
 - Battery storage system: 8
@@ -497,7 +469,7 @@ Normalized profile:
   },
   "ownershipRelationship": "tenant",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 30000,
@@ -515,8 +487,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 3,
-  "likely_eligible": 22,
+  "eligible_active": 13,
+  "likely_eligible": 12,
   "needs_information": 0,
   "upcoming": 18,
   "manual_review": 8,
@@ -526,50 +498,41 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible_active / 100: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible_active / 100: City of San Francisco - GreenFinanceSF (SOURCE_DSIRE:dsire_program_id:4091)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
-  - matched: Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
-  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
-- likely_eligible / 96: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
 
 Common next questions:
 - project.technologyIds: 7
 - site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 22
 - Opportunity appears upcoming; application timing should be verified.: 18
-- No specific eligible building type was normalized.: 12
 - No project technology was normalized.: 7
-- Opportunity building specificity (multifamily) does not directly match the user's site type.: 3
+- Site or facility type restriction is still unknown after review.: 7
+- Availability is uncertain.: 2
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 9
@@ -611,7 +574,7 @@ Normalized profile:
   },
   "ownershipRelationship": "owner",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 18000,
@@ -628,8 +591,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 1,
-  "likely_eligible": 12,
+  "eligible_active": 8,
+  "likely_eligible": 5,
   "needs_information": 0,
   "upcoming": 10,
   "manual_review": 9,
@@ -639,51 +602,44 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: Commercial Solar Rebate Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program)
+- eligible_active / 100: Commercial Solar Rebate Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Nonprofit Solar Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:nonprofit-solar-grant)
+- eligible_active / 100: Nonprofit Solar Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:nonprofit-solar-grant)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
+- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (retail, other) does not directly match the user's site type.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- likely_eligible / 96: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+  - unresolved: Opportunity site or facility specificity (education_campus) does not directly match the user's site type.
 - likely_eligible / 96: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (medical) does not directly match the user's site type.
-- likely_eligible / 96: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: Residential Energy Conservation Subsidy Exclusion (Corporate) (SOURCE_DSIRE:dsire_program_id:727)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Site or facility type restriction is still unknown after review.
 - likely_eligible / 96: Residential Energy Conservation Subsidy Exclusion (Personal) (SOURCE_DSIRE:dsire_program_id:666)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
+  - unresolved: Site or facility type restriction is still unknown after review.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 12
 - Opportunity appears upcoming; application timing should be verified.: 10
-- No specific eligible building type was normalized.: 8
 - No project technology was normalized.: 7
-- Opportunity building specificity (medical) does not directly match the user's site type.: 1
+- Site or facility type restriction is still unknown after review.: 4
+- Opportunity site or facility specificity (agricultural_facility) does not directly match the user's site type.: 1
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 1
 
 Retrofit types inferred from promising matches:
 - Battery storage system: 7
@@ -725,7 +681,7 @@ Normalized profile:
   },
   "ownershipRelationship": "tenant",
   "buildingTypes": [
-    "grocery"
+    "grocery_food_retail"
   ],
   "squareFootage": {
     "value": 15000,
@@ -743,8 +699,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 0,
-  "likely_eligible": 25,
+  "eligible_active": 12,
+  "likely_eligible": 13,
   "needs_information": 0,
   "upcoming": 17,
   "manual_review": 8,
@@ -754,53 +710,41 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
+- eligible_active / 100: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
-  - matched: Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
-  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
-- likely_eligible / 96: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
-- likely_eligible / 96: PON-24-002 - K–12 Energy Efficiency Program (KTEP) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-24-002)
+- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: California Energy Design Assistance (CEDA) (SOURCE_DSIRE:dsire_program_id:1455)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: City of San Francisco - GreenFinanceSF (SOURCE_DSIRE:dsire_program_id:4091)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
 - project.technologyIds: 7
 - site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 21
 - Opportunity appears upcoming; application timing should be verified.: 17
-- No specific eligible building type was normalized.: 12
 - No project technology was normalized.: 7
-- Opportunity building specificity (multifamily) does not directly match the user's site type.: 3
+- Site or facility type restriction is still unknown after review.: 7
+- Availability is uncertain.: 2
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 9
@@ -842,7 +786,7 @@ Normalized profile:
   },
   "ownershipRelationship": "property_manager",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 60000,
@@ -860,8 +804,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 3,
-  "likely_eligible": 25,
+  "eligible_active": 15,
+  "likely_eligible": 13,
   "needs_information": 0,
   "upcoming": 18,
   "manual_review": 8,
@@ -871,48 +815,39 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible_active / 100: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+- eligible_active / 100: GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
-  - matched: Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
-  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
+- eligible_active / 100: City of San Francisco - GreenFinanceSF (SOURCE_DSIRE:dsire_program_id:4091)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 26
 - Opportunity appears upcoming; application timing should be verified.: 18
-- No specific eligible building type was normalized.: 12
 - No project technology was normalized.: 7
+- Site or facility type restriction is still unknown after review.: 7
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 3
 - Availability is uncertain.: 2
 
 Retrofit types inferred from promising matches:
@@ -955,7 +890,7 @@ Normalized profile:
   },
   "ownershipRelationship": "owner",
   "buildingTypes": [
-    "office"
+    "office_admin"
   ],
   "squareFootage": {
     "value": 80000,
@@ -973,8 +908,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 4,
-  "likely_eligible": 43,
+  "eligible_active": 33,
+  "likely_eligible": 14,
   "needs_information": 0,
   "upcoming": 19,
   "manual_review": 8,
@@ -984,48 +919,40 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: HVAC System and Heat Pump Rebates (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:hvac-system-and-heat-pump-rebates)
+- eligible_active / 100: Commercial Solar Rebate Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Commercial Solar Rebate Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program)
+- eligible_active / 100: Nonprofit Solar Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:nonprofit-solar-grant)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Nonprofit Solar Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:nonprofit-solar-grant)
+- eligible_active / 100: Emerging Technologies Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:emerging-technologies-grant)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Emerging Technologies Grant (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:emerging-technologies-grant)
+- eligible_active / 100: Building Operator Certification Training Scholarships (SOURCE_SILICON_VALLEY_POWER:svp_source_section:ef0850c0e097a7f9:building-operator-certification-training-scholarships)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Building Operator Certification Training Scholarships (SOURCE_SILICON_VALLEY_POWER:svp_source_section:ef0850c0e097a7f9:building-operator-certification-training-scholarships)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-  - unresolved: Opportunity building specificity (multifamily, other) does not directly match the user's site type.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
+- eligible_active / 100: Building Optimization Rebate (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:building-optimization-rebate)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
+- eligible_active / 100: Silicon Valley Power - Emerging Technologies Grant Program (SOURCE_DSIRE:dsire_program_id:22068)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: Energy Design Assistance (SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-design-assistance)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
+- eligible_active / 100: Food Service Equipment Rebate Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:food-service-equipment-rebate-program)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 38
 - Opportunity appears upcoming; application timing should be verified.: 19
-- No specific eligible building type was normalized.: 16
+- Site or facility type restriction is still unknown after review.: 10
 - No project technology was normalized.: 7
-- Opportunity building specificity (multifamily) does not directly match the user's site type.: 2
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
+- Opportunity site or facility specificity (industrial_manufacturing, agricultural_facility) does not directly match the user's site type.: 2
 
 Retrofit types inferred from promising matches:
 - Low-flow fixture retrofit: 21
@@ -1067,7 +994,7 @@ Normalized profile:
   },
   "ownershipRelationship": "tenant",
   "buildingTypes": [
-    "restaurant"
+    "restaurant_foodservice"
   ],
   "squareFootage": {
     "value": 8500,
@@ -1084,8 +1011,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 0,
-  "likely_eligible": 24,
+  "eligible_active": 12,
+  "likely_eligible": 12,
   "needs_information": 0,
   "upcoming": 16,
   "manual_review": 7,
@@ -1095,52 +1022,40 @@ Status counts:
 ```
 
 Top matches requiring no hard blocker:
-- likely_eligible / 96: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
+- eligible_active / 100: PG&E - Non-Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4899)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
-  - matched: Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
-  - matched: Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.; Applicant type overlaps eligible sector: commercial.
-  - unresolved: Availability is uncertain.; Opportunity building specificity (other, medical) does not directly match the user's site type.
-- likely_eligible / 96: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
-  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
-- likely_eligible / 96: PON-24-002 - K–12 Energy Efficiency Program (KTEP) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-24-002)
+- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-  - unresolved: Opportunity building specificity (other) does not directly match the user's site type.
-- likely_eligible / 96: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-  - unresolved: No specific eligible building type was normalized.
-- likely_eligible / 96: California Energy Design Assistance (CEDA) (SOURCE_DSIRE:dsire_program_id:1455)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches PG&E.
-  - unresolved: Opportunity building specificity (multifamily) does not directly match the user's site type.
+- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: City of San Francisco - GreenFinanceSF (SOURCE_DSIRE:dsire_program_id:4091)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: GFO-22-903 - Cost Share for Federal Funding Opportunities Clean Hydrogen Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-22-903)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
+- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
 - project.technologyIds: 7
 
 Common unresolved requirements among promising matches:
-- Opportunity building specificity (other) does not directly match the user's site type.: 20
 - Opportunity appears upcoming; application timing should be verified.: 16
-- No specific eligible building type was normalized.: 12
 - No project technology was normalized.: 7
-- Opportunity building specificity (office) does not directly match the user's site type.: 3
+- Site or facility type restriction is still unknown after review.: 7
+- Availability is uncertain.: 2
+- Opportunity site or facility specificity (education_campus) does not directly match the user's site type.: 2
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 7

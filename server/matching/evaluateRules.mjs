@@ -1,4 +1,5 @@
 import { UTILITY_DISPLAY_NAMES, unique } from "./ontologies.mjs";
+import { buildingTypesOverlap } from "./facilityEligibility.mjs";
 import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
 
 export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now = new Date() } = {}) {
@@ -172,13 +173,35 @@ function evaluateApplicant(user, applicant, offer) {
 function evaluateSite(user, site) {
   const userBuildingTypes = user.site.buildingTypes || [];
   const eligibleBuildingTypes = site.eligibleBuildingTypes || [];
+  const facilityEligibilityStatus = site.facilityEligibilityStatus || "unknown";
+  if (facilityEligibilityStatus === "none") {
+    return pass("Opportunity explicitly has no site or facility type restriction.");
+  }
+  if (facilityEligibilityStatus === "not_applicable") {
+    return pass("Site or facility type is not applicable to this opportunity.");
+  }
+  if (facilityEligibilityStatus === "none_found_after_review") {
+    return pass("No site or facility type restriction was found after source review.");
+  }
+  if (facilityEligibilityStatus === "broad_nonresidential" && buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
+    return pass("User site is compatible with broad nonresidential facility eligibility.");
+  }
+  if (facilityEligibilityStatus === "broad_commercial" && buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
+    return pass("User site is compatible with broad commercial facility eligibility.");
+  }
+  if (facilityEligibilityStatus === "broad_residential" && buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
+    return pass("User site is compatible with broad residential facility eligibility.");
+  }
+  if (facilityEligibilityStatus !== "required") {
+    return unknown("Site or facility type restriction is still unknown after review.");
+  }
   if (eligibleBuildingTypes.length === 0) {
-    return unknown("No specific eligible building type was normalized.");
+    return unknown("Site or facility type is required but no specific eligible type was normalized.");
   }
-  if (userBuildingTypes.some((type) => eligibleBuildingTypes.includes(type))) {
-    return pass(`Building type matches: ${userBuildingTypes.filter((type) => eligibleBuildingTypes.includes(type)).join(", ")}.`);
+  if (buildingTypesOverlap(userBuildingTypes, eligibleBuildingTypes, facilityEligibilityStatus)) {
+    return pass(`Site or facility type matches: ${userBuildingTypes.filter((type) => eligibleBuildingTypes.includes(type)).join(", ") || userBuildingTypes.join(", ")}.`);
   }
-  return unknown(`Opportunity building specificity (${eligibleBuildingTypes.join(", ")}) does not directly match the user's site type.`);
+  return unknown(`Opportunity site or facility specificity (${eligibleBuildingTypes.join(", ")}) does not directly match the user's site type.`);
 }
 
 function evaluateProject(user, project, offer) {

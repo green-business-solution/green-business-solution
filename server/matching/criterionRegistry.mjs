@@ -38,8 +38,8 @@ export const criterionRegistry = [
     dataType: "string[]",
     supportedOperators: ["overlaps", "in"],
     collectionMode: "current_form",
-    userQuestion: "What type of building or facility is this?",
-    opportunityAliases: ["building type", "facility type", "property type"]
+    userQuestion: "What type of site or facility is this?",
+    opportunityAliases: ["building type", "facility type", "property type", "site type"]
   },
   {
     criterionId: "site.ownershipRelationship",

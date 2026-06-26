@@ -610,15 +610,19 @@ const homeownerBuildingTypeOptions: StepOption[] = [
 
 const businessBuildingTypeOptions: StepOption[] = [
   { label: "Office", description: "Professional or administrative workspace", value: "Office" },
-  { label: "Retail", description: "Storefront or customer-facing space", value: "Retail" },
+  { label: "Retail / storefront", description: "Storefront or customer-facing space", value: "Retail / Storefront" },
   { label: "Restaurant / commercial kitchen", description: "Food service or kitchen operation", value: "Restaurant / Commercial Kitchen" },
-  { label: "Grocery / convenience store", description: "Food retail or convenience format", value: "Grocery / Convenience Store" },
-  { label: "Warehouse", description: "Storage, logistics, or fulfillment space", value: "Warehouse" },
-  { label: "Industrial", description: "Manufacturing or heavy-use facility", value: "Industrial" },
-  { label: "Hospitality", description: "Hotel, lodging, or guest-serving property", value: "Hospitality" },
-  { label: "Medical / dental office", description: "Healthcare or clinical office", value: "Medical / Dental Office" },
+  { label: "Grocery / convenience / cold storage", description: "Food retail, convenience, or cold-storage site", value: "Grocery / Convenience / Cold Storage" },
+  { label: "Warehouse / logistics", description: "Storage, logistics, or fulfillment space", value: "Warehouse / Logistics" },
+  { label: "Industrial / manufacturing", description: "Production, fabrication, or processing site", value: "Industrial / Manufacturing" },
+  { label: "Hospitality / lodging", description: "Hotel, lodging, or guest-serving property", value: "Hospitality / Lodging" },
+  { label: "Medical / healthcare", description: "Healthcare, clinical, or dental facility", value: "Medical / Healthcare" },
+  { label: "School / education campus", description: "K-12, college, university, or campus site", value: "School / Education Campus" },
+  { label: "Multifamily / apartment building", description: "Apartment, condo, or shared residential property", value: "Multifamily / Apartment Building" },
+  { label: "Agricultural / greenhouse", description: "Farm, ranch, greenhouse, or ag facility", value: "Agricultural / Greenhouse" },
+  { label: "Data center / server facility", description: "Data center, server room, or compute facility", value: "Data Center / Server Facility" },
   { label: "Mixed-use", description: "Multiple uses in one property", value: "Mixed-use" },
-  { label: "Other", description: "Another building type", value: "Other" }
+  { label: "Other", description: "Another site or facility type", value: "Other" }
 ];
 
 const organizationSizeStepOptions = organizationSizeOptions.map((option) => ({ label: option, value: option }));
@@ -908,7 +912,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
       {
         id: "buildingType",
         kind: "choice",
-        question: "What type of building is it?",
+        question: "What type of site or facility is it?",
         field: "buildingType",
         section: "Property",
         options: businessBuildingTypeOptions

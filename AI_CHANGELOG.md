@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) facility taxonomy and eligibility review
+
+- Expanded the public business site/facility type choices while preserving the existing intake step layout.
+- Added canonical facility eligibility normalization, broad facility statuses, source-page review artifacts, and DynamoDB writeback for all 2,096 opportunity records.
+- Regenerated admin matching test cases from DynamoDB-stored utility/facility reviews, increasing sample `eligible_active` pairings from near-zero to 127 across the 10 test profiles.
+
 ## 2026-06-25 - Codex (GPT-5) intake back button text color
 
 - Updated the conversational intake footer back button to use white label text.

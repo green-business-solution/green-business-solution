@@ -193,14 +193,32 @@ export const ORGANIZATION_TYPE_ALIASES = {
 };
 
 export const BUILDING_TYPE_ALIASES = {
-  restaurant: ["restaurant / commercial kitchen", "restaurant", "commercial kitchen", "food service"],
-  grocery: ["grocery / convenience store", "grocery", "convenience store"],
-  hospitality: ["hotel / hospitality", "hotel", "hospitality", "lodging"],
-  warehouse: ["warehouse / industrial space", "warehouse", "industrial space"],
-  medical: ["medical / dental office", "medical", "dental", "healthcare"],
-  office: ["office"],
-  retail: ["retail"],
-  multifamily: ["multifamily", "apartment"],
+  any_site: ["any site", "any facility", "any building", "all building types"],
+  residential: ["residential", "single family", "single-family home", "townhome", "condo", "duplex", "triplex", "homeowner", "home"],
+  multifamily_residential: ["multifamily / apartment building", "multifamily", "multi family", "apartment", "apartments", "condominium", "condo building"],
+  nonresidential: ["nonresidential", "non-residential", "commercial and industrial", "c and i", "c&i"],
+  commercial: ["commercial building", "commercial facility", "commercial site", "commercial property", "commercial"],
+  public_institutional: ["public institution", "public institutional", "public sector facility", "government building", "municipal building"],
+  office_admin: ["office", "office / administrative", "administrative", "professional office", "business office"],
+  retail_storefront: ["retail / storefront", "retail", "storefront", "store front"],
+  restaurant_foodservice: ["restaurant / commercial kitchen", "restaurant", "commercial kitchen", "food service", "foodservice"],
+  grocery_food_retail: [
+    "grocery / convenience / cold storage",
+    "grocery / convenience store",
+    "grocery",
+    "convenience store",
+    "food retail",
+    "cold storage",
+    "food storage"
+  ],
+  warehouse_logistics: ["warehouse / logistics", "warehouse / industrial space", "warehouse", "logistics", "fulfillment", "distribution center"],
+  industrial_manufacturing: ["industrial / manufacturing", "industrial facility", "industrial", "manufacturing", "production", "processing"],
+  hospitality_lodging: ["hospitality / lodging", "hotel / hospitality", "hotel", "hospitality", "lodging", "motel"],
+  healthcare: ["medical / healthcare", "medical / dental office", "medical", "dental", "healthcare", "health care", "clinic", "hospital"],
+  education_campus: ["school / education campus", "school", "education", "educational", "campus", "college", "university", "k-12"],
+  agricultural_facility: ["agricultural / greenhouse", "agricultural facility", "agricultural", "agriculture", "farm", "ranch", "greenhouse"],
+  data_center: ["data center / server facility", "data center", "server facility", "server room", "compute facility"],
+  mixed_use: ["mixed-use", "mixed use", "multiple uses"],
   other: ["other"]
 };
 
@@ -297,6 +315,14 @@ export function canonicalOrganizationType(value) {
 
 export function canonicalBuildingType(value) {
   const normalized = normalizeText(value);
+  for (const type of Object.keys(BUILDING_TYPE_ALIASES)) {
+    if (normalized === normalizeText(type)) return type;
+  }
+  for (const [type, aliases] of Object.entries(BUILDING_TYPE_ALIASES)) {
+    if (aliases.some((alias) => normalized === normalizeText(alias))) {
+      return type;
+    }
+  }
   for (const [type, aliases] of Object.entries(BUILDING_TYPE_ALIASES)) {
     if (aliases.some((alias) => normalized.includes(normalizeText(alias)))) {
       return type;

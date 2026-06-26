@@ -1,13 +1,13 @@
 import crypto from "node:crypto";
 import {
   asArray,
-  canonicalBuildingType,
   canonicalOrganizationType,
   canonicalTechnologiesFromText,
   extractStateCode,
   normalizeText,
   unique
 } from "./ontologies.mjs";
+import { extractFacilityRequirements } from "./facilityEligibility.mjs";
 import { extractUtilityRequirements } from "./utilityRestrictions.mjs";
 
 export const MATCH_PROFILE_SCHEMA_VERSION = "opportunity-match-profile-v1";
@@ -207,16 +207,19 @@ function extractApplicant(opportunity, searchableText) {
 }
 
 function extractSite(opportunity, searchableText) {
-  const eligibleBuildingTypes = unique([
-    ...inferBuildingTypesFromText(searchableText),
-    ...asArray(opportunity.matchingParameters?.businessClassification?.values).map(canonicalBuildingType)
-  ].filter(Boolean));
+  const facilityRequirements = extractFacilityRequirements(opportunity, searchableText);
 
   return {
-    eligibleBuildingTypes,
+    facilityEligibilityStatus: facilityRequirements.eligibilityStatus,
+    eligibleBuildingTypes: facilityRequirements.eligibleBuildingTypes,
+    evidenceText: facilityRequirements.evidenceText,
+    reviewMethod: facilityRequirements.reviewMethod,
+    sourceUrlsChecked: facilityRequirements.sourceUrlsChecked,
+    fetchErrors: facilityRequirements.fetchErrors,
+    reviewedAt: facilityRequirements.reviewedAt,
     ownershipRelationships: [],
     existingConstructionRequired: /existing building|existing facility|retrofit/i.test(searchableText) ? true : null,
-    confidence: eligibleBuildingTypes.length > 0 ? 0.58 : 0.35
+    confidence: facilityRequirements.confidence
   };
 }
 
@@ -412,12 +415,6 @@ function inferApplicantTypesFromText(value) {
   if (text.includes("business")) types.push("commercial");
   if (text.includes("school") || text.includes("public agency")) types.push("government");
   return unique(types);
-}
-
-function inferBuildingTypesFromText(value) {
-  const text = normalizeText(value);
-  const buildingWords = ["restaurant", "grocery", "hotel", "hospitality", "warehouse", "office", "retail", "multifamily", "medical", "dental"];
-  return unique(buildingWords.map((word) => (text.includes(word) ? canonicalBuildingType(word) : null)).filter(Boolean));
 }
 
 function lookupNames(value) {
