@@ -2247,7 +2247,7 @@ body {
     radial-gradient(circle at top, rgba(218, 233, 223, 0.64), transparent 36%),
     linear-gradient(180deg, #f8faf8 0%, #f5f8f4 100%);
   min-height: calc(100vh - 110px);
-  padding: 22px clamp(22px, 4vw, 48px) 30px;
+  padding: 22px 0 30px;
 }
 
 .scan-page .intake-form {
@@ -2278,40 +2278,28 @@ body {
   padding: 12px 14px;
 }
 
-.privacy-line {
-  align-items: center;
-  color: #7d8c84;
-  display: flex;
-  font-size: 13px;
-  font-weight: 500;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 0;
-  min-height: 24px;
-  text-align: center;
-}
-
 .conversational-intake-form {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 0 auto;
-  max-width: 960px;
   min-height: calc(100vh - 150px);
   padding: 0;
 }
 
-.conversational-step-shell {
-  align-content: start;
+.intake-shell {
   display: grid;
   flex: 1 1 auto;
   gap: 18px;
+  margin: 0 auto;
+  max-width: 960px;
   min-height: 0;
+  padding: 0 24px;
+  width: 100%;
 }
 
-.conversational-step-header {
-  display: flex;
-  justify-content: stretch;
+.step-top-row {
+  display: grid;
+  width: 100%;
 }
 
 .conversational-step-meta {
@@ -2323,6 +2311,20 @@ body {
   gap: 18px;
   justify-content: space-between;
   min-height: 24px;
+  width: 100%;
+}
+
+.step-question-area {
+  animation: onboarding-step-in 250ms ease;
+  display: grid;
+  gap: 0;
+  justify-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.step-body {
+  display: grid;
   width: 100%;
 }
 
@@ -2368,18 +2370,7 @@ body {
   width: 7px;
 }
 
-.conversational-step-body {
-  animation: onboarding-step-in 250ms ease;
-  display: grid;
-  gap: 0;
-  justify-items: center;
-  margin: 0 auto;
-  max-width: 880px;
-  text-align: center;
-  width: 100%;
-}
-
-.conversational-step-body h2 {
+.step-question-area h2 {
   border-top: 0;
   color: #0b1d16;
   font-size: 40px;
@@ -2390,7 +2381,7 @@ body {
   padding-top: 0;
 }
 
-.conversational-step-body > p {
+.step-question-area > p {
   color: #5b6b63;
   font-size: 17px;
   font-weight: 400;
@@ -2404,6 +2395,7 @@ body {
   gap: 12px 22px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 22px auto 0;
+  max-width: 880px;
   width: 100%;
 }
 
@@ -2523,8 +2515,10 @@ body {
 .conversational-input-shell {
   display: block;
   margin-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 520px;
   width: 100%;
-  max-width: 880px;
 }
 
 .conversational-input-shell input,
@@ -2553,6 +2547,11 @@ body {
 .review-panel,
 .review-grid {
   width: 100%;
+}
+
+.review-panel {
+  margin: 32px auto 0;
+  max-width: 880px;
 }
 
 .review-grid {
@@ -2584,25 +2583,44 @@ body {
   line-height: 1.45;
 }
 
-.conversational-footer {
-  background: transparent;
-  border-top: 0;
-  bottom: 0;
+.intake-error {
+  margin: 0 auto;
+  max-width: 880px;
+  width: 100%;
+}
+
+.privacy-line {
+  align-items: center;
+  color: #7d8c84;
+  display: flex;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 880px;
+  min-height: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+.step-bottom-area {
   display: grid;
   gap: 14px;
-  grid-template-rows: minmax(24px, auto) minmax(52px, auto) auto;
+  grid-template-rows: minmax(52px, auto) auto;
   margin: auto auto 0;
   max-width: 880px;
   padding-top: 20px;
   width: 100%;
 }
 
-.conversational-actions {
+.bottom-controls {
   align-items: center;
   display: flex;
   gap: 14px;
   justify-content: flex-end;
   min-height: 52px;
+  width: 100%;
 }
 
 .conversational-action-group {
@@ -2610,6 +2628,7 @@ body {
   gap: 12px;
   justify-content: end;
   min-height: 52px;
+  width: 100%;
 }
 
 .step-next-button {
@@ -2637,6 +2656,8 @@ body {
   display: grid;
   gap: 8px;
   justify-items: center;
+  margin: 0 auto;
+  max-width: 880px;
   width: 100%;
 }
 
@@ -3471,10 +3492,10 @@ body {
   }
 
   .scan-page {
-    padding: 22px 18px 44px;
+    padding: 22px 0 44px;
   }
 
-  .conversational-step-body h2 {
+  .step-question-area h2 {
     font-size: 40px;
     max-width: 11ch;
   }
@@ -3578,18 +3599,15 @@ body {
     padding: 8px 0 6px;
   }
 
-  .conversational-footer {
-    grid-template-rows: minmax(24px, auto) minmax(52px, auto) auto;
+  .intake-shell {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .conversational-actions,
+  .bottom-controls,
   .conversational-action-group {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .conversational-step-shell {
-    min-height: 0;
   }
 }
 
@@ -3626,17 +3644,17 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .conversational-footer {
+  .step-bottom-area {
     gap: 12px;
     padding-top: 18px;
   }
 
-  .conversational-actions {
+  .bottom-controls {
     justify-content: stretch;
   }
 
   .conversational-action-group {
-    width: 100%;
+    justify-content: stretch;
   }
 
   .step-next-button,
@@ -3649,7 +3667,7 @@ body {
     gap: 10px;
   }
 
-  .conversational-step-body h2 {
+  .step-question-area h2 {
     font-size: 34px;
   }
 

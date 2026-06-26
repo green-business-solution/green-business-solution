@@ -3499,8 +3499,8 @@ function IntakePage({
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <section className="scan-page form-shell">
         <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
-          <div className="conversational-step-shell">
-            <div className="conversational-step-header">
+          <div className="intake-shell">
+            <div className="step-top-row">
               <div className="conversational-step-meta">
                 {stepIndex > 0 ? (
                   <button className="step-back-link" disabled={isSubmitting} onClick={goBack} type="button">
@@ -3516,44 +3516,46 @@ function IntakePage({
                 </span>
               </div>
             </div>
-            <div className="conversational-step-body" key={currentStep?.id}>
+            <section className="step-question-area" key={currentStep?.id}>
               <h2>{currentStep?.question}</h2>
               {currentStep?.description ? <p>{currentStep.description}</p> : null}
               {currentStep?.optional ? <p className="required-note">Optional</p> : null}
+            </section>
+            <div className="step-body">
               {renderStepBody()}
             </div>
-          </div>
-          {error ? <p className="error-message">{error}</p> : null}
-          <div className="conversational-footer">
+            {error ? <p className="error-message intake-error">{error}</p> : null}
             <div className="privacy-line">
               <LockIcon />
               <span>Your information is kept private and used only to prepare your recommendations.</span>
             </div>
-            <div className="conversational-actions">
-              <div className="conversational-action-group">
-                {currentStep?.kind === "choice" && currentStep.optional ? (
-                  <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
-                    Skip for now
-                  </button>
-                ) : null}
-                {currentStep?.kind === "choice" && canAdvanceCurrentStep() ? (
-                  <button className="step-next-button" disabled={isSubmitting} type="submit">
-                    Next →
-                  </button>
-                ) : null}
-                {(currentStep?.kind === "input" || currentStep?.kind === "textarea") && canAdvanceCurrentStep() ? (
-                  <button className="step-next-button" disabled={isSubmitting} type="submit">
-                    Next →
-                  </button>
-                ) : null}
-                {currentStep?.kind === "review" ? (
-                  <button className="step-next-button" disabled={isSubmitting} type="submit">
-                    {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Get Started"}
-                  </button>
-                ) : null}
+            <div className="step-bottom-area">
+              <div className="bottom-controls">
+                <div className="conversational-action-group">
+                  {currentStep?.kind === "choice" && currentStep.optional ? (
+                    <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
+                      Skip for now
+                    </button>
+                  ) : null}
+                  {currentStep?.kind === "choice" && canAdvanceCurrentStep() ? (
+                    <button className="step-next-button" disabled={isSubmitting} type="submit">
+                      Next →
+                    </button>
+                  ) : null}
+                  {(currentStep?.kind === "input" || currentStep?.kind === "textarea") && canAdvanceCurrentStep() ? (
+                    <button className="step-next-button" disabled={isSubmitting} type="submit">
+                      Next →
+                    </button>
+                  ) : null}
+                  {currentStep?.kind === "review" ? (
+                    <button className="step-next-button" disabled={isSubmitting} type="submit">
+                      {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Get Started"}
+                    </button>
+                  ) : null}
+                </div>
               </div>
+              <ProgressBar current={displayStepCurrent} total={displayStepTotal} />
             </div>
-            <ProgressBar current={displayStepCurrent} total={displayStepTotal} />
           </div>
         </form>
       </section>

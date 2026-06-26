@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) unified conversational intake shell
+
+- Replaced the stepper's mixed-width layout with one shared `960px` intake shell that now contains the header row, question area, body, privacy note, controls, and progress UI on every step.
+- Kept selection steps on an `880px` centered content area while constraining only text inputs to a centered `520px` field width inside the same outer shell.
+- Standardized the footer alignment so the privacy note, Next button row, and progress bar all share the same `880px` horizontal frame across the full 14-step flow.
+
 ## 2026-06-25 - Codex (GPT-5) conversational intake width wrapper fix
 
 - Fixed the single-field intake wrapper rendering inline, which prevented the shared full-width layout from applying on later steps.
