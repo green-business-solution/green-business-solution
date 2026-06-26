@@ -789,7 +789,11 @@ dd {
   overflow: hidden;
 }
 
-.admin-intake-summary-table {
+.admin-intake-summary-shell {
+  overflow: hidden;
+}
+
+.admin-intake-summary-scroll {
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -799,20 +803,6 @@ dd {
   gap: 14px;
   grid-template-columns: minmax(150px, 0.9fr) minmax(160px, 0.9fr) minmax(190px, 1fr) minmax(150px, 0.8fr) minmax(220px, 1.2fr) 138px;
   padding: 15px 16px;
-}
-
-.admin-intake-summary-row {
-  grid-template-columns:
-    minmax(180px, 1fr)
-    minmax(150px, 0.8fr)
-    minmax(160px, 0.85fr)
-    minmax(140px, 0.7fr)
-    minmax(180px, 0.9fr)
-    minmax(120px, 0.55fr)
-    minmax(140px, 0.65fr)
-    150px;
-  min-width: 1480px;
-  width: max-content;
 }
 
 .admin-row + .admin-row {
@@ -855,29 +845,92 @@ dd {
   font-size: 30px;
 }
 
-.admin-clickable-row {
-  appearance: none;
-  background: #ffffff;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
+.admin-intake-summary-table {
+  border-collapse: collapse;
+  min-width: 1800px;
+  table-layout: fixed;
+  width: 1800px;
+}
+
+.admin-intake-summary-col-client {
+  width: 320px;
+}
+
+.admin-intake-summary-col-type {
+  width: 220px;
+}
+
+.admin-intake-summary-col-utility {
+  width: 260px;
+}
+
+.admin-intake-summary-col-filled {
+  width: 220px;
+}
+
+.admin-intake-summary-col-missing {
+  width: 260px;
+}
+
+.admin-intake-summary-col-completion {
+  width: 160px;
+}
+
+.admin-intake-summary-col-status {
+  width: 180px;
+}
+
+.admin-intake-summary-col-updated {
+  width: 180px;
+}
+
+.admin-intake-summary-table th,
+.admin-intake-summary-table td {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 18px 16px;
   text-align: left;
-  width: 100%;
+  vertical-align: top;
 }
 
-.admin-clickable-row.admin-intake-summary-row {
-  min-width: 1480px;
-  width: max-content;
+.admin-intake-summary-table thead th {
+  background: #edf2ee;
+  color: #526058;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
 }
 
-.admin-clickable-row:hover {
+.admin-intake-summary-table tbody tr + tr td {
+  border-top: 1px solid #edf1ee;
+}
+
+.admin-intake-summary-table td small {
+  display: block;
+  margin-top: 4px;
+}
+
+.admin-intake-summary-table-row {
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.admin-intake-summary-table-row:hover {
   background: #f5faf6;
 }
 
-.admin-clickable-row:focus-visible {
+.admin-intake-summary-table-row:focus-visible {
   outline: 2px solid #2f6c43;
   outline-offset: -2px;
+}
+
+.admin-intake-summary-empty {
+  padding: 24px 16px;
+}
+
+.admin-intake-summary-empty small {
+  display: block;
+  margin-top: 4px;
 }
 
 .admin-status-pill {
@@ -1461,10 +1514,6 @@ dd {
   }
 
   .admin-row {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-intake-summary-row {
     grid-template-columns: 1fr;
   }
 

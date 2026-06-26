@@ -612,3 +612,4 @@
 - Split the admin database browser into separate `Opportunities` and `Retrofits` tabs while preserving the existing raw DynamoDB table tabs and test-case tab.
 - Added a retrofit index admin panel backed by `public/retrofit_opportunity_index.json`.
 - Tightened transportation-electrification technology normalization so EV/fleet pages do not match HVAC-only user interests without explicit building HVAC evidence.
+- Rebuilt the `/admin` Client Intake Summary into a fixed-column horizontally scrollable table so headers and row cells stay aligned at all viewport widths.

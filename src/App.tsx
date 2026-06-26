@@ -5233,6 +5233,14 @@ function ClientIntakeSummaryPanel({
 }) {
   const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows), [rows]);
   const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
+  const handleSummaryRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>, userId: string) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    onOpenIntakeTable(userId);
+  };
 
   return (
     <section className="admin-section">
@@ -5264,65 +5272,85 @@ function ClientIntakeSummaryPanel({
         </article>
       </div>
 
-      <div className="admin-table admin-intake-summary-table" role="table" aria-label="Client intake summary">
-        <div className="admin-row admin-head admin-intake-summary-row" role="row">
-          <span role="columnheader">Client</span>
-          <span role="columnheader">Type</span>
-          <span role="columnheader">Utility</span>
-          <span role="columnheader">Bill fields filled</span>
-          <span role="columnheader">Missing fields</span>
-          <span role="columnheader">Completion %</span>
-          <span role="columnheader">Status</span>
-          <span role="columnheader">Last updated</span>
+      <div className="admin-table admin-intake-summary-shell">
+        <div className="admin-intake-summary-scroll">
+          <table className="admin-intake-summary-table" aria-label="Client intake summary">
+            <colgroup>
+              <col className="admin-intake-summary-col-client" />
+              <col className="admin-intake-summary-col-type" />
+              <col className="admin-intake-summary-col-utility" />
+              <col className="admin-intake-summary-col-filled" />
+              <col className="admin-intake-summary-col-missing" />
+              <col className="admin-intake-summary-col-completion" />
+              <col className="admin-intake-summary-col-status" />
+              <col className="admin-intake-summary-col-updated" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Client</th>
+                <th scope="col">Type</th>
+                <th scope="col">Utility</th>
+                <th scope="col">Bill fields filled</th>
+                <th scope="col">Missing fields</th>
+                <th scope="col">Completion %</th>
+                <th scope="col">Status</th>
+                <th scope="col">Last updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              {summaryRows.length === 0 ? (
+                <tr>
+                  <td className="admin-intake-summary-empty" colSpan={8}>
+                    <strong>{isLoading ? "Loading intake summaries..." : "No client intake summaries available."}</strong>
+                    <small>{isLoading ? "This tab is loading after sign-in." : "Refresh after new intake submissions arrive."}</small>
+                  </td>
+                </tr>
+              ) : summaryRows.map((row) => (
+                <tr
+                  className="admin-intake-summary-table-row"
+                  key={row.userId}
+                  onClick={() => onOpenIntakeTable(row.userId)}
+                  onKeyDown={(event) => handleSummaryRowKeyDown(event, row.userId)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <td>
+                    <strong>{row.clientName}</strong>
+                    <small>{row.email}</small>
+                    <small>{row.companyName}</small>
+                  </td>
+                  <td>
+                    {row.organizationType}
+                    <small>{row.siteAddress}</small>
+                  </td>
+                  <td>
+                    {row.utilityProvider}
+                    <small>{row.uploadedFileCount} uploaded file(s)</small>
+                  </td>
+                  <td>
+                    {`${row.filledFieldCount}/${row.totalExpectedFieldCount}`}
+                    <small>{utilitySummaryFields.slice(0, 3).map((field) => field.display_name).join(", ")}...</small>
+                  </td>
+                  <td>
+                    {row.missingFieldCount.toLocaleString()}
+                    <small>{row.missingFieldLabels.slice(0, 2).join(", ") || "None"}</small>
+                  </td>
+                  <td>
+                    <strong>{row.completionPercent}%</strong>
+                    <small>{row.filledFieldCount > 0 ? "Utility fields detected" : "No extracted values yet"}</small>
+                  </td>
+                  <td>
+                    <mark className={`admin-status-pill ${slugify(row.processingStatus)}`}>{row.processingStatus}</mark>
+                  </td>
+                  <td>
+                    {formatDate(row.lastUpdated)}
+                    <small>Opens the intake table view</small>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        {summaryRows.length === 0 ? (
-          <div className="admin-row admin-empty-row" role="row">
-            <span role="cell">
-              <strong>{isLoading ? "Loading intake summaries..." : "No client intake summaries available."}</strong>
-              <small>{isLoading ? "This tab is loading after sign-in." : "Refresh after new intake submissions arrive."}</small>
-            </span>
-          </div>
-        ) : summaryRows.map((row) => (
-          <button
-            className="admin-row admin-intake-summary-row admin-clickable-row"
-            key={row.userId}
-            onClick={() => onOpenIntakeTable(row.userId)}
-            type="button"
-          >
-            <span>
-              <strong>{row.clientName}</strong>
-              <small>{row.email}</small>
-              <small>{row.companyName}</small>
-            </span>
-            <span>
-              {row.organizationType}
-              <small>{row.siteAddress}</small>
-            </span>
-            <span>
-              {row.utilityProvider}
-              <small>{row.uploadedFileCount} uploaded file(s)</small>
-            </span>
-            <span>
-              {`${row.filledFieldCount}/${row.totalExpectedFieldCount}`}
-              <small>{utilitySummaryFields.slice(0, 3).map((field) => field.display_name).join(", ")}...</small>
-            </span>
-            <span>
-              {row.missingFieldCount.toLocaleString()}
-              <small>{row.missingFieldLabels.slice(0, 2).join(", ") || "None"}</small>
-            </span>
-            <span>
-              <strong>{row.completionPercent}%</strong>
-              <small>{row.filledFieldCount > 0 ? "Utility fields detected" : "No extracted values yet"}</small>
-            </span>
-            <span>
-              <mark className={`admin-status-pill ${slugify(row.processingStatus)}`}>{row.processingStatus}</mark>
-            </span>
-            <span>
-              {formatDate(row.lastUpdated)}
-              <small>Opens the intake table view</small>
-            </span>
-          </button>
-        ))}
       </div>
     </section>
   );
