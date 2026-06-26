@@ -532,11 +532,13 @@ const gasUtilityStepOptions = [...electricUtilityStepOptions, "I don't have gas"
 type IntakeFlowId = "unselected" | "homeowner" | "multifamily" | "business" | "organization";
 
 type StepOption = {
+  description?: string;
   label: string;
   value: string;
 };
 
 type ConversationalStep = {
+  ctaLabel?: string;
   id: string;
   kind: "choice" | "input" | "textarea" | "review";
   question: string;
@@ -546,19 +548,20 @@ type ConversationalStep = {
   optional?: boolean;
   options?: StepOption[];
   placeholder?: string;
+  section: string;
   validate?: (value: string) => string | null;
 };
 
 const organizationTypeChoices: StepOption[] = [
-  { label: "Homeowner", value: "homeowner" },
-  { label: "Multifamily Property Owner / Manager", value: "multifamily_property_owner_manager" },
-  { label: "Business / Commercial", value: "business_commercial" },
-  { label: "Nonprofit", value: "nonprofit" },
-  { label: "Government / Public Agency", value: "government_public_agency" },
-  { label: "School / Education", value: "school_education" },
-  { label: "Agriculture", value: "agriculture" },
-  { label: "Industrial / Manufacturing", value: "industrial_manufacturing" },
-  { label: "Other", value: "other" }
+  { label: "Homeowner", description: "Own and live in a home", value: "homeowner" },
+  { label: "Multifamily Property Owner / Manager", description: "Own or manage a residential property", value: "multifamily_property_owner_manager" },
+  { label: "Business / Commercial", description: "Operate or own a commercial property", value: "business_commercial" },
+  { label: "Nonprofit", description: "Mission-driven organization or association", value: "nonprofit" },
+  { label: "Government / Public Agency", description: "City, county, state, or federal agency", value: "government_public_agency" },
+  { label: "School / Education", description: "K-12, college, university, or campus", value: "school_education" },
+  { label: "Agriculture", description: "Farm, ranch, greenhouse, or ag operation", value: "agriculture" },
+  { label: "Industrial / Manufacturing", description: "Production, fabrication, or processing site", value: "industrial_manufacturing" },
+  { label: "Other", description: "Something else not listed here", value: "other" }
 ];
 
 const organizationTypeLabelByValue = Object.fromEntries(
@@ -566,24 +569,24 @@ const organizationTypeLabelByValue = Object.fromEntries(
 ) as Record<string, string>;
 
 const homeownerBuildingTypeOptions: StepOption[] = [
-  { label: "Single-family home", value: "Single-family home" },
-  { label: "Townhome", value: "Townhome" },
-  { label: "Condo", value: "Condo" },
-  { label: "Duplex / triplex", value: "Duplex / triplex" },
-  { label: "Other", value: "Other" }
+  { label: "Single-family home", description: "Detached residence", value: "Single-family home" },
+  { label: "Townhome", description: "Attached home with shared walls", value: "Townhome" },
+  { label: "Condo", description: "Unit in a shared building", value: "Condo" },
+  { label: "Duplex / triplex", description: "Small multi-unit property", value: "Duplex / triplex" },
+  { label: "Other", description: "Another home type", value: "Other" }
 ];
 
 const businessBuildingTypeOptions: StepOption[] = [
-  { label: "Office", value: "Office" },
-  { label: "Retail", value: "Retail" },
-  { label: "Restaurant / commercial kitchen", value: "Restaurant / Commercial Kitchen" },
-  { label: "Grocery / convenience store", value: "Grocery / Convenience Store" },
-  { label: "Warehouse", value: "Warehouse" },
-  { label: "Industrial", value: "Industrial" },
-  { label: "Hospitality", value: "Hospitality" },
-  { label: "Medical / dental office", value: "Medical / Dental Office" },
-  { label: "Mixed-use", value: "Mixed-use" },
-  { label: "Other", value: "Other" }
+  { label: "Office", description: "Professional or administrative workspace", value: "Office" },
+  { label: "Retail", description: "Storefront or customer-facing space", value: "Retail" },
+  { label: "Restaurant / commercial kitchen", description: "Food service or kitchen operation", value: "Restaurant / Commercial Kitchen" },
+  { label: "Grocery / convenience store", description: "Food retail or convenience format", value: "Grocery / Convenience Store" },
+  { label: "Warehouse", description: "Storage, logistics, or fulfillment space", value: "Warehouse" },
+  { label: "Industrial", description: "Manufacturing or heavy-use facility", value: "Industrial" },
+  { label: "Hospitality", description: "Hotel, lodging, or guest-serving property", value: "Hospitality" },
+  { label: "Medical / dental office", description: "Healthcare or clinical office", value: "Medical / Dental Office" },
+  { label: "Mixed-use", description: "Multiple uses in one property", value: "Mixed-use" },
+  { label: "Other", description: "Another building type", value: "Other" }
 ];
 
 const organizationSizeStepOptions = organizationSizeOptions.map((option) => ({ label: option, value: option }));
@@ -624,7 +627,9 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
       id: "organizationType",
       kind: "choice",
       question: "What best describes you?",
+      description: "We'll personalize every recommendation automatically.",
       field: "organizationType",
+      section: "Personalization",
       options: organizationTypeChoices,
       validate: (value) => (value ? null : "Choose the option that best matches you.")
     }
@@ -639,6 +644,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "What is your property address?",
         field: "siteAddress",
+        section: "Property",
         placeholder: "Street address, city, state, ZIP"
       },
       {
@@ -646,6 +652,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your electric utility provider?",
         field: "electricUtilityProvider",
+        section: "Utilities",
         options: electricUtilityChoiceOptions
       },
       {
@@ -653,6 +660,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your gas utility provider?",
         field: "gasUtilityProvider",
+        section: "Utilities",
         options: gasUtilityChoiceOptions,
         optional: true
       },
@@ -661,6 +669,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "What type of home is it?",
         field: "buildingType",
+        section: "Property",
         options: homeownerBuildingTypeOptions
       },
       {
@@ -669,6 +678,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is the approximate square footage?",
         field: "squareFootage",
         inputMode: "numeric",
+        section: "Property",
         placeholder: "Approximate is fine",
         validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
       },
@@ -677,6 +687,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "input",
         question: "What is your name?",
         field: "contactName",
+        section: "Contact",
         placeholder: "Full name"
       },
       {
@@ -685,6 +696,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your email?",
         field: "email",
         inputMode: "email",
+        section: "Contact",
         placeholder: "name@example.com",
         validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
       },
@@ -694,6 +706,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your phone number?",
         field: "phone",
         inputMode: "tel",
+        section: "Contact",
         placeholder: "(555) 555-5555",
         optional: true
       },
@@ -702,6 +715,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "Anything else we should know?",
         field: "notes",
+        section: "Notes",
         placeholder: "Optional details",
         optional: true
       }
@@ -715,6 +729,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "input",
         question: "What is the property name?",
         field: "companyName",
+        section: "Property",
         placeholder: "Property name",
         optional: true
       },
@@ -723,6 +738,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "What is the property address?",
         field: "siteAddress",
+        section: "Property",
         placeholder: "Street address, city, state, ZIP"
       },
       {
@@ -730,6 +746,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your electric utility provider?",
         field: "electricUtilityProvider",
+        section: "Utilities",
         options: electricUtilityChoiceOptions
       },
       {
@@ -737,6 +754,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your gas utility provider?",
         field: "gasUtilityProvider",
+        section: "Utilities",
         options: gasUtilityChoiceOptions,
         optional: true
       },
@@ -746,6 +764,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "How many units are in the property?",
         field: "numberOfUnits",
         inputMode: "numeric",
+        section: "Property",
         placeholder: "Number of units",
         validate: (value) => (!value.trim() ? "Enter the number of units." : isNumericEntry(value) ? null : "Number of units must be numeric.")
       },
@@ -755,6 +774,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is the approximate square footage?",
         field: "squareFootage",
         inputMode: "numeric",
+        section: "Property",
         placeholder: "Approximate is fine",
         validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
       },
@@ -763,6 +783,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "input",
         question: "What is your name?",
         field: "contactName",
+        section: "Contact",
         placeholder: "Full name"
       },
       {
@@ -771,6 +792,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your email?",
         field: "email",
         inputMode: "email",
+        section: "Contact",
         placeholder: "name@example.com",
         validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
       },
@@ -780,6 +802,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your phone number?",
         field: "phone",
         inputMode: "tel",
+        section: "Contact",
         placeholder: "(555) 555-5555",
         optional: true
       },
@@ -788,6 +811,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "Anything else we should know?",
         field: "notes",
+        section: "Notes",
         placeholder: "Optional details",
         optional: true
       }
@@ -802,6 +826,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "input",
         question: isOrganizationFlow ? "What is your organization name?" : "What is your company name?",
         field: "companyName",
+        section: "Organization",
         placeholder: isOrganizationFlow ? "Organization name" : "Company name"
       },
       {
@@ -810,6 +835,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your website?",
         field: "website",
         inputMode: "url",
+        section: "Organization",
         placeholder: "https://example.com",
         optional: true
       },
@@ -818,6 +844,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "What is your organization size?",
         field: "organizationSize",
+        section: "Organization",
         options: organizationSizeStepOptions,
         optional: true
       },
@@ -826,6 +853,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "What is your site address?",
         field: "siteAddress",
+        section: "Property",
         placeholder: "Street address, city, state, ZIP"
       },
       {
@@ -833,6 +861,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your electric utility provider?",
         field: "electricUtilityProvider",
+        section: "Utilities",
         options: electricUtilityChoiceOptions
       },
       {
@@ -840,6 +869,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "Who is your gas utility provider?",
         field: "gasUtilityProvider",
+        section: "Utilities",
         options: gasUtilityChoiceOptions,
         optional: true
       },
@@ -848,6 +878,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "choice",
         question: "What type of building is it?",
         field: "buildingType",
+        section: "Property",
         options: businessBuildingTypeOptions
       },
       {
@@ -856,6 +887,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is the approximate square footage?",
         field: "squareFootage",
         inputMode: "numeric",
+        section: "Property",
         placeholder: "Approximate is fine",
         validate: (value) => (!value.trim() ? "Enter the approximate square footage." : isNumericEntry(value) ? null : "Square footage must be numeric.")
       },
@@ -864,6 +896,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "input",
         question: "What is your name?",
         field: "contactName",
+        section: "Contact",
         placeholder: "Full name"
       },
       {
@@ -872,6 +905,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your email?",
         field: "email",
         inputMode: "email",
+        section: "Contact",
         placeholder: "name@example.com",
         validate: (value) => (!value.trim() ? "Enter your email address." : isEmail(value) ? null : "Email must be valid.")
       },
@@ -881,6 +915,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         question: "What is your phone number?",
         field: "phone",
         inputMode: "tel",
+        section: "Contact",
         placeholder: "(555) 555-5555",
         optional: true
       },
@@ -889,6 +924,7 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
         kind: "textarea",
         question: "Anything else we should know?",
         field: "notes",
+        section: "Notes",
         placeholder: "Optional details",
         optional: true
       }
@@ -901,6 +937,9 @@ function buildConversationalSteps(form: IntakeFormState): ConversationalStep[] {
       kind: "review",
       question: "Review and submit",
       description: "Use Back to make changes before you submit."
+      ,
+      ctaLabel: "Get Started",
+      section: "Review"
     });
   }
 
@@ -3067,6 +3106,8 @@ function IntakePage({
   const flow = intakeFlowForOrganizationType(form.organizationType);
   const progressPercent = steps.length > 0 ? Math.round(((stepIndex + 1) / steps.length) * 100) : 0;
   const showFlowProgress = flow !== "unselected" && steps.length > 1;
+  const currentChoiceValue =
+    currentStep?.field && typeof form[currentStep.field] === "string" ? form[currentStep.field] : "";
 
   const reviewRows = useMemo(() => {
     const rows: Array<{ label: string; value: string }> = [
@@ -3207,12 +3248,10 @@ function IntakePage({
 
     if (field === "organizationType") {
       resetPathSpecificFields(value);
-      setStepIndex(1);
       return;
     }
 
     updateField(field, value);
-    setStepIndex((current) => Math.min(current + 1, steps.length - 1));
   }
 
   async function submitForm(event: FormEvent) {
@@ -3279,7 +3318,13 @@ function IntakePage({
               onClick={() => handleChoiceSelection(currentStep.field as keyof IntakeFormState, option.value)}
               type="button"
             >
-              <span>{option.label}</span>
+              <div className="choice-card-copy">
+                <strong>{option.label}</strong>
+                {option.description ? <small>{option.description}</small> : null}
+              </div>
+              <span className="choice-card-check" aria-hidden="true">
+                {selectedValue === option.value ? "✓" : ""}
+              </span>
             </button>
           ))}
         </div>
@@ -3342,17 +3387,24 @@ function IntakePage({
       <section className="scan-page form-shell">
         <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
           <div className="conversational-step-shell">
-            {showFlowProgress ? (
+            <div className="conversational-step-header">
               <div className="conversational-step-meta">
-                <span>{`Step ${stepIndex + 1} of ${steps.length}`}</span>
+                {stepIndex > 0 ? (
+                  <button className="step-back-link" disabled={isSubmitting} onClick={goBack} type="button">
+                    Back
+                  </button>
+                ) : (
+                  <span />
+                )}
+                <span className="step-chip">
+                  <span className="step-chip-dot" />
+                  {currentStep?.section}
+                </span>
               </div>
-            ) : null}
-            <div className="conversational-step-body">
+            </div>
+            <div className="conversational-step-body" key={currentStep?.id}>
               <h2>{currentStep?.question}</h2>
               {currentStep?.description ? <p>{currentStep.description}</p> : null}
-              {currentStep?.id === "organizationType" ? (
-                <p>We&apos;ll use this to personalize your recommendations.</p>
-              ) : null}
               {currentStep?.optional ? <p className="required-note">Optional</p> : null}
               {renderStepBody()}
             </div>
@@ -3364,17 +3416,15 @@ function IntakePage({
           </div>
           <div className="conversational-footer">
             <div className="conversational-actions">
-              {stepIndex > 0 ? (
-                <button className="secondary-button" disabled={isSubmitting} onClick={goBack} type="button">
-                  Back
-                </button>
-              ) : (
-                <span />
-              )}
               <div className="conversational-action-group">
                 {currentStep?.kind === "choice" && currentStep.optional ? (
                   <button className="secondary-button" disabled={isSubmitting} onClick={goNext} type="button">
                     Skip for now
+                  </button>
+                ) : null}
+                {currentStep?.kind === "choice" ? (
+                  <button disabled={isSubmitting || (!currentChoiceValue && !currentStep.optional)} type="submit">
+                    Next
                   </button>
                 ) : null}
                 {currentStep?.kind === "input" || currentStep?.kind === "textarea" ? (
@@ -3384,7 +3434,7 @@ function IntakePage({
                 ) : null}
                 {currentStep?.kind === "review" ? (
                   <button disabled={isSubmitting} type="submit">
-                    {isSubmitting ? "Submitting..." : "Get Started"}
+                    {isSubmitting ? "Submitting..." : currentStep.ctaLabel || "Get Started"}
                   </button>
                 ) : null}
               </div>
