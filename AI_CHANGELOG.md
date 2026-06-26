@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-25 - Codex (GPT-5) admin retrofit relationship graph
+
+- Added a scrollable two-column SVG graph to each admin matching test case showing retrofit types, unique opportunities, and every connection between them.
+- Made retrofit graph nodes selectable so choosing a retrofit in the chart updates the detailed opportunity list below.
+
 ## 2026-06-25 - Codex (GPT-5) retrofit opportunity index
 
 - Added a canonical retrofit taxonomy layer and generated a separate public retrofit-to-opportunity index.

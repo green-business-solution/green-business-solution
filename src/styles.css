@@ -877,6 +877,85 @@ dd {
   font-weight: 750;
 }
 
+.relationship-graph-card {
+  overflow: hidden;
+}
+
+.relationship-graph-shell {
+  background: #f7faf7;
+  border: 1px solid #e1e9e3;
+  border-radius: 8px;
+  max-height: 720px;
+  overflow: auto;
+}
+
+.relationship-graph {
+  display: block;
+  min-width: 920px;
+  width: 100%;
+}
+
+.relationship-graph-column-label {
+  fill: #5e6d64;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.relationship-edge {
+  opacity: 0.16;
+  stroke: #7f9689;
+  stroke-linecap: round;
+  stroke-width: 1.2;
+}
+
+.relationship-edge.is-active {
+  opacity: 0.88;
+  stroke: #176b4c;
+  stroke-width: 2.1;
+}
+
+.relationship-node rect {
+  fill: #ffffff;
+  stroke: #dce3dd;
+  stroke-width: 1;
+}
+
+.relationship-node text {
+  fill: #16231b;
+  font-size: 12px;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.relationship-node-count {
+  fill: #65756c;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.relationship-retrofit-node {
+  cursor: pointer;
+}
+
+.relationship-retrofit-node:focus {
+  outline: none;
+}
+
+.relationship-retrofit-node:focus rect,
+.relationship-retrofit-node:hover rect,
+.relationship-retrofit-node.is-active rect {
+  fill: #e9f4ed;
+  stroke: #176b4c;
+  stroke-width: 1.5;
+}
+
+.relationship-opportunity-node.is-connected rect {
+  fill: #f2f8f4;
+  stroke: #a9c8b5;
+}
+
 .match-result-card {
   background: #ffffff;
   border: 1px solid #dce3dd;

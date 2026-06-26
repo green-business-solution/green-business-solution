@@ -3902,6 +3902,12 @@ function AdminTestCasesPanel() {
             ))}
           </div>
 
+          <TestCaseRelationshipGraph
+            onSelectRetrofit={setSelectedRetrofitTypeId}
+            retrofits={retrofitGroups}
+            selectedRetrofitTypeId={selectedRetrofit?.retrofitTypeId || ""}
+          />
+
           <article className="data-card">
             <div>
               <p className="eyebrow">Retrofits from matched opportunities</p>
@@ -3961,6 +3967,227 @@ function AdminTestCasesPanel() {
       </div>
     </section>
   );
+}
+
+type RelationshipGraphOpportunity = SampleMatchResult & {
+  graphKey: string;
+  retrofitCount: number;
+};
+
+type RelationshipGraphData = {
+  opportunities: RelationshipGraphOpportunity[];
+  edges: Array<{
+    retrofitTypeId: string;
+    opportunityKey: string;
+  }>;
+  edgeCount: number;
+};
+
+function TestCaseRelationshipGraph({
+  onSelectRetrofit,
+  retrofits,
+  selectedRetrofitTypeId
+}: {
+  onSelectRetrofit: (retrofitTypeId: string) => void;
+  retrofits: SampleRetrofitGroup[];
+  selectedRetrofitTypeId: string;
+}) {
+  const graph = useMemo(() => buildRelationshipGraph(retrofits), [retrofits]);
+  const activeRetrofitId = selectedRetrofitTypeId || retrofits[0]?.retrofitTypeId || "";
+  const selectedOpportunityKeys = new Set(
+    graph.edges.filter((edge) => edge.retrofitTypeId === activeRetrofitId).map((edge) => edge.opportunityKey)
+  );
+  const graphWidth = 920;
+  const leftX = 24;
+  const leftWidth = 286;
+  const rightX = 560;
+  const rightWidth = 336;
+  const topOffset = 50;
+  const rowHeight = 42;
+  const rectHeight = 30;
+  const graphHeight = Math.max(260, topOffset + Math.max(retrofits.length, graph.opportunities.length) * rowHeight + 32);
+  const retrofitYById = new Map(retrofits.map((retrofit, index) => [retrofit.retrofitTypeId, topOffset + index * rowHeight]));
+  const opportunityYByKey = new Map(graph.opportunities.map((opportunity, index) => [opportunity.graphKey, topOffset + index * rowHeight]));
+
+  return (
+    <article className="data-card relationship-graph-card">
+      <div>
+        <p className="eyebrow">Retrofit and opportunity map</p>
+        <h3>
+          {retrofits.length.toLocaleString()} retrofits, {graph.opportunities.length.toLocaleString()} opportunities
+        </h3>
+        <p className="muted-message">{graph.edgeCount.toLocaleString()} retrofit-opportunity connections.</p>
+      </div>
+
+      {retrofits.length === 0 || graph.opportunities.length === 0 ? (
+        <p className="empty-state">No relationship graph is available for this test case.</p>
+      ) : (
+        <div className="relationship-graph-shell">
+          <svg
+            aria-label="Retrofit types connected to matching opportunities"
+            className="relationship-graph"
+            role="img"
+            style={{ height: graphHeight }}
+            viewBox={`0 0 ${graphWidth} ${graphHeight}`}
+          >
+            <text className="relationship-graph-column-label" x={leftX} y="24">
+              Retrofit types
+            </text>
+            <text className="relationship-graph-column-label" textAnchor="end" x={leftX + leftWidth} y="24">
+              Connections
+            </text>
+            <text className="relationship-graph-column-label" x={rightX} y="24">
+              Opportunities
+            </text>
+            <text className="relationship-graph-column-label" textAnchor="end" x={rightX + rightWidth} y="24">
+              Retrofits
+            </text>
+
+            <g className="relationship-edges">
+              {graph.edges.map((edge) => {
+                const retrofitY = retrofitYById.get(edge.retrofitTypeId);
+                const opportunityY = opportunityYByKey.get(edge.opportunityKey);
+                if (retrofitY === undefined || opportunityY === undefined) return null;
+                const isActive = edge.retrofitTypeId === activeRetrofitId;
+                return (
+                  <line
+                    className={`relationship-edge${isActive ? " is-active" : ""}`}
+                    key={`${edge.retrofitTypeId}:${edge.opportunityKey}`}
+                    x1={leftX + leftWidth}
+                    x2={rightX}
+                    y1={retrofitY + rectHeight / 2}
+                    y2={opportunityY + rectHeight / 2}
+                  />
+                );
+              })}
+            </g>
+
+            <g className="relationship-retrofits">
+              {retrofits.map((retrofit, index) => {
+                const y = topOffset + index * rowHeight;
+                const isActive = retrofit.retrofitTypeId === activeRetrofitId;
+                return (
+                  <g
+                    className={`relationship-node relationship-retrofit-node${isActive ? " is-active" : ""}`}
+                    key={retrofit.retrofitTypeId}
+                    onClick={() => onSelectRetrofit(retrofit.retrofitTypeId)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        onSelectRetrofit(retrofit.retrofitTypeId);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <title>
+                      {retrofit.displayName}: {retrofit.opportunityCount.toLocaleString()} opportunities
+                    </title>
+                    <rect height={rectHeight} rx="6" width={leftWidth} x={leftX} y={y} />
+                    <text x={leftX + 12} y={y + 19}>
+                      {truncateGraphLabel(retrofit.displayName, 30)}
+                    </text>
+                    <text className="relationship-node-count" textAnchor="end" x={leftX + leftWidth - 12} y={y + 19}>
+                      {retrofit.opportunityCount.toLocaleString()}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
+
+            <g className="relationship-opportunities">
+              {graph.opportunities.map((opportunity, index) => {
+                const y = topOffset + index * rowHeight;
+                const isConnected = selectedOpportunityKeys.has(opportunity.graphKey);
+                return (
+                  <g
+                    className={`relationship-node relationship-opportunity-node${isConnected ? " is-connected" : ""}`}
+                    key={opportunity.graphKey}
+                  >
+                    <title>
+                      {opportunity.opportunityName}: connected to {opportunity.retrofitCount.toLocaleString()} retrofit types
+                    </title>
+                    <rect height={rectHeight} rx="6" width={rightWidth} x={rightX} y={y} />
+                    <text x={rightX + 12} y={y + 19}>
+                      {truncateGraphLabel(opportunity.opportunityName, 38)}
+                    </text>
+                    <text className="relationship-node-count" textAnchor="end" x={rightX + rightWidth - 12} y={y + 19}>
+                      {opportunity.retrofitCount.toLocaleString()}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
+          </svg>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function buildRelationshipGraph(retrofits: SampleRetrofitGroup[]): RelationshipGraphData {
+  const opportunityMap = new Map<string, RelationshipGraphOpportunity>();
+  const retrofitCountByOpportunity = new Map<string, number>();
+  const edgeKeys = new Set<string>();
+  const edges: RelationshipGraphData["edges"] = [];
+
+  for (const retrofit of retrofits) {
+    const seenInRetrofit = new Set<string>();
+    for (const opportunity of retrofit.opportunities) {
+      const opportunityKey = sampleOpportunityKey(opportunity);
+      if (seenInRetrofit.has(opportunityKey)) continue;
+      seenInRetrofit.add(opportunityKey);
+
+      if (!opportunityMap.has(opportunityKey)) {
+        opportunityMap.set(opportunityKey, {
+          ...opportunity,
+          graphKey: opportunityKey,
+          retrofitCount: 0
+        });
+      }
+
+      const edgeKey = `${retrofit.retrofitTypeId}:${opportunityKey}`;
+      if (edgeKeys.has(edgeKey)) continue;
+      edgeKeys.add(edgeKey);
+      edges.push({ retrofitTypeId: retrofit.retrofitTypeId, opportunityKey });
+      retrofitCountByOpportunity.set(opportunityKey, (retrofitCountByOpportunity.get(opportunityKey) || 0) + 1);
+    }
+  }
+
+  const opportunities = [...opportunityMap.values()]
+    .map((opportunity) => ({
+      ...opportunity,
+      retrofitCount: retrofitCountByOpportunity.get(opportunity.graphKey) || 0
+    }))
+    .sort(compareRelationshipOpportunities);
+
+  return {
+    opportunities,
+    edges,
+    edgeCount: edges.length
+  };
+}
+
+function compareRelationshipOpportunities(a: RelationshipGraphOpportunity, b: RelationshipGraphOpportunity) {
+  return (
+    sampleStatusRank(a.eligibilityStatus) - sampleStatusRank(b.eligibilityStatus) ||
+    b.rankScore - a.rankScore ||
+    b.retrofitCount - a.retrofitCount ||
+    a.opportunityName.localeCompare(b.opportunityName)
+  );
+}
+
+function sampleOpportunityKey(result: SampleMatchResult) {
+  return `${result.opportunityId}:${result.offerId || "opportunity"}`;
+}
+
+function sampleStatusRank(status: string) {
+  const index = SAMPLE_MATCH_STATUS_ORDER.indexOf(status);
+  return index === -1 ? SAMPLE_MATCH_STATUS_ORDER.length : index;
+}
+
+function truncateGraphLabel(value: string, maxLength: number) {
+  return value.length > maxLength ? `${value.slice(0, Math.max(0, maxLength - 3))}...` : value;
 }
 
 function SampleMatchCard({ result }: { result: SampleMatchResult }) {
