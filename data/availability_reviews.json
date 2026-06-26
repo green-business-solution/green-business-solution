@@ -1,13 +1,14 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-26T20:39:52.568Z",
-  "opportunityCount": 12,
+  "generatedAt": "2026-06-26T23:27:30.942Z",
+  "opportunityCount": 16,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
   "statusCounts": {
-    "active": 10,
+    "active": 13,
     "rolling": 1,
-    "unavailable": 1
+    "unavailable": 1,
+    "upcoming": 1
   },
   "reviews": [
     {
@@ -356,6 +357,122 @@
         "reviewedAt": "2026-06-26T20:39:52.568Z",
         "reviewMethod": "manual_source_research_repair",
         "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:gogreenfinancing_com_sdge",
+      "opportunityName": "GoGreen Financing",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/savings-center/business-winter-savings-safety-and-solutions",
+      "websiteUrl": "https://gogreenfinancing.com/SDGE",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "GoGreen Business and SDG&E source pages present financing in current tense for eligible business clean-energy, EV-charging, and efficiency upgrades.",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://gogreenfinancing.com/SDGE",
+          "https://gogreenfinancing.com/business",
+          "https://www.treasurer.ca.gov/caeatfa/cheef/sblp/index.asp"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "reviewMethod": "manual_source_research_repair",
+        "confidence": 0.86
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
+      "opportunityName": "Power Your Drive for Fleets",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
+      "websiteUrl": "https://www.sdge.com/node/15131",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "SDG&E's current Power Your Drive for Fleets page includes application language and states that SDG&E customers operating medium- and heavy-duty vehicles are eligible in SDG&E service territory.",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets",
+          "https://www.sdge.com/node/15131"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "reviewMethod": "manual_source_research_repair",
+        "confidence": 0.86
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdsmartindustrials_com",
+      "opportunityName": "SMART Industrials",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://www.sdsmartindustrials.com/",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "SMART Industrials states that Strategic Energy Management is not accepting new participants and that the program is 100% subscribed for incentives in 2026, with possible additional availability in 2027.",
+        "reasons": [
+          "currently_subscribed_future_availability"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.sdsmartindustrials.com/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "reviewMethod": "manual_source_research_repair",
+        "confidence": 0.9
+      }
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:teas_sdge_com",
+      "opportunityName": "Transportation Electrification Advisory Services (TEAS)",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "state": "CA",
+      "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
+      "websiteUrl": "https://teas.sdge.com/",
+      "availabilityReview": {
+        "normalizedStatus": "active",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": true,
+        "noDeadlineExplicit": false,
+        "evidenceText": "TEAS is presented as an active SDG&E advisory service for fleet electrification planning, with the current site inviting business users to work with an SDG&E advisor.",
+        "reasons": [
+          "active_program_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://teas.sdge.com/",
+          "https://www.sdge.com/business/electric-vehicles/lovelectric"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "reviewMethod": "manual_source_research_repair",
+        "confidence": 0.84
       }
     }
   ]

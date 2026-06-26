@@ -90,8 +90,9 @@ When manual research is needed, use the same evidence standard:
 4. Treat current application/enroll/get-started/rebate language as `active`.
 5. Leave `uncertain` when the source only describes historical funding or marketing text without current participation evidence.
 6. Do not use `lastSeenAt` alone as proof that the opportunity is open.
-7. If an official source responds with HTTP 429, timeout, or transient 5xx errors, wait for the retry window and rerun the review before accepting `uncertain`.
+7. If an official source responds with HTTP 403/429, timeout, or transient 5xx errors, wait for the retry window and rerun the review. If it is still blocked, check alternate official or program-partner sources before accepting `uncertain`.
 8. If a DSIRE record is only a maintenance/update note with no detail URL or useful program corpus, archive it as `low_information_update_record` instead of letting it remain in `manual_review`.
+9. If a visible sample match still produces `likely_eligible` or `needs_information`, repair the specific unknown canonical field and rerun the sample generator. The admin fixture should not be published with unresolved visible statuses.
 
 ## Future Cron Automation
 
@@ -103,6 +104,7 @@ A future scheduled job should:
 4. Include opportunities that are currently causing `likely_eligible` sample results because of uncertain availability.
 5. Re-fetch source URLs and update DynamoDB review fields.
 6. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
-7. Regenerate sample matching fixtures and publish them with the frontend.
+7. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
+8. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

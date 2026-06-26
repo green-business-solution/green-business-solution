@@ -33,6 +33,8 @@ const now = new Date(process.env.MATCHING_NOW || Date.now());
 const writeFullOutput = process.env.MATCHING_WRITE_FULL_OUTPUT !== "0";
 const writeRetrofitIndex = process.env.MATCHING_WRITE_RETROFIT_INDEX !== "0";
 const patchExistingTestCases = process.env.MATCHING_PATCH_EXISTING_TEST_CASES === "1";
+const ADMIN_MATCH_STATUS_ORDER = ["eligible_active", "ineligible"];
+const DISALLOWED_ADMIN_STATUSES = new Set(["likely_eligible", "needs_information", "upcoming", "manual_review", "unavailable"]);
 const requestedSampleUserIds = new Set(
   (process.env.SAMPLE_USER_IDS || "")
     .split(",")
@@ -242,15 +244,14 @@ async function scanOpportunitiesFromAws() {
 
 function buildUserReport(userProfile, results) {
   const grouped = groupBy(results, (result) => result.eligibilityStatus);
+  assertNoDisallowedAdminStatuses(userProfile, grouped);
   const statusCounts = Object.fromEntries(
-    ["eligible_active", "likely_eligible", "needs_information", "manual_review", "ineligible", "unavailable"].map((status) => [
+    ADMIN_MATCH_STATUS_ORDER.map((status) => [
       status,
       grouped.get(status)?.length || 0
     ])
   );
-  const promising = results.filter((result) =>
-    ["eligible_active", "likely_eligible", "needs_information"].includes(result.eligibilityStatus)
-  );
+  const promising = results.filter((result) => result.eligibilityStatus === "eligible_active");
   const topResults = promising.slice(0, 12).map(summarizeMatchResult);
   const commonQuestions = topCounts(
     promising
@@ -273,6 +274,19 @@ function buildUserReport(userProfile, results) {
     blockers,
     unresolved
   };
+}
+
+function assertNoDisallowedAdminStatuses(userProfile, grouped) {
+  const disallowed = [...DISALLOWED_ADMIN_STATUSES]
+    .map((status) => ({ status, count: grouped.get(status)?.length || 0 }))
+    .filter((row) => row.count > 0);
+  if (disallowed.length === 0) return;
+
+  throw new Error(
+    `Admin matching fixture still has unresolved/hidden statuses for ${userProfile.sampleUserId}: ${disallowed
+      .map((row) => `${row.status}=${row.count}`)
+      .join(", ")}. Run the data repair pipeline before publishing test cases.`
+  );
 }
 
 function buildUserRetrofitGroups(results) {
@@ -316,7 +330,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     `Pairings evaluated: ${opportunities.length * userReports.length}`,
     "",
     "This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.",
-    "The script evaluates every current opportunity against each sample profile, then reports the strongest matches and the most common unknowns/blockers.",
+    "The script evaluates every current visible opportunity against each sample profile, then reports eligible matches and common blockers.",
     writeFullOutput ? `Full JSON output: \`${outputPath}\`` : "Full pair-level JSON output was skipped for this run.",
     "",
     "## Global Notes",
@@ -325,7 +339,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "- Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.",
     `- Facility eligibility uses the generated review artifact when present. Artifact: ${facilityReviewsByOpportunityId.size > 0 ? `\`${facilityReviewsPath}\` (${facilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
     `- Utility review artifact: ${utilityReviewsByOpportunityId.size > 0 ? `\`${utilityReviewsPath}\` (${utilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
-    "- Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.",
+    "- The admin fixture intentionally fails generation if visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable` statuses.",
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
     "",
@@ -357,7 +371,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     lines.push("```json");
     lines.push(JSON.stringify(report.statusCounts, null, 2));
     lines.push("```", "");
-    lines.push("Top matches requiring no hard blocker:");
+    lines.push("Eligible active matches:");
     for (const result of report.topResults) {
       lines.push(
         `- ${result.eligibilityStatus} / ${result.rankScore}: ${result.opportunityName} (${result.opportunityId})`
@@ -383,9 +397,8 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "1. Improve utility resolution for `Other / Not sure` users by geocoding and service-territory lookup instead of relying on the current form option.",
     "2. Split offer-level sectors/technologies more carefully for DSIRE parameter sets to reduce residential/commercial leakage.",
-    "3. Continue availability review on opportunities that still produce uncertain availability after source-page research.",
-    "4. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.",
-    "5. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated."
+    "3. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.",
+    "4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated."
   );
 
   return `${lines.join("\n")}\n`;

@@ -1,14 +1,14 @@
 {
   "schemaVersion": "utility-restriction-review-v1",
-  "generatedAt": "2026-06-26T20:39:52.568Z",
+  "generatedAt": "2026-06-26T23:27:30.942Z",
   "opportunityCount": 2096,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
   "statusCounts": {
-    "required": 1154,
-    "not_applicable": 504,
-    "none_found_after_review": 202,
-    "unknown": 63,
+    "required": 1156,
+    "not_applicable": 505,
+    "none_found_after_review": 205,
+    "unknown": 57,
     "none": 173
   },
   "reviews": [
@@ -6496,26 +6496,22 @@
       "state": "CO",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22160/electric-vehicle-fast-charging-plazas-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "none_found_after_review",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "Electric Vehicle Fast-Charging Plazas Program",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Colorado Energy Office/Drive Clean Colorado program materials describe a statewide competitive grant for DC fast-charging plazas; no electric distribution utility gate was found after retrying official and partner sources.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/22160/electric-vehicle-fast-charging-plazas-program",
-          "https://energyoffice.colorado.gov/ev-fast-charging-plazas"
+          "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+          "https://drivecleancolorado.org/dcfc-plazas-grant-application-round-open-until-december-5-2025/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 403",
-            "url": "https://energyoffice.colorado.gov/ev-fast-charging-plazas"
-          }
-        ],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.82
       }
     },
     {
@@ -22182,21 +22178,21 @@
       "state": "AK",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/115/power-project-loan-fund",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "not_applicable",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "Power Project Loan Fund / Alaska Industrial Development and Export Authority",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Alaska's Power Project Fund lends to utilities, local governments, regional/village corporations, village councils, and independent power producers for power projects; eligibility is applicant/project based, not based on the user's distribution utility.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/115/power-project-loan-fund",
           "https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Power-Project-Fund"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.84
       }
     },
     {
@@ -32006,21 +32002,25 @@
       "state": "VT",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22404/green-mountain-power-ev-charging-station-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
-        "requiredUtilityNames": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_GMP"
+        ],
+        "requiredUtilityNames": [
+          "Green Mountain Power"
+        ],
         "allowedSupplierIds": [],
         "rateClasses": [],
-        "customerRelationshipRequired": false,
-        "evidenceText": "Green Mountain Power EV Charging Station Program",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "customerRelationshipRequired": true,
+        "evidenceText": "Green Mountain Power's EV charger program is a GMP customer program and requires the charger/account relationship to be with Green Mountain Power.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/22404/green-mountain-power-ev-charging-station-program",
           "https://greenmountainpower.com/rebates-programs/electric-vehicles/in-home-ev-charger/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.9
       }
     },
     {
@@ -36373,21 +36373,26 @@
       "state": "HI",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5437/green-infrastructure-bonds",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
-        "requiredUtilityNames": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_HAWAIIAN_ELECTRIC"
+        ],
+        "requiredUtilityNames": [
+          "Hawaiian Electric Companies"
+        ],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "Make clean energy investment accessible and affordable to Hawaii’s underserved ratepayers; stimulate private investments; and leverage innovative financing tools to mitigate risks and reach new markets in sup",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Hawaii GEM$/Green Infrastructure financing is repaid through the electric bill and applies to eligible Hawaiian Electric Companies customers, so the customer's electric utility relationship is a real gate.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/5437/green-infrastructure-bonds",
-          "https://gems.hawaii.gov/"
+          "https://gems.hawaii.gov/",
+          "https://gems.hawaii.gov/participating-contractors/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.9
       }
     },
     {
@@ -44249,21 +44254,21 @@
       "state": "CO",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22758/city-and-county-of-denver-all-electric-new-construction-rebates",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "none_found_after_review",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "City and County of Denver - All-Electric New Construction Rebates / City of Denver",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Denver's building-decarbonization rebate materials describe City and County of Denver project eligibility and incentive stacking, including Xcel stacking, but do not make Xcel service a distribution-utility eligibility gate.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/22758/city-and-county-of-denver-all-electric-new-construction-rebates",
           "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Efficient-Commercial-Buildings/Rebates-for-Building-Decarbonization"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.82
       }
     },
     {
@@ -49805,26 +49810,21 @@
       "state": "NY",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2324/empower-new-york",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "none_found_after_review",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
-        "customerRelationshipRequired": true,
-        "evidenceText": "rings into one program, EmPower+. In addition to the low income tier previously served by EmPower, EmPower+ also serves the moderate-income households who historically participated in Assisted Home Performance",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "customerRelationshipRequired": false,
+        "evidenceText": "NYSERDA EmPower+ eligibility is based on household income, property/renter status, landlord approval for rentals, and New York geography; no electric distribution utility gate was found after reviewing NYSERDA and DSIRE sources.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/2324/empower-new-york",
-          "https://www.nyserda.ny.gov/All-Programs/Programs/EmPower-New-York"
+          "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://www.nyserda.ny.gov/All-Programs/Programs/EmPower-New-York"
-          }
-        ],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-26T23:27:30.942Z",
+        "confidence": 0.82
       }
     },
     {

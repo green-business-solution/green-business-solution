@@ -1,11 +1,11 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-06-26T22:59:37.022Z",
-  "matchingNow": "2026-06-26T22:59:16.180Z",
-  "opportunityCount": 1812,
+  "generatedAt": "2026-06-26T23:28:00.447Z",
+  "matchingNow": "2026-06-26T23:27:37.611Z",
+  "opportunityCount": 1809,
   "totalOpportunityRecordCount": 2096,
-  "archivedOpportunityCount": 243,
+  "archivedOpportunityCount": 245,
   "retrofitCount": 86,
   "retrofits": [
     {
@@ -8155,7 +8155,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 869,
+      "opportunityCount": 846,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -8614,20 +8614,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22277",
-          "opportunityName": "Anaheim Public Utilities - EV Fleet Charger and Infrastructure Rebate",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22277/anaheim-public-utilities-ev-fleet-charger-and-infrastructure-rebate",
-          "websiteUrl": "https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Anaheim Public Utilities",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1614",
           "opportunityName": "Anaheim Public Utilities - Residential Home Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -8771,20 +8757,6 @@
           "state": "AR",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2457",
-          "opportunityName": "Arlington County - Green Building Incentive Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2457/arlington-county-green-building-incentive-program",
-          "websiteUrl": "https://www.arlingtonva.us/Government/Programs/Sustainability-and-Environment/Energy/Green-Building/Green-Building-New-Construction-Program",
-          "applicationUrl": null,
-          "state": "VA",
-          "programType": "Green Building Incentive",
-          "administrator": "Arlington County",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -10000,20 +9972,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-transport",
-          "opportunityName": "Charge Ready Transport",
-          "sourceName": "Southern California Edison Business Programs",
-          "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "applicationUrl": "https://crt.sce.com/overview",
-          "state": "CA",
-          "programType": "technical_assistance",
-          "administrator": "Southern California Edison",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3179",
           "opportunityName": "Chelan County PUD - Residential Weatherization Rebate Program",
           "sourceName": "DSIRE",
@@ -10667,20 +10625,6 @@
           "applicationUrl": null,
           "state": "CO",
           "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_code_title_hash:CO78F:4ce622607633",
-          "opportunityName": "Colorado - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "unknown",
           "administrator": null,
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
@@ -12570,34 +12514,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22338",
-          "opportunityName": "Entergy Mississippi - eTech Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22338/entergy-mississippi-etech-program",
-          "websiteUrl": "https://entergyetech.com/electric-vehicles/",
-          "applicationUrl": null,
-          "state": "MS",
-          "programType": "Rebate Program",
-          "administrator": "Entergy Mississippi",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22596",
-          "opportunityName": "Entergy New Orleans - eTech Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22596/entergy-new-orleans-etech-program",
-          "websiteUrl": "https://entergyetech.com/electric-vehicles/",
-          "applicationUrl": null,
-          "state": "LA",
-          "programType": "Rebate Program",
-          "administrator": "Entergy New Orleans",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3752",
           "opportunityName": "Entergy New Orleans - Residential Energy Efficiency Program",
           "sourceName": "DSIRE",
@@ -13120,76 +13036,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
-          "opportunityName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
-          "sourceName": "California Energy Commission",
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-06/gfo-25-308-distributed-clean-hydrogen-production-onsite-end-use-h2onsite",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-06/gfo-25-308-distributed-clean-hydrogen-production-onsite-end-use-h2onsite",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "state": "CA",
-          "programType": "grant",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
-          "opportunityName": "GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging",
-          "sourceName": "California Energy Commission",
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "state": "CA",
-          "programType": "grant",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
-          "opportunityName": "GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
-          "sourceName": "California Energy Commission",
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-605-reliable-electric-charging-eligible-school-bus-sites-recess",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-605-reliable-electric-charging-eligible-school-bus-sites-recess",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "state": "CA",
-          "programType": "grant",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
-          "opportunityName": "GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO)",
-          "sourceName": "California Energy Commission",
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-607-clean-transportation-program-hydrogen-infrastructure-project",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-607-clean-transportation-program-hydrogen-infrastructure-project",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "state": "CA",
-          "programType": "grant",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608",
-          "opportunityName": "GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME)",
-          "sourceName": "California Energy Commission",
-          "sourceUrl": "https://www.energy.ca.gov/solicitations/2026-05/gfo-25-608-electric-vehicle-hub-outreach-messaging-and-equipment-ev-home",
-          "websiteUrl": "https://www.energy.ca.gov/solicitations/2026-05/gfo-25-608-electric-vehicle-hub-outreach-messaging-and-equipment-ev-home",
-          "applicationUrl": "https://ecams.energy.ca.gov/s/login/",
-          "state": "CA",
-          "programType": "grant",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1689",
           "opportunityName": "Glendale Water and Power - Residential Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -13301,20 +13147,6 @@
           "state": "VT",
           "programType": "Rebate Program",
           "administrator": "Green Mountain Power",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22254",
-          "opportunityName": "Green Transportation Capital Grant Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22254/green-transportation-capital-grant-program",
-          "websiteUrl": "https://wsdot.wa.gov/business-wsdot/grants/public-transportation-grants/grant-programs-and-awards/green-transportation-capital",
-          "applicationUrl": null,
-          "state": "WA",
-          "programType": "Grant Program",
-          "administrator": "Washington State Department of Transportation",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -13613,20 +13445,6 @@
             "air conditioner",
             "air conditioning"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_26181",
-          "opportunityName": "Hydrogen 101 for Fleets",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://www.sdge.com/node/26181",
-          "applicationUrl": "https://www.sdge.com/node/26181",
-          "state": "CA",
-          "programType": "technical_assistance",
-          "administrator": "SDG&E",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2030",
@@ -13999,20 +13817,6 @@
           "matchedTerms": [
             "air conditioner"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22751",
-          "opportunityName": "JEA - Commercial Fleet Electrification Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22751/jea-commercial-fleet-electrification-program",
-          "websiteUrl": "https://www.jea.com/Business_Resources/Rebates_for_Businesses/Electrification_Rebates_Program/",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4723",
@@ -15930,20 +15734,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22631",
-          "opportunityName": "Nevada - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22631/nevada-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
-          "websiteUrl": "https://www.dot.nv.gov/mobility/alternative-fueling-infrastructure-plan",
-          "applicationUrl": null,
-          "state": "NV",
-          "programType": "Grant Program",
-          "administrator": "Nevada Department of Transportation",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3630",
           "opportunityName": "New Braunfels Utilities - Energy Efficiency and Water Conservation Rebate Programs",
           "sourceName": "DSIRE",
@@ -16193,20 +15983,6 @@
           "matchedTerms": [
             "air conditioner"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22745",
-          "opportunityName": "NextZero Connected Homes Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22745/nextzero-connected-homes-program",
-          "websiteUrl": "https://nextzeroconnectedhomes.virtualpeaker.io/overview/#qualifications",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Performance-Based Incentive",
-          "administrator": "Massachusetts Municipal Wholesale Electric Company",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22736",
@@ -17486,20 +17262,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
-          "opportunityName": "Power Your Drive for Fleets",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://www.sdge.com/node/15131",
-          "applicationUrl": "https://www.sdge.com/node/15131",
-          "state": "CA",
-          "programType": "utility_program",
-          "administrator": "SDG&E",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
           "opportunityName": "PPL Electric Utilities - Commercial, Industrial and Agricultural Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -17809,20 +17571,6 @@
           "state": "MA",
           "programType": "Rebate Program",
           "administrator": "RMLD",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate",
-          "opportunityName": "ReCharge Rebate",
-          "sourceName": "Southern California Edison Business Programs",
-          "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "applicationUrl": "https://commercialevrebates.sce.com/consumer/recharge",
-          "state": "CA",
-          "programType": "rebate",
-          "administrator": "Southern California Edison",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -19629,34 +19377,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22498",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22498/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Loan Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22496",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22496/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Grant Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3172",
           "opportunityName": "Tacoma Power - Commercial and Industrial Energy Efficiency Rebate Programs",
           "sourceName": "DSIRE",
@@ -19768,20 +19488,6 @@
           "state": "KY",
           "programType": "Rebate Program",
           "administrator": "Taylor County RECC",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:te-advisory-services",
-          "opportunityName": "TE Advisory Services",
-          "sourceName": "Southern California Edison Business Programs",
-          "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "applicationUrl": "https://cloud.sce.com/teas",
-          "state": "CA",
-          "programType": "technical_assistance",
-          "administrator": "Southern California Edison",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -19932,34 +19638,6 @@
           "state": "OR",
           "programType": "Rebate Program",
           "administrator": "Tillamook County PUD",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2283",
-          "opportunityName": "Together We Save - Kentucky's Touchstone Energy Cooperatives (16 Cooperatives)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2283/together-we-save-kentucky-s-touchstone-energy-cooperatives-16-cooperatives",
-          "websiteUrl": "https://togetherwesaveky.com/cooperatives/",
-          "applicationUrl": null,
-          "state": "KY",
-          "programType": "Rebate Program",
-          "administrator": "Kentucky Touchstone Energy Cooperatives",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:teas_sdge_com",
-          "opportunityName": "Transportation Electrification Advisory Services (TEAS)",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://teas.sdge.com/",
-          "applicationUrl": "https://teas.sdge.com/",
-          "state": "CA",
-          "programType": "technical_assistance",
-          "administrator": "SDG&E",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -89414,7 +89092,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 394,
+      "opportunityCount": 393,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
@@ -92219,22 +91897,6 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_26181",
-          "opportunityName": "Hydrogen 101 for Fleets",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://www.sdge.com/node/26181",
-          "applicationUrl": "https://www.sdge.com/node/26181",
-          "state": "CA",
-          "programType": "technical_assistance",
-          "administrator": "SDG&E",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charging"
-          ]
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22655",

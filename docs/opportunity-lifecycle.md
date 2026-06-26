@@ -57,11 +57,14 @@ In a future version, this lifecycle check should run automatically after DSIRE i
 5. Unarchive restored records only when the source clearly supports active or rolling availability.
 6. Archive DSIRE update-only records with no detail page or matchable source corpus as `low_information_update_record`.
 7. Preserve archive/unarchive timestamps and reasons instead of deleting the record.
+8. Run status-bucket cleanup repairs before regenerating admin fixtures so visible matches only publish eligible or ineligible outcomes.
 
 The daily lifecycle command should be:
 
 ```sh
 npm run matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information
+npm run matching:status-bucket-repairs -- --write-dynamodb
+npm run matching:sample
 ```
 
 The existing script has a `--unarchive-restored` option for that future flow, but the default current workflow only archives unavailable records.

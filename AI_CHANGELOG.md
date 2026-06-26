@@ -604,3 +604,11 @@
 - Updated the client/admin utility data views and upload flow to show file processing status, extracted bill fields, and site energy profile summaries.
 - Added a local-safe fake client seeding workflow for the 14-step intake plus Green Button fixture uploads, with vendored test fixtures, report generation, and parser/seed tests.
 - Added an admin-only `Client Intake Summary` workspace tab that turns intake utility data into a readable completion dashboard without mutating stored records.
+
+# 2026-06-26
+
+- Repaired the remaining visible `likely_eligible` sample matching causes with targeted utility/availability review updates and two lifecycle archives in DynamoDB.
+- Changed generated admin sample matching fixtures to publish only `eligible_active` and `ineligible` visible statuses, with a guard that fails generation if unresolved or hidden statuses return.
+- Split the admin database browser into separate `Opportunities` and `Retrofits` tabs while preserving the existing raw DynamoDB table tabs and test-case tab.
+- Added a retrofit index admin panel backed by `public/retrofit_opportunity_index.json`.
+- Tightened transportation-electrification technology normalization so EV/fleet pages do not match HVAC-only user interests without explicit building HVAC evidence.

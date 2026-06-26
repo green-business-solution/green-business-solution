@@ -444,6 +444,31 @@ describe("matching pipeline", () => {
     expect(profile.project.technologyIds).not.toContain("battery_storage");
   });
 
+  it("does not classify transportation electrification pages as HVAC without building HVAC evidence", () => {
+    const opportunity = {
+      opportunityId: "test-transportation-electrification-no-hvac",
+      canonicalTitle: "Transportation Electrification Advisory Services",
+      sourceKey: "SOURCE_SDGE_BUSINESS",
+      sourceName: "San Diego Gas & Electric Business Programs",
+      state: "CA",
+      status: "active",
+      category: "Business electric vehicles",
+      programType: "Advisory Service",
+      summary: "An advisor will help commercial fleets develop personalized transportation electrification strategies.",
+      matchingParameters: {
+        technologyTags: ["EV_charging", "fleet_electrification"]
+      },
+      sectors: ["Commercial"],
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+
+    expect(profile.project.technologyIds).toContain("ev_charging");
+    expect(profile.project.technologyIds).toContain("fleet_electrification");
+    expect(profile.project.technologyIds).not.toContain("hvac");
+  });
+
   it("marks fully subscribed programs as unavailable from summary text", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",

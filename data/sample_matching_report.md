@@ -1,16 +1,16 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T22:59:41.250Z
-Matcher clock: 2026-06-26T22:59:16.180Z
-Opportunities evaluated: 1812
-Archived opportunities skipped: 243
-Upcoming opportunities hidden: 41
+Generated: 2026-06-26T23:28:06.844Z
+Matcher clock: 2026-06-26T23:27:37.611Z
+Opportunities evaluated: 1809
+Archived opportunities skipped: 245
+Upcoming opportunities hidden: 42
 Sample users evaluated: 50
-Pairings evaluated: 90600
+Pairings evaluated: 90450
 
 This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.
-The script evaluates every current opportunity against each sample profile, then reports the strongest matches and the most common unknowns/blockers.
-Full pair-level JSON output was skipped for this run.
+The script evaluates every current visible opportunity against each sample profile, then reports eligible matches and common blockers.
+Full JSON output: `/tmp/retrofi-sample-matching-results.json`
 
 ## Global Notes
 
@@ -18,7 +18,7 @@ Full pair-level JSON output was skipped for this run.
 - Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.
 - Facility eligibility uses the generated review artifact when present. Artifact: `/Users/neer_kuchlous/Code/Green Business Solution/data/facility_eligibility_reviews.json` (2096 reviewed opportunities).
 - Utility review artifact: `/Users/neer_kuchlous/Code/Green Business Solution/data/utility_restriction_reviews.json` (2096 reviewed opportunities).
-- Missing building specificity and ambiguous opportunity geography return `unknown` rather than a false rejection.
+- The admin fixture intentionally fails generation if visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable` statuses.
 - Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.
 - This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.
 
@@ -71,15 +71,11 @@ Status counts:
 ```json
 {
   "eligible_active": 24,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1788,
-  "unavailable": 0
+  "ineligible": 1785
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -110,20 +106,20 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 8
 - Ground-source / geothermal heat pump: 7
 - EV charger installation: 6
 - Battery storage system: 5
 - Biomass / biogas energy system: 5
 - LED lighting retrofit: 5
+- High-efficiency HVAC replacement: 4
 - Solar water heating system: 3
 - Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### ikea-burbank
@@ -173,15 +169,11 @@ Status counts:
 ```json
 {
   "eligible_active": 22,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1790,
-  "unavailable": 0
+  "ineligible": 1787
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -212,11 +204,11 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 9
 - Ground-source / geothermal heat pump: 7
 - Battery storage system: 6
 - EV charger installation: 6
 - Biomass / biogas energy system: 5
+- High-efficiency HVAC replacement: 5
 - LED lighting retrofit: 5
 - Solar water heating system: 3
 - Combined heat and power system: 2
@@ -224,8 +216,8 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (retail_storefront) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### juniper-and-ivy-san-diego
@@ -272,18 +264,16 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 32,
-  "likely_eligible": 5,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1775,
-  "unavailable": 0
+  "eligible_active": 29,
+  "ineligible": 1780
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GoGreen Financing (SOURCE_SDGE_BUSINESS:program_url:gogreenfinancing_com_sdge)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
 - eligible_active / 100: Comfortably CA (SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -294,40 +284,37 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: SD Energy Edge (SOURCE_SDGE_BUSINESS:program_url:sdenergyedge_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
 - eligible_active / 100: Higher Education Efficiency Performance (HEEP) (SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 - eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible_active / 100: GRID-MAP (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
 
 Common next questions:
 
 Common unresolved requirements among promising matches:
-- Availability is uncertain.: 5
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 15
-- EV charger installation: 6
-- Battery storage system: 5
+- High-efficiency HVAC replacement: 8
 - Ground-source / geothermal heat pump: 5
 - LED lighting retrofit: 5
+- Battery storage system: 4
 - Biomass / biogas energy system: 4
 - Automated demand response controls: 2
 - Combined heat and power system: 2
+- Solar water heating system: 2
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 
 ### northgate-market-anaheim
 
@@ -376,15 +363,11 @@ Status counts:
 ```json
 {
   "eligible_active": 26,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1786,
-  "unavailable": 0
+  "ineligible": 1783
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -415,9 +398,9 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 11
 - EV charger installation: 9
 - Ground-source / geothermal heat pump: 7
+- High-efficiency HVAC replacement: 6
 - LED lighting retrofit: 6
 - Battery storage system: 5
 - Biomass / biogas energy system: 5
@@ -427,8 +410,8 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### melissas-vernon-distribution
@@ -477,15 +460,11 @@ Status counts:
 ```json
 {
   "eligible_active": 22,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1790,
-  "unavailable": 0
+  "ineligible": 1787
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -516,11 +495,11 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 8
 - Ground-source / geothermal heat pump: 7
 - Battery storage system: 6
 - EV charger installation: 6
 - Biomass / biogas energy system: 5
+- High-efficiency HVAC replacement: 4
 - LED lighting retrofit: 4
 - Solar water heating system: 4
 - Combined heat and power system: 2
@@ -528,8 +507,8 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### fender-corona-plant
@@ -577,15 +556,11 @@ Status counts:
 ```json
 {
   "eligible_active": 21,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1791,
-  "unavailable": 0
+  "ineligible": 1788
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program (SOURCE_DSIRE:dsire_program_id:4054)
@@ -621,16 +596,16 @@ Retrofit types inferred from promising matches:
 - EV charger installation: 6
 - Ground-source / geothermal heat pump: 5
 - Combined heat and power system: 3
-- High-efficiency HVAC replacement: 3
 - Rooftop solar PV: 3
 - Solar water heating system: 3
+- High-efficiency HVAC replacement: 2
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 
 ### westin-pasadena
 
@@ -679,15 +654,11 @@ Status counts:
 ```json
 {
   "eligible_active": 23,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1789,
-  "unavailable": 0
+  "ineligible": 1786
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -718,11 +689,11 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 9
 - EV charger installation: 7
 - Ground-source / geothermal heat pump: 7
 - Battery storage system: 5
 - Biomass / biogas energy system: 5
+- High-efficiency HVAC replacement: 5
 - LED lighting retrofit: 5
 - Solar water heating system: 3
 - Combined heat and power system: 2
@@ -730,8 +701,8 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (hospitality_lodging) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### one-community-health-midtown
@@ -781,15 +752,11 @@ Status counts:
 ```json
 {
   "eligible_active": 25,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1787,
-  "unavailable": 0
+  "ineligible": 1784
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -820,11 +787,11 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 9
 - EV charger installation: 8
 - Ground-source / geothermal heat pump: 7
 - Battery storage system: 6
 - Biomass / biogas energy system: 5
+- High-efficiency HVAC replacement: 5
 - LED lighting retrofit: 5
 - Combined heat and power system: 3
 - Solar water heating system: 3
@@ -832,8 +799,8 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (healthcare) does not match broad_residential eligibility.: 576
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 - Project site state CA does not match opportunity geography OR.: 74
 
 ### santa-clara-university-campus
@@ -883,15 +850,11 @@ Status counts:
 ```json
 {
   "eligible_active": 24,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1788,
-  "unavailable": 0
+  "ineligible": 1785
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -922,7 +885,7 @@ Common next questions:
 Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 11
+- High-efficiency HVAC replacement: 9
 - Low-flow fixture retrofit: 7
 - Battery storage system: 5
 - EV charger installation: 5
@@ -933,10 +896,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 576
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 379
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 378
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 
 ### seghesio-healdsburg-winery
 
@@ -984,15 +947,11 @@ Status counts:
 ```json
 {
   "eligible_active": 14,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1798,
-  "unavailable": 0
+  "ineligible": 1795
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
@@ -1027,17 +986,17 @@ Retrofit types inferred from promising matches:
 - EV charger installation: 5
 - Ground-source / geothermal heat pump: 5
 - Battery storage system: 3
-- High-efficiency HVAC replacement: 3
+- High-efficiency HVAC replacement: 2
 - Solar water heating system: 2
 - Combined heat and power system: 1
 - Electric vehicle purchase: 1
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
 - Project site state CA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state CA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state CA does not match opportunity geography CO.: 86
 
 ### via-verde-bronx-renter-household
 
@@ -1083,16 +1042,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 14,
-  "likely_eligible": 1,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1797,
-  "unavailable": 0
+  "eligible_active": 15,
+  "ineligible": 1794
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: ConEd - Multifamily Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:3821)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Self-reported utility matches ConEd.
 - eligible_active / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
@@ -1119,10 +1074,8 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - High-efficiency HVAC replacement: 4
@@ -1135,9 +1088,9 @@ Retrofit types inferred from promising matches:
 - High-efficiency refrigeration equipment: 2
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 379
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 219
-- Project site state NY does not match opportunity geography CA.: 190
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 378
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 218
+- Project site state NY does not match opportunity geography CA.: 188
 - Project site state NY does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
 
@@ -1185,15 +1138,11 @@ Status counts:
 ```json
 {
   "eligible_active": 12,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1800,
-  "unavailable": 0
+  "ineligible": 1797
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: WSHFC Sustainable Energy Program (SOURCE_DSIRE:dsire_program_id:5840)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Richland Energy Services - Residential Energy Conservation & Solar Loan Program (SOURCE_DSIRE:dsire_program_id:2512)
@@ -1234,9 +1183,9 @@ Retrofit types inferred from promising matches:
 - Combined heat and power system: 1
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 379
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 219
-- Project site state WA does not match opportunity geography CA.: 190
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 378
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 218
+- Project site state WA does not match opportunity geography CA.: 188
 - Project site state WA does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
 
@@ -1283,16 +1232,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 20,
-  "likely_eligible": 2,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1790,
-  "unavailable": 0
+  "eligible_active": 21,
+  "ineligible": 1788
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City of Boulder - Solar Grant Program (SOURCE_DSIRE:dsire_program_id:2948)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Colorado - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22718)
@@ -1319,14 +1264,11 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Availability is uncertain.: 1
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
-- High-efficiency HVAC replacement: 10
+- High-efficiency HVAC replacement: 7
 - Rooftop solar PV: 7
 - Air sealing / weatherization: 6
 - Insulation upgrade: 6
@@ -1336,9 +1278,9 @@ Retrofit types inferred from promising matches:
 - Heat pump water heater: 4
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 379
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 219
-- Project site state CO does not match opportunity geography CA.: 190
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 378
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 218
+- Project site state CO does not match opportunity geography CA.: 188
 - Project site state CO does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
 
@@ -1386,16 +1328,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
-  "likely_eligible": 1,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "eligible_active": 10,
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -1412,17 +1350,14 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Green Infrastructure Bonds (SOURCE_DSIRE:dsire_program_id:5437)
+  - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Self-reported utility matches Hawaiian Electric.
 - eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- likely_eligible / 91: Green Infrastructure Bonds (SOURCE_DSIRE:dsire_program_id:5437)
-  - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Applicant type overlaps eligible sector: residential.
-  - unresolved: Utility restriction is still unknown after review.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - Solar water heating system: 4
@@ -1436,9 +1371,9 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 576
-- Project site state HI does not match opportunity geography CA.: 190
+- Project site state HI does not match opportunity geography CA.: 188
 - Project site state HI does not match opportunity geography MN.: 113
-- Project site state HI does not match opportunity geography CO.: 87
+- Project site state HI does not match opportunity geography CO.: 86
 - Applicant type residential does not match eligible sectors commercial.: 81
 
 ### the-rose-minneapolis-household
@@ -1485,15 +1420,11 @@ Status counts:
 ```json
 {
   "eligible_active": 18,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1794,
-  "unavailable": 0
+  "ineligible": 1791
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Minnesota Energy Resources (Gas) - Home Energy Excellence Program for Builders or Homeowners (SOURCE_DSIRE:dsire_program_id:3312)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; Self-reported utility matches Xcel Energy.
 - eligible_active / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:5417)
@@ -1534,11 +1465,11 @@ Retrofit types inferred from promising matches:
 - High-efficiency commercial dishwasher: 3
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 379
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 219
-- Project site state MN does not match opportunity geography CA.: 190
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 378
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 218
+- Project site state MN does not match opportunity geography CA.: 188
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Project site state MN does not match opportunity geography CO.: 87
+- Project site state MN does not match opportunity geography CO.: 86
 
 ### bens-chili-bowl-dc
 
@@ -1585,15 +1516,11 @@ Status counts:
 ```json
 {
   "eligible_active": 7,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1805,
-  "unavailable": 0
+  "ineligible": 1802
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Solar Renewable Energy Credits (SOURCE_DSIRE:dsire_program_id:5686)
   - matched: Opportunity appears active.; Project site state DC matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -1625,10 +1552,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 576
-- Project site state DC does not match opportunity geography CA.: 190
+- Project site state DC does not match opportunity geography CA.: 188
 - Project site state DC does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### zingermans-deli-ann-arbor
 
@@ -1675,15 +1602,11 @@ Status counts:
 ```json
 {
   "eligible_active": 7,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1805,
-  "unavailable": 0
+  "ineligible": 1802
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -1715,10 +1638,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 576
-- Project site state MI does not match opportunity geography CA.: 190
+- Project site state MI does not match opportunity geography CA.: 188
 - Project site state MI does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### big-dipper-missoula
 
@@ -1764,15 +1687,11 @@ Status counts:
 ```json
 {
   "eligible_active": 11,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1801,
-  "unavailable": 0
+  "ineligible": 1798
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Deduction For Energy-Conserving Investment (SOURCE_DSIRE:dsire_program_id:1158)
@@ -1812,10 +1731,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 576
-- Project site state MT does not match opportunity geography CA.: 190
+- Project site state MT does not match opportunity geography CA.: 188
 - Project site state MT does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### burlington-beer-company
 
@@ -1864,15 +1783,11 @@ Status counts:
 ```json
 {
   "eligible_active": 12,
-  "likely_eligible": 1,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1799,
-  "unavailable": 0
+  "ineligible": 1797
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -1899,27 +1814,25 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 5
-- EV charger installation: 5
+- EV charger installation: 4
 - Ground-source / geothermal heat pump: 4
 - Combined heat and power system: 2
 - High-efficiency HVAC replacement: 2
 - High-efficiency refrigeration equipment: 2
 - LED lighting retrofit: 2
-- Level 2 EV charger installation: 2
+- Solar water heating system: 2
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state VT does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state VT does not match opportunity geography CA.: 188
 - Project site state VT does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### bluebird-cafe-nashville
 
@@ -1966,15 +1879,11 @@ Status counts:
 ```json
 {
   "eligible_active": 7,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1805,
-  "unavailable": 0
+  "ineligible": 1802
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2006,10 +1915,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 576
-- Project site state TN does not match opportunity geography CA.: 190
+- Project site state TN does not match opportunity geography CA.: 188
 - Project site state TN does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### la-montanita-nob-hill-albuquerque
 
@@ -2058,15 +1967,11 @@ Status counts:
 ```json
 {
   "eligible_active": 11,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1801,
-  "unavailable": 0
+  "ineligible": 1798
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2106,10 +2011,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 576
-- Project site state NM does not match opportunity geography CA.: 190
+- Project site state NM does not match opportunity geography CA.: 188
 - Project site state NM does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### food-bank-rockies-aurora-dc
 
@@ -2156,16 +2061,12 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 25,
-  "likely_eligible": 1,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1786,
-  "unavailable": 0
+  "eligible_active": 26,
+  "ineligible": 1783
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: City and County of Denver - Building Electrification Retrofit Pilot (SOURCE_DSIRE:dsire_program_id:22757)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Electric Vehicle Income Tax Credit (SOURCE_DSIRE:dsire_program_id:22156)
@@ -2176,6 +2077,8 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Electric Vehicle Fast-Charging Plazas Program (SOURCE_DSIRE:dsire_program_id:22160)
+  - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:1255)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
 - eligible_active / 100: C-PACE: Colorado Commercial Property Assessed Clean Energy (SOURCE_DSIRE:dsire_program_id:5878)
@@ -2188,14 +2091,10 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: City and County of Denver - Solar and EV Charging for Nonprofits (SOURCE_DSIRE:dsire_program_id:22754)
   - matched: Opportunity appears rolling or no-deadline.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: Renewable Energy Property Tax Assessment (SOURCE_DSIRE:dsire_program_id:2388)
-  - matched: Opportunity appears rolling or no-deadline.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - Ground-source / geothermal heat pump: 9
@@ -2209,9 +2108,9 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 576
-- Project site state CO does not match opportunity geography CA.: 190
+- Project site state CO does not match opportunity geography CA.: 188
 - Project site state CO does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state CO does not match opportunity geography OR.: 74
 
 ### eastern-market-detroit
@@ -2260,15 +2159,11 @@ Status counts:
 ```json
 {
   "eligible_active": 15,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1797,
-  "unavailable": 0
+  "ineligible": 1794
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -2310,10 +2205,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 576
-- Project site state MI does not match opportunity geography CA.: 190
+- Project site state MI does not match opportunity geography CA.: 188
 - Project site state MI does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state MI does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state MI does not match opportunity geography CO.: 86
 
 ### okc-national-memorial-museum
 
@@ -2361,15 +2256,11 @@ Status counts:
 ```json
 {
   "eligible_active": 8,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1804,
-  "unavailable": 0
+  "ineligible": 1801
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
@@ -2403,10 +2294,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 576
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 379
-- Project site state OK does not match opportunity geography CA.: 190
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 378
+- Project site state OK does not match opportunity geography CA.: 188
 - Project site state OK does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### museum-life-science-durham
 
@@ -2455,15 +2346,11 @@ Status counts:
 ```json
 {
   "eligible_active": 9,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1803,
-  "unavailable": 0
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
@@ -2499,10 +2386,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 576
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 379
-- Project site state NC does not match opportunity geography CA.: 190
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 378
+- Project site state NC does not match opportunity geography CA.: 188
 - Project site state NC does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### portland-food-coop-maine
 
@@ -2550,15 +2437,11 @@ Status counts:
 ```json
 {
   "eligible_active": 9,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1803,
-  "unavailable": 0
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: C-PACE: Efficiency Maine (SOURCE_DSIRE:dsire_program_id:22591)
   - matched: Opportunity appears active.; Project site state ME matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -2594,10 +2477,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 576
-- Project site state ME does not match opportunity geography CA.: 190
+- Project site state ME does not match opportunity geography CA.: 188
 - Project site state ME does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### phipps-conservatory-pittsburgh
 
@@ -2646,15 +2529,11 @@ Status counts:
 ```json
 {
   "eligible_active": 9,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1803,
-  "unavailable": 0
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Duquesne Light Company - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3873)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Self-reported utility matches Duquesne Light.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2690,10 +2569,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 576
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 379
-- Project site state PA does not match opportunity geography CA.: 190
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 378
+- Project site state PA does not match opportunity geography CA.: 188
 - Project site state PA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### boise-coop-north-end
 
@@ -2742,15 +2621,11 @@ Status counts:
 ```json
 {
   "eligible_active": 12,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1800,
-  "unavailable": 0
+  "ineligible": 1797
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2792,10 +2667,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 576
-- Project site state ID does not match opportunity geography CA.: 190
+- Project site state ID does not match opportunity geography CA.: 188
 - Project site state ID does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state ID does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state ID does not match opportunity geography CO.: 86
 
 ### common-ground-coop-urbana
 
@@ -2841,15 +2716,11 @@ Status counts:
 ```json
 {
   "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2887,10 +2758,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 576
-- Project site state IL does not match opportunity geography CA.: 190
+- Project site state IL does not match opportunity geography CA.: 188
 - Project site state IL does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### trees-atlanta-kendeda-treehouse
 
@@ -2938,15 +2809,11 @@ Status counts:
 ```json
 {
   "eligible_active": 15,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1797,
-  "unavailable": 0
+  "ineligible": 1794
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -2988,10 +2855,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 576
-- Project site state GA does not match opportunity geography CA.: 190
+- Project site state GA does not match opportunity geography CA.: 188
 - Project site state GA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state GA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state GA does not match opportunity geography CO.: 86
 
 ### boeing-everett-factory
 
@@ -3040,24 +2907,18 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 15,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1797,
-  "unavailable": 0
+  "eligible_active": 14,
+  "ineligible": 1795
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Snohomish County PUD No 1 - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:2239)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Self-reported utility matches Snohomish County PUD.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Green Transportation Capital Grant Program (SOURCE_DSIRE:dsire_program_id:22254)
-  - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
 - eligible_active / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
@@ -3074,6 +2935,8 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Washington - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22662)
+  - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
 
@@ -3083,7 +2946,7 @@ Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 6
 - Ground-source / geothermal heat pump: 4
 - EV charger installation: 3
-- High-efficiency HVAC replacement: 3
+- High-efficiency HVAC replacement: 2
 - High-efficiency refrigeration equipment: 2
 - LED lighting retrofit: 2
 - Rooftop solar PV: 2
@@ -3091,10 +2954,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state WA does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state WA does not match opportunity geography CA.: 188
 - Project site state WA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### intel-ocotillo-chandler
 
@@ -3143,15 +3006,11 @@ Status counts:
 ```json
 {
   "eligible_active": 12,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1800,
-  "unavailable": 0
+  "ineligible": 1797
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -3193,10 +3052,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state AZ does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state AZ does not match opportunity geography CA.: 188
 - Project site state AZ does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### bmw-spartanburg-plant
 
@@ -3244,15 +3103,11 @@ Status counts:
 ```json
 {
   "eligible_active": 16,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1796,
-  "unavailable": 0
+  "ineligible": 1793
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -3294,10 +3149,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state SC does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state SC does not match opportunity geography CA.: 188
 - Project site state SC does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### whirlpool-clyde-operations
 
@@ -3345,15 +3200,11 @@ Status counts:
 ```json
 {
   "eligible_active": 15,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1797,
-  "unavailable": 0
+  "ineligible": 1794
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Energy Loan Fund (SOURCE_DSIRE:dsire_program_id:5069)
@@ -3395,10 +3246,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state OH does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state OH does not match opportunity geography CA.: 188
 - Project site state OH does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### gm-factory-zero-detroit
 
@@ -3448,15 +3299,11 @@ Status counts:
 ```json
 {
   "eligible_active": 14,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1798,
-  "unavailable": 0
+  "ineligible": 1795
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -3498,10 +3345,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state MI does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state MI does not match opportunity geography CA.: 188
 - Project site state MI does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### microsoft-columbia-data-center-quincy
 
@@ -3548,22 +3395,16 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "eligible_active": 9,
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Green Transportation Capital Grant Program (SOURCE_DSIRE:dsire_program_id:22254)
-  - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Clean Alternative Fuel Commercial Vehicle and Vehicle Infrastructure Tax Credit (SOURCE_DSIRE:dsire_program_id:22256)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
@@ -3587,18 +3428,18 @@ Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 4
 - Ground-source / geothermal heat pump: 4
 - LED lighting retrofit: 4
-- High-efficiency HVAC replacement: 3
 - Battery storage system: 2
 - Combined heat and power system: 2
 - EV charger installation: 2
+- High-efficiency HVAC replacement: 2
 - Solar water heating system: 2
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 576
-- Project site state WA does not match opportunity geography CA.: 190
+- Project site state WA does not match opportunity geography CA.: 188
 - Project site state WA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state WA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state WA does not match opportunity geography CO.: 86
 
 ### fedex-world-hub-memphis
 
@@ -3647,15 +3488,11 @@ Status counts:
 ```json
 {
   "eligible_active": 9,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1803,
-  "unavailable": 0
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22641)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
@@ -3691,10 +3528,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 576
-- Project site state TN does not match opportunity geography CA.: 190
+- Project site state TN does not match opportunity geography CA.: 188
 - Project site state TN does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state TN does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state TN does not match opportunity geography CO.: 86
 
 ### qts-richmond-data-center
 
@@ -3742,15 +3579,11 @@ Status counts:
 ```json
 {
   "eligible_active": 13,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1799,
-  "unavailable": 0
+  "ineligible": 1796
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Tax Exemption for Renewable Energy Generation (SOURCE_DSIRE:dsire_program_id:104)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Small Business & Non-Profit Loan Program (SOURCE_DSIRE:dsire_program_id:5504)
@@ -3792,10 +3625,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 576
-- Project site state VA does not match opportunity geography CA.: 190
+- Project site state VA does not match opportunity geography CA.: 188
 - Project site state VA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state VA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state VA does not match opportunity geography CO.: 86
 
 ### hersheys-chocolate-world-hershey
 
@@ -3844,15 +3677,11 @@ Status counts:
 ```json
 {
   "eligible_active": 18,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1794,
-  "unavailable": 0
+  "ineligible": 1791
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -3894,10 +3723,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (retail_storefront) does not match broad_residential eligibility.: 576
-- Project site state PA does not match opportunity geography CA.: 190
+- Project site state PA does not match opportunity geography CA.: 188
 - Project site state PA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state PA does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state PA does not match opportunity geography CO.: 86
 
 ### quaker-oats-cedar-rapids
 
@@ -3944,15 +3773,11 @@ Status counts:
 ```json
 {
   "eligible_active": 9,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1803,
-  "unavailable": 0
+  "ineligible": 1800
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -3988,8 +3813,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 576
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 379
-- Project site state IA does not match opportunity geography CA.: 190
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 378
+- Project site state IA does not match opportunity geography CA.: 188
 - Project site state IA does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
 
@@ -4040,15 +3865,11 @@ Status counts:
 ```json
 {
   "eligible_active": 5,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1807,
-  "unavailable": 0
+  "ineligible": 1804
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Austin Energy - Home Energy Savings Rebate Program (SOURCE_DSIRE:dsire_program_id:2011)
@@ -4076,10 +3897,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 576
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 379
-- Project site state TX does not match opportunity geography CA.: 190
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 378
+- Project site state TX does not match opportunity geography CA.: 188
 - Project site state TX does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### uw-madison-main-campus
 
@@ -4129,15 +3950,11 @@ Status counts:
 ```json
 {
   "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Biogas, Solar, and Wind Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:178)
@@ -4175,10 +3992,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 576
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 379
-- Project site state WI does not match opportunity geography CA.: 190
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 378
+- Project site state WI does not match opportunity geography CA.: 188
 - Project site state WI does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### boston-latin-school
 
@@ -4227,15 +4044,11 @@ Status counts:
 ```json
 {
   "eligible_active": 16,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1796,
-  "unavailable": 0
+  "ineligible": 1793
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: PACE Massachusetts Financing (SOURCE_DSIRE:dsire_program_id:22037)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4277,10 +4090,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 576
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 379
-- Project site state MA does not match opportunity geography CA.: 190
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 378
+- Project site state MA does not match opportunity geography CA.: 188
 - Project site state MA does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### uaf-akasofu-building
 
@@ -4327,19 +4140,17 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
-  "likely_eligible": 1,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "eligible_active": 10,
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:4449)
+  - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible_active / 100: Power Project Loan Fund (SOURCE_DSIRE:dsire_program_id:115)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
@@ -4355,15 +4166,10 @@ Top matches requiring no hard blocker:
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Energy Efficiency Revolving Loan Fund Program (SOURCE_DSIRE:dsire_program_id:4448)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; No utility restriction was found after source review.
-- likely_eligible / 91: Power Project Loan Fund (SOURCE_DSIRE:dsire_program_id:115)
-  - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Applicant type overlaps eligible sector: government.
-  - unresolved: Utility restriction is still unknown after review.
 
 Common next questions:
-- site.utility.electric.distributionUtilityId: 1
 
 Common unresolved requirements among promising matches:
-- Utility restriction is still unknown after review.: 1
 
 Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 5
@@ -4377,8 +4183,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 576
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 379
-- Project site state AK does not match opportunity geography CA.: 190
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 378
+- Project site state AK does not match opportunity geography CA.: 188
 - Project site state AK does not match opportunity geography MN.: 113
 - Selected improvements do not match opportunity technologies (ev_charging).: 109
 
@@ -4428,15 +4234,11 @@ Status counts:
 ```json
 {
   "eligible_active": 8,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1804,
-  "unavailable": 0
+  "ineligible": 1801
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Rocky Mountain Power - wattsmart Business Program (SOURCE_DSIRE:dsire_program_id:2412)
   - matched: Opportunity appears active.; Project site state UT matches opportunity geography.; Self-reported utility matches Rocky Mountain Power.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4470,10 +4272,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 576
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 379
-- Project site state UT does not match opportunity geography CA.: 190
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 378
+- Project site state UT does not match opportunity geography CA.: 188
 - Project site state UT does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### kauai-coffee-kalaheo
 
@@ -4521,15 +4323,11 @@ Status counts:
 ```json
 {
   "eligible_active": 12,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1800,
-  "unavailable": 0
+  "ineligible": 1797
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4571,10 +4369,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (agricultural_facility) does not match broad_residential eligibility.: 576
-- User site or facility type (agricultural_facility) does not match broad_commercial eligibility.: 379
-- Project site state HI does not match opportunity geography CA.: 190
+- User site or facility type (agricultural_facility) does not match broad_commercial eligibility.: 378
+- Project site state HI does not match opportunity geography CA.: 188
 - Project site state HI does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### cherokee-ww-hastings-hospital
 
@@ -4623,15 +4421,11 @@ Status counts:
 ```json
 {
   "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4669,10 +4463,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (healthcare) does not match broad_residential eligibility.: 576
-- Project site state OK does not match opportunity geography CA.: 190
+- Project site state OK does not match opportunity geography CA.: 188
 - Project site state OK does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state OK does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state OK does not match opportunity geography CO.: 86
 
 ### organic-valley-lafarge-hq
 
@@ -4720,15 +4514,11 @@ Status counts:
 ```json
 {
   "eligible_active": 13,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1799,
-  "unavailable": 0
+  "ineligible": 1796
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4770,10 +4560,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 576
-- Project site state WI does not match opportunity geography CA.: 190
+- Project site state WI does not match opportunity geography CA.: 188
 - Project site state WI does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state WI does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state WI does not match opportunity geography CO.: 86
 
 ### ocracoke-school-island
 
@@ -4821,15 +4611,11 @@ Status counts:
 ```json
 {
   "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
@@ -4867,10 +4653,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 576
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 379
-- Project site state NC does not match opportunity geography CA.: 190
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 378
+- Project site state NC does not match opportunity geography CA.: 188
 - Project site state NC does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ### ntua-fort-defiance-headquarters
 
@@ -4918,15 +4704,11 @@ Status counts:
 ```json
 {
   "eligible_active": 10,
-  "likely_eligible": 0,
-  "needs_information": 0,
-  "manual_review": 0,
-  "ineligible": 1802,
-  "unavailable": 0
+  "ineligible": 1799
 }
 ```
 
-Top matches requiring no hard blocker:
+Eligible active matches:
 - eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
@@ -4964,15 +4746,14 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 576
-- Project site state AZ does not match opportunity geography CA.: 190
+- Project site state AZ does not match opportunity geography CA.: 188
 - Project site state AZ does not match opportunity geography MN.: 113
-- Opportunity appears residential-only and the user profile is nonresidential.: 99
-- Project site state AZ does not match opportunity geography CO.: 87
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
+- Project site state AZ does not match opportunity geography CO.: 86
 
 ## Immediate Iteration Targets
 
 1. Improve utility resolution for `Other / Not sure` users by geocoding and service-territory lookup instead of relying on the current form option.
 2. Split offer-level sectors/technologies more carefully for DSIRE parameter sets to reduce residential/commercial leakage.
-3. Continue availability review on opportunities that still produce uncertain availability after source-page research.
-4. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.
-5. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated.
+3. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.
+4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated.

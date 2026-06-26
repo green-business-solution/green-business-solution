@@ -84,7 +84,16 @@ export const UTILITY_ALIASES = {
   UTIL_HAWAIIAN_ELECTRIC: [
     "hawaiian electric",
     "hawaiian electric company",
-    "heco"
+    "heco",
+    "maui electric",
+    "meco",
+    "hawaii electric light",
+    "hawai'i electric light",
+    "helco"
+  ],
+  UTIL_GMP: [
+    "green mountain power",
+    "gmp"
   ],
   UTIL_PEPCO: [
     "pepco",
@@ -242,6 +251,7 @@ export const UTILITY_DISPLAY_NAMES = {
   UTIL_AUSTIN_ENERGY: "Austin Energy",
   UTIL_SEATTLE_CITY_LIGHT: "Seattle City Light",
   UTIL_HAWAIIAN_ELECTRIC: "Hawaiian Electric",
+  UTIL_GMP: "Green Mountain Power",
   UTIL_PEPCO: "Pepco",
   UTIL_DTE: "DTE Electric",
   UTIL_NORTHWESTERN: "NorthWestern Energy",

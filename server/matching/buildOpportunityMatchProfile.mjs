@@ -309,6 +309,15 @@ function refineTechnologyIds(technologyIds, technologyText) {
     refined = refined.filter((technologyId) => technologyId !== "energy_efficiency");
   }
 
+  if (
+    refined.includes("hvac") &&
+    refined.some((technologyId) => ["ev_charging", "fleet_electrification", "clean_transportation"].includes(technologyId)) &&
+    /\b(fleet|vehicle|vehicles|transportation electrification|ev|electric vehicle|charging|hydrogen)\b/i.test(technologyText) &&
+    !/\b(hvac|heat pump|air conditioner|air conditioning|chiller|boiler|furnace|space heating|space cooling|building electrification)\b/i.test(technologyText)
+  ) {
+    refined = refined.filter((technologyId) => technologyId !== "hvac");
+  }
+
   return refined;
 }
 
