@@ -1058,12 +1058,6 @@ dd {
   gap: 14px;
 }
 
-.test-case-insight-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .test-case-profile-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1181,8 +1175,7 @@ dd {
 }
 
 .match-result-card h3,
-.match-result-card h4,
-.sample-count-card h3 {
+.match-result-card h4 {
   letter-spacing: 0;
   margin: 0;
 }
@@ -1210,8 +1203,7 @@ dd {
   padding: 10px;
 }
 
-.match-detail-section ul,
-.sample-count-card ol {
+.match-detail-section ul {
   display: grid;
   gap: 7px;
   margin: 0;
@@ -1334,21 +1326,6 @@ dd {
 
 .savings-trace-list strong {
   color: #16231b;
-}
-
-.sample-count-card ol {
-  list-style: decimal;
-}
-
-.sample-count-card li {
-  color: #4f5e56;
-  line-height: 1.45;
-}
-
-.sample-count-card li strong {
-  color: #17211b;
-  display: block;
-  margin-top: 2px;
 }
 
 .review-filters {
@@ -1622,7 +1599,6 @@ dd {
   .review-filters,
   .test-site-profile-header,
   .test-case-layout,
-  .test-case-insight-grid,
   .match-detail-grid,
   .savings-headline-grid,
   .savings-breakdown-grid,

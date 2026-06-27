@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) test-case diagnostics removal
+
+- Removed the admin Test Cases `Common next questions`, `Common unresolved requirements`, and `Common blockers` diagnostic cards from the main sample profile view.
+
 ## 2026-06-26 - Codex (GPT-5) relationship map scenario colors
 
 - Updated the admin Test Cases retrofit-opportunity map so the selected retrofit is grey, compatible selected-retrofit opportunities are light green, and opportunities excluded from a modeled best scenario are light red.

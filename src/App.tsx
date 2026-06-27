@@ -4818,12 +4818,6 @@ function AdminTestCasesPanel() {
           </article>
 
           <SavingsPreviewCard preview={selectedRetrofit?.savingsPreview || null} />
-
-          <div className="test-case-insight-grid">
-            <SampleCountCard title="Common next questions" values={selectedTestCase.commonQuestions} />
-            <SampleCountCard title="Common unresolved requirements" values={selectedTestCase.unresolved} />
-            <SampleCountCard title="Common blockers" values={selectedTestCase.blockers} />
-          </div>
         </div>
       </div>
     </section>
@@ -5326,26 +5320,6 @@ function SampleTextList({
         <p>{emptyMessage}</p>
       )}
     </section>
-  );
-}
-
-function SampleCountCard({ title, values }: { title: string; values: SampleCount[] }) {
-  return (
-    <article className="data-card sample-count-card">
-      <h3>{title}</h3>
-      {values.length > 0 ? (
-        <ol>
-          {values.slice(0, 5).map((item) => (
-            <li key={item.value}>
-              <span>{item.value}</span>
-              <strong>{item.count.toLocaleString()}</strong>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <p>No values reported.</p>
-      )}
-    </article>
   );
 }
 
