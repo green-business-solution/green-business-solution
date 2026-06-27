@@ -1103,8 +1103,15 @@ dd {
 
 .relationship-edge.is-active {
   opacity: 0.88;
-  stroke: #176b4c;
   stroke-width: 2.1;
+}
+
+.relationship-edge.is-compatible {
+  stroke: #2f8a61;
+}
+
+.relationship-edge.is-excluded {
+  stroke: #b9413d;
 }
 
 .relationship-node rect {
@@ -1135,16 +1142,26 @@ dd {
 }
 
 .relationship-retrofit-node:focus rect,
-.relationship-retrofit-node:hover rect,
 .relationship-retrofit-node.is-active rect {
-  fill: #e9f4ed;
-  stroke: #176b4c;
+  fill: #ecefed;
+  stroke: #87948d;
   stroke-width: 1.5;
 }
 
-.relationship-opportunity-node.is-connected rect {
+.relationship-retrofit-node:hover rect {
+  fill: #f1f4f2;
+  stroke: #87948d;
+  stroke-width: 1.5;
+}
+
+.relationship-opportunity-node.is-compatible rect {
   fill: #f2f8f4;
-  stroke: #a9c8b5;
+  stroke: #86b99a;
+}
+
+.relationship-opportunity-node.is-excluded rect {
+  fill: #fff0ef;
+  stroke: #d48b87;
 }
 
 .match-result-card {

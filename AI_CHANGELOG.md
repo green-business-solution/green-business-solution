@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) relationship map scenario colors
+
+- Updated the admin Test Cases retrofit-opportunity map so the selected retrofit is grey, compatible selected-retrofit opportunities are light green, and opportunities excluded from a modeled best scenario are light red.
+
 ## 2026-06-26 - Codex (GPT-5) map-driven retrofit selection
 
 - Removed the duplicate `Retrofits from matched opportunities` selector panel from admin Test Cases so the retrofit-opportunity map is the single selector for the selected-retrofit opportunity list.

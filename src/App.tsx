@@ -451,6 +451,9 @@ type SampleSavingsPreview = {
   selectedIncentiveScenario?: {
     id?: string;
     name?: string;
+    opportunityIds?: string[];
+    incentiveRuleIds?: string[];
+    status?: string;
     totalUpfrontSavingsCents?: number;
     firstYearRecurringSavingsCents?: number;
     firstYearTotalBenefitCents?: number;
@@ -5001,9 +5004,11 @@ function TestCaseRelationshipGraph({
 }) {
   const graph = useMemo(() => buildRelationshipGraph(retrofits), [retrofits]);
   const activeRetrofitId = selectedRetrofitTypeId || retrofits[0]?.retrofitTypeId || "";
+  const activeRetrofit = retrofits.find((retrofit) => retrofit.retrofitTypeId === activeRetrofitId) || null;
   const selectedOpportunityKeys = new Set(
     graph.edges.filter((edge) => edge.retrofitTypeId === activeRetrofitId).map((edge) => edge.opportunityKey)
   );
+  const bestScenarioOpportunityIds = bestScenarioOpportunityIdsForRetrofit(activeRetrofit);
   const graphWidth = 920;
   const leftX = 24;
   const leftWidth = 286;
@@ -5056,9 +5061,12 @@ function TestCaseRelationshipGraph({
                 const opportunityY = opportunityYByKey.get(edge.opportunityKey);
                 if (retrofitY === undefined || opportunityY === undefined) return null;
                 const isActive = edge.retrofitTypeId === activeRetrofitId;
+                const opportunity = graph.opportunities.find((item) => item.graphKey === edge.opportunityKey);
+                const scenarioClass =
+                  isActive && opportunity ? relationshipOpportunityScenarioClass(opportunity, bestScenarioOpportunityIds) : "";
                 return (
                   <line
-                    className={`relationship-edge${isActive ? " is-active" : ""}`}
+                    className={`relationship-edge${isActive ? " is-active" : ""}${scenarioClass ? ` ${scenarioClass}` : ""}`}
                     key={`${edge.retrofitTypeId}:${edge.opportunityKey}`}
                     x1={leftX + leftWidth}
                     x2={rightX}
@@ -5106,13 +5114,16 @@ function TestCaseRelationshipGraph({
               {graph.opportunities.map((opportunity, index) => {
                 const y = topOffset + index * rowHeight;
                 const isConnected = selectedOpportunityKeys.has(opportunity.graphKey);
+                const scenarioClass = isConnected ? relationshipOpportunityScenarioClass(opportunity, bestScenarioOpportunityIds) : "";
                 return (
                   <g
-                    className={`relationship-node relationship-opportunity-node${isConnected ? " is-connected" : ""}`}
+                    className={`relationship-node relationship-opportunity-node${isConnected ? " is-connected" : ""}${
+                      scenarioClass ? ` ${scenarioClass}` : ""
+                    }`}
                     key={opportunity.graphKey}
                   >
                     <title>
-                      {opportunity.opportunityName}: connected to {opportunity.retrofitCount.toLocaleString()} retrofit types
+                      {relationshipOpportunityTitle(opportunity, isConnected, bestScenarioOpportunityIds)}
                     </title>
                     <rect height={rectHeight} rx="6" width={rightWidth} x={rightX} y={y} />
                     <text x={rightX + 12} y={y + 19}>
@@ -5130,6 +5141,36 @@ function TestCaseRelationshipGraph({
       )}
     </article>
   );
+}
+
+function bestScenarioOpportunityIdsForRetrofit(retrofit: SampleRetrofitGroup | null): Set<string> | null {
+  const opportunityIds = retrofit?.savingsPreview?.selectedIncentiveScenario?.opportunityIds;
+  if (!Array.isArray(opportunityIds) || opportunityIds.length === 0) return null;
+  return new Set(opportunityIds.filter((opportunityId) => typeof opportunityId === "string" && opportunityId.length > 0));
+}
+
+function relationshipOpportunityScenarioClass(
+  opportunity: RelationshipGraphOpportunity,
+  bestScenarioOpportunityIds: Set<string> | null
+) {
+  if (!bestScenarioOpportunityIds) return "is-compatible";
+  return bestScenarioOpportunityIds.has(opportunity.opportunityId) ? "is-compatible" : "is-excluded";
+}
+
+function relationshipOpportunityTitle(
+  opportunity: RelationshipGraphOpportunity,
+  isConnectedToSelectedRetrofit: boolean,
+  bestScenarioOpportunityIds: Set<string> | null
+) {
+  const baseTitle = `${opportunity.opportunityName}: connected to ${opportunity.retrofitCount.toLocaleString()} retrofit types`;
+  if (!isConnectedToSelectedRetrofit) return baseTitle;
+  if (!bestScenarioOpportunityIds) {
+    return `${baseTitle}. Connected to the selected retrofit; no conflicting incentive scenario is modeled for this retrofit yet.`;
+  }
+  if (bestScenarioOpportunityIds.has(opportunity.opportunityId)) {
+    return `${baseTitle}. Included in the selected best-case incentive scenario.`;
+  }
+  return `${baseTitle}. Not included in the selected best-case incentive scenario.`;
 }
 
 function buildRelationshipGraph(retrofits: SampleRetrofitGroup[]): RelationshipGraphData {
