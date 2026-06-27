@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) test-site profile counts
+
+- Added eligible and ineligible opportunity counts directly inside the admin Test site profile card for each sample matching test case.
+
 ## 2026-06-26 - Codex (GPT-5) compact test-case selector
 
 - Moved the admin Test Cases selector into the Test site profile card header and removed the separate wide selector card to reduce empty vertical space.

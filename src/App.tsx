@@ -4726,6 +4726,10 @@ function AdminTestCasesPanel() {
     status,
     count: selectedTestCase.statusCounts[status] || 0
   })).filter((row) => row.status !== "unavailable" || row.count > 0);
+  const profileStatusRows = [
+    { label: "Eligible", count: selectedTestCase.statusCounts.eligible || 0 },
+    { label: "Ineligible", count: selectedTestCase.statusCounts.ineligible || 0 }
+  ];
 
   return (
     <section className="admin-section">
@@ -4757,6 +4761,14 @@ function AdminTestCasesPanel() {
                 ))}
               </select>
             </label>
+          </div>
+          <div className="test-site-profile-metrics" aria-label="Opportunity matching status counts">
+            {profileStatusRows.map(({ label, count }) => (
+              <div className="test-site-profile-metric" key={label}>
+                <span>{label}</span>
+                <strong>{count.toLocaleString()}</strong>
+              </div>
+            ))}
           </div>
           <div className="opportunity-summary-grid test-case-profile-grid">
             <DetailItem label="Organization" value={sampleValue(sourceForm.organizationType)} />
