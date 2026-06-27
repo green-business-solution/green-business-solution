@@ -18,6 +18,11 @@ The stack creates:
 
 The API Lambda runs in `us-east-1` with IAM permissions to read/write the existing DynamoDB tables in `us-east-2`.
 
+The production API uses separate AWS regions for:
+
+- DynamoDB data access via `GBS_AWS_REGION` (`us-east-2`)
+- The energy-data S3 bucket via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
+
 ## Deploy Command
 
 ```sh

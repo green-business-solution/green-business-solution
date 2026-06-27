@@ -149,6 +149,7 @@ Resources:
       Environment:
         Variables:
           GBS_AWS_REGION: !Ref DataRegion
+          GBS_ENERGY_DATA_BUCKET_REGION: !Ref AWS::Region
           GBS_USERS_TABLE: !Ref UsersTable
           GBS_INTAKE_TABLE: !Ref IntakeTable
           GBS_ENERGY_DATA_TABLE: !Ref EnergyDataTable

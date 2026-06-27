@@ -24,7 +24,8 @@ import {
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
-const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
+const dataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
+const s3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || dataRegion;
 const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
@@ -58,12 +59,12 @@ const adminEmails = new Set(
 );
 
 const client = new DynamoDBClient({
-  region,
+  region: dataRegion,
   credentials: profile ? fromIni({ profile }) : undefined
 });
 const db = DynamoDBDocumentClient.from(client);
 const s3 = new S3Client({
-  region,
+  region: s3Region,
   credentials: profile ? fromIni({ profile }) : undefined
 });
 export const app = express();
