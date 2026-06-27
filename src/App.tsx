@@ -4739,25 +4739,24 @@ function AdminTestCasesPanel() {
         </div>
       </div>
 
-      <div className="test-case-controls">
-        <label className="field">
-          <span>Test case</span>
-          <select onChange={(event) => setSelectedTestCaseId(event.target.value)} value={selectedTestCase.sampleUserId}>
-            {testCases.map((testCase) => (
-              <option key={testCase.sampleUserId} value={testCase.sampleUserId}>
-                {testCase.sampleUserId}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
       <div className="test-case-layout">
-        <article className="data-card">
-          <div>
-            <p className="eyebrow">Test site profile</p>
-            <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
-            <p className="muted-message">{selectedTestCase.description}</p>
+        <article className="data-card test-site-profile-card">
+          <div className="test-site-profile-header">
+            <div>
+              <p className="eyebrow">Test site profile</p>
+              <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
+              <p className="muted-message">{selectedTestCase.description}</p>
+            </div>
+            <label className="field test-case-profile-select">
+              <span>Test case</span>
+              <select onChange={(event) => setSelectedTestCaseId(event.target.value)} value={selectedTestCase.sampleUserId}>
+                {testCases.map((testCase) => (
+                  <option key={testCase.sampleUserId} value={testCase.sampleUserId}>
+                    {testCase.sampleUserId}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
           <div className="opportunity-summary-grid test-case-profile-grid">
             <DetailItem label="Organization" value={sampleValue(sourceForm.organizationType)} />

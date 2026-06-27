@@ -1003,28 +1003,26 @@ dd {
   white-space: pre;
 }
 
-.test-case-controls {
-  background: #ffffff;
-  border: 1px solid #dce3dd;
-  border-radius: 8px;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: minmax(260px, 420px);
-  padding: 16px;
-}
-
-.test-case-controls p {
-  align-self: end;
-  color: #4f5e56;
-  line-height: 1.5;
-  margin: 0 0 2px;
-}
-
 .test-case-layout {
   align-items: start;
   display: grid;
   gap: 18px;
   grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.test-site-profile-card {
+  gap: 18px;
+}
+
+.test-site-profile-header {
+  align-items: start;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+}
+
+.test-case-profile-select {
+  margin: 0;
 }
 
 .test-case-results,
@@ -1633,7 +1631,7 @@ dd {
   }
 
   .review-filters,
-  .test-case-controls,
+  .test-site-profile-header,
   .test-case-layout,
   .test-case-stat-grid,
   .test-case-insight-grid,

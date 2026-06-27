@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) compact test-case selector
+
+- Moved the admin Test Cases selector into the Test site profile card header and removed the separate wide selector card to reduce empty vertical space.
+
 ## 2026-06-26 - Codex (GPT-5) test-case description placement
 
 - Moved admin test-case description text from the selector row into the Test site profile card so site context appears with the site details it describes.
