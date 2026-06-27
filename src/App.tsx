@@ -4732,13 +4732,6 @@ function AdminTestCasesPanel() {
 
   return (
     <section className="admin-section">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Matching test cases</p>
-          <h2>Sample profile results</h2>
-        </div>
-      </div>
-
       <div className="test-case-layout">
         <article className="data-card test-site-profile-card">
           <div className="test-site-profile-header">
@@ -6417,6 +6410,13 @@ function WorkspaceLayout({
             <strong>Green Business Solution</strong>
           </div>
         </div>
+        <div className="workspace-account">
+          <strong>{user.fullName}</strong>
+          <span>{user.email}</span>
+          <button onClick={onSignOut} type="button">
+            Sign out
+          </button>
+        </div>
         <nav className="workspace-nav" aria-label={`${title} sections`}>
           {navItems.map((item) => (
             <button
@@ -6431,18 +6431,6 @@ function WorkspaceLayout({
         </nav>
       </aside>
       <main className="workspace-main">
-        <header className="workspace-topbar">
-          <div>
-            <p className="eyebrow">{title}</p>
-            <h1>{user.fullName}</h1>
-          </div>
-          <div className="session-chip">
-            <span>{user.email}</span>
-            <button className="secondary-button" onClick={onSignOut} type="button">
-              Sign out
-            </button>
-          </div>
-        </header>
         {children}
       </main>
     </div>

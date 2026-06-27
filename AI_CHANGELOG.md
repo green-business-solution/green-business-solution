@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) compact workspace chrome
+
+- Moved the signed-in user name, email, and sign-out button from the main workspace topbar into the left sidebar above navigation.
+- Removed the redundant visible admin/topbar header and the normal admin Test Cases page heading so the page starts directly with test-case content.
+
 ## 2026-06-27 - Codex (GPT-5) test-case fixture metadata cleanup
 
 - Removed the generated-at/opportunity-count fixture metadata line from the admin Test Cases page header.

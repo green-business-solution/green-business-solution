@@ -268,9 +268,7 @@ p {
 }
 
 .preview-topline,
-.section-heading,
-.workspace-topbar,
-.session-chip {
+.section-heading {
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -706,6 +704,40 @@ textarea {
   color: #b5c2b9;
 }
 
+.workspace-account {
+  border-bottom: 1px solid rgba(249, 251, 246, 0.12);
+  border-top: 1px solid rgba(249, 251, 246, 0.12);
+  display: grid;
+  gap: 7px;
+  padding: 16px 0;
+}
+
+.workspace-account strong {
+  color: #ffffff;
+  font-size: 19px;
+  line-height: 1.15;
+}
+
+.workspace-account span {
+  color: #c5d0c9;
+  font-size: 13px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.workspace-account button {
+  background: #f5faf6;
+  color: #17211b;
+  justify-self: start;
+  margin-top: 4px;
+  min-height: 36px;
+  padding: 0 12px;
+}
+
+.workspace-account button:hover {
+  background: #e4eee7;
+}
+
 .workspace-nav {
   display: grid;
   gap: 8px;
@@ -729,26 +761,6 @@ textarea {
   display: grid;
   gap: 24px;
   padding: 30px;
-}
-
-.workspace-topbar {
-  gap: 18px;
-}
-
-.workspace-topbar h1 {
-  letter-spacing: 0;
-  margin-bottom: 0;
-}
-
-.session-chip {
-  gap: 10px;
-}
-
-.session-chip span {
-  background: #e9f0eb;
-  border-radius: 999px;
-  font-weight: 850;
-  padding: 8px 12px;
 }
 
 .profile-grid {
