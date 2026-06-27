@@ -730,3 +730,10 @@
 - Rebuilt the `/admin` Client Intake Summary into a fixed-column horizontally scrollable table so headers and row cells stay aligned at all viewport widths.
 - Upgraded the utility upload pipeline to support category-aware electric, gas, water/sewer, and waste uploads with category metadata, multi-utility parsing, and per-category intake/profile summaries.
 - Split the `/admin` Client Intake Summary into internal electricity, gas, water, and trash/recycling tabs with utility-specific completion, status, and file counts.
+
+# 2026-06-27
+
+- Hid energy audit, LEED certification, engineering feasibility study, and building benchmarking compliance from the normal test-case retrofit savings map and surfaced them in a separate planning/certification/compliance section.
+- Extended the availability review workflow to accept the public retrofit-opportunity index, skip low-value DSIRE shell pages during source fetches, add a USDA EA/REDA source URL repair, and conservatively leave unverified rows as `uncertain`.
+- Added a mixed special/physical retrofit edge audit and suppressed physical retrofit edges for 20 opportunities whose source text explicitly requires an audit, study, certification, or benchmarking step first.
+- Generated public availability and special-edge audit artifacts documenting current review counts, source evidence, and future cron workflow inputs.

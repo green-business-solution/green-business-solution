@@ -4391,6 +4391,12 @@ const SAMPLE_MATCH_STATUS_ORDER = [
   "eligible",
   "ineligible"
 ];
+const SPECIAL_PLANNING_RETROFIT_IDS = new Set([
+  "energy_audit",
+  "leed_certification",
+  "engineering_feasibility_study",
+  "building_benchmarking_compliance"
+]);
 const billFieldDictionaryEntries = billFieldDictionary as BillFieldDictionaryEntry[];
 const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) => [field.id, field]));
 const utilitySummaryFieldsByType = new Map(
@@ -4613,9 +4619,12 @@ function AdminTestCasesPanel() {
   const [error, setError] = useState<string | null>(null);
   const testCases = dataset?.testCases || [];
   const selectedTestCase = testCases.find((testCase) => testCase.sampleUserId === selectedTestCaseId) || testCases[0];
+  const retrofitGroups = selectedTestCase?.retrofits || [];
+  const normalRetrofitGroups = retrofitGroups.filter((retrofit) => !isSpecialPlanningRetrofit(retrofit));
+  const specialRetrofitGroups = retrofitGroups.filter(isSpecialPlanningRetrofit);
   const selectedRetrofit =
-    selectedTestCase?.retrofits?.find((retrofit) => retrofit.retrofitTypeId === selectedRetrofitTypeId) ||
-    selectedTestCase?.retrofits?.[0] ||
+    normalRetrofitGroups.find((retrofit) => retrofit.retrofitTypeId === selectedRetrofitTypeId) ||
+    normalRetrofitGroups[0] ||
     null;
 
   useEffect(() => {
@@ -4658,7 +4667,7 @@ function AdminTestCasesPanel() {
 
   useEffect(() => {
     if (!selectedTestCase) return;
-    const retrofits = selectedTestCase.retrofits || [];
+    const retrofits = (selectedTestCase.retrofits || []).filter((retrofit) => !isSpecialPlanningRetrofit(retrofit));
     if (retrofits.length === 0) {
       setSelectedRetrofitTypeId("");
       return;
@@ -4734,7 +4743,6 @@ function AdminTestCasesPanel() {
   }
 
   const sourceForm = selectedTestCase.sourceForm;
-  const retrofitGroups = selectedTestCase.retrofits || [];
   const profileStatusRows = [
     { label: "Eligible", count: selectedTestCase.statusCounts.eligible || 0 },
     { label: "Ineligible", count: selectedTestCase.statusCounts.ineligible || 0 }
@@ -4783,11 +4791,12 @@ function AdminTestCasesPanel() {
           <TestCaseRelationshipGraph
             onSelectOpportunity={setSelectedOpportunityResult}
             onSelectRetrofit={selectRetrofit}
-            retrofits={retrofitGroups}
+            retrofits={normalRetrofitGroups}
             selectedRetrofitTypeId={selectedRetrofit?.retrofitTypeId || ""}
           />
 
           <SavingsPreviewCard preview={selectedRetrofit?.savingsPreview || null} />
+          <SpecialPlanningRetrofitsPanel onSelectOpportunity={setSelectedOpportunityResult} retrofits={specialRetrofitGroups} />
         </div>
       </div>
       {selectedOpportunityResult ? (
@@ -4795,6 +4804,69 @@ function AdminTestCasesPanel() {
       ) : null}
     </section>
   );
+}
+
+function isSpecialPlanningRetrofit(retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId">) {
+  return SPECIAL_PLANNING_RETROFIT_IDS.has(retrofit.retrofitTypeId);
+}
+
+function SpecialPlanningRetrofitsPanel({
+  onSelectOpportunity,
+  retrofits
+}: {
+  onSelectOpportunity: (opportunity: SampleMatchResult) => void;
+  retrofits: SampleRetrofitGroup[];
+}) {
+  if (retrofits.length === 0) return null;
+
+  return (
+    <article className="data-card special-retrofit-card">
+      <div>
+        <p className="eyebrow">Planning, certification, and compliance</p>
+        <h3>{retrofits.length.toLocaleString()} service categories</h3>
+        <p className="muted-message">
+          These are shown separately because they do not directly create utility-bill savings.
+        </p>
+      </div>
+
+      <div className="special-retrofit-grid">
+        {retrofits.map((retrofit) => (
+          <section className="special-retrofit-item" key={retrofit.retrofitTypeId}>
+            <div>
+              <h4>{retrofit.displayName}</h4>
+              <p>{planningRetrofitExplanation(retrofit.retrofitTypeId)}</p>
+            </div>
+            <strong>{retrofit.opportunityCount.toLocaleString()} opportunities</strong>
+            {retrofit.opportunities.length > 0 ? (
+              <button
+                className="secondary-button"
+                onClick={() => onSelectOpportunity(retrofit.opportunities[0])}
+                type="button"
+              >
+                View top opportunity
+              </button>
+            ) : null}
+          </section>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function planningRetrofitExplanation(retrofitTypeId: string) {
+  if (retrofitTypeId === "energy_audit") {
+    return "Audit funding or audit requirements; modeled as service cost support only when the program pays for the audit.";
+  }
+  if (retrofitTypeId === "leed_certification") {
+    return "Certification, permit, tax, or green-building benefits; not a standalone utility savings measure.";
+  }
+  if (retrofitTypeId === "engineering_feasibility_study") {
+    return "Predevelopment engineering support before an implementation project is selected.";
+  }
+  if (retrofitTypeId === "building_benchmarking_compliance") {
+    return "Measurement, reporting, or compliance support used to establish or verify performance.";
+  }
+  return "Planning or compliance support.";
 }
 
 function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null }) {

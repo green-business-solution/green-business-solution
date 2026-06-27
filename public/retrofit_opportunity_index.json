@@ -24,7 +24,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 418,
+      "opportunityCount": 410,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -651,22 +651,6 @@
           "state": "TX",
           "programType": "Rebate Program",
           "administrator": "Austin Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -1753,20 +1737,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4206",
           "opportunityName": "District of Columbia Property Assessed Clean Energy Financing",
           "sourceName": "DSIRE",
@@ -2762,22 +2732,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2030",
-          "opportunityName": "Idaho Falls Power - Commercial Energy Conservation Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program",
-          "websiteUrl": "https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business",
-          "applicationUrl": null,
-          "state": "ID",
-          "programType": "Loan Program",
-          "administrator": "Idaho Falls Power",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3458",
           "opportunityName": "Idaho Falls Power - Commercial Energy Conservation Rebate Program",
           "sourceName": "DSIRE",
@@ -3000,20 +2954,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
-          "opportunityName": "Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://lge-ku.com/bizrebates",
-          "applicationUrl": null,
-          "state": "KY",
-          "programType": "Rebate Program",
-          "administrator": "Kentucky Utilities Company and Louisville Gas & Electric",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3169",
           "opportunityName": "Kissimmee Utility Authority - Residential & Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -3173,20 +3113,6 @@
           "state": "MN",
           "programType": "Grant Program",
           "administrator": "Lake Region Electric Cooperative",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3617",
-          "opportunityName": "Lakeland Electric - Commercial Conservation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program",
-          "websiteUrl": "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Rebate Program",
-          "administrator": "Lakeland Electric",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -3614,20 +3540,6 @@
           "state": "OR",
           "programType": "Rebate Program",
           "administrator": "Midstate Electric Cooperative",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-          "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-          "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-          "applicationUrl": null,
-          "state": "KS",
-          "programType": "Loan Program",
-          "administrator": "Midwest Energy",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -4191,22 +4103,6 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
@@ -5793,22 +5689,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2187",
-          "opportunityName": "Tillamook County PUD - Dairy Lighting Retrofit Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2187/tillamook-county-pud-dairy-lighting-retrofit-rebate-program",
-          "websiteUrl": "http://www.tpud.org/energy-efficiency/commercial-dairy-programs/",
-          "applicationUrl": null,
-          "state": "OR",
-          "programType": "Rebate Program",
-          "administrator": "Tillamook County PUD",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "lighting retrofit"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3652",
           "opportunityName": "Town of Babylon - Long Island Green Homes Program",
           "sourceName": "DSIRE",
@@ -6260,7 +6140,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 96,
+      "opportunityCount": 95,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3831",
@@ -7092,22 +6972,6 @@
           "matchedTerms": [
             "lighting controls",
             "occupancy sensor"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
-          "opportunityName": "Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://lge-ku.com/bizrebates",
-          "applicationUrl": null,
-          "state": "KY",
-          "programType": "Rebate Program",
-          "administrator": "Kentucky Utilities Company and Louisville Gas & Electric",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "lighting controls"
           ]
         },
         {
@@ -8155,7 +8019,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 846,
+      "opportunityCount": 833,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -8943,22 +8807,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioner"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5946",
           "opportunityName": "Avista Utilities (Electric) - Commercial Energy Efficiency Incentives Program",
           "sourceName": "DSIRE",
@@ -9574,20 +9422,6 @@
           "state": "US",
           "programType": "Corporate Tax Credit",
           "administrator": "U.S. Internal Revenue Service",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3331",
-          "opportunityName": "Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
-          "websiteUrl": "https://www.butlerrural.coop/low-interest-loans",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Loan Program",
-          "administrator": "Butler Rural Electric Cooperative, Inc.",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -11436,20 +11270,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4387",
           "opportunityName": "DEMEC Member Utilities - Green Energy Program Incentives",
           "sourceName": "DSIRE",
@@ -11931,22 +11751,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioning"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
           "opportunityName": "East Central Energy - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -12289,20 +12093,6 @@
           "applicationUrl": null,
           "state": "DE",
           "programType": "Rebate Program",
-          "administrator": "Energize Delaware",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5448",
-          "opportunityName": "Energize Delaware - Low Interest Commercial Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program",
-          "websiteUrl": "https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/",
-          "applicationUrl": null,
-          "state": "DE",
-          "programType": "Loan Program",
           "administrator": "Energize Delaware",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
@@ -13342,22 +13132,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioning"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1188",
           "opportunityName": "Home Energy Loan Program",
           "sourceName": "DSIRE",
@@ -13445,20 +13219,6 @@
             "air conditioner",
             "air conditioning"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2030",
-          "opportunityName": "Idaho Falls Power - Commercial Energy Conservation Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program",
-          "websiteUrl": "https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business",
-          "applicationUrl": null,
-          "state": "ID",
-          "programType": "Loan Program",
-          "administrator": "Idaho Falls Power",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3458",
@@ -13893,20 +13653,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
-          "opportunityName": "Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://lge-ku.com/bizrebates",
-          "applicationUrl": null,
-          "state": "KY",
-          "programType": "Rebate Program",
-          "administrator": "Kentucky Utilities Company and Louisville Gas & Electric",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22778",
           "opportunityName": "Keystone Energy Efficiency Program (KEEP) Home Energy Loan",
           "sourceName": "DSIRE",
@@ -14083,20 +13829,6 @@
           "matchedTerms": [
             "air conditioning"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3617",
-          "opportunityName": "Lakeland Electric - Commercial Conservation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program",
-          "websiteUrl": "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Rebate Program",
-          "administrator": "Lakeland Electric",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3616",
@@ -15000,20 +14732,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-          "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-          "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-          "applicationUrl": null,
-          "state": "KS",
-          "programType": "Loan Program",
-          "administrator": "Midwest Energy",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5156",
           "opportunityName": "Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -15554,20 +15272,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22044",
-          "opportunityName": "Multifamily Navigator Pre-Development Energy Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22044/multifamily-navigator-pre-development-energy-loan-program",
-          "websiteUrl": "https://inclusiveprosperitycapital.org/products/navigator/",
-          "applicationUrl": null,
-          "state": "CT",
-          "programType": "Loan Program",
-          "administrator": "Inclusive Prosperity Capital",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2862",
           "opportunityName": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates",
           "sourceName": "DSIRE",
@@ -16094,20 +15798,6 @@
           "state": "IN",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -19599,20 +19289,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
-          "opportunityName": "The Green Energy Loan Fund (GELF)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-          "websiteUrl": "https://www.reinvestment.com/gelf/",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "Reinvestment Fund",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
           "opportunityName": "Tideland EMC - Weatherization Loan Program",
           "sourceName": "DSIRE",
@@ -20567,7 +20243,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 553,
+      "opportunityCount": 548,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -21133,24 +20809,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump",
-            "mini split",
-            "ductless"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4639",
           "opportunityName": "Avista Utilities (Electric) - Commercial Energy Efficiency Incentives Program",
           "sourceName": "DSIRE",
@@ -21560,22 +21218,6 @@
           "state": "ND",
           "programType": "Rebate Program",
           "administrator": "Bright Energy Solutions/Missouri River Energy Services",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3331",
-          "opportunityName": "Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
-          "websiteUrl": "https://www.butlerrural.coop/low-interest-loans",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Loan Program",
-          "administrator": "Butler Rural Electric Cooperative, Inc.",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -23374,23 +23016,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump",
-            "mini split"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
           "opportunityName": "East Central Energy - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -24486,22 +24111,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "heat pump"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "mini split"
           ]
         },
         {
@@ -26407,22 +26016,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "heat pump"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "mini split"
           ]
         },
         {
@@ -29780,7 +29373,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 333,
+      "opportunityCount": 331,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -30247,23 +29840,6 @@
           "state": "TX",
           "programType": "Rebate Program",
           "administrator": "Austin Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "smart thermostat",
-            "thermostat"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -31797,23 +31373,6 @@
           "state": "CO",
           "programType": "Rebate Program",
           "administrator": "Walking Mountains Science Center",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "programmable thermostat",
-            "thermostat"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -36343,7 +35902,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 154,
+      "opportunityCount": 152,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -36419,22 +35978,6 @@
           "state": "AR",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "furnace"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -36979,22 +36522,6 @@
           "state": "MI",
           "programType": "Rebate Program",
           "administrator": "CLEAResult Consulting",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "furnace"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -38829,7 +38356,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 109,
+      "opportunityCount": 107,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -38857,22 +38384,6 @@
           "state": "MS",
           "programType": "Rebate Program",
           "administrator": "CLEAResult",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "boiler"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -39420,22 +38931,6 @@
           "state": "NH",
           "programType": "Rebate Program",
           "administrator": "Public Service of New Hampshire",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "boiler"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -41046,7 +40541,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 102,
+      "opportunityCount": 101,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -41497,22 +40992,6 @@
           "state": "WA",
           "programType": "Rebate Program",
           "administrator": "Cowlitz County Public Utility District",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "duct sealing"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -42717,7 +42196,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 361,
+      "opportunityCount": 355,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -42998,22 +42477,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5042",
           "opportunityName": "Baltimore County - Property Tax Credit for Solar and Geothermal Devices",
           "sourceName": "DSIRE",
@@ -43236,22 +42699,6 @@
           "state": "US",
           "programType": "Corporate Tax Credit",
           "administrator": "U.S. Internal Revenue Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3331",
-          "opportunityName": "Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
-          "websiteUrl": "https://www.butlerrural.coop/low-interest-loans",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Loan Program",
-          "administrator": "Butler Rural Electric Cooperative, Inc.",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -44220,22 +43667,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
           "opportunityName": "East Central Energy - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -44414,22 +43845,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "geothermal heat pump",
-            "geothermal"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5448",
-          "opportunityName": "Energize Delaware - Low Interest Commercial Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program",
-          "websiteUrl": "https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/",
-          "applicationUrl": null,
-          "state": "DE",
-          "programType": "Loan Program",
-          "administrator": "Energize Delaware",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
             "geothermal"
           ]
         },
@@ -46055,22 +45470,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22044",
-          "opportunityName": "Multifamily Navigator Pre-Development Energy Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22044/multifamily-navigator-pre-development-energy-loan-program",
-          "websiteUrl": "https://inclusiveprosperitycapital.org/products/navigator/",
-          "applicationUrl": null,
-          "state": "CT",
-          "programType": "Loan Program",
-          "administrator": "Inclusive Prosperity Capital",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2862",
           "opportunityName": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates",
           "sourceName": "DSIRE",
@@ -46249,22 +45648,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "geothermal heat pump",
-            "geothermal"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
             "geothermal"
           ]
         },
@@ -53460,7 +52843,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 30,
+      "opportunityCount": 29,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -53584,22 +52967,6 @@
           "state": "CA",
           "programType": "Rebate Program",
           "administrator": "Utility Marketing Services",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "gas water heater"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1777",
-          "opportunityName": "City of Tallahassee Utilities - Solar Loans",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans",
-          "websiteUrl": "http://www.talgov.com/you/you-products-home-loans.aspx",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Loan Program",
-          "administrator": "City of Tallahassee Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -53962,40 +53329,8 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 124,
+      "opportunityCount": 119,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Corporate)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Corporate Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar thermal"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Personal)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Personal Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar thermal"
-          ]
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
           "opportunityName": "Agricultural Energy Loan Program",
@@ -54042,23 +53377,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "solar water heating"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating",
-            "solar hot water"
           ]
         },
         {
@@ -54203,22 +53521,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "solar hot water"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1777",
-          "opportunityName": "City of Tallahassee Utilities - Solar Loans",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans",
-          "websiteUrl": "http://www.talgov.com/you/you-products-home-loans.aspx",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Loan Program",
-          "administrator": "City of Tallahassee Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating"
           ]
         },
         {
@@ -54585,22 +53887,6 @@
           "state": "MA",
           "programType": "Loan Program",
           "administrator": "Holyoke Gas and Electric Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar hot water"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -56036,7 +55322,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 327,
+      "opportunityCount": 326,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -56380,23 +55666,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "refrigeration"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "refrigerator",
-            "freezer"
           ]
         },
         {
@@ -63752,7 +63021,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 394,
+      "opportunityCount": 388,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -64148,22 +63417,6 @@
           "state": "TX",
           "programType": "Rebate Program",
           "administrator": "Austin Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -65515,22 +64768,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2039",
           "opportunityName": "Denton Municipal Electric - Residential GreenSense Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -66699,22 +65936,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1188",
           "opportunityName": "Home Energy Loan Program",
           "sourceName": "DSIRE",
@@ -66772,22 +65993,6 @@
           "state": "VT",
           "programType": "Rebate Program",
           "administrator": "Efficiency Vermont",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2030",
-          "opportunityName": "Idaho Falls Power - Commercial Energy Conservation Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program",
-          "websiteUrl": "https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business",
-          "applicationUrl": null,
-          "state": "ID",
-          "programType": "Loan Program",
-          "administrator": "Idaho Falls Power",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -67595,22 +66800,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-          "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-          "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-          "applicationUrl": null,
-          "state": "KS",
-          "programType": "Loan Program",
-          "administrator": "Midwest Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5156",
           "opportunityName": "Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -68004,22 +67193,6 @@
           "state": "NJ",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -70076,7 +69249,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 255,
+      "opportunityCount": 249,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3831",
@@ -70367,22 +69540,6 @@
           "matchedTerms": [
             "air sealing",
             "weatherization"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing"
           ]
         },
         {
@@ -71118,22 +70275,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-          "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-          "websiteUrl": "https://dmea.com/free-home-weatherization",
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Rebate Program",
-          "administrator": "Delta-Montrose Electric Association",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2039",
           "opportunityName": "Denton Municipal Electric - Residential GreenSense Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -71374,22 +70515,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "air sealing"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
           ]
         },
         {
@@ -71875,22 +71000,6 @@
           "state": "MA",
           "programType": "Loan Program",
           "administrator": "Holyoke Gas and Electric Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -72526,22 +71635,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-          "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-          "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-          "applicationUrl": null,
-          "state": "KS",
-          "programType": "Loan Program",
-          "administrator": "Midwest Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4787",
           "opportunityName": "Minnesota Energy Resources (Gas) - Low-Income New Construction Rebates",
           "sourceName": "DSIRE",
@@ -72762,23 +71855,6 @@
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
-            "weatherization"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing",
             "weatherization"
           ]
         },
@@ -79157,7 +78233,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 32,
+      "opportunityCount": 31,
       "opportunities": [
         {
           "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:agricultural-and-pumping-interruptible-ap-i-program",
@@ -79626,22 +78702,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
-          "opportunityName": "The Green Energy Loan Fund (GELF)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-          "websiteUrl": "https://www.reinvestment.com/gelf/",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "Reinvestment Fund",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "demand response"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1374",
           "opportunityName": "Unitil (Electric) - Commercial and Industrial Energy Efficiency Programs",
           "sourceName": "DSIRE",
@@ -79691,40 +78751,8 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 140,
+      "opportunityCount": 136,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Corporate)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Corporate Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "photovoltaic"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Personal)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Personal Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "photovoltaic"
-          ]
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22441",
           "opportunityName": "Adjustable Block Program (Illinois Shines)",
@@ -80149,23 +79177,6 @@
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
-            "photovoltaic"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1777",
-          "opportunityName": "City of Tallahassee Utilities - Solar Loans",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans",
-          "websiteUrl": "http://www.talgov.com/you/you-products-home-loans.aspx",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Loan Program",
-          "administrator": "City of Tallahassee Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar pv",
             "photovoltaic"
           ]
         },
@@ -80666,22 +79677,6 @@
           "matchedTerms": [
             "solar photovoltaic",
             "photovoltaic"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar pv"
           ]
         },
         {
@@ -82953,7 +81948,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 46,
+      "opportunityCount": 45,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
@@ -83676,22 +82671,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
-          "opportunityName": "The Green Energy Loan Fund (GELF)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-          "websiteUrl": "https://www.reinvestment.com/gelf/",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "Reinvestment Fund",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "combined heat and power"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5840",
           "opportunityName": "WSHFC Sustainable Energy Program",
           "sourceName": "DSIRE",
@@ -83725,7 +82704,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 111,
+      "opportunityCount": 110,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4495",
@@ -84140,22 +83119,6 @@
           "state": "ME",
           "programType": "Rebate Program",
           "administrator": "Efficiency Maine Trust",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "biomass"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5448",
-          "opportunityName": "Energize Delaware - Low Interest Commercial Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program",
-          "websiteUrl": "https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/",
-          "applicationUrl": null,
-          "state": "DE",
-          "programType": "Loan Program",
-          "administrator": "Energize Delaware",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -85532,7 +84495,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 205,
+      "opportunityCount": 200,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
@@ -86519,20 +85482,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-          "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-          "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-          "applicationUrl": null,
-          "state": "MA",
-          "programType": "Loan Program",
-          "administrator": "Customer Service",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2426",
           "opportunityName": "Home Energy Solutions for Existing Homes",
           "sourceName": "DSIRE",
@@ -86923,20 +85872,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5854",
-          "opportunityName": "Lodi Electric Utility - Commercial and Industrial Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5854/lodi-electric-utility-commercial-and-industrial-energy-efficiency-loan-program",
-          "websiteUrl": "http://lodielectric.com/908/Commercial-Programs",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22563",
           "opportunityName": "Making Solar Equitable Program",
           "sourceName": "DSIRE",
@@ -87064,20 +85999,6 @@
           "state": "FL",
           "programType": "PACE Financing",
           "administrator": "Miami-Dade County",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-          "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-          "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-          "applicationUrl": null,
-          "state": "KS",
-          "programType": "Loan Program",
-          "administrator": "Midwest Energy",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -87334,22 +86255,6 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ]
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3112",
@@ -88401,22 +87306,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
-          "opportunityName": "The Green Energy Loan Fund (GELF)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-          "websiteUrl": "https://www.reinvestment.com/gelf/",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "Reinvestment Fund",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
           "opportunityName": "Tideland EMC - Weatherization Loan Program",
           "sourceName": "DSIRE",
@@ -89092,36 +87981,8 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 393,
+      "opportunityCount": 386,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Corporate)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Corporate Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
-          "opportunityName": "2021 Sustainable Building Tax Credit (Personal)",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal",
-          "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Personal Tax Credit",
-          "administrator": "New Mexico Taxation & Revenue Department",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
           "opportunityName": "AEP (SWEPCO) - Efficient Products Rebates Program",
@@ -89660,22 +88521,6 @@
             "ev charging",
             "charging station",
             "electric vehicle charging"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charger"
           ]
         },
         {
@@ -90888,22 +89733,6 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ]
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
@@ -92398,20 +91227,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5892",
-          "opportunityName": "Local Government Energy Audit/Retrofits",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5892/local-government-energy-audit-retrofits",
-          "websiteUrl": "https://www.wyoenergy.org/financing/",
-          "applicationUrl": null,
-          "state": "WY",
-          "programType": "Grant Program",
-          "administrator": "Wyoming Energy Authority",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5423",
           "opportunityName": "Local Option - Property Tax Exemption for Renewable Energy Systems",
           "sourceName": "DSIRE",
@@ -92961,20 +91776,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22777",
-          "opportunityName": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
-          "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "National Energy Improvement Fund",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2862",
           "opportunityName": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates",
           "sourceName": "DSIRE",
@@ -93230,20 +92031,6 @@
           "state": "NJ",
           "programType": "Loan Program",
           "administrator": "New Jersey Economic Development Authority (NJEDA)",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -95282,7 +94069,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 265,
+      "opportunityCount": 260,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
@@ -95701,23 +94488,6 @@
           "state": "TX",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -96684,23 +95454,6 @@
           "state": "IN",
           "programType": "Performance-Based Incentive",
           "administrator": "Itron/Rolling Energy Resources",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-          "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-          "websiteUrl": "https://ecoec.com/rebates",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Rebate Program",
-          "administrator": null,
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -97833,23 +96586,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5892",
-          "opportunityName": "Local Government Energy Audit/Retrofits",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5892/local-government-energy-audit-retrofits",
-          "websiteUrl": "https://www.wyoenergy.org/financing/",
-          "applicationUrl": null,
-          "state": "WY",
-          "programType": "Grant Program",
-          "administrator": "Wyoming Energy Authority",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4583",
           "opportunityName": "Lodi Electric Utility - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -98175,23 +96911,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22777",
-          "opportunityName": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
-          "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency",
-          "applicationUrl": null,
-          "state": "PA",
-          "programType": "Loan Program",
-          "administrator": "National Energy Improvement Fund",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2862",
           "opportunityName": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates",
           "sourceName": "DSIRE",
@@ -98353,23 +97072,6 @@
           "state": "MA",
           "programType": "Rebate Program",
           "administrator": "Massachusetts Municipal Wholesale Electric Company",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -101778,7 +100480,7 @@
       "typicalBillTypes": [
         "water"
       ],
-      "opportunityCount": 128,
+      "opportunityCount": 127,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -101875,23 +100577,6 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "fixture"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "fixture",
-            "showerhead"
           ]
         },
         {
@@ -103864,24 +102549,8 @@
       "typicalBillTypes": [
         "water"
       ],
-      "opportunityCount": 19,
+      "opportunityCount": 18,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "toilet"
-          ]
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5254",
           "opportunityName": "Brownsville Public Utilities Board - Residential/Small Commercial Rebate Program",
@@ -104439,7 +103108,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 161,
+      "opportunityCount": 160,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
@@ -104579,22 +103248,6 @@
           "state": "OR",
           "programType": "Rebate Program",
           "administrator": "City of Ashland",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "clothes washer"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -107142,7 +105795,7 @@
         "gas",
         "water"
       ],
-      "opportunityCount": 114,
+      "opportunityCount": 112,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -107284,22 +105937,6 @@
           "state": "VA",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dishwasher"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-          "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-          "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "Austin Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -108201,22 +106838,6 @@
           "state": "IN",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dishwasher"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -113289,7 +111910,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 33,
+      "opportunityCount": 32,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1931",
@@ -113605,22 +112226,6 @@
           "state": "CO",
           "programType": "Rebate Program",
           "administrator": "Mountain View Electric Association, Inc.",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "blower"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-          "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-          "websiteUrl": "http://www.naeci.com/eecl",
-          "applicationUrl": null,
-          "state": "AR",
-          "programType": "Loan Program",
-          "administrator": "North Arkansas Electric Cooperative",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [

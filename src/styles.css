@@ -1414,6 +1414,40 @@ dd {
   align-content: start;
 }
 
+.special-retrofit-card {
+  align-content: start;
+}
+
+.special-retrofit-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.special-retrofit-item {
+  background: #f7faf7;
+  border: 1px solid #e1e9e3;
+  border-radius: 6px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+}
+
+.special-retrofit-item h4 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.special-retrofit-item p {
+  color: #5d6b63;
+  line-height: 1.35;
+}
+
+.special-retrofit-item strong {
+  color: #16231b;
+  font-size: 13px;
+}
+
 .savings-headline-grid {
   display: grid;
   gap: 10px;
@@ -1799,6 +1833,7 @@ dd {
   .match-detail-grid,
   .savings-headline-grid,
   .savings-breakdown-grid,
+  .special-retrofit-grid,
   .opportunity-review-layout,
   .opportunity-summary-grid {
     grid-template-columns: 1fr;

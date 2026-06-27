@@ -56,6 +56,15 @@ OPPORTUNITY_SOURCE_PATH=/tmp/retrofi-availability-targets.json \
   npm run matching:availability-reviews -- --write-dynamodb
 ```
 
+To audit the same opportunities currently visible in the public retrofit index without scanning AWS, pass the generated public index:
+
+```sh
+OPPORTUNITY_SOURCE_PATH=public/retrofit_opportunity_index.json \
+  AVAILABILITY_REVIEW_OUTPUT_PATH=data/public_opportunity_availability_reviews.json \
+  AVAILABILITY_REVIEW_REPORT_PATH=data/public_opportunity_availability_review_report.md \
+  npm run matching:availability-reviews
+```
+
 The script writes:
 
 - `data/availability_reviews.json`
@@ -68,6 +77,27 @@ After writing availability reviews, rerun the archive pass and sample matching f
 npm run matching:archive-unavailable -- --write-dynamodb
 npm run matching:sample
 ```
+
+Then audit mixed special/physical retrofit edges:
+
+```sh
+npm run matching:special-edge-audit
+```
+
+The special-edge audit writes:
+
+- `data/special_retrofit_edge_audit.json`
+- `data/special_retrofit_edge_audit.md`
+
+Use the audit to suppress normal-retrofit edges only when official source text explicitly says an energy audit, LEED certification, engineering feasibility study, or benchmarking/compliance step is required before the normal retrofit incentive can be used. Otherwise keep the normal retrofit edge and show the special category separately in the UI.
+
+When suppression IDs have been added to `SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS` in `server/matching/retrofitTaxonomy.mjs`, regenerate sample data from AWS with `npm run matching:sample`. If AWS credentials are unavailable and the checked-in public fixtures need to be patched immediately, run:
+
+```sh
+npm run matching:special-edge-suppressions:public
+```
+
+That command removes the suppressed opportunities from physical-retrofit groups in `public/retrofit_opportunity_index.json` and `public/sample_matching_test_cases.json`, while leaving the opportunities attached to their planning/certification/compliance categories.
 
 ## Source Research Process
 
@@ -105,6 +135,7 @@ A future scheduled job should:
 5. Re-fetch source URLs and update DynamoDB review fields.
 6. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
 7. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
-8. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
+8. Run `matching:special-edge-audit` and review any `remove_normal_edges` or `manual_review_before_edge_removal` rows before publishing regenerated test cases.
+9. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

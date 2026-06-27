@@ -114,6 +114,29 @@ export const RETROFIT_TYPES = [
 
 export const RETROFIT_TYPES_BY_ID = Object.fromEntries(RETROFIT_TYPES.map((type) => [type.retrofitTypeId, type]));
 
+export const SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS = new Set([
+  "SOURCE_DSIRE:dsire_program_id:1935",
+  "SOURCE_DSIRE:dsire_program_id:3580",
+  "SOURCE_DSIRE:dsire_program_id:2030",
+  "SOURCE_DSIRE:dsire_program_id:3951",
+  "SOURCE_DSIRE:dsire_program_id:3617",
+  "SOURCE_DSIRE:dsire_program_id:3187",
+  "SOURCE_DSIRE:dsire_program_id:2042",
+  "SOURCE_DSIRE:dsire_program_id:2187",
+  "SOURCE_DSIRE:dsire_program_id:3331",
+  "SOURCE_DSIRE:dsire_program_id:5250",
+  "SOURCE_DSIRE:dsire_program_id:5448",
+  "SOURCE_DSIRE:dsire_program_id:1337",
+  "SOURCE_DSIRE:dsire_program_id:22044",
+  "SOURCE_DSIRE:dsire_program_id:22779",
+  "SOURCE_DSIRE:dsire_program_id:1777",
+  "SOURCE_DSIRE:dsire_program_id:22423",
+  "SOURCE_DSIRE:dsire_program_id:22424",
+  "SOURCE_DSIRE:dsire_program_id:5854",
+  "SOURCE_DSIRE:dsire_program_id:5892",
+  "SOURCE_DSIRE:dsire_program_id:22777"
+]);
+
 export function classifyRetrofitsForOpportunity(opportunity, matchProfile) {
   const normalizedText = buildOpportunityRetrofitText(opportunity);
   const technologyIds = new Set([
@@ -138,7 +161,11 @@ export function classifyRetrofitsForOpportunity(opportunity, matchProfile) {
     });
   }
 
-  return uniqueBy(matches, (match) => match.retrofitTypeId).sort((a, b) => taxonomyOrder(a.retrofitTypeId) - taxonomyOrder(b.retrofitTypeId));
+  const filteredMatches = SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS.has(opportunity?.opportunityId)
+    ? matches.filter((match) => !RETROFIT_TYPES_BY_ID[match.retrofitTypeId]?.isPhysicalRetrofit)
+    : matches;
+
+  return uniqueBy(filteredMatches, (match) => match.retrofitTypeId).sort((a, b) => taxonomyOrder(a.retrofitTypeId) - taxonomyOrder(b.retrofitTypeId));
 }
 
 export function buildRetrofitOpportunityIndex(opportunityProfiles) {

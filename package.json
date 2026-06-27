@@ -18,6 +18,8 @@
     "matching:utility-reviews": "node scripts/research-utility-restrictions.mjs",
     "matching:utility-reviews:write": "node scripts/write-utility-restriction-reviews.mjs",
     "matching:availability-reviews": "node scripts/research-availability.mjs",
+    "matching:special-edge-audit": "node scripts/audit-special-retrofit-edges.mjs",
+    "matching:special-edge-suppressions:public": "node scripts/apply-special-edge-suppressions-to-public-fixtures.mjs",
     "matching:archive-unavailable": "node scripts/archive-unavailable-opportunities.mjs",
     "matching:review-repairs": "node scripts/apply-targeted-review-repairs.mjs",
     "matching:status-bucket-repairs": "node scripts/apply-status-bucket-cleanup-repairs.mjs",

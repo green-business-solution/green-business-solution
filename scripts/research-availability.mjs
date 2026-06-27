@@ -56,6 +56,9 @@ console.log(`Wrote: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
 if (writeDynamoDb) console.log(`DynamoDB updates written to ${tableName}.`);
 console.log(JSON.stringify(statusCounts, null, 2));
+if (process.env.AVAILABILITY_REVIEW_NO_FORCE_EXIT !== "1") {
+  process.exit(0);
+}
 
 async function reviewOpportunity(opportunity) {
   const corpusText = buildExtractionCorpus(opportunity).map((segment) => segment.text).join("\n");
@@ -100,7 +103,36 @@ async function reviewOpportunity(opportunity) {
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
   if (Array.isArray(source)) return source.filter((item) => item?.opportunityId);
+  if (Array.isArray(source.retrofits)) return flattenPublicRetrofitIndex(source);
   return (source.Items || []).map((item) => (item.opportunityId ? item : unmarshall(item))).filter((item) => item?.opportunityId);
+}
+
+function flattenPublicRetrofitIndex(source) {
+  const opportunitiesById = new Map();
+
+  for (const retrofit of source.retrofits || []) {
+    for (const opportunity of retrofit.opportunities || []) {
+      if (!opportunity?.opportunityId || opportunitiesById.has(opportunity.opportunityId)) {
+        continue;
+      }
+
+      opportunitiesById.set(opportunity.opportunityId, {
+        opportunityId: opportunity.opportunityId,
+        canonicalTitle: opportunity.opportunityName,
+        normalizedTitle: opportunity.opportunityName,
+        sourceName: opportunity.sourceName,
+        sourceKey: opportunity.sourceName,
+        sourceUrl: opportunity.sourceUrl,
+        websiteUrl: opportunity.websiteUrl,
+        applicationUrl: opportunity.applicationUrl,
+        state: opportunity.state,
+        programType: opportunity.programType,
+        administrator: opportunity.administrator
+      });
+    }
+  }
+
+  return [...opportunitiesById.values()];
 }
 
 async function scanOpportunitiesFromAws() {
@@ -128,11 +160,29 @@ function createDbClient() {
 
 function sourceUrlsFor(opportunity) {
   return uniqueStrings([
-    opportunity.sourceUrl,
     opportunity.websiteUrl,
     opportunity.applicationUrl,
+    opportunity.sourceUrl,
     ...asArray(opportunity.evidence).map((evidence) => evidence?.sourceUrl)
-  ]).filter((url) => /^https?:\/\//i.test(url));
+  ].flatMap(expandKnownSourceUrls))
+    .filter((url) => /^https?:\/\//i.test(url))
+    .filter((url) => !isLowValueAvailabilitySourceUrl(url));
+}
+
+function expandKnownSourceUrls(url) {
+  if (!url) return [];
+  const value = String(url);
+  if (/rd\.usda\.gov\/programs-services\/rural-energy-america-program-energy-audit-renewable-energy-development-assistance\b/i.test(value)) {
+    return [
+      value,
+      "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-energy-audit-renewable-energy-development-assistance-grants"
+    ];
+  }
+  return [value];
+}
+
+function isLowValueAvailabilitySourceUrl(url) {
+  return /programs\.dsireusa\.org\/system\/program\/detail\//i.test(url);
 }
 
 async function fetchSourceText(url) {

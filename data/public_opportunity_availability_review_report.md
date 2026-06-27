@@ -1,0 +1,350 @@
+# Availability Review
+
+Generated: 2026-06-27T22:40:40.672Z
+Opportunities reviewed: 1619
+Source-page fetch enabled: yes
+Source fetch attempts: 1
+Source fetch retry delay: 0 ms
+
+## Status Counts
+
+```json
+{
+  "uncertain": 879,
+  "active": 659,
+  "rolling": 28,
+  "upcoming": 45,
+  "unavailable": 8
+}
+```
+
+## Status Meanings
+
+- `active`: source text indicates the program is currently accepting participation or applications.
+- `rolling`: source text explicitly says no deadline, no time limit, first-come first-served, or open until funds are exhausted.
+- `upcoming`: source text indicates a future opening.
+- `unavailable`: source text or dates indicate the program is closed, fully subscribed, expired, cancelled, or no longer accepting applications.
+- `uncertain`: reviewed source text did not contain enough supported availability evidence. If source fetches were rate-limited, wait for the retry window and rerun the review before accepting this status.
+
+## Sample Rows
+
+- uncertain: (Electric and Gas) Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:5738)
+  - reasons: none
+  - evidence: (Electric and Gas) Residential Rebate Program Rebate Program CT
+  - sources: https://energizect.com/your-home/rebates-and-incentives
+- uncertain: Advanced Energy Fund Grant (SOURCE_DSIRE:dsire_program_id:22746)
+  - reasons: none
+  - evidence: Advanced Energy Fund Grant Grant Program OH
+  - sources: https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery
+- uncertain: AEP (Central, SWEPCO and North) - Commercial Solutions Program (SOURCE_DSIRE:dsire_program_id:3831)
+  - reasons: none
+  - evidence: AEP (Central, SWEPCO and North) - Commercial Solutions Program CLEAResult Consulting Rebate Program TX &times; Submitted! Thank you for expressing your interest in our program. A program representative will contact you shortly. You may only submit once every 2
+  - sources: https://www.aeptexasefficiency.com/#/commercial/commercial-solutions
+- uncertain: AEP (Central, SWEPCO and North) - SCORE Program for Schools (SOURCE_DSIRE:dsire_program_id:5170)
+  - reasons: none
+  - evidence: AEP (Central, SWEPCO and North) - SCORE Program for Schools CLEAResult Consulting Rebate Program TX &times; Submitted! Thank you for expressing your interest in our program. A program representative will contact you shortly. You may only submit once every 24 h
+  - sources: https://www.aeptexasefficiency.com/#/commercial/score
+- uncertain: AEP (Central) - CitySmart Program (SOURCE_DSIRE:dsire_program_id:5171)
+  - reasons: none
+  - evidence: AEP (Central) - CitySmart Program CLEAResult Consulting Rebate Program TX &times; Submitted! Thank you for expressing your interest in our program. A program representative will contact you shortly. You may only submit once every 24 hours. --->
+  - sources: https://aeptexasefficiency.com/#/
+- uncertain: AEP (SWEPCO) - Efficient Products Rebates Program (SOURCE_DSIRE:dsire_program_id:5822)
+  - reasons: none
+  - evidence: AEP (SWEPCO) - Efficient Products Rebates Program Rebate Program LA
+  - sources: https://www.swepco.com/savings/home/money/rebates/
+- uncertain: AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program (SOURCE_DSIRE:dsire_program_id:5823)
+  - reasons: none
+  - evidence: AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program Rebate Program LA
+  - sources: https://www.swepco.com/savings/business/louisiana
+- active: AEP Public Service Company of Oklahoma - Commercial Rebate Program (SOURCE_DSIRE:dsire_program_id:3659)
+  - reasons: active_program_language
+  - evidence: ors Lighting Plug Load & Controls Refrigeration Find Rebates Must be ENERGY STAR® Certified --> --> May qualify for Multiple Upgrade Bonus --> --> Rebates Home Appliances & Equipment Share Email Facebook Print Print Twitter Bookmark Dehumidifier $15 VIEW HOME REBATE Home
+  - sources: https://powerforwardwithpso.com/rebates/
+- active: AEP SWEPCO - Commercial and Industrial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3654)
+  - reasons: active_program_language
+  - evidence: nd more, we've got you covered. See Offers FOR YOUR BUSINESS Reach your energy efficiency goals and receive incentives for tailored solutions that reduce operating costs. Get Started let's talk Contact an Energy Advisor to schedule a free, no-obligation energy assessment. 888.2
+  - sources: https://swepcosavings.com/#/commercial
+- active: AEP SWEPCO - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3642)
+  - reasons: active_program_language
+  - evidence: nd more, we've got you covered. See Offers FOR YOUR BUSINESS Reach your energy efficiency goals and receive incentives for tailored solutions that reduce operating costs. Get Started let's talk Contact an Energy Advisor to schedule a free, no-obligation energy assessment. 888.2
+  - sources: https://swepcosavings.com/#/residential
+- active: AES Indiana - Business Energy Incentives Program (SOURCE_DSIRE:dsire_program_id:4365)
+  - reasons: active_program_language
+  - evidence: spend on energy bills. Green power Support renewable energy for just a few dollars more each month. Enroll now Learn more Customer opt-out Eligible commercial and industrial customers may opt out of AES Indiana's energy efficiency programs. Learn more Back to top Footer
+  - sources: https://www.aesindiana.com/your-business
+- uncertain: Agricultural Energy Loan Program (SOURCE_DSIRE:dsire_program_id:5513)
+  - reasons: none
+  - evidence: Agricultural Energy Loan Program Vermont Agricultural Credit Corporation (VACC) Loan Program VT Agricultural Energy Loan Program | VEDA Home Financing Overview Commercial Financing Overview Direct Loan Program Small Business Loan Program Entrepreneurial Loan P
+  - sources: http://www.veda.org/financing-options/vermont-agricultural-financing/agricultural-energy-loan-program/
+- rolling: Agricultural Energy Program (SOURCE_DSIRE:dsire_program_id:21861)
+  - reasons: rolling_or_no_deadline_language
+  - evidence: f OER; submission of an application does not guarantee an award. Applications will be accepted on a rolling basis throughout the summer, and are due by 5:00pm on Friday, November 6, 2026. Farm Energy Program Guidance Doc V4.pdf PDF file, less than 1 mb megabytes Ener
+  - sources: https://energy.ri.gov/energy-efficiency/farm-energy-programs
+- uncertain: Agricultural Lighting and Equipment Rebate Program (SOURCE_DSIRE:dsire_program_id:4056)
+  - reasons: none
+  - evidence: Agricultural Lighting and Equipment Rebate Program Efficiency Vermont Rebate Program VT
+  - sources: https://www.efficiencyvermont.com/products-technologies/agricultural-equipment
+- uncertain: Alabama Commercial PACE financing program (SOURCE_DSIRE:dsire_program_id:5799)
+  - reasons: none
+  - evidence: Alabama Commercial PACE financing program Alabama Department of Economic and Community Affairs PACE Financing AL PACE Programs - PACENation Skip links Skip to primary navigation Skip to content PACE JOBS Toggle navigation About us Our Members Member resources 
+  - sources: https://www.pacenation.org/pace-programs/
+- rolling: Alameda Municipal Power - Commercial New Construction Rebate Program (SOURCE_DSIRE:dsire_program_id:1611)
+  - reasons: rolling_or_no_deadline_language
+  - evidence: osts associated with the upgrade. Applications will be accepted on a first-come, first-served basis until funds are exhausted. AMP reserves the right to modify or discontinue this program without prior notice at its discretion. Commercial new Construction Rebate Contact Us Alameda Mun
+  - sources: https://www.alamedamp.com/243/New-Construction
+- active: Alameda Municipal Power - Commercial Rebate Program (SOURCE_DSIRE:dsire_program_id:1613)
+  - reasons: active_program_language
+  - evidence: ce Equipment Rebates Heat Pump Water Heater Rebates-Commercial HVAC Rebates Alameda Municipal Power offers rebates to help your business replace old HVAC systems with new, high-efficiency units, as well as other energy savings upgrades. Lighting Retrofit (Self Install) Read
+  - sources: https://www.alamedamp.com/217/Businesses
+- active: Alameda Municipal Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3357)
+  - reasons: active_program_language
+  - evidence: le Induction Cooktop/Range Explore AMP offerings Explore AMP Offers Alameda Municipal Power ( AMP ) offers rebates and resources to encourage residents make the switch to electric to make homes cleaner and greener by making use of AMP &apos;s 100% clean energy. Explore AMP&
+  - sources: https://www.alamedamp.com/407/Rebates-and-Incentives
+- uncertain: Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22666)
+  - reasons: none
+  - evidence: Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Alaska Energy Authority Grant Program AK Alaska Energy Authority > What We Do State of Alaska myAlaska Departments State Employees Statewide Links Login Search Button Button Home Wh
+  - sources: https://www.akenergyauthority.org/What-We-Do/Alternative-Energy-and-Energy-Efficiency-Programs/Electric-Vehicles/EV-Infrastructure-Implementation-Plan#:~:text=Through%20the%20NEVI%20program%2C%20Alaska,and%20urban%20areas%20across%20Alaska.
+- active: Alexandria Light and Power - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1931)
+  - reasons: active_program_language
+  - evidence: ht Energy Solutions ® Commercial Rebate Program Get rewarded for your energy-efficient business. We offer incentives for energy-saving projects and products for businesses and access to our network of Trade Ally contractors. These programs are made available to you through AL
+  - sources: https://www.alputilities.com/rebate-category/business/
+- active: Alexandria Light and Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1930)
+  - reasons: active_program_language
+  - evidence: right Energy Solutions ® Residential Rebate Program Get rewarded for your energy-efficient home. We offer incentives for energy-saving projects for residential customers and access to our network of Trade Ally contractors. These programs are made available to you through ALP
+  - sources: http://www.alputilities.com/residential/rebates.php
+- active: Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4971)
+  - reasons: active_program_language
+  - evidence: an Emergency Sign into My Account Account and Billing Account and Billing Contact Us Outage Center Enroll in My Account Start, Stop or Move Service Payment Options Payment Assistance Understanding Your Bill and Rates Get Average Energy Use For a Property Ways to Save
+  - sources: https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool
+- active: Alliant Energy Interstate Power and Light - Farm Equipment Energy Efficiency Incentives (SOURCE_DSIRE:dsire_program_id:1574)
+  - reasons: active_program_language
+  - evidence: an Emergency Sign into My Account Account and Billing Account and Billing Contact Us Outage Center Enroll in My Account Start, Stop or Move Service Payment Options Payment Assistance Understanding Your Bill and Rates Get Average Energy Use For a Property Ways to Save
+  - sources: https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool
+- active: Alliant Energy Interstate Power and Light - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1570)
+  - reasons: active_program_language
+  - evidence: an Emergency Sign into My Account Account and Billing Account and Billing Contact Us Outage Center Enroll in My Account Start, Stop or Move Service Payment Options Payment Assistance Understanding Your Bill and Rates Get Average Energy Use For a Property Ways to Save
+  - sources: https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool?utm_source=WS&utm_campaign=Legacy&utm_medium=WaysToSave/Rebates/RebateLocatorTool
+- uncertain: Alternative and Clean Energy Program (SOURCE_DSIRE:dsire_program_id:3650)
+  - reasons: none
+  - evidence: Alternative and Clean Energy Program Department of Community and Economic Development; Department of Environmental Protection Loan Program PA Alternative & Clean Energy Program (ACE) - PA Dept. of Community & Economic Development --> https://dced.pa.gov/wp-con
+  - sources: https://dced.pa.gov/programs/alternative-clean-energy-program-ace/
+- uncertain: Alternative Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:1070)
+  - reasons: none
+  - evidence: Alternative Energy Sales Tax Exemption Utah State Tax Commission Sales Tax Incentive UT
+  - sources: none
+- active: Ameren Illinois - Energy-Efficiency Program (SOURCE_DSIRE:dsire_program_id:4698)
+  - reasons: active_program_language
+  - evidence: ruction By incorporating energy efficiency into the design and build process, your building project may qualify for New Construction incentives, including: Financial incentives for lighting projects, HVAC upgrades, lighting and HVAC controls, refrigeration equipment, spe
+  - sources: https://amerenillinoissavings.com/business/incentives-services/
+- active: Ameren Illinois - Instant Incentives Program (SOURCE_DSIRE:dsire_program_id:3812)
+  - reasons: active_program_language
+  - evidence: t to be completed. Quick implementation Most eligible products are easy to put in place, so you can start saving on your energy costs sooner rather than later. Lighting Incentives & Eligibility From replacements for T8 and T5 fluorescents to wall packs, exit signs and mor
+  - sources: https://amerenillinoissavings.com/business/incentives-services/instant-incentives/
+- uncertain: Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1615)
+  - reasons: none
+  - evidence: Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs Anaheim Public Utilities Rebate Program CA Business Energy Rebates | Anaheim, CA - Official Website Skip to Main Content Search MY ACCOUNT Ways to Save Electric Services Water Services Res
+  - sources: http://www.anaheim.net/5353/Business-Energy-Rebates
+- uncertain: Anaheim Public Utilities - Small Business Energy & Water Direct Install Program (SOURCE_DSIRE:dsire_program_id:1625)
+  - reasons: none
+  - evidence: Anaheim Public Utilities - Small Business Energy & Water Direct Install Program Anaheim Public Utilities Rebate Program CA Small Business Energy &&#160;Water Direct Install Program | Anaheim, CA - Official Website Skip to Main Content Search MY ACCOUNT Ways to
+  - sources: http://www.anaheim.net/965/Small-Business-Energy-Water-Direct-Insta
+- uncertain: Anne Arundel County - High Performance Building Property Tax Credit (SOURCE_DSIRE:dsire_program_id:4577)
+  - reasons: none
+  - evidence: Anne Arundel County - High Performance Building Property Tax Credit Anne Arundel County Office of Finance Property Tax Incentive MD Tax Credits & Exemptions | Anne Arundel County Government Skip to main content News Events Jobs Maps OpenArundel EngageArundel T
+  - sources: https://www.aacounty.org/finance/tax-information/tax-credits-exemptions
+- active: Anoka Municipal Utility - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3409)
+  - reasons: active_program_language
+  - evidence: al Rebates If Anoka Municipal Utilities ( AMU ) is the electric service provider for your business, you may qualify for rebate(s). Rebate programs are for AMU customers only. Start saving money and more energy today! AMU Commercial Rebates Complete and sign the Printable Reb
+  - sources: https://www.anokamunicipalutility.com/381/Commercial-Rebates
+- active: Anoka Municipal Utility - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1932)
+  - reasons: active_program_language
+  - evidence: dential Rebates Residential Rebates If you have Anoka Municipal Utilities as your utility provider, you may qualify for rebate(s) on some of your electrical equipment purchases. Be sure to check with all of your utility providers, such as your natural gas company, for availa
+  - sources: https://www.anokamunicipalutility.com/384/Residential-Rebates
+- uncertain: Appalachian Power (Electric)- Non-Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:5853)
+  - reasons: none
+  - evidence: Appalachian Power (Electric)- Non-Residential Energy Efficiency Program Rebate Program VA TakeCharge VA | Programs For Your Business Virginia West Virginia Espanol Search Programs For Your Home For Your Business Ways to Save ENERGY STAR Energy Explorer Home En
+  - sources: http://takechargeva.com/business/default.aspx
+- uncertain: APS - Energy Efficiency Solutions for Business (SOURCE_DSIRE:dsire_program_id:2458)
+  - reasons: none
+  - evidence: APS - Energy Efficiency Solutions for Business APS Rebate Program AZ Solutions for Business Header Outages Contact Us Help Espa&#241;ol Translation options Click the Español link on any page to view the page in Spanish. Please note: not all pages are available
+  - sources: https://www.aps.com/en/Business/Save-Money-and-Energy/Business-Solutions
+- active: Ashland Electric Utility - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22702)
+  - reasons: active_program_language
+  - evidence: ectrician and installation shall meet all local, state, and federal codes. Labor and material costs are eligible, so long as they are necessary for the installation. Documentation Specific documentation requirements include, at minimum: Business name, applicant name, and
+  - sources: https://ashlandoregon.gov/590/Commercial-Incentives
+- active: Austin Energy - Commercial Energy Management Rebate Program (SOURCE_DSIRE:dsire_program_id:2013)
+  - reasons: active_program_language
+  - evidence: nergy Green Building Austin Energy Green Building Our Story Design & Build Why Design & Build Green Get Started with Austin Energy Green Building Extended Area Rating Services Learn and Connect AEGB Single Family and Multifamily Rating Updates Advanced Humidity Control S
+  - sources: https://savings.austinenergy.com/rebates/commercial/
+- active: Austin Energy - Commercial New Construction Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:2925)
+  - reasons: active_program_language
+  - evidence: nergy Green Building Austin Energy Green Building Our Story Design & Build Why Design & Build Green Get Started with Austin Energy Green Building Extended Area Rating Services Learn and Connect AEGB Single Family and Multifamily Rating Updates Advanced Humidity Control S
+  - sources: https://savings.austinenergy.com/rebates/commercial/offerings/new-construction/new-construction
+- active: Austin Energy - Multi-Family Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2015)
+  - reasons: active_program_language
+  - evidence: nergy Green Building Austin Energy Green Building Our Story Design & Build Why Design & Build Green Get Started with Austin Energy Green Building Extended Area Rating Services Learn and Connect AEGB Single Family and Multifamily Rating Updates Advanced Humidity Control S
+  - sources: https://savings.austinenergy.com/rebates/multifamily/
+- uncertain: Austin Energy - Small Business Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2014)
+  - reasons: none
+  - evidence: Austin Energy - Small Business Energy Efficiency Rebate Program Austin Energy Rebate Program TX
+  - sources: https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus
+- active: Austin Energy - Weatherization Assistance Program (SOURCE_DSIRE:dsire_program_id:2016)
+  - reasons: active_program_language
+  - evidence: nergy Green Building Austin Energy Green Building Our Story Design & Build Why Design & Build Green Get Started with Austin Energy Green Building Extended Area Rating Services Learn and Connect AEGB Single Family and Multifamily Rating Updates Advanced Humidity Control S
+  - sources: https://savings.austinenergy.com/rebates/residential/offerings/home-improvements/weatherization
+- active: Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program (SOURCE_DSIRE:dsire_program_id:1935)
+  - reasons: active_program_language
+  - evidence: ISH , SPANISH , HMONG ) ENERGY STAR or Designlights LED Lighting Rebates ( FILLABLE REBATE FORM ) ( APPLY ONLINE ) ENERGY STAR or DesignLights LED Fixture 50% of fixture cost, not to exceed $20 per fixture ENERGY STAR Holiday LED Lights 50% of cost, not to exceed $12 per
+  - sources: https://www.austinutilities.com/pages/rebates-programs/
+- active: Avista Utilities (Electric) - Commercial Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:5946)
+  - reasons: active_program_language
+  - evidence: Owners in Washington Enjoy savings when you improve the energy efficiency of your business. You can receive incentives for improving the energy efficiency of your business. Many projects not only save electricity and natural gas, but other resources, as well. Be sure you meet p
+  - sources: https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington
+- active: Avista Utilities (Electric) - Commercial Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:4639)
+  - reasons: active_program_language
+  - evidence: ness Owners in Idaho Enjoy savings when you improve the energy efficiency of your business. You can receive incentives for improving the energy efficiency of your business. Many projects not only save electricity and natural gas, but other resources, as well. Be sure you meet p
+  - sources: https://www.myavista.com/energy-savings/tools-for-your-business/rebates-idaho
+- active: Avista Utilities (Gas) - Commercial Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:4637)
+  - reasons: active_program_language
+  - evidence: Owners in Washington Enjoy savings when you improve the energy efficiency of your business. You can receive incentives for improving the energy efficiency of your business. Many projects not only save electricity and natural gas, but other resources, as well. Be sure you meet p
+  - sources: https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington
+- active: Baltimore Gas & Electric Company (Electric) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3385)
+  - reasons: active_program_language
+  - evidence: Rebate Heating and Cooling Home Performance with ENERGY STAR® Smart Thermostats Switch to Electric Earn Incentives Connected Rewards PeakRewards Energy Savings Day My Business Toggle submenu Business Programs Energy solutions for your business Small Business Energy Solution
+  - sources: https://bgesmartenergy.com/business/business-programs/energy-solutions-business
+- uncertain: Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program (SOURCE_DSIRE:dsire_program_id:3276)
+  - reasons: none
+  - evidence: Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program Barron Electric Cooperative Rebate Program WI
+  - sources: https://www.barronelectric.com/rebates-2023
+- active: Be SMART Home Energy Loan Program (SOURCE_DSIRE:dsire_program_id:4886)
+  - reasons: active_program_language
+  - evidence: hat does not exceed 50%​ Eligible​ Energy Saving Measures Insulation and air sealing (MD Homeowners may qualify for Grants through EmPOWER Program​ - Income Limits apply) ENERGY STAR® heating and cooling systems ENERGY STAR® hot water heating equipment ENERGY STAR® appli
+  - sources: https://dhcd.maryland.gov/Energy-Home-Repair/Pages/Homeowner-Loans/BeSMART.aspx
+- active: Beaches Energy Services - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22062)
+  - reasons: active_program_language
+  - evidence: $1,600 in rebates on home upgrades when you submit your rebate forms within 90 days. Beaches Energy offers rebates for upgrades to solar and heat pump water heaters, HVAC, insulation, solar screen/window film, and more. See Rebate forms below How To Get Energy Rebates Caref
+  - sources: http://www.beachesenergy.com/beaches-energy-services-rebates
+- active: Benton PUD - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2205)
+  - reasons: active_program_language
+  - evidence: s Benton PUD Rebate Program WA Benton PUD - Business Rebates Pay My Bill Pagar Mi Factura Log In or Enroll Iniciar Sesi&#xF3;n Report an Outage Reportar un Apag&#xF3;n Search Search Espa&#xF1;ol How Do I? Pay My Bill Start & Stop Electric Service Apply for a Job Get Fi
+  - sources: https://www.bentonpud.org/Energy-Programs/Rebates/Commercial
+- active: Black Hills Energy - Commercial Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:3154)
+  - reasons: active_program_language
+  - evidence: electric rebates, please email Brian Munsell . Rebate Program information / Efficiency requirements Apply Online Printable application LED Lighting projects - lamps and fixtures Commercial lighting projects that include installing, replacing or retrofitting, and updating
+  - sources: https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/south-dakota-commercial-rebates
+- active: Black Hills Energy - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3157)
+  - reasons: active_program_language
+  - evidence: our monthly bills and use less energy — all while earning cash back for qualifying improvements. To get started, select your state from the list below: Arkansas Colorado Colorado electric customers Colorado gas customers Iowa Nebraska South Dakota and Weston County, Wyom
+  - sources: https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates
+- uncertain: Black Hills Energy (Electric) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4279)
+  - reasons: none
+  - evidence: Black Hills Energy (Electric) - Commercial Energy Efficiency Program Rebate Program CO Colorado electric commercial rebates | Black Hills Energy Skip to main content Home Services Efficiency and savings Safety Community Our company Billing and payments Outage 
+  - sources: https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/colorado-electric-commercial-rebates
+- uncertain: Blooming Prairie Public Utilities - Business Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2533)
+  - reasons: none
+  - evidence: Blooming Prairie Public Utilities - Business Energy Efficiency Rebate Program Blooming Prairie Public Utilities Rebate Program MN Blooming Prairie &mdash; Southern Minnesota Municipal Power Agency section of webpage --> Our Members News Generation Transmission
+  - sources: https://smmpa.com/members/blooming-prairie
+- uncertain: Blooming Prairie Public Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2532)
+  - reasons: none
+  - evidence: Blooming Prairie Public Utilities - Residential Energy Efficiency Rebate Program Blooming Prairie Public Utilities Rebate Program MN Blooming Prairie &mdash; Southern Minnesota Municipal Power Agency section of webpage --> Our Members News Generation Transmiss
+  - sources: https://smmpa.com/members/blooming-prairie
+- uncertain: Brainerd Public Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22119)
+  - reasons: none
+  - evidence: Brainerd Public Utilities - Residential Energy Efficiency Rebate Program Brainerd Public Utilites Rebate Program MN Rebates - Brainerd Public Utilities Emergencies: (218) 829-2193 Business Office: (218) 829-8726 Open Monday-Friday 7:00 AM - 3:30 PM Search for:
+  - sources: http://bpu.org/rebates/
+- uncertain: Bright Start for New Business (SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:bright-start-for-new-business)
+  - reasons: none
+  - evidence: Bright Start for New Business Silicon Valley Power rebate CA Save Money | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home mainHome Menu Outages & Alerts My Account Contact Us Home Residents 
+  - sources: https://www.siliconvalleypower.com/businesses/save-money
+- uncertain: Bryan Texas Utilities - SmartBUSINESS Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2631)
+  - reasons: none
+  - evidence: Bryan Texas Utilities - SmartBUSINESS Commercial Energy Efficiency Rebate Program Bryan Texas Utilities Rebate Program TX SmartBUSINESS | Bryan Texas Utilities Skip to main content Trash/Waste Services Water Services Outage Center Account Login About About Us 
+  - sources: https://www.btutilities.com/smartbusiness
+- uncertain: Burbank Water & Power - Energy Solutions Business Rebate Program (SOURCE_DSIRE:dsire_program_id:1630)
+  - reasons: none
+  - evidence: Burbank Water & Power - Energy Solutions Business Rebate Program Burbank Water and Power Rebate Program CA
+  - sources: https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs
+- active: Burlington Electric Department - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22103)
+  - reasons: active_program_language
+  - evidence: month to month, day to day, and even in 15-minute increments so you can figure out the best way to start saving. Usage Tracker Heat Pumps Heat pumps provide energy-efficient heating and cooling and work well in cold climates. Heat Pumps Where We Use Electricity Commercia
+  - sources: https://www.burlingtonelectric.com/commercial/
+- active: Burlington Electric Department - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4636)
+  - reasons: active_program_language
+  - evidence: nd Pool In-Ground Pool This refrigerator or freezer is for a rental residential dwelling. We do not offer rebates on refrigerators or freezers for owner-occupied residences or for commercial properties. Was this item purchased for a rental residential property? Yes, this i
+  - sources: https://www.burlingtonelectric.com/rebate-form
+- uncertain: Business Energy Efficiency Rebate (Offered by 11 Utilities) (SOURCE_DSIRE:dsire_program_id:5140)
+  - reasons: none
+  - evidence: Business Energy Efficiency Rebate (Offered by 11 Utilities) Bright Energy Solutions/Missouri River Energy Services Rebate Program SD Get Rebates | Bright Energy Solutions Skip to Content Get Rebates Find Contractors Resources For Home For Business For Contract
+  - sources: https://www.brightenergysolutions.com/find-a-rebate/
+- uncertain: Business Energy Efficiency Rebate (Offered by 18 Utilities) (SOURCE_DSIRE:dsire_program_id:5145)
+  - reasons: none
+  - evidence: Business Energy Efficiency Rebate (Offered by 18 Utilities) Bright Energy Solutions/Missouri River Energy Services Rebate Program IA Get Rebates | Bright Energy Solutions Skip to Content Get Rebates Find Contractors Resources For Home For Business For Contract
+  - sources: http://www.brightenergysolutions.com/find-a-rebate/
+- uncertain: Business Energy Efficiency Rebates (Offered by 5 Utilities) (SOURCE_DSIRE:dsire_program_id:5101)
+  - reasons: none
+  - evidence: Business Energy Efficiency Rebates (Offered by 5 Utilities) Bright Energy Solutions/Missouri River Energy Services Rebate Program ND Get Rebates | Bright Energy Solutions Skip to Content Get Rebates Find Contractors Resources For Home For Business For Contract
+  - sources: http://www.brightenergysolutions.com/find-a-rebate/
+- uncertain: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+  - reasons: none
+  - evidence: Business Energy Investment Tax Credit (ITC) U.S. Internal Revenue Service Corporate Tax Credit US
+  - sources: none
+- active: California Energy Design Assistance (CEDA) (SOURCE_DSIRE:dsire_program_id:1455)
+  - reasons: active_program_language
+  - evidence: arn more about your project. What if I decide I no longer want to participate? Participation in the program is available at no cost, is non-binding and project teams may exit the program at any time. What materials will I gain from the program? Customized energy decarbonization r
+  - sources: https://energyassistance.willdan.com/CEDA
+- active: Carbon Power & Light - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2290)
+  - reasons: active_program_language
+  - evidence: with original purchase/application. Electric Vehicle Chargers • Member systems and member consumers are eligible for rebates. • Member systems and member consumers are required to comply with all applicable building and electric codes. • All equipment and installation cos
+  - sources: https://www.carbonpower.com/rebates-2020
+- uncertain: Cedarburg Light & Water Utility - Commercial Shared Savings Loan Program (SOURCE_DSIRE:dsire_program_id:4858)
+  - reasons: none
+  - evidence: Cedarburg Light & Water Utility - Commercial Shared Savings Loan Program Cedarburg Light and Water Utility Loan Program WI Shared Savings Program | Cedarburg Light and Water Skip to main content MyAccount [X] CONTACT US (262) 375-7650 Search form Search About 
+  - sources: http://www.cedarburglightandwater.org/shared-savings-program
+- active: Cedarburg Light & Water Utility - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2041)
+  - reasons: active_program_language
+  - evidence: re Focus Initiative Payment Look-up Utility Resources Trade Ally Resources FAQs Explore all Rebates Get Started Get Started Your browser does not support the video tag. Your Journey Starts Here Focus on Energy offers a range of rebates and services to support the energy
+  - sources: https://focusonenergy.com/residential
+- uncertain: CenterPoint Energy - Commercial and Industrial Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:2649)
+  - reasons: none
+  - evidence: CenterPoint Energy - Commercial and Industrial Energy Efficiency Programs CenterPoint Energy Rebate Program TX &lrm; You need to enable JavaScript to run this app.
+  - sources: https://csop.programprocessing.com/
+- uncertain: CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:2650)
+  - reasons: none
+  - evidence: CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program CenterPoint Energy Rebate Program TX &lrm; You need to enable JavaScript to run this app.
+  - sources: https://cnpres.programprocessing.com/
+- active: CenterPoint Energy - SCORE and CitySmart Program (SOURCE_DSIRE:dsire_program_id:3833)
+  - reasons: active_program_language
+  - evidence: tives for both demand and energy savings Private and public schools and higher education facilities are eligible to participate in the SCORE program. The CitySmart Program targets city and county government facilities, non-profit organizations, and places of worship&#160;
+  - sources: https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/score-city-smart-programs.aspx?sa=ho&au=bus
+- uncertain: CenterPoint Energy Advanced Residential Lighting Program (SOURCE_DSIRE:dsire_program_id:5744)
+  - reasons: none
+  - evidence: CenterPoint Energy Advanced Residential Lighting Program Rebate Program TX ENERGY STAR® LED Lighting | CenterPoint Energy We’ve detected a problem with your browser settings. It’s possible that you don't have javascript enabled in your browser. Please enable j
+  - sources: https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/LED-Lighting.aspx?sa=ho&au=res
+- uncertain: Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3629)
+  - reasons: none
+  - evidence: Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs Central Lincoln People's Utility District Rebate Program OR
+  - sources: https://clpud.org/energy-efficiency/residential-rebate-programs/
+- rolling: Chicopee Electric Light - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5239)
+  - reasons: rolling_or_no_deadline_language
+  - evidence: mercial and industrial customers are eligible to apply. Funding is limited and will be awarded on a first come first served basis. ​ NextZero Prescriptive Lighting & HVAC Programs ​ The NextZero Prescriptive Lighting & HVAC programs are a fast track process for reviewing and impleme
+  - sources: https://www.celd.com/commercial-industrial-programs
+- uncertain: City and County of Denver - Elevations Energy Loans (SOURCE_DSIRE:dsire_program_id:5307)
+  - reasons: none
+  - evidence: City and County of Denver - Elevations Energy Loans Elevations Credit Union Loan Program CO
+  - sources: https://www.elevationscu.com/loans/energy-loans
+- active: City of Columbia Water & Light - Commercial Energy Efficiency Loans (SOURCE_DSIRE:dsire_program_id:4243)
+  - reasons: active_program_language
+  - evidence: iciency Loans Commercial Energy Efficiency Loans Why not make an energy efficiency upgrade now, and start saving on your utility bills? We can help you with financing the upgrades. Our loans have a fixed, low-interest rate with no prepayment penalties. Up to $30,000 is av
+  - sources: https://www.como.gov/utilities/columbia-power-partners/commercial-programs-and-tools/commercial-energy-efficiency-loans/
+- active: City of Lompoc Utilities - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1665)
+  - reasons: active_program_language
+  - evidence: il Facebook LinkedIn Twitter Reddit Font Size: + - City of Lompoc rebates are now available online! Apply Online by Clicking Here Need assistance with a form or an application? Call 805-875-8018 or email rebate@esgroupllc.com Important Utility Rate Information! In general
+  - sources: http://www.cityoflompoc.com/utilities/conservation/
+- active: City of Lompoc Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1663)
+  - reasons: active_program_language
+  - evidence: il Facebook LinkedIn Twitter Reddit Font Size: + - City of Lompoc rebates are now available online! Apply Online by Clicking Here Need assistance with a form or an application? Call 805-875-8018 or email rebate@esgroupllc.com Important Utility Rate Information! In general
+  - sources: http://www.cityoflompoc.com/utilities/conservation/
+- active: City of San Marcos - Commercial Lighting Retrofit Program (SOURCE_DSIRE:dsire_program_id:22058)
+  - reasons: active_program_language
+  - evidence: any products and technologies available to reduce your home heating and cooling costs, and the City offers rebates for many of them including efficient HVAC systems, attic and wall insulation, duct sealing or replacement, EnergyStar windows and doors , solar window film and
+  - sources: https://www.sanmarcostx.gov/3720/Energy-Rebate-Programs
