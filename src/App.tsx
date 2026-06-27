@@ -4623,6 +4623,7 @@ function AdminTestCasesPanel() {
   const [dataset, setDataset] = useState<SampleMatchingTestCasesData | null>(null);
   const [selectedTestCaseId, setSelectedTestCaseId] = useState("");
   const [selectedRetrofitTypeId, setSelectedRetrofitTypeId] = useState("");
+  const [selectedOpportunityResult, setSelectedOpportunityResult] = useState<SampleMatchResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const testCases = dataset?.testCases || [];
@@ -4681,6 +4682,29 @@ function AdminTestCasesPanel() {
       setSelectedRetrofitTypeId(retrofits[0].retrofitTypeId);
     }
   }, [selectedTestCase, selectedRetrofitTypeId]);
+
+  useEffect(() => {
+    if (!selectedOpportunityResult) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setSelectedOpportunityResult(null);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selectedOpportunityResult]);
+
+  function selectTestCase(nextTestCaseId: string) {
+    setSelectedTestCaseId(nextTestCaseId);
+    setSelectedOpportunityResult(null);
+  }
+
+  function selectRetrofit(nextRetrofitTypeId: string) {
+    setSelectedRetrofitTypeId(nextRetrofitTypeId);
+    setSelectedOpportunityResult(null);
+  }
 
   if (isLoading) {
     return (
@@ -4743,7 +4767,7 @@ function AdminTestCasesPanel() {
             </div>
             <label className="field test-case-profile-select">
               <span>Test case</span>
-              <select onChange={(event) => setSelectedTestCaseId(event.target.value)} value={selectedTestCase.sampleUserId}>
+              <select onChange={(event) => selectTestCase(event.target.value)} value={selectedTestCase.sampleUserId}>
                 {testCases.map((testCase) => (
                   <option key={testCase.sampleUserId} value={testCase.sampleUserId}>
                     {testCase.sampleUserId}
@@ -4780,37 +4804,18 @@ function AdminTestCasesPanel() {
 
         <div className="test-case-results">
           <TestCaseRelationshipGraph
-            onSelectRetrofit={setSelectedRetrofitTypeId}
+            onSelectOpportunity={setSelectedOpportunityResult}
+            onSelectRetrofit={selectRetrofit}
             retrofits={retrofitGroups}
             selectedRetrofitTypeId={selectedRetrofit?.retrofitTypeId || ""}
           />
 
-          <article className="data-card">
-            <div>
-              <p className="eyebrow">Opportunities for selected retrofit</p>
-              <h3>{selectedRetrofit ? selectedRetrofit.displayName : "No retrofit selected"}</h3>
-              {selectedRetrofit ? (
-                <p className="muted-message">
-                  {selectedRetrofit.opportunityCount.toLocaleString()} matching opportunities for this test case.
-                </p>
-              ) : null}
-            </div>
-            <div className="match-result-list">
-              {!selectedRetrofit ? (
-                <p className="empty-state">Select a retrofit type to see related opportunities.</p>
-              ) : selectedRetrofit.opportunities.length === 0 ? (
-                <p className="empty-state">No opportunities were generated for this retrofit type.</p>
-              ) : (
-                selectedRetrofit.opportunities.map((result) => (
-                  <SampleMatchCard key={`${selectedRetrofit.retrofitTypeId}:${result.opportunityId}:${result.offerId || "offer"}`} result={result} />
-                ))
-              )}
-            </div>
-          </article>
-
           <SavingsPreviewCard preview={selectedRetrofit?.savingsPreview || null} />
         </div>
       </div>
+      {selectedOpportunityResult ? (
+        <SampleOpportunityModal onClose={() => setSelectedOpportunityResult(null)} result={selectedOpportunityResult} />
+      ) : null}
     </section>
   );
 }
@@ -4979,10 +4984,12 @@ type RelationshipGraphData = {
 };
 
 function TestCaseRelationshipGraph({
+  onSelectOpportunity,
   onSelectRetrofit,
   retrofits,
   selectedRetrofitTypeId
 }: {
+  onSelectOpportunity: (opportunity: SampleMatchResult) => void;
   onSelectRetrofit: (retrofitTypeId: string) => void;
   retrofits: SampleRetrofitGroup[];
   selectedRetrofitTypeId: string;
@@ -5106,6 +5113,15 @@ function TestCaseRelationshipGraph({
                       scenarioClass ? ` ${scenarioClass}` : ""
                     }`}
                     key={opportunity.graphKey}
+                    onClick={() => onSelectOpportunity(opportunity)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        onSelectOpportunity(opportunity);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
                   >
                     <title>
                       {relationshipOpportunityTitle(opportunity, isConnected, bestScenarioOpportunityIds)}
@@ -5221,6 +5237,31 @@ function sampleStatusRank(status: string) {
 
 function truncateGraphLabel(value: string, maxLength: number) {
   return value.length > maxLength ? `${value.slice(0, Math.max(0, maxLength - 3))}...` : value;
+}
+
+function SampleOpportunityModal({
+  onClose,
+  result
+}: {
+  onClose: () => void;
+  result: SampleMatchResult;
+}) {
+  return (
+    <div className="modal-backdrop opportunity-modal-backdrop" onClick={onClose}>
+      <div
+        aria-label={`Opportunity details for ${result.opportunityName}`}
+        aria-modal="true"
+        className="opportunity-match-modal"
+        onClick={(event) => event.stopPropagation()}
+        role="dialog"
+      >
+        <button aria-label="Close opportunity details" className="modal-close-button" onClick={onClose} type="button">
+          Close
+        </button>
+        <SampleMatchCard result={result} />
+      </div>
+    </div>
+  );
 }
 
 function SampleMatchCard({ result }: { result: SampleMatchResult }) {

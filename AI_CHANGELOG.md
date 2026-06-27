@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) opportunity map modal
+
+- Changed the admin Test Cases opportunity map so clicking an opportunity opens its full detail card in a centered popup.
+- Removed the always-visible selected-retrofit opportunity card list below the map to reduce page clutter.
+
 ## 2026-06-27 - Codex (GPT-5) sticky sidebar avatar fix
 
 - Fixed the workspace sidebar so the bottom-left avatar sign-out control stays anchored to the viewport instead of being pushed below long admin tables after content loads.
