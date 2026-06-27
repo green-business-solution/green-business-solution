@@ -6402,12 +6402,9 @@ function WorkspaceLayout({
     <div className="workspace-layout">
       <aside className="workspace-sidebar">
         <div className="brand-block">
-          <div className="brand-mark" aria-hidden="true">
-            G
-          </div>
+          <img alt="RetroFi" className="workspace-logo" src="/retrofi-logo.png" />
           <div>
-            <p className="eyebrow">Workspace</p>
-            <strong>Green Business Solution</strong>
+            <strong>{user.role === "admin" ? "Admin Workspace" : "User Workspace"}</strong>
           </div>
         </div>
         <div className="workspace-account">

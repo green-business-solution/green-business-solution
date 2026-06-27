@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) workspace sidebar branding
+
+- Replaced the sidebar `G` workspace mark and `Green Business Solution` text with the RetroFi logo and `Admin Workspace` label for admin users.
+
 ## 2026-06-27 - Codex (GPT-5) compact workspace chrome
 
 - Moved the signed-in user name, email, and sign-out button from the main workspace topbar into the left sidebar above navigation.

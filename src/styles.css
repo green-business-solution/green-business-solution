@@ -181,6 +181,15 @@ p {
   width: 46px;
 }
 
+.workspace-logo {
+  background: #ffffff;
+  border-radius: 8px;
+  height: 46px;
+  object-fit: contain;
+  padding: 4px;
+  width: 46px;
+}
+
 .link-button {
   background: transparent;
   color: #17211b;
