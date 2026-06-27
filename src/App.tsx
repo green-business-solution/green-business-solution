@@ -48,6 +48,8 @@ type PublicAuthState = {
 };
 
 type UtilityFileType = "green_button_xml" | "green_button_csv" | "utility_pdf" | "unknown";
+type UtilityCategory = "electric" | "gas" | "water_sewer" | "waste" | "unknown";
+type UtilityUploadCategory = UtilityCategory | "auto_detect";
 
 type UploadedUtilityFile = {
   fileId: string;
@@ -55,6 +57,7 @@ type UploadedUtilityFile = {
   siteId: string | null;
   originalFilename: string;
   fileType: UtilityFileType;
+  utilityCategory: UtilityCategory;
   utilityProvider: string | null;
   s3Key: string;
   processingStatus: "uploaded" | "processing" | "processed" | "needs_review" | "failed";
@@ -95,6 +98,27 @@ type SiteEnergyProfile = {
     periodEnd: string | null;
     kwh: number | null;
     cost: number | null;
+  }>;
+  utilitySummaries: Array<{
+    utilityCategory: UtilityCategory;
+    uploadedFileCount: number;
+    processedFileCount: number;
+    availableFieldIds: string[];
+    latestUtilityProvider: string | null;
+    latestBillingPeriodStart: string | null;
+    latestBillingPeriodEnd: string | null;
+    annualUsage: number | null;
+    annualCost: number | null;
+    averageUnitCost: number | null;
+    usageUnit: string | null;
+    monthlySummaries: Array<{
+      periodStart: string | null;
+      periodEnd: string | null;
+      usage: string | number | null;
+      unit: string | null;
+      cost: string | number | null;
+    }>;
+    lastUpdatedAt: string | null;
   }>;
   lastUpdatedAt: string | null;
 };
@@ -181,6 +205,7 @@ type AdminRow = {
 type BillFieldDictionaryEntry = {
   id: string;
   display_name: string;
+  bill_type?: string;
   unit?: string;
 };
 
@@ -3352,12 +3377,31 @@ const energyDataSourceTypeLabels: Record<UtilityFileType, string> = {
   green_button_csv: "Utility export CSV",
   unknown: "Unknown utility file"
 };
+const utilityCategoryLabels: Record<UtilityUploadCategory, string> = {
+  auto_detect: "Auto-detect",
+  electric: "Electric",
+  gas: "Gas",
+  water_sewer: "Water / Sewer",
+  waste: "Waste / Recycling / Organics",
+  unknown: "Unknown"
+};
+const utilityCategoryDisplayOrder: UtilityCategory[] = ["electric", "gas", "water_sewer", "waste", "unknown"];
+const utilityCategoryUsageLabels: Partial<Record<UtilityCategory, string>> = {
+  electric: "Annual usage",
+  gas: "Annual usage",
+  water_sewer: "Annual usage",
+  waste: "Annual cost"
+};
 
 function formatProcessingStatus(status: UploadedUtilityFile["processingStatus"]) {
   return status
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+function formatUtilityCategory(category: UtilityUploadCategory) {
+  return utilityCategoryLabels[category] || "Unknown";
 }
 
 function formatUtilityFieldValue(value: UtilityExtractedValue) {
@@ -3485,7 +3529,7 @@ function ScanResultsPage({
             <span className="eyebrow">Latest energy data</span>
             <h3>{latestRecord.originalFilename}</h3>
             <p>
-              {energyDataSourceTypeLabels[latestRecord.fileType]} · {formatProcessingStatus(latestRecord.processingStatus)}
+              {energyDataSourceTypeLabels[latestRecord.fileType]} · {formatUtilityCategory(latestRecord.utilityCategory)} · {formatProcessingStatus(latestRecord.processingStatus)}
             </p>
             <p>
               Coverage:{" "}
@@ -3518,6 +3562,7 @@ function EnergyDataUploadPage({
   const [storedSession, setStoredSession] = useState<EnergyDataUploadSession | null>(() => readStoredEnergyDataUploadSession());
   const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
   const [selectedSourceType, setSelectedSourceType] = useState<UtilityFileType>("green_button_xml");
+  const [selectedUtilityCategory, setSelectedUtilityCategory] = useState<UtilityUploadCategory>("auto_detect");
   const [utilityName, setUtilityName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -3575,7 +3620,8 @@ function EnergyDataUploadPage({
           uploadToken: storedSession.token,
           fileName: file.name,
           contentType: file.type || "application/octet-stream",
-          sourceType: selectedSourceType
+          sourceType: selectedSourceType,
+          utilityCategory: selectedUtilityCategory
         });
 
         await uploadFileToSignedUrl(uploadDescriptor.uploadUrl, file);
@@ -3588,6 +3634,7 @@ function EnergyDataUploadPage({
           fileName: file.name,
           contentType: file.type || uploadDescriptor.contentType,
           sourceType: selectedSourceType,
+          utilityCategory: selectedUtilityCategory,
           utilityName
         });
       }
@@ -3643,6 +3690,19 @@ function EnergyDataUploadPage({
                     value={utilityName}
                   />
                 </label>
+                <label className="field">
+                  <span>Utility category</span>
+                  <select
+                    onChange={(event) => setSelectedUtilityCategory(event.target.value as UtilityUploadCategory)}
+                    value={selectedUtilityCategory}
+                  >
+                    <option value="auto_detect">Auto-detect</option>
+                    <option value="electric">Electric</option>
+                    <option value="gas">Gas</option>
+                    <option value="water_sewer">Water / Sewer</option>
+                    <option value="waste">Waste / Recycling / Organics</option>
+                  </select>
+                </label>
                 <label className="field upload-field">
                   <span>Upload one or more files</span>
                   <input
@@ -3660,8 +3720,8 @@ function EnergyDataUploadPage({
                   />
                 </label>
                 <p className="field-note">
-                  Green Button XML and CSV files are parsed automatically. PDFs are accepted and stored with a
-                  manual-review placeholder until extraction is implemented.
+                  Green Button XML and CSV files are parsed by utility category when possible. PDFs are accepted for
+                  any utility category and stored with a manual-review placeholder until extraction is implemented.
                 </p>
               </article>
               <article className="feature-card energy-upload-form-card">
@@ -3695,6 +3755,7 @@ function EnergyDataUploadPage({
                     <article className="feature-card energy-upload-record" key={record.fileId}>
                       <span className="eyebrow">{energyDataSourceTypeLabels[record.fileType]}</span>
                       <h3>{record.originalFilename}</h3>
+                      <p>Category: {formatUtilityCategory(record.utilityCategory)}</p>
                       <p>Status: {formatProcessingStatus(record.processingStatus)}</p>
                       <p>Utility: {record.utilityProvider || "Not detected"}</p>
                       <p>Coverage: {formatUtilityPeriod((billingStart?.value as string | null) || null, (billingEnd?.value as string | null) || null)}</p>
@@ -3706,7 +3767,7 @@ function EnergyDataUploadPage({
                 {sessionPayload && sessionPayload.uploadedUtilityFiles.length === 0 ? (
                   <article className="feature-card energy-empty-state">
                     <h3>No files uploaded yet</h3>
-                    <p>Start with a Green Button XML export if you have one. It gives the cleanest automated usage summary.</p>
+                    <p>Start with a Green Button XML or utility export and choose the utility category if you want to override auto-detect.</p>
                   </article>
                 ) : null}
               </div>
@@ -3721,6 +3782,7 @@ function EnergyDataUploadPage({
                   <article className="feature-card energy-upload-record" key={value.extractedValueId}>
                     <span className="eyebrow">{value.fieldDisplayName}</span>
                     <h3>{formatUtilityFieldValue(value)}</h3>
+                    <p>Category: {formatUtilityCategory((billFieldDictionaryById.get(value.fieldId)?.bill_type as UtilityCategory) || "unknown")}</p>
                     <p>Field ID: {value.fieldId}</p>
                     <p>Period: {formatUtilityPeriod(value.periodStart, value.periodEnd)}</p>
                     <p>Confidence: {value.confidence || "Not scored"}</p>
@@ -3763,6 +3825,33 @@ function EnergyDataUploadPage({
                       : "Not available"}
                   </p>
                 </article>
+                {(sessionPayload?.siteEnergyProfile?.utilitySummaries || [])
+                  .sort(
+                    (left, right) =>
+                      utilityCategoryDisplayOrder.indexOf(left.utilityCategory) -
+                      utilityCategoryDisplayOrder.indexOf(right.utilityCategory)
+                  )
+                  .map((summary) => (
+                    <article className="feature-card energy-upload-record" key={summary.utilityCategory}>
+                      <span className="eyebrow">{formatUtilityCategory(summary.utilityCategory)}</span>
+                      <h3>{summary.latestUtilityProvider || "Provider pending"}</h3>
+                      <p>
+                        Billing period:{" "}
+                        {formatUtilityPeriod(summary.latestBillingPeriodStart, summary.latestBillingPeriodEnd)}
+                      </p>
+                      <p>
+                        {utilityCategoryUsageLabels[summary.utilityCategory] || "Annual usage"}:{" "}
+                        {summary.annualUsage != null
+                          ? `${Number(summary.annualUsage).toLocaleString()}${summary.usageUnit ? ` ${summary.usageUnit}` : ""}`
+                          : "Not available"}
+                      </p>
+                      <p>
+                        Annual cost:{" "}
+                        {summary.annualCost != null ? `$${Number(summary.annualCost).toLocaleString()}` : "Not available"}
+                      </p>
+                      <p>Available fields: {summary.availableFieldIds.length}</p>
+                    </article>
+                  ))}
               </div>
             </section>
             <div className="hero-actions">
@@ -4220,6 +4309,9 @@ const SAMPLE_MATCH_STATUS_ORDER = [
 ];
 const utilitySummaryFieldIds = [
   "utility_provider",
+  "gas_utility_provider",
+  "water_provider",
+  "waste_hauler",
   "service_address",
   "account_number_masked",
   "billing_period_start",
@@ -4230,7 +4322,31 @@ const utilitySummaryFieldIds = [
   "annual_electric_cost",
   "average_cost_per_kwh",
   "rate_schedule",
-  "customer_class"
+  "customer_class",
+  "monthly_therms",
+  "annual_therms",
+  "total_gas_cost",
+  "annual_gas_cost",
+  "average_cost_per_therm",
+  "gas_rate_schedule",
+  "monthly_water_use",
+  "annual_water_use",
+  "water_unit",
+  "total_water_cost",
+  "annual_water_cost",
+  "sewer_cost",
+  "annual_sewer_cost",
+  "stormwater_fee",
+  "meter_size",
+  "irrigation_meter_present",
+  "landfill_service_cost",
+  "recycling_service_cost",
+  "organics_service_cost",
+  "pickup_frequency",
+  "bin_size",
+  "contamination_fees",
+  "overage_fees",
+  "total_waste_cost"
 ] as const;
 const billFieldDictionaryEntries = billFieldDictionary as BillFieldDictionaryEntry[];
 const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) => [field.id, field]));
@@ -5208,7 +5324,7 @@ function AdminUsersPanel({
                 : "No utility data uploaded"}
               <small>
                 {intake?.siteEnergyProfile?.latestUtilityProvider
-                  ? `${intake.siteEnergyProfile.latestUtilityProvider} · ${intake.siteEnergyProfile.availableFieldIds.length} field types available`
+                  ? `${intake.siteEnergyProfile.latestUtilityProvider} · ${(intake.siteEnergyProfile.utilitySummaries || []).map((summary) => formatUtilityCategory(summary.utilityCategory)).join(", ") || "No categories"} · ${intake.siteEnergyProfile.availableFieldIds.length} field types available`
                   : intake?.sustainability.goals || "Conversational intake"}
               </small>
             </span>
@@ -6213,6 +6329,12 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dd>{intake.siteEnergyProfile?.processedFileCount ?? 0}</dd>
           <dt>Latest utility</dt>
           <dd>{intake.siteEnergyProfile?.latestUtilityProvider || "Not detected"}</dd>
+          <dt>Utility categories</dt>
+          <dd>
+            {intake.siteEnergyProfile?.utilitySummaries?.length
+              ? intake.siteEnergyProfile.utilitySummaries.map((summary) => formatUtilityCategory(summary.utilityCategory)).join(", ")
+              : "None detected"}
+          </dd>
           <dt>Billing period</dt>
           <dd>{formatUtilityPeriod(intake.siteEnergyProfile?.latestBillingPeriodStart || null, intake.siteEnergyProfile?.latestBillingPeriodEnd || null)}</dd>
           <dt>Available bill fields</dt>
@@ -6223,6 +6345,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
             <article className="feature-card" key={file.fileId}>
               <span className="eyebrow">{energyDataSourceTypeLabels[file.fileType]}</span>
               <h3>{file.originalFilename}</h3>
+              <p>Category: {formatUtilityCategory(file.utilityCategory)}</p>
               <p>Status: {formatProcessingStatus(file.processingStatus)}</p>
               <p>{file.utilityProvider || "Utility pending"}</p>
               {file.errorMessage ? <p className="error-message">{file.errorMessage}</p> : null}

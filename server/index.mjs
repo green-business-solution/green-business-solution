@@ -17,7 +17,9 @@ import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportun
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
-  supportedUtilityFileTypes
+  supportedUtilityCategories,
+  supportedUtilityFileTypes,
+  utilityUploadCategoryOptions
 } from "./energyData/parseEnergyData.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
@@ -701,6 +703,7 @@ function normalizeUploadedUtilityFiles(value) {
       siteId: cleanOptional(item.siteId),
       originalFilename: cleanText(item.originalFilename),
       fileType: supportedUtilityFileTypes.has(cleanText(item.fileType)) ? cleanText(item.fileType) : "unknown",
+      utilityCategory: supportedUtilityCategories.has(cleanText(item.utilityCategory)) ? cleanText(item.utilityCategory) : "unknown",
       utilityProvider: cleanOptional(item.utilityProvider),
       s3Key: cleanText(item.s3Key),
       processingStatus: cleanText(item.processingStatus) || "uploaded",
@@ -750,12 +753,13 @@ function normalizeIntakeRecord(item) {
     uploadedUtilityFiles,
     utilityExtractedValues,
     siteEnergyProfile:
-      item.siteEnergyProfile ||
-      buildSiteEnergyProfile({
-        siteId,
-        uploadedUtilityFiles,
-        utilityExtractedValues
-      })
+      item.siteEnergyProfile && Array.isArray(item.siteEnergyProfile.utilitySummaries)
+        ? item.siteEnergyProfile
+        : buildSiteEnergyProfile({
+            siteId,
+            uploadedUtilityFiles,
+            utilityExtractedValues
+          })
   };
 }
 
@@ -864,6 +868,7 @@ function publicUploadedUtilityFile(record) {
     siteId: record.siteId || null,
     originalFilename: record.originalFilename,
     fileType: record.fileType,
+    utilityCategory: supportedUtilityCategories.has(cleanText(record.utilityCategory)) ? cleanText(record.utilityCategory) : "unknown",
     utilityProvider: record.utilityProvider || null,
     s3Key: record.s3Key,
     processingStatus: record.processingStatus,
@@ -963,6 +968,7 @@ function buildFailedUtilityUploadResult({
   s3Key,
   siteId,
   sourceType,
+  utilityCategory,
   uploadedAt,
   utilityProvider,
   errorMessage
@@ -974,6 +980,7 @@ function buildFailedUtilityUploadResult({
       siteId,
       originalFilename,
       fileType: supportedUtilityFileTypes.has(sourceType) ? sourceType : "unknown",
+      utilityCategory: utilityUploadCategoryOptions.has(cleanText(utilityCategory)) ? cleanText(utilityCategory) : "unknown",
       utilityProvider: cleanOptional(utilityProvider),
       s3Key,
       processingStatus: "failed",
@@ -2624,6 +2631,9 @@ app.post("/api/energy-data/register", async (req, res) => {
     }
 
     const uploadedAt = new Date().toISOString();
+    const utilityCategory = utilityUploadCategoryOptions.has(cleanText(req.body?.utilityCategory))
+      ? cleanText(req.body?.utilityCategory)
+      : "auto_detect";
     const text =
       sourceType === "green_button_xml" || sourceType === "green_button_csv"
         ? await readEnergyDataObjectAsText(s3Key)
@@ -2639,6 +2649,7 @@ app.post("/api/energy-data/register", async (req, res) => {
         sourceType,
         text,
         uploadedAt,
+        utilityCategory,
         utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider
       });
     } catch (error) {
@@ -2649,6 +2660,7 @@ app.post("/api/energy-data/register", async (req, res) => {
         s3Key,
         siteId: deriveSiteId(userId, intake),
         sourceType,
+        utilityCategory,
         uploadedAt,
         utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider,
         errorMessage:
