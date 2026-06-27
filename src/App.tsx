@@ -4793,33 +4793,6 @@ function AdminTestCasesPanel() {
 
           <article className="data-card">
             <div>
-              <p className="eyebrow">Retrofits from matched opportunities</p>
-              <h3>{retrofitGroups.length} retrofit types</h3>
-            </div>
-            <div className="retrofit-button-grid">
-              {retrofitGroups.length === 0 ? (
-                <p className="empty-state">No retrofit types were inferred for this test case.</p>
-              ) : (
-                retrofitGroups.map((retrofit) => (
-                  <button
-                    aria-pressed={retrofit.retrofitTypeId === selectedRetrofit?.retrofitTypeId}
-                    className="retrofit-filter-button"
-                    key={retrofit.retrofitTypeId}
-                    onClick={() => setSelectedRetrofitTypeId(retrofit.retrofitTypeId)}
-                    type="button"
-                  >
-                    <span>{retrofit.displayName}</span>
-                    <small>
-                      {retrofit.opportunityCount.toLocaleString()} {retrofit.opportunityCount === 1 ? "opportunity" : "opportunities"}
-                    </small>
-                  </button>
-                ))
-              )}
-            </div>
-          </article>
-
-          <article className="data-card">
-            <div>
               <p className="eyebrow">Opportunities for selected retrofit</p>
               <h3>{selectedRetrofit ? selectedRetrofit.displayName : "No retrofit selected"}</h3>
               {selectedRetrofit ? (

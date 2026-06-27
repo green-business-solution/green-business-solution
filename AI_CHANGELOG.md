@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) map-driven retrofit selection
+
+- Removed the duplicate `Retrofits from matched opportunities` selector panel from admin Test Cases so the retrofit-opportunity map is the single selector for the selected-retrofit opportunity list.
+
 ## 2026-06-26 - Codex (GPT-5) duplicate test-case counts cleanup
 
 - Removed the separate admin Test Cases eligible/ineligible summary cards now that those counts live inside the Test site profile card.
