@@ -701,12 +701,18 @@ textarea {
 }
 
 .workspace-sidebar {
+  align-self: start;
   background: #17211b;
   color: #f9fbf6;
   display: flex;
   flex-direction: column;
   gap: 36px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
   padding: 28px;
+  position: sticky;
+  top: 0;
 }
 
 .workspace-sidebar .eyebrow {
@@ -1632,6 +1638,10 @@ dd {
 
   .workspace-sidebar {
     gap: 18px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    position: static;
   }
 
   .workspace-nav {

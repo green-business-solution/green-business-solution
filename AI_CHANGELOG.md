@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) sticky sidebar avatar fix
+
+- Fixed the workspace sidebar so the bottom-left avatar sign-out control stays anchored to the viewport instead of being pushed below long admin tables after content loads.
+
 ## 2026-06-27 - Codex (GPT-5) sidebar avatar sign-out
 
 - Replaced the visible sidebar name/email/sign-out stack with a bottom-left circular account avatar that expands on hover/focus to reveal the sign-out button.
