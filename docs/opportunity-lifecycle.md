@@ -58,6 +58,7 @@ In a future version, this lifecycle check should run automatically after DSIRE i
 6. Archive DSIRE update-only records with no detail page or matchable source corpus as `low_information_update_record`.
 7. Preserve archive/unarchive timestamps and reasons instead of deleting the record.
 8. Run status-bucket cleanup repairs before regenerating admin fixtures so visible matches only publish eligible or ineligible outcomes.
+9. TODO: Add a backend publish gate before opportunities become accessible to users. The gate should verify that every visible opportunity has current normalized availability, utility, facility, applicant, geography, and technology data, and that sample/user-facing matching can resolve visible results to only `eligible` or `ineligible`. If any internal repair status remains, the pipeline should block publication and route the affected records through data repair, archival, or hidden-upcoming handling first.
 
 The daily lifecycle command should be:
 

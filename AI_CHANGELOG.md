@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) opportunity publish gate TODO
+
+- Documented the need for a backend publish gate that validates repaired opportunity data before opportunities become user-accessible.
+- The future gate should block publication when visible records still produce unresolved internal repair statuses instead of `eligible` or `ineligible`.
+
 ## 2026-06-26 - Codex (GPT-5) eligible status rename
 
 - Renamed the previous positive matching status key to `eligible` across matcher output, admin test-case rendering, generated fixtures, tests, and docs.
