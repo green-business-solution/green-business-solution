@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) compact test site profile
+
+- Tightened the standalone Test Cases test-site profile card with a narrower column, stacked selector/header, smaller metric tiles, and compact key/value profile rows.
+
 ## 2026-06-27 - Codex (GPT-5) standalone test cases route
 
 - Added `/testcases` as a standalone admin-only route that renders the Test Cases workspace without the sidebar/navbar.

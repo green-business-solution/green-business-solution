@@ -1109,18 +1109,18 @@ dd {
   align-items: start;
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
 }
 
 .test-site-profile-card {
-  gap: 18px;
+  gap: 14px;
 }
 
 .test-site-profile-header {
   align-items: start;
   display: grid;
-  gap: 16px;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  gap: 12px;
+  grid-template-columns: 1fr;
 }
 
 .test-case-profile-select {
@@ -1129,7 +1129,7 @@ dd {
 
 .test-site-profile-metrics {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -1138,8 +1138,8 @@ dd {
   border: 1px solid #dce5de;
   border-radius: 6px;
   display: grid;
-  gap: 4px;
-  padding: 12px;
+  gap: 2px;
+  padding: 10px;
 }
 
 .test-site-profile-metric span {
@@ -1150,7 +1150,7 @@ dd {
 }
 
 .test-site-profile-metric strong {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.05;
 }
 
@@ -1162,6 +1162,34 @@ dd {
 
 .test-case-profile-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.test-site-profile-card .test-case-profile-grid {
+  gap: 7px;
+  grid-template-columns: 1fr;
+}
+
+.test-site-profile-card .test-case-profile-grid div {
+  align-items: baseline;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  min-height: 0;
+  padding: 8px 10px;
+}
+
+.test-site-profile-card .test-case-profile-grid span {
+  font-size: 11px;
+}
+
+.test-site-profile-card .test-case-profile-grid strong {
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.test-site-profile-card .detail-section {
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .relationship-graph-card {
