@@ -12,16 +12,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Office / Administrative",
     "squareFootage": "210,459",
-    "interestedImprovements": [
-      "LED lighting",
-      "HVAC",
-      "Building controls",
-      "Commercial kitchen equipment",
-      "EV charging",
-      "Solar",
-      "Battery storage",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Grantmaking, health-equity philanthropy, nonprofit administration, meetings, and community events",
     "naicsCodes": [
       "813211"
@@ -48,16 +38,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Retail / Storefront",
     "squareFootage": "456,000",
-    "interestedImprovements": [
-      "LED lighting",
-      "HVAC",
-      "Building controls",
-      "Commercial kitchen equipment",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Retail sale of furniture and home goods, customer showroom operations, warehousing, and high-volume food service",
     "naicsCodes": [
       "449110",
@@ -85,14 +65,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Restaurant / Commercial Kitchen",
     "squareFootage": "7,580",
-    "interestedImprovements": [
-      "Commercial kitchen equipment",
-      "HVAC",
-      "Building controls",
-      "Refrigeration",
-      "LED lighting",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Full-service restaurant operations with cooking, ventilation, refrigeration, dishwashing, and guest-service loads",
     "naicsCodes": [
       "722511"
@@ -119,16 +91,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Grocery / Convenience / Cold Storage",
     "squareFootage": "45,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "Building controls",
-      "HVAC",
-      "LED lighting",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Retail grocery sales, refrigerated and frozen food merchandising, fresh-food preparation, and back-of-house storage",
     "naicsCodes": [
       "445110"
@@ -155,15 +117,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Warehouse / Industrial Space",
     "squareFootage": "280,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "Building controls",
-      "LED lighting",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Receiving, cooling, packing, storing, and distributing specialty produce and refrigerated food",
     "naicsCodes": [
       "424480",
@@ -191,14 +144,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "181,593",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Solar",
-      "Battery storage",
-      "EV charging"
-    ],
     "primaryActivityText": "Manufacturing, finishing, assembly, testing, warehousing, and distribution of musical instruments",
     "naicsCodes": [
       "339992"
@@ -225,16 +170,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Hotel / Hospitality",
     "squareFootage": "266,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Commercial kitchen equipment",
-      "Water efficiency",
-      "EV charging",
-      "Solar",
-      "Battery storage"
-    ],
     "primaryActivityText": "Lodging, food service, conferences and events, guest amenities, laundry, and pool operations",
     "naicsCodes": [
       "721110",
@@ -262,16 +197,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Medical / Healthcare",
     "squareFootage": "59,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Refrigeration",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Outpatient primary care, dental care, behavioral health, pharmacy, laboratory, and community-health services",
     "naicsCodes": [
       "621498",
@@ -300,16 +225,6 @@
     "ownershipStatus": "Own",
     "buildingType": "School / Education Campus",
     "squareFootage": "3,210,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Commercial kitchen equipment",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Higher education, research, student housing, dining, athletics, events, and campus administration",
     "naicsCodes": [
       "611310"
@@ -336,15 +251,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "60,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "Building controls",
-      "LED lighting",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Wine production, fermentation and cellar operations, storage, tasting-room hospitality, and direct-to-consumer sales",
     "naicsCodes": [
       "312130",
@@ -372,14 +278,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Multifamily / Apartment Building",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "HVAC",
-      "Building envelope",
-      "Building controls",
-      "LED lighting",
-      "Solar",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Residential occupancy in affordable or mixed-income multifamily housing with tenant and common-area utility ambiguity",
     "naicsCodes": [
       "531110",
@@ -407,13 +305,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Multifamily / Apartment Building",
     "squareFootage": "150,730",
-    "interestedImprovements": [
-      "HVAC",
-      "Building envelope",
-      "LED lighting",
-      "Building controls",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Residential occupancy in income-qualified public housing with tenant and housing-authority control split",
     "naicsCodes": [
       "531110",
@@ -441,13 +332,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Multifamily / Apartment Building",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "Building envelope",
-      "HVAC",
-      "LED lighting",
-      "Building controls",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Residential occupancy in senior or disabled public housing",
     "naicsCodes": [
       "531110",
@@ -475,14 +359,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Mixed-use",
     "squareFootage": "179,800",
-    "interestedImprovements": [
-      "HVAC",
-      "Solar",
-      "Battery storage",
-      "LED lighting",
-      "Water efficiency",
-      "EV charging"
-    ],
     "primaryActivityText": "Residential occupancy in workforce housing with shared mixed-use building loads",
     "naicsCodes": [
       "531110"
@@ -509,13 +385,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Multifamily / Apartment Building",
     "squareFootage": "86,195",
-    "interestedImprovements": [
-      "Building envelope",
-      "HVAC",
-      "LED lighting",
-      "Solar",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Residential occupancy in sustainable mixed-income multifamily housing",
     "naicsCodes": [
       "531110"
@@ -542,14 +411,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Restaurant / Commercial Kitchen",
     "squareFootage": "3,000",
-    "interestedImprovements": [
-      "Commercial kitchen equipment",
-      "HVAC",
-      "Building controls",
-      "Refrigeration",
-      "LED lighting",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Counter-service and dine-in restaurant with cooking, refrigeration, ventilation, and late-night loads",
     "naicsCodes": [
       "722513",
@@ -577,14 +438,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Restaurant / Commercial Kitchen",
     "squareFootage": "13,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "Commercial kitchen equipment",
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Deli, cafe, prepared foods, retail specialty grocery, and refrigerated food merchandising",
     "naicsCodes": [
       "722513",
@@ -612,13 +465,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Restaurant / Commercial Kitchen",
     "squareFootage": "2,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Retail ice-cream sales, frozen-product storage, and small-scale food preparation",
     "naicsCodes": [
       "722515",
@@ -646,16 +492,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "15,000",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "Refrigeration",
-      "Commercial kitchen equipment",
-      "HVAC",
-      "LED lighting",
-      "Water efficiency",
-      "Solar",
-      "EV charging"
-    ],
     "primaryActivityText": "Beer production, taproom sales, restaurant food service, cold storage, and barrel aging",
     "naicsCodes": [
       "312120",
@@ -683,14 +519,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Restaurant / Commercial Kitchen",
     "squareFootage": "2,500",
-    "interestedImprovements": [
-      "LED lighting",
-      "HVAC",
-      "Building controls",
-      "Commercial kitchen equipment",
-      "Refrigeration",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Live music events, food and beverage service, small commercial kitchen, and public assembly space",
     "naicsCodes": [
       "722511",
@@ -718,16 +546,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Grocery / Convenience / Cold Storage",
     "squareFootage": "15,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "LED lighting",
-      "HVAC",
-      "Building controls",
-      "Commercial kitchen equipment",
-      "Water efficiency",
-      "Solar",
-      "Battery storage"
-    ],
     "primaryActivityText": "Cooperative grocery retail, refrigerated food merchandising, produce handling, and prepared foods",
     "naicsCodes": [
       "445110",
@@ -755,15 +573,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Warehouse / Logistics",
     "squareFootage": "270,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "LED lighting",
-      "Building controls",
-      "Battery storage",
-      "Solar",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Food storage, cold storage, regional distribution, volunteer operations, and fleet logistics",
     "naicsCodes": [
       "624210",
@@ -792,15 +601,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Mixed-use",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "LED lighting",
-      "Refrigeration",
-      "EV charging",
-      "Solar",
-      "Water efficiency",
-      "HVAC",
-      "Building controls"
-    ],
     "primaryActivityText": "Public market operations, events, vendor leasing, food business support, and district management",
     "naicsCodes": [
       "531120",
@@ -829,15 +629,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Public Institution",
     "squareFootage": "30,000",
-    "interestedImprovements": [
-      "LED lighting",
-      "HVAC",
-      "Building controls",
-      "EV charging",
-      "Solar",
-      "Battery storage",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Museum operations, memorial site management, public education, events, and visitor services",
     "naicsCodes": [
       "712110",
@@ -865,16 +656,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Public Institution",
     "squareFootage": "100,000",
-    "interestedImprovements": [
-      "HVAC",
-      "LED lighting",
-      "Commercial kitchen equipment",
-      "Water efficiency",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Building controls"
-    ],
     "primaryActivityText": "Science education, exhibits, animal care, outdoor learning, events, and visitor services",
     "naicsCodes": [
       "712110",
@@ -902,15 +683,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Grocery / Convenience / Cold Storage",
     "squareFootage": "10,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "LED lighting",
-      "HVAC",
-      "Commercial kitchen equipment",
-      "Water efficiency",
-      "Solar",
-      "Battery storage"
-    ],
     "primaryActivityText": "Retail grocery sales, local food merchandising, refrigerated foods, and prepared foods",
     "naicsCodes": [
       "445110"
@@ -937,16 +709,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Public Institution",
     "squareFootage": "55,500",
-    "interestedImprovements": [
-      "HVAC",
-      "Building envelope",
-      "LED lighting",
-      "Building controls",
-      "Water efficiency",
-      "Solar",
-      "Battery storage",
-      "EV charging"
-    ],
     "primaryActivityText": "Conservatory exhibits, greenhouse plant care, events, education, cafe operations, and visitor services",
     "naicsCodes": [
       "712130",
@@ -974,16 +736,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Grocery / Convenience / Cold Storage",
     "squareFootage": "26,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "LED lighting",
-      "HVAC",
-      "Commercial kitchen equipment",
-      "Building controls",
-      "Solar",
-      "Battery storage",
-      "EV charging"
-    ],
     "primaryActivityText": "Cooperative grocery retail, refrigerated food merchandising, prepared foods, and specialty retail",
     "naicsCodes": [
       "445110"
@@ -1010,13 +762,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Grocery / Convenience / Cold Storage",
     "squareFootage": "8,000",
-    "interestedImprovements": [
-      "Refrigeration",
-      "LED lighting",
-      "HVAC",
-      "Commercial kitchen equipment",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Retail grocery sales, refrigerated food merchandising, local food sales, and prepared-food operations",
     "naicsCodes": [
       "445110"
@@ -1043,15 +788,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Office / Administrative",
     "squareFootage": "22,000",
-    "interestedImprovements": [
-      "HVAC",
-      "LED lighting",
-      "Building controls",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Urban forestry, education, volunteer operations, nonprofit administration, events, and landscape stewardship",
     "naicsCodes": [
       "813312",
@@ -1079,17 +815,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "4,281,948",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "HVAC",
-      "LED lighting",
-      "Building controls",
-      "Demand response",
-      "Battery storage",
-      "Solar",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Commercial aircraft assembly, manufacturing, testing, offices, warehousing, and logistics",
     "naicsCodes": [
       "336411"
@@ -1116,16 +841,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "HVAC",
-      "Building controls",
-      "Water efficiency",
-      "Battery storage",
-      "Demand response",
-      "Solar",
-      "EV charging"
-    ],
     "primaryActivityText": "Semiconductor wafer fabrication, cleanroom manufacturing, process utilities, R&D, and campus operations",
     "naicsCodes": [
       "334413"
@@ -1152,15 +867,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "8,000,000",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "LED lighting",
-      "Building controls",
-      "Battery storage",
-      "Solar",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Automotive manufacturing, assembly, painting, logistics, testing, and campus operations",
     "naicsCodes": [
       "336111"
@@ -1187,15 +893,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "LED lighting",
-      "Building controls",
-      "Demand response",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Washing-machine and appliance manufacturing, assembly, testing, warehousing, and plant operations",
     "naicsCodes": [
       "335220"
@@ -1222,17 +919,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "4,000,000",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "HVAC",
-      "LED lighting",
-      "Building controls",
-      "Battery storage",
-      "Demand response",
-      "Solar",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Electric-vehicle manufacturing, assembly, logistics, testing, and plant operations",
     "naicsCodes": [
       "336110"
@@ -1259,15 +945,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Data Center / Server Facility",
     "squareFootage": "800,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "Battery storage",
-      "Demand response",
-      "Water efficiency",
-      "Solar",
-      "EV charging"
-    ],
     "primaryActivityText": "Cloud computing, server operations, IT infrastructure, cooling, and backup power",
     "naicsCodes": [
       "518210"
@@ -1294,16 +971,6 @@
     "ownershipStatus": "Lease",
     "buildingType": "Warehouse / Logistics",
     "squareFootage": "1,300,000",
-    "interestedImprovements": [
-      "LED lighting",
-      "Energy efficiency",
-      "HVAC",
-      "Battery storage",
-      "Demand response",
-      "EV charging",
-      "Solar",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Air cargo sorting, airport logistics, package handling, fleet operations, and warehouse distribution",
     "naicsCodes": [
       "492110",
@@ -1332,15 +999,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Data Center / Server Facility",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "Battery storage",
-      "Demand response",
-      "Solar",
-      "Water efficiency",
-      "EV charging"
-    ],
     "primaryActivityText": "Data center colocation, cloud infrastructure, critical power, cooling, and backup operations",
     "naicsCodes": [
       "518210"
@@ -1367,16 +1025,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Retail / Storefront",
     "squareFootage": "100,000",
-    "interestedImprovements": [
-      "LED lighting",
-      "HVAC",
-      "Commercial kitchen equipment",
-      "Refrigeration",
-      "EV charging",
-      "Solar",
-      "Battery storage",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Chocolate-themed visitor attraction, retail, food service, events, and brand experiences",
     "naicsCodes": [
       "713110",
@@ -1405,14 +1053,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Industrial / Manufacturing",
     "squareFootage": "1,900,000",
-    "interestedImprovements": [
-      "Energy efficiency",
-      "LED lighting",
-      "Building controls",
-      "Demand response",
-      "Battery storage",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Oat milling, cereal production, packaging, dust collection, warehousing, and process operations",
     "naicsCodes": [
       "311211",
@@ -1440,16 +1080,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Public Institution",
     "squareFootage": "198,210",
-    "interestedImprovements": [
-      "Building controls",
-      "HVAC",
-      "LED lighting",
-      "EV charging",
-      "Battery storage",
-      "Solar",
-      "Water efficiency",
-      "Commercial kitchen equipment"
-    ],
     "primaryActivityText": "Public library service, civic events, community technology access, cafe, and public assembly",
     "naicsCodes": [
       "519210",
@@ -1477,17 +1107,6 @@
     "ownershipStatus": "Own",
     "buildingType": "School / Education Campus",
     "squareFootage": "17,000,000",
-    "interestedImprovements": [
-      "Building controls",
-      "HVAC",
-      "LED lighting",
-      "Commercial kitchen equipment",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency",
-      "Energy efficiency"
-    ],
     "primaryActivityText": "Higher education, research, student housing, dining, athletics, healthcare, and campus operations",
     "naicsCodes": [
       "611310"
@@ -1514,16 +1133,6 @@
     "ownershipStatus": "Own",
     "buildingType": "School / Education Campus",
     "squareFootage": "325,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "LED lighting",
-      "Commercial kitchen equipment",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Public secondary education, cafeteria operations, athletics, auditorium events, and school administration",
     "naicsCodes": [
       "611110"
@@ -1550,15 +1159,6 @@
     "ownershipStatus": "Own",
     "buildingType": "School / Education Campus",
     "squareFootage": "100,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building envelope",
-      "Building controls",
-      "LED lighting",
-      "Battery storage",
-      "Solar",
-      "Demand response"
-    ],
     "primaryActivityText": "Arctic research, institutional offices, weather service functions, library, and university operations",
     "naicsCodes": [
       "611310",
@@ -1586,15 +1186,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Public Institution",
     "squareFootage": "172,000",
-    "interestedImprovements": [
-      "Building controls",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "LED lighting",
-      "Water efficiency",
-      "Demand response"
-    ],
     "primaryActivityText": "Police, fire administration, emergency operations, municipal public safety, and civic services",
     "naicsCodes": [
       "922120",
@@ -1623,15 +1214,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Agricultural / Greenhouse",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "Water efficiency",
-      "Energy efficiency",
-      "Solar",
-      "Battery storage",
-      "LED lighting",
-      "HVAC",
-      "EV charging"
-    ],
     "primaryActivityText": "Coffee cultivation, irrigation, processing support, visitor tours, retail, and estate operations",
     "naicsCodes": [
       "111339",
@@ -1660,16 +1242,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Medical / Healthcare",
     "squareFootage": "469,000",
-    "interestedImprovements": [
-      "HVAC",
-      "Building controls",
-      "Refrigeration",
-      "LED lighting",
-      "Battery storage",
-      "Solar",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Tribal hospital, emergency care, outpatient care, pharmacy, laboratory, clinical administration, and community health",
     "naicsCodes": [
       "622110",
@@ -1698,15 +1270,6 @@
     "ownershipStatus": "Not sure",
     "buildingType": "Office / Administrative",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "HVAC",
-      "LED lighting",
-      "Solar",
-      "Battery storage",
-      "EV charging",
-      "Building controls",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Agricultural cooperative administration, producer support, brand management, meetings, and rural office operations",
     "naicsCodes": [
       "112120",
@@ -1735,15 +1298,6 @@
     "ownershipStatus": "Own",
     "buildingType": "School / Education Campus",
     "squareFootage": "19,117",
-    "interestedImprovements": [
-      "Solar",
-      "Battery storage",
-      "HVAC",
-      "LED lighting",
-      "Building controls",
-      "EV charging",
-      "Water efficiency"
-    ],
     "primaryActivityText": "Public K-12 education in a remote island community",
     "naicsCodes": [
       "611110"
@@ -1770,15 +1324,6 @@
     "ownershipStatus": "Own",
     "buildingType": "Office / Administrative",
     "squareFootage": "Unknown",
-    "interestedImprovements": [
-      "Solar",
-      "Battery storage",
-      "HVAC",
-      "Building controls",
-      "EV charging",
-      "Water efficiency",
-      "Building envelope"
-    ],
     "primaryActivityText": "Tribal electric, water, wastewater, natural gas, telecommunications, off-grid solar, and utility operations",
     "naicsCodes": [
       "221122",

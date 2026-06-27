@@ -1,7 +1,6 @@
 import {
   canonicalBuildingType,
   canonicalOrganizationType,
-  canonicalTechnologiesFromImprovements,
   canonicalUtilityId,
   extractStateCode,
   extractZip5,
@@ -21,7 +20,6 @@ export function normalizeUserProfile(intake) {
   const organizationType = business.organizationType || source.organizationType || "";
   const buildingType = site.buildingType || source.buildingType || "";
   const electricUtilityProvider = site.electricUtilityProvider || source.electricUtilityProvider || "";
-  const interestedImprovements = sustainability.interestedImprovements || source.interestedImprovements || [];
   const squareFootageRaw = site.squareFootage || source.squareFootage || "";
 
   const stateCode = extractStateCode(siteAddress) || extractStateCode(business.headquarters);
@@ -70,8 +68,6 @@ export function normalizeUserProfile(intake) {
       }
     },
     project: {
-      technologyIds: canonicalTechnologiesFromImprovements(interestedImprovements),
-      rawInterestedImprovements: Array.isArray(interestedImprovements) ? interestedImprovements : [],
       stage: source.project?.stage || "unknown",
       alreadyPurchasedEquipment: null,
       targetStartDate: null
@@ -86,7 +82,6 @@ export function normalizeUserProfile(intake) {
       hasUtility: Boolean(utilityId),
       hasOrganizationType: Boolean(organizationType),
       hasBuildingType: Boolean(buildingType),
-      hasTechnologyInterest: canonicalTechnologiesFromImprovements(interestedImprovements).length > 0,
       hasSquareFootage: squareFootage != null
     }
   };

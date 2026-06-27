@@ -509,7 +509,6 @@ type SampleNormalizedProfile = {
     squareFootage?: unknown;
   };
   project?: {
-    technologyIds?: string[];
     stage?: string | null;
   };
 };
@@ -2837,7 +2836,6 @@ function TrustPage({
               "Utility provider",
               "Organization and building type",
               "Approximate square footage",
-              "Interested improvements",
               "Utility bills if uploaded later"
             ].map((item) => (
               <li key={item}>{item}</li>
@@ -4723,12 +4721,6 @@ function AdminTestCasesPanel() {
   }
 
   const sourceForm = selectedTestCase.sourceForm;
-  const normalizedProfile = selectedTestCase.normalizedProfile;
-  const business = normalizedProfile.business || {};
-  const site = normalizedProfile.site || {};
-  const geo = site.geo || {};
-  const utility = site.utility?.electric || {};
-  const project = normalizedProfile.project || {};
   const retrofitGroups = selectedTestCase.retrofits || [];
   const statusRows = SAMPLE_MATCH_STATUS_ORDER.map((status) => ({
     status,
@@ -4764,7 +4756,7 @@ function AdminTestCasesPanel() {
       <div className="test-case-layout">
         <article className="data-card">
           <div>
-            <p className="eyebrow">Form profile</p>
+            <p className="eyebrow">Test site profile</p>
             <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
           </div>
           <div className="opportunity-summary-grid test-case-profile-grid">
@@ -4776,7 +4768,6 @@ function AdminTestCasesPanel() {
             <DetailItem label="Ownership" value={sampleValue(sourceForm.ownershipStatus)} />
             <DetailItem label="Building" value={sampleValue(sourceForm.buildingType)} />
             <DetailItem label="Square feet" value={sampleValue(sourceForm.squareFootage)} />
-            <DetailItem label="Improvements" value={sampleList(toStringArray(sourceForm.interestedImprovements))} />
           </div>
           {sourceForm.publicSourceNotes ? (
             <section className="detail-section">
@@ -4784,19 +4775,6 @@ function AdminTestCasesPanel() {
               <p className="muted-message">{sampleValue(sourceForm.publicSourceNotes)}</p>
             </section>
           ) : null}
-          <section className="detail-section">
-            <h4>Normalized matcher profile</h4>
-            <div className="opportunity-summary-grid test-case-profile-grid">
-              <DetailItem label="Applicant types" value={sampleList(business.organizationTypes)} />
-              <DetailItem label="State / ZIP" value={`${sampleValue(geo.stateCode)} / ${sampleValue(geo.zip5)}`} />
-              <DetailItem label="Utility ID" value={sampleValue(utility.distributionUtilityId)} />
-              <DetailItem label="Utility status" value={sampleValue(utility.verificationStatus)} />
-              <DetailItem label="Site control" value={sampleValue(site.ownershipRelationship)} />
-              <DetailItem label="Building types" value={sampleList(site.buildingTypes)} />
-              <DetailItem label="Square feet" value={sampleSquareFootage(site.squareFootage)} />
-              <DetailItem label="Technologies" value={sampleList(project.technologyIds)} />
-            </div>
-          </section>
         </article>
 
         <div className="test-case-results">
@@ -6556,8 +6534,6 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
       <article className="profile-wide">
         <p className="eyebrow">Sustainability priorities</p>
         <dl>
-          <dt>Interested improvements</dt>
-          <dd>{intake.sustainability.interestedImprovements?.join(", ") || "Not provided"}</dd>
           <dt>Goals</dt>
           <dd>{intake.sustainability.goals}</dd>
           <dt>Current challenges</dt>

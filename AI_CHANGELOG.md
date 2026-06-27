@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) admin test-case profile cleanup
+
+- Simplified the admin Test Cases profile card to show a single test site profile instead of exposing the internal normalized matcher profile.
+- Removed stale interested-improvement and user technology-interest fields from sample user profiles and public admin test-case fixtures.
+- Updated matching so user-selected technology interests no longer reject otherwise eligible opportunities; opportunity technologies now drive retrofit discovery/classification only.
+
 ## 2026-06-26 - Codex (GPT-5) admin savings preview
 
 - Added admin test-case savings previews generated from the V1 savings engine, with calculated LED fixture estimates and explicit unsupported states for retrofit types without V1 models.

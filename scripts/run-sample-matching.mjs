@@ -367,8 +367,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
           utility: report.normalizedProfile.site.utility.electric,
           ownershipRelationship: report.normalizedProfile.site.ownershipRelationship,
           buildingTypes: report.normalizedProfile.site.buildingTypes,
-          squareFootage: report.normalizedProfile.site.squareFootage,
-          technologyIds: report.normalizedProfile.project.technologyIds
+          squareFootage: report.normalizedProfile.site.squareFootage
         },
         null,
         2

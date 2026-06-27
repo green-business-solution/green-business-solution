@@ -225,32 +225,11 @@ function evaluateSite(user, site) {
 }
 
 function evaluateProject(user, project, offer) {
-  const userTechnologies = user.project.technologyIds || [];
   const opportunityTechnologies = unique([...(offer.technologies || []), ...(project.technologyIds || [])]);
   if (opportunityTechnologies.length === 0) {
-    return unknown("No project technology was normalized.");
+    return unknown("No opportunity technology was normalized.");
   }
-  if (userTechnologies.some((technologyId) => opportunityTechnologies.includes(technologyId))) {
-    return pass(`Technology interest matches: ${userTechnologies.filter((technologyId) => opportunityTechnologies.includes(technologyId)).join(", ")}.`);
-  }
-  if (opportunityTechnologies.includes("energy_efficiency") && userTechnologies.some(isEfficiencyTechnology)) {
-    return pass("Broad energy-efficiency opportunity may cover selected efficiency improvements.");
-  }
-  return fail(`Selected improvements do not match opportunity technologies (${opportunityTechnologies.join(", ")}).`);
-}
-
-function isEfficiencyTechnology(technologyId) {
-  return [
-    "hvac",
-    "lighting",
-    "refrigeration",
-    "water_efficiency",
-    "building_controls",
-    "commercial_kitchen",
-    "building_envelope",
-    "energy_efficiency",
-    "demand_response"
-  ].includes(technologyId);
+  return pass(`Opportunity technology is available for retrofit discovery: ${opportunityTechnologies.join(", ")}.`);
 }
 
 function evaluateConstraints(user, constraints) {
@@ -334,12 +313,6 @@ function nextQuestionFor(unknowns) {
     return {
       criterionId: "site.geo.stateCode",
       prompt: "Confirm the project site's city, state, and ZIP code."
-    };
-  }
-  if (reasons.includes("technology")) {
-    return {
-      criterionId: "project.technologyIds",
-      prompt: "Which equipment or project type are you planning to evaluate?"
     };
   }
   return null;

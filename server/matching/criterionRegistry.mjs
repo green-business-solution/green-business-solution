@@ -62,8 +62,8 @@ export const criterionRegistry = [
     criterionId: "project.technologyIds",
     dataType: "string[]",
     supportedOperators: ["overlaps", "in"],
-    collectionMode: "current_form",
-    userQuestion: "Which improvements are you interested in?",
+    collectionMode: "opportunity_metadata",
+    userQuestion: null,
     opportunityAliases: ["technology", "measure", "equipment", "project type"]
   },
   {

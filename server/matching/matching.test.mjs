@@ -120,6 +120,51 @@ describe("matching pipeline", () => {
     expect(result.matchedReasons.join(" ")).toMatch(/No utility restriction was found after source review/);
   });
 
+  it("does not reject opportunities based on old user-selected technology interests", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1 City Hall Square, Boston, MA 02201",
+      electricUtilityProvider: "Other / Not sure",
+      ownershipStatus: "Own",
+      buildingType: "Office",
+      squareFootage: "30000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-ev-not-filtered-by-user-interest",
+      canonicalTitle: "Commercial EV Charging Rebate",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      state: "MA",
+      status: "active",
+      category: "EV Charging Programs",
+      programType: "Rebate Program",
+      summary: "Commercial customers can receive incentives for EV charging.",
+      technologies: ["Level-2 Electric Vehicle Service Equipment"],
+      sectors: ["Commercial"],
+      utilityRestrictionReview: {
+        restrictionStatus: "none",
+        requiredUtilityIds: [],
+        evidenceText: "Any commercial electric customer may apply.",
+        confidence: 0.9
+      },
+      facilityEligibilityReview: {
+        eligibilityStatus: "none",
+        eligibleBuildingTypes: [],
+        evidenceText: "No facility type restriction found.",
+        confidence: 0.9
+      },
+      dataQuality: { status: "clean" },
+      contentHash: "abc"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(result.eligibilityStatus).toBe("eligible");
+    expect(result.blockers.join(" ")).not.toMatch(/Selected improvements/i);
+    expect(result.matchedReasons.join(" ")).toMatch(/retrofit discovery/i);
+  });
+
   it("hard-fails utility-like requirements that are not in the utility ontology", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",
