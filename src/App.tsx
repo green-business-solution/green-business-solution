@@ -4722,10 +4722,6 @@ function AdminTestCasesPanel() {
 
   const sourceForm = selectedTestCase.sourceForm;
   const retrofitGroups = selectedTestCase.retrofits || [];
-  const statusRows = SAMPLE_MATCH_STATUS_ORDER.map((status) => ({
-    status,
-    count: selectedTestCase.statusCounts[status] || 0
-  })).filter((row) => row.status !== "unavailable" || row.count > 0);
   const profileStatusRows = [
     { label: "Eligible", count: selectedTestCase.statusCounts.eligible || 0 },
     { label: "Ineligible", count: selectedTestCase.statusCounts.ineligible || 0 }
@@ -4789,15 +4785,6 @@ function AdminTestCasesPanel() {
         </article>
 
         <div className="test-case-results">
-          <div className="test-case-stat-grid">
-            {statusRows.map(({ status, count }) => (
-              <article className="data-card test-case-stat-card" key={status}>
-                <span>{sampleStatusLabel(status)}</span>
-                <strong>{count.toLocaleString()}</strong>
-              </article>
-            ))}
-          </div>
-
           <TestCaseRelationshipGraph
             onSelectRetrofit={setSelectedRetrofitTypeId}
             retrofits={retrofitGroups}
