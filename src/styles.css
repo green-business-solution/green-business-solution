@@ -1009,7 +1009,7 @@ dd {
   border-radius: 8px;
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 420px);
   padding: 16px;
 }
 

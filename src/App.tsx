@@ -4750,7 +4750,6 @@ function AdminTestCasesPanel() {
             ))}
           </select>
         </label>
-        <p>{selectedTestCase.description}</p>
       </div>
 
       <div className="test-case-layout">
@@ -4758,6 +4757,7 @@ function AdminTestCasesPanel() {
           <div>
             <p className="eyebrow">Test site profile</p>
             <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
+            <p className="muted-message">{selectedTestCase.description}</p>
           </div>
           <div className="opportunity-summary-grid test-case-profile-grid">
             <DetailItem label="Organization" value={sampleValue(sourceForm.organizationType)} />

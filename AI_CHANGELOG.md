@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) test-case description placement
+
+- Moved admin test-case description text from the selector row into the Test site profile card so site context appears with the site details it describes.
+
 ## 2026-06-26 - Codex (GPT-5) admin test-case profile cleanup
 
 - Simplified the admin Test Cases profile card to show a single test site profile instead of exposing the internal normalized matcher profile.
