@@ -729,3 +729,4 @@
 - Tightened transportation-electrification technology normalization so EV/fleet pages do not match HVAC-only user interests without explicit building HVAC evidence.
 - Rebuilt the `/admin` Client Intake Summary into a fixed-column horizontally scrollable table so headers and row cells stay aligned at all viewport widths.
 - Upgraded the utility upload pipeline to support category-aware electric, gas, water/sewer, and waste uploads with category metadata, multi-utility parsing, and per-category intake/profile summaries.
+- Split the `/admin` Client Intake Summary into internal electricity, gas, water, and trash/recycling tabs with utility-specific completion, status, and file counts.

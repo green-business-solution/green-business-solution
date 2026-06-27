@@ -215,15 +215,15 @@ type ClientIntakeSummaryRow = {
   companyName: string;
   completionPercent: number;
   email: string;
+  fileCount: number;
   filledFieldCount: number;
   lastUpdated: string | null;
   missingFieldCount: number;
   missingFieldLabels: string[];
   organizationType: string;
-  processingStatus: "No utility data" | "Uploaded" | "Processing" | "Needs review" | "Ready for estimates";
+  processingStatus: "No data" | "Uploaded" | "Processing" | "Needs review" | "Ready";
   siteAddress: string;
   totalExpectedFieldCount: number;
-  uploadedFileCount: number;
   utilityProvider: string;
   userId: string;
 };
@@ -3469,6 +3469,13 @@ const utilityCategoryUsageLabels: Partial<Record<UtilityCategory, string>> = {
   water_sewer: "Annual usage",
   waste: "Annual cost"
 };
+const adminUtilitySummaryTabs = [
+  { id: "electric", label: "Electricity Usage", billType: "electric" },
+  { id: "gas", label: "Gas Usage", billType: "gas" },
+  { id: "water_sewer", label: "Water Usage", billType: "water_sewer" },
+  { id: "waste", label: "Trash / Recycling Usage", billType: "waste" }
+] as const;
+type AdminUtilitySummaryTabId = (typeof adminUtilitySummaryTabs)[number]["id"];
 
 function formatProcessingStatus(status: UploadedUtilityFile["processingStatus"]) {
   return status
@@ -4384,52 +4391,14 @@ const SAMPLE_MATCH_STATUS_ORDER = [
   "eligible",
   "ineligible"
 ];
-const utilitySummaryFieldIds = [
-  "utility_provider",
-  "gas_utility_provider",
-  "water_provider",
-  "waste_hauler",
-  "service_address",
-  "account_number_masked",
-  "billing_period_start",
-  "billing_period_end",
-  "monthly_kwh",
-  "annual_kwh",
-  "total_electric_cost",
-  "annual_electric_cost",
-  "average_cost_per_kwh",
-  "rate_schedule",
-  "customer_class",
-  "monthly_therms",
-  "annual_therms",
-  "total_gas_cost",
-  "annual_gas_cost",
-  "average_cost_per_therm",
-  "gas_rate_schedule",
-  "monthly_water_use",
-  "annual_water_use",
-  "water_unit",
-  "total_water_cost",
-  "annual_water_cost",
-  "sewer_cost",
-  "annual_sewer_cost",
-  "stormwater_fee",
-  "meter_size",
-  "irrigation_meter_present",
-  "landfill_service_cost",
-  "recycling_service_cost",
-  "organics_service_cost",
-  "pickup_frequency",
-  "bin_size",
-  "contamination_fees",
-  "overage_fees",
-  "total_waste_cost"
-] as const;
 const billFieldDictionaryEntries = billFieldDictionary as BillFieldDictionaryEntry[];
 const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) => [field.id, field]));
-const utilitySummaryFields = utilitySummaryFieldIds
-  .map((fieldId) => billFieldDictionaryById.get(fieldId))
-  .filter((field): field is BillFieldDictionaryEntry => Boolean(field));
+const utilitySummaryFieldsByType = new Map(
+  adminUtilitySummaryTabs.map((tab) => [
+    tab.id,
+    billFieldDictionaryEntries.filter((field) => field.bill_type === tab.billType)
+  ])
+);
 
 function adminSectionKey(tab: string) {
   if (tab === CLIENT_INTAKE_SUMMARY_TAB) return "client-intake-summary";
@@ -5419,11 +5388,13 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-function deriveClientIntakeProcessingStatus(intake: IntakeRecord | null, filledFieldCount: number, expectedFieldCount: number) {
-  const uploadedFiles = intake?.uploadedUtilityFiles || [];
-
+function deriveClientIntakeProcessingStatus(
+  uploadedFiles: UploadedUtilityFile[],
+  filledFieldCount: number,
+  expectedFieldCount: number
+) {
   if (uploadedFiles.length === 0) {
-    return "No utility data" as const;
+    return "No data" as const;
   }
 
   if (
@@ -5441,51 +5412,58 @@ function deriveClientIntakeProcessingStatus(intake: IntakeRecord | null, filledF
   }
 
   if (expectedFieldCount > 0 && filledFieldCount >= expectedFieldCount) {
-    return "Ready for estimates" as const;
+    return "Ready" as const;
   }
 
   return "Uploaded" as const;
 }
 
-function buildClientIntakeSummaryRows(rows: AdminRow[]): ClientIntakeSummaryRow[] {
+function buildClientIntakeSummaryRows(rows: AdminRow[], utilityType: AdminUtilitySummaryTabId): ClientIntakeSummaryRow[] {
+  const expectedFields = utilitySummaryFieldsByType.get(utilityType) || [];
   return rows
     .filter(({ user, intake }) => user.role === "client" && intake)
     .map(({ intake, user }) => {
-      const utilityFieldIds = new Set(
-        intake?.utilityExtractedValues
-          .map((value) => value.fieldId)
-          .filter((fieldId) => utilitySummaryFieldIds.includes(fieldId as (typeof utilitySummaryFieldIds)[number])) || []
-      );
+      const categoryFiles = (intake?.uploadedUtilityFiles || []).filter((file) => file.utilityCategory === utilityType);
+      const utilityFieldIds = new Set((intake?.utilityExtractedValues || [])
+        .map((value) => value.fieldId)
+        .filter((fieldId) => billFieldDictionaryById.get(fieldId)?.bill_type === utilityType));
       const filledFieldCount = utilityFieldIds.size;
-      const totalExpectedFieldCount = utilitySummaryFields.length;
-      const missingFieldLabels = utilitySummaryFields
+      const totalExpectedFieldCount = expectedFields.length;
+      const missingFieldLabels = expectedFields
         .filter((field) => !utilityFieldIds.has(field.id))
         .map((field) => field.display_name);
       const completionPercent =
         totalExpectedFieldCount > 0 ? Math.round((filledFieldCount / totalExpectedFieldCount) * 100) : 0;
-      const latestUploadedAt = (intake?.uploadedUtilityFiles || [])
+      const latestUploadedAt = categoryFiles
         .map((file) => file.processedAt || file.uploadedAt)
         .filter(Boolean)
         .sort((left, right) => String(right).localeCompare(String(left)))[0] || null;
+      const categorySummary = intake?.siteEnergyProfile?.utilitySummaries?.find((summary) => summary.utilityCategory === utilityType);
+      const fallbackUtilityProvider =
+        utilityType === "electric"
+          ? intake?.site?.electricUtilityProvider
+          : utilityType === "gas"
+            ? intake?.site?.gasUtilityProvider || null
+            : null;
 
       return {
         clientName: intake?.contact.fullName || user.fullName || "Unknown client",
         companyName: intake?.business.companyName || user.companyName || "Not provided",
         completionPercent,
         email: intake?.contact.email || user.email,
+        fileCount: categoryFiles.length,
         filledFieldCount,
         lastUpdated: latestUploadedAt || intake?.updatedAt || user.createdAt,
         missingFieldCount: totalExpectedFieldCount - filledFieldCount,
         missingFieldLabels,
         organizationType: intake?.business.organizationType || "Not provided",
-        processingStatus: deriveClientIntakeProcessingStatus(intake, filledFieldCount, totalExpectedFieldCount),
+        processingStatus: deriveClientIntakeProcessingStatus(categoryFiles, filledFieldCount, totalExpectedFieldCount),
         siteAddress: intake?.site?.address || "Not provided",
         totalExpectedFieldCount,
-        uploadedFileCount: intake?.uploadedUtilityFiles.length || 0,
         utilityProvider:
-          intake?.siteEnergyProfile?.latestUtilityProvider ||
-          intake?.site?.electricUtilityProvider ||
-          intake?.uploadedUtilityFiles[0]?.utilityProvider ||
+          categorySummary?.latestUtilityProvider ||
+          categoryFiles[0]?.utilityProvider ||
+          fallbackUtilityProvider ||
           "Not provided",
         userId: user.userId
       };
@@ -5494,7 +5472,7 @@ function buildClientIntakeSummaryRows(rows: AdminRow[]): ClientIntakeSummaryRow[
 }
 
 function summarizeClientIntakeSummaryRows(rows: ClientIntakeSummaryRow[]) {
-  const clientsWithUtilityData = rows.filter((row) => row.uploadedFileCount > 0).length;
+  const clientsWithUtilityData = rows.filter((row) => row.fileCount > 0).length;
   const averageCompletionPercent =
     rows.length > 0
       ? Math.round(rows.reduce((sum, row) => sum + row.completionPercent, 0) / rows.length)
@@ -5503,7 +5481,6 @@ function summarizeClientIntakeSummaryRows(rows: ClientIntakeSummaryRow[]) {
   return {
     averageCompletionPercent,
     clientsNeedingReview: rows.filter((row) => row.processingStatus === "Needs review").length,
-    clientsWithNoUtilityData: rows.filter((row) => row.uploadedFileCount === 0).length,
     clientsWithUtilityData,
     totalClientRecords: rows.length
   };
@@ -5599,7 +5576,9 @@ function ClientIntakeSummaryPanel({
   onRefresh: () => void;
   rows: AdminRow[];
 }) {
-  const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows), [rows]);
+  const [activeUtilityTab, setActiveUtilityTab] = useState<AdminUtilitySummaryTabId>("electric");
+  const activeUtilityTabConfig = adminUtilitySummaryTabs.find((tab) => tab.id === activeUtilityTab) || adminUtilitySummaryTabs[0];
+  const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows, activeUtilityTab), [activeUtilityTab, rows]);
   const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
   const handleSummaryRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>, userId: string) => {
     if (event.key !== "Enter" && event.key !== " ") {
@@ -5622,21 +5601,41 @@ function ClientIntakeSummaryPanel({
         </button>
       </div>
 
-      <div className="card-grid three admin-summary-card-grid">
+      <div className="admin-utility-summary-tabs" role="tablist" aria-label="Utility type summary tabs">
+        {adminUtilitySummaryTabs.map((tab) => (
+          <button
+            aria-selected={tab.id === activeUtilityTab}
+            className={`admin-utility-summary-tab${tab.id === activeUtilityTab ? " is-active" : ""}`}
+            key={tab.id}
+            onClick={() => setActiveUtilityTab(tab.id)}
+            role="tab"
+            type="button"
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="card-grid four admin-summary-card-grid">
         <article className="feature-card admin-summary-card">
           <span className="eyebrow">Total client records</span>
           <h3>{totals.totalClientRecords.toLocaleString()}</h3>
           <p>Active client intake records currently available in the admin workspace.</p>
         </article>
         <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Utility data coverage</span>
+          <span className="eyebrow">{activeUtilityTabConfig.label}</span>
           <h3>{totals.clientsWithUtilityData.toLocaleString()}</h3>
-          <p>{totals.clientsWithNoUtilityData.toLocaleString()} client record(s) still have no utility uploads.</p>
+          <p>Client record(s) with at least one uploaded file for this utility type.</p>
         </article>
         <article className="feature-card admin-summary-card">
           <span className="eyebrow">Average completion</span>
           <h3>{totals.averageCompletionPercent}%</h3>
-          <p>{totals.clientsNeedingReview.toLocaleString()} client record(s) currently need review.</p>
+          <p>Expected fields come from bill-field dictionary entries tagged `{activeUtilityTabConfig.billType}`.</p>
+        </article>
+        <article className="feature-card admin-summary-card">
+          <span className="eyebrow">Needs review</span>
+          <h3>{totals.clientsNeedingReview.toLocaleString()}</h3>
+          <p>Client record(s) with failed or manual-review utility files for this utility type.</p>
         </article>
       </div>
 
@@ -5647,6 +5646,7 @@ function ClientIntakeSummaryPanel({
               <col className="admin-intake-summary-col-client" />
               <col className="admin-intake-summary-col-type" />
               <col className="admin-intake-summary-col-utility" />
+              <col className="admin-intake-summary-col-files" />
               <col className="admin-intake-summary-col-filled" />
               <col className="admin-intake-summary-col-missing" />
               <col className="admin-intake-summary-col-completion" />
@@ -5658,7 +5658,8 @@ function ClientIntakeSummaryPanel({
                 <th scope="col">Client</th>
                 <th scope="col">Type</th>
                 <th scope="col">Utility</th>
-                <th scope="col">Bill fields filled</th>
+                <th scope="col">Files uploaded</th>
+                <th scope="col">Fields filled</th>
                 <th scope="col">Missing fields</th>
                 <th scope="col">Completion %</th>
                 <th scope="col">Status</th>
@@ -5668,9 +5669,13 @@ function ClientIntakeSummaryPanel({
             <tbody>
               {summaryRows.length === 0 ? (
                 <tr>
-                  <td className="admin-intake-summary-empty" colSpan={8}>
-                    <strong>{isLoading ? "Loading intake summaries..." : "No client intake summaries available."}</strong>
-                    <small>{isLoading ? "This tab is loading after sign-in." : "Refresh after new intake submissions arrive."}</small>
+                  <td className="admin-intake-summary-empty" colSpan={9}>
+                    <strong>{isLoading ? "Loading intake summaries..." : `No ${activeUtilityTabConfig.label.toLowerCase()} summaries available.`}</strong>
+                    <small>
+                      {isLoading
+                        ? "This tab is loading after sign-in."
+                        : "Refresh after new intake submissions or utility uploads arrive."}
+                    </small>
                   </td>
                 </tr>
               ) : summaryRows.map((row) => (
@@ -5693,11 +5698,15 @@ function ClientIntakeSummaryPanel({
                   </td>
                   <td>
                     {row.utilityProvider}
-                    <small>{row.uploadedFileCount} uploaded file(s)</small>
+                    <small>{row.siteAddress}</small>
+                  </td>
+                  <td>
+                    {row.fileCount.toLocaleString()}
+                    <small>{row.fileCount === 1 ? "1 file for this utility" : `${row.fileCount} files for this utility`}</small>
                   </td>
                   <td>
                     {`${row.filledFieldCount}/${row.totalExpectedFieldCount}`}
-                    <small>{utilitySummaryFields.slice(0, 3).map((field) => field.display_name).join(", ")}...</small>
+                    <small>{row.filledFieldCount > 0 ? "Detected from extracted values" : "No utility-specific extracted values yet"}</small>
                   </td>
                   <td>
                     {row.missingFieldCount.toLocaleString()}
@@ -5705,7 +5714,7 @@ function ClientIntakeSummaryPanel({
                   </td>
                   <td>
                     <strong>{row.completionPercent}%</strong>
-                    <small>{row.filledFieldCount > 0 ? "Utility fields detected" : "No extracted values yet"}</small>
+                    <small>{activeUtilityTabConfig.label} fields detected</small>
                   </td>
                   <td>
                     <mark className={`admin-status-pill ${slugify(row.processingStatus)}`}>{row.processingStatus}</mark>
