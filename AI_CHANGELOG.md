@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) test-case fixture metadata cleanup
+
+- Removed the generated-at/opportunity-count fixture metadata line from the admin Test Cases page header.
+
 ## 2026-06-26 - Codex (GPT-5) test-case diagnostics removal
 
 - Removed the admin Test Cases `Common next questions`, `Common unresolved requirements`, and `Common blockers` diagnostic cards from the main sample profile view.

@@ -4736,9 +4736,6 @@ function AdminTestCasesPanel() {
         <div>
           <p className="eyebrow">Matching test cases</p>
           <h2>Sample profile results</h2>
-          <p className="muted-message">
-            Generated {formatDate(dataset?.generatedAt || null)} from {dataset?.opportunityCount.toLocaleString() || "0"} opportunities.
-          </p>
         </div>
       </div>
 
