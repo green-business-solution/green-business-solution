@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) savings engine LED vertical slice
+
+- Added pure savings-engine modules for integer-cent money math, upfront/recurring aggregation, labor rules, geographic tax rules, incentive calculation, stacking scenarios, and a V1 LED average-rate savings estimate.
+- Added focused Vitest coverage for the initial vertical slice: formulas, aggregation, blocked states, labor, tax, incentives, stacking, LED golden scenarios, and engine traces.
+- Updated Vitest excludes so full repo test runs ignore dependency test files in `node_modules`.
+
 ## 2026-06-26 - Codex (GPT-5) opportunity publish gate TODO
 
 - Documented the need for a backend publish gate that validates repaired opportunity data before opportunities become user-accessible.
