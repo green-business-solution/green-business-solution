@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) grouped test profile fields
+
+- Changed the Test Cases profile details from separate mini-cards into one compact grouped card with thin divider lines.
+
 ## 2026-06-27 - Codex (GPT-5) compact test site profile
 
 - Tightened the standalone Test Cases test-site profile card with a narrower column, stacked selector/header, smaller metric tiles, and compact key/value profile rows.

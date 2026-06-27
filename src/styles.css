@@ -1165,17 +1165,29 @@ dd {
 }
 
 .test-site-profile-card .test-case-profile-grid {
-  gap: 7px;
+  background: #f7faf7;
+  border: 1px solid #e1e9e3;
+  border-radius: 6px;
+  gap: 0;
   grid-template-columns: 1fr;
+  overflow: hidden;
 }
 
 .test-site-profile-card .test-case-profile-grid div {
   align-items: baseline;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #e1e9e3;
+  border-radius: 0;
   display: grid;
   gap: 10px;
   grid-template-columns: 96px minmax(0, 1fr);
   min-height: 0;
-  padding: 8px 10px;
+  padding: 9px 12px;
+}
+
+.test-site-profile-card .test-case-profile-grid div:last-child {
+  border-bottom: 0;
 }
 
 .test-site-profile-card .test-case-profile-grid span {
