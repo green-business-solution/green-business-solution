@@ -1119,7 +1119,7 @@ dd {
 .test-site-profile-header {
   align-items: start;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   grid-template-columns: 1fr;
 }
 

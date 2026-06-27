@@ -4778,14 +4778,13 @@ function AdminTestCasesPanel() {
           <div className="test-site-profile-header">
             <div>
               <p className="eyebrow">Test site profile</p>
-              <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
             </div>
             <label className="field test-case-profile-select">
               <span>Test case</span>
               <select onChange={(event) => selectTestCase(event.target.value)} value={selectedTestCase.sampleUserId}>
                 {testCases.map((testCase) => (
                   <option key={testCase.sampleUserId} value={testCase.sampleUserId}>
-                    {testCase.sampleUserId}
+                    {sampleValue(testCase.sourceForm?.companyName, testCase.sampleUserId)}
                   </option>
                 ))}
               </select>

@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) test case selector labels
+
+- Changed the Test Cases selector to show establishment names instead of fixture IDs and removed the duplicate establishment heading.
+
 ## 2026-06-27 - Codex (GPT-5) remove test profile description
 
 - Removed the visible generated description line under the establishment name in the Test Cases profile card.
