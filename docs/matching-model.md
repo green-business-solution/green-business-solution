@@ -49,7 +49,7 @@ Additional questions should be generated only when they unblock many otherwise-p
 
 ## Result Buckets
 
-- `eligible_active`: no known blocker and all extracted required checks pass.
+- `eligible`: no known blocker and all extracted required checks pass.
 - `likely_eligible`: no known blocker, high score, but some checks are unknown.
 - `needs_information`: no known blocker, but missing facts materially affect eligibility.
 - `upcoming`: opportunity appears future-dated.

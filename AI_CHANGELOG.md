@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) eligible status rename
+
+- Renamed the previous positive matching status key to `eligible` across matcher output, admin test-case rendering, generated fixtures, tests, and docs.
+- Tightened sample fixture generation so published admin test cases only allow `eligible` and `ineligible` statuses.
+- Regenerated the sample matching and retrofit fixtures from DynamoDB, preserving 1,809 visible opportunities, 245 archived records, and 42 hidden upcoming records.
+
 ## 2026-06-26 - Codex (GPT-5) upcoming hide and manual-review lifecycle repair
 
 - Hid upcoming opportunities from admin database browsing and generated sample matching fixtures while keeping them unarchived for future availability reclassification.
@@ -67,7 +73,7 @@
 
 - Expanded the public business site/facility type choices while preserving the existing intake step layout.
 - Added canonical facility eligibility normalization, broad facility statuses, source-page review artifacts, and DynamoDB writeback for all 2,096 opportunity records.
-- Regenerated admin matching test cases from DynamoDB-stored utility/facility reviews, increasing sample `eligible_active` pairings from near-zero to 127 across the 10 test profiles.
+- Regenerated admin matching test cases from DynamoDB-stored utility/facility reviews, increasing sample positive pairings from near-zero to 127 across the 10 test profiles.
 
 ## 2026-06-25 - Codex (GPT-5) intake back button text color
 
@@ -608,7 +614,7 @@
 # 2026-06-26
 
 - Repaired the remaining visible `likely_eligible` sample matching causes with targeted utility/availability review updates and two lifecycle archives in DynamoDB.
-- Changed generated admin sample matching fixtures to publish only `eligible_active` and `ineligible` visible statuses, with a guard that fails generation if unresolved or hidden statuses return.
+- Changed generated admin sample matching fixtures to publish only positive and `ineligible` visible statuses, with a guard that fails generation if unresolved or hidden statuses return.
 - Split the admin database browser into separate `Opportunities` and `Retrofits` tabs while preserving the existing raw DynamoDB table tabs and test-case tab.
 - Added a retrofit index admin panel backed by `public/retrofit_opportunity_index.json`.
 - Tightened transportation-electrification technology normalization so EV/fleet pages do not match HVAC-only user interests without explicit building HVAC evidence.

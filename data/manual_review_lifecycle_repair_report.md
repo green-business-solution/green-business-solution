@@ -59,7 +59,7 @@ Regenerated sample fixture:
   "hiddenUpcomingOpportunityCount": 41,
   "sampleUserCount": 50,
   "statusTotals": {
-    "eligible_active": 707,
+    "eligible": 707,
     "likely_eligible": 12,
     "needs_information": 0,
     "manual_review": 0,

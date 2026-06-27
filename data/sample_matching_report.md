@@ -1,7 +1,7 @@
 # Sample Matching Report
 
-Generated: 2026-06-26T23:28:06.844Z
-Matcher clock: 2026-06-26T23:27:37.611Z
+Generated: 2026-06-27T00:45:37.204Z
+Matcher clock: 2026-06-27T00:45:05.723Z
 Opportunities evaluated: 1809
 Archived opportunities skipped: 245
 Upcoming opportunities hidden: 42
@@ -18,7 +18,7 @@ Full JSON output: `/tmp/retrofi-sample-matching-results.json`
 - Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.
 - Facility eligibility uses the generated review artifact when present. Artifact: `/Users/neer_kuchlous/Code/Green Business Solution/data/facility_eligibility_reviews.json` (2096 reviewed opportunities).
 - Utility review artifact: `/Users/neer_kuchlous/Code/Green Business Solution/data/utility_restriction_reviews.json` (2096 reviewed opportunities).
-- The admin fixture intentionally fails generation if visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable` statuses.
+- The admin fixture intentionally fails generation if visible results contain any status other than `eligible` or `ineligible`.
 - Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.
 - This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.
 
@@ -70,35 +70,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 24,
+  "eligible": 24,
   "ineligible": 1785
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: LADWP - Feed-in Tariff (FiT) Program (SOURCE_DSIRE:dsire_program_id:5685)
+- eligible / 100: LADWP - Feed-in Tariff (FiT) Program (SOURCE_DSIRE:dsire_program_id:5685)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches LADWP.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
@@ -168,35 +168,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 22,
+  "eligible": 22,
   "ineligible": 1787
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Burbank Water & Power - Energy Solutions Business Rebate Program (SOURCE_DSIRE:dsire_program_id:1630)
+- eligible / 100: Burbank Water & Power - Energy Solutions Business Rebate Program (SOURCE_DSIRE:dsire_program_id:1630)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Burbank Water and Power.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
@@ -264,35 +264,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 29,
+  "eligible": 29,
   "ineligible": 1780
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GoGreen Financing (SOURCE_SDGE_BUSINESS:program_url:gogreenfinancing_com_sdge)
+- eligible / 100: GoGreen Financing (SOURCE_SDGE_BUSINESS:program_url:gogreenfinancing_com_sdge)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: Comfortably CA (SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com)
+- eligible / 100: Comfortably CA (SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: GRID-Lodging (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging)
+- eligible / 100: GRID-Lodging (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: SD Energy Edge (SOURCE_SDGE_BUSINESS:program_url:sdenergyedge_com)
+- eligible / 100: SD Energy Edge (SOURCE_SDGE_BUSINESS:program_url:sdenergyedge_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
+- eligible / 100: Statewide Midstream Water Heating (SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: Higher Education Efficiency Performance (HEEP) (SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program)
+- eligible / 100: Higher Education Efficiency Performance (HEEP) (SOURCE_SDGE_BUSINESS:program_url:pep_clearesult_com_pep_heep_program)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GRID-MAP (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home)
+- eligible / 100: GRID-MAP (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_map_home)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches SDG&E.
 
 Common next questions:
@@ -362,35 +362,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 26,
+  "eligible": 26,
   "ineligible": 1783
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Anaheim Public Utilities - Small Business Energy & Water Direct Install Program (SOURCE_DSIRE:dsire_program_id:1625)
+- eligible / 100: Anaheim Public Utilities - Small Business Energy & Water Direct Install Program (SOURCE_DSIRE:dsire_program_id:1625)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Anaheim Public Utilities.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Anaheim Public Utilities - Personal Use EV Charger Rebates (SOURCE_DSIRE:dsire_program_id:22275)
+- eligible / 100: Anaheim Public Utilities - Personal Use EV Charger Rebates (SOURCE_DSIRE:dsire_program_id:22275)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Anaheim Public Utilities.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -459,35 +459,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 22,
+  "eligible": 22,
   "ineligible": 1787
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Property Tax Exclusion for Solar Energy Systems and Solar Plus Storage System (SOURCE_DSIRE:dsire_program_id:558)
+- eligible / 100: Property Tax Exclusion for Solar Energy Systems and Solar Plus Storage System (SOURCE_DSIRE:dsire_program_id:558)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
@@ -555,35 +555,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 21,
+  "eligible": 21,
   "ineligible": 1788
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program (SOURCE_DSIRE:dsire_program_id:4054)
+- eligible / 100: Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program (SOURCE_DSIRE:dsire_program_id:4054)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Exclusion for Solar Energy Systems and Solar Plus Storage System (SOURCE_DSIRE:dsire_program_id:558)
+- eligible / 100: Property Tax Exclusion for Solar Energy Systems and Solar Plus Storage System (SOURCE_DSIRE:dsire_program_id:558)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Sales and Use Tax Exemption for Electric Power Generation and Storage Equipment (SOURCE_DSIRE:dsire_program_id:22048)
+- eligible / 100: Sales and Use Tax Exemption for Electric Power Generation and Storage Equipment (SOURCE_DSIRE:dsire_program_id:22048)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Self-Generation Incentive Program (SOURCE_DSIRE:dsire_program_id:552)
+- eligible / 100: Self-Generation Incentive Program (SOURCE_DSIRE:dsire_program_id:552)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Southern California Edison.
-- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
+- eligible / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Azusa Light & Water - EV Charger Rebate (SOURCE_DSIRE:dsire_program_id:22278)
+- eligible / 100: Azusa Light & Water - EV Charger Rebate (SOURCE_DSIRE:dsire_program_id:22278)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -653,35 +653,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 23,
+  "eligible": 23,
   "ineligible": 1786
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Pasadena Water and Power - Commercial Charger Incentive Program (SOURCE_DSIRE:dsire_program_id:22289)
+- eligible / 100: Pasadena Water and Power - Commercial Charger Incentive Program (SOURCE_DSIRE:dsire_program_id:22289)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Pasadena Water and Power.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
@@ -751,35 +751,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 25,
+  "eligible": 25,
   "ineligible": 1784
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
+- eligible / 100: GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
+- eligible / 100: RFQ-25-401 - Energy Code Compliance Evaluation Support (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:RFQ-25-401)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
+- eligible / 100: GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
+- eligible / 100: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
   - matched: Opportunity appears rolling or no-deadline.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
+- eligible / 100: GFO-25-605 – Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
+- eligible / 100: San Diego County - Green Building Program (SOURCE_DSIRE:dsire_program_id:1105)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
+- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
@@ -849,35 +849,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 24,
+  "eligible": 24,
   "ineligible": 1785
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+Eligible matches:
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
+- eligible / 100: PON-17-401 - Financing for Energy Efficiency and Renewable Energy Generation Projects (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-17-401)
   - matched: Opportunity appears rolling or no-deadline.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Silicon Valley Power - Emerging Technologies Grant Program (SOURCE_DSIRE:dsire_program_id:22068)
+- eligible / 100: Silicon Valley Power - Emerging Technologies Grant Program (SOURCE_DSIRE:dsire_program_id:22068)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-- eligible_active / 100: GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608)
+- eligible / 100: GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Energy Design Assistance (SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-design-assistance)
+- eligible / 100: Energy Design Assistance (SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-design-assistance)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-- eligible_active / 100: PON-24-002 - K–12 Energy Efficiency Program (KTEP) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-24-002)
+- eligible / 100: PON-24-002 - K–12 Energy Efficiency Program (KTEP) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:PON-24-002)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: New Construction Incentives (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives)
+- eligible / 100: New Construction Incentives (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
+- eligible / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Energy Efficiency Grant Program for Nonprofit Organizations (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations)
+- eligible / 100: Energy Efficiency Grant Program for Nonprofit Organizations (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Self-reported utility matches Silicon Valley Power.
-- eligible_active / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
+- eligible / 100: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -946,35 +946,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 14,
+  "eligible": 14,
   "ineligible": 1795
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
+- eligible / 100: City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
+- eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
+- eligible / 100: GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Azusa Light & Water - EV Charger Rebate (SOURCE_DSIRE:dsire_program_id:22278)
+- eligible / 100: Azusa Light & Water - EV Charger Rebate (SOURCE_DSIRE:dsire_program_id:22278)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
+- eligible / 100: Local Option - Municipal Energy Districts (SOURCE_DSIRE:dsire_program_id:3527)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Clean Transportation Program (SOURCE_DSIRE:dsire_program_id:22149)
+- eligible / 100: Clean Transportation Program (SOURCE_DSIRE:dsire_program_id:22149)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1042,35 +1042,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 15,
+  "eligible": 15,
   "ineligible": 1794
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: ConEd - Multifamily Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:3821)
+Eligible matches:
+- eligible / 100: ConEd - Multifamily Energy Efficiency Incentives Program (SOURCE_DSIRE:dsire_program_id:3821)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Self-reported utility matches ConEd.
-- eligible_active / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
+- eligible / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: NYSERDA -  Residential Financing Options (SOURCE_DSIRE:dsire_program_id:4563)
+- eligible / 100: NYSERDA -  Residential Financing Options (SOURCE_DSIRE:dsire_program_id:4563)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Self-reported utility matches ConEd.
-- eligible_active / 100: New York City - Residential Solar Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:4703)
+- eligible / 100: New York City - Residential Solar Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:4703)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Town of Babylon - Long Island Green Homes Program (SOURCE_DSIRE:dsire_program_id:3652)
+- eligible / 100: Town of Babylon - Long Island Green Homes Program (SOURCE_DSIRE:dsire_program_id:3652)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: NYSERDA Residential and Retail Energy Storage Incentive Program (SOURCE_DSIRE:dsire_program_id:22098)
+- eligible / 100: NYSERDA Residential and Retail Energy Storage Incentive Program (SOURCE_DSIRE:dsire_program_id:22098)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: RG&E - Smart Energy Residential Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3464)
+- eligible / 100: RG&E - Smart Energy Residential Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3464)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
+- eligible / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
+- eligible / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: New York City - Residential Solar Sales Tax Exemption (SOURCE_DSIRE:dsire_program_code_title_hash:NY98F:8923b34ebfda)
+- eligible / 100: New York City - Residential Solar Sales Tax Exemption (SOURCE_DSIRE:dsire_program_code_title_hash:NY98F:8923b34ebfda)
   - matched: Opportunity appears active.; Project site state NY matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Residential Energy Conservation Subsidy Exclusion (Corporate) (SOURCE_DSIRE:dsire_program_id:727)
+- eligible / 100: Residential Energy Conservation Subsidy Exclusion (Corporate) (SOURCE_DSIRE:dsire_program_id:727)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1137,35 +1137,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 12,
+  "eligible": 12,
   "ineligible": 1797
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: WSHFC Sustainable Energy Program (SOURCE_DSIRE:dsire_program_id:5840)
+Eligible matches:
+- eligible / 100: WSHFC Sustainable Energy Program (SOURCE_DSIRE:dsire_program_id:5840)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Richland Energy Services - Residential Energy Conservation & Solar Loan Program (SOURCE_DSIRE:dsire_program_id:2512)
+- eligible / 100: Richland Energy Services - Residential Energy Conservation & Solar Loan Program (SOURCE_DSIRE:dsire_program_id:2512)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
+- eligible / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Seattle City Light - Multifamily New Construction Rebate Program (SOURCE_DSIRE:dsire_program_id:4479)
+- eligible / 100: Seattle City Light - Multifamily New Construction Rebate Program (SOURCE_DSIRE:dsire_program_id:4479)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Richland Energy Services - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2837)
+- eligible / 100: Richland Energy Services - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2837)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Seattle HomeWise: Weatherization (SOURCE_DSIRE:dsire_program_id:5622)
+- eligible / 100: Seattle HomeWise: Weatherization (SOURCE_DSIRE:dsire_program_id:5622)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
+- eligible / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
+- eligible / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Residential Energy Conservation Subsidy Exclusion (Corporate) (SOURCE_DSIRE:dsire_program_id:727)
+- eligible / 100: Residential Energy Conservation Subsidy Exclusion (Corporate) (SOURCE_DSIRE:dsire_program_id:727)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Residential Energy Conservation Subsidy Exclusion (Personal) (SOURCE_DSIRE:dsire_program_id:666)
+- eligible / 100: Residential Energy Conservation Subsidy Exclusion (Personal) (SOURCE_DSIRE:dsire_program_id:666)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: EnergySpark Home Loan (SOURCE_DSIRE:dsire_program_id:5800)
+- eligible / 100: EnergySpark Home Loan (SOURCE_DSIRE:dsire_program_id:5800)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -1232,35 +1232,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 21,
+  "eligible": 21,
   "ineligible": 1788
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City of Boulder - Solar Grant Program (SOURCE_DSIRE:dsire_program_id:2948)
+Eligible matches:
+- eligible / 100: City of Boulder - Solar Grant Program (SOURCE_DSIRE:dsire_program_id:2948)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Colorado - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22718)
+- eligible / 100: Colorado - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22718)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Summit County - Energy Smart Colorado Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5562)
+- eligible / 100: Summit County - Energy Smart Colorado Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5562)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Colorado Residential Energy Upgrade (RENU) Loan program (SOURCE_DSIRE:dsire_program_id:5349)
+- eligible / 100: Colorado Residential Energy Upgrade (RENU) Loan program (SOURCE_DSIRE:dsire_program_id:5349)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
+- eligible / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Boulder County - EnergySmart Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4630)
+- eligible / 100: Boulder County - EnergySmart Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4630)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Energy Smart Colorado Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5565)
+- eligible / 100: Energy Smart Colorado Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5565)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants (SOURCE_DSIRE:dsire_program_id:5558)
+- eligible / 100: City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants (SOURCE_DSIRE:dsire_program_id:5558)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
+- eligible / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Xcel Energy - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1581)
+- eligible / 100: Xcel Energy - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1581)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
+- eligible / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Sustainable Rebuilding Program (SOURCE_DSIRE:dsire_program_id:22498)
+- eligible / 100: Sustainable Rebuilding Program (SOURCE_DSIRE:dsire_program_id:22498)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1328,31 +1328,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
+- eligible / 100: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar Water Heater Rebate (SOURCE_DSIRE:dsire_program_id:506)
+- eligible / 100: Solar Water Heater Rebate (SOURCE_DSIRE:dsire_program_id:506)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Self-reported utility matches Hawaiian Electric.
-- eligible_active / 100: Solar and Wind Energy Credit (Personal) (SOURCE_DSIRE:dsire_program_id:50)
+- eligible / 100: Solar and Wind Energy Credit (Personal) (SOURCE_DSIRE:dsire_program_id:50)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Solar and Wind Energy Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:49)
+- eligible / 100: Solar and Wind Energy Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:49)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Green Infrastructure Bonds (SOURCE_DSIRE:dsire_program_id:5437)
+- eligible / 100: Green Infrastructure Bonds (SOURCE_DSIRE:dsire_program_id:5437)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Self-reported utility matches Hawaiian Electric.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1419,35 +1419,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 18,
+  "eligible": 18,
   "ineligible": 1791
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Minnesota Energy Resources (Gas) - Home Energy Excellence Program for Builders or Homeowners (SOURCE_DSIRE:dsire_program_id:3312)
+Eligible matches:
+- eligible / 100: Minnesota Energy Resources (Gas) - Home Energy Excellence Program for Builders or Homeowners (SOURCE_DSIRE:dsire_program_id:3312)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:5417)
+- eligible / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:5417)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
+- eligible / 100: Energy-Efficient Mortgages (SOURCE_DSIRE:dsire_program_id:742)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: East Central Energy - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2258)
+- eligible / 100: East Central Energy - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2258)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Fix-Up Loan (SOURCE_DSIRE:dsire_program_id:4366)
+- eligible / 100: Fix-Up Loan (SOURCE_DSIRE:dsire_program_id:4366)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
+- eligible / 100: Fannie Mae Green Financing – Loan Program (SOURCE_DSIRE:dsire_program_id:5780)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
+- eligible / 100: Energy-Efficient New Homes Tax Credit for Home Builders (SOURCE_DSIRE:dsire_program_id:1272)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Princeton PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2555)
+- eligible / 100: Princeton PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2555)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Grand Marais PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2539)
+- eligible / 100: Grand Marais PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2539)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Wind Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:601)
+- eligible / 100: Wind Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:601)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: MMPA - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4740)
+- eligible / 100: MMPA - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4740)
   - matched: Opportunity appears active.; Project site state MN matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -1515,25 +1515,25 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 7,
+  "eligible": 7,
   "ineligible": 1802
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Solar Renewable Energy Credits (SOURCE_DSIRE:dsire_program_id:5686)
+Eligible matches:
+- eligible / 100: Solar Renewable Energy Credits (SOURCE_DSIRE:dsire_program_id:5686)
   - matched: Opportunity appears active.; Project site state DC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: District of Columbia Property Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:4206)
+- eligible / 100: District of Columbia Property Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:4206)
   - matched: Opportunity appears active.; Project site state DC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1601,25 +1601,25 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 7,
+  "eligible": 7,
   "ineligible": 1802
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Michigan Saves - Business Energy Financing (SOURCE_DSIRE:dsire_program_id:4633)
+- eligible / 100: Michigan Saves - Business Energy Financing (SOURCE_DSIRE:dsire_program_id:4633)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Michigan Local PACE Program (SOURCE_DSIRE:dsire_program_id:4521)
+- eligible / 100: Michigan Local PACE Program (SOURCE_DSIRE:dsire_program_id:4521)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1686,33 +1686,33 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 11,
+  "eligible": 11,
   "ineligible": 1798
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Deduction For Energy-Conserving Investment (SOURCE_DSIRE:dsire_program_id:1158)
+- eligible / 100: Deduction For Energy-Conserving Investment (SOURCE_DSIRE:dsire_program_id:1158)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Systems Exemption (SOURCE_DSIRE:dsire_program_id:154)
+- eligible / 100: Renewable Energy Systems Exemption (SOURCE_DSIRE:dsire_program_id:154)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: NorthWestern Energy (Gas) - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5007)
+- eligible / 100: NorthWestern Energy (Gas) - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5007)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Self-reported utility matches NorthWestern Energy.
-- eligible_active / 100: NorthWestern Energy (Electric) - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1658)
+- eligible / 100: NorthWestern Energy (Electric) - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1658)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Self-reported utility matches NorthWestern Energy.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Montana Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22653)
+- eligible / 100: Montana Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22653)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: NorthWestern Energy - Custom Business Efficiency Program (SOURCE_DSIRE:dsire_program_id:1655)
+- eligible / 100: NorthWestern Energy - Custom Business Efficiency Program (SOURCE_DSIRE:dsire_program_id:1655)
   - matched: Opportunity appears active.; Project site state MT matches opportunity geography.; Self-reported utility matches NorthWestern Energy.
 
 Common next questions:
@@ -1782,35 +1782,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 12,
+  "eligible": 12,
   "ineligible": 1797
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:45)
+- eligible / 100: Local Option - Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:45)
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Charging Station Loan Program (SOURCE_DSIRE:dsire_program_id:22250)
+- eligible / 100: Electric Vehicle Charging Station Loan Program (SOURCE_DSIRE:dsire_program_id:22250)
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Residential Rental Property Rebate Program (SOURCE_DSIRE:dsire_program_id:2680)
+- eligible / 100: Residential Rental Property Rebate Program (SOURCE_DSIRE:dsire_program_id:2680)
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22642)
+- eligible / 100: Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22642)
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:22588)
+- eligible / 100: Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:22588)
   - matched: Opportunity appears active.; Project site state VT matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -1878,25 +1878,25 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 7,
+  "eligible": 7,
   "ineligible": 1802
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22126)
+- eligible / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22126)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: City of Memphis - PILOT Program (SOURCE_DSIRE:dsire_program_id:22676)
+- eligible / 100: City of Memphis - PILOT Program (SOURCE_DSIRE:dsire_program_id:22676)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -1966,33 +1966,33 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 11,
+  "eligible": 11,
   "ineligible": 1798
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities (SOURCE_DSIRE:dsire_program_id:3980)
+- eligible / 100: Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities (SOURCE_DSIRE:dsire_program_id:3980)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Biomass Equipment & Materials Compensating Tax Deduction (SOURCE_DSIRE:dsire_program_id:359)
+- eligible / 100: Biomass Equipment & Materials Compensating Tax Deduction (SOURCE_DSIRE:dsire_program_id:359)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments (SOURCE_DSIRE:dsire_program_id:3532)
+- eligible / 100: Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments (SOURCE_DSIRE:dsire_program_id:3532)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: 2021 Sustainable Building Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22424)
+- eligible / 100: 2021 Sustainable Building Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22424)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: New Solar Market Development Tax Credit (SOURCE_DSIRE:dsire_program_id:22472)
+- eligible / 100: New Solar Market Development Tax Credit (SOURCE_DSIRE:dsire_program_id:22472)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: 2021 Sustainable Building Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22423)
+- eligible / 100: 2021 Sustainable Building Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22423)
   - matched: Opportunity appears active.; Project site state NM matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2061,35 +2061,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 26,
+  "eligible": 26,
   "ineligible": 1783
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: City and County of Denver - Building Electrification Retrofit Pilot (SOURCE_DSIRE:dsire_program_id:22757)
+Eligible matches:
+- eligible / 100: City and County of Denver - Building Electrification Retrofit Pilot (SOURCE_DSIRE:dsire_program_id:22757)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Income Tax Credit (SOURCE_DSIRE:dsire_program_id:22156)
+- eligible / 100: Electric Vehicle Income Tax Credit (SOURCE_DSIRE:dsire_program_id:22156)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Poudre Valley REA - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4815)
+- eligible / 100: Poudre Valley REA - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4815)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Fast-Charging Plazas Program (SOURCE_DSIRE:dsire_program_id:22160)
+- eligible / 100: Electric Vehicle Fast-Charging Plazas Program (SOURCE_DSIRE:dsire_program_id:22160)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:1255)
+- eligible / 100: Xcel Energy - Solar*Rewards Program (SOURCE_DSIRE:dsire_program_id:1255)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: C-PACE: Colorado Commercial Property Assessed Clean Energy (SOURCE_DSIRE:dsire_program_id:5878)
+- eligible / 100: C-PACE: Colorado Commercial Property Assessed Clean Energy (SOURCE_DSIRE:dsire_program_id:5878)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City and County of Denver - Rebates for Electrification Feasilibity Reports (SOURCE_DSIRE:dsire_program_id:22756)
+- eligible / 100: City and County of Denver - Rebates for Electrification Feasilibity Reports (SOURCE_DSIRE:dsire_program_id:22756)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Xcel Energy - Commercial Energy Efficiency Financing (SOURCE_DSIRE:dsire_program_id:5628)
+- eligible / 100: Xcel Energy - Commercial Energy Efficiency Financing (SOURCE_DSIRE:dsire_program_id:5628)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
-- eligible_active / 100: City and County of Denver - Home Energy Rebates (SOURCE_DSIRE:dsire_program_id:22760)
+- eligible / 100: City and County of Denver - Home Energy Rebates (SOURCE_DSIRE:dsire_program_id:22760)
   - matched: Opportunity appears active.; Project site state CO matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City and County of Denver - Solar and EV Charging for Nonprofits (SOURCE_DSIRE:dsire_program_id:22754)
+- eligible / 100: City and County of Denver - Solar and EV Charging for Nonprofits (SOURCE_DSIRE:dsire_program_id:22754)
   - matched: Opportunity appears rolling or no-deadline.; Project site state CO matches opportunity geography.; Self-reported utility matches Xcel Energy.
 
 Common next questions:
@@ -2158,35 +2158,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 15,
+  "eligible": 15,
   "ineligible": 1794
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Nonrefundable Business Activity Tax Credit (SOURCE_DSIRE:dsire_program_id:333)
+- eligible / 100: Nonrefundable Business Activity Tax Credit (SOURCE_DSIRE:dsire_program_id:333)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Charge Up Michigan Program (SOURCE_DSIRE:dsire_program_id:22193)
+- eligible / 100: Charge Up Michigan Program (SOURCE_DSIRE:dsire_program_id:22193)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Michigan Saves - Business Energy Financing (SOURCE_DSIRE:dsire_program_id:4633)
+- eligible / 100: Michigan Saves - Business Energy Financing (SOURCE_DSIRE:dsire_program_id:4633)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar Energy Facility Exemption (SOURCE_DSIRE:dsire_program_id:22686)
+- eligible / 100: Solar Energy Facility Exemption (SOURCE_DSIRE:dsire_program_id:22686)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Lean and Green Michigan PACE (SOURCE_DSIRE:dsire_program_id:5543)
+- eligible / 100: Lean and Green Michigan PACE (SOURCE_DSIRE:dsire_program_id:5543)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22142)
+- eligible / 100: Alternative Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22142)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2255,27 +2255,27 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 8,
+  "eligible": 8,
   "ineligible": 1801
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
+- eligible / 100: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Tax Credit (SOURCE_DSIRE:dsire_program_id:22425)
+- eligible / 100: Electric Vehicle Tax Credit (SOURCE_DSIRE:dsire_program_id:22425)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - County Energy District Authority (SOURCE_DSIRE:dsire_program_id:3534)
+- eligible / 100: Local Option - County Energy District Authority (SOURCE_DSIRE:dsire_program_id:3534)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
+- eligible / 100: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2345,29 +2345,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
+- eligible / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
+- eligible / 100: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Duke Energy - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3466)
+- eligible / 100: Duke Energy - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3466)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Self-reported utility matches Duke Energy.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Duke Energy - PowerPair (SOURCE_DSIRE:dsire_program_id:22607)
+- eligible / 100: Duke Energy - PowerPair (SOURCE_DSIRE:dsire_program_id:22607)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Self-reported utility matches Duke Energy.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
+- eligible / 100: EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -2436,29 +2436,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: C-PACE: Efficiency Maine (SOURCE_DSIRE:dsire_program_id:22591)
+Eligible matches:
+- eligible / 100: C-PACE: Efficiency Maine (SOURCE_DSIRE:dsire_program_id:22591)
   - matched: Opportunity appears active.; Project site state ME matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Small Business Energy Loans (SOURCE_DSIRE:dsire_program_id:22716)
+- eligible / 100: Small Business Energy Loans (SOURCE_DSIRE:dsire_program_id:22716)
   - matched: Opportunity appears active.; Project site state ME matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Efficiency Maine Appliance Rebate Program (SOURCE_DSIRE:dsire_program_id:5324)
+- eligible / 100: Efficiency Maine Appliance Rebate Program (SOURCE_DSIRE:dsire_program_id:5324)
   - matched: Opportunity appears active.; Project site state ME matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Efficiency Maine Commercial and Industrial Prescriptive Program (SOURCE_DSIRE:dsire_program_id:1144)
+- eligible / 100: Efficiency Maine Commercial and Industrial Prescriptive Program (SOURCE_DSIRE:dsire_program_id:1144)
   - matched: Opportunity appears active.; Project site state ME matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2528,29 +2528,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Duquesne Light Company - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3873)
+Eligible matches:
+- eligible / 100: Duquesne Light Company - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3873)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Self-reported utility matches Duquesne Light.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Level 2 EV Charging Rebate Program (SOURCE_DSIRE:dsire_program_id:22230)
+- eligible / 100: Level 2 EV Charging Rebate Program (SOURCE_DSIRE:dsire_program_id:22230)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: The Green Energy Loan Fund (GELF) (SOURCE_DSIRE:dsire_program_id:22779)
+- eligible / 100: The Green Energy Loan Fund (GELF) (SOURCE_DSIRE:dsire_program_id:22779)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Duquesne Light Company - PEV Bill Credit Program (SOURCE_DSIRE:dsire_program_id:22376)
+- eligible / 100: Duquesne Light Company - PEV Bill Credit Program (SOURCE_DSIRE:dsire_program_id:22376)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Self-reported utility matches Duquesne Light.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: DC Fast Charging and Hydrogen Fueling Grant Program (SOURCE_DSIRE:dsire_program_id:22229)
+- eligible / 100: DC Fast Charging and Hydrogen Fueling Grant Program (SOURCE_DSIRE:dsire_program_id:22229)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2620,35 +2620,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 12,
+  "eligible": 12,
   "ineligible": 1797
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Vehicle Replacement Program (SOURCE_DSIRE:dsire_program_id:22169)
+- eligible / 100: Vehicle Replacement Program (SOURCE_DSIRE:dsire_program_id:22169)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Northern Lights Inc. - Energy Conservation Rebate Program (SOURCE_DSIRE:dsire_program_id:4198)
+- eligible / 100: Northern Lights Inc. - Energy Conservation Rebate Program (SOURCE_DSIRE:dsire_program_id:4198)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Guam - Photovoltaic Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22589)
+- eligible / 100: Guam - Photovoltaic Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22589)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers (SOURCE_DSIRE:dsire_program_id:2786)
+- eligible / 100: Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers (SOURCE_DSIRE:dsire_program_id:2786)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Idaho Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22652)
+- eligible / 100: Idaho Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22652)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Income Tax Deduction for Energy Efficiency Upgrades (SOURCE_DSIRE:dsire_program_id:1227)
+- eligible / 100: Income Tax Deduction for Energy Efficiency Upgrades (SOURCE_DSIRE:dsire_program_id:1227)
   - matched: Opportunity appears active.; Project site state ID matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2715,31 +2715,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of Chicago - Green Building Permit Programs (SOURCE_DSIRE:dsire_program_id:2466)
+- eligible / 100: City of Chicago - Green Building Permit Programs (SOURCE_DSIRE:dsire_program_id:2466)
   - matched: Opportunity appears active.; Project site state IL matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Illinois PACE Financing Program (SOURCE_DSIRE:dsire_program_id:3626)
+- eligible / 100: Illinois PACE Financing Program (SOURCE_DSIRE:dsire_program_id:3626)
   - matched: Opportunity appears active.; Project site state IL matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy and Energy Efficiency Project Financing (SOURCE_DSIRE:dsire_program_id:3567)
+- eligible / 100: Renewable Energy and Energy Efficiency Project Financing (SOURCE_DSIRE:dsire_program_id:3567)
   - matched: Opportunity appears active.; Project site state IL matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: ComEd - Energy Efficiency Program for Commercial New Construction (SOURCE_DSIRE:dsire_program_id:3716)
+- eligible / 100: ComEd - Energy Efficiency Program for Commercial New Construction (SOURCE_DSIRE:dsire_program_id:3716)
   - matched: Opportunity appears active.; Project site state IL matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of Chicago - Small Business Improvement Fund (SOURCE_DSIRE:dsire_program_id:3388)
+- eligible / 100: City of Chicago - Small Business Improvement Fund (SOURCE_DSIRE:dsire_program_id:3388)
   - matched: Opportunity appears active.; Project site state IL matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2808,35 +2808,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 15,
+  "eligible": 15,
   "ineligible": 1794
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Georgia Power -  Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4656)
+- eligible / 100: Georgia Power -  Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4656)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Self-reported utility matches Georgia Power.
-- eligible_active / 100: Georgia Power - Business EV Charger Plus Rebate Program (SOURCE_DSIRE:dsire_program_id:22309)
+- eligible / 100: Georgia Power - Business EV Charger Plus Rebate Program (SOURCE_DSIRE:dsire_program_id:22309)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Self-reported utility matches Georgia Power.
-- eligible_active / 100: Biomass Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:1952)
+- eligible / 100: Biomass Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:1952)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Supply Equipment Tax Credit (SOURCE_DSIRE:dsire_program_id:22167)
+- eligible / 100: Electric Vehicle Supply Equipment Tax Credit (SOURCE_DSIRE:dsire_program_id:22167)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Georgia Power - Energy Assistance for Savings & Efficiency (EASE) (SOURCE_DSIRE:dsire_program_id:22509)
+- eligible / 100: Georgia Power - Energy Assistance for Savings & Efficiency (EASE) (SOURCE_DSIRE:dsire_program_id:22509)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Self-reported utility matches Georgia Power.
-- eligible_active / 100: Local Option - Special Improvement Districts (SOURCE_DSIRE:dsire_program_id:4177)
+- eligible / 100: Local Option - Special Improvement Districts (SOURCE_DSIRE:dsire_program_id:4177)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22127)
+- eligible / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22127)
   - matched: Opportunity appears active.; Project site state GA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -2907,35 +2907,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 14,
+  "eligible": 14,
   "ineligible": 1795
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Snohomish County PUD No 1 - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:2239)
+- eligible / 100: Snohomish County PUD No 1 - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:2239)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Self-reported utility matches Snohomish County PUD.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381)
+- eligible / 100: Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
+- eligible / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Tax Credit for Forest Derived Biomass (SOURCE_DSIRE:dsire_program_id:5550)
+- eligible / 100: Tax Credit for Forest Derived Biomass (SOURCE_DSIRE:dsire_program_id:5550)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:576)
+- eligible / 100: Renewable Energy Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:576)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Washington - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22662)
+- eligible / 100: Washington - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22662)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3005,35 +3005,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 12,
+  "eligible": 12,
   "ineligible": 1797
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Equipment Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:1683)
+- eligible / 100: Energy Equipment Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:1683)
   - matched: Opportunity appears active.; Project site state AZ matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar and Wind Equipment Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:119)
+- eligible / 100: Solar and Wind Equipment Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:119)
   - matched: Opportunity appears rolling or no-deadline.; Project site state AZ matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
+- eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Assessment for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:2984)
+- eligible / 100: Property Tax Assessment for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:2984)
   - matched: Opportunity appears active.; Project site state AZ matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Salt River Project - Business Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:3256)
+- eligible / 100: Salt River Project - Business Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:3256)
   - matched: Opportunity appears active.; Project site state AZ matches opportunity geography.; Self-reported utility matches Salt River Project.
 
 Common next questions:
@@ -3102,35 +3102,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 16,
+  "eligible": 16,
   "ineligible": 1793
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy and Energy Storage Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22419)
+- eligible / 100: Renewable Energy and Energy Storage Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22419)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Revolving Loan Fund (SOURCE_DSIRE:dsire_program_id:5520)
+- eligible / 100: Energy Efficiency Revolving Loan Fund (SOURCE_DSIRE:dsire_program_id:5520)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3606)
+- eligible / 100: Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3606)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Self-reported utility matches Duke Energy.
-- eligible_active / 100: Renewable Energy Manufacturing Tax Credit (SOURCE_DSIRE:dsire_program_id:5396)
+- eligible / 100: Renewable Energy Manufacturing Tax Credit (SOURCE_DSIRE:dsire_program_id:5396)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
+- eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar Energy, Small Hydropower, and Geothermal Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:1803)
+- eligible / 100: Solar Energy, Small Hydropower, and Geothermal Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:1803)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3199,35 +3199,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 15,
+  "eligible": 15,
   "ineligible": 1794
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Loan Fund (SOURCE_DSIRE:dsire_program_id:5069)
+- eligible / 100: Energy Loan Fund (SOURCE_DSIRE:dsire_program_id:5069)
   - matched: Opportunity appears active.; Project site state OH matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Air-Quality Improvement Tax Incentives (SOURCE_DSIRE:dsire_program_id:78)
+- eligible / 100: Air-Quality Improvement Tax Incentives (SOURCE_DSIRE:dsire_program_id:78)
   - matched: Opportunity appears active.; Project site state OH matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22649)
+- eligible / 100: Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22649)
   - matched: Opportunity appears active.; Project site state OH matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
+- eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Program for Manufacturers (SOURCE_DSIRE:dsire_program_id:5587)
+- eligible / 100: Energy Efficiency Program for Manufacturers (SOURCE_DSIRE:dsire_program_id:5587)
   - matched: Opportunity appears active.; Project site state OH matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3298,35 +3298,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 14,
+  "eligible": 14,
   "ineligible": 1795
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Charge Up Michigan Program (SOURCE_DSIRE:dsire_program_id:22193)
+- eligible / 100: Charge Up Michigan Program (SOURCE_DSIRE:dsire_program_id:22193)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Renaissance Zones (SOURCE_DSIRE:dsire_program_id:3216)
+- eligible / 100: Renewable Energy Renaissance Zones (SOURCE_DSIRE:dsire_program_id:3216)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar Energy Facility Exemption (SOURCE_DSIRE:dsire_program_id:22686)
+- eligible / 100: Solar Energy Facility Exemption (SOURCE_DSIRE:dsire_program_id:22686)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22647)
+- eligible / 100: Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22647)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22142)
+- eligible / 100: Alternative Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22142)
   - matched: Opportunity appears active.; Project site state MI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
+- eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3395,29 +3395,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Clean Alternative Fuel Commercial Vehicle and Vehicle Infrastructure Tax Credit (SOURCE_DSIRE:dsire_program_id:22256)
+- eligible / 100: Clean Alternative Fuel Commercial Vehicle and Vehicle Infrastructure Tax Credit (SOURCE_DSIRE:dsire_program_id:22256)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
+- eligible / 100: Seattle City Light - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2208)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Washington Commercial PACER Program (SOURCE_DSIRE:dsire_program_id:22654)
+- eligible / 100: Washington Commercial PACER Program (SOURCE_DSIRE:dsire_program_id:22654)
   - matched: Opportunity appears active.; Project site state WA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3487,29 +3487,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22641)
+Eligible matches:
+- eligible / 100: Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22641)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22126)
+- eligible / 100: TVA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22126)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: City of Memphis - PILOT Program (SOURCE_DSIRE:dsire_program_id:22676)
+- eligible / 100: City of Memphis - PILOT Program (SOURCE_DSIRE:dsire_program_id:22676)
   - matched: Opportunity appears active.; Project site state TN matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3578,35 +3578,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 13,
+  "eligible": 13,
   "ineligible": 1796
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Tax Exemption for Renewable Energy Generation (SOURCE_DSIRE:dsire_program_id:104)
+Eligible matches:
+- eligible / 100: Tax Exemption for Renewable Energy Generation (SOURCE_DSIRE:dsire_program_id:104)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Small Business & Non-Profit Loan Program (SOURCE_DSIRE:dsire_program_id:5504)
+- eligible / 100: Small Business & Non-Profit Loan Program (SOURCE_DSIRE:dsire_program_id:5504)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing (SOURCE_DSIRE:dsire_program_id:3531)
+- eligible / 100: Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing (SOURCE_DSIRE:dsire_program_id:3531)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Project and Equipment Financing (SOURCE_DSIRE:dsire_program_id:4875)
+- eligible / 100: Energy Project and Equipment Financing (SOURCE_DSIRE:dsire_program_id:4875)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: VirginiaSAVES Green Community Loan Program (SOURCE_DSIRE:dsire_program_id:5834)
+- eligible / 100: VirginiaSAVES Green Community Loan Program (SOURCE_DSIRE:dsire_program_id:5834)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Special Assessment for Wind Energy Systems (SOURCE_DSIRE:dsire_program_id:561)
+- eligible / 100: Special Assessment for Wind Energy Systems (SOURCE_DSIRE:dsire_program_id:561)
   - matched: Opportunity appears active.; Project site state VA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3676,35 +3676,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 18,
+  "eligible": 18,
   "ineligible": 1791
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: High Performance Buildings Incentive Program (SOURCE_DSIRE:dsire_program_id:3602)
+- eligible / 100: High Performance Buildings Incentive Program (SOURCE_DSIRE:dsire_program_id:3602)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Assessment for Commercial Wind Farms (SOURCE_DSIRE:dsire_program_id:2369)
+- eligible / 100: Property Tax Assessment for Commercial Wind Farms (SOURCE_DSIRE:dsire_program_id:2369)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: PECO - EV Rebate Program (SOURCE_DSIRE:dsire_program_id:22377)
+- eligible / 100: PECO - EV Rebate Program (SOURCE_DSIRE:dsire_program_id:22377)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: PECO - Commercial Charger Rebate Program (SOURCE_DSIRE:dsire_program_id:22456)
+- eligible / 100: PECO - Commercial Charger Rebate Program (SOURCE_DSIRE:dsire_program_id:22456)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Small Business Advantage Grant Program (SOURCE_DSIRE:dsire_program_id:1185)
+- eligible / 100: Small Business Advantage Grant Program (SOURCE_DSIRE:dsire_program_id:1185)
   - matched: Opportunity appears rolling or no-deadline.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: PPL Electric Utilities - Business Incentive Program (SOURCE_DSIRE:dsire_program_id:22438)
+- eligible / 100: PPL Electric Utilities - Business Incentive Program (SOURCE_DSIRE:dsire_program_id:22438)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Self-reported utility matches PPL Electric Utilities.
-- eligible_active / 100: Level 2 EV Charging Rebate Program (SOURCE_DSIRE:dsire_program_id:22230)
+- eligible / 100: Level 2 EV Charging Rebate Program (SOURCE_DSIRE:dsire_program_id:22230)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: The Green Energy Loan Fund (GELF) (SOURCE_DSIRE:dsire_program_id:22779)
+- eligible / 100: The Green Energy Loan Fund (GELF) (SOURCE_DSIRE:dsire_program_id:22779)
   - matched: Opportunity appears active.; Project site state PA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3772,29 +3772,29 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 9,
+  "eligible": 9,
   "ineligible": 1800
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: IADG Energy Bank Revolving Loan Program (SOURCE_DSIRE:dsire_program_id:5410)
+- eligible / 100: IADG Energy Bank Revolving Loan Program (SOURCE_DSIRE:dsire_program_id:5410)
   - matched: Opportunity appears active.; Project site state IA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4971)
+- eligible / 100: Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4971)
   - matched: Opportunity appears active.; Project site state IA matches opportunity geography.; Self-reported utility matches Alliant Energy / Interstate Power and Light.
-- eligible_active / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
+- eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:56)
+- eligible / 100: Renewable Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:56)
   - matched: Opportunity appears active.; Project site state IA matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3864,21 +3864,21 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 5,
+  "eligible": 5,
   "ineligible": 1804
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Austin Energy - Home Energy Savings Rebate Program (SOURCE_DSIRE:dsire_program_id:2011)
+- eligible / 100: Austin Energy - Home Energy Savings Rebate Program (SOURCE_DSIRE:dsire_program_id:2011)
   - matched: Opportunity appears active.; Project site state TX matches opportunity geography.; Self-reported utility matches Austin Energy.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -3949,31 +3949,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Biogas, Solar, and Wind Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:178)
+- eligible / 100: Biogas, Solar, and Wind Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:178)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Madison Gas & Electric - Electric Vehicle Charger Leasing Program (SOURCE_DSIRE:dsire_program_id:22363)
+- eligible / 100: Madison Gas & Electric - Electric Vehicle Charger Leasing Program (SOURCE_DSIRE:dsire_program_id:22363)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Self-reported utility matches Madison Gas and Electric.
-- eligible_active / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
+- eligible / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Energy-Efficiency Improvement Loans (SOURCE_DSIRE:dsire_program_id:3538)
+- eligible / 100: Local Option - Energy-Efficiency Improvement Loans (SOURCE_DSIRE:dsire_program_id:3538)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Sales Tax Exemptions (SOURCE_DSIRE:dsire_program_id:3223)
+- eligible / 100: Renewable Energy Sales Tax Exemptions (SOURCE_DSIRE:dsire_program_id:3223)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Innovation Grant Program (SOURCE_DSIRE:dsire_program_id:22074)
+- eligible / 100: Energy Innovation Grant Program (SOURCE_DSIRE:dsire_program_id:22074)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -4043,35 +4043,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 16,
+  "eligible": 16,
   "ineligible": 1793
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: PACE Massachusetts Financing (SOURCE_DSIRE:dsire_program_id:22037)
+Eligible matches:
+- eligible / 100: PACE Massachusetts Financing (SOURCE_DSIRE:dsire_program_id:22037)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: MOR-EV Trucks Program (SOURCE_DSIRE:dsire_program_id:22191)
+- eligible / 100: MOR-EV Trucks Program (SOURCE_DSIRE:dsire_program_id:22191)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Excise Tax Exemption for Solar or Wind Powered Systems (SOURCE_DSIRE:dsire_program_id:147)
+- eligible / 100: Excise Tax Exemption for Solar or Wind Powered Systems (SOURCE_DSIRE:dsire_program_id:147)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:146)
+- eligible / 100: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:146)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: MassEVIP Public Access Charging (PAC) Program (SOURCE_DSIRE:dsire_program_id:22187)
+- eligible / 100: MassEVIP Public Access Charging (PAC) Program (SOURCE_DSIRE:dsire_program_id:22187)
   - matched: Opportunity appears rolling or no-deadline.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
+- eligible / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: MassEVIP Fleets Charging Program (SOURCE_DSIRE:dsire_program_id:22185)
+- eligible / 100: MassEVIP Fleets Charging Program (SOURCE_DSIRE:dsire_program_id:22185)
   - matched: Opportunity appears rolling or no-deadline.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: MassEVIP Workplace and Fleet Charging Program (SOURCE_DSIRE:dsire_program_id:22186)
+- eligible / 100: MassEVIP Workplace and Fleet Charging Program (SOURCE_DSIRE:dsire_program_id:22186)
   - matched: Opportunity appears rolling or no-deadline.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Excise Tax Deduction for Solar or Wind Powered Systems (SOURCE_DSIRE:dsire_program_id:148)
+- eligible / 100: Excise Tax Deduction for Solar or Wind Powered Systems (SOURCE_DSIRE:dsire_program_id:148)
   - matched: Opportunity appears active.; Project site state MA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -4140,31 +4140,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:4449)
+- eligible / 100: Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:4449)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Power Project Loan Fund (SOURCE_DSIRE:dsire_program_id:115)
+- eligible / 100: Power Project Loan Fund (SOURCE_DSIRE:dsire_program_id:115)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
+- eligible / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Interest Rate Reduction Program (SOURCE_DSIRE:dsire_program_id:1497)
+- eligible / 100: Energy Efficiency Interest Rate Reduction Program (SOURCE_DSIRE:dsire_program_id:1497)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22666)
+- eligible / 100: Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22666)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Grant Program (SOURCE_DSIRE:dsire_program_id:3080)
+- eligible / 100: Renewable Energy Grant Program (SOURCE_DSIRE:dsire_program_id:3080)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Efficiency Revolving Loan Fund Program (SOURCE_DSIRE:dsire_program_id:4448)
+- eligible / 100: Energy Efficiency Revolving Loan Fund Program (SOURCE_DSIRE:dsire_program_id:4448)
   - matched: Opportunity appears active.; Project site state AK matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -4233,27 +4233,27 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 8,
+  "eligible": 8,
   "ineligible": 1801
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Rocky Mountain Power - wattsmart Business Program (SOURCE_DSIRE:dsire_program_id:2412)
+Eligible matches:
+- eligible / 100: Rocky Mountain Power - wattsmart Business Program (SOURCE_DSIRE:dsire_program_id:2412)
   - matched: Opportunity appears active.; Project site state UT matches opportunity geography.; Self-reported utility matches Rocky Mountain Power.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Utah - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22661)
+- eligible / 100: Utah - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22661)
   - matched: Opportunity appears active.; Project site state UT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Systems Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:83)
+- eligible / 100: Renewable Energy Systems Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:83)
   - matched: Opportunity appears active.; Project site state UT matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Systems Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:248)
+- eligible / 100: Renewable Energy Systems Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:248)
   - matched: Opportunity appears active.; Project site state UT matches opportunity geography.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -4322,35 +4322,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 12,
+  "eligible": 12,
   "ineligible": 1797
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
+- eligible / 100: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: KIUC - Solar Water Heating Rebate Program (SOURCE_DSIRE:dsire_program_id:598)
+- eligible / 100: KIUC - Solar Water Heating Rebate Program (SOURCE_DSIRE:dsire_program_id:598)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Self-reported utility matches Kauai Island Utility Cooperative.
-- eligible_active / 100: Farm and Aquaculture Alternative Energy Loan (SOURCE_DSIRE:dsire_program_id:2997)
+- eligible / 100: Farm and Aquaculture Alternative Energy Loan (SOURCE_DSIRE:dsire_program_id:2997)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22630)
+- eligible / 100: Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22630)
   - matched: Opportunity appears active.; Project site state HI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Electricity Production Tax Credit (PTC) (SOURCE_DSIRE:dsire_program_id:734)
+- eligible / 100: Renewable Electricity Production Tax Credit (PTC) (SOURCE_DSIRE:dsire_program_id:734)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -4420,31 +4420,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
+- eligible / 100: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Electric Vehicle Tax Credit (SOURCE_DSIRE:dsire_program_id:22425)
+- eligible / 100: Electric Vehicle Tax Credit (SOURCE_DSIRE:dsire_program_id:22425)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - County Energy District Authority (SOURCE_DSIRE:dsire_program_id:3534)
+- eligible / 100: Local Option - County Energy District Authority (SOURCE_DSIRE:dsire_program_id:3534)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
+- eligible / 100: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
   - matched: Opportunity appears active.; Project site state OK matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
@@ -4513,35 +4513,35 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 13,
+  "eligible": 13,
   "ineligible": 1796
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Biogas, Solar, and Wind Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:178)
+- eligible / 100: Biogas, Solar, and Wind Energy Equipment Exemption (SOURCE_DSIRE:dsire_program_id:178)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Commercial Retro-Commissioning and New Construction Program (SOURCE_DSIRE:dsire_program_id:5218)
+- eligible / 100: Commercial Retro-Commissioning and New Construction Program (SOURCE_DSIRE:dsire_program_id:5218)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Local Option - Energy-Efficiency Improvement Loans (SOURCE_DSIRE:dsire_program_id:3538)
+- eligible / 100: Local Option - Energy-Efficiency Improvement Loans (SOURCE_DSIRE:dsire_program_id:3538)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Renewable Energy Sales Tax Exemptions (SOURCE_DSIRE:dsire_program_id:3223)
+- eligible / 100: Renewable Energy Sales Tax Exemptions (SOURCE_DSIRE:dsire_program_id:3223)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Innovation Grant Program (SOURCE_DSIRE:dsire_program_id:22074)
+- eligible / 100: Energy Innovation Grant Program (SOURCE_DSIRE:dsire_program_id:22074)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Focus on Energy - Business Incentive Program (SOURCE_DSIRE:dsire_program_id:1292)
+- eligible / 100: Focus on Energy - Business Incentive Program (SOURCE_DSIRE:dsire_program_id:1292)
   - matched: Opportunity appears active.; Project site state WI matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -4610,31 +4610,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+Eligible matches:
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
+- eligible / 100: Active Solar Heating and Cooling Systems Exemption (SOURCE_DSIRE:dsire_program_id:183)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Clean Fuel Advanced Technology (CFAT) Project (SOURCE_DSIRE:dsire_program_id:22215)
+- eligible / 100: Clean Fuel Advanced Technology (CFAT) Project (SOURCE_DSIRE:dsire_program_id:22215)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
+- eligible / 100: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
+- eligible / 100: Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: South River EMC - Solar Water Heating Rebate Program (SOURCE_DSIRE:dsire_program_id:3351)
+- eligible / 100: South River EMC - Solar Water Heating Rebate Program (SOURCE_DSIRE:dsire_program_id:3351)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
+- eligible / 100: EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; No utility restriction was found after source review.
 
 Common next questions:
@@ -4703,31 +4703,31 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible_active": 10,
+  "eligible": 10,
   "ineligible": 1799
 }
 ```
 
-Eligible active matches:
-- eligible_active / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
+Eligible matches:
+- eligible / 100: Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy Equipment Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:1683)
+- eligible / 100: Energy Equipment Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:1683)
   - matched: Opportunity appears active.; Project site state AZ matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: APS - Energy Efficiency Solutions for Business (SOURCE_DSIRE:dsire_program_id:2458)
+- eligible / 100: APS - Energy Efficiency Solutions for Business (SOURCE_DSIRE:dsire_program_id:2458)
   - matched: Opportunity appears active.; Project site state AZ matches opportunity geography.; No utility restriction was found after source review.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Solar and Wind Equipment Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:119)
+- eligible / 100: Solar and Wind Equipment Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:119)
   - matched: Opportunity appears rolling or no-deadline.; Project site state AZ matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible_active / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
+- eligible / 100: Energy-Efficient Commercial Buildings Tax Deduction (SOURCE_DSIRE:dsire_program_id:1271)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:

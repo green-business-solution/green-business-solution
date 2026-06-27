@@ -313,7 +313,7 @@ function statusFor({ hardFail, unknowns, availability, rankScore, profile }) {
   if (unknowns.length > 0) {
     return rankScore >= 70 ? "likely_eligible" : "needs_information";
   }
-  return "eligible_active";
+  return "eligible";
 }
 
 function nextQuestionFor(unknowns) {
@@ -357,7 +357,7 @@ function compareOfferResults(a, b) {
 
 function statusRank(status) {
   return {
-    eligible_active: 0,
+    eligible: 0,
     likely_eligible: 1,
     needs_information: 2,
     upcoming: 3,

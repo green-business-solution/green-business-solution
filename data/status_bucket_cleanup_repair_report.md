@@ -5,7 +5,7 @@ DynamoDB writes: yes
 
 ## Repair Standard
 
-- Visible admin sample matching should only publish `eligible_active` and `ineligible` statuses.
+- Visible admin sample matching should only publish `eligible` and `ineligible` statuses.
 - Resolve `likely_eligible` by repairing the specific unknown canonical field, not by hiding the status in the UI.
 - If an opportunity is a duplicate generic update row or informational page rather than a matchable incentive/advisory/financing record, archive it with a lifecycle reason.
 - If an official source is blocked, rate-limited, times out, or returns HTTP 403/429/5xx, wait for the retry window, retry, and use alternate official or program-partner sources before accepting an unresolved repair.
@@ -98,4 +98,3 @@ Availability reviews:
   "upcoming": 1
 }
 ```
-

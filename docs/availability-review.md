@@ -105,6 +105,6 @@ A future scheduled job should:
 5. Re-fetch source URLs and update DynamoDB review fields.
 6. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
 7. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
-8. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable`.
+8. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

@@ -4304,7 +4304,7 @@ const CLIENT_INTAKE_SUMMARY_TAB = "Client Intake Summary";
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
 const SAMPLE_MATCH_STATUS_ORDER = [
-  "eligible_active",
+  "eligible",
   "ineligible"
 ];
 const utilitySummaryFieldIds = [

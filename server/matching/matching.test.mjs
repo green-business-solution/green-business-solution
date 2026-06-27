@@ -49,7 +49,7 @@ describe("matching pipeline", () => {
     const profile = buildOpportunityMatchProfile(opportunity, { now });
     const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
 
-    expect(["eligible_active", "likely_eligible"]).toContain(result.eligibilityStatus);
+    expect(["eligible", "likely_eligible"]).toContain(result.eligibilityStatus);
     expect(result.rankScore).toBeGreaterThanOrEqual(85);
     expect(result.blockers).toHaveLength(0);
   });
@@ -320,7 +320,7 @@ describe("matching pipeline", () => {
     const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
 
     expect(profile.availability.normalizedStatus).toBe("rolling");
-    expect(result.eligibilityStatus).toBe("eligible_active");
+    expect(result.eligibilityStatus).toBe("eligible");
     expect(result.matchedReasons.join(" ")).toMatch(/rolling or no-deadline/);
   });
 

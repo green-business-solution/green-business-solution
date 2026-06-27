@@ -33,8 +33,8 @@ const now = new Date(process.env.MATCHING_NOW || Date.now());
 const writeFullOutput = process.env.MATCHING_WRITE_FULL_OUTPUT !== "0";
 const writeRetrofitIndex = process.env.MATCHING_WRITE_RETROFIT_INDEX !== "0";
 const patchExistingTestCases = process.env.MATCHING_PATCH_EXISTING_TEST_CASES === "1";
-const ADMIN_MATCH_STATUS_ORDER = ["eligible_active", "ineligible"];
-const DISALLOWED_ADMIN_STATUSES = new Set(["likely_eligible", "needs_information", "upcoming", "manual_review", "unavailable"]);
+const ADMIN_MATCH_STATUS_ORDER = ["eligible", "ineligible"];
+const ADMIN_MATCH_ALLOWED_STATUSES = new Set(ADMIN_MATCH_STATUS_ORDER);
 const requestedSampleUserIds = new Set(
   (process.env.SAMPLE_USER_IDS || "")
     .split(",")
@@ -251,7 +251,7 @@ function buildUserReport(userProfile, results) {
       grouped.get(status)?.length || 0
     ])
   );
-  const promising = results.filter((result) => result.eligibilityStatus === "eligible_active");
+  const promising = results.filter((result) => result.eligibilityStatus === "eligible");
   const topResults = promising.slice(0, 12).map(summarizeMatchResult);
   const commonQuestions = topCounts(
     promising
@@ -277,8 +277,9 @@ function buildUserReport(userProfile, results) {
 }
 
 function assertNoDisallowedAdminStatuses(userProfile, grouped) {
-  const disallowed = [...DISALLOWED_ADMIN_STATUSES]
-    .map((status) => ({ status, count: grouped.get(status)?.length || 0 }))
+  const disallowed = [...grouped.entries()]
+    .filter(([status]) => !ADMIN_MATCH_ALLOWED_STATUSES.has(status))
+    .map(([status, rows]) => ({ status, count: rows.length }))
     .filter((row) => row.count > 0);
   if (disallowed.length === 0) return;
 
@@ -339,7 +340,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "- Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.",
     `- Facility eligibility uses the generated review artifact when present. Artifact: ${facilityReviewsByOpportunityId.size > 0 ? `\`${facilityReviewsPath}\` (${facilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
     `- Utility review artifact: ${utilityReviewsByOpportunityId.size > 0 ? `\`${utilityReviewsPath}\` (${utilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
-    "- The admin fixture intentionally fails generation if visible results still contain `likely_eligible`, `needs_information`, `upcoming`, `manual_review`, or `unavailable` statuses.",
+    "- The admin fixture intentionally fails generation if visible results contain any status other than `eligible` or `ineligible`.",
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
     "",
@@ -371,7 +372,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     lines.push("```json");
     lines.push(JSON.stringify(report.statusCounts, null, 2));
     lines.push("```", "");
-    lines.push("Eligible active matches:");
+    lines.push("Eligible matches:");
     for (const result of report.topResults) {
       lines.push(
         `- ${result.eligibilityStatus} / ${result.rankScore}: ${result.opportunityName} (${result.opportunityId})`
@@ -429,7 +430,7 @@ function compareResults(a, b) {
 
 function statusRank(status) {
   return {
-    eligible_active: 0,
+    eligible: 0,
     likely_eligible: 1,
     needs_information: 2,
     manual_review: 3,
