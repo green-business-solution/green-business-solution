@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) modeled retrofit savings expansion
+
+- Added reusable modeled savings handlers for electric kWh reductions, gas therm reductions, gas-to-electric replacements, demand-charge reductions, solar/export value, EV charging load, water/sewer reductions, waste service reductions, and fleet electrification.
+- Reworked admin test-case savings previews from LED-only fixtures to template-driven retrofit family fixtures, calculating 830 of 885 matched retrofit previews while leaving service-only audit/certification/study items unsupported until modeled savings are available.
+- Added focused Vitest coverage for modeled retrofit handlers and updated admin preview tests for calculated HVAC fixtures and service-only unsupported states.
+
 ## 2026-06-27 - Codex (GPT-5) test case selector labels
 
 - Changed the Test Cases selector to show establishment names instead of fixture IDs and removed the duplicate establishment heading.

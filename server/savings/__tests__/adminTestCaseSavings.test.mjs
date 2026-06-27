@@ -40,7 +40,7 @@ describe("admin test-case savings previews", () => {
     );
   });
 
-  it("marks non-LED retrofit previews as unsupported in V1", () => {
+  it("calculates modeled HVAC admin test fixture previews", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       sampleUserId: "sample_hvac",
       calculationDate: "2026-06-27",
@@ -49,6 +49,35 @@ describe("admin test-case savings previews", () => {
         retrofitTypeId: "high_efficiency_hvac_replacement",
         displayName: "High-efficiency HVAC replacement",
         opportunityCount: 3
+      }
+    });
+
+    expect(preview).toMatchObject({
+      status: "calculated",
+      estimateKind: "test_fixture",
+      modelCoverage: "retrofit_only",
+      upfrontCostCents: 798000,
+      upfrontSavingsCents: 0,
+      upfrontCostAfterSavingsCents: 798000,
+      monthlySavingsCents: 6000,
+      annualSavingsCents: 72000
+    });
+    expect(preview.billLineDeltas).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -4000 })
+      ])
+    );
+  });
+
+  it("keeps service-only matched items unsupported until modeled savings are available", () => {
+    const preview = buildAdminTestCaseSavingsPreview({
+      sampleUserId: "sample_audit",
+      calculationDate: "2026-06-27",
+      normalizedProfile: {},
+      retrofitGroup: {
+        retrofitTypeId: "energy_audit",
+        displayName: "Energy audit",
+        opportunityCount: 2
       }
     });
 
