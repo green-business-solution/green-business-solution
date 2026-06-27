@@ -1238,6 +1238,117 @@ dd {
   margin: 0;
 }
 
+.savings-preview-card {
+  align-content: start;
+}
+
+.savings-headline-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.savings-metric {
+  background: #f7faf7;
+  border: 1px solid #e1e9e3;
+  border-radius: 6px;
+  display: grid;
+  gap: 4px;
+  min-height: 78px;
+  padding: 10px;
+}
+
+.savings-metric span,
+.savings-ledger-section h4,
+.savings-assumption-list h4 {
+  color: #5e6d64;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.savings-metric strong {
+  align-self: end;
+  color: #16231b;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.savings-breakdown-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.savings-ledger-section,
+.savings-assumption-list,
+.savings-trace {
+  background: #f7faf7;
+  border: 1px solid #e4ebe6;
+  border-radius: 6px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+}
+
+.savings-ledger-section ul,
+.savings-assumption-list ul {
+  display: grid;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.savings-ledger-section li {
+  align-items: start;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.savings-ledger-section li span,
+.savings-ledger-section p,
+.savings-assumption-list li,
+.savings-trace p {
+  color: #4f5e56;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.savings-ledger-section li strong {
+  color: #16231b;
+  white-space: nowrap;
+}
+
+.savings-trace summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.savings-trace-list {
+  display: grid;
+  gap: 8px;
+}
+
+.savings-trace-list section {
+  border-top: 1px solid #dfe8e2;
+  display: grid;
+  gap: 5px;
+  padding-top: 8px;
+}
+
+.savings-trace-list h4 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.savings-trace-list strong {
+  color: #16231b;
+}
+
 .sample-count-card ol {
   list-style: decimal;
 }
@@ -1528,6 +1639,8 @@ dd {
   .test-case-insight-grid,
   .retrofit-button-grid,
   .match-detail-grid,
+  .savings-headline-grid,
+  .savings-breakdown-grid,
   .opportunity-review-layout,
   .opportunity-summary-grid {
     grid-template-columns: 1fr;

@@ -392,6 +392,80 @@ type SampleMatchResult = {
   };
 };
 
+type SampleSavingsLedgerEntry = {
+  id?: string;
+  kind?: "upfront_cost" | "upfront_savings";
+  category: string;
+  label?: string;
+  amountCents: number;
+  source?: string;
+  formula?: string | null;
+};
+
+type SampleRecurringSavingsEntry = {
+  id?: string;
+  category: string;
+  label?: string;
+  amountCents: number;
+  period: "monthly" | "annual";
+  annualizedAmountCents?: number;
+  source?: string;
+  formula?: string | null;
+};
+
+type SampleCalculationTraceStep = {
+  id?: string;
+  label: string;
+  category: string;
+  formula: string;
+  result?: {
+    value: number;
+    unit: string;
+  };
+};
+
+type SampleSavingsPreview = {
+  schemaVersion?: string;
+  status: "calculated" | "blocked" | "unsupported";
+  estimateKind: "test_fixture" | "not_modeled_v1" | string;
+  modelCoverage: "retrofit_only" | "none" | string;
+  retrofitTypeId: string;
+  retrofitDisplayName: string;
+  opportunityCount: number;
+  calculationDate?: string | null;
+  upfrontCostCents: number | null;
+  upfrontSavingsCents: number | null;
+  upfrontCostAfterSavingsCents: number | null;
+  monthlySavingsCents: number | null;
+  annualSavingsCents: number | null;
+  costBreakdown: SampleSavingsLedgerEntry[];
+  savingsBreakdown: SampleRecurringSavingsEntry[];
+  billLineDeltas?: Array<{
+    domain: string;
+    canonicalField: string;
+    deltaValue: number;
+    unit: string;
+    period: string;
+    savingsCents?: number;
+  }>;
+  selectedIncentiveScenario?: {
+    id?: string;
+    name?: string;
+    totalUpfrontSavingsCents?: number;
+    firstYearRecurringSavingsCents?: number;
+    firstYearTotalBenefitCents?: number;
+    conflictExplanations?: Array<{ reason: string }>;
+  } | null;
+  alternativeScenarios?: unknown[];
+  calculationTrace?: {
+    summary?: string;
+    steps?: SampleCalculationTraceStep[];
+    assumptions?: Array<{ label?: string; value?: unknown }>;
+  } | null;
+  assumptions?: string[];
+  unsupportedReason?: string | null;
+};
+
 type SampleCount = {
   value: string;
   count: number;
@@ -404,6 +478,7 @@ type SampleRetrofitGroup = {
   isPhysicalRetrofit: boolean;
   opportunityCount: number;
   opportunities: SampleMatchResult[];
+  savingsPreview?: SampleSavingsPreview;
 };
 
 type SampleNormalizedProfile = {
@@ -4790,6 +4865,8 @@ function AdminTestCasesPanel() {
             </div>
           </article>
 
+          <SavingsPreviewCard preview={selectedRetrofit?.savingsPreview || null} />
+
           <div className="test-case-insight-grid">
             <SampleCountCard title="Common next questions" values={selectedTestCase.commonQuestions} />
             <SampleCountCard title="Common unresolved requirements" values={selectedTestCase.unresolved} />
@@ -4797,6 +4874,155 @@ function AdminTestCasesPanel() {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null }) {
+  if (!preview) {
+    return (
+      <article className="data-card savings-preview-card">
+        <div>
+          <p className="eyebrow">Savings estimate</p>
+          <h3>No retrofit selected</h3>
+        </div>
+        <p className="empty-state">Select a retrofit type to inspect savings output.</p>
+      </article>
+    );
+  }
+
+  if (preview.status === "unsupported") {
+    return (
+      <article className="data-card savings-preview-card">
+        <div>
+          <p className="eyebrow">Savings estimate</p>
+          <h3>{preview.retrofitDisplayName}</h3>
+          <p className="muted-message">{preview.unsupportedReason || "No V1 savings model is connected for this retrofit type yet."}</p>
+        </div>
+      </article>
+    );
+  }
+
+  const upfrontSavings = preview.upfrontSavingsCents ?? 0;
+  const recurringEntries = preview.savingsBreakdown || [];
+  const upfrontCostEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_cost");
+  const upfrontSavingsEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_savings");
+  const traceSteps = preview.calculationTrace?.steps || [];
+
+  return (
+    <article className="data-card savings-preview-card">
+      <div>
+        <p className="eyebrow">Savings estimate</p>
+        <h3>{preview.retrofitDisplayName}</h3>
+        <p className="muted-message">
+          {preview.modelCoverage === "retrofit_only"
+            ? "Admin test-fixture estimate. Opportunity incentive amounts are not extracted yet."
+            : "Savings estimate generated from the available test-case data."}
+        </p>
+      </div>
+
+      <div className="savings-headline-grid">
+        <SavingsMetric label="Upfront cost" value={formatCents(preview.upfrontCostCents)} />
+        <SavingsMetric label="One-time savings" value={formatCents(upfrontSavings)} />
+        <SavingsMetric label="After savings" value={formatCents(preview.upfrontCostAfterSavingsCents)} />
+        <SavingsMetric label="Saved / month" value={formatCents(preview.monthlySavingsCents)} />
+        <SavingsMetric label="Saved / year" value={formatCents(preview.annualSavingsCents)} />
+      </div>
+
+      <div className="savings-breakdown-grid">
+        <SavingsLedgerList title="Upfront costs" entries={upfrontCostEntries} emptyMessage="No upfront costs calculated." />
+        <SavingsLedgerList title="One-time savings" entries={upfrontSavingsEntries} emptyMessage="No one-time opportunity savings modeled yet." />
+        <RecurringSavingsList entries={recurringEntries} />
+      </div>
+
+      {preview.assumptions?.length ? (
+        <section className="savings-assumption-list">
+          <h4>Assumptions</h4>
+          <ul>
+            {preview.assumptions.map((assumption) => (
+              <li key={assumption}>{assumption}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {traceSteps.length > 0 ? (
+        <details className="savings-trace">
+          <summary>Show calculations</summary>
+          <div className="savings-trace-list">
+            {traceSteps.map((step) => (
+              <section key={step.id || `${step.category}:${step.label}`}>
+                <h4>{step.label}</h4>
+                <p>{step.formula}</p>
+                {step.result ? (
+                  <strong>
+                    {formatTraceResult(step.result.value, step.result.unit)}
+                  </strong>
+                ) : null}
+              </section>
+            ))}
+          </div>
+        </details>
+      ) : null}
+    </article>
+  );
+}
+
+function SavingsMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="savings-metric">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function SavingsLedgerList({
+  emptyMessage,
+  entries,
+  title
+}: {
+  emptyMessage: string;
+  entries: SampleSavingsLedgerEntry[];
+  title: string;
+}) {
+  return (
+    <section className="savings-ledger-section">
+      <h4>{title}</h4>
+      {entries.length > 0 ? (
+        <ul>
+          {entries.map((entry) => (
+            <li key={entry.id || `${entry.category}:${entry.amountCents}`}>
+              <span>{entry.label || formatSavingsCategory(entry.category)}</span>
+              <strong>{formatCents(entry.amountCents)}</strong>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{emptyMessage}</p>
+      )}
+    </section>
+  );
+}
+
+function RecurringSavingsList({ entries }: { entries: SampleRecurringSavingsEntry[] }) {
+  return (
+    <section className="savings-ledger-section">
+      <h4>Recurring savings</h4>
+      {entries.length > 0 ? (
+        <ul>
+          {entries.map((entry) => (
+            <li key={entry.id || `${entry.category}:${entry.period}:${entry.amountCents}`}>
+              <span>
+                {entry.label || formatSavingsCategory(entry.category)} / {entry.period}
+              </span>
+              <strong>{formatCents(entry.amountCents)}</strong>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No recurring savings calculated.</p>
+      )}
     </section>
   );
 }
@@ -5151,6 +5377,28 @@ function sampleSquareFootage(value: unknown) {
     return status ? `${parsedValue} (${status})` : parsedValue;
   }
   return sampleValue(value);
+}
+
+function formatCents(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "Not calculated";
+  const amount = value / 100;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2
+  }).format(amount);
+}
+
+function formatTraceResult(value: number, unit: string) {
+  if (unit.includes("cent")) return formatCents(value);
+  return `${Number(value).toLocaleString()} ${unit}`;
+}
+
+function formatSavingsCategory(value: string) {
+  return value
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 function sampleStatusLabel(status: string) {

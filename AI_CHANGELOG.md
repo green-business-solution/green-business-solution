@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-26 - Codex (GPT-5) admin savings preview
+
+- Added admin test-case savings previews generated from the V1 savings engine, with calculated LED fixture estimates and explicit unsupported states for retrofit types without V1 models.
+- Rendered upfront cost, one-time savings, upfront cost after savings, monthly/annual recurring savings, cost and savings breakdowns, assumptions, and calculation traces in the admin Test Cases tab.
+- Added a local fixture patch script for refreshing savings previews without re-running live opportunity matching.
+
 ## 2026-06-26 - Codex (GPT-5) savings engine LED vertical slice
 
 - Added pure savings-engine modules for integer-cent money math, upfront/recurring aggregation, labor rules, geographic tax rules, incentive calculation, stacking scenarios, and a V1 LED average-rate savings estimate.
