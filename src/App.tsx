@@ -4779,7 +4779,6 @@ function AdminTestCasesPanel() {
             <div>
               <p className="eyebrow">Test site profile</p>
               <h3>{sampleValue(sourceForm.companyName, "Sample user")}</h3>
-              <p className="muted-message">{selectedTestCase.description}</p>
             </div>
             <label className="field test-case-profile-select">
               <span>Test case</span>

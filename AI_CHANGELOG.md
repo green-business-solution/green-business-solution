@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) remove test profile description
+
+- Removed the visible generated description line under the establishment name in the Test Cases profile card.
+
 ## 2026-06-27 - Codex (GPT-5) remove public source notes
 
 - Removed the visible Public source notes section from the standalone Test Cases test-site profile card.
