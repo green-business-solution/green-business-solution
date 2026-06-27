@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) sidebar avatar sign-out
+
+- Replaced the visible sidebar name/email/sign-out stack with a bottom-left circular account avatar that expands on hover/focus to reveal the sign-out button.
+- Exposed the stored Google profile picture URL in the public user payload, with initials fallback for accounts without a picture.
+
 ## 2026-06-27 - Codex (GPT-5) workspace sidebar branding
 
 - Replaced the sidebar `G` workspace mark and `Green Business Solution` text with the RetroFi logo and `Admin Workspace` label for admin users.

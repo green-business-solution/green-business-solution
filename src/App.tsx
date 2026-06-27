@@ -37,6 +37,7 @@ type UserRecord = {
   companyName: string | null;
   authProvider: string;
   googleLinked: boolean;
+  googlePicture?: string | null;
   createdAt: string;
   lastLoginAt: string | null;
 };
@@ -6407,13 +6408,6 @@ function WorkspaceLayout({
             <strong>{user.role === "admin" ? "Admin Workspace" : "User Workspace"}</strong>
           </div>
         </div>
-        <div className="workspace-account">
-          <strong>{user.fullName}</strong>
-          <span>{user.email}</span>
-          <button onClick={onSignOut} type="button">
-            Sign out
-          </button>
-        </div>
         <nav className="workspace-nav" aria-label={`${title} sections`}>
           {navItems.map((item) => (
             <button
@@ -6426,12 +6420,35 @@ function WorkspaceLayout({
             </button>
           ))}
         </nav>
+        <div className="workspace-account" title={`${user.fullName} (${user.email})`}>
+          <span className="workspace-avatar" aria-hidden="true">
+            {user.googlePicture ? (
+              <img alt="" src={user.googlePicture} />
+            ) : (
+              <span>{workspaceUserInitials(user)}</span>
+            )}
+          </span>
+          <button onClick={onSignOut} type="button">
+            Sign out
+          </button>
+        </div>
       </aside>
       <main className="workspace-main">
         {children}
       </main>
     </div>
   );
+}
+
+function workspaceUserInitials(user: UserRecord) {
+  const source = user.fullName || user.email || "User";
+  const parts = source
+    .replace(/@.*/, "")
+    .split(/\s+|[._-]+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const initials = parts.slice(0, 2).map((part) => part[0]?.toUpperCase()).join("");
+  return initials || "U";
 }
 
 function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: UserRecord }) {

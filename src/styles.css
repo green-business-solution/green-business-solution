@@ -714,33 +714,62 @@ textarea {
 }
 
 .workspace-account {
-  border-bottom: 1px solid rgba(249, 251, 246, 0.12);
-  border-top: 1px solid rgba(249, 251, 246, 0.12);
-  display: grid;
-  gap: 7px;
-  padding: 16px 0;
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  max-width: 46px;
+  min-height: 46px;
+  overflow: hidden;
+  transition: max-width 160ms ease;
+  white-space: nowrap;
 }
 
-.workspace-account strong {
-  color: #ffffff;
-  font-size: 19px;
-  line-height: 1.15;
+.workspace-account:hover,
+.workspace-account:focus-within {
+  max-width: 150px;
 }
 
-.workspace-account span {
-  color: #c5d0c9;
-  font-size: 13px;
-  font-weight: 750;
-  overflow-wrap: anywhere;
+.workspace-avatar {
+  align-items: center;
+  background: #f5faf6;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: #17211b;
+  display: inline-flex;
+  flex: 0 0 46px;
+  font-size: 14px;
+  font-weight: 850;
+  height: 46px;
+  justify-content: center;
+  overflow: hidden;
+  width: 46px;
+}
+
+.workspace-avatar img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .workspace-account button {
   background: #f5faf6;
   color: #17211b;
-  justify-self: start;
-  margin-top: 4px;
+  flex: 0 0 auto;
   min-height: 36px;
+  opacity: 0;
   padding: 0 12px;
+  transform: translateX(-6px);
+  transition:
+    opacity 140ms ease,
+    transform 160ms ease;
+}
+
+.workspace-account:hover button,
+.workspace-account:focus-within button {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .workspace-account button:hover {

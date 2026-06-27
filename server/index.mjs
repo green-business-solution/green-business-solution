@@ -679,6 +679,7 @@ function publicUser(user) {
     companyName: user.companyName || null,
     authProvider: user.authProvider,
     googleLinked: Boolean(user.googleLinked),
+    googlePicture: user.googlePicture || null,
     passwordLinked: Boolean(user.passwordLinked),
     createdAt: user.createdAt,
     lastLoginAt: user.lastLoginAt || null
