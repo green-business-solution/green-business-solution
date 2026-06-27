@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) remove public source notes
+
+- Removed the visible Public source notes section from the standalone Test Cases test-site profile card.
+
 ## 2026-06-27 - Codex (GPT-5) grouped test profile fields
 
 - Changed the Test Cases profile details from separate mini-cards into one compact grouped card with thin divider lines.

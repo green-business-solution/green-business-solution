@@ -4810,12 +4810,6 @@ function AdminTestCasesPanel() {
             <DetailItem label="Building" value={sampleValue(sourceForm.buildingType)} />
             <DetailItem label="Square feet" value={sampleValue(sourceForm.squareFootage)} />
           </div>
-          {sourceForm.publicSourceNotes ? (
-            <section className="detail-section">
-              <h4>Public source notes</h4>
-              <p className="muted-message">{sampleValue(sourceForm.publicSourceNotes)}</p>
-            </section>
-          ) : null}
         </article>
 
         <div className="test-case-results">
