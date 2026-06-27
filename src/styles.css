@@ -848,6 +848,11 @@ textarea {
   padding: 30px;
 }
 
+.testcases-standalone-page {
+  min-height: 100vh;
+  padding: 24px;
+}
+
 .profile-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }

@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) standalone test cases route
+
+- Added `/testcases` as a standalone admin-only route that renders the Test Cases workspace without the sidebar/navbar.
+- Changed the admin workspace Test Cases nav item to open `/testcases` in a new browser tab.
+
 ## 2026-06-27 - Codex (GPT-5) opportunity map modal
 
 - Changed the admin Test Cases opportunity map so clicking an opportunity opens its full detail card in a centered popup.

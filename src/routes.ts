@@ -12,7 +12,8 @@ export type Route =
   | "scan-energy-data"
   | "sign-in"
   | "portal"
-  | "admin";
+  | "admin"
+  | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
   { label: "Mission", route: "about-mission" },
@@ -37,6 +38,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/sign-in") return "sign-in";
   if (pathname === "/portal") return "portal";
   if (pathname === "/admin") return "admin";
+  if (pathname === "/testcases") return "testcases";
   return "home";
 }
 

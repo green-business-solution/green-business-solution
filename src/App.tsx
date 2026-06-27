@@ -4581,11 +4581,19 @@ function AdminDashboard({
     void loadDashboardSection(activeTab);
   }, [activeTab, credential, loadedSections]);
 
+  function handleAdminNavItemChange(item: string) {
+    if (item === ADMIN_TEST_CASES_TAB) {
+      window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
+      return;
+    }
+    setActiveTab(item);
+  }
+
   return (
     <WorkspaceLayout
       activeNavItem={activeTab}
       navItems={navItems}
-      onNavItemChange={setActiveTab}
+      onNavItemChange={handleAdminNavItemChange}
       onSignOut={onSignOut}
       title="Admin"
       user={admin}
@@ -4616,6 +4624,14 @@ function AdminDashboard({
         />
       )}
     </WorkspaceLayout>
+  );
+}
+
+function AdminTestCasesStandalonePage() {
+  return (
+    <main className="testcases-standalone-page">
+      <AdminTestCasesPanel />
+    </main>
   );
 }
 
@@ -6715,7 +6731,7 @@ export function App() {
     setAuthPayload(payload);
     setAuthCredential(credential);
     setSignInMessage(null);
-    navigate(payload.dashboard === "admin" ? "admin" : "portal");
+    navigate(payload.dashboard === "admin" ? (route === "testcases" ? "testcases" : "admin") : "portal");
   }
 
   function signOut() {
@@ -6779,6 +6795,21 @@ export function App() {
   }
 
   if (effectiveRoute === "sign-in") {
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "testcases") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return <AdminTestCasesStandalonePage />;
+    }
+
     return (
       <SignInPage
         navigate={navigate}
