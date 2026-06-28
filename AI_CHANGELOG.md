@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) conservative availability uncertainty repair
+
+- Added a conservative uncertainty-only availability repair workflow that re-reviews only currently uncertain public opportunities and merges safe direct-source classifications into the public review artifact.
+- Tightened availability search fallback logic after detecting noisy generic search results; broad search fallback is now documented as exploratory and disabled by default for the uncertainty repair command.
+- Reclassified 13 public opportunities from `uncertain` to `active` using reachable title-specific source URLs/pages, leaving 303 rows in an official-source research queue.
+- Generated `data/public_opportunity_uncertain_research_targets.json` and `data/public_opportunity_uncertain_research_prompt.md` for GPT Pro/manual research of the remaining unresolved opportunities.
+
 ## 2026-06-27 - Codex (GPT-5) opportunity availability repair
 
 - Added a searchable public availability-review pass that can fall back to title/state web search for uncertain source pages and classify reachable title-specific program pages as lower-confidence active evidence.

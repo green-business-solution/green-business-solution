@@ -1,7 +1,7 @@
 {
   "schemaVersion": "opportunity-archive-report-v1",
-  "generatedAt": "2026-06-28T02:04:04.523Z",
-  "matcherClock": "2026-06-28T02:04:04.523Z",
+  "generatedAt": "2026-06-28T02:56:45.819Z",
+  "matcherClock": "2026-06-28T02:56:45.819Z",
   "opportunityCount": 1619,
   "writeDynamoDb": false,
   "unarchiveRestored": false,
@@ -25,7 +25,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -42,7 +42,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -112,11 +112,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -133,7 +135,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -264,7 +266,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -490,7 +492,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -754,7 +756,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -866,7 +868,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1092,7 +1094,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1204,7 +1206,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1373,7 +1375,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1409,7 +1411,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1502,7 +1504,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1557,7 +1559,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1631,7 +1633,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -1739,11 +1741,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -1756,11 +1760,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -1773,11 +1779,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -1828,11 +1836,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -1925,7 +1935,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2607,7 +2617,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2624,7 +2634,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2662,7 +2672,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2717,7 +2727,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2772,7 +2782,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2827,7 +2837,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -2863,7 +2873,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -3982,7 +3992,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -3999,7 +4009,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -4149,7 +4159,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -4660,7 +4670,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -4677,7 +4687,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -4732,7 +4742,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -4939,7 +4949,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5032,7 +5042,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5049,7 +5059,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5180,7 +5190,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5235,7 +5245,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5271,7 +5281,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5326,7 +5336,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5343,7 +5353,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5360,7 +5370,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5738,7 +5748,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5831,7 +5841,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5848,7 +5858,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -5903,7 +5913,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6015,7 +6025,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6127,7 +6137,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6144,7 +6154,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6313,7 +6323,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6444,7 +6454,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6480,7 +6490,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6497,7 +6507,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6628,7 +6638,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6892,7 +6902,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6966,7 +6976,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -6983,7 +6993,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -7152,7 +7162,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -7169,7 +7179,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -7718,7 +7728,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -7868,7 +7878,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -7938,11 +7948,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -8092,7 +8104,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -8261,7 +8273,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -8679,7 +8691,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -8905,7 +8917,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9017,7 +9029,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9148,7 +9160,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9203,7 +9215,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9239,7 +9251,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9503,7 +9515,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9539,7 +9551,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9556,7 +9568,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9820,7 +9832,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -9989,7 +10001,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10084,7 +10096,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10103,7 +10115,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10842,7 +10854,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10859,7 +10871,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10876,7 +10888,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10893,7 +10905,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10929,7 +10941,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -10946,7 +10958,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11286,7 +11298,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11474,7 +11486,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11512,7 +11524,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11719,7 +11731,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11850,7 +11862,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11886,7 +11898,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -11903,7 +11915,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12414,7 +12426,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12469,7 +12481,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12505,7 +12517,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12522,7 +12534,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12615,7 +12627,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12689,7 +12701,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12877,7 +12889,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12913,7 +12925,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12968,7 +12980,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -12987,7 +12999,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13004,7 +13016,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13211,7 +13223,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13266,7 +13278,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13283,7 +13295,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13433,7 +13445,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13602,7 +13614,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13695,7 +13707,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13769,7 +13781,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -13938,7 +13950,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14008,11 +14020,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -14063,11 +14077,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "active_program_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -14080,11 +14096,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14101,7 +14119,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14232,7 +14250,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14268,7 +14286,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14285,7 +14303,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14321,7 +14339,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14338,7 +14356,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14355,7 +14373,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14429,7 +14447,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14522,7 +14540,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14577,7 +14595,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14765,7 +14783,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -14934,7 +14952,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15084,7 +15102,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15405,7 +15423,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15612,7 +15630,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15781,7 +15799,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15836,7 +15854,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15872,7 +15890,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15927,7 +15945,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15944,7 +15962,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -15980,7 +15998,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16472,7 +16490,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16660,7 +16678,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16677,7 +16695,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16770,7 +16788,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16882,7 +16900,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -16994,7 +17012,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17030,7 +17048,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17085,7 +17103,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17368,7 +17386,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17575,7 +17593,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17858,7 +17876,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17913,7 +17931,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17930,7 +17948,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17947,7 +17965,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -17983,7 +18001,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18019,7 +18037,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18051,11 +18069,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -18072,7 +18092,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18146,7 +18166,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18182,7 +18202,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18199,7 +18219,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18216,7 +18236,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18252,7 +18272,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18269,7 +18289,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18305,7 +18325,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18455,7 +18475,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18472,7 +18492,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18489,7 +18509,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18506,7 +18526,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18523,7 +18543,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18540,7 +18560,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18595,7 +18615,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18631,7 +18651,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18724,7 +18744,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18779,7 +18799,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18796,7 +18816,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18832,7 +18852,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18868,7 +18888,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18923,7 +18943,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -18936,11 +18956,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -18957,7 +18979,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19031,7 +19053,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19067,7 +19089,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19084,7 +19106,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19253,7 +19275,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19327,7 +19349,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19363,7 +19385,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19399,7 +19421,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19454,7 +19476,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19471,7 +19493,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19545,7 +19567,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19562,7 +19584,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19579,7 +19601,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19653,7 +19675,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19746,7 +19768,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19820,7 +19842,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19894,7 +19916,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -19911,7 +19933,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -20042,7 +20064,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -20078,7 +20100,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -20114,7 +20136,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -20473,7 +20495,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -20562,11 +20584,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -20735,7 +20759,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -21056,7 +21080,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -21092,7 +21116,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -21356,7 +21380,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22057,7 +22081,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22112,7 +22136,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22338,7 +22362,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22393,7 +22417,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22410,7 +22434,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22598,7 +22622,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22615,7 +22639,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22708,7 +22732,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22725,7 +22749,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22742,7 +22766,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22759,7 +22783,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22814,7 +22838,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -22831,7 +22855,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23057,7 +23081,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23074,7 +23098,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23091,7 +23115,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23108,7 +23132,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23201,7 +23225,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23256,7 +23280,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23273,7 +23297,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23290,7 +23314,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23307,7 +23331,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23343,7 +23367,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23379,7 +23403,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23396,7 +23420,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23413,7 +23437,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23430,7 +23454,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23462,11 +23486,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -23521,7 +23547,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23557,7 +23583,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23612,7 +23638,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23686,7 +23712,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23703,7 +23729,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23720,7 +23746,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23737,7 +23763,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23868,7 +23894,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23885,7 +23911,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23902,7 +23928,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23938,7 +23964,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -23993,7 +24019,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24010,7 +24036,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24046,7 +24072,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24063,7 +24089,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24080,7 +24106,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24097,7 +24123,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24114,7 +24140,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24131,7 +24157,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24167,7 +24193,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24260,7 +24286,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24467,7 +24493,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24522,7 +24548,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24539,7 +24565,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24556,7 +24582,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24725,7 +24751,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24761,7 +24787,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24778,7 +24804,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24795,7 +24821,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24812,7 +24838,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24943,7 +24969,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24960,7 +24986,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -24977,7 +25003,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25317,7 +25343,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25412,7 +25438,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25505,7 +25531,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25524,7 +25550,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25543,7 +25569,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25655,7 +25681,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25691,7 +25717,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25746,7 +25772,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25763,7 +25789,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25780,7 +25806,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25837,7 +25863,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -25926,11 +25952,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -25966,7 +25994,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26211,7 +26239,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26228,7 +26256,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26245,7 +26273,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26357,7 +26385,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26431,7 +26459,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26600,7 +26628,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26712,7 +26740,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -26995,7 +27023,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27031,7 +27059,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27314,7 +27342,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27369,7 +27397,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27709,7 +27737,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27764,7 +27792,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27838,7 +27866,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27855,7 +27883,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -27868,11 +27896,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:47:06.637Z"
       }
     },
     {
@@ -27967,7 +27997,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28005,7 +28035,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28081,7 +28111,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28157,7 +28187,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28193,7 +28223,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28210,7 +28240,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28417,7 +28447,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28567,7 +28597,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28622,7 +28652,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28639,7 +28669,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28732,7 +28762,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28825,7 +28855,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28937,7 +28967,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -28973,7 +29003,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29066,7 +29096,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29216,7 +29246,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29271,7 +29301,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29383,7 +29413,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29497,7 +29527,7 @@
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29704,7 +29734,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29816,7 +29846,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -29871,7 +29901,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -30059,7 +30089,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -30076,7 +30106,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -30131,7 +30161,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {
@@ -30148,7 +30178,7 @@
         "reasons": [],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:00:43.764Z"
+        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
       }
     },
     {

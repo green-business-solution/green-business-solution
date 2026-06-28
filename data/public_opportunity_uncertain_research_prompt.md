@@ -1,0 +1,6916 @@
+# GPT Pro Research Prompt: RetroFi Opportunity Availability
+
+You are helping classify availability for RetroFi opportunity records that our deterministic crawler could not safely classify.
+
+Current date: June 28, 2026. Use current public web research and official/administrator sources whenever possible.
+
+## Goal
+
+For each target opportunity below, determine one normalized availability status:
+
+- `active`: currently accepting applications/participation, currently available, or an official page describes the program as available with no closed/upcoming language.
+- `rolling`: explicitly no deadline, first-come first-served, open until funds are exhausted, or an ongoing statutory incentive with no application window.
+- `upcoming`: not open now but official source says it will open/reopen in the future.
+- `unavailable`: closed, expired, cancelled, fully subscribed, no longer accepting applications, repealed, or official source page is gone and no replacement official page can be found.
+- `uncertain`: still cannot be classified after official-source research.
+
+## Strict Rules
+
+1. Prefer official administrator pages, state/federal/utility pages, program application portals, official PDFs, or official tax-authority pages.
+2. Do not classify as active from generic search snippets, unrelated city/state homepages, generic news pages, dictionaries, tourism pages, social media, or aggregator sites.
+3. A stale 404 source URL is not enough by itself to mark unavailable if a current official replacement page exists.
+4. If a program has a tax statute or standing utility tariff with no application cycle, use `rolling` only when the official source supports ongoing availability.
+5. If a closed page also says a future cycle is expected, use `upcoming` instead of `unavailable`.
+6. Capture a short evidence quote and the source URL for every non-uncertain decision.
+
+## Output Format
+
+Return JSON only:
+
+```json
+{
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:658",
+      "normalizedStatus": "active|rolling|upcoming|unavailable|uncertain",
+      "confidence": 0,
+      "evidenceText": "Short quote or paraphrased official evidence.",
+      "sourceUrlsChecked": [
+        "https://official-source.example/page"
+      ],
+      "reasons": [
+        "official_source_active"
+      ],
+      "notes": "Short explanation, especially if status remains uncertain."
+    }
+  ]
+}
+```
+
+## Failure Buckets
+
+```json
+{
+  "fetched_but_no_supported_status": 19,
+  "network_or_timeout": 17,
+  "no_source_url": 88,
+  "source_blocked_403": 54,
+  "source_missing_404": 123
+}
+```
+
+## Targets
+
+### 1. CA Clean Fuel Reward
+
+```json
+{
+  "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:ca-clean-fuel-reward",
+  "opportunityName": "CA Clean Fuel Reward",
+  "state": "CA",
+  "sourceName": "Southern California Edison Business Programs",
+  "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "checkedUrls": [
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+    "https://cleanfuelreward.com/site/home"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "CA Clean Fuel Reward Southern California Edison rebate CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show More Show ",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 2. California - Home Electrification and Appliance Rebate (HEAR) Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
+  "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
+  "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
+  "checkedUrls": [
+    "https://techcleanca.com/incentives/heehrarebates/"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "California - Home Electrification and Appliance Rebate (HEAR) Program TECH Clean California Rebate Program CA TECH Public Reporting HEEHRA Rebates Home About About About Our Approach Our Approach Equity Strategy Results & Reporting News Frequently Asked Questi",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 3. Charge Ready Program
+
+```json
+{
+  "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-program",
+  "opportunityName": "Charge Ready Program",
+  "state": "CA",
+  "sourceName": "Southern California Edison Business Programs",
+  "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "checkedUrls": [
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+    "https://www.sce.com/business/smart-energy-solar/charge-ready"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Charge Ready Program Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . S",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 4. Charge Ready Transport
+
+```json
+{
+  "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-transport",
+  "opportunityName": "Charge Ready Transport",
+  "state": "CA",
+  "sourceName": "Southern California Edison Business Programs",
+  "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "checkedUrls": [
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+    "https://crt.sce.com/overview"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Charge Ready Transport Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information .",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 5. Custom Measure Rebates - Heat Recovery Chillers and Heat Pump Pool Heaters
+
+```json
+{
+  "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:custom-measure-rebates-heat-recovery-chillers-and-heat-pump-pool-heaters",
+  "opportunityName": "Custom Measure Rebates - Heat Recovery Chillers and Heat Pump Pool Heaters",
+  "state": "CA",
+  "sourceName": "Silicon Valley Power Business Programs",
+  "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "checkedUrls": [
+    "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+    "https://www.siliconvalleypower.com/home/showpublisheddocument/71429/637902891309870000"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Custom Measure Rebates - Heat Recovery Chillers and Heat Pump Pool Heaters Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 6. Customer Directed Electrification Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
+  "opportunityName": "Customer Directed Electrification Rebate",
+  "state": "CA",
+  "sourceName": "Silicon Valley Power Business Programs",
+  "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "checkedUrls": [
+    "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+    "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Customer Directed Electrification Rebate Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home mainHome Menu Outages & Alerts My",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 7. Energy Efficiency Financing for Public Sector Projects
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
+  "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
+  "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
+  "checkedUrls": [
+    "http://www.energy.ca.gov/efficiency/financing/index.html"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Energy Efficiency Financing for Public Sector Projects California Energy Commission Loan Program CA Energy Conservation Assistance Act | California Energy Commission Skip to main content CA.gov Share via Facebook Share via Twitter Share via LinkedIn Share via ",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 8. Heat Pump Air Conditioner Rebates - Conversion to All Electric Heating and Cooling
+
+```json
+{
+  "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:heat-pump-air-conditioner-rebates-conversion-to-all-electric-heating-and-cooling",
+  "opportunityName": "Heat Pump Air Conditioner Rebates - Conversion to All Electric Heating and Cooling",
+  "state": "CA",
+  "sourceName": "Silicon Valley Power Business Programs",
+  "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "checkedUrls": [
+    "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+    "https://www.siliconvalleypower.com/home/showpublisheddocument/71431/637902892215200000"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Heat Pump Air Conditioner Rebates - Conversion to All Electric Heating and Cooling Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Po",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 9. Multifamily Boiler Electrification Pilot Program
+
+```json
+{
+  "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:multifamily-boiler-electrification-pilot-program",
+  "opportunityName": "Multifamily Boiler Electrification Pilot Program",
+  "state": "CA",
+  "sourceName": "Silicon Valley Power Business Programs",
+  "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+  "checkedUrls": [
+    "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Multifamily Boiler Electrification Pilot Program Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home mainHome Menu Outages & A",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 10. Power Your Drive for Apartments and Condos
+
+```json
+{
+  "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21401",
+  "opportunityName": "Power Your Drive for Apartments and Condos",
+  "state": "CA",
+  "sourceName": "San Diego Gas & Electric Business Programs",
+  "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
+  "websiteUrl": "https://www.sdge.com/node/21401",
+  "checkedUrls": [
+    "https://www.sdge.com/node/21401",
+    "https://www.sdge.com/business/electric-vehicles/lovelectric"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Power Your Drive for Apartments and Condos SDG&E utility_program CA Power Your Drive for Apartments and Condos | San Diego Gas & Electric Sorry, you need to enable JavaScript to visit this website. Skip to main content Search Notifications More Info --> Englis",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 11. Power Your Drive for Workplaces
+
+```json
+{
+  "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21406",
+  "opportunityName": "Power Your Drive for Workplaces",
+  "state": "CA",
+  "sourceName": "San Diego Gas & Electric Business Programs",
+  "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
+  "websiteUrl": "https://www.sdge.com/node/21406",
+  "checkedUrls": [
+    "https://www.sdge.com/node/21406",
+    "https://www.sdge.com/business/electric-vehicles/lovelectric"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Power Your Drive for Workplaces SDG&E utility_program CA Power Your Drive for Workplaces | San Diego Gas & Electric Sorry, you need to enable JavaScript to visit this website. Skip to main content Search Notifications More Info --> English Español Vietnamese C",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 12. ReCharge Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate",
+  "opportunityName": "ReCharge Rebate",
+  "state": "CA",
+  "sourceName": "Southern California Edison Business Programs",
+  "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "checkedUrls": [
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+    "https://commercialevrebates.sce.com/consumer/recharge"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "ReCharge Rebate Southern California Edison rebate CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show More Show Less ",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 13. Rule 29 EV Guide
+
+```json
+{
+  "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:rule-29-ev-guide",
+  "opportunityName": "Rule 29 EV Guide",
+  "state": "CA",
+  "sourceName": "Southern California Edison Business Programs",
+  "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+  "checkedUrls": [
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+    "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Rule 29 EV Guide Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show ",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 14. PSE&G - Residential Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3907",
+  "opportunityName": "PSE&G - Residential Efficiency Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3907/pse-and-g-residential-efficiency-program",
+  "websiteUrl": "https://homeenergy.pseg.com/",
+  "checkedUrls": [
+    "https://homeenergy.pseg.com/"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "PSE&G - Residential Efficiency Program PSE&G Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 15. Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22777",
+  "opportunityName": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
+  "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency",
+  "checkedUrls": [
+    "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program National Energy Improvement Fund Loan Program PA Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program | Department of Environmental Protection | Commonwealth of Pe",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 16. PECO - Commercial Charger Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22456",
+  "opportunityName": "PECO - Commercial Charger Rebate Program",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22456/peco-commercial-charger-rebate-program",
+  "websiteUrl": "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
+  "checkedUrls": [
+    "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "PECO - Commercial Charger Rebate Program Rebate Program PA",
+  "currentReasons": [],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 17. PECO - EV Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22377",
+  "opportunityName": "PECO - EV Rebate Program",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22377/peco-ev-rebate-program",
+  "websiteUrl": "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
+  "checkedUrls": [
+    "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "PECO - EV Rebate Program Rebate Program PA",
+  "currentReasons": [],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 18. USDA - Rural Energy for America Program (REAP) Grants
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
+  "opportunityName": "USDA - Rural Energy for America Program (REAP) Grants",
+  "state": "US",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
+  "websiteUrl": "http://www.rd.usda.gov/reap",
+  "checkedUrls": [
+    "http://www.rd.usda.gov/reap"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "USDA - Rural Energy for America Program (REAP) Grants U.S. Department of Agriculture Grant Program US eWAPS Platform Portal USDA Enterprise Web Application Platform & Services The eWAPS Maintenance: RKE HA Production upgrade to take place from 5:00 - 7:00 PM E",
+  "currentReasons": [],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 19. Community EV Chargers Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22529",
+  "opportunityName": "Community EV Chargers Incentive Program",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22529/community-ev-chargers-incentive-program",
+  "websiteUrl": "https://www.vermontevchargers.com/",
+  "checkedUrls": [
+    "https://www.vermontevchargers.com/"
+  ],
+  "fetchErrors": [],
+  "currentEvidenceText": "Community EV Chargers Incentive Program Green Mountain Power Grant Program VT Charge Vermont - Vermont EV Charging Skip to content Visit News & Updates for the latest on county funding availability. search Apply Now Power up the drive ahead Apply Now Charger O",
+  "currentReasons": [
+    "unavailable_evidence_not_title_specific"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
+}
+```
+
+### 20. Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4054",
+  "opportunityName": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
+  "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
+  "checkedUrls": [
+    "http://www.treasurer.ca.gov/caeatfa/ste/index.asp"
+  ],
+  "fetchErrors": [
+    {
+      "error": "This operation was aborted",
+      "url": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp"
+    }
+  ],
+  "currentEvidenceText": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program State Treasurer's Office Industry Recruitment/Support CA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 21. Technology and Equipment for Clean Heating (TECH) Initiative
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22427",
+  "opportunityName": "Technology and Equipment for Clean Heating (TECH) Initiative",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22427/technology-and-equipment-for-clean-heating-tech-initiative",
+  "websiteUrl": "https://energy-solution.com/tech-incentives/",
+  "checkedUrls": [
+    "https://energy-solution.com/tech-incentives/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 429",
+      "url": "https://energy-solution.com/tech-incentives/"
+    }
+  ],
+  "currentEvidenceText": "Technology and Equipment for Clean Heating (TECH) Initiative Energy Solutions Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 22. Poudre Valley REA - Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+  "opportunityName": "Poudre Valley REA - Energy Efficiency Rebate Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.pvrea.com/rebates",
+  "checkedUrls": [
+    "https://www.pvrea.com/rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://www.pvrea.com/rebates"
+    }
+  ],
+  "currentEvidenceText": "Poudre Valley REA - Energy Efficiency Rebate Program Poudre Valley REA Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 23. City and County of Honolulu - Solar Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:943",
+  "opportunityName": "City and County of Honolulu - Solar Loan Program",
+  "state": "HI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/943/city-and-county-of-honolulu-solar-loan-program",
+  "websiteUrl": "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/",
+  "checkedUrls": [
+    "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "This operation was aborted",
+      "url": "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/"
+    }
+  ],
+  "currentEvidenceText": "City and County of Honolulu - Solar Loan Program City and County of Honolulu Loan Program HI",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 24. Clean Energy Project Bond Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:365",
+  "opportunityName": "Clean Energy Project Bond Program",
+  "state": "ID",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/365/clean-energy-project-bond-program",
+  "websiteUrl": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/",
+  "checkedUrls": [
+    "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/"
+    }
+  ],
+  "currentEvidenceText": "Clean Energy Project Bond Program Idaho Energy Resources Authority Bond Program ID",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 25. AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5823",
+  "opportunityName": "AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5823/aep-swepco-louisiana-commercial-solutions-standard-offer-program",
+  "websiteUrl": "https://www.swepco.com/savings/business/louisiana",
+  "checkedUrls": [
+    "https://www.swepco.com/savings/business/louisiana"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://www.swepco.com/savings/business/louisiana"
+    }
+  ],
+  "currentEvidenceText": "AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 26. Sales Tax Holiday for Energy-Efficient Appliances
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
+  "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
+  "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
+  "checkedUrls": [
+    "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/"
+    }
+  ],
+  "currentEvidenceText": "Sales Tax Holiday for Energy-Efficient Appliances Comptroller of Maryland Sales Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 27. Coast Electric Power Association - Comfort Advantage Home Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2222",
+  "opportunityName": "Coast Electric Power Association - Comfort Advantage Home Program",
+  "state": "MS",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2222/coast-electric-power-association-comfort-advantage-home-program",
+  "websiteUrl": "https://coastepa.com/comfort-advantage/",
+  "checkedUrls": [
+    "https://coastepa.com/comfort-advantage/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://coastepa.com/comfort-advantage/"
+    }
+  ],
+  "currentEvidenceText": "Coast Electric Power Association - Comfort Advantage Home Program Coast Electric Power Association Rebate Program MS",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 28. Clean Energy Revenue Bond Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:364",
+  "opportunityName": "Clean Energy Revenue Bond Program",
+  "state": "NM",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/364/clean-energy-revenue-bond-program",
+  "websiteUrl": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html",
+  "checkedUrls": [
+    "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html"
+    }
+  ],
+  "currentEvidenceText": "Clean Energy Revenue Bond Program New Mexico Finance Authority Bond Program NM",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 29. Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3532",
+  "opportunityName": "Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments",
+  "state": "NM",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3532/local-option-renewable-energy-financing-district-solar-energy-improvement-special-assessments",
+  "websiteUrl": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html",
+  "checkedUrls": [
+    "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
+    }
+  ],
+  "currentEvidenceText": "Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments Programs administered locally PACE Financing NM",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 30. Town of Babylon - Long Island Green Homes Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3652",
+  "opportunityName": "Town of Babylon - Long Island Green Homes Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3652/town-of-babylon-long-island-green-homes-program",
+  "websiteUrl": "https://www.ligreenhomes.com/index.html",
+  "checkedUrls": [
+    "https://www.ligreenhomes.com/index.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://www.ligreenhomes.com/index.html"
+    }
+  ],
+  "currentEvidenceText": "Town of Babylon - Long Island Green Homes Program Town of Babylon PACE Financing NY",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 31. Philadelphia Gas Works - Residential Incentives Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
+  "opportunityName": "Philadelphia Gas Works - Residential Incentives Program",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5354/philadelphia-gas-works-residential-incentives-program",
+  "websiteUrl": "https://pgwenergysense.com/residential-rebates/",
+  "checkedUrls": [
+    "https://pgwenergysense.com/residential-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "This operation was aborted",
+      "url": "https://pgwenergysense.com/residential-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Philadelphia Gas Works - Residential Incentives Program Philadelphia Gas Works Rebate Program PA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 32. Energy Efficient Schools Initiative - Loans
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3801",
+  "opportunityName": "Energy Efficient Schools Initiative - Loans",
+  "state": "TN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3801/energy-efficient-schools-initiative-loans",
+  "websiteUrl": "https://www.tn.gov/eesi/apply-now.html",
+  "checkedUrls": [
+    "https://www.tn.gov/eesi/apply-now.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 503",
+      "url": "https://www.tn.gov/eesi/apply-now.html"
+    }
+  ],
+  "currentEvidenceText": "Energy Efficient Schools Initiative - Loans Energy Efficient Schools Initiative Loan Program TN",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 33. Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+  "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+  "websiteUrl": "https://tnmpefficiency.com/residential.php#existing-homes",
+  "checkedUrls": [
+    "https://tnmpefficiency.com/residential.php#existing-homes"
+  ],
+  "fetchErrors": [
+    {
+      "error": "fetch failed",
+      "url": "https://tnmpefficiency.com/residential.php#existing-homes"
+    }
+  ],
+  "currentEvidenceText": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs Frontier Energy Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 34. CMAQ Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22253",
+  "opportunityName": "CMAQ Incentive Program",
+  "state": "VA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22253/cmaq-incentive-program",
+  "websiteUrl": "https://vacleancities.org/reports-2/cmaq-incentive-program/",
+  "checkedUrls": [
+    "https://vacleancities.org/reports-2/cmaq-incentive-program/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "This operation was aborted",
+      "url": "https://vacleancities.org/reports-2/cmaq-incentive-program/"
+    }
+  ],
+  "currentEvidenceText": "CMAQ Incentive Program Virginia Clean Cities Rebate Program VA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 35. Puget Sound Energy - Multi-Family Efficiency Retrofit Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
+  "opportunityName": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+  "websiteUrl": "https://www.pse.com/rebates/multifamily-retrofit",
+  "checkedUrls": [
+    "https://www.pse.com/rebates/multifamily-retrofit"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 500",
+      "url": "https://www.pse.com/rebates/multifamily-retrofit"
+    }
+  ],
+  "currentEvidenceText": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program Puget Sound Energy Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 36. Puget Sound Energy - Residential Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
+  "opportunityName": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.pse.com/rebates",
+  "checkedUrls": [
+    "https://www.pse.com/rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 500",
+      "url": "https://www.pse.com/rebates"
+    }
+  ],
+  "currentEvidenceText": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs Puget Sound Energy Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "network_or_timeout"
+}
+```
+
+### 37. Wood-Burning Heating System Deduction
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:46",
+  "opportunityName": "Wood-Burning Heating System Deduction",
+  "state": "AL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/46/wood-burning-heating-system-deduction",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Wood-Burning Heating System Deduction Personal Tax Deduction AL",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 38. Arkansas PACE Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5408",
+  "opportunityName": "Arkansas PACE Program",
+  "state": "AR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5408/arkansas-pace-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Arkansas PACE Program PACE Financing AR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 39. Energy Equipment Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1683",
+  "opportunityName": "Energy Equipment Property Tax Exemption",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1683/energy-equipment-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Energy Equipment Property Tax Exemption Arizona Department of Revenue Property Tax Incentive AZ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 40. Qualifying Wood Stove Deduction
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2",
+  "opportunityName": "Qualifying Wood Stove Deduction",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2/qualifying-wood-stove-deduction",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Qualifying Wood Stove Deduction Personal Tax Deduction AZ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 41. Solar and Wind Equipment Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:119",
+  "opportunityName": "Solar and Wind Equipment Sales Tax Exemption",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/119/solar-and-wind-equipment-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Solar and Wind Equipment Sales Tax Exemption Department of Revenue Sales Tax Incentive AZ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 42. Local Option - Sales and Use Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2502",
+  "opportunityName": "Local Option - Sales and Use Tax Exemption for Renewable Energy Systems",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2502/local-option-sales-and-use-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Sales and Use Tax Exemption for Renewable Energy Systems Department of Local Affairs, Local Governments Sales Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 43. Sustainable Rebuilding Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22498",
+  "opportunityName": "Sustainable Rebuilding Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22498/sustainable-rebuilding-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sustainable Rebuilding Program Colorado Energy Office Loan Program CO",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 44. Sustainable Rebuilding Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22496",
+  "opportunityName": "Sustainable Rebuilding Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22496/sustainable-rebuilding-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sustainable Rebuilding Program Colorado Energy Office Grant Program CO",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 45. Local Option - Property Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5423",
+  "opportunityName": "Local Option - Property Tax Exemption for Renewable Energy Systems",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5423/local-option-property-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Tax Exemption for Renewable Energy Systems Connecticut Department of Revenue Services Property Tax Incentive CT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 46. Property Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:240",
+  "opportunityName": "Property Tax Exemption for Renewable Energy Systems",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/240/property-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Systems Connecticut Department of Revenue Services Property Tax Incentive CT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 47. Sales and Use Tax Exemption for Solar and Geothermal Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2613",
+  "opportunityName": "Sales and Use Tax Exemption for Solar and Geothermal Systems",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2613/sales-and-use-tax-exemption-for-solar-and-geothermal-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Solar and Geothermal Systems Connecticut Department of Revenue Services Sales Tax Incentive CT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 48. Solar Energy System and Cogeneration System Personal Property Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5245",
+  "opportunityName": "Solar Energy System and Cogeneration System Personal Property Tax Credit",
+  "state": "DC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5245/solar-energy-system-and-cogeneration-system-personal-property-tax-credit",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Solar Energy System and Cogeneration System Personal Property Tax Credit Property Tax Incentive DC",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 49. Solar, Storage, and Electric Vehicle  Charging Real Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22803",
+  "opportunityName": "Solar, Storage, and Electric Vehicle  Charging Real Property Tax Exemption",
+  "state": "DC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22803/solar-storage-and-electric-vehicle-charging-real-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Solar, Storage, and Electric Vehicle Charging Real Property Tax Exemption Property Tax Incentive DC",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 50. Property Tax Abatement for Renewable Energy Property
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5426",
+  "opportunityName": "Property Tax Abatement for Renewable Energy Property",
+  "state": "FL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5426/property-tax-abatement-for-renewable-energy-property",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Abatement for Renewable Energy Property Property Tax Incentive FL",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 51. Solar and CHP Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
+  "opportunityName": "Solar and CHP Sales Tax Exemption",
+  "state": "FL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/243/solar-and-chp-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Solar and CHP Sales Tax Exemption Florida Department of Revenue Sales Tax Incentive FL",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 52. Biomass Sales and Use Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1952",
+  "opportunityName": "Biomass Sales and Use Tax Exemption",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1952/biomass-sales-and-use-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Biomass Sales and Use Tax Exemption Georgia Department of Revenue Sales Tax Incentive GA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 53. City of Atlanta - Incentivized Green Developments
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22679",
+  "opportunityName": "City of Atlanta - Incentivized Green Developments",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22679/city-of-atlanta-incentivized-green-developments",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "City of Atlanta - Incentivized Green Developments Green Building Incentive GA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 54. Local Option - Special Improvement Districts
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4177",
+  "opportunityName": "Local Option - Special Improvement Districts",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4177/local-option-special-improvement-districts",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Special Improvement Districts Programs administered locally PACE Financing GA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 55. Guam - Photovoltaic Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22589",
+  "opportunityName": "Guam - Photovoltaic Property Tax Exemption",
+  "state": "GU",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22589/guam-photovoltaic-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Guam - Photovoltaic Property Tax Exemption Property Tax Incentive GU",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 56. Hawaii C-PACE program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3870",
+  "opportunityName": "Hawaii C-PACE program",
+  "state": "HI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3870/hawaii-c-pace-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Hawaii C-PACE program Programs administered locally PACE Financing HI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 57. Priority Permit Processing for Green Buildings
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2287",
+  "opportunityName": "Priority Permit Processing for Green Buildings",
+  "state": "HI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Priority Permit Processing for Green Buildings Green Building Incentive HI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 58. Property Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:184",
+  "opportunityName": "Property Tax Exemption for Renewable Energy Systems",
+  "state": "IA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/184/property-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Systems Iowa Department of Natural Resources Property Tax Incentive IA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 59. Idaho Commercial PACE Financing Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22652",
+  "opportunityName": "Idaho Commercial PACE Financing Program",
+  "state": "ID",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22652/idaho-commercial-pace-financing-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Idaho Commercial PACE Financing Program PACE Financing ID",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 60. Income Tax Deduction for Energy Efficiency Upgrades
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1227",
+  "opportunityName": "Income Tax Deduction for Energy Efficiency Upgrades",
+  "state": "ID",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1227/income-tax-deduction-for-energy-efficiency-upgrades",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Income Tax Deduction for Energy Efficiency Upgrades Idaho Tax Commission Personal Tax Deduction ID",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 61. Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2786",
+  "opportunityName": "Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers",
+  "state": "ID",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2786/property-tax-exemption-for-wind-solar-and-geothermal-energy-producers",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers Idaho State Tax Commission Property Tax Incentive ID",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 62. Residential Alternative Energy Tax Deduction
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:137",
+  "opportunityName": "Residential Alternative Energy Tax Deduction",
+  "state": "ID",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/137/residential-alternative-energy-tax-deduction",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Residential Alternative Energy Tax Deduction Idaho Tax Commission Personal Tax Deduction ID",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 63. Illinois PACE Financing Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3626",
+  "opportunityName": "Illinois PACE Financing Program",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3626/illinois-pace-financing-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Illinois PACE Financing Program Programs administered locally PACE Financing IL",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 64. Renewable Energy and Energy Efficiency Project Financing
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3567",
+  "opportunityName": "Renewable Energy and Energy Efficiency Project Financing",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3567/renewable-energy-and-energy-efficiency-project-financing",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Renewable Energy and Energy Efficiency Project Financing Illinois Finance Authority Bond Program IL",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 65. Sales and Use Tax Exemption for Electrical Generating Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5106",
+  "opportunityName": "Sales and Use Tax Exemption for Electrical Generating Equipment",
+  "state": "IN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5106/sales-and-use-tax-exemption-for-electrical-generating-equipment",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Electrical Generating Equipment Indiana Department of Revenue Sales Tax Incentive IN",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 66. Renewable Energy Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:75",
+  "opportunityName": "Renewable Energy Property Tax Exemption",
+  "state": "KS",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/75/renewable-energy-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Renewable Energy Property Tax Exemption Kansas Corporation Commission Property Tax Incentive KS",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 67. Sales Tax Exemption - Machinery for New and Expanded Industry
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22572",
+  "opportunityName": "Sales Tax Exemption - Machinery for New and Expanded Industry",
+  "state": "KY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22572/sales-tax-exemption-machinery-for-new-and-expanded-industry",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales Tax Exemption - Machinery for New and Expanded Industry Sales Tax Incentive KY",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 68. Belmont Light - Battery Storage Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22735",
+  "opportunityName": "Belmont Light - Battery Storage Rebate Program",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22735/belmont-light-battery-storage-rebate-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Belmont Light - Battery Storage Rebate Program Rebate Program MA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 69. Local Option - Energy Revolving Loan Fund
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4283",
+  "opportunityName": "Local Option - Energy Revolving Loan Fund",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4283/local-option-energy-revolving-loan-fund",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Energy Revolving Loan Fund Programs administered locally PACE Financing MA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 70. Local Option - Property Tax Credit for High Performance Buildings
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2363",
+  "opportunityName": "Local Option - Property Tax Credit for High Performance Buildings",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2363/local-option-property-tax-credit-for-high-performance-buildings",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Tax Credit for High Performance Buildings Programs locally administered Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 71. Local Option - Property Tax Credit for Renewables and Energy Conservation Devices
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:232",
+  "opportunityName": "Local Option - Property Tax Credit for Renewables and Energy Conservation Devices",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/232/local-option-property-tax-credit-for-renewables-and-energy-conservation-devices",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Tax Credit for Renewables and Energy Conservation Devices Programs locally administered Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 72. Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22575",
+  "opportunityName": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22575/medium-duty-and-heavy-duty-zero-emission-vehicle-grant-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program. Grant Program MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 73. Prince George's County - Solar and Geothermal Residential Property Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3106",
+  "opportunityName": "Prince George's County - Solar and Geothermal Residential Property Tax Credit",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3106/prince-george-s-county-solar-and-geothermal-residential-property-tax-credit",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Prince George's County - Solar and Geothermal Residential Property Tax Credit Prince George's County Office of Finance Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 74. Property Tax Exemption for Solar and Wind Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2542",
+  "opportunityName": "Property Tax Exemption for Solar and Wind Energy Systems",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2542/property-tax-exemption-for-solar-and-wind-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Solar and Wind Energy Systems Maryland Department of Assessments and Taxation Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 75. Sales and Use Tax Exemption for Renewable Energy Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2928",
+  "opportunityName": "Sales and Use Tax Exemption for Renewable Energy Equipment",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2928/sales-and-use-tax-exemption-for-renewable-energy-equipment",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Renewable Energy Equipment Comptroller of Maryland Sales Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 76. Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4853",
+  "opportunityName": "Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4853/sales-and-use-tax-exemption-for-residential-solar-and-wind-electricity-sales",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales Comptroller of Maryland Sales Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 77. Wood Heating Fuel Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:143",
+  "opportunityName": "Wood Heating Fuel Exemption",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/143/wood-heating-fuel-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Wood Heating Fuel Exemption Sales Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 78. Michigan Local PACE Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4521",
+  "opportunityName": "Michigan Local PACE Program",
+  "state": "MI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4521/michigan-local-pace-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Michigan Local PACE Program PACE Financing MI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 79. Nonrefundable Business Activity Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:333",
+  "opportunityName": "Nonrefundable Business Activity Tax Credit",
+  "state": "MI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/333/nonrefundable-business-activity-tax-credit",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Nonrefundable Business Activity Tax Credit Michigan Economic Development Corporation Industry Recruitment/Support MI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 80. Solar Energy Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1218",
+  "opportunityName": "Solar Energy Sales Tax Exemption",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1218/solar-energy-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Solar Energy Sales Tax Exemption Department of Revenue Sales Tax Incentive MN",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 81. Wind Energy Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:601",
+  "opportunityName": "Wind Energy Sales Tax Exemption",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/601/wind-energy-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Wind Energy Sales Tax Exemption Sales Tax Incentive MN",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 82. Mississippi Clean Energy Initiative
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4242",
+  "opportunityName": "Mississippi Clean Energy Initiative",
+  "state": "MS",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4242/mississippi-clean-energy-initiative",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Mississippi Clean Energy Initiative Mississippi Development Authority Industry Recruitment/Support MS",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 83. Generation Facility Corporate Tax Exemptions
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:978",
+  "opportunityName": "Generation Facility Corporate Tax Exemptions",
+  "state": "MT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/978/generation-facility-corporate-tax-exemptions",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Generation Facility Corporate Tax Exemptions Property Tax Incentive MT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 84. Local Option - Commercial Property Assessed Capital Expenditure (C-PACE)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22669",
+  "opportunityName": "Local Option - Commercial Property Assessed Capital Expenditure (C-PACE)",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22669/local-option-commercial-property-assessed-capital-expenditure-c-pace",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Commercial Property Assessed Capital Expenditure (C-PACE) PACE Financing NC",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 85. Property Tax Abatement for Solar Electric Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3036",
+  "opportunityName": "Property Tax Abatement for Solar Electric Systems",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3036/property-tax-abatement-for-solar-electric-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Abatement for Solar Electric Systems N.C. Department of Revenue Property Tax Incentive NC",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 86. Sales Tax Exemption for Hydrogen Generation Facilities
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4989",
+  "opportunityName": "Sales Tax Exemption for Hydrogen Generation Facilities",
+  "state": "ND",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4989/sales-tax-exemption-for-hydrogen-generation-facilities",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales Tax Exemption for Hydrogen Generation Facilities Office of State Tax Commissioner Sales Tax Incentive ND",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 87. Local Option - Property-Assessed Clean Energy Financing
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5869",
+  "opportunityName": "Local Option - Property-Assessed Clean Energy Financing",
+  "state": "NE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5869/local-option-property-assessed-clean-energy-financing",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property-Assessed Clean Energy Financing PACE Financing NE",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 88. Property Tax Exemption for Renewable Energy Generation Facilities
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4946",
+  "opportunityName": "Property Tax Exemption for Renewable Energy Generation Facilities",
+  "state": "NE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4946/property-tax-exemption-for-renewable-energy-generation-facilities",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Generation Facilities Nebraska Department of Revenue Property Tax Incentive NE",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 89. Sales and Use Tax Exemption for Community Renewable Energy Projects
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2576",
+  "opportunityName": "Sales and Use Tax Exemption for Community Renewable Energy Projects",
+  "state": "NE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2576/sales-and-use-tax-exemption-for-community-renewable-energy-projects",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Community Renewable Energy Projects Nebraska Department of Revenue Sales Tax Incentive NE",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 90. Local Option - Energy Efficiency & Clean Energy Districts
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4252",
+  "opportunityName": "Local Option - Energy Efficiency & Clean Energy Districts",
+  "state": "NH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4252/local-option-energy-efficiency-and-clean-energy-districts",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Energy Efficiency & Clean Energy Districts Local community PACE Financing NH",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 91. Assessment of Farmland Hosting Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4026",
+  "opportunityName": "Assessment of Farmland Hosting Renewable Energy Systems",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4026/assessment-of-farmland-hosting-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Assessment of Farmland Hosting Renewable Energy Systems Property Tax Incentive NJ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 92. Local Option - Property Assessed Clean Energy Financing
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5109",
+  "opportunityName": "Local Option - Property Assessed Clean Energy Financing",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5109/local-option-property-assessed-clean-energy-financing",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Assessed Clean Energy Financing PACE Financing NJ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 93. Property Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3100",
+  "opportunityName": "Property Tax Exemption for Renewable Energy Systems",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3100/property-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Systems New Jersey Department of the Treasury Property Tax Incentive NJ",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 94. Biomass Equipment & Materials Compensating Tax Deduction
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:359",
+  "opportunityName": "Biomass Equipment & Materials Compensating Tax Deduction",
+  "state": "NM",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/359/biomass-equipment-and-materials-compensating-tax-deduction",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Biomass Equipment & Materials Compensating Tax Deduction New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 95. Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
+  "opportunityName": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities",
+  "state": "NM",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3980/gross-receipts-tax-exemption-for-sales-of-wind-and-solar-systems-to-government-entities",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 96. Renewable Energy Systems Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:158",
+  "opportunityName": "Renewable Energy Systems Property Tax Exemption",
+  "state": "NV",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/158/renewable-energy-systems-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Renewable Energy Systems Property Tax Exemption NV Department of Taxation Property Tax Incentive NV",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 97. Air-Quality Improvement Tax Incentives
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:78",
+  "opportunityName": "Air-Quality Improvement Tax Incentives",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/78/air-quality-improvement-tax-incentives",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Air-Quality Improvement Tax Incentives Ohio Department of Development Other Incentive OH",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 98. Local Option - Special Energy Improvement Districts
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3554",
+  "opportunityName": "Local Option - Special Energy Improvement Districts",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3554/local-option-special-energy-improvement-districts",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Special Energy Improvement Districts PACE Financing OH",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 99. Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22221",
+  "opportunityName": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22221/clean-burning-motor-vehicle-fuel-property-tax-credit-corporate",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate Corporate Tax Credit OK",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 100. Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22222",
+  "opportunityName": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22222/clean-burning-motor-vehicle-fuel-property-tax-credit-personal",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal Personal Tax Credit OK",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 101. Electric Vehicle Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22425",
+  "opportunityName": "Electric Vehicle Tax Credit",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22425/electric-vehicle-tax-credit",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Electric Vehicle Tax Credit Personal Tax Credit OK",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 102. Energy Efficient Residential Construction Tax Credit (Personal)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1230",
+  "opportunityName": "Energy Efficient Residential Construction Tax Credit (Personal)",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1230/energy-efficient-residential-construction-tax-credit-personal",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Energy Efficient Residential Construction Tax Credit (Personal) Oklahoma Tax Commission Personal Tax Credit OK",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 103. Local Option - Local Improvement Districts
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3561",
+  "opportunityName": "Local Option - Local Improvement Districts",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3561/local-option-local-improvement-districts",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Local Improvement Districts Programs administered locally PACE Financing OR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 104. Puerto Rico - Excise Tax Exemption for Farmers
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2844",
+  "opportunityName": "Puerto Rico - Excise Tax Exemption for Farmers",
+  "state": "PR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2844/puerto-rico-excise-tax-exemption-for-farmers",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Puerto Rico - Excise Tax Exemption for Farmers Departmento de Hacienda Sales Tax Incentive PR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 105. Puerto Rico - Industry Tax Incentives
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:310",
+  "opportunityName": "Puerto Rico - Industry Tax Incentives",
+  "state": "PR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/310/puerto-rico-industry-tax-incentives",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Puerto Rico - Industry Tax Incentives Industry Recruitment/Support PR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 106. Puerto Rico - Property Tax Exemption for Solar and Renewable Energy Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2842",
+  "opportunityName": "Puerto Rico - Property Tax Exemption for Solar and Renewable Energy Equipment",
+  "state": "PR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2842/puerto-rico-property-tax-exemption-for-solar-and-renewable-energy-equipment",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Puerto Rico - Property Tax Exemption for Solar and Renewable Energy Equipment Energy Affairs Administration Property Tax Incentive PR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 107. Puerto Rico - Sales and Use Tax Exemption for Solar Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3182",
+  "opportunityName": "Puerto Rico - Sales and Use Tax Exemption for Solar Equipment",
+  "state": "PR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3182/puerto-rico-sales-and-use-tax-exemption-for-solar-equipment",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Puerto Rico - Sales and Use Tax Exemption for Solar Equipment Energy Affairs Administration Sales Tax Incentive PR",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 108. Local Option - Property Tax Exemption for Renewable Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2801",
+  "opportunityName": "Local Option - Property Tax Exemption for Renewable Energy Systems",
+  "state": "RI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2801/local-option-property-tax-exemption-for-renewable-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Tax Exemption for Renewable Energy Systems Rhode Island Office of Energy Resources Property Tax Incentive RI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 109. Renewable Energy and Energy Storage Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22419",
+  "opportunityName": "Renewable Energy and Energy Storage Property Tax Exemption",
+  "state": "SC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22419/renewable-energy-and-energy-storage-property-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Renewable Energy and Energy Storage Property Tax Exemption Property Tax Incentive SC",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 110. Green Energy Property Tax Assessment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5216",
+  "opportunityName": "Green Energy Property Tax Assessment",
+  "state": "TN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5216/green-energy-property-tax-assessment",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Green Energy Property Tax Assessment Tennessee Comptroller of the Treasury Property Tax Incentive TN",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 111. Sales Tax Credit for Clean Energy Technology
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4919",
+  "opportunityName": "Sales Tax Credit for Clean Energy Technology",
+  "state": "TN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4919/sales-tax-credit-for-clean-energy-technology",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Sales Tax Credit for Clean Energy Technology Tennessee Department of Revenue Sales Tax Incentive TN",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 112. Business Energy Investment Tax Credit (ITC)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:658",
+  "opportunityName": "Business Energy Investment Tax Credit (ITC)",
+  "state": "US",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/658/business-energy-investment-tax-credit-itc",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Business Energy Investment Tax Credit (ITC) U.S. Internal Revenue Service Corporate Tax Credit US",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 113. Modified Accelerated Cost-Recovery System (MACRS)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
+  "opportunityName": "Modified Accelerated Cost-Recovery System (MACRS)",
+  "state": "US",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/676/modified-accelerated-cost-recovery-system-macrs",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Modified Accelerated Cost-Recovery System (MACRS) U.S. Internal Revenue Service Corporate Depreciation US",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 114. Alternative Energy Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1070",
+  "opportunityName": "Alternative Energy Sales Tax Exemption",
+  "state": "UT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1070/alternative-energy-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Alternative Energy Sales Tax Exemption Utah State Tax Commission Sales Tax Incentive UT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 115. Income Tax Deduction for Energy-Efficient Products
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4362",
+  "opportunityName": "Income Tax Deduction for Energy-Efficient Products",
+  "state": "VA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4362/income-tax-deduction-for-energy-efficient-products",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Income Tax Deduction for Energy-Efficient Products Virginia Department of Taxation Personal Tax Deduction VA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 116. Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3531",
+  "opportunityName": "Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing",
+  "state": "VA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3531/local-option-commercial-property-assessed-clean-energy-c-pace-financing",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing Virginia PACE Authority PACE Financing VA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 117. Local Option - Property Tax Assessment for Energy Efficient Buildings
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2983",
+  "opportunityName": "Local Option - Property Tax Assessment for Energy Efficient Buildings",
+  "state": "VA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2983/local-option-property-tax-assessment-for-energy-efficient-buildings",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Property Tax Assessment for Energy Efficient Buildings Virginia Department of Taxation Property Tax Incentive VA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 118. Renewable Energy Systems Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:44",
+  "opportunityName": "Renewable Energy Systems Sales Tax Exemption",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/44/renewable-energy-systems-sales-tax-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Renewable Energy Systems Sales Tax Exemption Sales Tax Incentive VT",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 119. Washington Commercial PACER Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22654",
+  "opportunityName": "Washington Commercial PACER Program",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22654/washington-commercial-pacer-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Washington Commercial PACER Program Programs administered locally PACE Financing WA",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 120. Biogas, Solar, and Wind Energy Equipment Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:178",
+  "opportunityName": "Biogas, Solar, and Wind Energy Equipment Exemption",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/178/biogas-solar-and-wind-energy-equipment-exemption",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Biogas, Solar, and Wind Energy Equipment Exemption Wisconsin Department of Revenue Property Tax Incentive WI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 121. Local Option - Energy-Efficiency Improvement Loans
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3538",
+  "opportunityName": "Local Option - Energy-Efficiency Improvement Loans",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3538/local-option-energy-efficiency-improvement-loans",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Local Option - Energy-Efficiency Improvement Loans Programs administered locally PACE Financing WI",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 122. Special Assessment for Wind Energy Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:561",
+  "opportunityName": "Special Assessment for Wind Energy Systems",
+  "state": "WV",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/561/special-assessment-for-wind-energy-systems",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Special Assessment for Wind Energy Systems West Virginia Division of Energy Property Tax Incentive WV",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 123. Tax Exemption for Renewable Energy Generation
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:104",
+  "opportunityName": "Tax Exemption for Renewable Energy Generation",
+  "state": "WV",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/104/tax-exemption-for-renewable-energy-generation",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Tax Exemption for Renewable Energy Generation West Virginia Division of Energy Corporate Tax Exemption WV",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 124. Wyoming PACE Financing Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4914",
+  "opportunityName": "Wyoming PACE Financing Program",
+  "state": "WY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4914/wyoming-pace-financing-program",
+  "websiteUrl": null,
+  "checkedUrls": [],
+  "fetchErrors": [],
+  "currentEvidenceText": "Wyoming PACE Financing Program Program administered locally PACE Financing WY",
+  "currentReasons": [],
+  "failureBucket": "no_source_url"
+}
+```
+
+### 125. City of Chandler - Expedited Plan Review for Green Buildings
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3248",
+  "opportunityName": "City of Chandler - Expedited Plan Review for Green Buildings",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3248/city-of-chandler-expedited-plan-review-for-green-buildings",
+  "websiteUrl": "https://www.chandleraz.gov/government/departments/development-services/planning-and-zoning/green-building-program",
+  "checkedUrls": [
+    "https://www.chandleraz.gov/government/departments/development-services/planning-and-zoning/green-building-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.chandleraz.gov/government/departments/development-services/planning-and-zoning/green-building-program"
+    }
+  ],
+  "currentEvidenceText": "City of Chandler - Expedited Plan Review for Green Buildings City of Chandler Green Building Incentive AZ",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 126. Salt River Project - Business Energy Efficiency Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3256",
+  "opportunityName": "Salt River Project - Business Energy Efficiency Programs",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3256/salt-river-project-business-energy-efficiency-programs",
+  "websiteUrl": "https://www.srpnet.com/energy-savings-rebates/business/savings-tools",
+  "checkedUrls": [
+    "https://www.srpnet.com/energy-savings-rebates/business/savings-tools"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.srpnet.com/energy-savings-rebates/business/savings-tools"
+    }
+  ],
+  "currentEvidenceText": "Salt River Project - Business Energy Efficiency Programs Salt River Project Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 127. Salt River Project - Business EV Charger Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22270",
+  "opportunityName": "Salt River Project - Business EV Charger Rebate",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22270/salt-river-project-business-ev-charger-rebate",
+  "websiteUrl": "https://savewithsrpbiz.com/rebates/evcharger.aspx",
+  "checkedUrls": [
+    "https://savewithsrpbiz.com/rebates/evcharger.aspx"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://savewithsrpbiz.com/rebates/evcharger.aspx"
+    }
+  ],
+  "currentEvidenceText": "Salt River Project - Business EV Charger Rebate Salt River Project Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 128. SRP - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4051",
+  "opportunityName": "SRP - Residential Energy Efficiency Rebate Program",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4051/srp-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://srpnet.com/menu/savings/rebates_discounts.aspx",
+  "checkedUrls": [
+    "https://srpnet.com/menu/savings/rebates_discounts.aspx"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://srpnet.com/menu/savings/rebates_discounts.aspx"
+    }
+  ],
+  "currentEvidenceText": "SRP - Residential Energy Efficiency Rebate Program SRP Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 129. CaliforniaFIRST
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5309",
+  "opportunityName": "CaliforniaFIRST",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5309/californiafirst",
+  "websiteUrl": "https://renewfinancial.com/",
+  "checkedUrls": [
+    "https://renewfinancial.com/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://renewfinancial.com/"
+    }
+  ],
+  "currentEvidenceText": "CaliforniaFIRST Renewable Funding PACE Financing CA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 130. Marin Clean Energy - Feed-In Tariff Plus
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
+  "opportunityName": "Marin Clean Energy - Feed-In Tariff Plus",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22615/marin-clean-energy-feed-in-tariff-plus",
+  "websiteUrl": "https://www.mcecleanenergy.org/feed-in-tariff/",
+  "checkedUrls": [
+    "https://www.mcecleanenergy.org/feed-in-tariff/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.mcecleanenergy.org/feed-in-tariff/"
+    }
+  ],
+  "currentEvidenceText": "Marin Clean Energy - Feed-In Tariff Plus Marin Clean Energy Feed-in Tariff CA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 131. Marin County - Natural Gas Appliance Replacement Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22106",
+  "opportunityName": "Marin County - Natural Gas Appliance Replacement Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22106/marin-county-natural-gas-appliance-replacement-rebate-program",
+  "websiteUrl": "https://www.marincounty.org/depts/cd/divisions/sustainability/electrify",
+  "checkedUrls": [
+    "https://www.marincounty.org/depts/cd/divisions/sustainability/electrify"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.marincounty.org/depts/cd/divisions/sustainability/electrify"
+    }
+  ],
+  "currentEvidenceText": "Marin County - Natural Gas Appliance Replacement Rebate Program Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 132. City and County of Denver - Elevations Energy Loans
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5307",
+  "opportunityName": "City and County of Denver - Elevations Energy Loans",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5307/city-and-county-of-denver-elevations-energy-loans",
+  "websiteUrl": "https://www.elevationscu.com/loans/energy-loans",
+  "checkedUrls": [
+    "https://www.elevationscu.com/loans/energy-loans"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.elevationscu.com/loans/energy-loans"
+    }
+  ],
+  "currentEvidenceText": "City and County of Denver - Elevations Energy Loans Elevations Credit Union Loan Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 133. Colorado - Home Electrification and Appliance Rebate (HEAR) Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22718",
+  "opportunityName": "Colorado - Home Electrification and Appliance Rebate (HEAR) Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22718/colorado-home-electrification-and-appliance-rebate-hear-program",
+  "websiteUrl": "https://energyoffice.colorado.gov/home-energy-rebates",
+  "checkedUrls": [
+    "https://energyoffice.colorado.gov/home-energy-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energyoffice.colorado.gov/home-energy-rebates"
+    }
+  ],
+  "currentEvidenceText": "Colorado - Home Electrification and Appliance Rebate (HEAR) Program Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 134. Electric Vehicle Fast-Charging Plazas Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22160",
+  "opportunityName": "Electric Vehicle Fast-Charging Plazas Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22160/electric-vehicle-fast-charging-plazas-program",
+  "websiteUrl": "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+  "checkedUrls": [
+    "https://energyoffice.colorado.gov/ev-fast-charging-plazas"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energyoffice.colorado.gov/ev-fast-charging-plazas"
+    }
+  ],
+  "currentEvidenceText": "Electric Vehicle Fast-Charging Plazas Program Grant Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 135. Electric Vehicle Income Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22156",
+  "opportunityName": "Electric Vehicle Income Tax Credit",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22156/electric-vehicle-income-tax-credit",
+  "websiteUrl": "https://evco.colorado.gov/whats-new/ev-tax-credit-eligibility",
+  "checkedUrls": [
+    "https://evco.colorado.gov/whats-new/ev-tax-credit-eligibility"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://evco.colorado.gov/whats-new/ev-tax-credit-eligibility"
+    }
+  ],
+  "currentEvidenceText": "Electric Vehicle Income Tax Credit Personal Tax Credit CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 136. Mountain View Electric Association, Inc - Energy Efficiency Rebates Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2103",
+  "opportunityName": "Mountain View Electric Association, Inc - Energy Efficiency Rebates Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2103/mountain-view-electric-association-inc-energy-efficiency-rebates-program",
+  "websiteUrl": "https://www.mvea.coop/save-energy-money/rebates/",
+  "checkedUrls": [
+    "https://www.mvea.coop/save-energy-money/rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.mvea.coop/save-energy-money/rebates/"
+    }
+  ],
+  "currentEvidenceText": "Mountain View Electric Association, Inc - Energy Efficiency Rebates Program Mountain View Electric Association, Inc. Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 137. Property Tax Exemption for Residential Renewable Energy Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4210",
+  "opportunityName": "Property Tax Exemption for Residential Renewable Energy Equipment",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4210/property-tax-exemption-for-residential-renewable-energy-equipment",
+  "websiteUrl": "https://cdola.colorado.gov/renewable-energy",
+  "checkedUrls": [
+    "https://cdola.colorado.gov/renewable-energy"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://cdola.colorado.gov/renewable-energy"
+    }
+  ],
+  "currentEvidenceText": "Property Tax Exemption for Residential Renewable Energy Equipment Division of Property Taxation / Local Assessors Property Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 138. Renewable Energy Property Tax Assessment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2388",
+  "opportunityName": "Renewable Energy Property Tax Assessment",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2388/renewable-energy-property-tax-assessment",
+  "websiteUrl": "https://dpt.colorado.gov/renewable-energy",
+  "checkedUrls": [
+    "https://dpt.colorado.gov/renewable-energy"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://dpt.colorado.gov/renewable-energy"
+    }
+  ],
+  "currentEvidenceText": "Renewable Energy Property Tax Assessment Department of Local Affairs Property Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 139. Sales and Use Tax Exemption for Renewable Energy Equipment
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3397",
+  "opportunityName": "Sales and Use Tax Exemption for Renewable Energy Equipment",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3397/sales-and-use-tax-exemption-for-renewable-energy-equipment",
+  "websiteUrl": "https://tax.colorado.gov/sales-use-tax-guidance-publications",
+  "checkedUrls": [
+    "https://tax.colorado.gov/sales-use-tax-guidance-publications"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://tax.colorado.gov/sales-use-tax-guidance-publications"
+    }
+  ],
+  "currentEvidenceText": "Sales and Use Tax Exemption for Renewable Energy Equipment Sales Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 140. Sales Tax Exemption for Energy Storage Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22489",
+  "opportunityName": "Sales Tax Exemption for Energy Storage Systems",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22489/sales-tax-exemption-for-energy-storage-systems",
+  "websiteUrl": "https://tax.colorado.gov/climate-focused-tax-incentives",
+  "checkedUrls": [
+    "https://tax.colorado.gov/climate-focused-tax-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://tax.colorado.gov/climate-focused-tax-incentives"
+    }
+  ],
+  "currentEvidenceText": "Sales Tax Exemption for Energy Storage Systems Sales Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 141. Tax Credit for Residential Energy Storage Systems
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22490",
+  "opportunityName": "Tax Credit for Residential Energy Storage Systems",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22490/tax-credit-for-residential-energy-storage-systems",
+  "websiteUrl": "https://tax.colorado.gov/DR1307",
+  "checkedUrls": [
+    "https://tax.colorado.gov/DR1307"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://tax.colorado.gov/DR1307"
+    }
+  ],
+  "currentEvidenceText": "Tax Credit for Residential Energy Storage Systems Personal Tax Credit CO",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 142. (Electric and Gas)  Residential New Construction Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
+  "opportunityName": "(Electric and Gas)  Residential New Construction Program",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4342/electric-and-gas-residential-new-construction-program",
+  "websiteUrl": "https://energizect.com/your-home/solutions-list/residential-new-construction-program",
+  "checkedUrls": [
+    "https://energizect.com/your-home/solutions-list/residential-new-construction-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energizect.com/your-home/solutions-list/residential-new-construction-program"
+    }
+  ],
+  "currentEvidenceText": "(Electric and Gas) Residential New Construction Program Eversource Energy, UI, SCG, CNG Rebate Program CT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 143. (Electric and Gas) Residential Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+  "opportunityName": "(Electric and Gas) Residential Rebate Program",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+  "websiteUrl": "https://energizect.com/your-home/rebates-and-incentives",
+  "checkedUrls": [
+    "https://energizect.com/your-home/rebates-and-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energizect.com/your-home/rebates-and-incentives"
+    }
+  ],
+  "currentEvidenceText": "(Electric and Gas) Residential Rebate Program Rebate Program CT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 144. Energize Connecticut Residential and Commercial Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5737",
+  "opportunityName": "Energize Connecticut Residential and Commercial Rebates",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5737/energize-connecticut-residential-and-commercial-rebates",
+  "websiteUrl": "https://energizect.com/rebates-and-incentives",
+  "checkedUrls": [
+    "https://energizect.com/rebates-and-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energizect.com/rebates-and-incentives"
+    }
+  ],
+  "currentEvidenceText": "Energize Connecticut Residential and Commercial Rebates Rebate Program CT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 145. Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22092",
+  "opportunityName": "Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program",
+  "state": "DC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22092/sustainable-energy-utility-commercial-and-multifamily-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.dcseu.com/business-rebates/lighting-instant",
+  "checkedUrls": [
+    "https://www.dcseu.com/business-rebates/lighting-instant"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.dcseu.com/business-rebates/lighting-instant"
+    }
+  ],
+  "currentEvidenceText": "Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program Sustainable Energy Utility Rebate Program DC",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 146. Sustainable Energy Utility - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5399",
+  "opportunityName": "Sustainable Energy Utility - Residential Energy Efficiency Rebate Program",
+  "state": "DC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5399/sustainable-energy-utility-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.dcseu.com/homes",
+  "checkedUrls": [
+    "https://www.dcseu.com/homes"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.dcseu.com/homes"
+    }
+  ],
+  "currentEvidenceText": "Sustainable Energy Utility - Residential Energy Efficiency Rebate Program Sustainable Energy Utility Rebate Program DC",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 147. Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5167",
+  "opportunityName": "Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program",
+  "state": "DC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5167/sustainable-energy-utility-electric-and-gas-commercial-and-multifamily-rebate-program",
+  "websiteUrl": "https://www.dcseu.com/commercial-and-multifamily",
+  "checkedUrls": [
+    "https://www.dcseu.com/commercial-and-multifamily"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.dcseu.com/commercial-and-multifamily"
+    }
+  ],
+  "currentEvidenceText": "Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program District of Columbia Sustainable Energy Utility Rebate Program DC",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 148. Delaware Electric Cooperative - Beat the Peak With Electric Vehicles
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22304",
+  "opportunityName": "Delaware Electric Cooperative - Beat the Peak With Electric Vehicles",
+  "state": "DE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22304/delaware-electric-cooperative-beat-the-peak-with-electric-vehicles",
+  "websiteUrl": "https://www.delaware.coop/btp",
+  "checkedUrls": [
+    "https://www.delaware.coop/btp"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.delaware.coop/btp"
+    }
+  ],
+  "currentEvidenceText": "Delaware Electric Cooperative - Beat the Peak With Electric Vehicles Delaware Electric Cooperative Rebate Program DE",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 149. New Smyrna Beach - Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3335",
+  "opportunityName": "New Smyrna Beach - Energy Efficiency Rebate Program",
+  "state": "FL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3335/new-smyrna-beach-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.nsbufl.com/energy-conservation",
+  "checkedUrls": [
+    "https://www.nsbufl.com/energy-conservation"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.nsbufl.com/energy-conservation"
+    }
+  ],
+  "currentEvidenceText": "New Smyrna Beach - Energy Efficiency Rebate Program New Smyrna Beach Utilities Commission Rebate Program FL",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 150. Jackson EMC - Residential Energy Efficiency HomePlus Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2272",
+  "opportunityName": "Jackson EMC - Residential Energy Efficiency HomePlus Loan Program",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2272/jackson-emc-residential-energy-efficiency-homeplus-loan-program",
+  "websiteUrl": "https://www.jacksonemc.com/homeplus",
+  "checkedUrls": [
+    "https://www.jacksonemc.com/homeplus"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.jacksonemc.com/homeplus"
+    }
+  ],
+  "currentEvidenceText": "Jackson EMC - Residential Energy Efficiency HomePlus Loan Program Jackson Electric Membership Corporation Loan Program GA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 151. Jackson EMC - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5236",
+  "opportunityName": "Jackson EMC - Residential Energy Efficiency Rebate Program",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5236/jackson-emc-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "http://www.jacksonemc.com/rebates",
+  "checkedUrls": [
+    "http://www.jacksonemc.com/rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.jacksonemc.com/rebates"
+    }
+  ],
+  "currentEvidenceText": "Jackson EMC - Residential Energy Efficiency Rebate Program Jackson Electric Membership Corporation Rebate Program GA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 152. Jackson EMC - Residential EV Charger Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22620",
+  "opportunityName": "Jackson EMC - Residential EV Charger Rebate",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22620/jackson-emc-residential-ev-charger-rebate",
+  "websiteUrl": "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles",
+  "checkedUrls": [
+    "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles"
+    }
+  ],
+  "currentEvidenceText": "Jackson EMC - Residential EV Charger Rebate Jackson EMC Rebate Program GA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 153. IADG Energy Bank Revolving Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5410",
+  "opportunityName": "IADG Energy Bank Revolving Loan Program",
+  "state": "IA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5410/iadg-energy-bank-revolving-loan-program",
+  "websiteUrl": "http://www.iadg.com/services/financial-assistance/iadg-energy-bank.aspx",
+  "checkedUrls": [
+    "http://www.iadg.com/services/financial-assistance/iadg-energy-bank.aspx"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.iadg.com/services/financial-assistance/iadg-energy-bank.aspx"
+    }
+  ],
+  "currentEvidenceText": "IADG Energy Bank Revolving Loan Program Iowa Economic Development Authority and Iowa Area Development Group Loan Program IA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 154. Cleco Power - Commercial EV Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22622",
+  "opportunityName": "Cleco Power - Commercial EV Rebate",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22622/cleco-power-commercial-ev-rebate",
+  "websiteUrl": "https://www.cleco.com/electrification/commercial-evs",
+  "checkedUrls": [
+    "https://www.cleco.com/electrification/commercial-evs"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.cleco.com/electrification/commercial-evs"
+    }
+  ],
+  "currentEvidenceText": "Cleco Power - Commercial EV Rebate Cleco Power Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 155. Cleco Power - Residential EV Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22623",
+  "opportunityName": "Cleco Power - Residential EV Rebate",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22623/cleco-power-residential-ev-rebate",
+  "websiteUrl": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables",
+  "checkedUrls": [
+    "https://www.cleco.com/residential-commercial/energy-efficiency-renewables"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables"
+    }
+  ],
+  "currentEvidenceText": "Cleco Power - Residential EV Rebate Cleco Power Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 156. Cleco- Power Wise™ Commercial Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5832",
+  "opportunityName": "Cleco- Power Wise™ Commercial Program",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5832/cleco-power-wise-commercial-program",
+  "websiteUrl": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/small-large-commercial",
+  "checkedUrls": [
+    "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/small-large-commercial"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/small-large-commercial"
+    }
+  ],
+  "currentEvidenceText": "Cleco- Power Wise™ Commercial Program Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 157. Cleco- Power Wise™ Residential Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5831",
+  "opportunityName": "Cleco- Power Wise™ Residential Program",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5831/cleco-power-wise-residential-program",
+  "websiteUrl": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/residential",
+  "checkedUrls": [
+    "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/residential"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/residential"
+    }
+  ],
+  "currentEvidenceText": "Cleco- Power Wise™ Residential Program Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 158. Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1811",
+  "opportunityName": "Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1811/mansfield-municipal-electric-department-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.mansfieldelectric.com/rebates-savings",
+  "checkedUrls": [
+    "https://www.mansfieldelectric.com/rebates-savings"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.mansfieldelectric.com/rebates-savings"
+    }
+  ],
+  "currentEvidenceText": "Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program Mansfield Municipal Electric Department Rebate Program MA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 159. Baltimore County - Property Tax Credit for High Performance Buildings and Homes
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4341",
+  "opportunityName": "Baltimore County - Property Tax Credit for High Performance Buildings and Homes",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4341/baltimore-county-property-tax-credit-for-high-performance-buildings-and-homes",
+  "websiteUrl": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes",
+  "checkedUrls": [
+    "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes"
+    }
+  ],
+  "currentEvidenceText": "Baltimore County - Property Tax Credit for High Performance Buildings and Homes Baltimore County Office of Budget and Finance Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 160. Baltimore County - Property Tax Credit for Solar and Geothermal Devices
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5042",
+  "opportunityName": "Baltimore County - Property Tax Credit for Solar and Geothermal Devices",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5042/baltimore-county-property-tax-credit-for-solar-and-geothermal-devices",
+  "websiteUrl": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/energy",
+  "checkedUrls": [
+    "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/energy"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/energy"
+    }
+  ],
+  "currentEvidenceText": "Baltimore County - Property Tax Credit for Solar and Geothermal Devices Baltimore County Office of Budget and Finance Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 161. Rural Minnesota Energy Board PACE Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5751",
+  "opportunityName": "Rural Minnesota Energy Board PACE Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5751/rural-minnesota-energy-board-pace-program",
+  "websiteUrl": "http://rmeb.org/pace.htm",
+  "checkedUrls": [
+    "http://rmeb.org/pace.htm"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://rmeb.org/pace.htm"
+    }
+  ],
+  "currentEvidenceText": "Rural Minnesota Energy Board PACE Program PACE Financing MN",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 162. Entergy Mississippi- Residential Energy Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5793",
+  "opportunityName": "Entergy Mississippi- Residential Energy Efficiency Program",
+  "state": "MS",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5793/entergy-mississippi-residential-energy-efficiency-program",
+  "websiteUrl": "http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx",
+  "checkedUrls": [
+    "http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx"
+    }
+  ],
+  "currentEvidenceText": "Entergy Mississippi- Residential Energy Efficiency Program Rebate Program MS",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 163. City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2007",
+  "opportunityName": "City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2007/city-of-statesville-electric-utility-department-residential-and-commercial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.statesvillenc.net/departments/electric_utilities/rebates",
+  "checkedUrls": [
+    "https://www.statesvillenc.net/departments/electric_utilities/rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.statesvillenc.net/departments/electric_utilities/rebates"
+    }
+  ],
+  "currentEvidenceText": "City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program City of Statesville Rebate Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 164. American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4845",
+  "opportunityName": "American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4845/american-municipal-power-public-electric-utilities-efficiency-smart-residential-program",
+  "websiteUrl": "http://www.efficiencysmart.org/",
+  "checkedUrls": [
+    "http://www.efficiencysmart.org/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.efficiencysmart.org/"
+    }
+  ],
+  "currentEvidenceText": "American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program Rebate Program OH",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 165. Emerald PUC Electric Vehicle Charger Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22558",
+  "opportunityName": "Emerald PUC Electric Vehicle Charger Rebate Program",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22558/emerald-puc-electric-vehicle-charger-rebate-program",
+  "websiteUrl": "https://epud.chooseev.com/promos/",
+  "checkedUrls": [
+    "https://epud.chooseev.com/promos/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://epud.chooseev.com/promos/"
+    }
+  ],
+  "currentEvidenceText": "Emerald PUC Electric Vehicle Charger Rebate Program Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 166. Monmouth Power & Light - Residential Energy Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3337",
+  "opportunityName": "Monmouth Power & Light - Residential Energy Efficiency Program",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3337/monmouth-power-and-light-residential-energy-efficiency-program",
+  "websiteUrl": "http://www.ci.monmouth.or.us/pview.aspx?id=4776",
+  "checkedUrls": [
+    "http://www.ci.monmouth.or.us/pview.aspx?id=4776"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.ci.monmouth.or.us/pview.aspx?id=4776"
+    }
+  ],
+  "currentEvidenceText": "Monmouth Power & Light - Residential Energy Efficiency Program Monmouth Power & Light Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 167. Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22725",
+  "opportunityName": "Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program",
+  "state": "RI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22725/rhode-island-home-electrification-and-appliance-rebate-hear-program",
+  "websiteUrl": "https://energy.ri.gov/energy-incentives/home-energy-rebate-program",
+  "checkedUrls": [
+    "https://energy.ri.gov/energy-incentives/home-energy-rebate-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://energy.ri.gov/energy-incentives/home-energy-rebate-program"
+    }
+  ],
+  "currentEvidenceText": "Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program Office of Energy Resources Rebate Program RI",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 168. Fannie Mae Green Financing – Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5780",
+  "opportunityName": "Fannie Mae Green Financing – Loan Program",
+  "state": "US",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5780/fannie-mae-green-financing-loan-program",
+  "websiteUrl": "https://multifamily.fanniemae.com/financing-options/specialty-financing/green-financing/green-financing-loans",
+  "checkedUrls": [
+    "https://multifamily.fanniemae.com/financing-options/specialty-financing/green-financing/green-financing-loans"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://multifamily.fanniemae.com/financing-options/specialty-financing/green-financing/green-financing-loans"
+    }
+  ],
+  "currentEvidenceText": "Fannie Mae Green Financing – Loan Program Loan Program US",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 169. Agricultural Lighting and Equipment Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4056",
+  "opportunityName": "Agricultural Lighting and Equipment Rebate Program",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4056/agricultural-lighting-and-equipment-rebate-program",
+  "websiteUrl": "https://www.efficiencyvermont.com/products-technologies/agricultural-equipment",
+  "checkedUrls": [
+    "https://www.efficiencyvermont.com/products-technologies/agricultural-equipment"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.efficiencyvermont.com/products-technologies/agricultural-equipment"
+    }
+  ],
+  "currentEvidenceText": "Agricultural Lighting and Equipment Rebate Program Efficiency Vermont Rebate Program VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 170. Investment Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3428",
+  "opportunityName": "Investment Tax Credit",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3428/investment-tax-credit",
+  "websiteUrl": "http://tax.vermont.gov/business-and-corp/corp-and-business-income-taxes/tax-credits",
+  "checkedUrls": [
+    "http://tax.vermont.gov/business-and-corp/corp-and-business-income-taxes/tax-credits"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://tax.vermont.gov/business-and-corp/corp-and-business-income-taxes/tax-credits"
+    }
+  ],
+  "currentEvidenceText": "Investment Tax Credit Vermont Department of Taxes Personal Tax Credit VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 171. Local Option - Property Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:45",
+  "opportunityName": "Local Option - Property Tax Exemption",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/45/local-option-property-tax-exemption",
+  "websiteUrl": "http://tax.vermont.gov/municipal-officials/solar-valuation/everything-you-need-to-know-about-solar",
+  "checkedUrls": [
+    "http://tax.vermont.gov/municipal-officials/solar-valuation/everything-you-need-to-know-about-solar"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://tax.vermont.gov/municipal-officials/solar-valuation/everything-you-need-to-know-about-solar"
+    }
+  ],
+  "currentEvidenceText": "Local Option - Property Tax Exemption Property Tax Incentive VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 172. Residential Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2325",
+  "opportunityName": "Residential Energy Efficiency Rebate Programs",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2325/residential-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=res",
+  "checkedUrls": [
+    "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=res"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=res"
+    }
+  ],
+  "currentEvidenceText": "Residential Energy Efficiency Rebate Programs Efficiency Vermont Rebate Program VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 173. Uniform Capacity Tax and Exemption for Solar
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5209",
+  "opportunityName": "Uniform Capacity Tax and Exemption for Solar",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5209/uniform-capacity-tax-and-exemption-for-solar",
+  "websiteUrl": "https://tax.vermont.gov/municipal-officials/solar-plant-taxation",
+  "checkedUrls": [
+    "https://tax.vermont.gov/municipal-officials/solar-plant-taxation"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://tax.vermont.gov/municipal-officials/solar-plant-taxation"
+    }
+  ],
+  "currentEvidenceText": "Uniform Capacity Tax and Exemption for Solar Department of Taxes Property Tax Incentive VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 174. Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22642",
+  "opportunityName": "Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22642/vermont-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+  "websiteUrl": "https://vtrans.vermont.gov/planning/nevi",
+  "checkedUrls": [
+    "https://vtrans.vermont.gov/planning/nevi"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://vtrans.vermont.gov/planning/nevi"
+    }
+  ],
+  "currentEvidenceText": "Vermont - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Vermont Agency of Transportation Grant Program VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 175. Vermont Replace Your Ride Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22544",
+  "opportunityName": "Vermont Replace Your Ride Program",
+  "state": "VT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22544/vermont-replace-your-ride-program",
+  "websiteUrl": "https://www.driveelectricvt.com/incentives/vermont-state-incentives",
+  "checkedUrls": [
+    "https://www.driveelectricvt.com/incentives/vermont-state-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.driveelectricvt.com/incentives/vermont-state-incentives"
+    }
+  ],
+  "currentEvidenceText": "Vermont Replace Your Ride Program The Center for Sustainable Energy (CSE) Rebate Program VT",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 176. Chelan County PUD - Residential Weatherization Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3179",
+  "opportunityName": "Chelan County PUD - Residential Weatherization Rebate Program",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3179/chelan-county-pud-residential-weatherization-rebate-program",
+  "websiteUrl": "http://www.chelanpud.org/conservationhome/residential",
+  "checkedUrls": [
+    "http://www.chelanpud.org/conservationhome/residential"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://www.chelanpud.org/conservationhome/residential"
+    }
+  ],
+  "currentEvidenceText": "Chelan County PUD - Residential Weatherization Rebate Program Chelan County Public Utility District Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 177. Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3276",
+  "opportunityName": "Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3276/barron-electric-cooperative-energy-star-appliance-energy-efficient-lighting-hvac-and-water-heater-rebate-program",
+  "websiteUrl": "https://www.barronelectric.com/rebates-2023",
+  "checkedUrls": [
+    "https://www.barronelectric.com/rebates-2023"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "https://www.barronelectric.com/rebates-2023"
+    }
+  ],
+  "currentEvidenceText": "Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program Barron Electric Cooperative Rebate Program WI",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 178. City of Milwaukee - Milwaukee Shines Solar Financing
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4916",
+  "opportunityName": "City of Milwaukee - Milwaukee Shines Solar Financing",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4916/city-of-milwaukee-milwaukee-shines-solar-financing",
+  "websiteUrl": "http://city.milwaukee.gov/MilwaukeeShines#.VRw1e-G86W4",
+  "checkedUrls": [
+    "http://city.milwaukee.gov/MilwaukeeShines#.VRw1e-G86W4"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 403",
+      "url": "http://city.milwaukee.gov/MilwaukeeShines#.VRw1e-G86W4"
+    }
+  ],
+  "currentEvidenceText": "City of Milwaukee - Milwaukee Shines Solar Financing Summit Credit Union Loan Program WI",
+  "currentReasons": [],
+  "failureBucket": "source_blocked_403"
+}
+```
+
+### 179. Entergy Arkansas - Residential Energy Efficiency Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3680",
+  "opportunityName": "Entergy Arkansas - Residential Energy Efficiency Programs",
+  "state": "AR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3680/entergy-arkansas-residential-energy-efficiency-programs",
+  "websiteUrl": "https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/",
+  "checkedUrls": [
+    "https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/"
+    }
+  ],
+  "currentEvidenceText": "Entergy Arkansas - Residential Energy Efficiency Programs Entergy Arkansas, Inc. Rebate Program AR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 180. OGE - Commercial Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3638",
+  "opportunityName": "OGE - Commercial Energy Efficiency Rebate Programs",
+  "state": "AR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3638/oge-commercial-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/pZJNT4NAEIZ_Sw8cZUd2WdAblgpFEoppKe7FgCLFUJawUP6-60eiSKVpnNPO5HlnZt8MYihGrEoORZ60Ba-SUuYPjD5qrk1dz4HADO4JhDeXWLu1XRzoBG2HQEA8KgHftOebNZ",
+  "checkedUrls": [
+    "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/pZJNT4NAEIZ_Sw8cZUd2WdAblgpFEoppKe7FgCLFUJawUP6-60eiSKVpnNPO5HlnZt8MYihGrEoORZ60Ba-SUuYPjD5qrk1dz4HADO4JhDeXWLu1XRzoBG2HQEA8KgHftOebNZ"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/pZJNT4NAEIZ_Sw8cZUd2WdAblgpFEoppKe7FgCLFUJawUP6-60eiSKVpnNPO5HlnZt8MYihGrEoORZ60Ba-SUuYPjD5qrk1dz4HADO4JhDeXWLu1XRzoBG2HQEA8KgHftOebNZ"
+    }
+  ],
+  "currentEvidenceText": "OGE - Commercial Energy Efficiency Rebate Programs OGE Energy Corp Rebate Program AR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 181. APS - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1716",
+  "opportunityName": "APS - Residential Energy Efficiency Rebate Program",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1716/aps-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options/Rebates",
+  "checkedUrls": [
+    "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options/Rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options/Rebates"
+    }
+  ],
+  "currentEvidenceText": "APS - Residential Energy Efficiency Rebate Program Arizona Public Service Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 182. Southwest Gas Corporation - Combined Heat and Power Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4066",
+  "opportunityName": "Southwest Gas Corporation - Combined Heat and Power Program",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4066/southwest-gas-corporation-combined-heat-and-power-program",
+  "websiteUrl": "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business",
+  "checkedUrls": [
+    "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business"
+    }
+  ],
+  "currentEvidenceText": "Southwest Gas Corporation - Combined Heat and Power Program Southwest Gas Corporation Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 183. Sulphur Springs Valley EC - SunWatts Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:186",
+  "opportunityName": "Sulphur Springs Valley EC - SunWatts Rebate Program",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/186/sulphur-springs-valley-ec-sunwatts-rebate-program",
+  "websiteUrl": "http://www.ssvec.org/programs/renewable.php",
+  "checkedUrls": [
+    "http://www.ssvec.org/programs/renewable.php"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.ssvec.org/programs/renewable.php"
+    }
+  ],
+  "currentEvidenceText": "Sulphur Springs Valley EC - SunWatts Rebate Program Sulphur Springs Valley Electric Cooperative Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 184. Trico Electric Cooperative  - SunWatts Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2402",
+  "opportunityName": "Trico Electric Cooperative  - SunWatts Incentive Program",
+  "state": "AZ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2402/trico-electric-cooperative-sunwatts-incentive-program",
+  "websiteUrl": "https://www.trico.coop/sustainable-energy/member-installed-solar/",
+  "checkedUrls": [
+    "https://www.trico.coop/sustainable-energy/member-installed-solar/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.trico.coop/sustainable-energy/member-installed-solar/"
+    }
+  ],
+  "currentEvidenceText": "Trico Electric Cooperative - SunWatts Incentive Program Trico Electric Cooperative, Inc. Rebate Program AZ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 185. Burbank Water & Power - Energy Solutions Business Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
+  "opportunityName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1630/burbank-water-and-power-energy-solutions-business-rebate-program",
+  "websiteUrl": "https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs",
+  "checkedUrls": [
+    "https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs"
+    }
+  ],
+  "currentEvidenceText": "Burbank Water & Power - Energy Solutions Business Rebate Program Burbank Water and Power Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 186. City of San Francisco - GreenFinanceSF
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4091",
+  "opportunityName": "City of San Francisco - GreenFinanceSF",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4091/city-of-san-francisco-greenfinancesf",
+  "websiteUrl": "https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program",
+  "checkedUrls": [
+    "https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program"
+    }
+  ],
+  "currentEvidenceText": "City of San Francisco - GreenFinanceSF PACE Financing CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 187. Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1718",
+  "opportunityName": "Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1718/lassen-municipal-utility-district-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.lmud.org/customer-services/rebates-solar/residential-rebates/",
+  "checkedUrls": [
+    "https://www.lmud.org/customer-services/rebates-solar/residential-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.lmud.org/customer-services/rebates-solar/residential-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program Public Benefits Specialist Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 188. Modesto Irrigation District - Commercial New Construction Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3219",
+  "opportunityName": "Modesto Irrigation District - Commercial New Construction Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3219/modesto-irrigation-district-commercial-new-construction-rebate-program",
+  "websiteUrl": "http://www.mid.org/rebates/commercial/default.html",
+  "checkedUrls": [
+    "http://www.mid.org/rebates/commercial/default.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.mid.org/rebates/commercial/default.html"
+    }
+  ],
+  "currentEvidenceText": "Modesto Irrigation District - Commercial New Construction Rebate Program Energy Management Department Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 189. Modesto Irrigation District - Electric Vehicle  Charger Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22525",
+  "opportunityName": "Modesto Irrigation District - Electric Vehicle  Charger Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22525/modesto-irrigation-district-electric-vehicle-charger-rebate-program",
+  "websiteUrl": "https://www.mid.org/rebates/ev/default.html",
+  "checkedUrls": [
+    "https://www.mid.org/rebates/ev/default.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.mid.org/rebates/ev/default.html"
+    }
+  ],
+  "currentEvidenceText": "Modesto Irrigation District - Electric Vehicle Charger Rebate Program Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 190. Roseville Electric - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1902",
+  "opportunityName": "Roseville Electric - Residential Energy Efficiency Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1902/roseville-electric-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359",
+  "checkedUrls": [
+    "https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359"
+    }
+  ],
+  "currentEvidenceText": "Roseville Electric - Residential Energy Efficiency Rebate Program Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 191. Santa Clara Water & Sewer - Solar Water Heating Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:123",
+  "opportunityName": "Santa Clara Water & Sewer - Solar Water Heating Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/123/santa-clara-water-and-sewer-solar-water-heating-program",
+  "websiteUrl": "http://santaclaraca.gov/index.aspx?page=1046",
+  "checkedUrls": [
+    "http://santaclaraca.gov/index.aspx?page=1046"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://santaclaraca.gov/index.aspx?page=1046"
+    }
+  ],
+  "currentEvidenceText": "Santa Clara Water & Sewer - Solar Water Heating Program City of Santa Clara Water & Sewer Utility Leasing Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 192. Silicon Valley Power - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1920",
+  "opportunityName": "Silicon Valley Power - Residential Energy Efficiency Rebate Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1920/silicon-valley-power-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.siliconvalleypower.com/residents/rebates-6214",
+  "checkedUrls": [
+    "https://www.siliconvalleypower.com/residents/rebates-6214"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.siliconvalleypower.com/residents/rebates-6214"
+    }
+  ],
+  "currentEvidenceText": "Silicon Valley Power - Residential Energy Efficiency Rebate Program Silicon Valley Power Rebate Program CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 193. Sonoma County Energy Independence Program (SCEIP)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3334",
+  "opportunityName": "Sonoma County Energy Independence Program (SCEIP)",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3334/sonoma-county-energy-independence-program-sceip",
+  "websiteUrl": "https://sonomacountyenergy.force.com/financing/s/about-sceip-financing",
+  "checkedUrls": [
+    "https://sonomacountyenergy.force.com/financing/s/about-sceip-financing"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://sonomacountyenergy.force.com/financing/s/about-sceip-financing"
+    }
+  ],
+  "currentEvidenceText": "Sonoma County Energy Independence Program (SCEIP) PACE Financing CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 194. Western Riverside Council of Governments - Home Energy Renovation Opportunity (HERO) Financing Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5181",
+  "opportunityName": "Western Riverside Council of Governments - Home Energy Renovation Opportunity (HERO) Financing Program",
+  "state": "CA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5181/western-riverside-council-of-governments-home-energy-renovation-opportunity-hero-financing-program",
+  "websiteUrl": "https://wrcog.us/DocumentCenter/View/4469/CPP-V2-2018-FINAL",
+  "checkedUrls": [
+    "https://wrcog.us/DocumentCenter/View/4469/CPP-V2-2018-FINAL"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://wrcog.us/DocumentCenter/View/4469/CPP-V2-2018-FINAL"
+    }
+  ],
+  "currentEvidenceText": "Western Riverside Council of Governments - Home Energy Renovation Opportunity (HERO) Financing Program PACE Financing CA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 195. Charge Ahead Colorado
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22157",
+  "opportunityName": "Charge Ahead Colorado",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22157/charge-ahead-colorado",
+  "websiteUrl": "http://cleanairfleets.org/programs/charge-ahead-colorado",
+  "checkedUrls": [
+    "http://cleanairfleets.org/programs/charge-ahead-colorado"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://cleanairfleets.org/programs/charge-ahead-colorado"
+    }
+  ],
+  "currentEvidenceText": "Charge Ahead Colorado Grant Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 196. City and County of Denver - Home Energy Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22760",
+  "opportunityName": "City and County of Denver - Home Energy Rebates",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22760/city-and-county-of-denver-home-energy-rebates",
+  "websiteUrl": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Electrifying-Denvers-Homes/Resources-for-Home-and-Townhouse-Owners",
+  "checkedUrls": [
+    "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Electrifying-Denvers-Homes/Resources-for-Home-and-Townhouse-Owners"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Electrifying-Denvers-Homes/Resources-for-Home-and-Townhouse-Owners"
+    }
+  ],
+  "currentEvidenceText": "City and County of Denver - Home Energy Rebates APTIM Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 197. City and County of Denver - Solar and EV Charging for Nonprofits
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22754",
+  "opportunityName": "City and County of Denver - Solar and EV Charging for Nonprofits",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22754/city-and-county-of-denver-solar-and-ev-charging-for-nonprofits",
+  "websiteUrl": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Renewable-Energy/Funding-for-Solar-Energy/",
+  "checkedUrls": [
+    "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Renewable-Energy/Funding-for-Solar-Energy/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Renewable-Energy/Funding-for-Solar-Energy/"
+    }
+  ],
+  "currentEvidenceText": "City and County of Denver - Solar and EV Charging for Nonprofits Grant Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 198. City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
+  "opportunityName": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5558/city-of-aspen-and-pitkin-county-renewable-energy-mitigation-program-grants",
+  "websiteUrl": "http://aspencore.org/grants/",
+  "checkedUrls": [
+    "http://aspencore.org/grants/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://aspencore.org/grants/"
+    }
+  ],
+  "currentEvidenceText": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants Community Office for Resource Efficiency Grant Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 199. City of Boulder - Solar Sales and Use Tax Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4082",
+  "opportunityName": "City of Boulder - Solar Sales and Use Tax Rebate",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4082/city-of-boulder-solar-sales-and-use-tax-rebate",
+  "websiteUrl": "https://bouldercolorado.gov/services/solar-tax-rebates",
+  "checkedUrls": [
+    "https://bouldercolorado.gov/services/solar-tax-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://bouldercolorado.gov/services/solar-tax-rebates"
+    }
+  ],
+  "currentEvidenceText": "City of Boulder - Solar Sales and Use Tax Rebate Sales Tax Incentive CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 200. Eagle County - Walking Mountains Science Center Solar PV Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22786",
+  "opportunityName": "Eagle County - Walking Mountains Science Center Solar PV Rebate",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22786/eagle-county-walking-mountains-science-center-solar-pv-rebate",
+  "websiteUrl": "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/",
+  "checkedUrls": [
+    "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Eagle County - Walking Mountains Science Center Solar PV Rebate Energy Smart Colorado Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 201. San Isabel Electric Association - Commercial Lighting Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22083",
+  "opportunityName": "San Isabel Electric Association - Commercial Lighting Rebate Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22083/san-isabel-electric-association-commercial-lighting-rebate-program",
+  "websiteUrl": "https://siea.com/empower-commercial-lighting-efficiency/",
+  "checkedUrls": [
+    "https://siea.com/empower-commercial-lighting-efficiency/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://siea.com/empower-commercial-lighting-efficiency/"
+    }
+  ],
+  "currentEvidenceText": "San Isabel Electric Association - Commercial Lighting Rebate Program San Isabel Electric Association Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 202. San Isabel Electric Association - Electric Vehicle Charger Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22301",
+  "opportunityName": "San Isabel Electric Association - Electric Vehicle Charger Rebates",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22301/san-isabel-electric-association-electric-vehicle-charger-rebates",
+  "websiteUrl": "https://siea.com/wp-content/uploads/2023/04/EvChargerRebateFlyer_2025.pdf",
+  "checkedUrls": [
+    "https://siea.com/wp-content/uploads/2023/04/EvChargerRebateFlyer_2025.pdf"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://siea.com/wp-content/uploads/2023/04/EvChargerRebateFlyer_2025.pdf"
+    }
+  ],
+  "currentEvidenceText": "San Isabel Electric Association - Electric Vehicle Charger Rebates San Isabel Electric Association Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 203. San Miguel Power Association - Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4312",
+  "opportunityName": "San Miguel Power Association - Energy Efficiency Rebate Program",
+  "state": "CO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.ecoactionpartners.org/smparebates",
+  "checkedUrls": [
+    "https://www.ecoactionpartners.org/smparebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.ecoactionpartners.org/smparebates"
+    }
+  ],
+  "currentEvidenceText": "San Miguel Power Association - Energy Efficiency Rebate Program Rebate Program CO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 204. Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3112",
+  "opportunityName": "Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program",
+  "state": "CT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3112/norwich-public-utilities-electric-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://norwichpublicutilities.com/residential/efficiency-programs-rebates/#nav-anchor-to-2",
+  "checkedUrls": [
+    "https://norwichpublicutilities.com/residential/efficiency-programs-rebates/#nav-anchor-to-2"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://norwichpublicutilities.com/residential/efficiency-programs-rebates/#nav-anchor-to-2"
+    }
+  ],
+  "currentEvidenceText": "Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program Norwich Public Utilities Rebate Program CT",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 205. Energize Delaware  - Energize Delaware Farm Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5724",
+  "opportunityName": "Energize Delaware  - Energize Delaware Farm Loan Program",
+  "state": "DE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5724/energize-delaware-energize-delaware-farm-loan-program",
+  "websiteUrl": "https://www.energizedelaware.org/energize-delaware-farm-program",
+  "checkedUrls": [
+    "https://www.energizedelaware.org/energize-delaware-farm-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energizedelaware.org/energize-delaware-farm-program"
+    }
+  ],
+  "currentEvidenceText": "Energize Delaware - Energize Delaware Farm Loan Program Loan Program DE",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 206. Energize Delaware - Home Energy-Efficiency Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22556",
+  "opportunityName": "Energize Delaware - Home Energy-Efficiency Loan Program",
+  "state": "DE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22556/energize-delaware-home-energy-efficiency-loan-program",
+  "websiteUrl": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/home-energy-efficiency-loan-program/",
+  "checkedUrls": [
+    "https://www.energizedelaware.org/residential/home-performance-with-energy-star/home-energy-efficiency-loan-program/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/home-energy-efficiency-loan-program/"
+    }
+  ],
+  "currentEvidenceText": "Energize Delaware - Home Energy-Efficiency Loan Program Energize Delaware Loan Program DE",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 207. Energize Delaware - Home Performance with ENERGY STAR
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5449",
+  "opportunityName": "Energize Delaware - Home Performance with ENERGY STAR",
+  "state": "DE",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star",
+  "websiteUrl": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/",
+  "checkedUrls": [
+    "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+    }
+  ],
+  "currentEvidenceText": "Energize Delaware - Home Performance with ENERGY STAR Energize Delaware Rebate Program DE",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 208. Orlando Utilities Commission - Electric Vehicle Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22307",
+  "opportunityName": "Orlando Utilities Commission - Electric Vehicle Rebate Program",
+  "state": "FL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22307/orlando-utilities-commission-electric-vehicle-rebate-program",
+  "websiteUrl": "https://www.ouc.com/residential/save-energy-water-money/electric-vehicles",
+  "checkedUrls": [
+    "https://www.ouc.com/residential/save-energy-water-money/electric-vehicles"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.ouc.com/residential/save-energy-water-money/electric-vehicles"
+    }
+  ],
+  "currentEvidenceText": "Orlando Utilities Commission - Electric Vehicle Rebate Program Orlando Utilities Commission Rebate Program FL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 209. Georgia Power - Residential Electric Vehicle Charger Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22308",
+  "opportunityName": "Georgia Power - Residential Electric Vehicle Charger Program",
+  "state": "GA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22308/georgia-power-residential-electric-vehicle-charger-program",
+  "websiteUrl": "https://www.georgiapower.com/residential/save-money-and-energy/products-programs/electric-vehicles/buying-an-ev.html",
+  "checkedUrls": [
+    "https://www.georgiapower.com/residential/save-money-and-energy/products-programs/electric-vehicles/buying-an-ev.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.georgiapower.com/residential/save-money-and-energy/products-programs/electric-vehicles/buying-an-ev.html"
+    }
+  ],
+  "currentEvidenceText": "Georgia Power - Residential Electric Vehicle Charger Program Georgia Power Rebate Program GA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 210. City and County of Honolulu - Real Property Tax Exemption for Renewable Energy Property
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3684",
+  "opportunityName": "City and County of Honolulu - Real Property Tax Exemption for Renewable Energy Property",
+  "state": "HI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3684/city-and-county-of-honolulu-real-property-tax-exemption-for-renewable-energy-property",
+  "websiteUrl": "https://energy.hawaii.gov/what-we-do/financial-assistance-and-grants/financial-assistance-resources/income-guidelines-and-tax-resources/",
+  "checkedUrls": [
+    "https://energy.hawaii.gov/what-we-do/financial-assistance-and-grants/financial-assistance-resources/income-guidelines-and-tax-resources/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://energy.hawaii.gov/what-we-do/financial-assistance-and-grants/financial-assistance-resources/income-guidelines-and-tax-resources/"
+    }
+  ],
+  "currentEvidenceText": "City and County of Honolulu - Real Property Tax Exemption for Renewable Energy Property City and County of Honolulu, Real Property Tax Assessment Division Property Tax Incentive HI",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 211. Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22645",
+  "opportunityName": "Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+  "state": "IA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22645/iowa-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+  "websiteUrl": "https://iowadot.gov/iowaevplan",
+  "checkedUrls": [
+    "https://iowadot.gov/iowaevplan"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://iowadot.gov/iowaevplan"
+    }
+  ],
+  "currentEvidenceText": "Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Iowa Department of Transportation Grant Program IA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 212. Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2862",
+  "opportunityName": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates",
+  "state": "IA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2862/muscatine-power-and-water-commercial-and-industrial-energy-efficiency-rebates",
+  "websiteUrl": "https://mpw.org/rebates/#section-1-slider-commercial-lighting-and-fixtures",
+  "checkedUrls": [
+    "https://mpw.org/rebates/#section-1-slider-commercial-lighting-and-fixtures"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://mpw.org/rebates/#section-1-slider-commercial-lighting-and-fixtures"
+    }
+  ],
+  "currentEvidenceText": "Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates Muscatine Power and Water Rebate Program IA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 213. Muscatine Power and Water - Residential Energy Efficiency Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2861",
+  "opportunityName": "Muscatine Power and Water - Residential Energy Efficiency Rebates",
+  "state": "IA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2861/muscatine-power-and-water-residential-energy-efficiency-rebates",
+  "websiteUrl": "https://mpw.org/rebates/#residential-rebates",
+  "checkedUrls": [
+    "https://mpw.org/rebates/#residential-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://mpw.org/rebates/#residential-rebates"
+    }
+  ],
+  "currentEvidenceText": "Muscatine Power and Water - Residential Energy Efficiency Rebates Muscatine Power and Water Rebate Program IA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 214. City of Chicago - Green Building Permit Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2466",
+  "opportunityName": "City of Chicago - Green Building Permit Programs",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2466/city-of-chicago-green-building-permit-programs",
+  "websiteUrl": "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html",
+  "checkedUrls": [
+    "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html"
+    }
+  ],
+  "currentEvidenceText": "City of Chicago - Green Building Permit Programs City of Chicago Green Building Incentive IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 215. Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4234",
+  "opportunityName": "Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4234/corn-belt-energy-coop-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "http://www.cornbeltenergy.com/programs-services/rebate-program.html",
+  "checkedUrls": [
+    "http://www.cornbeltenergy.com/programs-services/rebate-program.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.cornbeltenergy.com/programs-services/rebate-program.html"
+    }
+  ],
+  "currentEvidenceText": "Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program Power Moves - Wabash Valley Power Association Rebate Program IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 216. Electric Vehicle Fleet Fee Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22174",
+  "opportunityName": "Electric Vehicle Fleet Fee Exemption",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22174/electric-vehicle-fleet-fee-exemption",
+  "websiteUrl": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=041501200K35",
+  "checkedUrls": [
+    "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=041501200K35"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=041501200K35"
+    }
+  ],
+  "currentEvidenceText": "Electric Vehicle Fleet Fee Exemption Other Incentive IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 217. Energy Efficiency Revolving Loan Fund
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22747",
+  "opportunityName": "Energy Efficiency Revolving Loan Fund",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22747/energy-efficiency-revolving-loan-fund",
+  "websiteUrl": "https://www.il-fa.com/programs/ee-rlf",
+  "checkedUrls": [
+    "https://www.il-fa.com/programs/ee-rlf"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.il-fa.com/programs/ee-rlf"
+    }
+  ],
+  "currentEvidenceText": "Energy Efficiency Revolving Loan Fund Illinois Finance Authority & Climate Bank Loan Program IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 218. MidAmerican Energy - Residential Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3507",
+  "opportunityName": "MidAmerican Energy - Residential Energy Efficiency Rebate Programs",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3507/midamerican-energy-residential-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.midamericanenergy.com/il-ee-rebates",
+  "checkedUrls": [
+    "https://www.midamericanenergy.com/il-ee-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.midamericanenergy.com/il-ee-rebates"
+    }
+  ],
+  "currentEvidenceText": "MidAmerican Energy - Residential Energy Efficiency Rebate Programs MidAmerican Energy Company Rebate Program IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 219. Nicor Gas - Commercial Energy Efficiency Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4130",
+  "opportunityName": "Nicor Gas - Commercial Energy Efficiency Rebates",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+  "websiteUrl": "https://www.nicorgas.com/business/ways-to-save/rebates.html",
+  "checkedUrls": [
+    "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+    }
+  ],
+  "currentEvidenceText": "Nicor Gas - Commercial Energy Efficiency Rebates Rebate Program IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 220. Nicor Gas - Residential Energy Efficiency Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4128",
+  "opportunityName": "Nicor Gas - Residential Energy Efficiency Rebates",
+  "state": "IL",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4128/nicor-gas-residential-energy-efficiency-rebates",
+  "websiteUrl": "https://www.nicorgas.com/residential/ways-to-save/rebates.html.html",
+  "checkedUrls": [
+    "https://www.nicorgas.com/residential/ways-to-save/rebates.html.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nicorgas.com/residential/ways-to-save/rebates.html.html"
+    }
+  ],
+  "currentEvidenceText": "Nicor Gas - Residential Energy Efficiency Rebates CLEAResult Rebate Program IL",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 221. Southern Indiana Power - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2667",
+  "opportunityName": "Southern Indiana Power - Residential Energy Efficiency Rebate Program",
+  "state": "IN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2667/southern-indiana-power-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "http://www.sinpwr.com/content/2020-residential-rebates",
+  "checkedUrls": [
+    "http://www.sinpwr.com/content/2020-residential-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.sinpwr.com/content/2020-residential-rebates"
+    }
+  ],
+  "currentEvidenceText": "Southern Indiana Power - Residential Energy Efficiency Rebate Program Southern Indiana Rural Electric Cooperative Rebate Program IN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 222. Owen Electric - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2301",
+  "opportunityName": "Owen Electric - Residential Energy Efficiency Rebate Program",
+  "state": "KY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2301/owen-electric-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.owenelectric.com/energy-efficiency-info-programs-rebates",
+  "checkedUrls": [
+    "https://www.owenelectric.com/energy-efficiency-info-programs-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.owenelectric.com/energy-efficiency-info-programs-rebates"
+    }
+  ],
+  "currentEvidenceText": "Owen Electric - Residential Energy Efficiency Rebate Program Owen Electric Cooperative, Inc. Rebate Program KY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 223. Taylor County RECC - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3262",
+  "opportunityName": "Taylor County RECC - Residential Energy Efficiency Rebate Program",
+  "state": "KY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3262/taylor-county-recc-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "http://www.tcrecc.com/rebates.php",
+  "checkedUrls": [
+    "http://www.tcrecc.com/rebates.php"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.tcrecc.com/rebates.php"
+    }
+  ],
+  "currentEvidenceText": "Taylor County RECC - Residential Energy Efficiency Rebate Program Taylor County RECC Rebate Program KY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 224. Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+  "opportunityName": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program",
+  "state": "LA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+  "websiteUrl": "https://www.energysmartnola.info/custom-and-prescriptive-incentives/",
+  "checkedUrls": [
+    "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+    }
+  ],
+  "currentEvidenceText": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program Energy Smart Rebate Program LA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 225. Mass Save  - Residential Energy Efficiency Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
+  "opportunityName": "Mass Save  - Residential Energy Efficiency Programs",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4799/mass-save-residential-energy-efficiency-programs",
+  "websiteUrl": "https://www.masssave.com/en/saving/residential-rebates/",
+  "checkedUrls": [
+    "https://www.masssave.com/en/saving/residential-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.masssave.com/en/saving/residential-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Mass Save - Residential Energy Efficiency Programs Berkshire Gas, Cape Light Compact, Eversource, Liberty, National Grid, Unitil Rebate Program MA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 226. Reading Municipal Light Department - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1829",
+  "opportunityName": "Reading Municipal Light Department - Residential Energy Efficiency Rebate Program",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1829/reading-municipal-light-department-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.rmld.com/my-residence/pages/residential-rebates",
+  "checkedUrls": [
+    "https://www.rmld.com/my-residence/pages/residential-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.rmld.com/my-residence/pages/residential-rebates"
+    }
+  ],
+  "currentEvidenceText": "Reading Municipal Light Department - Residential Energy Efficiency Rebate Program Customer Service Rebate Program MA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 227. Wakefield Municipal Gas & Light Department - Residential Conservation Services Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1342",
+  "opportunityName": "Wakefield Municipal Gas & Light Department - Residential Conservation Services Program",
+  "state": "MA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1342/wakefield-municipal-gas-and-light-department-residential-conservation-services-program",
+  "websiteUrl": "http://wmgld.com/energy-programs/",
+  "checkedUrls": [
+    "http://wmgld.com/energy-programs/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://wmgld.com/energy-programs/"
+    }
+  ],
+  "currentEvidenceText": "Wakefield Municipal Gas & Light Department - Residential Conservation Services Program Rebate Program MA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 228. City of Baltimore - High-Performance Market-Rate Rental Housing Property Tax Credit
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22677",
+  "opportunityName": "City of Baltimore - High-Performance Market-Rate Rental Housing Property Tax Credit",
+  "state": "MD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22677/city-of-baltimore-high-performance-market-rate-rental-housing-property-tax-credit",
+  "websiteUrl": "https://finance.baltimorecity.gov/sites/default/files/HPMRRH-Citywide%20-%20Regulations%202-8-22.pdf",
+  "checkedUrls": [
+    "https://finance.baltimorecity.gov/sites/default/files/HPMRRH-Citywide%20-%20Regulations%202-8-22.pdf"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://finance.baltimorecity.gov/sites/default/files/HPMRRH-Citywide%20-%20Regulations%202-8-22.pdf"
+    }
+  ],
+  "currentEvidenceText": "City of Baltimore - High-Performance Market-Rate Rental Housing Property Tax Credit Property Tax Incentive MD",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 229. MMPA - Commercial and Industrial Energy Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4739",
+  "opportunityName": "MMPA - Commercial and Industrial Energy Efficiency Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4739/mmpa-commercial-and-industrial-energy-efficiency-program",
+  "websiteUrl": "http://mmpa.org/conservation/we-save-business/",
+  "checkedUrls": [
+    "http://mmpa.org/conservation/we-save-business/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://mmpa.org/conservation/we-save-business/"
+    }
+  ],
+  "currentEvidenceText": "MMPA - Commercial and Industrial Energy Efficiency Program Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 230. MMPA - Residential Energy Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4740",
+  "opportunityName": "MMPA - Residential Energy Efficiency Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4740/mmpa-residential-energy-efficiency-program",
+  "websiteUrl": "http://mmpa.org/conservation/we-save-home/",
+  "checkedUrls": [
+    "http://mmpa.org/conservation/we-save-home/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://mmpa.org/conservation/we-save-home/"
+    }
+  ],
+  "currentEvidenceText": "MMPA - Residential Energy Efficiency Program Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 231. North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
+  "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://smmpa.com/members/north-branch",
+  "checkedUrls": [
+    "https://smmpa.com/members/north-branch"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://smmpa.com/members/north-branch"
+    }
+  ],
+  "currentEvidenceText": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program North Branch Municipal Water & Light Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 232. Rochester Public Utilities - Residential Conserve and Save Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2865",
+  "opportunityName": "Rochester Public Utilities - Residential Conserve and Save Rebate",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2865/rochester-public-utilities-residential-conserve-and-save-rebate",
+  "websiteUrl": "http://www.rpu.org/your-home/rebates-programs/conserve-and-save.html",
+  "checkedUrls": [
+    "http://www.rpu.org/your-home/rebates-programs/conserve-and-save.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.rpu.org/your-home/rebates-programs/conserve-and-save.html"
+    }
+  ],
+  "currentEvidenceText": "Rochester Public Utilities - Residential Conserve and Save Rebate Rochester Public Utilities Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 233. Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1948",
+  "opportunityName": "Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1948/shakopee-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://shakopeeutilities.com/business/2024-commercial-rebates/",
+  "checkedUrls": [
+    "https://shakopeeutilities.com/business/2024-commercial-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://shakopeeutilities.com/business/2024-commercial-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program Shakopee Public Utilities Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 234. Stearns Electric Association - Commercial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2449",
+  "opportunityName": "Stearns Electric Association - Commercial Energy Efficiency Rebate Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2449/stearns-electric-association-commercial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.stearnselectric.org/save-money-and-energy/commercial-and-argiculture/commercial-equipment-rebates/",
+  "checkedUrls": [
+    "https://www.stearnselectric.org/save-money-and-energy/commercial-and-argiculture/commercial-equipment-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.stearnselectric.org/save-money-and-energy/commercial-and-argiculture/commercial-equipment-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Stearns Electric Association - Commercial Energy Efficiency Rebate Program Stearns Electric Association Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 235. Stearns Electric Association - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3433",
+  "opportunityName": "Stearns Electric Association - Residential Energy Efficiency Rebate Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3433/stearns-electric-association-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.stearnselectric.org/save-money-and-energy/tools-and-resources/appliance-rebates/",
+  "checkedUrls": [
+    "https://www.stearnselectric.org/save-money-and-energy/tools-and-resources/appliance-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.stearnselectric.org/save-money-and-energy/tools-and-resources/appliance-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Stearns Electric Association - Residential Energy Efficiency Rebate Program Stearns Electric Association Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 236. Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2249",
+  "opportunityName": "Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program",
+  "state": "MN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2249/wright-hennepin-cooperative-electric-association-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "http://www.whe.org/for-my-home/resources/rebates.html",
+  "checkedUrls": [
+    "http://www.whe.org/for-my-home/resources/rebates.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.whe.org/for-my-home/resources/rebates.html"
+    }
+  ],
+  "currentEvidenceText": "Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program Wright-Hennepin Cooperative Electric Association Rebate Program MN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 237. City Utilities of Springfield - Commercial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2702",
+  "opportunityName": "City Utilities of Springfield - Commercial Energy Efficiency Rebate Program",
+  "state": "MO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2702/city-utilities-of-springfield-commercial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.cityutilities.net/save/commercial/",
+  "checkedUrls": [
+    "https://www.cityutilities.net/save/commercial/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.cityutilities.net/save/commercial/"
+    }
+  ],
+  "currentEvidenceText": "City Utilities of Springfield - Commercial Energy Efficiency Rebate Program City Utilities of Springfield, Missouri Rebate Program MO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 238. Kirkwood Electric - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1951",
+  "opportunityName": "Kirkwood Electric - Residential Energy Efficiency Rebate Program",
+  "state": "MO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1951/kirkwood-electric-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.kirkwoodelectric.org/residential/energy-efficiency",
+  "checkedUrls": [
+    "https://www.kirkwoodelectric.org/residential/energy-efficiency"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.kirkwoodelectric.org/residential/energy-efficiency"
+    }
+  ],
+  "currentEvidenceText": "Kirkwood Electric - Residential Energy Efficiency Rebate Program Kirkwood Electric Rebate Program MO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 239. Local Option - Clean Energy Development Boards
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4248",
+  "opportunityName": "Local Option - Clean Energy Development Boards",
+  "state": "MO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4248/local-option-clean-energy-development-boards",
+  "websiteUrl": "https://dnr.mo.gov/energy/business-industry/financial-opportunities/property-assessed-clean-energy-pace",
+  "checkedUrls": [
+    "https://dnr.mo.gov/energy/business-industry/financial-opportunities/property-assessed-clean-energy-pace"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://dnr.mo.gov/energy/business-industry/financial-opportunities/property-assessed-clean-energy-pace"
+    }
+  ],
+  "currentEvidenceText": "Local Option - Clean Energy Development Boards PACE Financing MO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 240. Volkswagen Trust Electric Vehicle Charging Infrastructure Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22195",
+  "opportunityName": "Volkswagen Trust Electric Vehicle Charging Infrastructure Program",
+  "state": "MO",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22195/volkswagen-trust-electric-vehicle-charging-infrastructure-program",
+  "websiteUrl": "https://dnr.mo.gov/env/apcp/vw/ev.htm",
+  "checkedUrls": [
+    "https://dnr.mo.gov/env/apcp/vw/ev.htm"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://dnr.mo.gov/env/apcp/vw/ev.htm"
+    }
+  ],
+  "currentEvidenceText": "Volkswagen Trust Electric Vehicle Charging Infrastructure Program Missouri Department of Natural Resources Grant Program MO",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 241. Corporate Property Tax Reduction for New/Expanded Generating Facilities
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:496",
+  "opportunityName": "Corporate Property Tax Reduction for New/Expanded Generating Facilities",
+  "state": "MT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/496/corporate-property-tax-reduction-for-new-expanded-generating-facilities",
+  "websiteUrl": "https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/",
+  "checkedUrls": [
+    "https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/"
+    }
+  ],
+  "currentEvidenceText": "Corporate Property Tax Reduction for New/Expanded Generating Facilities Montana Department of Revenue Property Tax Incentive MT",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 242. Renewable Energy Systems Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:154",
+  "opportunityName": "Renewable Energy Systems Exemption",
+  "state": "MT",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/154/renewable-energy-systems-exemption",
+  "websiteUrl": "https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/",
+  "checkedUrls": [
+    "https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/"
+    }
+  ],
+  "currentEvidenceText": "Renewable Energy Systems Exemption Montana Department of Revenue Property Tax Incentive MT",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 243. Energy United - Residential Heat Pump Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22522",
+  "opportunityName": "Energy United - Residential Heat Pump Rebate",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22522/energy-united-residential-heat-pump-rebate",
+  "websiteUrl": "https://www.energyunited.com/energy-services/rebates/pev-programs/",
+  "checkedUrls": [
+    "https://www.energyunited.com/energy-services/rebates/pev-programs/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energyunited.com/energy-services/rebates/pev-programs/"
+    }
+  ],
+  "currentEvidenceText": "Energy United - Residential Heat Pump Rebate Rebate Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 244. EnergyUnited (Electric) - Residential Energy Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22094",
+  "opportunityName": "EnergyUnited (Electric) - Residential Energy Efficiency Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22094/energyunited-electric-residential-energy-efficiency-program",
+  "websiteUrl": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/",
+  "checkedUrls": [
+    "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
+    }
+  ],
+  "currentEvidenceText": "EnergyUnited (Electric) - Residential Energy Efficiency Program Rebate Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 245. EnergyUnited Commercial Lighting Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22096",
+  "opportunityName": "EnergyUnited Commercial Lighting Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22096/energyunited-commercial-lighting-program",
+  "websiteUrl": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/",
+  "checkedUrls": [
+    "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
+    }
+  ],
+  "currentEvidenceText": "EnergyUnited Commercial Lighting Program Rebate Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 246. Four-County EMC - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3320",
+  "opportunityName": "Four-County EMC - Residential Energy Efficiency Rebate Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3320/four-county-emc-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.fourcty.org/rates-rebates-free-checkup/",
+  "checkedUrls": [
+    "https://www.fourcty.org/rates-rebates-free-checkup/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.fourcty.org/rates-rebates-free-checkup/"
+    }
+  ],
+  "currentEvidenceText": "Four-County EMC - Residential Energy Efficiency Rebate Program Four County EMC Rebate Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 247. Haywood EMC - Residential Heat Pump and Weatherization Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3589",
+  "opportunityName": "Haywood EMC - Residential Heat Pump and Weatherization Loan Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3589/haywood-emc-residential-heat-pump-and-weatherization-loan-program",
+  "websiteUrl": "https://www.haywoodemc.com/heat-pumpweatherization-loan",
+  "checkedUrls": [
+    "https://www.haywoodemc.com/heat-pumpweatherization-loan"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.haywoodemc.com/heat-pumpweatherization-loan"
+    }
+  ],
+  "currentEvidenceText": "Haywood EMC - Residential Heat Pump and Weatherization Loan Program Haywood EMC Loan Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 248. Randolph EMC - ElecTel Energy Efficiency Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22437",
+  "opportunityName": "Randolph EMC - ElecTel Energy Efficiency Loan Program",
+  "state": "NC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22437/randolph-emc-electel-energy-efficiency-loan-program",
+  "websiteUrl": "https://www.randolphemc.com/financing-electel",
+  "checkedUrls": [
+    "https://www.randolphemc.com/financing-electel"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.randolphemc.com/financing-electel"
+    }
+  ],
+  "currentEvidenceText": "Randolph EMC - ElecTel Energy Efficiency Loan Program Randolph Electric Membership Corporation Loan Program NC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 249. New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2163",
+  "opportunityName": "New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs",
+  "state": "NH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2163/new-hampshire-electric-co-op-residential-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.nhec.com/home-energy-solutions/",
+  "checkedUrls": [
+    "https://www.nhec.com/home-energy-solutions/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nhec.com/home-energy-solutions/"
+    }
+  ],
+  "currentEvidenceText": "New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs New Hampshire Electric Co-op Rebate Program NH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 250. Clean Fleet EV Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22200",
+  "opportunityName": "Clean Fleet EV Incentive Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22200/clean-fleet-ev-incentive-program",
+  "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/electric-vehicle-programs",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/commercial-industrial/programs/electric-vehicle-programs"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/commercial-industrial/programs/electric-vehicle-programs"
+    }
+  ],
+  "currentEvidenceText": "Clean Fleet EV Incentive Program Grant Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 251. EV Tourism Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22521",
+  "opportunityName": "EV Tourism Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
+  "websiteUrl": "https://www.njcleanenergy.com/ev",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/ev"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/ev"
+    }
+  ],
+  "currentEvidenceText": "EV Tourism Program NJ Board of Public Utilities Grant Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 252. Large Energy Users Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5568",
+  "opportunityName": "Large Energy Users Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5568/large-energy-users-program",
+  "websiteUrl": "https://www.njcleanenergy.com/LEUP",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/LEUP"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/LEUP"
+    }
+  ],
+  "currentEvidenceText": "Large Energy Users Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 253. Local Energy Audit Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5567",
+  "opportunityName": "Local Energy Audit Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5567/local-energy-audit-program",
+  "websiteUrl": "https://www.njcleanenergy.com/lgea",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/lgea"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/lgea"
+    }
+  ],
+  "currentEvidenceText": "Local Energy Audit Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 254. New Jersey SmartStart Buildings - New Construction and Retrofits
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2359",
+  "opportunityName": "New Jersey SmartStart Buildings - New Construction and Retrofits",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2359/new-jersey-smartstart-buildings-new-construction-and-retrofits",
+  "websiteUrl": "https://www.njcleanenergy.com/smartstart-new-construction-buildings",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/smartstart-new-construction-buildings"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/smartstart-new-construction-buildings"
+    }
+  ],
+  "currentEvidenceText": "New Jersey SmartStart Buildings - New Construction and Retrofits New Jersey Board of Public Utilities, Office of Clean Energy Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 255. NJ Clean Energy- Residential New Construction Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5811",
+  "opportunityName": "NJ Clean Energy- Residential New Construction Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5811/nj-clean-energy-residential-new-construction-program",
+  "websiteUrl": "https://www.njcleanenergy.com/residential/programs/residential-new-construction",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/residential/programs/residential-new-construction"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/residential/programs/residential-new-construction"
+    }
+  ],
+  "currentEvidenceText": "NJ Clean Energy- Residential New Construction Program Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 256. Pay for Performance Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3330",
+  "opportunityName": "Pay for Performance Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3330/pay-for-performance-program",
+  "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
+  "checkedUrls": [
+    "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction"
+    }
+  ],
+  "currentEvidenceText": "Pay for Performance Program New Jersey Board of Public Utilities, Office of Clean Energy Rebate Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 257. PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4982",
+  "opportunityName": "PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4982/pse-and-g-government-and-non-profit-facility-direct-install-efficiency-program",
+  "websiteUrl": "https://bizsave.pseg.com/home/direct-install/",
+  "checkedUrls": [
+    "https://bizsave.pseg.com/home/direct-install/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://bizsave.pseg.com/home/direct-install/"
+    }
+  ],
+  "currentEvidenceText": "PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program PSE&G Grant Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 258. Small Scale CHP and Fuel Cell Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5205",
+  "opportunityName": "Small Scale CHP and Fuel Cell Incentive Program",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5205/small-scale-chp-and-fuel-cell-incentive-program",
+  "websiteUrl": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power",
+  "checkedUrls": [
+    "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power"
+    }
+  ],
+  "currentEvidenceText": "Small Scale CHP and Fuel Cell Incentive Program TRC Solutions Grant Program NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 259. Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22480",
+  "opportunityName": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive",
+  "state": "NJ",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22480/successor-solar-incentive-susi-program-competitive-solar-incentive",
+  "websiteUrl": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
+  "checkedUrls": [
+    "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program"
+    }
+  ],
+  "currentEvidenceText": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive Board of Public Utilities Performance-Based Incentive NJ",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 260. New Mexico Gas Company - New Home Construction Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22140",
+  "opportunityName": "New Mexico Gas Company - New Home Construction Rebate Program",
+  "state": "NM",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22140/new-mexico-gas-company-new-home-construction-rebate-program",
+  "websiteUrl": "https://nmgcgetrebates.com/new-homes-rebates",
+  "checkedUrls": [
+    "https://nmgcgetrebates.com/new-homes-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://nmgcgetrebates.com/new-homes-rebates"
+    }
+  ],
+  "currentEvidenceText": "New Mexico Gas Company - New Home Construction Rebate Program New Mexico Gas Company Rebate Program NM",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 261. NV Energy - Solar Thermal Heating Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4590",
+  "opportunityName": "NV Energy - Solar Thermal Heating Program",
+  "state": "NV",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4590/nv-energy-solar-thermal-heating-program",
+  "websiteUrl": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
+  "checkedUrls": [
+    "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating"
+    }
+  ],
+  "currentEvidenceText": "NV Energy - Solar Thermal Heating Program NV Energy Rebate Program NV",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 262. NV Energy -Energy Smart Schools Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4524",
+  "opportunityName": "NV Energy -Energy Smart Schools Program",
+  "state": "NV",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4524/nv-energy-energy-smart-schools-program",
+  "websiteUrl": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm",
+  "checkedUrls": [
+    "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
+    }
+  ],
+  "currentEvidenceText": "NV Energy -Energy Smart Schools Program Nevada Power Company Rebate Program NV",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 263. Con Ed Demand Management for Industrial and Commercial Customers
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22108",
+  "opportunityName": "Con Ed Demand Management for Industrial and Commercial Customers",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22108/con-ed-demand-management-for-industrial-and-commercial-customers",
+  "websiteUrl": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems",
+  "checkedUrls": [
+    "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
+    }
+  ],
+  "currentEvidenceText": "Con Ed Demand Management for Industrial and Commercial Customers ConEdison Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 264. ConEd (Gas and Electric) - Small Business Direct Install Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5424",
+  "opportunityName": "ConEd (Gas and Electric) - Small Business Direct Install Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5424/coned-gas-and-electric-small-business-direct-install-program",
+  "websiteUrl": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business",
+  "checkedUrls": [
+    "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business"
+    }
+  ],
+  "currentEvidenceText": "ConEd (Gas and Electric) - Small Business Direct Install Program Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 265. NYSEG (Electric) - Commercial and Industrial Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
+  "opportunityName": "NYSEG (Electric) - Commercial and Industrial Efficiency Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
+  "websiteUrl": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS",
+  "checkedUrls": [
+    "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+    }
+  ],
+  "currentEvidenceText": "NYSEG (Electric) - Commercial and Industrial Efficiency Program Franklin Energy Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 266. Orange and Rockland Utilities (Gas) - Residential Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3905",
+  "opportunityName": "Orange and Rockland Utilities (Gas) - Residential Efficiency Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3905/orange-and-rockland-utilities-gas-residential-efficiency-program",
+  "websiteUrl": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates",
+  "checkedUrls": [
+    "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
+    }
+  ],
+  "currentEvidenceText": "Orange and Rockland Utilities (Gas) - Residential Efficiency Program Orange and Rockland Utilities, Inc. Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 267. RG&E (Electric) - Commercial and Industrial Efficiency Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4245",
+  "opportunityName": "RG&E (Electric) - Commercial and Industrial Efficiency Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4245/rg-and-e-electric-commercial-and-industrial-efficiency-program",
+  "websiteUrl": "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS",
+  "checkedUrls": [
+    "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS"
+    }
+  ],
+  "currentEvidenceText": "RG&E (Electric) - Commercial and Industrial Efficiency Program RG&E Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 268. RG&E (Electric) - Small Business Lighting Retrofit Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
+  "opportunityName": "RG&E (Electric) - Small Business Lighting Retrofit Program",
+  "state": "NY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4304/rg-and-e-electric-small-business-lighting-retrofit-program",
+  "websiteUrl": "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy",
+  "checkedUrls": [
+    "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy"
+    }
+  ],
+  "currentEvidenceText": "RG&E (Electric) - Small Business Lighting Retrofit Program Rebate Program NY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 269. Advanced Energy Fund Grant
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
+  "opportunityName": "Advanced Energy Fund Grant",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
+  "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
+  "checkedUrls": [
+    "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery"
+    }
+  ],
+  "currentEvidenceText": "Advanced Energy Fund Grant Grant Program OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 270. Diesel Mitigation Trust Fund
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22216",
+  "opportunityName": "Diesel Mitigation Trust Fund",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22216/diesel-mitigation-trust-fund",
+  "websiteUrl": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants",
+  "checkedUrls": [
+    "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants"
+    }
+  ],
+  "currentEvidenceText": "Diesel Mitigation Trust Fund Ohio Environmental Protection Agency Grant Program OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 271. Energy Conversion and Thermal Efficiency Sales Tax Exemption
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:77",
+  "opportunityName": "Energy Conversion and Thermal Efficiency Sales Tax Exemption",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/77/energy-conversion-and-thermal-efficiency-sales-tax-exemption",
+  "websiteUrl": "https://tax.ohio.gov/help-center/faqs/sales-and-use-applying-the-tax-what-is-and-isnt-taxable",
+  "checkedUrls": [
+    "https://tax.ohio.gov/help-center/faqs/sales-and-use-applying-the-tax-what-is-and-isnt-taxable"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://tax.ohio.gov/help-center/faqs/sales-and-use-applying-the-tax-what-is-and-isnt-taxable"
+    }
+  ],
+  "currentEvidenceText": "Energy Conversion and Thermal Efficiency Sales Tax Exemption Ohio Department of Taxation Sales Tax Incentive OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 272. Energy Efficiency Program for Manufacturers
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5587",
+  "opportunityName": "Energy Efficiency Program for Manufacturers",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers",
+  "websiteUrl": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
+  "checkedUrls": [
+    "https://development.ohio.gov/community/redevelopment/energy-efficiency-program"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program"
+    }
+  ],
+  "currentEvidenceText": "Energy Efficiency Program for Manufacturers Grant Program OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 273. Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22649",
+  "opportunityName": "Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22649/ohio-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+  "websiteUrl": "https://drive.ohio.gov/programs/electric/infrastructure/nevi/nevi",
+  "checkedUrls": [
+    "https://drive.ohio.gov/programs/electric/infrastructure/nevi/nevi"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://drive.ohio.gov/programs/electric/infrastructure/nevi/nevi"
+    }
+  ],
+  "currentEvidenceText": "Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program DriveOhio Grant Program OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 274. Qualified Energy Property Tax Exemption for Projects 250 kW or Less
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4217",
+  "opportunityName": "Qualified Energy Property Tax Exemption for Projects 250 kW or Less",
+  "state": "OH",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4217/qualified-energy-property-tax-exemption-for-projects-250-kw-or-less",
+  "websiteUrl": "https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption",
+  "checkedUrls": [
+    "https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption"
+    }
+  ],
+  "currentEvidenceText": "Qualified Energy Property Tax Exemption for Projects 250 kW or Less Ohio Development Services Agency Property Tax Incentive OH",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 275. OG&E - Commercial Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3639",
+  "opportunityName": "OG&E - Commercial Energy Efficiency Rebate Programs",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3639/og-and-e-commercial-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/lZHLDoIwEEU_qUNbSruEVFvEpKAI2I1hRUgUXRi_XwwJCS_F2TVzz5zMFFlUINuUr7oqn_W9Ka_t-2zZBYNWWnDsxCmXwIQ-iiighGuC8i6gJdM7BUYlkQsJgY2fUUoACLJreF",
+  "checkedUrls": [
+    "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/lZHLDoIwEEU_qUNbSruEVFvEpKAI2I1hRUgUXRi_XwwJCS_F2TVzz5zMFFlUINuUr7oqn_W9Ka_t-2zZBYNWWnDsxCmXwIQ-iiighGuC8i6gJdM7BUYlkQsJgY2fUUoACLJreF"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/lZHLDoIwEEU_qUNbSruEVFvEpKAI2I1hRUgUXRi_XwwJCS_F2TVzz5zMFFlUINuUr7oqn_W9Ka_t-2zZBYNWWnDsxCmXwIQ-iiighGuC8i6gJdM7BUYlkQsJgY2fUUoACLJreF"
+    }
+  ],
+  "currentEvidenceText": "OG&E - Commercial Energy Efficiency Rebate Programs OGE Energy Rebate Program OK",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 276. Oklahoma City - Green Home Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
+  "opportunityName": "Oklahoma City - Green Home Loan Program",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
+  "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
+  "checkedUrls": [
+    "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan"
+    }
+  ],
+  "currentEvidenceText": "Oklahoma City - Green Home Loan Program Community Action Agency of Oklahoma City Loan Program OK",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 277. Oklahoma Electric Cooperative - Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
+  "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
+  "state": "OK",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3590/oklahoma-electric-cooperative-energy-efficiency-rebate-program",
+  "websiteUrl": "https://okcoop.org/energy-efficiency-rebates/",
+  "checkedUrls": [
+    "https://okcoop.org/energy-efficiency-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://okcoop.org/energy-efficiency-rebates/"
+    }
+  ],
+  "currentEvidenceText": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program Oklahoma Electric Cooperative Rebate Program OK",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 278. Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3629",
+  "opportunityName": "Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3629/central-lincoln-people-s-utility-district-residential-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://clpud.org/energy-efficiency/residential-rebate-programs/",
+  "checkedUrls": [
+    "https://clpud.org/energy-efficiency/residential-rebate-programs/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://clpud.org/energy-efficiency/residential-rebate-programs/"
+    }
+  ],
+  "currentEvidenceText": "Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs Central Lincoln People's Utility District Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 279. OTEC - Agricultural Energy Efficiency Rebate Programs
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3136",
+  "opportunityName": "OTEC - Agricultural Energy Efficiency Rebate Programs",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3136/otec-agricultural-energy-efficiency-rebate-programs",
+  "websiteUrl": "https://www.directefficiency.com/otec-rebates/",
+  "checkedUrls": [
+    "https://www.directefficiency.com/otec-rebates/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.directefficiency.com/otec-rebates/"
+    }
+  ],
+  "currentEvidenceText": "OTEC - Agricultural Energy Efficiency Rebate Programs Oregon Trail Electric Cooperative Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 280. OTEC - Commercial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22431",
+  "opportunityName": "OTEC - Commercial Energy Efficiency Rebate Program",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22431/otec-commercial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.directefficiency.com/otec-rebates/#otec-commercial",
+  "checkedUrls": [
+    "https://www.directefficiency.com/otec-rebates/#otec-commercial"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.directefficiency.com/otec-rebates/#otec-commercial"
+    }
+  ],
+  "currentEvidenceText": "OTEC - Commercial Energy Efficiency Rebate Program Oregon Trail Electric Cooperative Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 281. Portland General Electric - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1674",
+  "opportunityName": "Portland General Electric - Residential Energy Efficiency Rebate Program",
+  "state": "OR",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1674/portland-general-electric-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives",
+  "checkedUrls": [
+    "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives"
+    }
+  ],
+  "currentEvidenceText": "Portland General Electric - Residential Energy Efficiency Rebate Program Portland General Electric Rebate Program OR",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 282. Met-Ed / Penelec Sustainable Energy Fund
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:678",
+  "opportunityName": "Met-Ed / Penelec Sustainable Energy Fund",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/678/met-ed-penelec-sustainable-energy-fund",
+  "websiteUrl": "https://bccf.org/overview-sustainable-energy-funds/",
+  "checkedUrls": [
+    "https://bccf.org/overview-sustainable-energy-funds/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://bccf.org/overview-sustainable-energy-funds/"
+    }
+  ],
+  "currentEvidenceText": "Met-Ed / Penelec Sustainable Energy Fund Berks County Community Foundation Grant Program PA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 283. Metropolitan Edison Company SEF Loans (FirstEnergy Territory)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1051",
+  "opportunityName": "Metropolitan Edison Company SEF Loans (FirstEnergy Territory)",
+  "state": "PA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1051/metropolitan-edison-company-sef-loans-firstenergy-territory",
+  "websiteUrl": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86",
+  "checkedUrls": [
+    "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86"
+    }
+  ],
+  "currentEvidenceText": "Metropolitan Edison Company SEF Loans (FirstEnergy Territory) Berks County Community Foundation Loan Program PA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 284. National Grid (Electric) - Residential Energy Efficiency Incentive Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3025",
+  "opportunityName": "National Grid (Electric) - Residential Energy Efficiency Incentive Program",
+  "state": "RI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3025/national-grid-electric-residential-energy-efficiency-incentive-program",
+  "websiteUrl": "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs",
+  "checkedUrls": [
+    "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs"
+    }
+  ],
+  "currentEvidenceText": "National Grid (Electric) - Residential Energy Efficiency Incentive Program Rebate Program RI",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 285. Sales Tax Exemption for Hydrogen Fuel Cells
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2755",
+  "opportunityName": "Sales Tax Exemption for Hydrogen Fuel Cells",
+  "state": "SC",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2755/sales-tax-exemption-for-hydrogen-fuel-cells",
+  "websiteUrl": "http://www.energy.sc.gov/lpage?m=701",
+  "checkedUrls": [
+    "http://www.energy.sc.gov/lpage?m=701"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.energy.sc.gov/lpage?m=701"
+    }
+  ],
+  "currentEvidenceText": "Sales Tax Exemption for Hydrogen Fuel Cells South Carolina Energy Office Sales Tax Incentive SC",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 286. Renewable Energy Facility Sales and Use Tax Reimbursement
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5422",
+  "opportunityName": "Renewable Energy Facility Sales and Use Tax Reimbursement",
+  "state": "SD",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5422/renewable-energy-facility-sales-and-use-tax-reimbursement",
+  "websiteUrl": "https://sdreadytowork.com/financing-incentives/tax-incentives/",
+  "checkedUrls": [
+    "https://sdreadytowork.com/financing-incentives/tax-incentives/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://sdreadytowork.com/financing-incentives/tax-incentives/"
+    }
+  ],
+  "currentEvidenceText": "Renewable Energy Facility Sales and Use Tax Reimbursement Governor's Office of Economic Development Sales Tax Incentive SD",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 287. Middle Tennessee EMC - Residential Heat Pump Loan Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2234",
+  "opportunityName": "Middle Tennessee EMC - Residential Heat Pump Loan Program",
+  "state": "TN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2234/middle-tennessee-emc-residential-heat-pump-loan-program",
+  "websiteUrl": "http://www.mtemc.com/pages.cfm/name/r09_heatingac",
+  "checkedUrls": [
+    "http://www.mtemc.com/pages.cfm/name/r09_heatingac"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.mtemc.com/pages.cfm/name/r09_heatingac"
+    }
+  ],
+  "currentEvidenceText": "Middle Tennessee EMC - Residential Heat Pump Loan Program Middle Tennessee Electric Membership Corporation Loan Program TN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 288. Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22641",
+  "opportunityName": "Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+  "state": "TN",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22641/tennessee-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+  "websiteUrl": "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html",
+  "checkedUrls": [
+    "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html"
+    }
+  ],
+  "currentEvidenceText": "Tennessee - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Tennessee Department of Transportation Grant Program TN",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 289. Austin Energy - Small Business Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2014",
+  "opportunityName": "Austin Energy - Small Business Energy Efficiency Rebate Program",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2014/austin-energy-small-business-energy-efficiency-rebate-program",
+  "websiteUrl": "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus",
+  "checkedUrls": [
+    "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus"
+    }
+  ],
+  "currentEvidenceText": "Austin Energy - Small Business Energy Efficiency Rebate Program Austin Energy Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 290. CenterPoint Energy A/C Distributor Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5745",
+  "opportunityName": "CenterPoint Energy A/C Distributor Program",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5745/centerpoint-energy-a-c-distributor-program",
+  "websiteUrl": "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res",
+  "checkedUrls": [
+    "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res"
+    }
+  ],
+  "currentEvidenceText": "CenterPoint Energy A/C Distributor Program Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 291. El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4593",
+  "opportunityName": "El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4593/el-paso-electric-company-score-program-for-counties-municipalities-and-schools",
+  "websiteUrl": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines",
+  "checkedUrls": [
+    "https://www.epelectric.com/tx/business/program-manuals-and-guidelines"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines"
+    }
+  ],
+  "currentEvidenceText": "El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools CLEAResult Consulting Company Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 292. Texas Gas Service - Commercial Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1538",
+  "opportunityName": "Texas Gas Service - Commercial Energy Efficiency Rebate Program",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
+  "checkedUrls": [
+    "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives"
+    }
+  ],
+  "currentEvidenceText": "Texas Gas Service - Commercial Energy Efficiency Rebate Program Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 293. Texas Gas Service - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1536",
+  "opportunityName": "Texas Gas Service - Residential Energy Efficiency Rebate Program",
+  "state": "TX",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
+  "checkedUrls": [
+    "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives"
+    }
+  ],
+  "currentEvidenceText": "Texas Gas Service - Residential Energy Efficiency Rebate Program Texas Gas Service Rebate Program TX",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 294. Renewable Electricity Production Tax Credit (PTC)
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:734",
+  "opportunityName": "Renewable Electricity Production Tax Credit (PTC)",
+  "state": "US",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/734/renewable-electricity-production-tax-credit-ptc",
+  "websiteUrl": "https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses",
+  "checkedUrls": [
+    "https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses"
+    }
+  ],
+  "currentEvidenceText": "Renewable Electricity Production Tax Credit (PTC) U.S. Internal Revenue Service Corporate Tax Credit US",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 295. City of Danville Utilities - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4928",
+  "opportunityName": "City of Danville Utilities - Residential Energy Efficiency Rebate Program",
+  "state": "VA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4928/city-of-danville-utilities-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
+  "checkedUrls": [
+    "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html"
+    }
+  ],
+  "currentEvidenceText": "City of Danville Utilities - Residential Energy Efficiency Rebate Program Danville Utilities Rebate Program VA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 296. Mason County PUD 3 - Residential Energy Rebates
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2197",
+  "opportunityName": "Mason County PUD 3 - Residential Energy Rebates",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2197/mason-county-pud-3-residential-energy-rebates",
+  "websiteUrl": "http://www.pud3.org/service/conservation-incentives",
+  "checkedUrls": [
+    "http://www.pud3.org/service/conservation-incentives"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "http://www.pud3.org/service/conservation-incentives"
+    }
+  ],
+  "currentEvidenceText": "Mason County PUD 3 - Residential Energy Rebates Mason County PUD 3 Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 297. Pend Oreille PUD - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4599",
+  "opportunityName": "Pend Oreille PUD - Residential Energy Efficiency Rebate Program",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4599/pend-oreille-pud-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://popud.org/your-account/save-energy-2/rebates",
+  "checkedUrls": [
+    "https://popud.org/your-account/save-energy-2/rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://popud.org/your-account/save-energy-2/rebates"
+    }
+  ],
+  "currentEvidenceText": "Pend Oreille PUD - Residential Energy Efficiency Rebate Program Pend Oreille PUD Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 298. Vera Water & Power - Residential Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2241",
+  "opportunityName": "Vera Water & Power - Residential Energy Efficiency Rebate Program",
+  "state": "WA",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2241/vera-water-and-power-residential-energy-efficiency-rebate-program",
+  "websiteUrl": "https://verawaterandpower.com/residential-rebates-2/",
+  "checkedUrls": [
+    "https://verawaterandpower.com/residential-rebates-2/"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://verawaterandpower.com/residential-rebates-2/"
+    }
+  ],
+  "currentEvidenceText": "Vera Water & Power - Residential Energy Efficiency Rebate Program Rebate Program WA",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 299. Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3277",
+  "opportunityName": "Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3277/barron-electric-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+  "websiteUrl": "https://www.barronelectric.com/2024-energy-rebates",
+  "checkedUrls": [
+    "https://www.barronelectric.com/2024-energy-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.barronelectric.com/2024-energy-rebates"
+    }
+  ],
+  "currentEvidenceText": "Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program Barron Electric Cooperative Rebate Program WI",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 300. Barron Electric Cooperative - Electric Vehicle Charging Station Rebate
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22357",
+  "opportunityName": "Barron Electric Cooperative - Electric Vehicle Charging Station Rebate",
+  "state": "WI",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22357/barron-electric-cooperative-electric-vehicle-charging-station-rebate",
+  "websiteUrl": "https://www.barronelectric.com/2024-energy-rebates",
+  "checkedUrls": [
+    "https://www.barronelectric.com/2024-energy-rebates"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.barronelectric.com/2024-energy-rebates"
+    }
+  ],
+  "currentEvidenceText": "Barron Electric Cooperative - Electric Vehicle Charging Station Rebate Barron Electric Cooperative Rebate Program WI",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```
+
+### 301. Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+
+```json
+{
+  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22663",
+  "opportunityName": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+  "state": "WY",
+  "sourceName": "DSIRE",
+  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22663/wyoming-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+  "websiteUrl": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html",
+  "checkedUrls": [
+    "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html"
+  ],
+  "fetchErrors": [
+    {
+      "error": "HTTP 404",
+      "url": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html"
+    }
+  ],
+  "currentEvidenceText": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Wyoming Department of Transportation Grant Program WY",
+  "currentReasons": [],
+  "failureBucket": "source_missing_404"
+}
+```

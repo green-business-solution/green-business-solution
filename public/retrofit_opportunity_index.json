@@ -124,7 +124,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5823",
@@ -1511,7 +1511,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3166",
@@ -1528,7 +1528,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
@@ -1545,7 +1545,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2437",
@@ -1590,7 +1590,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22561",
@@ -6862,7 +6862,7 @@
             "networked lighting",
             "lighting control"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
@@ -8157,7 +8157,7 @@
             "street lighting",
             "outdoor lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
@@ -8572,7 +8572,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5823",
@@ -8696,7 +8696,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
@@ -11102,7 +11102,7 @@
           "matchedTerms": [
             "air conditioner"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
@@ -11120,7 +11120,7 @@
             "air conditioner",
             "chiller"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com",
@@ -17413,7 +17413,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5620",
@@ -17477,7 +17477,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4831",
@@ -17492,7 +17492,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
@@ -21203,7 +21203,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
@@ -21294,7 +21294,7 @@
             "heat pump",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
@@ -23129,7 +23129,7 @@
             "mini split",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
@@ -23146,7 +23146,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
@@ -27790,7 +27790,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1428",
@@ -27824,7 +27824,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2121",
@@ -32039,7 +32039,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
@@ -32056,7 +32056,7 @@
           "matchedTerms": [
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3406",
@@ -34878,7 +34878,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1428",
@@ -36573,7 +36573,7 @@
           "matchedTerms": [
             "economizer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22108",
@@ -39304,7 +39304,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
@@ -41339,7 +41339,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4831",
@@ -41356,7 +41356,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
@@ -42307,7 +42307,7 @@
           "matchedTerms": [
             "duct insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -45038,7 +45038,7 @@
             "geothermal heat pump",
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
@@ -45056,7 +45056,7 @@
             "ground source heat pump",
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5512",
@@ -46019,7 +46019,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5216",
@@ -49752,7 +49752,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2668",
@@ -50140,7 +50140,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
@@ -51262,7 +51262,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
@@ -53710,7 +53710,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1428",
@@ -56064,7 +56064,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
@@ -58648,7 +58648,7 @@
             "freezer",
             "display case"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
@@ -58682,7 +58682,7 @@
           "matchedTerms": [
             "refrigeration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22561",
@@ -61517,7 +61517,7 @@
             "refrigerator",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22283",
@@ -63710,7 +63710,7 @@
             "vending machine controls",
             "floating head pressure"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3733",
@@ -64251,7 +64251,7 @@
             "electronically commutated motor",
             "evaporator fan"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4142",
@@ -64845,7 +64845,7 @@
             "anti sweat heater",
             "anti-sweat heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
@@ -65710,7 +65710,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
@@ -70657,7 +70657,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
@@ -72191,7 +72191,7 @@
           "matchedTerms": [
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
@@ -73105,7 +73105,7 @@
           "matchedTerms": [
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5512",
@@ -74325,7 +74325,7 @@
           "matchedTerms": [
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22787",
@@ -75132,7 +75132,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5354",
@@ -76374,7 +76374,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -79832,7 +79832,7 @@
             "energy management system",
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2437",
@@ -87668,7 +87668,7 @@
             "biomass",
             "biogas"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
@@ -87702,7 +87702,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2503",
@@ -88710,7 +88710,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5216",
@@ -91245,7 +91245,7 @@
             "ev charging",
             "charging station"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3823",
@@ -92833,7 +92833,7 @@
           "matchedTerms": [
             "evse"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22216",
@@ -95784,7 +95784,7 @@
           "matchedTerms": [
             "evse"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22283",
@@ -97520,7 +97520,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3823",
@@ -98832,7 +98832,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22481",
@@ -100960,7 +100960,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22283",
@@ -102405,7 +102405,7 @@
             "dc fast",
             "fast charger"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22624",
@@ -103245,7 +103245,7 @@
             "make ready",
             "make-ready"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22210",
@@ -103389,7 +103389,7 @@
             "make ready",
             "make-ready"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22523",
@@ -104113,7 +104113,7 @@
           "matchedTerms": [
             "low flow"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4056",
@@ -104542,7 +104542,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3166",
@@ -104559,7 +104559,7 @@
           "matchedTerms": [
             "low flow"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program",
@@ -105673,7 +105673,7 @@
             "aerator",
             "showerhead"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
@@ -107375,7 +107375,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3594",
@@ -111872,7 +111872,7 @@
           "matchedTerms": [
             "fryer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -113243,7 +113243,7 @@
           "matchedTerms": [
             "induction"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
@@ -113498,7 +113498,7 @@
           "matchedTerms": [
             "induction"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3842",
@@ -116098,7 +116098,7 @@
           "matchedTerms": [
             "blower"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2288",
@@ -116560,7 +116560,7 @@
           "matchedTerms": [
             "fan controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
@@ -116731,7 +116731,7 @@
           "matchedTerms": [
             "air compressor"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1553",
@@ -117862,7 +117862,7 @@
           "matchedTerms": [
             "electrification equipment"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
@@ -118220,7 +118220,7 @@
           "matchedTerms": [
             "steam trap"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4245",
@@ -118653,7 +118653,7 @@
           "matchedTerms": [
             "demand controlled ventilation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2260",
@@ -121606,7 +121606,7 @@
           "matchedTerms": [
             "feasibility study"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         }
       ]
     },
@@ -122440,10 +122440,10 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T02:00:43.764Z",
+  "availabilityReviewedAt": "2026-06-28T02:56:16.120Z",
   "availabilityStatusCounts": {
-    "uncertain": 316,
-    "active": 1222,
+    "uncertain": 301,
+    "active": 1237,
     "rolling": 28,
     "upcoming": 45,
     "unavailable": 8

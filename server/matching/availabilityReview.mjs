@@ -106,6 +106,9 @@ export function inferAvailabilityReview(
   } else if (successfulSourceFetchCount > 0 && hasReachableTitleSpecificProgramPage(opportunity, compactText)) {
     normalizedStatus = "active";
     reasons.push("reachable_title_specific_program_page");
+  } else if (successfulSourceFetchCount > 0 && hasReachableTitleSpecificProgramUrl(opportunity, sourceUrlsChecked, fetchErrors)) {
+    normalizedStatus = "active";
+    reasons.push("reachable_title_specific_program_url");
   }
 
   const knownOverride = knownAvailabilityOverride(opportunity);
@@ -115,7 +118,11 @@ export function inferAvailabilityReview(
     reasons.push(...knownOverride.reasons);
   }
 
-  let evidenceText = knownOverride?.evidenceText || evidenceTextFor(normalizedStatus, compactText);
+  let evidenceText =
+    knownOverride?.evidenceText ||
+    (reasons.includes("reachable_title_specific_program_url")
+      ? `Reachable title-specific program URL: ${bestReachableProgramUrl(opportunity, sourceUrlsChecked, fetchErrors) || sourceUrlsChecked[0] || ""}`
+      : evidenceTextFor(normalizedStatus, compactText));
   if (
     normalizedStatus === "unavailable" &&
     reasons.includes("source_status_unavailable") &&
@@ -171,6 +178,7 @@ function confidenceForStatus(normalizedStatus, reasons) {
   if (normalizedStatus === "uncertain") return 0.42;
   if (reasons.includes("deadline_has_passed") || reasons.includes("source_status_unavailable")) return 0.9;
   if (reasons.includes("reachable_title_specific_program_page")) return 0.68;
+  if (reasons.includes("reachable_title_specific_program_url")) return 0.58;
   if (normalizedStatus === "rolling") return 0.88;
   if (normalizedStatus === "active") return 0.82;
   if (normalizedStatus === "upcoming") return 0.78;
@@ -184,6 +192,56 @@ function hasReachableTitleSpecificProgramPage(opportunity, text) {
   return /\b(rebate|rebates|incentive|incentives|grant|grants|loan|loans|financing|pace|tax credit|tax exemption|property tax|program|application|eligible|eligibility|qualify|savings|energy efficiency|renewable energy|electric vehicle|solar|battery|heat pump|lighting|hvac)\b/i.test(
     text
   );
+}
+
+function hasReachableTitleSpecificProgramUrl(opportunity, sourceUrlsChecked, fetchErrors) {
+  return Boolean(bestReachableProgramUrl(opportunity, sourceUrlsChecked, fetchErrors));
+}
+
+function bestReachableProgramUrl(opportunity, sourceUrlsChecked, fetchErrors) {
+  const failedUrls = new Set((fetchErrors || []).map((error) => error?.url).filter(Boolean));
+  const urls = (sourceUrlsChecked || []).filter((url) => url && !failedUrls.has(url));
+  return urls.find((url) => isTitleSpecificProgramUrl(opportunity, url)) || null;
+}
+
+function isTitleSpecificProgramUrl(opportunity, url) {
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+
+  if (/programs\.dsireusa\.org$/i.test(parsed.hostname)) return false;
+  if (/\b(?:google|bing|duckduckgo|facebook|linkedin|youtube|wikipedia|merriam-webster|dictionary|cambridge|advanceautoparts)\b/i.test(parsed.hostname)) {
+    return false;
+  }
+
+  const normalizedUrl = `${parsed.hostname} ${parsed.pathname}`.toLowerCase().replace(/[^a-z0-9]+/g, " ");
+  const titleTokens = significantTitleTokens(opportunity);
+  const overlap = titleTokens.filter((token) => normalizedUrl.includes(token)).length;
+  const programUrlLanguage = [
+    "rebate",
+    "incentive",
+    "grant",
+    "loan",
+    "financing",
+    "pace",
+    "tax",
+    "credit",
+    "exemption",
+    "program",
+    "application",
+    "solar",
+    "battery",
+    "heat",
+    "pump",
+    "lighting",
+    "hvac",
+    "efficiency",
+    "renewable"
+  ].some((term) => normalizedUrl.includes(term));
+  return programUrlLanguage && overlap >= Math.min(1, titleTokens.length);
 }
 
 function knownAvailabilityOverride(opportunity) {
@@ -211,8 +269,22 @@ function significantTitleTokens(opportunity) {
     "and",
     "for",
     "the",
+    "city",
+    "county",
+    "state",
+    "home",
+    "homes",
+    "business",
     "with",
     "from",
+    "gas",
+    "water",
+    "power",
+    "department",
+    "association",
+    "cooperative",
+    "district",
+    "municipal",
     "program",
     "programs",
     "rebate",
@@ -234,13 +306,14 @@ function significantTitleTokens(opportunity) {
     "grants",
     "financing",
     "tax",
+    "investment",
     "credit",
     "credits"
   ]);
   const title = [opportunity.canonicalTitle, opportunity.normalizedTitle, opportunity.name, opportunity.title]
     .filter(Boolean)
     .join(" ");
-  return [...new Set(title.toLowerCase().match(/[a-z0-9]{4,}/g) || [])].filter((token) => !stopwords.has(token));
+  return [...new Set(title.toLowerCase().match(/[a-z0-9]{3,}/g) || [])].filter((token) => !stopwords.has(token));
 }
 
 function parseDate(value) {

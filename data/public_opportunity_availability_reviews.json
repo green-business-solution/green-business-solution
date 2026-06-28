@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T02:00:43.764Z",
+  "generatedAt": "2026-06-28T02:56:16.120Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,8 +9,8 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "uncertain": 316,
-    "active": 1222,
+    "uncertain": 301,
+    "active": 1237,
     "rolling": 28,
     "upcoming": 45,
     "unavailable": 8
@@ -42,7 +42,7 @@
             "url": "https://energizect.com/your-home/rebates-and-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -73,7 +73,7 @@
             "url": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -170,22 +170,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5822/aep-swepco-efficient-products-rebates-program",
       "websiteUrl": "https://www.swepco.com/savings/home/money/rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "AEP (SWEPCO) - Efficient Products Rebates Program Rebate Program LA",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.swepco.com/savings/home/money/rebates/",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.swepco.com/savings/home/money/rebates/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -214,7 +216,7 @@
             "url": "https://www.swepco.com/savings/business/louisiana"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -413,7 +415,7 @@
             "url": "https://www.efficiencyvermont.com/products-technologies/agricultural-equipment"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -745,7 +747,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -1140,7 +1142,7 @@
             "url": "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -1311,7 +1313,7 @@
             "url": "https://www.barronelectric.com/rebates-2023"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -1650,7 +1652,7 @@
             "url": "https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -1814,7 +1816,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2069,7 +2071,7 @@
             "url": "https://clpud.org/energy-efficiency/residential-rebate-programs/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2128,7 +2130,7 @@
             "url": "https://www.elevationscu.com/loans/energy-loans"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2271,7 +2273,7 @@
             "url": "https://www.statesvillenc.net/departments/electric_utilities/rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2358,7 +2360,7 @@
             "url": "https://www.cityutilities.net/save/commercial/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2473,7 +2475,7 @@
             "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/small-large-commercial"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -2626,22 +2628,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5317/comed-business-instant-lighting-discounts-program",
       "websiteUrl": "https://www.comed.com/WaysToSave/ForYourBusiness/Pages/LightingDiscounts.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "ComEd - Business Instant Lighting Discounts Program Rebate Program IL",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.comed.com/WaysToSave/ForYourBusiness/Pages/LightingDiscounts.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.comed.com/WaysToSave/ForYourBusiness/Pages/LightingDiscounts.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -2652,22 +2656,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3166/comed-energy-efficiency-program-for-residential",
       "websiteUrl": "https://www.comed.com/WaystoSave/ForYourHome/Pages/RebatesDiscounts.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "ComEd - Energy Efficiency Program for Residential Rebate Program IL",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.comed.com/WaystoSave/ForYourHome/Pages/RebatesDiscounts.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.comed.com/WaystoSave/ForYourHome/Pages/RebatesDiscounts.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -2678,22 +2684,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3074/comed-energy-efficiency-program-for-businesses",
       "websiteUrl": "https://www.comed.com/WaysToSave/ForYourBusiness/Pages/FactSheets/StandardIncentives.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "ComEd -Energy Efficiency Program For Businesses Rebate Program IL",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.comed.com/WaysToSave/ForYourBusiness/Pages/FactSheets/StandardIncentives.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.comed.com/WaysToSave/ForYourBusiness/Pages/FactSheets/StandardIncentives.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -2760,27 +2768,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22588/commercial-energy-efficiency-rebate-programs",
       "websiteUrl": "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=biz",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Commercial Energy Efficiency Rebate Programs Efficiency Vermont Rebate Program VT",
-        "reasons": [],
+        "evidenceText": "Commercial Energy Efficiency Rebate Programs Efficiency Vermont Rebate Program VT Available Rebates | Efficiency Vermont Skip to main content About Media Room Events &#43; Training Contact For Partners Efficiency Vermont Logo (link to homepage) Rebates Service",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "sourceUrlsChecked": [
           "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=biz"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 403",
-            "url": "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=biz"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.68
       }
     },
     {
@@ -2921,7 +2926,7 @@
             "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -3932,7 +3937,7 @@
             "url": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -3963,7 +3968,7 @@
             "url": "https://tax.ohio.gov/help-center/faqs/sales-and-use-applying-the-tax-what-is-and-isnt-taxable"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -4019,7 +4024,7 @@
           "http://www.energy.ca.gov/efficiency/financing/index.html"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -4103,11 +4108,11 @@
         ],
         "fetchErrors": [
           {
-            "error": "fetch failed",
+            "error": "HTTP 503",
             "url": "https://www.tn.gov/eesi/apply-now.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -4194,7 +4199,7 @@
             "url": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -4281,7 +4286,7 @@
             "url": "https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -4340,7 +4345,7 @@
             "url": "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -5996,7 +6001,7 @@
             "url": "https://www.njcleanenergy.com/LEUP"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -6027,7 +6032,7 @@
             "url": "https://www.lmud.org/customer-services/rebates-solar/residential-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -6255,7 +6260,7 @@
             "url": "https://dnr.mo.gov/energy/business-industry/financial-opportunities/property-assessed-clean-energy-pace"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7014,7 +7019,7 @@
             "url": "http://mmpa.org/conservation/we-save-business/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7045,7 +7050,7 @@
             "url": "http://mmpa.org/conservation/we-save-home/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7125,7 +7130,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7436,7 +7441,7 @@
             "url": "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7580,7 +7585,7 @@
             "url": "https://www.nhec.com/home-energy-solutions/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7611,7 +7616,7 @@
             "url": "https://www.njcleanenergy.com/smartstart-new-construction-buildings"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7810,7 +7815,7 @@
             "url": "https://smmpa.com/members/north-branch"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7897,7 +7902,7 @@
             "url": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -7956,7 +7961,7 @@
             "url": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8043,7 +8048,7 @@
             "url": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/lZHLDoIwEEU_qUNbSruEVFvEpKAI2I1hRUgUXRi_XwwJCS_F2TVzz5zMFFlUINuUr7oqn_W9Ka_t-2zZBYNWWnDsxCmXwIQ-iiighGuC8i6gJdM7BUYlkQsJgY2fUUoACLJreF"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8074,7 +8079,7 @@
             "url": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8105,7 +8110,7 @@
             "url": "https://okcoop.org/energy-efficiency-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8668,7 +8673,7 @@
             "url": "https://www.pvrea.com/rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8811,7 +8816,7 @@
             "url": "https://bizsave.pseg.com/home/direct-install/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8837,7 +8842,7 @@
           "https://homeenergy.pseg.com/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -8924,7 +8929,7 @@
             "url": "https://www.pse.com/rebates/multifamily-retrofit"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9095,7 +9100,7 @@
             "url": "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=res"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9266,7 +9271,7 @@
             "url": "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9297,7 +9302,7 @@
             "url": "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9552,7 +9557,7 @@
             "url": "http://www.rpu.org/your-home/rebates-programs/conserve-and-save.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9751,7 +9756,7 @@
             "url": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9810,7 +9815,7 @@
             "url": "https://www.srpnet.com/energy-savings-rebates/business/savings-tools"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -9841,7 +9846,7 @@
             "url": "https://siea.com/empower-commercial-lighting-efficiency/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10041,7 +10046,7 @@
             "url": "https://shakopeeutilities.com/business/2024-commercial-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10436,7 +10441,7 @@
             "url": "https://www.stearnselectric.org/save-money-and-energy/commercial-and-argiculture/commercial-equipment-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10551,7 +10556,7 @@
             "url": "https://www.dcseu.com/business-rebates/lighting-instant"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10582,7 +10587,7 @@
             "url": "https://www.dcseu.com/commercial-and-multifamily"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10837,7 +10842,7 @@
             "url": "https://tnmpefficiency.com/residential.php#existing-homes"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -10868,7 +10873,7 @@
             "url": "https://www.ligreenhomes.com/index.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -11683,7 +11688,7 @@
             "url": "https://mpw.org/rebates/#section-1-slider-commercial-lighting-and-fixtures"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -11910,7 +11915,7 @@
             "url": "https://energizect.com/your-home/solutions-list/residential-new-construction-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -12007,27 +12012,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22775/affordable-home-electrification-program-ahep",
       "websiteUrl": "https://www.dcseu.com/affordable-home-electrification",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
-        "recurring": false,
+        "recurring": true,
         "noDeadlineExplicit": false,
-        "evidenceText": "Affordable Home Electrification Program (AHEP) DC Sustainable Energy Utility Rebate Program DC",
-        "reasons": [],
+        "evidenceText": "pgrade your stove and heating and cooling equipment. Jump to section Eligibility Solar for All FAQs Get Started Find a Contractor A Win for You & the Environment The Affordable Home Electrification Program can help you make the switch from natural gas and electrify your",
+        "reasons": [
+          "active_program_language"
+        ],
         "sourceUrlsChecked": [
           "https://www.dcseu.com/affordable-home-electrification"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 403",
-            "url": "https://www.dcseu.com/affordable-home-electrification"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.82
       }
     },
     {
@@ -12252,7 +12254,7 @@
             "url": "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options/Rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -12507,7 +12509,7 @@
             "url": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/energy"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13123,7 +13125,7 @@
           "https://techcleanca.com/incentives/heehrarebates/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13462,7 +13464,7 @@
             "url": "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13633,7 +13635,7 @@
             "url": "http://www.chelanpud.org/conservationhome/residential"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13832,7 +13834,7 @@
             "url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Electrifying-Denvers-Homes/Resources-for-Home-and-Townhouse-Owners"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13919,7 +13921,7 @@
             "url": "http://aspencore.org/grants/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -13978,7 +13980,7 @@
             "url": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -14373,7 +14375,7 @@
             "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/residential"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -14432,7 +14434,7 @@
             "url": "https://coastepa.com/comfort-advantage/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -14463,7 +14465,7 @@
             "url": "https://energyoffice.colorado.gov/home-energy-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -14859,7 +14861,7 @@
             "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -15115,7 +15117,7 @@
             "url": "http://www.cornbeltenergy.com/programs-services/rebate-program.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -15256,7 +15258,7 @@
           "https://www.siliconvalleypower.com/home/showpublisheddocument/71429/637902891309870000"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -15285,7 +15287,7 @@
           "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16382,7 +16384,7 @@
             "url": "https://energizect.com/rebates-and-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16413,7 +16415,7 @@
             "url": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/home-energy-efficiency-loan-program/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16444,7 +16446,7 @@
             "url": "https://www.il-fa.com/programs/ee-rlf"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16468,7 +16470,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16527,7 +16529,7 @@
             "url": "https://www.energyunited.com/energy-services/rebates/pev-programs/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -16558,7 +16560,7 @@
             "url": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17065,7 +17067,7 @@
             "url": "https://www.fourcty.org/rates-rebates-free-checkup/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17348,7 +17350,7 @@
             "url": "https://www.haywoodemc.com/heat-pumpweatherization-loan"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17405,7 +17407,7 @@
           "https://www.siliconvalleypower.com/home/showpublisheddocument/71431/637902892215200000"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17711,7 +17713,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17910,7 +17912,7 @@
             "url": "http://tax.vermont.gov/business-and-corp/corp-and-business-income-taxes/tax-credits"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -17969,7 +17971,7 @@
             "url": "https://www.jacksonemc.com/homeplus"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -18000,7 +18002,7 @@
             "url": "http://www.jacksonemc.com/rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -18759,7 +18761,7 @@
             "url": "https://www.mansfieldelectric.com/rebates-savings"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -18846,7 +18848,7 @@
             "url": "https://www.marincounty.org/depts/cd/divisions/sustainability/electrify"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -18905,7 +18907,7 @@
             "url": "http://www.pud3.org/service/conservation-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -18936,7 +18938,7 @@
             "url": "https://www.masssave.com/en/saving/residential-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19079,7 +19081,7 @@
             "url": "https://www.midamericanenergy.com/il-ee-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19194,7 +19196,7 @@
             "url": "http://www.mtemc.com/pages.cfm/name/r09_heatingac"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19477,7 +19479,7 @@
             "url": "http://www.mid.org/rebates/commercial/default.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19536,7 +19538,7 @@
             "url": "http://www.ci.monmouth.or.us/pview.aspx?id=4776"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19623,7 +19625,7 @@
             "url": "https://www.mvea.coop/save-energy-money/rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19651,7 +19653,7 @@
           "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19682,7 +19684,7 @@
             "url": "https://mpw.org/rebates/#residential-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -19993,7 +19995,7 @@
             "url": "https://www.nsbufl.com/energy-conservation"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20080,7 +20082,7 @@
             "url": "https://www.nicorgas.com/business/ways-to-save/rebates.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20111,7 +20113,7 @@
             "url": "https://www.nicorgas.com/residential/ways-to-save/rebates.html.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20338,7 +20340,7 @@
             "url": "https://norwichpublicutilities.com/residential/efficiency-programs-rebates/#nav-anchor-to-2"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20593,7 +20595,7 @@
             "url": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20736,7 +20738,7 @@
             "url": "https://www.directefficiency.com/otec-rebates/#otec-commercial"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -20851,7 +20853,7 @@
             "url": "https://www.owenelectric.com/energy-efficiency-info-programs-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21106,7 +21108,7 @@
             "url": "https://popud.org/your-account/save-energy-2/rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21203,22 +21205,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3745/pepco-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.pepco.com/WaysToSave/ForYourHome/Pages/MD/RebatesAndDiscounts.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PEPCO - Residential Energy Efficiency Rebate Program PEPCO Rebate Program MD",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.pepco.com/WaysToSave/ForYourHome/Pages/MD/RebatesAndDiscounts.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.pepco.com/WaysToSave/ForYourHome/Pages/MD/RebatesAndDiscounts.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -21285,27 +21289,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5068/philadelphia-gas-works-commercial-and-industrial-equipment-rebate-program",
       "websiteUrl": "https://pgwenergysense.com/commercial-rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Philadelphia Gas Works - Commercial and Industrial Equipment Rebate Program Philadelphia Gas Works Rebate Program PA",
-        "reasons": [],
+        "evidenceText": "you the owner or manager of a multifamily property with low-income residents? If so, your property may qualify for PGW’s Low Income Multifamily Efficiency (LIME) program. LIME offers FREE energy efficiency upgrades in buildings where at least 75% of residents meet incom",
+        "reasons": [
+          "active_program_language"
+        ],
         "sourceUrlsChecked": [
           "https://pgwenergysense.com/commercial-rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://pgwenergysense.com/commercial-rebates/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.82
       }
     },
     {
@@ -21316,27 +21317,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4831/philadelphia-gas-works-residential-and-small-business-equipment-rebate-program",
       "websiteUrl": "https://pgwenergysense.com/residential-rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
-        "recurring": false,
+        "recurring": true,
         "noDeadlineExplicit": false,
-        "evidenceText": "Philadelphia Gas Works - Residential and Small Business Equipment Rebate Program Philadelphia Gas Works Rebate Program PA",
-        "reasons": [],
+        "evidenceText": "Philadelphia Gas Works - Residential and Small Business Equipment Rebate Program Philadelphia Gas Works Rebate Program PA PGW Residential Equipment Rebates - 2024 &#8211; PGW EnergySense - Rebates & Grants 1-855-PGW-SOLVES (1-855-749-7658) EnergySense Home Pag",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "sourceUrlsChecked": [
           "https://pgwenergysense.com/residential-rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://pgwenergysense.com/residential-rebates/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.68
       }
     },
     {
@@ -21365,7 +21363,7 @@
             "url": "https://pgwenergysense.com/residential-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21564,7 +21562,7 @@
             "url": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21616,7 +21614,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21640,7 +21638,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21692,7 +21690,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21723,7 +21721,7 @@
             "url": "https://www.pse.com/rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21747,7 +21745,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -21862,7 +21860,7 @@
             "url": "https://www.randolphemc.com/financing-electel"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -22005,7 +22003,7 @@
             "url": "https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -22085,7 +22083,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -22368,7 +22366,7 @@
             "url": "https://energy.ri.gov/energy-incentives/home-energy-rebate-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -22623,7 +22621,7 @@
             "url": "https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -22851,7 +22849,7 @@
             "url": "https://www.ecoactionpartners.org/smparebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -23323,7 +23321,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -23634,7 +23632,7 @@
             "url": "http://www.sinpwr.com/content/2020-residential-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -23889,7 +23887,7 @@
             "url": "https://srpnet.com/menu/savings/rebates_discounts.aspx"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -23977,7 +23975,7 @@
             "url": "https://www.stearnselectric.org/save-money-and-energy/tools-and-resources/appliance-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -24036,7 +24034,7 @@
             "url": "https://www.dcseu.com/homes"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -24123,7 +24121,7 @@
             "url": "http://www.tcrecc.com/rebates.php"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -24154,7 +24152,7 @@
             "url": "https://energy-solution.com/tech-incentives/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -24213,7 +24211,7 @@
             "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -24944,7 +24942,7 @@
             "url": "http://wmgld.com/energy-programs/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25220,7 +25218,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25251,7 +25249,7 @@
             "url": "http://www.whe.org/for-my-home/resources/rebates.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25394,7 +25392,7 @@
             "url": "http://www.efficiencysmart.org/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25565,7 +25563,7 @@
             "url": "http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25736,7 +25734,7 @@
             "url": "https://www.rmld.com/my-residence/pages/residential-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25795,7 +25793,7 @@
             "url": "https://www.siliconvalleypower.com/residents/rebates-6214"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -25882,7 +25880,7 @@
             "url": "https://verawaterandpower.com/residential-rebates-2/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -26305,7 +26303,7 @@
             "url": "https://www.delaware.coop/btp"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -26616,7 +26614,7 @@
             "url": "https://nmgcgetrebates.com/new-homes-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27032,7 +27030,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27119,7 +27117,7 @@
             "url": "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27150,7 +27148,7 @@
             "url": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27181,7 +27179,7 @@
             "url": "https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27233,7 +27231,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27285,7 +27283,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27327,27 +27325,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4330/green-energy-production-facility-tax-credit",
       "websiteUrl": "https://www.tn.gov/environment/sustainability/funding/green-energy.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
-        "recurring": false,
+        "recurring": true,
         "noDeadlineExplicit": false,
-        "evidenceText": "Green Energy Production Facility Tax Credit Tennessee Department of Revenue Industry Recruitment/Support TN",
-        "reasons": [],
+        "evidenceText": "Green Energy Production Facility Tax Credit Tennessee Department of Revenue Industry Recruitment/Support TN Certified Green Energy Production Facilities Skip to Main Content Go to TN.gov Go to TN.gov Section Go to Environment & Conservation (TDEC) Program Area",
+        "reasons": [
+          "reachable_title_specific_program_page"
+        ],
         "sourceUrlsChecked": [
           "https://www.tn.gov/environment/sustainability/funding/green-energy.html"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://www.tn.gov/environment/sustainability/funding/green-energy.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.68
       }
     },
     {
@@ -27369,7 +27364,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27477,7 +27472,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27529,7 +27524,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27553,7 +27548,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27584,7 +27579,7 @@
             "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27636,7 +27631,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27660,7 +27655,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27719,7 +27714,7 @@
             "url": "https://www.mcecleanenergy.org/feed-in-tariff/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27939,7 +27934,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27963,7 +27958,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -27994,7 +27989,7 @@
             "url": "https://cdola.colorado.gov/renewable-energy"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28018,7 +28013,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28049,7 +28044,7 @@
             "url": "https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28073,7 +28068,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28160,7 +28155,7 @@
             "url": "https://dpt.colorado.gov/renewable-energy"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28212,7 +28207,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28348,7 +28343,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28435,7 +28430,7 @@
             "url": "https://tax.colorado.gov/sales-use-tax-guidance-publications"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28459,7 +28454,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28511,7 +28506,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28563,7 +28558,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28645,7 +28640,7 @@
           "http://www.rd.usda.gov/reap"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28658,22 +28653,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2511/usda-rural-energy-for-america-program-reap-loan-guarantees",
       "websiteUrl": "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "USDA - Rural Energy for America Program (REAP) Loan Guarantees U.S. Department of Agriculture Loan Program US eWAPS Platform Portal USDA Enterprise Web Application Platform & Services The eWAPS Maintenance: RKE HA Production upgrade to take place from 5:00 - 7",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -28702,7 +28699,7 @@
             "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28813,11 +28810,11 @@
         ],
         "fetchErrors": [
           {
-            "error": "fetch failed",
+            "error": "This operation was aborted",
             "url": "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28876,7 +28873,7 @@
             "url": "https://bouldercolorado.gov/services/solar-tax-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -28907,7 +28904,7 @@
             "url": "http://city.milwaukee.gov/MilwaukeeShines#.VRw1e-G86W4"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29155,7 +29152,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29270,7 +29267,7 @@
             "url": "http://tax.vermont.gov/municipal-officials/solar-valuation/everything-you-need-to-know-about-solar"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29329,7 +29326,7 @@
             "url": "https://bccf.org/overview-sustainable-energy-funds/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29381,7 +29378,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29461,7 +29458,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29492,7 +29489,7 @@
             "url": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29600,7 +29597,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29624,7 +29621,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29648,7 +29645,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29756,7 +29753,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -29899,7 +29896,7 @@
             "url": "http://santaclaraca.gov/index.aspx?page=1046"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30007,7 +30004,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30115,7 +30112,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30139,7 +30136,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30338,7 +30335,7 @@
             "url": "http://www.ssvec.org/programs/renewable.php"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30397,7 +30394,7 @@
             "url": "https://www.trico.coop/sustainable-energy/member-installed-solar/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30456,7 +30453,7 @@
             "url": "https://www.barronelectric.com/2024-energy-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -30993,7 +30990,7 @@
             "url": "https://www.njcleanenergy.com/residential/programs/residential-new-construction"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -31118,22 +31115,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5712/low-income-home-energy-assistance-program-liheap",
       "websiteUrl": "https://www.acf.hhs.gov/ocs/low-income-home-energy-assistance-program-liheap",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Low Income Home Energy Assistance Program (LIHEAP) Grant Program US",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.acf.hhs.gov/ocs/low-income-home-energy-assistance-program-liheap",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.acf.hhs.gov/ocs/low-income-home-energy-assistance-program-liheap"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -31386,7 +31385,7 @@
             "url": "https://www.chandleraz.gov/government/departments/development-services/planning-and-zoning/green-building-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -31869,7 +31868,7 @@
             "url": "http://www.iadg.com/services/financial-assistance/iadg-energy-bank.aspx"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -31921,7 +31920,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -32310,7 +32309,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -33357,7 +33356,7 @@
             "url": "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -33437,7 +33436,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -33770,7 +33769,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -33857,7 +33856,7 @@
             "url": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -33881,7 +33880,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34157,7 +34156,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34188,7 +34187,7 @@
             "url": "https://tax.vermont.gov/municipal-officials/solar-plant-taxation"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34331,7 +34330,7 @@
             "url": "https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34362,7 +34361,7 @@
             "url": "https://sdreadytowork.com/financing-incentives/tax-incentives/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34386,7 +34385,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34410,7 +34409,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34490,7 +34489,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34514,7 +34513,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34854,7 +34853,7 @@
             "url": "http://www.energy.sc.gov/lpage?m=701"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34878,7 +34877,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34909,7 +34908,7 @@
             "url": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -34940,7 +34939,7 @@
             "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35083,7 +35082,7 @@
             "url": "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35163,7 +35162,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35187,7 +35186,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35211,7 +35210,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35235,7 +35234,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35287,7 +35286,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35339,7 +35338,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35363,7 +35362,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35387,7 +35386,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35411,7 +35410,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35452,22 +35451,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5313/usda-biorefinery-renewable-chemical-and-biobased-product-manufacturing-assistance-program",
       "websiteUrl": "https://www.rd.usda.gov/programs-services/biorefinery-renewable-chemical-and-biobased-product-manufacturing-assistance",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program US Department of Agriculture Loan Program US eWAPS Platform Portal USDA Enterprise Web Application Platform & Services The eWAPS Maintenance: RKE HA Production upgrad",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.rd.usda.gov/programs-services/biorefinery-renewable-chemical-and-biobased-product-manufacturing-assistance",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.rd.usda.gov/programs-services/biorefinery-renewable-chemical-and-biobased-product-manufacturing-assistance"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -35545,7 +35546,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35597,7 +35598,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35677,7 +35678,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35792,7 +35793,7 @@
             "url": "https://renewfinancial.com/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35823,7 +35824,7 @@
             "url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Renewable-Energy/Funding-for-Solar-Energy/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35854,7 +35855,7 @@
             "url": "https://energy.hawaii.gov/what-we-do/financial-assistance-and-grants/financial-assistance-resources/income-guidelines-and-tax-resources/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -35885,7 +35886,7 @@
             "url": "https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36078,7 +36079,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36102,7 +36103,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36126,7 +36127,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36185,7 +36186,7 @@
             "url": "https://www.kirkwoodelectric.org/residential/energy-efficiency"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36265,7 +36266,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36289,7 +36290,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36341,7 +36342,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36365,7 +36366,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36389,7 +36390,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36413,7 +36414,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36437,7 +36438,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36461,7 +36462,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36513,7 +36514,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36656,7 +36657,7 @@
             "url": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -36961,7 +36962,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37048,7 +37049,7 @@
             "url": "http://rmeb.org/pace.htm"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37072,7 +37073,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37103,7 +37104,7 @@
             "url": "https://tax.colorado.gov/climate-focused-tax-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37358,7 +37359,7 @@
             "url": "https://sonomacountyenergy.force.com/financing/s/about-sceip-financing"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37417,7 +37418,7 @@
             "url": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37441,7 +37442,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37465,7 +37466,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37496,7 +37497,7 @@
             "url": "https://tax.colorado.gov/DR1307"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37688,7 +37689,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37719,7 +37720,7 @@
             "url": "https://wrcog.us/DocumentCenter/View/4469/CPP-V2-2018-FINAL"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -37743,7 +37744,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38250,7 +38251,7 @@
             "url": "https://www.barronelectric.com/2024-energy-rebates"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38391,7 +38392,7 @@
           "https://cleanfuelreward.com/site/home"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38534,7 +38535,7 @@
             "url": "http://cleanairfleets.org/programs/charge-ahead-colorado"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38563,7 +38564,7 @@
           "https://www.sce.com/business/smart-energy-solar/charge-ready"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38592,7 +38593,7 @@
           "https://crt.sce.com/overview"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38757,7 +38758,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38816,7 +38817,7 @@
             "url": "https://www.njcleanenergy.com/commercial-industrial/programs/electric-vehicle-programs"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38903,7 +38904,7 @@
             "url": "https://www.cleco.com/electrification/commercial-evs"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38934,7 +38935,7 @@
             "url": "https://www.cleco.com/residential-commercial/energy-efficiency-renewables"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -38965,7 +38966,7 @@
             "url": "https://vacleancities.org/reports-2/cmaq-incentive-program/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39049,7 +39050,7 @@
           "https://www.vermontevchargers.com/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39174,22 +39175,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22319/delmarva-evsmart",
       "websiteUrl": "https://www.delmarva.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Delmarva - EVsmart Delmarva Rebate Program MD",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.delmarva.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.delmarva.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -39246,7 +39249,7 @@
             "url": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39613,7 +39616,7 @@
             "url": "https://energyoffice.colorado.gov/ev-fast-charging-plazas"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39644,7 +39647,7 @@
             "url": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=041501200K35"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39675,7 +39678,7 @@
             "url": "https://evco.colorado.gov/whats-new/ev-tax-credit-eligibility"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39839,7 +39842,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -39954,7 +39957,7 @@
             "url": "https://epud.chooseev.com/promos/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -40210,7 +40213,7 @@
             "url": "https://www.njcleanenergy.com/ev"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -40381,7 +40384,7 @@
             "url": "https://www.georgiapower.com/residential/save-money-and-energy/products-programs/electric-vehicles/buying-an-ev.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -40807,7 +40810,7 @@
             "url": "https://iowadot.gov/iowaevplan"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -40866,7 +40869,7 @@
             "url": "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -41282,7 +41285,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -41369,7 +41372,7 @@
             "url": "https://www.mid.org/rebates/ev/default.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -41877,7 +41880,7 @@
             "url": "https://drive.ohio.gov/programs/electric/infrastructure/nevi/nevi"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -41964,7 +41967,7 @@
             "url": "https://www.ouc.com/residential/save-energy-water-money/electric-vehicles"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42074,7 +42077,7 @@
           "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42100,7 +42103,7 @@
           "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42113,22 +42116,24 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22320/pepco-evsmart",
       "websiteUrl": "https://www.pepco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PEPCO - EVsmart PEPCO Rebate Program MD",
-        "reasons": [],
+        "evidenceText": "Reachable title-specific program URL: https://www.pepco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx",
+        "reasons": [
+          "reachable_title_specific_program_url"
+        ],
         "sourceUrlsChecked": [
           "https://www.pepco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicleProgramMD.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:47:06.637Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "confidence": 0.58
       }
     },
     {
@@ -42267,7 +42272,7 @@
           "https://www.sdge.com/business/electric-vehicles/lovelectric"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42325,7 +42330,7 @@
           "https://www.sdge.com/business/electric-vehicles/lovelectric"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42438,7 +42443,7 @@
           "https://commercialevrebates.sce.com/consumer/recharge"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42551,7 +42556,7 @@
           "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42610,7 +42615,7 @@
             "url": "https://savewithsrpbiz.com/rebates/evcharger.aspx"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42641,7 +42646,7 @@
             "url": "https://siea.com/wp-content/uploads/2023/04/EvChargerRebateFlyer_2025.pdf"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -42952,7 +42957,7 @@
             "url": "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43180,7 +43185,7 @@
             "url": "https://vtrans.vermont.gov/planning/nevi"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43267,7 +43272,7 @@
             "url": "https://www.driveelectricvt.com/incentives/vermont-state-incentives"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43298,7 +43303,7 @@
             "url": "https://dnr.mo.gov/env/apcp/vw/ev.htm"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43441,7 +43446,7 @@
             "url": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43578,7 +43583,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43750,7 +43755,7 @@
             "url": "https://multifamily.fanniemae.com/financing-options/specialty-financing/green-financing/green-financing-loans"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43810,7 +43815,7 @@
             "url": "https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/pZJNT4NAEIZ_Sw8cZUd2WdAblgpFEoppKe7FgCLFUJawUP6-60eiSKVpnNPO5HlnZt8MYihGrEoORZ60Ba-SUuYPjD5qrk1dz4HADO4JhDeXWLu1XRzoBG2HQEA8KgHftOebNZ"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -43953,7 +43958,7 @@
             "url": "https://www.directefficiency.com/otec-rebates/"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -44180,7 +44185,7 @@
             "url": "https://www.energizedelaware.org/energize-delaware-farm-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -44267,7 +44272,7 @@
             "url": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -44438,7 +44443,7 @@
             "url": "https://www.njcleanenergy.com/lgea"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -44606,7 +44611,7 @@
           "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -44918,7 +44923,7 @@
             "url": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45089,7 +45094,7 @@
             "url": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45176,7 +45181,7 @@
             "url": "https://finance.baltimorecity.gov/sites/default/files/HPMRRH-Citywide%20-%20Regulations%202-8-22.pdf"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45452,7 +45457,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45476,7 +45481,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45556,7 +45561,7 @@
         "reasons": [],
         "sourceUrlsChecked": [],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45587,7 +45592,7 @@
             "url": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines"
           }
         ],
-        "reviewedAt": "2026-06-28T02:00:43.764Z",
+        "reviewedAt": "2026-06-28T02:56:16.281Z",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "confidence": 0.42
       }
@@ -45620,5 +45625,12 @@
         "confidence": 0.82
       }
     }
-  ]
+  ],
+  "uncertainRepairGeneratedAt": "2026-06-28T02:56:16.120Z",
+  "uncertainRepairTargetCount": 303,
+  "uncertainRepairTotalUncertainBefore": 303,
+  "uncertainRepairSearchFallback": false,
+  "uncertainRepairFetchAttempts": 1,
+  "uncertainRepairFetchTimeoutMs": 10000,
+  "uncertainRepairConcurrency": 16
 }

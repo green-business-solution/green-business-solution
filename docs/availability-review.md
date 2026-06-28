@@ -63,8 +63,6 @@ To audit the same opportunities currently visible in the public retrofit index w
 AVAILABILITY_REVIEW_FETCH_ATTEMPTS=1 \
   AVAILABILITY_REVIEW_FETCH_RETRY_DELAY_MS=0 \
   AVAILABILITY_REVIEW_CONCURRENCY=16 \
-  AVAILABILITY_REVIEW_SEARCH_FALLBACK=1 \
-  AVAILABILITY_REVIEW_SEARCH_FALLBACK_LIMIT=2 \
   npm run matching:availability-reviews:public
 ```
 
@@ -73,7 +71,28 @@ The public review command uses `public/retrofit_opportunity_index.json` as the s
 - `data/public_opportunity_availability_reviews.json`
 - `data/public_opportunity_availability_review_report.md`
 
-`AVAILABILITY_REVIEW_SEARCH_FALLBACK=1` enables a search fallback for rows that remain `uncertain` after direct source fetches. The fallback searches by opportunity title/state, fetches the top non-DSIRE result URLs, and records those URLs in `sourceUrlsChecked`.
+`AVAILABILITY_REVIEW_SEARCH_FALLBACK=1` enables an optional search fallback for rows that remain `uncertain` after direct source fetches. Use this only for exploratory research or targeted runs: search results can return unrelated pages for generic program names, so the crawler should not auto-accept broad search fallback results without source review.
+
+For a conservative second pass over only currently uncertain public rows:
+
+```sh
+npm run matching:availability-reviews:public:uncertain
+```
+
+This reuses the existing public review artifact, reviews only rows with `availabilityReview.normalizedStatus = "uncertain"`, and merges safe direct-source updates back into the artifact. By default this command does not use broad search fallback.
+
+When rows remain uncertain after the conservative pass, generate a GPT Pro/manual research packet:
+
+```sh
+npm run matching:availability-research-prompt
+```
+
+This writes:
+
+- `data/public_opportunity_uncertain_research_targets.json`
+- `data/public_opportunity_uncertain_research_prompt.md`
+
+Use that prompt for official-source research, then apply reviewed repairs with the same evidence standard used by `availabilityReview`.
 
 The script writes:
 
@@ -141,7 +160,7 @@ For each opportunity, the script combines:
 
 The fetched text is searched for supported evidence of active, rolling, upcoming, or unavailable status. Evidence is stored in `availabilityReview.evidenceText` with `sourceUrlsChecked` and `fetchErrors` so the result can be audited later.
 
-Some official pages are JavaScript-heavy and only return a short shell to the fetcher. A reachable title-specific source page can be classified as `active` with lower confidence when it contains program/incentive terms and no closed/upcoming evidence. Pure maintenance shells, such as USDA eWAPS maintenance pages, must not activate a record by themselves.
+Some official pages are JavaScript-heavy and only return a short shell to the fetcher. A reachable title-specific source page or direct source URL can be classified as `active` with lower confidence when it contains program/incentive terms and no closed/upcoming evidence. Pure maintenance shells, generic search-result pages, and unrelated city/state homepages must not activate a record by themselves.
 
 When manual research is needed, use the same evidence standard:
 
@@ -154,6 +173,7 @@ When manual research is needed, use the same evidence standard:
 7. If an official source responds with HTTP 403/429, timeout, or transient 5xx errors, wait for the retry window and rerun the review. If it is still blocked, check alternate official or program-partner sources before accepting `uncertain`.
 8. If a DSIRE record is only a maintenance/update note with no detail URL or useful program corpus, archive it as `low_information_update_record` instead of letting it remain in `manual_review`.
 9. If a visible sample match still produces `likely_eligible` or `needs_information`, repair the specific unknown canonical field and rerun the sample generator. The admin fixture should not be published with unresolved visible statuses.
+10. Do not classify from generic search snippets or unrelated pages that happen to contain title words like city, county, energy, business, utility, or residential.
 
 ## Future Cron Automation
 

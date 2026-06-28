@@ -23,6 +23,12 @@ const fetchRetryDelayMs = Math.max(0, Number(process.env.AVAILABILITY_REVIEW_FET
 const concurrency = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_CONCURRENCY || 8));
 const searchFallback = process.env.AVAILABILITY_REVIEW_SEARCH_FALLBACK === "1";
 const searchFallbackLimit = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_SEARCH_FALLBACK_LIMIT || 3));
+const searchProviderNames = uniqueStrings(
+  String(process.env.AVAILABILITY_REVIEW_SEARCH_PROVIDERS || "duckduckgo,bing")
+    .split(",")
+    .map((provider) => provider.trim().toLowerCase())
+).filter((provider) => ["duckduckgo", "bing"].includes(provider));
+const searchTimeoutMs = Number(process.env.AVAILABILITY_REVIEW_SEARCH_TIMEOUT_MS || 12000);
 const writeDynamoDb = process.argv.includes("--write-dynamodb");
 const generatedAt = new Date().toISOString();
 
@@ -45,6 +51,8 @@ const output = {
   fetchRetryDelayMs,
   searchFallback,
   searchFallbackLimit,
+  searchProviderNames,
+  searchTimeoutMs,
   statusCounts,
   reviews
 };
@@ -131,43 +139,110 @@ function availabilityReviewFromFetchedSources(opportunity, corpusText, fetched, 
 async function fetchSearchFallbackSources(opportunity) {
   const searchResults = await searchOpportunitySources(opportunity);
   const urls = searchResults
+    .filter((result) => isUsableSearchResult(opportunity, result))
     .map((result) => result.url)
     .filter((url) => /^https?:\/\//i.test(url))
     .filter((url) => !isLowValueAvailabilitySourceUrl(url))
     .slice(0, searchFallbackLimit);
+
   if (urls.length === 0) return [];
   return mapWithConcurrency(urls, 2, fetchSourceText);
 }
 
 async function searchOpportunitySources(opportunity) {
-  const query = [
-    opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityName || opportunity.opportunityId,
-    opportunity.state,
-    opportunity.sourceName && opportunity.sourceName !== "DSIRE" ? opportunity.sourceName : null
-  ].filter(Boolean).join(" ");
-  const url = `https://duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+  const results = [];
+  const queries = searchQueriesFor(opportunity);
+
+  for (const query of queries) {
+    for (const provider of searchProviderNames) {
+      const providerResults = await searchProvider(provider, query);
+      for (const result of providerResults) {
+        results.push({
+          ...result,
+          query,
+          score: scoreSearchResult(opportunity, result)
+        });
+      }
+      if (results.some((result) => result.score >= 3)) break;
+    }
+    if (results.some((result) => result.score >= 4)) break;
+  }
+
+  return dedupeSearchResults(results)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, searchFallbackLimit * 2);
+}
+
+function searchQueriesFor(opportunity) {
+  const title = opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityName || opportunity.opportunityId;
+  const state = opportunity.state && opportunity.state !== "US" ? opportunity.state : null;
+  const administrator = opportunity.administrator || null;
+  const sourceName = opportunity.sourceName && opportunity.sourceName !== "DSIRE" ? opportunity.sourceName : null;
+  return uniqueStrings([
+    [`"${title}"`, state, administrator || sourceName].filter(Boolean).join(" "),
+    [`"${title}"`, state, "program"].filter(Boolean).join(" "),
+    [title, state, administrator || sourceName, "rebate incentive grant"].filter(Boolean).join(" ")
+  ]);
+}
+
+async function searchProvider(provider, query) {
+  const url =
+    provider === "bing"
+      ? `https://www.bing.com/search?q=${encodeURIComponent(query)}`
+      : `https://duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), searchTimeoutMs);
 
   try {
     const response = await fetch(url, {
       headers: {
-        "user-agent": "RetroFi availability review/1.0"
-      }
+        "user-agent": "Mozilla/5.0 RetroFi availability review/1.0"
+      },
+      signal: controller.signal
     });
     if (!response.ok) return [];
     const html = await response.text();
-    return parseDuckDuckGoResults(html);
+    return provider === "bing" ? parseBingResults(html) : parseDuckDuckGoResults(html);
   } catch {
     return [];
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
 function parseDuckDuckGoResults(html) {
   const results = [];
-  for (const match of String(html || "").matchAll(/<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>(.*?)<\/a>/g)) {
+  const blocks = String(html || "").match(/<div[^>]+class="result[^"]*"[\s\S]*?(?=<div[^>]+class="result[^"]*"|<\/body>)/g) || [];
+  for (const block of blocks) {
+    const match = /<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i.exec(block);
+    if (!match) continue;
     const url = normalizeDuckDuckGoUrl(decodeHtml(match[1]));
     const title = stripHtmlFragment(match[2]);
+    const snippet = stripHtmlFragment(
+      (/<a[^>]+class="result__snippet"[^>]*>([\s\S]*?)<\/a>/i.exec(block) ||
+        /<div[^>]+class="result__snippet"[^>]*>([\s\S]*?)<\/div>/i.exec(block) ||
+        [])[1]
+    );
     if (!url) continue;
-    results.push({ url, title });
+    results.push({ provider: "duckduckgo", url, title, snippet });
+  }
+  return results;
+}
+
+function parseBingResults(html) {
+  const results = [];
+  const blocks = String(html || "").match(/<li class="b_algo"[\s\S]*?(?=<li class="b_algo"|<li class="b_ans"|<\/ol>)/g) || [];
+  for (const block of blocks) {
+    const match =
+      /<h2[^>]*>\s*<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>\s*<\/h2>/i.exec(block) ||
+      /<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i.exec(block);
+    if (!match) continue;
+    const url = normalizeBingUrl(decodeHtml(match[1]));
+    const title = stripHtmlFragment(match[2]);
+    const snippet = stripHtmlFragment((/<p[^>]*>([\s\S]*?)<\/p>/i.exec(block) || [])[1]);
+    if (!url) continue;
+    results.push({ provider: "bing", url, title, snippet });
   }
   return results;
 }
@@ -181,6 +256,173 @@ function normalizeDuckDuckGoUrl(rawUrl) {
   } catch {
     return null;
   }
+}
+
+function normalizeBingUrl(rawUrl) {
+  const value = String(rawUrl || "");
+  try {
+    const parsed = new URL(value.startsWith("//") ? `https:${value}` : value);
+    const redirected = parsed.searchParams.get("u");
+    if (parsed.hostname.includes("bing.com") && redirected) {
+      return decodeBingRedirect(redirected) || null;
+    }
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+function decodeBingRedirect(value) {
+  try {
+    const encoded = String(value || "").replace(/^a1/i, "").replace(/-/g, "+").replace(/_/g, "/");
+    return Buffer.from(encoded, "base64").toString("utf8") || null;
+  } catch {
+    return null;
+  }
+}
+
+function scoreSearchResult(opportunity, result) {
+  const haystack = [result.title, result.snippet, result.url].filter(Boolean).join(" ").toLowerCase();
+  const tokens = significantSearchTokens(opportunity);
+  const overlap = tokens.filter((token) => haystack.includes(token)).length;
+  let score = overlap;
+  if (isLowValueAvailabilitySourceUrl(result.url) || isLowValueSearchResultUrl(result.url)) score -= 4;
+  if (/\b(rebate|rebates|incentive|incentives|grant|grants|loan|loans|financing|pace|tax credit|tax exemption|property tax|program|application|eligible|eligibility|solar|battery|heat pump|lighting|hvac|efficiency)\b/i.test(haystack)) {
+    score += 1;
+  }
+  if (isLikelyOfficialSearchResult(opportunity, result.url)) score += 1;
+  return score;
+}
+
+function isUsableSearchResult(opportunity, result) {
+  const tokens = significantSearchTokens(opportunity);
+  if (tokens.length === 0) return false;
+  const haystack = [result.title, result.snippet, result.url].filter(Boolean).join(" ").toLowerCase();
+  const urlHaystack = String(result.url || "").toLowerCase();
+  const overlap = tokens.filter((token) => haystack.includes(token)).length;
+  const urlOverlap = tokens.filter((token) => urlHaystack.includes(token)).length;
+  if (overlap < Math.min(2, tokens.length)) return false;
+  if (urlOverlap < 1) return false;
+  return isLikelyOfficialSearchResult(opportunity, result.url) || (result.score >= 5 && hasProgramLanguageInUrl(result.url));
+}
+
+function significantSearchTokens(opportunity) {
+  const stopwords = new Set([
+    "and",
+    "for",
+    "the",
+    "city",
+    "county",
+    "state",
+    "home",
+    "homes",
+    "business",
+    "with",
+    "from",
+    "gas",
+    "water",
+    "power",
+    "department",
+    "association",
+    "cooperative",
+    "district",
+    "municipal",
+    "program",
+    "programs",
+    "rebate",
+    "rebates",
+    "incentive",
+    "incentives",
+    "energy",
+    "efficiency",
+    "efficient",
+    "commercial",
+    "residential",
+    "electric",
+    "electricity",
+    "utility",
+    "utilities",
+    "loan",
+    "loans",
+    "grant",
+    "grants",
+    "financing",
+    "tax",
+    "investment",
+    "credit",
+    "credits"
+  ]);
+  const title = [opportunity.canonicalTitle, opportunity.normalizedTitle, opportunity.opportunityName, opportunity.name, opportunity.title]
+    .filter(Boolean)
+    .join(" ");
+  return [...new Set(title.toLowerCase().match(/[a-z0-9]{3,}/g) || [])].filter((token) => !stopwords.has(token));
+}
+
+function isLikelyOfficialSearchResult(opportunity, url) {
+  const hostname = hostnameFor(url);
+  if (!hostname) return false;
+  const sourceTokens = [opportunity.administrator, opportunity.sourceName, opportunity.opportunityName]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+    .match(/[a-z0-9]{4,}/g) || [];
+  const tokenMatch = sourceTokens.some((token) => hostname.includes(token));
+  if (tokenMatch) return true;
+  if (hostname.endsWith(".gov") || hostname.includes(".gov.")) {
+    const titleTokens = significantSearchTokens(opportunity);
+    return titleTokens.some((token) => hostname.includes(token) || String(url).toLowerCase().includes(token));
+  }
+  return false;
+}
+
+function hasProgramLanguageInUrl(url) {
+  const normalizedUrl = String(url || "").toLowerCase();
+  return [
+    "rebate",
+    "incentive",
+    "grant",
+    "loan",
+    "financing",
+    "pace",
+    "tax",
+    "credit",
+    "exemption",
+    "program",
+    "application",
+    "solar",
+    "battery",
+    "heat",
+    "pump",
+    "lighting",
+    "hvac",
+    "efficiency",
+    "renewable",
+    "electrification",
+    "ev"
+  ].some((term) => normalizedUrl.includes(term));
+}
+
+function isLowValueSearchResultUrl(url) {
+  const hostname = hostnameFor(url);
+  return /(?:google|bing|duckduckgo|facebook|linkedin|youtube|wikipedia|merriam-webster|dictionary|cambridge|advanceautoparts)\./i.test(hostname || "");
+}
+
+function hostnameFor(url) {
+  try {
+    return new URL(url).hostname.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function dedupeSearchResults(results) {
+  const byUrl = new Map();
+  for (const result of results) {
+    if (!result.url) continue;
+    const existing = byUrl.get(result.url);
+    if (!existing || result.score > existing.score) byUrl.set(result.url, result);
+  }
+  return [...byUrl.values()];
 }
 
 function stripHtmlFragment(value) {
@@ -302,6 +544,8 @@ function buildReport(output) {
     `Source fetch retry delay: ${output.fetchRetryDelayMs} ms`,
     `Search fallback enabled: ${output.searchFallback ? "yes" : "no"}`,
     `Search fallback source limit: ${output.searchFallbackLimit}`,
+    `Search providers: ${output.searchProviderNames?.join(", ") || "none"}`,
+    `Search timeout: ${output.searchTimeoutMs} ms`,
     "",
     "## Status Counts",
     "",
