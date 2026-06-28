@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) GPT Pro availability research batch
+
+- Added `matching:availability-apply-repairs` to import official-source GPT Pro/manual availability repair JSON into the public opportunity review artifact.
+- Applied 50 GPT Pro researched opportunity availability repairs, reducing public uncertain records from 301 to 253.
+- Regenerated public matching fixtures, archive reports, and the next GPT Pro research target packet after moving newly unavailable/upcoming opportunities out of active public fixtures.
+
 ## 2026-06-27 - Codex (GPT-5) conservative availability uncertainty repair
 
 - Added a conservative uncertainty-only availability repair workflow that re-reviews only currently uncertain public opportunities and merges safe direct-source classifications into the public review artifact.

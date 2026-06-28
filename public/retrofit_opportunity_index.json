@@ -3,7 +3,7 @@
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
   "generatedAt": "2026-06-27T00:45:30.865Z",
   "matchingNow": "2026-06-27T00:45:05.723Z",
-  "opportunityCount": 1566,
+  "opportunityCount": 1556,
   "totalOpportunityRecordCount": 2096,
   "archivedOpportunityCount": 245,
   "retrofitCount": 86,
@@ -24,7 +24,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 404,
+      "opportunityCount": 402,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -139,7 +139,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -2253,21 +2253,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
           "opportunityName": "Energy Efficiency Grant Program for Nonprofit Organizations",
           "sourceName": "Silicon Valley Power Business Programs",
@@ -2312,7 +2297,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
@@ -4812,7 +4797,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
@@ -4906,7 +4891,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2004",
@@ -4953,7 +4938,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4595",
@@ -5370,23 +5355,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
-          "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
-          "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
-          "applicationUrl": null,
-          "state": "MD",
-          "programType": "Sales Tax Incentive",
-          "administrator": "Comptroller of Maryland",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2306",
@@ -5978,7 +5946,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3652",
@@ -5993,7 +5961,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22683",
@@ -7154,7 +7122,7 @@
           "matchedTerms": [
             "lighting controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
@@ -7740,7 +7708,7 @@
           "matchedTerms": [
             "lighting controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
@@ -7758,7 +7726,7 @@
             "lighting controls",
             "occupancy sensor"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4245",
@@ -8452,7 +8420,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 810,
+      "opportunityCount": 806,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -8587,7 +8555,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
@@ -9936,21 +9904,6 @@
           "availabilityStatus": "rolling"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3488",
           "opportunityName": "Cape Light Compact - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -10818,7 +10771,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4429",
@@ -11594,7 +11547,7 @@
           "matchedTerms": [
             "chiller"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
@@ -11609,7 +11562,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:customer-directed-rebate",
@@ -12605,23 +12558,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioning"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
           "opportunityName": "Energy Efficiency Grant Program for Nonprofit Organizations",
           "sourceName": "Silicon Valley Power Business Programs",
@@ -12694,7 +12630,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
@@ -13598,7 +13534,7 @@
           "matchedTerms": [
             "air conditioner"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
@@ -15931,7 +15867,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
@@ -17507,7 +17443,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2121",
@@ -17678,7 +17614,7 @@
           "matchedTerms": [
             "air conditioner"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
@@ -17804,7 +17740,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5882",
@@ -17864,7 +17800,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2004",
@@ -17909,7 +17845,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -17924,7 +17860,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2",
@@ -17939,7 +17875,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -18828,21 +18764,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
-          "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
-          "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
-          "applicationUrl": null,
-          "state": "MD",
-          "programType": "Sales Tax Incentive",
-          "administrator": "Comptroller of Maryland",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2306",
@@ -20021,21 +19942,6 @@
           "availabilityStatus": "uncertain"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22427",
-          "opportunityName": "Technology and Equipment for Clean Heating (TECH) Initiative",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22427/technology-and-equipment-for-clean-heating-tech-initiative",
-          "websiteUrl": "https://energy-solution.com/tech-incentives/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Energy Solutions",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3117",
           "opportunityName": "TEP - Residential Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -20114,7 +20020,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1510",
@@ -21152,7 +21058,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 533,
+      "opportunityCount": 531,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -22176,23 +22082,6 @@
           "availabilityStatus": "rolling"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3488",
           "opportunityName": "Cape Light Compact - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -22857,7 +22746,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4429",
@@ -23479,7 +23368,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
@@ -23496,7 +23385,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2260",
@@ -25031,7 +24920,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
@@ -27980,7 +27869,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
@@ -28050,7 +27939,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2003",
@@ -28086,7 +27975,7 @@
             "mini split",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -28104,7 +27993,7 @@
             "heat pump",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4595",
@@ -29580,23 +29469,6 @@
           "availabilityStatus": "uncertain"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22427",
-          "opportunityName": "Technology and Equipment for Clean Heating (TECH) Initiative",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22427/technology-and-equipment-for-clean-heating-tech-initiative",
-          "websiteUrl": "https://energy-solution.com/tech-incentives/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Energy Solutions",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3117",
           "opportunityName": "TEP - Residential Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -29649,7 +29521,7 @@
             "heat pump",
             "mini split"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1510",
@@ -34985,7 +34857,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
@@ -35038,7 +34910,7 @@
           "matchedTerms": [
             "zoning"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2003",
@@ -35074,7 +34946,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -35092,7 +34964,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -36037,7 +35909,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2185",
@@ -39321,7 +39193,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4200",
@@ -39443,7 +39315,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -40366,7 +40238,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2689",
@@ -40791,7 +40663,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
@@ -41373,7 +41245,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -43668,7 +43540,7 @@
           "matchedTerms": [
             "duct sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2410",
@@ -43857,7 +43729,7 @@
           "matchedTerms": [
             "duct sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3652",
@@ -43874,7 +43746,7 @@
           "matchedTerms": [
             "duct sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1925",
@@ -44046,7 +43918,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 347,
+      "opportunityCount": 345,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -44897,7 +44769,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5831",
@@ -44950,7 +44822,7 @@
             "geothermal heat pump",
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2029",
@@ -45741,7 +45613,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1683",
@@ -45758,7 +45630,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22094",
@@ -46701,7 +46573,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2801",
@@ -46735,7 +46607,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5416",
@@ -46769,7 +46641,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3554",
@@ -48056,7 +47928,7 @@
             "ground source heat pump",
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:115",
@@ -48192,7 +48064,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5882",
@@ -48260,7 +48132,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4210",
@@ -49032,7 +48904,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4552",
@@ -49061,23 +48933,6 @@
           "state": "TN",
           "programType": "Sales Tax Incentive",
           "administrator": "Tennessee Department of Revenue",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
-          "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
-          "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
-          "applicationUrl": null,
-          "state": "MD",
-          "programType": "Sales Tax Incentive",
-          "administrator": "Comptroller of Maryland",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -49721,23 +49576,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
-          "opportunityName": "USDA - Rural Energy for America Program (REAP) Grants",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
-          "websiteUrl": "http://www.rd.usda.gov/reap",
-          "applicationUrl": null,
-          "state": "US",
-          "programType": "Grant Program",
-          "administrator": "U.S. Department of Agriculture",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2511",
           "opportunityName": "USDA - Rural Energy for America Program (REAP) Loan Guarantees",
           "sourceName": "DSIRE",
@@ -50106,7 +49944,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 289,
+      "opportunityCount": 287,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -50736,23 +50574,6 @@
             "heat pump water heater"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump water heater"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3488",
@@ -51483,7 +51304,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2259",
@@ -53846,7 +53667,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -53863,7 +53684,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2582",
@@ -54631,23 +54452,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22427",
-          "opportunityName": "Technology and Equipment for Clean Heating (TECH) Initiative",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22427/technology-and-equipment-for-clean-heating-tech-initiative",
-          "websiteUrl": "https://energy-solution.com/tech-incentives/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Energy Solutions",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump water heater"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
           "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
           "sourceName": "DSIRE",
@@ -54662,7 +54466,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2185",
@@ -55654,7 +55458,7 @@
           "matchedTerms": [
             "solar water heating"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2948",
@@ -56251,7 +56055,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2801",
@@ -56285,7 +56089,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:85",
@@ -56319,7 +56123,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3554",
@@ -57024,7 +56828,7 @@
           "matchedTerms": [
             "solar water heating"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4552",
@@ -57196,7 +57000,7 @@
           "matchedTerms": [
             "solar water heating"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3352",
@@ -57282,7 +57086,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1804",
@@ -57598,7 +57402,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 321,
+      "opportunityCount": 320,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -61623,7 +61427,7 @@
             "refrigerator",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
@@ -61748,7 +61552,7 @@
             "refrigerator",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2004",
@@ -62138,21 +61942,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
-          "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
-          "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
-          "applicationUrl": null,
-          "state": "MD",
-          "programType": "Sales Tax Incentive",
-          "administrator": "Comptroller of Maryland",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3256",
@@ -65642,7 +65431,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 379,
+      "opportunityCount": 378,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -68127,23 +67916,6 @@
           "availabilityStatus": "uncertain"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1230",
           "opportunityName": "Energy Efficient Residential Construction Tax Credit (Personal)",
           "sourceName": "DSIRE",
@@ -68175,7 +67947,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3947",
@@ -70674,7 +70446,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4554",
@@ -70810,7 +70582,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -70827,7 +70599,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -71592,7 +71364,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
@@ -71660,7 +71432,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22683",
@@ -73019,7 +72791,7 @@
           "matchedTerms": [
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22718",
@@ -75149,7 +74921,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2289",
@@ -75236,7 +75008,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -75254,7 +75026,7 @@
             "air sealing",
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -77173,7 +76945,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3752",
@@ -77972,7 +77744,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -77989,7 +77761,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4450",
@@ -79554,7 +79326,7 @@
           "matchedTerms": [
             "building automation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
@@ -79607,7 +79379,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 75,
+      "opportunityCount": 74,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
@@ -79973,23 +79745,6 @@
             "energy management"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy management"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3681",
@@ -80581,7 +80336,7 @@
           "matchedTerms": [
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:retrocommissioning-program",
@@ -80721,7 +80476,7 @@
           "matchedTerms": [
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2667",
@@ -81274,7 +81029,7 @@
           "matchedTerms": [
             "metering"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2542",
@@ -81376,7 +81131,7 @@
           "matchedTerms": [
             "metering"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22111",
@@ -82064,7 +81819,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 126,
+      "opportunityCount": 125,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22441",
@@ -82397,7 +82152,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4082",
@@ -83168,7 +82923,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:85",
@@ -83203,7 +82958,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3554",
@@ -83434,7 +83189,7 @@
             "solar pv",
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3036",
@@ -83767,24 +83522,6 @@
             "photovoltaic"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4054",
-          "opportunityName": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
-          "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Industry Recruitment/Support",
-          "administrator": "State Treasurer's Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar photovoltaic",
-            "photovoltaic"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5106",
@@ -84191,7 +83928,7 @@
           "matchedTerms": [
             "solar pv"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22497",
@@ -84572,7 +84309,7 @@
           "matchedTerms": [
             "small wind"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
@@ -84983,7 +84720,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:192",
@@ -85051,7 +84788,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:146",
@@ -85173,7 +84910,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 44,
+      "opportunityCount": 43,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
@@ -85244,7 +84981,7 @@
             "combined heat and power",
             "chp"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5836",
@@ -85296,7 +85033,7 @@
           "matchedTerms": [
             "cogeneration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:customer-directed-rebate",
@@ -85367,23 +85104,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "combined heat and power"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22723",
           "opportunityName": "Energy Efficiency Investment Fund",
           "sourceName": "DSIRE",
@@ -85417,7 +85137,7 @@
           "matchedTerms": [
             "combined heat and power"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4132",
@@ -85537,7 +85257,7 @@
           "matchedTerms": [
             "cogeneration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:192",
@@ -85868,7 +85588,7 @@
           "matchedTerms": [
             "cogeneration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4066",
@@ -85957,7 +85677,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 107,
+      "opportunityCount": 105,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4495",
@@ -86266,7 +85986,7 @@
             "biomass",
             "biogas"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5836",
@@ -86403,7 +86123,7 @@
             "biomass",
             "biogas"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22420",
@@ -86625,7 +86345,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2801",
@@ -86676,7 +86396,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:192",
@@ -87051,7 +86771,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4210",
@@ -87464,24 +87184,6 @@
           "availabilityStatus": "uncertain"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4054",
-          "opportunityName": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
-          "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Industry Recruitment/Support",
-          "administrator": "State Treasurer's Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "biomass",
-            "biogas"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2576",
           "opportunityName": "Sales and Use Tax Exemption for Community Renewable Energy Projects",
           "sourceName": "DSIRE",
@@ -87671,23 +87373,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:917",
-          "opportunityName": "USDA - Rural Energy for America Program (REAP) Grants",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
-          "websiteUrl": "http://www.rd.usda.gov/reap",
-          "applicationUrl": null,
-          "state": "US",
-          "programType": "Grant Program",
-          "administrator": "U.S. Department of Agriculture",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "biomass"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2511",
           "opportunityName": "USDA - Rural Energy for America Program (REAP) Loan Guarantees",
           "sourceName": "DSIRE",
@@ -87771,7 +87456,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5840",
@@ -87807,7 +87492,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 184,
+      "opportunityCount": 181,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
@@ -87906,7 +87591,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2013",
@@ -88248,7 +87933,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22233",
@@ -88463,23 +88148,6 @@
             "energy storage"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22747",
@@ -89103,7 +88771,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4951",
@@ -89730,7 +89398,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:558",
@@ -90416,7 +90084,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3434",
@@ -90466,40 +90134,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22498",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22498/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Loan Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "battery storage"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22496",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22496/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Grant Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "battery storage"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22490",
           "opportunityName": "Tax Credit for Residential Energy Storage Systems",
           "sourceName": "DSIRE",
@@ -90546,7 +90180,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
@@ -90576,7 +90210,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22737",
@@ -90878,7 +90512,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 13,
+      "opportunityCount": 12,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2013",
@@ -90964,23 +90598,6 @@
             "thermal energy storage"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "thermal energy storage"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22122",
@@ -91227,7 +90844,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 373,
+      "opportunityCount": 367,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -91952,7 +91569,7 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
@@ -92106,7 +91723,7 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-transport",
@@ -92123,7 +91740,7 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_16456",
@@ -92534,7 +92151,7 @@
             "ev charger",
             "evse"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1808",
@@ -93371,23 +92988,6 @@
             "electric vehicle charging"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
-          "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
-          "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Loan Program",
-          "administrator": "California Energy Commission",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
@@ -94544,7 +94144,7 @@
           "matchedTerms": [
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4583",
@@ -95767,7 +95367,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22320",
@@ -95936,24 +95536,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21401",
-          "opportunityName": "Power Your Drive for Apartments and Condos",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://www.sdge.com/node/21401",
-          "applicationUrl": "https://www.sdge.com/node/21401",
-          "state": "CA",
-          "programType": "utility_program",
-          "administrator": "SDG&E",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charging"
-          ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
@@ -95971,23 +95554,6 @@
             "ev charging"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21406",
-          "opportunityName": "Power Your Drive for Workplaces",
-          "sourceName": "San Diego Gas & Electric Business Programs",
-          "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
-          "websiteUrl": "https://www.sdge.com/node/21406",
-          "applicationUrl": "https://www.sdge.com/node/21406",
-          "state": "CA",
-          "programType": "utility_program",
-          "administrator": "SDG&E",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charging"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2552",
@@ -96034,7 +95600,7 @@
           "matchedTerms": [
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22523",
@@ -96102,7 +95668,7 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22526",
@@ -96339,7 +95905,7 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22337",
@@ -96372,21 +95938,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4054",
-          "opportunityName": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
-          "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Industry Recruitment/Support",
-          "administrator": "State Treasurer's Office",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3256",
@@ -96656,7 +96207,7 @@
           "matchedTerms": [
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22665",
@@ -96830,40 +96381,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22498",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22498/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Loan Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22496",
-          "opportunityName": "Sustainable Rebuilding Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22496/sustainable-rebuilding-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "CO",
-          "programType": "Grant Program",
-          "administrator": "Colorado Energy Office",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22397",
           "opportunityName": "SWEPCO - EV Residential Charging Station Rebate Program",
           "sourceName": "DSIRE",
@@ -96948,7 +96465,7 @@
           "matchedTerms": [
             "evse"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1510",
@@ -98580,7 +98097,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1808",
@@ -101086,7 +100603,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2552",
@@ -101770,7 +101287,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1510",
@@ -102352,7 +101869,7 @@
           "matchedTerms": [
             "dcfc"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22329",
@@ -102787,7 +102304,7 @@
             "dc fast",
             "fast charger"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22523",
@@ -103227,7 +102744,7 @@
             "make ready",
             "make-ready"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22319",
@@ -104644,7 +104161,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
@@ -104661,7 +104178,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:customer-directed-rebate",
@@ -105004,7 +104521,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
@@ -105157,7 +104674,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1941",
@@ -105293,7 +104810,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
@@ -105724,7 +105241,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2325",
@@ -106035,7 +105552,7 @@
             "aerator",
             "showerhead"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22123",
@@ -108891,7 +108408,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
@@ -108908,7 +108425,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -110964,7 +110481,7 @@
           "matchedTerms": [
             "dishwasher"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2584",
@@ -112045,7 +111562,7 @@
         "gas",
         "electric"
       ],
-      "opportunityCount": 48,
+      "opportunityCount": 47,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
@@ -112148,23 +111665,6 @@
             "oven"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "oven"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3901",
@@ -113872,7 +113372,7 @@
           "matchedTerms": [
             "induction"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2003",
@@ -117280,7 +116780,7 @@
             "waste heat recovery",
             "heat recovery"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3308",
@@ -117332,7 +116832,7 @@
           "matchedTerms": [
             "heat recovery"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1158",
@@ -117845,7 +117345,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 9,
+      "opportunityCount": 8,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22775",
@@ -117880,23 +117380,6 @@
             "electrification equipment"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electrification equipment"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22718",
@@ -120191,7 +119674,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5854",
@@ -120421,7 +119904,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3026",
@@ -121243,7 +120726,7 @@
             "retro-commissioning",
             "commissioning"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4132",
@@ -121655,25 +121138,8 @@
         "program_rule_value_only"
       ],
       "typicalBillTypes": [],
-      "opportunityCount": 6,
+      "opportunityCount": 5,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22709",
-          "opportunityName": "California - Home Electrification and Appliance Rebate (HEAR) Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
-          "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "TECH Clean California",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy star certification"
-          ],
-          "availabilityStatus": "uncertain"
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3342",
           "opportunityName": "Cascade Natural Gas - Conservation Incentives for New and Existing Homes",
@@ -122440,15 +121906,15 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T02:56:16.120Z",
+  "availabilityReviewedAt": "2026-06-28T03:42:01.909Z",
   "availabilityStatusCounts": {
-    "uncertain": 301,
-    "active": 1237,
-    "rolling": 28,
-    "upcoming": 45,
-    "unavailable": 8
+    "uncertain": 253,
+    "active": 1254,
+    "rolling": 49,
+    "upcoming": 48,
+    "unavailable": 15
   },
-  "hiddenUpcomingOpportunityCount": 45,
+  "hiddenUpcomingOpportunityCount": 48,
   "upcomingOpportunities": [
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2895",
@@ -123141,6 +122607,79 @@
       "retrofitTypes": []
     },
     {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5131",
+      "opportunityName": "Energy Efficiency Financing for Public Sector Projects",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
+      "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
+      "state": "CA",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "California Energy Commission says it is no longer accepting new applications effective November 28, 2025, but is updating the solicitations and plans to reopen them in the future.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act",
+          "https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act/low-interest-loans"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official page is closed now but expressly indicates a future reopening."
+      },
+      "retrofitTypes": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "combined_heat_and_power_system",
+          "displayName": "Combined heat and power system",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "thermal_energy_storage",
+          "displayName": "Thermal energy storage",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "isPhysicalRetrofit": true
+        }
+      ]
+    },
+    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:22634",
       "opportunityName": "Florida - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
       "sourceName": "DSIRE",
@@ -123711,6 +123250,106 @@
       "retrofitTypes": []
     },
     {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4054",
+      "opportunityName": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
+      "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
+      "state": "CA",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "CAEATFA's 2026 application schedule shows an upcoming August 7-August 28, 2026 application window, and the program is authorized through January 1, 2028.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.treasurer.ca.gov/caeatfa/ste",
+          "https://www.treasurer.ca.gov/sites/default/files/2026-03/amended.pdf"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current date is between scheduled application windows, but an official future window is scheduled."
+      },
+      "retrofitTypes": [
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "isPhysicalRetrofit": true
+        }
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
+      "opportunityName": "Sales Tax Holiday for Energy-Efficient Appliances",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
+      "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
+      "state": "MD",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Maryland Comptroller describes the ENERGY STAR tax holiday as recurring from the Saturday before the third Monday in February through the third Monday in February; the 2026 event was February 14-16.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.marylandcomptroller.gov/about/comptroller/programs.html"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "The 2026 event has passed as of June 28, 2026, but official source supports a recurring future holiday."
+      },
+      "retrofitTypes": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "isPhysicalRetrofit": true
+        }
+      ]
+    },
+    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:236",
       "opportunityName": "Small-Scale Energy Loan Program",
       "sourceName": "DSIRE",
@@ -123801,5 +123440,5 @@
       "retrofitTypes": []
     }
   ],
-  "archivedUnavailableOpportunityCount": 8
+  "archivedUnavailableOpportunityCount": 15
 }

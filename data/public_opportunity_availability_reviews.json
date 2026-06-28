@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T02:56:16.120Z",
+  "generatedAt": "2026-06-28T03:42:01.909Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,11 +9,11 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "uncertain": 301,
-    "active": 1237,
-    "rolling": 28,
-    "upcoming": 45,
-    "unavailable": 8
+    "uncertain": 253,
+    "active": 1254,
+    "rolling": 49,
+    "upcoming": 48,
+    "unavailable": 15
   },
   "reviews": [
     {
@@ -198,27 +198,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5823/aep-swepco-louisiana-commercial-solutions-standard-offer-program",
       "websiteUrl": "https://www.swepco.com/savings/business/louisiana",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program Rebate Program LA",
-        "reasons": [],
+        "evidenceText": "SWEPCO and its program portal describe business incentives for eligible new construction and retrofit projects and provide an Enroll Now path.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.swepco.com/savings/business/louisiana"
+          "https://www.swepco.com/savings/business/rebates/",
+          "https://swepcosolutions.com/programs/business-programs/louisiana-commercial-solutions-standard-offer-program/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://www.swepco.com/savings/business/louisiana"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official utility/program pages support active program enrollment."
       }
     },
     {
@@ -4009,24 +4008,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5131/energy-efficiency-financing-for-public-sector-projects",
       "websiteUrl": "http://www.energy.ca.gov/efficiency/financing/index.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Energy Efficiency Financing for Public Sector Projects California Energy Commission Loan Program CA Energy Conservation Assistance Act | California Energy Commission Skip to main content CA.gov Share via Facebook Share via Twitter Share via LinkedIn Share via ",
+        "evidenceText": "California Energy Commission says it is no longer accepting new applications effective November 28, 2025, but is updating the solicitations and plans to reopen them in the future.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "future_opening_language"
         ],
         "sourceUrlsChecked": [
-          "http://www.energy.ca.gov/efficiency/financing/index.html"
+          "https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act",
+          "https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act/low-interest-loans"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official page is closed now but expressly indicates a future reopening."
       }
     },
     {
@@ -4094,27 +4095,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3801/energy-efficient-schools-initiative-loans",
       "websiteUrl": "https://www.tn.gov/eesi/apply-now.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Energy Efficient Schools Initiative - Loans Energy Efficient Schools Initiative Loan Program TN",
-        "reasons": [],
+        "evidenceText": "Tennessee EESI pages state Apply Now and describe the current low-interest revolving loan mechanism for school energy efficiency projects; the application portal provides a Start Application action.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.tn.gov/eesi/apply-now.html"
+          "https://www.tn.gov/eesi.html",
+          "https://www.tn.gov/eesi/eesi-programs.html",
+          "https://eesi.tvaenergyrightsolutions.com/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 503",
-            "url": "https://www.tn.gov/eesi/apply-now.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Official pages include some older deadline references, but the current application portal is live."
       }
     },
     {
@@ -8655,27 +8656,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.pvrea.com/rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Poudre Valley REA - Energy Efficiency Rebate Program Poudre Valley REA Rebate Program CO",
-        "reasons": [],
+        "evidenceText": "Poudre Valley REA lists appliance, heating, and cooling rebates and instructs members to submit rebate applications within 90 days, with rebates subject to funding and availability.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.pvrea.com/rebates"
+          "https://pvrea.coop/for-members/rebates/",
+          "https://pvrea.coop/for-members/rebates/heating-cooling-rebates/",
+          "https://pvrea.coop/for-members/rebates/appliance-rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://www.pvrea.com/rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official cooperative pages list active rebate application procedures."
       }
     },
     {
@@ -8829,22 +8830,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3907/pse-and-g-residential-efficiency-program",
       "websiteUrl": "https://homeenergy.pseg.com/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PSE&G - Residential Efficiency Program PSE&G Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "PSE&G's Home Energy and appliance rebate pages provide 2026 residential rebate application paths for qualifying purchases submitted within the stated time period.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://homeenergy.pseg.com/"
+          "https://homeenergy.pseg.com/",
+          "https://appliancerebate.pseg.com/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official PSE&G rebate portal supports active availability."
       }
     },
     {
@@ -8911,27 +8916,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
       "websiteUrl": "https://www.pse.com/rebates/multifamily-retrofit",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program Puget Sound Energy Rebate Program WA",
-        "reasons": [],
+        "evidenceText": "PSE says it offers rebates and grants to offset the cost of in-unit and common area multifamily upgrades, with eligible properties potentially qualifying for higher rebates.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.pse.com/rebates/multifamily-retrofit"
+          "https://www.pse.com/en/rebates/multifamily-retrofit"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 500",
-            "url": "https://www.pse.com/rebates/multifamily-retrofit"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official PSE page supports active program availability."
       }
     },
     {
@@ -9738,27 +9741,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4426/sales-tax-holiday-for-energy-efficient-appliances",
       "websiteUrl": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales Tax Holiday for Energy-Efficient Appliances Comptroller of Maryland Sales Tax Incentive MD",
-        "reasons": [],
+        "evidenceText": "Maryland Comptroller describes the ENERGY STAR tax holiday as recurring from the Saturday before the third Monday in February through the third Monday in February; the 2026 event was February 14-16.",
+        "reasons": [
+          "future_opening_language"
+        ],
         "sourceUrlsChecked": [
-          "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/"
+          "https://www.marylandcomptroller.gov/about/comptroller/programs.html"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "http://comptroller.marylandtaxes.com/Public_Services/Agency_Information/Office_of_the_Comptroller/Comptroller_Initiatives/Shop_Maryland_Tax-free_Week/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "The 2026 event has passed as of June 28, 2026, but official source supports a recurring future holiday."
       }
     },
     {
@@ -10824,27 +10825,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
       "websiteUrl": "https://tnmpefficiency.com/residential.php#existing-homes",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs Frontier Energy Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "TNMP's residential existing homes page describes Residential and Hard-to-Reach Standard Offer Programs and provides enrollment/application paths for project sponsors.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://tnmpefficiency.com/residential.php#existing-homes"
+          "https://tnmp.com/energy-efficiency/residential/existing-homes"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://tnmpefficiency.com/residential.php#existing-homes"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official utility program page supports active participation."
       }
     },
     {
@@ -10855,27 +10854,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3652/town-of-babylon-long-island-green-homes-program",
       "websiteUrl": "https://www.ligreenhomes.com/index.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Town of Babylon - Long Island Green Homes Program Town of Babylon PACE Financing NY",
-        "reasons": [],
+        "evidenceText": "Town of Babylon's Green Homes page directs homeowners to fill out an intake form to apply for a loan and describes low-cost financing for eligible improvements.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.ligreenhomes.com/index.html"
+          "https://www.townofbabylonny.gov/145/Green-Homes",
+          "https://townofbabylonny.gov/924/About-Us"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://www.ligreenhomes.com/index.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official town pages support active application availability."
       }
     },
     {
@@ -13110,24 +13108,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22709/california-home-electrification-and-appliance-rebate-hear-program",
       "websiteUrl": "https://techcleanca.com/incentives/heehrarebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": false,
-        "evidenceText": "California - Home Electrification and Appliance Rebate (HEAR) Program TECH Clean California Rebate Program CA TECH Public Reporting HEEHRA Rebates Home About About About Our Approach Our Approach Equity Strategy Results & Reporting News Frequently Asked Questi",
+        "evidenceText": "TECH Clean California says HEEHRA single family rebates are fully reserved and no longer accepting new income verification applications; multifamily Stage 1 is paused while existing applications are processed.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_closed"
         ],
         "sourceUrlsChecked": [
           "https://techcleanca.com/incentives/heehrarebates/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official administrator page indicates the relevant rebate availability is not open for new applications."
       }
     },
     {
@@ -14416,27 +14415,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2222/coast-electric-power-association-comfort-advantage-home-program",
       "websiteUrl": "https://coastepa.com/comfort-advantage/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Coast Electric Power Association - Comfort Advantage Home Program Coast Electric Power Association Rebate Program MS",
-        "reasons": [],
+        "evidenceText": "Coast Electric's Comfort Advantage page describes cash incentives and forms for members installing qualifying efficient homes or heat pumps.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://coastepa.com/comfort-advantage/"
+          "https://coastelectric.coop/comfort-advantage/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://coastepa.com/comfort-advantage/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official cooperative page supports current rebate/program availability."
       }
     },
     {
@@ -15242,25 +15239,25 @@
       "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": true,
-        "evidenceText": "Custom Measure Rebates - Heat Recovery Chillers and Heat Pump Pool Heaters Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home",
+        "evidenceText": "Silicon Valley Power lists custom electrification rebates for heat recovery chillers and heat pump pool heaters and says pre-approval is required.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
-          "https://www.siliconvalleypower.com/home/showpublisheddocument/71429/637902891309870000"
+          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official utility page lists the rebate category as currently available."
       }
     },
     {
@@ -15271,25 +15268,26 @@
       "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": true,
-        "evidenceText": "Customer Directed Electrification Rebate Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home mainHome Menu Outages & Alerts My",
+        "evidenceText": "Silicon Valley Power describes rebates for replacing natural gas equipment with efficient all-electric equipment; the 2025-2026 application says nonresidential SVP customers are eligible to apply, with pre-approval required.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
           "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
           "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official utility page and current application document support active availability."
       }
     },
     {
@@ -17391,25 +17389,25 @@
       "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": true,
-        "evidenceText": "Heat Pump Air Conditioner Rebates - Conversion to All Electric Heating and Cooling Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Po",
+        "evidenceText": "Silicon Valley Power lists heat pump HVAC rebates for conversion to all-electric heating and cooling and directs customers to apply with pre-approval.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
-          "https://www.siliconvalleypower.com/home/showpublisheddocument/71431/637902892215200000"
+          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official utility page lists this rebate category as available."
       }
     },
     {
@@ -19638,24 +19636,27 @@
       "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": true,
-        "evidenceText": "Multifamily Boiler Electrification Pilot Program Silicon Valley Power rebate CA Electrification Programs & Rebates | Silicon Valley Power Please enable JavaScript in your browser for a better user experience. Silicon Valley Power Home mainHome Menu Outages & A",
+        "evidenceText": "Silicon Valley Power's pilot application says rebates are available to three participants and applications are accepted first-come, first-served until the program is fully subscribed.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active",
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
+          "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+          "https://www.siliconvalleypower.com/home/showpublisheddocument/77783/638877473842570000"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official utility materials support open, first-come-first-served availability until fully subscribed."
       }
     },
     {
@@ -21345,27 +21346,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5354/philadelphia-gas-works-residential-incentives-program",
       "websiteUrl": "https://pgwenergysense.com/residential-rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Philadelphia Gas Works - Residential Incentives Program Philadelphia Gas Works Rebate Program PA",
-        "reasons": [],
+        "evidenceText": "PGW EnergySense says residential rebates are available from September 1, 2024 through August 31, 2027 and are first-come, first-served and subject to funding.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
+          "https://pgwenergysense.com/",
           "https://pgwenergysense.com/residential-rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://pgwenergysense.com/residential-rebates/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official PGW rebate page supports current availability with first-come, first-served funding language."
       }
     },
     {
@@ -21627,20 +21628,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5426/property-tax-abatement-for-renewable-energy-property",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Abatement for Renewable Energy Property Property Tax Incentive FL",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Florida statute provides that the just value attributable to renewable energy source devices may not be considered for residential property and that 80 percent may not be considered for certain nonresidential property; the tangible personal property exemption expires December 31, 2037.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199%2F0193%2FSections%2F0193.624.html",
+          "https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&Search_String=&URL=0100-0199%2F0196%2FSections%2F0196.182.html"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official Florida statutes support an ongoing property tax incentive as of the current date."
       }
     },
     {
@@ -21703,27 +21710,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
       "websiteUrl": "https://www.pse.com/rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs Puget Sound Energy Rebate Program WA",
-        "reasons": [],
+        "evidenceText": "PSE lists current residential rebates and offers, including cash-back incentives for qualifying heating and water-heating equipment.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.pse.com/rebates"
+          "https://www.pse.com/en/rebates",
+          "https://www.pse.com/en/rebates/heating",
+          "https://www.pse.com/en/rebates/water-heating"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 500",
-            "url": "https://www.pse.com/rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official PSE rebate pages support active availability."
       }
     },
     {
@@ -21734,20 +21741,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2/qualifying-wood-stove-deduction",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Qualifying Wood Stove Deduction Personal Tax Deduction AZ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Arizona statute allows a subtraction for up to $500 of costs to convert an existing fireplace to a qualified wood stove, qualified wood fireplace, or gas-fired fireplace.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.azleg.gov/ars/43/01027.htm",
+          "https://www.azleg.gov/ars/43/01022.htm"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official statute supports a standing tax deduction with no application window."
       }
     },
     {
@@ -24134,27 +24147,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22427/technology-and-equipment-for-clean-heating-tech-initiative",
       "websiteUrl": "https://energy-solution.com/tech-incentives/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Technology and Equipment for Clean Heating (TECH) Initiative Energy Solutions Rebate Program CA",
-        "reasons": [],
+        "evidenceText": "TECH Clean California incentive pages state that single-family and commercial/small multifamily heat pump incentives are fully reserved or no longer accepting reservations; multifamily Stage 1 is paused or closed.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
-          "https://energy-solution.com/tech-incentives/"
+          "https://techcleanca.com/incentives/",
+          "https://techcleanca.com/incentives/single-family-incentives/",
+          "https://techcleanca.com/incentives/multifamily-information/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 429",
-            "url": "https://energy-solution.com/tech-incentives/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official administrator pages do not show a currently open TECH incentive path."
       }
     },
     {
@@ -27130,27 +27143,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/365/clean-energy-project-bond-program",
       "websiteUrl": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Clean Energy Project Bond Program Idaho Energy Resources Authority Bond Program ID",
-        "reasons": [],
+        "evidenceText": "Idaho's clean energy generation project statute authorizes the Idaho Energy Resources Authority to undertake clean energy projects and issue bonds to finance costs.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
-          "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/"
+          "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/",
+          "https://law.justia.com/codes/idaho/title-67/chapter-89/section-67-8925/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Official legislature site was checked but not fully accessible; current code mirror supports a standing statutory bond authority with no application cycle identified."
       }
     },
     {
@@ -27220,20 +27232,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1683/energy-equipment-property-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Energy Equipment Property Tax Exemption Arizona Department of Revenue Property Tax Incentive AZ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Arizona statute provides that renewable energy equipment, energy efficient building components, and combined heat and power systems may be considered to add no value for property tax when documentation is submitted.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.azleg.gov/ars/42/11054.htm"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official statute supports a standing property tax incentive."
       }
     },
     {
@@ -27513,20 +27530,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5423/local-option-property-tax-exemption-for-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Property Tax Exemption for Renewable Energy Systems Connecticut Department of Revenue Services Property Tax Incentive CT",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Connecticut General Assembly OLR describes municipal authority to provide property tax exemptions or abatements for certain solar and Class I renewable energy systems.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.cga.ct.gov/2023/rpt/pdf/2023-R-0214.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official legislative research document supports an ongoing local-option property tax incentive."
       }
     },
     {
@@ -27561,27 +27583,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3532/local-option-renewable-energy-financing-district-solar-energy-improvement-special-assessments",
       "websiteUrl": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments Programs administered locally PACE Financing NM",
-        "reasons": [],
+        "evidenceText": "New Mexico Economic Development Department describes C-PACE as a local-option financing tool where eligible property owners access long-term fixed-rate financing repaid through a local government special assessment.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
-          "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
+          "https://www.edd.newmexico.gov/programs-and-services/c-pace/",
+          "https://www.edd.newmexico.gov/press-releases/new-mexico-clears-path-for-more-clean-energy-financing/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official state sources support an ongoing local-option financing mechanism rather than a time-limited application window."
       }
     },
     {
@@ -27620,20 +27641,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2502/local-option-sales-and-use-tax-exemption-for-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Sales and Use Tax Exemption for Renewable Energy Systems Department of Local Affairs, Local Governments Sales Tax Incentive CO",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Colorado Department of Revenue guidance says Colorado allows a sales and use tax exemption for components used to produce electricity from renewable sources, and local exemptions apply where adopted by ordinance or resolution.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://tax.colorado.gov/sites/tax/files/documents/SUTT_Renewable_Energy_Components_Sep_2021.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official tax guidance supports a standing state/local-option exemption mechanism."
       }
     },
     {
@@ -27947,20 +27973,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/240/property-tax-exemption-for-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Renewable Energy Systems Connecticut Department of Revenue Services Property Tax Incentive CT",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Connecticut General Assembly OLR describes property tax exemptions for certain Class I renewable energy sources and solar heating systems, with filing to the assessor by November 1 for the assessment year.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.cga.ct.gov/2023/rpt/pdf/2023-R-0214.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official legislative research document supports a standing property tax exemption."
       }
     },
     {
@@ -28495,20 +28526,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2613/sales-and-use-tax-exemption-for-solar-and-geothermal-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exemption for Solar and Geothermal Systems Connecticut Department of Revenue Services Sales Tax Incentive CT",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Connecticut DRS guidance describes a sales and use tax exemption for machinery, equipment, tools, materials, and fuel used directly in renewable or clean energy technology industries, including solar and geothermal systems.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://portal.ct.gov/drs/publications/special-notices/2010/sn-2010-9-1",
+          "https://portal.ct.gov/drs/sales-tax/exemptions-from-sales-and-use-taxes"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official tax authority guidance supports a standing sales and use tax exemption."
       }
     },
     {
@@ -28627,22 +28664,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/917/usda-rural-energy-for-america-program-reap-grants",
       "websiteUrl": "http://www.rd.usda.gov/reap",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "USDA - Rural Energy for America Program (REAP) Grants U.S. Department of Agriculture Grant Program US eWAPS Platform Portal USDA Enterprise Web Application Platform & Services The eWAPS Maintenance: RKE HA Production upgrade to take place from 5:00 - 7:00 PM E",
-        "reasons": [],
+        "evidenceText": "USDA Rural Development says the agency is not accepting REAP grant applications at this time; guaranteed loan applications may be submitted.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
-          "http://www.rd.usda.gov/reap"
+          "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Target is the grants program; the official page says grants are not currently being accepted."
       }
     },
     {
@@ -28796,27 +28836,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/943/city-and-county-of-honolulu-solar-loan-program",
       "websiteUrl": "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "City and County of Honolulu - Solar Loan Program City and County of Honolulu Loan Program HI",
-        "reasons": [],
+        "evidenceText": "Honolulu's homeowner loan program page and Hawaii State Energy Office resources describe interest-free loans for income-eligible homeowners, including solar PV and solar water heating improvements.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/"
+          "https://www.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/",
+          "https://energy.hawaii.gov/energy-efficiency-programs-rebates-and-solar-initiatives/"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://www8.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official city and state pages support current program availability, though the solar component is embedded within broader homeowner loan programs."
       }
     },
     {
@@ -29993,20 +30032,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/119/solar-and-wind-equipment-sales-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Solar and Wind Equipment Sales Tax Exemption Department of Revenue Sales Tax Incentive AZ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Arizona law deducts sales of solar energy devices from the transaction privilege tax base, and state guidance describes sales and installation of solar and wind energy devices as exempt.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.azleg.gov/ars/42/05061.htm",
+          "https://azdor.gov/business/transaction-privilege-tax/tpt-exemptions",
+          "https://resilient.az.gov/clean-energy-hub/tax-exempt-entities/renewable-energy-generation-incentives"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official statutory and state guidance sources support a standing sales tax incentive."
       }
     },
     {
@@ -30125,20 +30171,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5245/solar-energy-system-and-cogeneration-system-personal-property-tax-credit",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Solar Energy System and Cogeneration System Personal Property Tax Credit Property Tax Incentive DC",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "D.C. Code exempts personal property systems using exclusively solar energy and, beginning October 1, 2016, cogeneration systems.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://code.dccouncil.gov/us/dc/council/code/sections/47-1508"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official D.C. Code supports a standing tax exemption with no application cycle identified."
       }
     },
     {
@@ -31909,20 +31960,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22803/solar-storage-and-electric-vehicle-charging-real-property-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Solar, Storage, and Electric Vehicle Charging Real Property Tax Exemption Property Tax Incentive DC",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "D.C. Code section 47-1005 provides that its taxation rule does not apply to buildings or grounds used for solar energy generation, energy storage, solar energy management, or electric vehicle charging.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://code.dccouncil.gov/us/dc/council/code/sections/47-1005"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official D.C. Code supports a standing real property tax exemption."
       }
     },
     {
@@ -33838,27 +33894,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4054/sales-and-use-tax-exclusion-for-advanced-transportation-and-alternative-energy-manufacturing-program",
       "websiteUrl": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program State Treasurer's Office Industry Recruitment/Support CA",
-        "reasons": [],
+        "evidenceText": "CAEATFA's 2026 application schedule shows an upcoming August 7-August 28, 2026 application window, and the program is authorized through January 1, 2028.",
+        "reasons": [
+          "future_opening_language"
+        ],
         "sourceUrlsChecked": [
-          "http://www.treasurer.ca.gov/caeatfa/ste/index.asp"
+          "https://www.treasurer.ca.gov/caeatfa/ste",
+          "https://www.treasurer.ca.gov/sites/default/files/2026-03/amended.pdf"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "http://www.treasurer.ca.gov/caeatfa/ste/index.asp"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current date is between scheduled application windows, but an official future window is scheduled."
       }
     },
     {
@@ -34921,27 +34976,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/364/clean-energy-revenue-bond-program",
       "websiteUrl": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Clean Energy Revenue Bond Program New Mexico Finance Authority Bond Program NM",
-        "reasons": [],
+        "evidenceText": "New Mexico EMNRD lists the Energy Efficiency and Renewable Energy Bonding Act, and current code text authorizes energy efficiency bonds for energy efficiency measures.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
-          "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html"
+          "https://www.emnrd.nm.gov/ecmd/statutes/",
+          "https://law.justia.com/codes/new-mexico/chapter-6/article-21d/section-6-21d-8/"
         ],
-        "fetchErrors": [
-          {
-            "error": "fetch failed",
-            "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/CREB.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.7,
+        "researchNotes": "Official state page lists the statute; no separate current application cycle or closure page was found."
       }
     },
     {
@@ -35535,20 +35589,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/46/wood-burning-heating-system-deduction",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Wood-Burning Heating System Deduction Personal Tax Deduction AL",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Alabama income tax law allows a deduction for the cost of converting from gas or electricity to wood as the primary energy source when completed.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2025RS/HB389-int.pdf",
+          "https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Official bill text and current code mirror support a standing statutory deduction; no repeal or application window was found."
       }
     },
     {
@@ -35587,20 +35647,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5408/arkansas-pace-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Arkansas PACE Program PACE Financing AR",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Arkansas Advanced Energy Foundation says it acts as program administrator for Arkansas C-PACE, and county materials describe financing repaid through property tax assessments.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program",
+          "https://www.pulaskicounty.net/news/posts/pulaski-pace"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official/administrator sources support ongoing local-option C-PACE availability."
       }
     },
     {
@@ -37431,20 +37498,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22498/sustainable-rebuilding-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sustainable Rebuilding Program Colorado Energy Office Loan Program CO",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "The State of Colorado Housing Recovery Program administrator states the program closed in June 2025; related electrification rebate applications were due by April 30, 2026.",
+        "reasons": [
+          "official_source_closed"
+        ],
+        "sourceUrlsChecked": [
+          "https://cdola.colorado.gov/housing-recovery-program",
+          "https://disaster-recovery.impactdf.org/",
+          "https://rebuildingbetter.org/energy-incentives/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official DOLA page was blocked, but the official program administrator and associated program materials indicate closure before the current date."
       }
     },
     {
@@ -37455,20 +37529,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22496/sustainable-rebuilding-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sustainable Rebuilding Program Colorado Energy Office Grant Program CO",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "The State of Colorado Housing Recovery Program administrator states the program closed in June 2025; related grant/rebate application deadlines had passed by April 30, 2026.",
+        "reasons": [
+          "official_source_closed"
+        ],
+        "sourceUrlsChecked": [
+          "https://cdola.colorado.gov/housing-recovery-program",
+          "https://disaster-recovery.impactdf.org/",
+          "https://rebuildingbetter.org/energy-incentives/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official DOLA page was blocked, but the official program administrator and associated program materials indicate closure before the current date."
       }
     },
     {
@@ -38376,25 +38457,27 @@
       "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": true,
-        "evidenceText": "CA Clean Fuel Reward Southern California Edison rebate CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show More Show ",
+        "evidenceText": "Official program site says California Clean Fuel Reward is available to commercial vehicle buyers, and CARB announced rebates available beginning June 26, 2026.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "https://cleanfuelreward.com/site/home"
+          "https://cleanfuelreward.com/",
+          "https://cleanfuelreward.com/site/home",
+          "https://ww2.arb.ca.gov/news/california-launching-1-billion-rebate-program-electric-trucks"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official program and CARB sources support current availability as of June 28, 2026."
       }
     },
     {
@@ -38548,25 +38631,26 @@
       "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": true,
-        "evidenceText": "Charge Ready Program Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . S",
+        "evidenceText": "SCE says Charge Ready applications will be accepted through June 30, 2026, or until all funds are allocated, and provides an Apply Now action.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active",
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business",
           "https://www.sce.com/business/smart-energy-solar/charge-ready"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current date is before the June 30, 2026 application cutoff; official page also uses funds-allocated language."
       }
     },
     {
@@ -38577,25 +38661,26 @@
       "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": true,
-        "evidenceText": "Charge Ready Transport Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information .",
+        "evidenceText": "SCE says Charge Ready Transport applications will be accepted through June 30, 2026, with participation agreements required by December 31, 2026.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "https://crt.sce.com/overview"
+          "https://crt.sce.com/overview",
+          "https://crt.sce.com/ready-to-apply-form"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current date is June 28, 2026, so the official application window is still open."
       }
     },
     {
@@ -38955,20 +39040,20 @@
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "CMAQ Incentive Program Virginia Clean Cities Rebate Program VA",
-        "reasons": [],
+        "evidenceText": "A current official administrator source confirming open CMAQ Incentive Program availability could not be verified.",
+        "reasons": [
+          "still_uncertain"
+        ],
         "sourceUrlsChecked": [
-          "https://vacleancities.org/reports-2/cmaq-incentive-program/"
+          "https://vacleancities.org/reports-2/cmaq-incentive-program/",
+          "https://afdc.energy.gov/laws/all?state=VA",
+          "https://climatepartners.org/local/cmaq-vehicle-fuel-conversion-incentive-program/"
         ],
-        "fetchErrors": [
-          {
-            "error": "This operation was aborted",
-            "url": "https://vacleancities.org/reports-2/cmaq-incentive-program/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.3,
+        "researchNotes": "Available non-administrator references were not sufficient to classify current availability."
       }
     },
     {
@@ -39035,24 +39120,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22529/community-ev-chargers-incentive-program",
       "websiteUrl": "https://www.vermontevchargers.com/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Community EV Chargers Incentive Program Green Mountain Power Grant Program VT Charge Vermont - Vermont EV Charging Skip to content Visit News & Updates for the latest on county funding availability. search Apply Now Power up the drive ahead Apply Now Charger O",
+        "evidenceText": "Charge Vermont says applications are accepted on a first-come, first-served basis through August 1, 2026 while funds last.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active",
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.vermontevchargers.com/"
+          "https://www.vermontevchargers.com/",
+          "https://www.chargevermont.com/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official program page supports open availability while funds last."
       }
     },
     {
@@ -42071,15 +42159,20 @@
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PECO - Commercial Charger Rebate Program Rebate Program PA",
-        "reasons": [],
+        "evidenceText": "A current official source specifically confirming the PECO Commercial Charger Rebate Program could not be verified.",
+        "reasons": [
+          "still_uncertain"
+        ],
         "sourceUrlsChecked": [
-          "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
+          "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
+          "https://www.peco.com/smart-energy/innovation-technology/electric-vehicles",
+          "https://www.peco.com/business/electric-vehicles"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.35,
+        "researchNotes": "Current PECO EV and tariff materials exist, but they did not safely confirm this specific commercial charger rebate record."
       }
     },
     {
@@ -42090,22 +42183,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22377/peco-ev-rebate-program",
       "websiteUrl": "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PECO - EV Rebate Program Rebate Program PA",
-        "reasons": [],
+        "evidenceText": "PECO says customers can earn $50 per car by notifying PECO they purchased an electric vehicle and provides an Apply Online path for residential and business customers.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx"
+          "https://secure.peco.com/WaystoSave/ForYourHome/Pages/PECOSmartDriverRebate.aspx"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official PECO rebate page supports active availability."
       }
     },
     {
@@ -42256,25 +42352,25 @@
       "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
       "websiteUrl": "https://www.sdge.com/node/21401",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Power Your Drive for Apartments and Condos SDG&E utility_program CA Power Your Drive for Apartments and Condos | San Diego Gas & Electric Sorry, you need to enable JavaScript to visit this website. Skip to main content Search Notifications More Info --> Englis",
+        "evidenceText": "SDG&E says the program is fully subscribed and it is no longer accepting applications.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_closed"
         ],
         "sourceUrlsChecked": [
-          "https://www.sdge.com/node/21401",
-          "https://www.sdge.com/business/electric-vehicles/lovelectric"
+          "https://www.sdge.com/business/electric-vehicles/power-your-drive-apartments-and-condos"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official utility page confirms no applications are being accepted."
       }
     },
     {
@@ -42314,25 +42410,25 @@
       "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
       "websiteUrl": "https://www.sdge.com/node/21406",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Power Your Drive for Workplaces SDG&E utility_program CA Power Your Drive for Workplaces | San Diego Gas & Electric Sorry, you need to enable JavaScript to visit this website. Skip to main content Search Notifications More Info --> English Español Vietnamese C",
+        "evidenceText": "SDG&E says the program is fully subscribed and it is no longer accepting applications.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_closed"
         ],
         "sourceUrlsChecked": [
-          "https://www.sdge.com/node/21406",
-          "https://www.sdge.com/business/electric-vehicles/lovelectric"
+          "https://www.sdge.com/business/electric-vehicles/power-your-drive-workplaces"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official utility page confirms no applications are being accepted."
       }
     },
     {
@@ -42427,25 +42523,26 @@
       "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": true,
-        "evidenceText": "ReCharge Rebate Southern California Edison rebate CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show More Show Less ",
+        "evidenceText": "SCE's ReCharge Rebate portal provides current retailer registration, enrollment, and claim workflow instructions; the pause notice applies to the Drayage Truck Rebate, not ReCharge.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "https://commercialevrebates.sce.com/consumer/recharge"
+          "https://commercialevrebates.sce.com/consumer/recharge",
+          "https://commercialevrebates.sce.com/consumer/how-to-enroll"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official portal remains live with participation steps, though page wording is less direct than a dated application notice."
       }
     },
     {
@@ -42540,25 +42637,26 @@
       "sourceUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": true,
-        "evidenceText": "Rule 29 EV Guide Southern California Edison technical_assistance CA EVs for Business Overview | SCE Skip to main content Alerts ( 2 ) PSPS Outage Alert A Public Safety Power Shutoff to help prevent a wildfire has been announced. Get current information . Show ",
+        "evidenceText": "SCE describes Rule 29 Electric Vehicle Infrastructure as an optional EV charging infrastructure guide and tariff framework for business customers, with no competitive application window.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business",
-          "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure"
+          "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure",
+          "https://www.sce.com/sites/default/files/custom-files/PDF_Files/ELECTRIC_RULES_29.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "This appears to be a standing utility tariff/service rule rather than a rebate round."
       }
     },
     {
@@ -44596,24 +44694,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
       "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": true,
         "noDeadlineExplicit": false,
-        "evidenceText": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program National Energy Improvement Fund Loan Program PA Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program | Department of Environmental Protection | Commonwealth of Pe",
+        "evidenceText": "Pennsylvania DEP says MORE Loan applications opened December 27, 2024, have no closing date, and will remain open as long as funds are available.",
         "reasons": [
-          "unavailable_evidence_not_title_specific"
+          "official_source_active",
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
           "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "The grant round appears closed, but the target record references the loan program; official page says loans remain open while funds are available."
       }
     },
     {
@@ -45632,5 +45732,8 @@
   "uncertainRepairSearchFallback": false,
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
-  "uncertainRepairConcurrency": 16
+  "uncertainRepairConcurrency": 16,
+  "gptProResearchAppliedAt": "2026-06-28T03:42:01.909Z",
+  "gptProResearchAppliedCount": 50,
+  "gptProResearchSkipped": []
 }

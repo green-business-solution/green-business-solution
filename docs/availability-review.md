@@ -94,6 +94,14 @@ This writes:
 
 Use that prompt for official-source research, then apply reviewed repairs with the same evidence standard used by `availabilityReview`.
 
+To apply a JSON repair response from GPT Pro or a manual researcher:
+
+```sh
+npm run matching:availability-apply-repairs -- path/to/repairs.json
+```
+
+The repair importer normalizes markdown-formatted source links, updates `data/public_opportunity_availability_reviews.json`, and rewrites `data/public_opportunity_availability_review_report.md`. After applying repairs, rerun the public fixture and archive steps below.
+
 The script writes:
 
 - `data/availability_reviews.json`
