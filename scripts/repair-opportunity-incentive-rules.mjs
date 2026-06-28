@@ -70,8 +70,13 @@ const repairedRows = fetchSources
   : targets.map((target) => buildNoFetchGap(target));
 
 const newRules = repairedRows.filter((row) => row.rule).map((row) => row.rule);
-const newGaps = repairedRows.filter((row) => !row.rule).map((row) => row.gap);
 const previousOutput = mergeExistingPath ? readJson(path.resolve(repoRoot, mergeExistingPath)) : null;
+const previousResearchReviewedNoRule = previousOutput?.researchReviewedNoRule || [];
+const previousResearchReviewedNoRuleIds = new Set(previousResearchReviewedNoRule.map((row) => row.opportunityId).filter(Boolean));
+const newGaps = repairedRows
+  .filter((row) => !row.rule)
+  .map((row) => row.gap)
+  .filter((gap) => !previousResearchReviewedNoRuleIds.has(gap.opportunityId));
 const newRuleIds = new Set(newRules.map((rule) => rule.opportunityId));
 const newGapIds = new Set(newGaps.map((gap) => gap.opportunityId));
 const rules = previousOutput
@@ -107,8 +112,13 @@ const output = {
   ruleExtractionCounts: countBy(rules, (rule) => rule.extractionMethod || "unknown"),
   ruleConfidenceCounts: countBy(rules, (rule) => rule.confidence || "unknown"),
   gapReasonCounts: countBy(gaps, (gap) => gap.reason || "unknown"),
+  researchReviewedNoRuleCount: previousResearchReviewedNoRule.length,
+  appliedResearchBatches: previousOutput?.appliedResearchBatches || [],
+  lastResearchRepairBatch: previousOutput?.lastResearchRepairBatch || null,
+  researchNoRuleStatusCounts: countBy(previousResearchReviewedNoRule, (row) => row.repairStatus || "unknown"),
   rules,
-  manualRepairTargets: gaps
+  manualRepairTargets: gaps,
+  researchReviewedNoRule: previousResearchReviewedNoRule
 };
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
