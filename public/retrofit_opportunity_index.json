@@ -1,11 +1,11 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-06-28T05:27:50.946Z",
-  "matchingNow": "2026-06-28T05:27:26.649Z",
-  "opportunityCount": 1537,
+  "generatedAt": "2026-06-28T06:37:09.317Z",
+  "matchingNow": "2026-06-28T06:36:46.037Z",
+  "opportunityCount": 1522,
   "totalOpportunityRecordCount": 2096,
-  "archivedOpportunityCount": 278,
+  "archivedOpportunityCount": 293,
   "retrofitCount": 85,
   "retrofits": [
     {
@@ -24,7 +24,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 401,
+      "opportunityCount": 398,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -40,23 +40,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3831",
@@ -679,7 +662,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2016",
@@ -1202,7 +1185,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5239",
@@ -1675,7 +1658,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2448",
@@ -3293,7 +3276,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1718",
@@ -4101,7 +4084,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3327",
@@ -4193,7 +4176,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2549",
@@ -4290,21 +4273,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1658",
           "opportunityName": "NorthWestern Energy (Electric) - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -4347,7 +4315,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3138",
@@ -4379,7 +4347,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4306",
@@ -4433,21 +4401,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -4462,7 +4415,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4528",
@@ -4861,7 +4814,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3907",
@@ -5085,7 +5038,7 @@
           "matchedTerms": [
             "led lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
@@ -5102,7 +5055,7 @@
           "matchedTerms": [
             "lighting retrofit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5756",
@@ -6919,7 +6872,7 @@
           "matchedTerms": [
             "lighting controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4691",
@@ -7591,7 +7544,7 @@
           "matchedTerms": [
             "lighting controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3999",
@@ -7729,7 +7682,7 @@
             "lighting controls",
             "networked lighting"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
@@ -7746,7 +7699,7 @@
           "matchedTerms": [
             "lighting controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
@@ -8405,7 +8358,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 803,
+      "opportunityCount": 797,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -8436,21 +8389,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4594",
@@ -9174,7 +9112,7 @@
           "matchedTerms": [
             "air conditioning"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22768",
@@ -10171,7 +10109,7 @@
           "matchedTerms": [
             "air conditioning"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22132",
@@ -10261,7 +10199,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3179",
@@ -10401,21 +10339,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4928",
-          "opportunityName": "City of Danville Utilities - Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4928/city-of-danville-utilities-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
-          "applicationUrl": null,
-          "state": "VA",
-          "programType": "Rebate Program",
-          "administrator": "Danville Utilities",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3622",
@@ -11154,7 +11077,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1808",
@@ -11199,7 +11122,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4691",
@@ -14937,7 +14860,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
@@ -15215,7 +15138,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1299",
@@ -15937,7 +15860,7 @@
           "matchedTerms": [
             "air conditioner"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4371",
@@ -16126,7 +16049,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4623",
@@ -16191,21 +16114,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3335",
-          "opportunityName": "New Smyrna Beach - Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3335/new-smyrna-beach-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.nsbufl.com/energy-conservation",
-          "applicationUrl": null,
-          "state": "FL",
-          "programType": "Rebate Program",
-          "administrator": "New Smyrna Beach Utilities Commission",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1943",
@@ -16362,23 +16270,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "hvac replacement"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22748",
           "opportunityName": "North Carolina - Home Electrification and Appliance Rebate (HEAR) Program",
           "sourceName": "DSIRE",
@@ -16521,7 +16412,7 @@
           "matchedTerms": [
             "air conditioning"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
@@ -16538,7 +16429,7 @@
           "matchedTerms": [
             "chiller"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4237",
@@ -16605,21 +16496,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -16632,7 +16508,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4528",
@@ -16722,7 +16598,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2678",
@@ -16797,7 +16673,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
@@ -17178,7 +17054,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4532",
@@ -17537,7 +17413,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
@@ -17725,7 +17601,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3907",
@@ -18252,7 +18128,7 @@
           "matchedTerms": [
             "chiller"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
@@ -18267,7 +18143,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -19915,21 +19791,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1536",
-          "opportunityName": "Texas Gas Service - Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": "Texas Gas Service",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1544",
           "opportunityName": "Texas-New Mexico Power Company - Commercial Market Transformation Program",
           "sourceName": "DSIRE",
@@ -20998,7 +20859,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 529,
+      "opportunityCount": 528,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -21561,7 +21422,7 @@
             "heat pump",
             "mini split"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4639",
@@ -22246,7 +22107,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22132",
@@ -22335,7 +22196,7 @@
             "heat pump",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2599",
@@ -25937,7 +25798,7 @@
             "mini split",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
@@ -26118,7 +25979,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1296",
@@ -26582,7 +26443,7 @@
             "heat pump",
             "mini split"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3462",
@@ -26985,23 +26846,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -27018,7 +26862,7 @@
             "mini split",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4528",
@@ -27158,7 +27002,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
@@ -27512,7 +27356,7 @@
           "matchedTerms": [
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4227",
@@ -27756,7 +27600,7 @@
           "matchedTerms": [
             "heat pump"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
@@ -29924,7 +29768,7 @@
             "mini split",
             "ductless"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3592",
@@ -30349,7 +30193,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 328,
+      "opportunityCount": 327,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -30795,7 +30639,7 @@
           "matchedTerms": [
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2016",
@@ -31371,7 +31215,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4273",
@@ -33578,7 +33422,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
@@ -33951,7 +33795,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4371",
@@ -34024,24 +33868,6 @@
             "thermostat"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22140",
-          "opportunityName": "New Mexico Gas Company - New Home Construction Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22140/new-mexico-gas-company-new-home-construction-rebate-program",
-          "websiteUrl": "https://nmgcgetrebates.com/new-homes-rebates",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Rebate Program",
-          "administrator": "New Mexico Gas Company",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "smart thermostat",
-            "thermostat"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4619",
@@ -34383,7 +34209,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
@@ -35028,7 +34854,7 @@
           "matchedTerms": [
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
@@ -35045,7 +34871,7 @@
           "matchedTerms": [
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -35955,7 +35781,7 @@
             "smart thermostat",
             "thermostat"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3592",
@@ -36366,7 +36192,7 @@
           "matchedTerms": [
             "hvac controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
@@ -36622,7 +36448,7 @@
           "matchedTerms": [
             "economizer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3235",
@@ -36690,7 +36516,7 @@
           "matchedTerms": [
             "economizer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -37193,7 +37019,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 151,
+      "opportunityCount": 150,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -38672,7 +38498,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3756",
@@ -38944,7 +38770,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1531",
@@ -39168,7 +38994,7 @@
           "matchedTerms": [
             "furnace"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2552",
@@ -39611,23 +39437,6 @@
             "furnace"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1536",
-          "opportunityName": "Texas Gas Service - Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": "Texas Gas Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "furnace"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2185",
@@ -40672,7 +40481,7 @@
             "boiler",
             "condensing boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4371",
@@ -40928,7 +40737,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5015",
@@ -40979,7 +40788,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1531",
@@ -41234,7 +41043,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -41875,7 +41684,7 @@
           "matchedTerms": [
             "boiler reset"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -42238,7 +42047,7 @@
             "duct sealing",
             "duct insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2202",
@@ -43152,7 +42961,7 @@
           "matchedTerms": [
             "duct sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3963",
@@ -43410,7 +43219,7 @@
             "duct sealing",
             "duct insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2004",
@@ -43822,7 +43631,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 344,
+      "opportunityCount": 342,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -47365,23 +47174,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4198",
           "opportunityName": "Northern Lights Inc. - Energy Conservation Rebate Program",
           "sourceName": "DSIRE",
@@ -47434,23 +47226,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -47465,7 +47240,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4528",
@@ -50205,7 +49980,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4637",
@@ -50664,7 +50439,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2599",
@@ -52483,7 +52258,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
@@ -52823,7 +52598,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3462",
@@ -53452,7 +53227,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
@@ -54438,7 +54213,7 @@
           "matchedTerms": [
             "heat pump water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22050",
@@ -54694,7 +54469,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 28,
+      "opportunityCount": 27,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -54984,7 +54759,7 @@
           "matchedTerms": [
             "gas water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4197",
@@ -55069,7 +54844,7 @@
           "matchedTerms": [
             "gas water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
@@ -55103,7 +54878,7 @@
           "matchedTerms": [
             "gas water heater"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3897",
@@ -55121,23 +54896,6 @@
             "gas water heater"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1538",
-          "opportunityName": "Texas Gas Service - Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "gas water heater"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4820",
@@ -55192,7 +54950,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 115,
+      "opportunityCount": 112,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
@@ -56061,7 +55819,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3128",
@@ -56181,24 +55939,6 @@
             "solar thermal"
           ],
           "availabilityStatus": "rolling"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4590",
-          "opportunityName": "NV Energy - Solar Thermal Heating Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4590/nv-energy-solar-thermal-heating-program",
-          "websiteUrl": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
-          "applicationUrl": null,
-          "state": "NV",
-          "programType": "Rebate Program",
-          "administrator": "NV Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating",
-            "solar thermal"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4290",
@@ -57098,23 +56838,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:186",
-          "opportunityName": "Sulphur Springs Valley EC - SunWatts Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/186/sulphur-springs-valley-ec-sunwatts-rebate-program",
-          "websiteUrl": "http://www.ssvec.org/programs/renewable.php",
-          "applicationUrl": null,
-          "state": "AZ",
-          "programType": "Rebate Program",
-          "administrator": "Sulphur Springs Valley Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2742",
           "opportunityName": "Tax Exemption for Large-Scale Renewable Energy Projects",
           "sourceName": "DSIRE",
@@ -57130,23 +56853,6 @@
             "solar thermal"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2402",
-          "opportunityName": "Trico Electric Cooperative  - SunWatts Incentive Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2402/trico-electric-cooperative-sunwatts-incentive-program",
-          "websiteUrl": "https://www.trico.coop/sustainable-energy/member-installed-solar/",
-          "applicationUrl": null,
-          "state": "AZ",
-          "programType": "Rebate Program",
-          "administrator": "Trico Electric Cooperative, Inc.",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2503",
@@ -57238,7 +56944,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 320,
+      "opportunityCount": 318,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -57692,7 +57398,7 @@
             "refrigeration",
             "refrigerator"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3276",
@@ -58375,7 +58081,7 @@
           "matchedTerms": [
             "refrigeration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4691",
@@ -60637,7 +60343,7 @@
             "refrigerator",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2176",
@@ -60779,24 +60485,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "refrigeration",
-            "freezer"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1658",
           "opportunityName": "NorthWestern Energy (Electric) - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -60846,7 +60534,7 @@
             "refrigeration",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4237",
@@ -60881,21 +60569,6 @@
             "refrigeration"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5011",
@@ -61370,7 +61043,7 @@
           "matchedTerms": [
             "refrigeration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3907",
@@ -61524,7 +61197,7 @@
             "refrigeration",
             "freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5756",
@@ -62756,7 +62429,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 24,
+      "opportunityCount": 23,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4698",
@@ -62970,24 +62643,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "walk in freezer",
-            "cooler freezer"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
           "opportunityName": "Preston Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -63055,7 +62710,7 @@
           "matchedTerms": [
             "cooler freezer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1946",
@@ -63197,7 +62852,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 31,
+      "opportunityCount": 30,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -63282,7 +62937,7 @@
           "matchedTerms": [
             "vending machine controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2533",
@@ -63528,24 +63183,6 @@
             "floating head pressure"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "vending machine controls",
-            "floating head pressure"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
@@ -64064,7 +63701,7 @@
             "ec motor",
             "evaporator fan"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
@@ -64117,7 +63754,7 @@
             "ec motor",
             "evaporator fan"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -64362,7 +63999,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 28,
+      "opportunityCount": 27,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3654",
@@ -64633,24 +64270,6 @@
             "anti-sweat heater"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "anti sweat heater",
-            "anti-sweat heater"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
@@ -65267,7 +64886,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 377,
+      "opportunityCount": 373,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -65302,23 +64921,6 @@
             "insulation"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -65658,7 +65260,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2016",
@@ -66406,7 +66008,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4273",
@@ -68939,7 +68541,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2107",
@@ -69330,7 +68932,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4371",
@@ -69452,23 +69054,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22140",
-          "opportunityName": "New Mexico Gas Company - New Home Construction Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22140/new-mexico-gas-company-new-home-construction-rebate-program",
-          "websiteUrl": "https://nmgcgetrebates.com/new-homes-rebates",
-          "applicationUrl": null,
-          "state": "NM",
-          "programType": "Rebate Program",
-          "administrator": "New Mexico Gas Company",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4619",
           "opportunityName": "New Mexico Gas Company - Residential Efficiency Programs",
           "sourceName": "DSIRE",
@@ -69534,7 +69119,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22749",
@@ -69775,23 +69360,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4525",
           "opportunityName": "Oklahoma Municipal Power Authority - WISE Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -69925,7 +69493,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
@@ -70333,7 +69901,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
@@ -70367,7 +69935,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2004",
@@ -71135,23 +70703,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1536",
-          "opportunityName": "Texas Gas Service - Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": "Texas Gas Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1544",
           "opportunityName": "Texas-New Mexico Power Company - Commercial Market Transformation Program",
           "sourceName": "DSIRE",
@@ -71506,7 +71057,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1342",
@@ -71696,7 +71247,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 243,
+      "opportunityCount": 241,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3831",
@@ -71970,7 +71521,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22768",
@@ -72471,7 +72022,7 @@
           "matchedTerms": [
             "weatherization"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3179",
@@ -74020,7 +73571,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2107",
@@ -74467,24 +74018,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing",
-            "weatherization"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_code_title_hash:OK30F:e57fdd96f549",
           "opportunityName": "Oklahoma Municipal Power Authority - WISE Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -74533,7 +74066,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1780",
@@ -74757,7 +74290,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
@@ -74965,7 +74498,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
@@ -74982,7 +74515,7 @@
           "matchedTerms": [
             "air sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1897",
@@ -75417,23 +74950,6 @@
             "weatherization"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1536",
-          "opportunityName": "Texas Gas Service - Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": "Texas Gas Service",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
@@ -75897,7 +75413,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 119,
+      "opportunityCount": 118,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -75915,23 +75431,6 @@
             "window"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "window"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -77274,7 +76773,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4565",
@@ -77359,7 +76858,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
@@ -77835,7 +77334,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3592",
@@ -78093,7 +77592,7 @@
             "exterior door",
             "door replacement"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1342",
@@ -78867,7 +78366,7 @@
           "matchedTerms": [
             "window film"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5412",
@@ -79181,25 +78680,8 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 74,
+      "opportunityCount": 72,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy management"
-          ],
-          "availabilityStatus": "uncertain"
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
           "opportunityName": "AES Indiana - Business Energy Incentives Program",
@@ -80001,24 +79483,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy management system",
-            "energy management"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4524",
           "opportunityName": "NV Energy -Energy Smart Schools Program",
           "sourceName": "DSIRE",
@@ -80033,7 +79497,7 @@
           "matchedTerms": [
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
@@ -80051,7 +79515,7 @@
             "energy management system",
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1429",
@@ -80174,7 +79638,7 @@
             "energy management system",
             "energy management"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1897",
@@ -84162,7 +83626,7 @@
           "matchedTerms": [
             "wind turbine"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5106",
@@ -84658,7 +84122,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
@@ -84712,26 +84176,8 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 43,
+      "opportunityCount": 41,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "combined heat and power",
-            "cogeneration"
-          ],
-          "availabilityStatus": "uncertain"
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
           "opportunityName": "Agricultural Energy Loan Program",
@@ -85025,7 +84471,7 @@
             "combined heat and power",
             "chp"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:45",
@@ -85128,7 +84574,7 @@
           "matchedTerms": [
             "combined heat and power"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
@@ -85356,7 +84802,7 @@
             "combined heat and power",
             "chp"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
@@ -85391,24 +84837,6 @@
             "cogeneration"
           ],
           "availabilityStatus": "rolling"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4066",
-          "opportunityName": "Southwest Gas Corporation - Combined Heat and Power Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4066/southwest-gas-corporation-combined-heat-and-power-program",
-          "websiteUrl": "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business",
-          "applicationUrl": null,
-          "state": "AZ",
-          "programType": "Rebate Program",
-          "administrator": "Southwest Gas Corporation",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "combined heat and power",
-            "chp"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3964",
@@ -86300,7 +85728,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4242",
@@ -87103,7 +86531,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:679",
@@ -87442,7 +86870,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22773",
@@ -87754,7 +87182,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:496",
@@ -88695,7 +88123,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1051",
@@ -88710,7 +88138,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4932",
@@ -89837,7 +89265,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:679",
@@ -90110,7 +89538,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         }
       ]
     },
@@ -90550,7 +89978,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 356,
+      "opportunityCount": 353,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -91127,7 +90555,7 @@
             "charging station",
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3276",
@@ -91511,23 +90939,6 @@
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
           "availabilityStatus": "rolling"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22679",
-          "opportunityName": "City of Atlanta - Incentivized Green Developments",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22679/city-of-atlanta-incentivized-green-developments",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "GA",
-          "programType": "Green Building Incentive",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5020",
@@ -92092,23 +91503,6 @@
             "evse"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22216",
-          "opportunityName": "Diesel Mitigation Trust Fund",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22216/diesel-mitigation-trust-fund",
-          "websiteUrl": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": "Ohio Environmental Protection Agency",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22481",
@@ -92797,7 +92191,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2932",
@@ -94646,21 +94040,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -94673,7 +94052,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2130",
@@ -96233,7 +95612,7 @@
           "matchedTerms": [
             "ev charger"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3592",
@@ -96485,7 +95864,7 @@
             "ev charging",
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22255",
@@ -96522,25 +95901,8 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 250,
+      "opportunityCount": 248,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level ii"
-          ],
-          "availabilityStatus": "uncertain"
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
           "opportunityName": "AEP (SWEPCO) - Efficient Products Rebates Program",
@@ -97007,7 +96369,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2202",
@@ -98301,7 +97663,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2932",
@@ -99657,24 +99019,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4477",
-          "opportunityName": "Oklahoma City - Green Home Loan Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
-          "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
-          "applicationUrl": null,
-          "state": "OK",
-          "programType": "Loan Program",
-          "administrator": "Community Action Agency of Oklahoma City",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
           "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -99690,7 +99034,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2130",
@@ -101509,7 +100853,7 @@
             "fast charger",
             "dcfc"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22309",
@@ -102615,7 +101959,7 @@
           "matchedTerms": [
             "electric forklift"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5101",
@@ -102992,7 +102336,7 @@
       "typicalBillTypes": [
         "water"
       ],
-      "opportunityCount": 125,
+      "opportunityCount": 124,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -104328,23 +103672,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "low flow"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4197",
           "opportunityName": "North Shore Gas - Commercial & Industrial Prescriptive Rebate Program",
           "sourceName": "DSIRE",
@@ -104705,7 +104032,7 @@
           "matchedTerms": [
             "fixture"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
@@ -106135,7 +105462,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1806",
@@ -107122,7 +106449,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4799",
@@ -107497,7 +106824,7 @@
           "matchedTerms": [
             "laundry"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4237",
@@ -107668,7 +106995,7 @@
           "matchedTerms": [
             "clothes washer"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3235",
@@ -107924,7 +107251,7 @@
           "matchedTerms": [
             "laundry"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3195",
@@ -108489,7 +107816,7 @@
           "matchedTerms": [
             "cooling tower"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         }
       ]
     },
@@ -109962,7 +109289,7 @@
           "matchedTerms": [
             "dishwasher"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
@@ -110428,7 +109755,7 @@
         "gas",
         "electric"
       ],
-      "opportunityCount": 29,
+      "opportunityCount": 28,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
@@ -110873,23 +110200,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1538",
-          "opportunityName": "Texas Gas Service - Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "fryer"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4820",
           "opportunityName": "Unitil (Gas) - Commercial and Industrial Energy Efficiency Programs",
           "sourceName": "DSIRE",
@@ -110941,7 +110251,7 @@
         "gas",
         "electric"
       ],
-      "opportunityCount": 46,
+      "opportunityCount": 45,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
@@ -111502,7 +110812,7 @@
           "matchedTerms": [
             "oven"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22725",
@@ -111656,23 +110966,6 @@
             "oven"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1538",
-          "opportunityName": "Texas Gas Service - Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "oven"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4820",
@@ -113271,7 +112564,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 10,
+      "opportunityCount": 9,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
@@ -113374,23 +112667,6 @@
             "motor replacement"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "motor replacement"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
@@ -113632,7 +112908,7 @@
             "variable frequency drive",
             "vfd"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3154",
@@ -114169,7 +113445,7 @@
             "vfd",
             "variable speed drive"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3136",
@@ -114186,7 +113462,7 @@
           "matchedTerms": [
             "variable frequency drive"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3235",
@@ -114686,7 +113962,7 @@
           "matchedTerms": [
             "pump replacement"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4554",
@@ -115439,7 +114715,7 @@
           "matchedTerms": [
             "fan controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
@@ -115473,7 +114749,7 @@
           "matchedTerms": [
             "fan controls"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4952",
@@ -115508,7 +114784,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 24,
+      "opportunityCount": 23,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -115747,23 +115023,6 @@
             "air compressor"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:2550",
-          "opportunityName": "North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://smmpa.com/members/north-branch",
-          "applicationUrl": null,
-          "state": "MN",
-          "programType": "Rebate Program",
-          "administrator": "North Branch Municipal Water & Light",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air compressor"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1658",
@@ -116056,7 +115315,7 @@
           "matchedTerms": [
             "heat recovery"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22103",
@@ -116415,7 +115674,7 @@
           "matchedTerms": [
             "heat recovery"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3999",
@@ -116483,7 +115742,7 @@
           "matchedTerms": [
             "heat recovery"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4559",
@@ -116844,7 +116103,7 @@
       "typicalBillTypes": [
         "gas"
       ],
-      "opportunityCount": 20,
+      "opportunityCount": 19,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3901",
@@ -117014,7 +116273,7 @@
           "matchedTerms": [
             "steam trap"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3235",
@@ -117065,7 +116324,7 @@
           "matchedTerms": [
             "steam trap"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
@@ -117134,23 +116393,6 @@
             "steam trap"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1538",
-          "opportunityName": "Texas Gas Service - Commercial Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
-          "applicationUrl": null,
-          "state": "TX",
-          "programType": "Rebate Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "steam trap"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5713",
@@ -117341,7 +116583,7 @@
           "matchedTerms": [
             "filtration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4245",
@@ -117358,7 +116600,7 @@
           "matchedTerms": [
             "filtration"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22071",
@@ -117740,7 +116982,7 @@
             "demand controlled ventilation",
             "dcv"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4559",
@@ -117790,26 +117032,8 @@
         "program_rule_value_only"
       ],
       "typicalBillTypes": [],
-      "opportunityCount": 115,
+      "opportunityCount": 114,
       "opportunities": [
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
-          "opportunityName": "Advanced Energy Fund Grant",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
-          "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
-          "applicationUrl": null,
-          "state": "OH",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ],
-          "availabilityStatus": "uncertain"
-        },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
           "opportunityName": "Agricultural Energy Program",
@@ -118878,7 +118102,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5892",
@@ -119108,7 +118332,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4730",
@@ -119413,7 +118637,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2003",
@@ -119858,7 +119082,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 23,
+      "opportunityCount": 22,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4698",
@@ -120075,23 +119299,6 @@
             "commissioning"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3330",
-          "opportunityName": "Pay for Performance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3330/pay-for-performance-program",
-          "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Rebate Program",
-          "administrator": "New Jersey Board of Public Utilities, Office of Clean Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "commissioning"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4454",
@@ -120501,7 +119708,7 @@
           "matchedTerms": [
             "energy star certification"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         }
       ]
     },
@@ -121043,7 +120250,7 @@
         "program_rule_value_only"
       ],
       "typicalBillTypes": [],
-      "opportunityCount": 8,
+      "opportunityCount": 7,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5170",
@@ -121094,7 +120301,7 @@
           "matchedTerms": [
             "benchmarking"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3681",
@@ -121148,23 +120355,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3330",
-          "opportunityName": "Pay for Performance Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3330/pay-for-performance-program",
-          "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Rebate Program",
-          "administrator": "New Jersey Board of Public Utilities, Office of Clean Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "benchmarking"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1459",
           "opportunityName": "SCE - Multi-Family Residential Energy Efficiency Programs",
           "sourceName": "DSIRE",
@@ -121184,13 +120374,12 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T05:25:06.796Z",
+  "availabilityReviewedAt": "2026-06-28T06:32:19.225Z",
   "availabilityStatusCounts": {
-    "active": 1339,
-    "uncertain": 50,
-    "rolling": 148,
-    "upcoming": 49,
-    "unavailable": 33
+    "active": 1371,
+    "unavailable": 48,
+    "rolling": 151,
+    "upcoming": 49
   },
   "hiddenUpcomingOpportunityCount": 49,
   "upcomingOpportunities": [
@@ -122673,5 +121862,5 @@
       "retrofitTypes": []
     }
   ],
-  "archivedUnavailableOpportunityCount": 33
+  "archivedUnavailableOpportunityCount": 48
 }

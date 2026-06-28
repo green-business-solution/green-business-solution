@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T05:25:06.796Z",
+  "generatedAt": "2026-06-28T06:32:19.225Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,11 +9,10 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "active": 1339,
-    "uncertain": 50,
-    "rolling": 148,
-    "upcoming": 49,
-    "unavailable": 33
+    "active": 1371,
+    "unavailable": 48,
+    "rolling": 151,
+    "upcoming": 49
   },
   "reviews": [
     {
@@ -54,27 +53,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22746/advanced-energy-fund-grant",
       "websiteUrl": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Advanced Energy Fund Grant Grant Program OH",
-        "reasons": [],
+        "evidenceText": "Ohio's official grants portal says the FY26 Advanced Energy Fund Grant is for reference only and registration closed on October 31, 2025.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
+          "https://grantsportal.ohio.gov/Public/FundingOpportunityDetails?detailid=d55fc301-8089-f011-8f12-00505680042e",
           "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "As of June 28, 2026, the official application end date has passed and no official future round was verified."
       }
     },
     {
@@ -1127,27 +1125,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2014/austin-energy-small-business-energy-efficiency-rebate-program",
       "websiteUrl": "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Austin Energy - Small Business Energy Efficiency Rebate Program Austin Energy Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "Austin Energy's current official commercial rebate page lists the Small Business Bundle and says small businesses and nonprofits can receive rebates for energy-reducing upgrades.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus"
+          "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial",
+          "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/sb-bundle",
+          "https://savings.austinenergy.com/-/media/project/websites/savings/commercial/learn/20240326_ae_com_smallbizbundle_summary.pdf"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.92,
+        "researchNotes": "Official replacement pages strongly support active availability."
       }
     },
     {
@@ -2059,27 +2057,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3629/central-lincoln-people-s-utility-district-residential-energy-efficiency-rebate-programs",
       "websiteUrl": "https://clpud.org/energy-efficiency/residential-rebate-programs/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs Central Lincoln People's Utility District Rebate Program OR",
-        "reasons": [],
+        "evidenceText": "Central Lincoln PUD's official site lists current residential rebate pages, including heat pump and heat pump water heater rebates.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://clpud.org/energy-efficiency/residential-rebate-programs/"
+          "https://clpud.org/energy-efficiency/residential-rebates/",
+          "https://clpud.org/energy-efficiency/rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://clpud.org/energy-efficiency/residential-rebate-programs/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current official utility pages support active availability."
       }
     },
     {
@@ -2908,27 +2905,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5424/coned-gas-and-electric-small-business-direct-install-program",
       "websiteUrl": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "ConEd (Gas and Electric) - Small Business Direct Install Program Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "Con Edison continues to publish official small-business and business energy efficiency upgrade pathways, even though the old short direct-install URL has moved.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business"
+          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business",
+          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/save-with-energy-efficiency-upgrades"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "Classified from current official replacement program surfaces."
       }
     },
     {
@@ -5981,27 +5977,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5568/large-energy-users-program",
       "websiteUrl": "https://www.njcleanenergy.com/LEUP",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Large Energy Users Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy exposes a current energy-efficiency program route for the Large Energy Users Program through the official program site.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/LEUP"
+          "https://www.njcleanenergy.com/LEUP",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/large-energy-users-program"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/LEUP"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.74,
+        "researchNotes": "Lower confidence because the old short URL no longer renders directly, but a current official replacement slug was found."
       }
     },
     {
@@ -7423,27 +7418,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3025/national-grid-electric-residential-energy-efficiency-incentive-program",
       "websiteUrl": "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "National Grid (Electric) - Residential Energy Efficiency Incentive Program Rebate Program RI",
-        "reasons": [],
+        "evidenceText": "Rhode Island Energy publishes current residential rebate materials, including 2026 heat pump water heater rebate applications and 2024-2026 ConnectedSolutions program guides.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
+          "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/gas-water-heating/HPWH_2026_3-11-2026.pdf",
+          "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/connectedsolutions/battery-program/RIE_Program-Guide_Battery-Energy-Storage-2025.ashx",
           "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "National Grid-branded record is now Rhode Island Energy; current official rebate materials support active availability."
       }
     },
     {
@@ -7597,27 +7592,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2359/new-jersey-smartstart-buildings-new-construction-and-retrofits",
       "websiteUrl": "https://www.njcleanenergy.com/smartstart-new-construction-buildings",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "New Jersey SmartStart Buildings - New Construction and Retrofits New Jersey Board of Public Utilities, Office of Clean Energy Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "The old SmartStart route redirects into the current New Jersey Clean Energy site, and current New Jersey Clean Energy new construction and energy-efficiency program pages continue to provide commercial building incentive pathways.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/smartstart-new-construction-buildings"
+          "https://www.njcleanenergy.com/smartstart-new-construction-buildings",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/new-construction-program",
+          "https://cleanenergy.nj.gov/resources/past-programs-energy-efficiency"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/smartstart-new-construction-buildings"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.72,
+        "researchNotes": "Lower confidence because the exact legacy SmartStart branding is partially stale; kept active as a current official replacement program path exists."
       }
     },
     {
@@ -7796,25 +7791,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2550/north-branch-municipal-water-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
       "websiteUrl": "https://smmpa.com/members/north-branch",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official North Branch or SMMPA source confirming this specific commercial and industrial rebate program could not be verified.",
+        "evidenceText": "The current SMMPA/North Branch official source did not safely confirm a current North Branch Commercial & Industrial Energy Efficiency Rebate Program.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
           "https://smmpa.com/members/north-branch"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Only insufficient or non-title-specific evidence was found."
+        "confidence": 0.7,
+        "researchNotes": "No title-specific current rebate page or application source was found."
       }
     },
     {
@@ -7881,27 +7876,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4524/nv-energy-energy-smart-schools-program",
       "websiteUrl": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "NV Energy -Energy Smart Schools Program Nevada Power Company Rebate Program NV",
-        "reasons": [],
+        "evidenceText": "The official NV Energy Energy Smart Schools route still resolves under NV Energy's current business/save-with-powershift site.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
+          "https://www.nvenergy.com/save-with-powershift/business/energy-smart-schools",
           "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.72,
+        "researchNotes": "Lower confidence because the page is JavaScript-heavy, but the official current route resolves."
       }
     },
     {
@@ -7940,27 +7934,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
       "websiteUrl": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "NYSEG (Electric) - Commercial and Industrial Efficiency Program Franklin Energy Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "NYSEG has a current business rebates and programs page for commercial energy-efficiency offerings.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+          "https://www.nyseg.com/business/rebates-and-programs"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official utility page timed out in one direct fetch but was confirmed by official-source search."
       }
     },
     {
@@ -8057,27 +8049,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4477/oklahoma-city-green-home-loan-program",
       "websiteUrl": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Oklahoma City - Green Home Loan Program Community Action Agency of Oklahoma City Loan Program OK",
-        "reasons": [],
+        "evidenceText": "The stored Oklahoma City Green Home Loan page is no longer available and no current official city replacement for the loan program was verified.",
+        "reasons": [
+          "source_missing_no_replacement"
+        ],
         "sourceUrlsChecked": [
           "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.okc.gov/departments/planning/programs/sustainability/green-home-loan"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Best-judgment archival after replacement search failed."
       }
     },
     {
@@ -8088,27 +8078,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3590/oklahoma-electric-cooperative-energy-efficiency-rebate-program",
       "websiteUrl": "https://okcoop.org/energy-efficiency-rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program Oklahoma Electric Cooperative Rebate Program OK",
-        "reasons": [],
+        "evidenceText": "Oklahoma Electric Cooperative's current official site includes Energy Efficiency Rebates in its Energy Solutions navigation and current 2026 OEC pages.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
+          "https://okcoop.org/",
           "https://okcoop.org/energy-efficiency-rebates/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://okcoop.org/energy-efficiency-rebates/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "The older deep link 404s, but current official OEC pages still expose the rebate category."
       }
     },
     {
@@ -8794,27 +8783,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4982/pse-and-g-government-and-non-profit-facility-direct-install-efficiency-program",
       "websiteUrl": "https://bizsave.pseg.com/home/direct-install/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program PSE&G Grant Program NJ",
-        "reasons": [],
+        "evidenceText": "PSE&G's Energy Efficient Solutions for Business site and PSE&G business efficiency pages continue to describe direct install and business energy-efficiency pathways, although the old direct-install URL has moved.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://bizsave.pseg.com/home/direct-install/"
+          "https://bizsave.pseg.com/home/direct-install/",
+          "https://bizsave.pseg.com/",
+          "https://nj.mybizenergyportal.com/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://bizsave.pseg.com/home/direct-install/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Classified from official program-administrator replacement pages after the stored page returned 404."
       }
     },
     {
@@ -9251,27 +9240,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4245/rg-and-e-electric-commercial-and-industrial-efficiency-program",
       "websiteUrl": "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "RG&E (Electric) - Commercial and Industrial Efficiency Program RG&E Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "RG&E has a current business rebates and programs page for commercial energy-efficiency offerings.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS"
+          "https://www.rge.com/business/rebates-and-programs"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.rge.com/wps/portal/rge/saveenergy/businesssolutions/commercialandindustrial/!ut/p/z1/vZNNb4JAEIZ_Sw8cyQ6KCEckBNsK1g_Kx4WssOIaWXRZrf33XRITTRqladLubZKZd555ZxalKEYpwydaYkFrhncyTlIj62u-O9YdCDzLtGEGjmO-Ba89MHUUPUyAAUp_Ug93ng1d9e8oRWnOxF5sUMJLgkueXS"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official utility page timed out in one direct fetch but was confirmed by official-source search."
       }
     },
     {
@@ -9282,27 +9269,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4304/rg-and-e-electric-small-business-lighting-retrofit-program",
       "websiteUrl": "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "RG&E (Electric) - Small Business Lighting Retrofit Program Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "RG&E continues to provide current business rebate and program pages, including small-business energy-efficiency pathways.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy"
+          "https://www.rge.com/business/rebates-and-programs"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "Classified as active through the current official business program surface rather than the obsolete legacy URL."
       }
     },
     {
@@ -13426,27 +13411,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5745/centerpoint-energy-a-c-distributor-program",
       "websiteUrl": "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "CenterPoint Energy A/C Distributor Program Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "CenterPoint Energy's current official Texas electric efficiency pages list active HVAC incentives and A/C tune-up programs, although the old A/C Distributor URL is gone.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res"
+          "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res",
+          "https://www.centerpointenergy.com/en-us/residential/save-energy-money/electric-efficiency-programs/heating-and-cooling?sa=ho",
+          "https://www.centerpointenergy.com/en-us/business/save-energy-money/electric-efficiency-programs/business-efficiency-programs?sa=ho"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.82,
+        "researchNotes": "Classified from current official CenterPoint HVAC and A/C efficiency pages."
       }
     },
     {
@@ -13940,27 +13925,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4928/city-of-danville-utilities-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "City of Danville Utilities - Residential Energy Efficiency Rebate Program Danville Utilities Rebate Program VA",
-        "reasons": [],
+        "evidenceText": "The stored Danville Utilities HomeSave rebate route now returns 404 and the current official Save Energy page provides conservation tips but no current rebate program.",
+        "reasons": [
+          "source_missing_no_replacement"
+        ],
         "sourceUrlsChecked": [
-          "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html"
+          "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
+          "https://home.danvilleutilities.com/238/Save-Energy/homesave/homesave-rebate-program.html",
+          "https://home.danvilleutilities.com/238/Save-Energy"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.78,
+        "researchNotes": "Archived the title-specific rebate program after official replacement search failed."
       }
     },
     {
@@ -14818,27 +14803,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22108/con-ed-demand-management-for-industrial-and-commercial-customers",
       "websiteUrl": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Con Ed Demand Management for Industrial and Commercial Customers ConEdison Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "Con Edison continues to advertise commercial and industrial energy efficiency upgrades and real-time energy management incentives on official replacement pages.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
+          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems",
+          "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/save-with-energy-efficiency-upgrades"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "The old exact route 404s; classified from official Con Edison C&I efficiency replacement pages."
       }
     },
     {
@@ -18858,27 +18842,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2197/mason-county-pud-3-residential-energy-rebates",
       "websiteUrl": "http://www.pud3.org/service/conservation-incentives",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Mason County PUD 3 - Residential Energy Rebates Mason County PUD 3 Rebate Program WA",
-        "reasons": [],
+        "evidenceText": "Mason County PUD 3's current official site has a Rebates & Incentives page.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "http://www.pud3.org/service/conservation-incentives"
+          "https://www.pud3.org/ways-to-save/rebates-incentives/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "http://www.pud3.org/service/conservation-incentives"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.92,
+        "researchNotes": "Current official utility page supports active availability."
       }
     },
     {
@@ -19145,27 +19127,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2234/middle-tennessee-emc-residential-heat-pump-loan-program",
       "websiteUrl": "http://www.mtemc.com/pages.cfm/name/r09_heatingac",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Middle Tennessee EMC - Residential Heat Pump Loan Program Middle Tennessee Electric Membership Corporation Loan Program TN",
-        "reasons": [],
+        "evidenceText": "Middle Tennessee Electric continues to publish rebates and energy-efficiency programs, including residential heat-pump/equipment pathways.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "http://www.mtemc.com/pages.cfm/name/r09_heatingac"
+          "https://mte.com/rebates",
+          "https://mte.com/pages.cfm/name/r09_heatingac"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "http://www.mtemc.com/pages.cfm/name/r09_heatingac"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.82,
+        "researchNotes": "The old deep link 404s; current official MTE rebate pages support active availability."
       }
     },
     {
@@ -19942,25 +19923,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3335/new-smyrna-beach-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.nsbufl.com/energy-conservation",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official New Smyrna Beach Utilities source confirming this specific rebate program could not be verified.",
+        "evidenceText": "The stored NSB Utilities energy conservation route is blocked or no longer returns a usable program page, and no current official replacement rebate page was found.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
-          "https://www.nsbufl.com/energy-conservation"
+          "https://www.nsbufl.com/energy-conservation",
+          "https://www.cityofnsb.com/energy-conservation"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "The official page was not safely accessible and no official replacement with title-specific rebate status was found."
+        "confidence": 0.65,
+        "researchNotes": "Best-judgment archival after official-source replacement search failed."
       }
     },
     {
@@ -20537,27 +20519,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3905/orange-and-rockland-utilities-gas-residential-efficiency-program",
       "websiteUrl": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Orange and Rockland Utilities (Gas) - Residential Efficiency Program Orange and Rockland Utilities, Inc. Rebate Program NY",
-        "reasons": [],
+        "evidenceText": "Orange and Rockland continues to provide official residential rebate and incentive pages for New York customers, including energy-efficient equipment pathways.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
+          "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates",
+          "https://www.oru.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "Classified from current official residential incentives replacement pages."
       }
     },
     {
@@ -20680,27 +20661,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22431/otec-commercial-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.directefficiency.com/otec-rebates/#otec-commercial",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "OTEC - Commercial Energy Efficiency Rebate Program Oregon Trail Electric Cooperative Rebate Program OR",
-        "reasons": [],
+        "evidenceText": "Oregon Trail Electric Cooperative's current official commercial rebate page says OTEC offers commercial rebates for businesses.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.directefficiency.com/otec-rebates/#otec-commercial"
+          "https://www.otec.coop/commercial-rebates",
+          "https://www.otec.coop/idahopower"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.directefficiency.com/otec-rebates/#otec-commercial"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "The old Direct Efficiency link is gone, but current official OTEC replacement pages confirm active rebates."
       }
     },
     {
@@ -21049,27 +21029,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4599/pend-oreille-pud-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://popud.org/your-account/save-energy-2/rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Pend Oreille PUD - Residential Energy Efficiency Rebate Program Pend Oreille PUD Rebate Program WA",
-        "reasons": [],
+        "evidenceText": "Pend Oreille PUD's official rebates route redirects to a current Residential Rebates & Incentives page.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://popud.org/your-account/save-energy-2/rebates"
+          "https://popud.org/rebates",
+          "https://popud.org/your-account/save-energy-2/rebates-and-incentives"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://popud.org/your-account/save-energy-2/rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.92,
+        "researchNotes": "Current official utility page supports active availability."
       }
     },
     {
@@ -21503,27 +21482,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1674/portland-general-electric-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Portland General Electric - Residential Energy Efficiency Rebate Program Portland General Electric Rebate Program OR",
-        "reasons": [],
+        "evidenceText": "PGE's current official residential pages list year-round heat pump incentives, heat pump water heater information, and active residential demand-response rebates in 2026.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives"
+          "https://portlandgeneral.com/save-money/save-money-home/heating-cooling/high-efficiency-heat-pumps",
+          "https://portlandgeneral.com/save-money/save-money-home/peak-time-rebates",
+          "https://portlandgeneral.com/residential/energy-savings/special-offers-incentives"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current official PGE pages support active residential energy-efficiency incentives."
       }
     },
     {
@@ -24177,27 +24156,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1536/texas-gas-service-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Texas Gas Service - Residential Energy Efficiency Rebate Program Texas Gas Service Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "Texas Gas Service says its Energy Efficiency Program has expired and rebate offerings are no longer available; its FAQ says it is unable to offer a rebate program at this time.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
+          "https://www.texasgasservice.com/save-money/energy-saving-tools-tips/energy-efficiency-program",
+          "https://www.texasgasservice.com/pay-bill/faqs",
           "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Applies to the residential rebate record."
       }
     },
     {
@@ -25848,27 +25827,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2241/vera-water-and-power-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://verawaterandpower.com/residential-rebates-2/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Vera Water & Power - Residential Energy Efficiency Rebate Program Rebate Program WA",
-        "reasons": [],
+        "evidenceText": "Vera Water & Power's current official site continues to publish residential energy-efficiency rebate and incentive content, including energy-efficient window rebates.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://verawaterandpower.com/residential-rebates-2/"
+          "https://verawaterandpower.com/rebates/",
+          "https://verawaterandpower.com/2024/08/rebates-available-for-energy-efficient-windows/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://verawaterandpower.com/residential-rebates-2/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.82,
+        "researchNotes": "The old residential-rebates route is stale, but current official rebate content remains active."
       }
     },
     {
@@ -26581,27 +26559,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22140/new-mexico-gas-company-new-home-construction-rebate-program",
       "websiteUrl": "https://nmgcgetrebates.com/new-homes-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "New Mexico Gas Company - New Home Construction Rebate Program New Mexico Gas Company Rebate Program NM",
-        "reasons": [],
+        "evidenceText": "The specific New Mexico Gas Company new-homes rebate route now returns not found; the current rebate portal lists residential and small-business rebates but not the title-specific New Home Construction program.",
+        "reasons": [
+          "source_missing_no_replacement"
+        ],
         "sourceUrlsChecked": [
-          "https://nmgcgetrebates.com/new-homes-rebates"
+          "https://nmgcgetrebates.com/new-homes-rebates",
+          "https://nmgcgetrebates.com/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://nmgcgetrebates.com/new-homes-rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.7,
+        "researchNotes": "Archived only the title-specific new-home program, not the broader NMGC rebate portal."
       }
     },
     {
@@ -28770,27 +28747,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1538/texas-gas-service-commercial-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Texas Gas Service - Commercial Energy Efficiency Rebate Program Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "Texas Gas Service says its Energy Efficiency Program has expired and rebate offerings are no longer available; its FAQ says it is unable to offer a rebate program at this time.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
+          "https://www.texasgasservice.com/save-money/energy-saving-tools-tips/energy-efficiency-program",
+          "https://www.texasgasservice.com/pay-bill/faqs",
           "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Applies to the commercial rebate record."
       }
     },
     {
@@ -29400,27 +29377,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/678/met-ed-penelec-sustainable-energy-fund",
       "websiteUrl": "https://bccf.org/overview-sustainable-energy-funds/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Met-Ed / Penelec Sustainable Energy Fund Berks County Community Foundation Grant Program PA",
-        "reasons": [],
+        "evidenceText": "Berks County Community Foundation maintains current Sustainable Energy Fund grant and funding pages for Met-Ed/Penelec territories, including current grant opportunities and program-related investment language.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
+          "https://bccf.org/grants-energy-efficiency/",
           "https://bccf.org/overview-sustainable-energy-funds/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://bccf.org/overview-sustainable-energy-funds/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "The old overview URL moved, but current administrator grant/funding content was verified."
       }
     },
     {
@@ -29577,27 +29553,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4590/nv-energy-solar-thermal-heating-program",
       "websiteUrl": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "NV Energy - Solar Thermal Heating Program NV Energy Rebate Program NV",
-        "reasons": [],
+        "evidenceText": "The stored NV Energy solar thermal heating route redirects to a non-rendering services endpoint and no current official solar thermal incentive page was verified.",
+        "reasons": [
+          "source_missing_no_replacement"
+        ],
         "sourceUrlsChecked": [
-          "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating"
+          "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
+          "https://www.nvenergy.com/cleanenergy/other-private-generation/solar-thermal-heating",
+          "http://services.nvenergy.com/cleanenergy/other-private-generation/solar-thermal-heating"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.72,
+        "researchNotes": "Best-judgment archival because the current official route fails and replacement search did not confirm an open program."
       }
     },
     {
@@ -30460,16 +30436,16 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/186/sulphur-springs-valley-ec-sunwatts-rebate-program",
       "websiteUrl": "http://www.ssvec.org/programs/renewable.php",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Current official Sulphur Springs Valley EC rebate pages did not safely confirm the SunWatts rebate program as currently open.",
+        "evidenceText": "Current SSVEC pages and documents checked show older SunWatts materials or interconnection materials, but no current title-specific SunWatts rebate availability.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
           "https://www.ssvec.org/downloads/programs/renewable/2022/2022-SunWatts-Handbook.pdf",
@@ -30477,10 +30453,10 @@
           "https://www.ssvec.org/programs/rebates.php"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Available SunWatts documents appear older and current official rebate status could not be verified."
+        "confidence": 0.65,
+        "researchNotes": "Kept conservative because current official evidence supported interconnection/solar information rather than an open rebate program."
       }
     },
     {
@@ -30519,26 +30495,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2402/trico-electric-cooperative-sunwatts-incentive-program",
       "websiteUrl": "https://www.trico.coop/sustainable-energy/member-installed-solar/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Current Trico solar and renewable materials did not safely confirm an active SunWatts incentive program.",
+        "evidenceText": "Current Trico solar and renewable pages describe solar/rate information but do not safely confirm an active SunWatts incentive program.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
           "https://trico.coop/sustainable-programs/solar/",
           "https://trico.coop/wp-content/uploads/2026/01/RESFM.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Official materials discuss solar and renewable rate treatment, but not a current SunWatts rebate."
+        "confidence": 0.68,
+        "researchNotes": "No current official title-specific SunWatts incentive page was found."
       }
     },
     {
@@ -30577,27 +30553,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3277/barron-electric-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
       "websiteUrl": "https://www.barronelectric.com/2024-energy-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program Barron Electric Cooperative Rebate Program WI",
-        "reasons": [],
+        "evidenceText": "Barron Electric Cooperative's official 2026 Energy Rebates page provides current rebate information.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.barronelectric.com/2024-energy-rebates"
+          "https://www.barronelectric.com/2026-energy-rebates"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.barronelectric.com/2024-energy-rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current official cooperative page supports active availability."
       }
     },
     {
@@ -31114,27 +31088,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5811/nj-clean-energy-residential-new-construction-program",
       "websiteUrl": "https://www.njcleanenergy.com/residential/programs/residential-new-construction",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "NJ Clean Energy- Residential New Construction Program Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy maintains a current New Construction Program page on its official program site.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/residential/programs/residential-new-construction"
+          "https://www.njcleanenergy.com/residential/programs/residential-new-construction",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/new-construction-program"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/residential/programs/residential-new-construction"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.86,
+        "researchNotes": "Official replacement route supports current availability."
       }
     },
     {
@@ -34514,27 +34487,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5422/renewable-energy-facility-sales-and-use-tax-reimbursement",
       "websiteUrl": "https://sdreadytowork.com/financing-incentives/tax-incentives/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Renewable Energy Facility Sales and Use Tax Reimbursement Governor's Office of Economic Development Sales Tax Incentive SD",
-        "reasons": [],
+        "evidenceText": "South Dakota economic development and tax-incentive materials maintain a renewable-energy facility sales/use tax reimbursement framework as a standing tax incentive.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
-          "https://sdreadytowork.com/financing-incentives/tax-incentives/"
+          "https://sdreadytowork.com/financing-incentives/tax-incentives/",
+          "https://sdgoed.com/financing-incentives/tax-incentives/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://sdreadytowork.com/financing-incentives/tax-incentives/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.86,
+        "researchNotes": "Standing statutory/tax incentive; not a one-time application window."
       }
     },
     {
@@ -35093,27 +35065,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5205/small-scale-chp-and-fuel-cell-incentive-program",
       "websiteUrl": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Small Scale CHP and Fuel Cell Incentive Program TRC Solutions Grant Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy exposes a current official energy-efficiency route for combined heat and power/fuel-cell incentives.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power"
+          "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/combined-heat-power"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.76,
+        "researchNotes": "Lower confidence because the old URL redirects, but the official replacement slug exists."
       }
     },
     {
@@ -35266,27 +35237,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4066/southwest-gas-corporation-combined-heat-and-power-program",
       "websiteUrl": "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official Southwest Gas source confirming the Arizona Combined Heat and Power Program as open could not be verified.",
+        "evidenceText": "The stored Southwest Gas CHP route is no longer recoverable, and current official Southwest Gas rebate/source pages checked did not list a current Arizona Combined Heat and Power rebate.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
+          "https://www.swgas.com/en/rebate/arizona-combined-heat-and-power-program-business",
           "https://www.swgas.com/en/rebates-and-promotions-search-residential-arizona",
-          "https://www.swgas.com/1409181751727/F915-09-Arizona-Smarter-Greener-Better-Distributed-Generation-Program-Rebate-Application.pdf",
-          "https://www.swgas.com/1409210069209/230531-APP-23-XXXX-SWG-2023-EE-RET-Application-.pdf"
+          "https://www.swgas.com/1409181751727/F915-09-Arizona-Smarter-Greener-Better-Distributed-Generation-Program-Rebate-Application.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Current general rebate pages do not safely confirm this specific CHP program."
+        "confidence": 0.65,
+        "researchNotes": "Best-judgment archival: an old official report confirms the program existed historically, but no current official application or rebate page was found."
       }
     },
     {
@@ -36998,27 +36969,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1051/metropolitan-edison-company-sef-loans-firstenergy-territory",
       "websiteUrl": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Metropolitan Edison Company SEF Loans (FirstEnergy Territory) Berks County Community Foundation Loan Program PA",
-        "reasons": [],
+        "evidenceText": "The Met-Ed/Penelec Sustainable Energy Fund administrator continues to publish program-related investment/funding information even though the old SEF loan page is unavailable.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "sourceUrlsChecked": [
-          "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86"
+          "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86",
+          "https://bccf.org/grants-energy-efficiency/",
+          "https://bccf.org/overview-sustainable-energy-funds/"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.72,
+        "researchNotes": "Lower-confidence replacement classification because the exact loan page is gone, but the fund's financing/funding function remains active through the administrator."
       }
     },
     {
@@ -37767,27 +37738,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22480/successor-solar-incentive-susi-program-competitive-solar-incentive",
       "websiteUrl": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive Board of Public Utilities Performance-Based Incentive NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy maintains current official routes for the Successor Solar Incentive and Competitive Solar Incentive programs.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program"
+          "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
+          "https://cleanenergy.nj.gov/programs/renewable-energy/competitive-solar-incentive-program",
+          "https://cleanenergy.nj.gov/programs/renewable-energy/successor-solar-incentive-program"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.84,
+        "researchNotes": "Program availability may still be tranche/solicitation-specific, but the current official program route is active."
       }
     },
     {
@@ -38116,26 +38087,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4914/wyoming-pace-financing-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official Wyoming administrator or statutory source confirming active PACE financing availability could not be verified.",
+        "evidenceText": "Wyoming law authorizes local governments to adopt energy improvements programs for energy efficiency or renewable energy improvements, supporting a standing local-option PACE-style financing authority.",
         "reasons": [
-          "still_uncertain"
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://programs.dsireusa.org/system/program/detail/4914/wyoming-pace-financing-program",
-          "https://www.epa.gov/statelocalenergy/commercial-property-assessed-clean-energy"
+          "https://wyoleg.gov/Legislation/2011/HB0179",
+          "https://wyoleg.gov/statutes/compress/title15.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:51:58.972Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Search did not locate a current official Wyoming PACE administrator or active local program page."
+        "confidence": 0.85,
+        "researchNotes": "Standing local-option authority; actual availability still depends on local adoption."
       }
     },
     {
@@ -38622,27 +38593,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22357/barron-electric-cooperative-electric-vehicle-charging-station-rebate",
       "websiteUrl": "https://www.barronelectric.com/2024-energy-rebates",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Barron Electric Cooperative - Electric Vehicle Charging Station Rebate Barron Electric Cooperative Rebate Program WI",
-        "reasons": [],
+        "evidenceText": "Barron Electric Cooperative's official 2026 Energy Rebates page provides current rebate information, including energy-efficiency rebate categories that replaced the old 2024 route.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.barronelectric.com/2024-energy-rebates"
+          "https://www.barronelectric.com/2026-energy-rebates"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.barronelectric.com/2024-energy-rebates"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.86,
+        "researchNotes": "Classified from the current official annual rebate page."
       }
     },
     {
@@ -39139,26 +39108,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22679/city-of-atlanta-incentivized-green-developments",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official City of Atlanta source confirming this specific Incentivized Green Developments incentive could not be verified.",
+        "evidenceText": "Current official Atlanta incentive pages list general grants, loans, tax benefits, and development incentives, but no current title-specific Incentivized Green Developments incentive was verified.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement"
         ],
         "sourceUrlsChecked": [
           "https://www.atlantaga.gov/doing-business/grants-loans-incentives",
           "https://www.atlantaga.gov/Home/Components/News/News/7103/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Official Atlanta incentive pages identify general grants, loans, tax benefits, and development incentives, but not enough title-specific evidence to classify this record."
+        "confidence": 0.68,
+        "researchNotes": "Archived because the title-specific program could not be confirmed from official city sources."
       }
     },
     {
@@ -39631,27 +39600,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22216/diesel-mitigation-trust-fund",
       "websiteUrl": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Diesel Mitigation Trust Fund Ohio Environmental Protection Agency Grant Program OH",
-        "reasons": [],
+        "evidenceText": "Ohio EPA and DSIRE evidence indicate the relevant Diesel Mitigation Trust Fund grant cycle is closed, and no current official open cycle was verified.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
-          "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants"
+          "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants",
+          "https://programs.dsireusa.org/system/program/detail/22216/diesel-mitigation-trust-fund"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official-source search found historical or closed-cycle materials, not a current application."
       }
     },
     {
@@ -40596,27 +40564,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
       "websiteUrl": "https://www.njcleanenergy.com/ev",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "EV Tourism Program NJ Board of Public Utilities Grant Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy has a current EV Tourism Corridor Program page for the EV tourism funding track.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/ev"
+          "https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism-corridor-program",
+          "https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/ev"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.78,
+        "researchNotes": "The exact old EV Tourism route 404s, but the official replacement EV Tourism Corridor Program route exists."
       }
     },
     {
@@ -43837,27 +43804,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22663/wyoming-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
       "websiteUrl": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Wyoming Department of Transportation Grant Program WY",
-        "reasons": [],
+        "evidenceText": "WYDOT's current NEVI page says Wyoming's 2025 NEVI Plan is approved, NEVI funding can be used to incentivize private industry or local governments, and interested parties can use WYDOT's EV infrastructure planning resources.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html"
+          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/national-electric-vehicle-infrastructure-%28nevi%29-program.html",
+          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/frequently-asked-questions-%28faq%29.html"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.86,
+        "researchNotes": "No single current RFP deadline was found, but the official state NEVI program remains current and funded."
       }
     },
     {
@@ -44355,27 +44321,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3136/otec-agricultural-energy-efficiency-rebate-programs",
       "websiteUrl": "https://www.directefficiency.com/otec-rebates/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "OTEC - Agricultural Energy Efficiency Rebate Programs Oregon Trail Electric Cooperative Rebate Program OR",
-        "reasons": [],
+        "evidenceText": "Oregon Trail Electric Cooperative's official agricultural pages say its Agricultural Energy Efficiency Rebate Program offers incentives and current agriculture rebates.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.directefficiency.com/otec-rebates/"
+          "https://www.otec.coop/agricultural",
+          "https://www.otec.coop/agriculture-rebates"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.directefficiency.com/otec-rebates/"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Current official OTEC replacement pages support active availability."
       }
     },
     {
@@ -44839,27 +44804,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5567/local-energy-audit-program",
       "websiteUrl": "https://www.njcleanenergy.com/lgea",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Energy Audit Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy exposes a current official energy-efficiency route for the Local Government Energy Audit program.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/lgea"
+          "https://www.njcleanenergy.com/lgea",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/local-government-energy-audit"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/lgea"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Classified from the current official replacement route rather than the stale short URL."
       }
     },
     {
@@ -45321,27 +45285,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3330/pay-for-performance-program",
       "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Pay for Performance Program New Jersey Board of Public Utilities, Office of Clean Energy Rebate Program NJ",
-        "reasons": [],
+        "evidenceText": "New Jersey Clean Energy now places Pay for Performance under past/legacy program resources rather than a current open program route.",
+        "reasons": [
+          "official_source_closed"
+        ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction"
+          "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/pay-for-performance-program",
+          "https://cleanenergy.nj.gov/resources/past-programs-energy-efficiency"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.78,
+        "researchNotes": "Best-judgment archival based on current NJCEP past-program placement and stale old route."
       }
     },
     {
@@ -46005,27 +45969,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4593/el-paso-electric-company-score-program-for-counties-municipalities-and-schools",
       "websiteUrl": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools CLEAResult Consulting Company Rebate Program TX",
-        "reasons": [],
+        "evidenceText": "El Paso Electric publishes a current 2026 SCORE Plus Program Manual and official energy-efficiency filings with Texas SCORE program materials.",
+        "reasons": [
+          "official_source_active"
+        ],
         "sourceUrlsChecked": [
-          "https://www.epelectric.com/tx/business/program-manuals-and-guidelines"
+          "https://www.epelectric.com/el-paso-electric/uploads/2026-epe-score-plus-prgm-manual-final.pdf",
+          "https://www.epelectric.com/company/regulatory/energy-efficiency-filings"
         ],
-        "fetchErrors": [
-          {
-            "error": "HTTP 404",
-            "url": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines"
-          }
-        ],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current official 2026 manual supports active availability."
       }
     },
     {
@@ -46064,7 +46027,7 @@
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
   "uncertainRepairConcurrency": 16,
-  "gptProResearchAppliedAt": "2026-06-28T05:25:06.796Z",
-  "gptProResearchAppliedCount": 12,
+  "gptProResearchAppliedAt": "2026-06-28T06:32:19.225Z",
+  "gptProResearchAppliedCount": 50,
   "gptProResearchSkipped": []
 }

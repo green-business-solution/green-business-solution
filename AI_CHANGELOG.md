@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) final public availability uncertainty repair
+
+- Researched and applied the final 50 public opportunity availability repairs using official-source manual research patterns learned from GPT Pro batches.
+- Reduced public uncertain availability records from 50 to 0, with final public review counts of 1,371 active, 151 rolling, 49 upcoming, and 48 unavailable opportunities.
+- Regenerated public fixtures, archive reports, and the uncertainty research packet so unavailable opportunities are archived from active public maps and no GPT Pro targets remain.
+- Documented last-50 official-source repair heuristics for future cron automation.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro availability research batch 2
 
 - Applied 50 additional GPT Pro researched opportunity availability repairs, reducing public uncertain records from 251 to 202.
