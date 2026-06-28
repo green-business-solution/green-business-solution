@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T06:32:19.225Z",
+  "generatedAt": "2026-06-28T06:50:12.517Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,10 +9,11 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "active": 1371,
-    "unavailable": 48,
-    "rolling": 151,
-    "upcoming": 49
+    "active": 1370,
+    "unavailable": 44,
+    "rolling": 152,
+    "upcoming": 52,
+    "uncertain": 1
   },
   "reviews": [
     {
@@ -7876,26 +7877,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4524/nv-energy-energy-smart-schools-program",
       "websiteUrl": "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm",
       "availabilityReview": {
-        "normalizedStatus": "active",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "The official NV Energy Energy Smart Schools route still resolves under NV Energy's current business/save-with-powershift site.",
+        "evidenceText": "NV Energy's Energy Smart Schools materials state that incentives are available January through December or until funds are exhausted.",
         "reasons": [
-          "official_source_active"
+          "official_source_active",
+          "rolling_or_no_deadline_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.nvenergy.com/save-with-powershift/business/energy-smart-schools",
-          "https://www.nvenergy.com/business/saveenergy/incentives/schools.cfm"
+          "https://www.nvenergy.com/save-with-powershift/schools",
+          "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/schools/ESS-Facts.pdf",
+          "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-school/EnergySmartSchools_ProgramSummary.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.72,
-        "researchNotes": "Lower confidence because the page is JavaScript-heavy, but the official current route resolves."
+        "confidence": 0.9,
+        "researchNotes": "Pro answer-key reconciliation: official utility materials support current availability while annual funds remain."
       }
     },
     {
@@ -13925,27 +13928,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4928/city-of-danville-utilities-residential-energy-efficiency-rebate-program",
       "websiteUrl": "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
       "availabilityReview": {
-        "normalizedStatus": "unavailable",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "The stored Danville Utilities HomeSave rebate route now returns 404 and the current official Save Energy page provides conservation tips but no current rebate program.",
+        "evidenceText": "Danville Utilities Home$ave says residential electric customers are eligible for mail-in rebates on qualifying HVAC tune-up services and other residential energy-efficiency measures.",
         "reasons": [
-          "source_missing_no_replacement"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html",
-          "https://home.danvilleutilities.com/238/Save-Energy/homesave/homesave-rebate-program.html",
-          "https://home.danvilleutilities.com/238/Save-Energy"
+          "https://home.danvilleutilities.com/229/Residential-Energy-Efficiency-Program",
+          "https://home.danvilleutilities.com/222/Homeave-Rebate-Program"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.78,
-        "researchNotes": "Archived the title-specific rebate program after official replacement search failed."
+        "confidence": 0.9,
+        "researchNotes": "Pro answer-key reconciliation: official city utility replacement pages support active residential rebate availability."
       }
     },
     {
@@ -29553,27 +29555,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4590/nv-energy-solar-thermal-heating-program",
       "websiteUrl": "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
       "availabilityReview": {
-        "normalizedStatus": "unavailable",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "The stored NV Energy solar thermal heating route redirects to a non-rendering services endpoint and no current official solar thermal incentive page was verified.",
+        "evidenceText": "NV Energy's Solar Thermal Heating page references incentive program eligibility requirements for solar water heating equipment.",
         "reasons": [
-          "source_missing_no_replacement"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating",
           "https://www.nvenergy.com/cleanenergy/other-private-generation/solar-thermal-heating",
-          "http://services.nvenergy.com/cleanenergy/other-private-generation/solar-thermal-heating"
+          "https://www.nvenergy.com/cleanenergy/solar"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.72,
-        "researchNotes": "Best-judgment archival because the current official route fails and replacement search did not confirm an open program."
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: official NV Energy page supports continued incentive-program eligibility, though the page is more technical than a standard application notice."
       }
     },
     {
@@ -37738,27 +37739,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22480/successor-solar-incentive-susi-program-competitive-solar-incentive",
       "websiteUrl": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
       "availabilityReview": {
-        "normalizedStatus": "active",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "New Jersey Clean Energy maintains current official routes for the Successor Solar Incentive and Competitive Solar Incentive programs.",
+        "evidenceText": "NJCEP describes the CSI Program as an annual competitive procurement; BPU launched the fourth solicitation in 2026, which closed April 24, 2026.",
         "reasons": [
-          "official_source_active"
+          "future_opening_language"
         ],
         "sourceUrlsChecked": [
-          "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
-          "https://cleanenergy.nj.gov/programs/renewable-energy/competitive-solar-incentive-program",
-          "https://cleanenergy.nj.gov/programs/renewable-energy/successor-solar-incentive-program"
+          "https://cleanenergy.nj.gov/programs/solar/competitive-solicitation-incentive-csi-program",
+          "https://www.nj.gov/bpu/pdf/boardorders/2026/20260304/8D%20ORDER%20CSI%20Fourth%20Solicitation%20Launch.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.84,
-        "researchNotes": "Program availability may still be tranche/solicitation-specific, but the current official program route is active."
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: latest solicitation is closed as of June 28, 2026, but official materials describe CSI as an annual procurement."
       }
     },
     {
@@ -40564,26 +40564,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
       "websiteUrl": "https://www.njcleanenergy.com/ev",
       "availabilityReview": {
-        "normalizedStatus": "active",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "New Jersey Clean Energy has a current EV Tourism Corridor Program page for the EV tourism funding track.",
+        "evidenceText": "Official Charge Up New Jersey EV Tourism Corridor page says applications are closed as of February 23, 2026 and the total funding status is Program Closed.",
         "reasons": [
-          "official_source_active"
+          "official_source_closed"
         ],
         "sourceUrlsChecked": [
-          "https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism-corridor-program",
-          "https://cleanenergy.nj.gov/programs/electric-vehicles/ev-tourism"
+          "https://chargeup.njcleanenergy.com/ev-tourism-corridor",
+          "https://www.nj.gov/bpu/newsroom/2025/approved/20250507ev.html"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.78,
-        "researchNotes": "The exact old EV Tourism route 404s, but the official replacement EV Tourism Corridor Program route exists."
+        "confidence": 0.95,
+        "researchNotes": "Pro answer-key reconciliation: the current official program page confirms the EV Tourism application window is closed."
       }
     },
     {
@@ -43317,27 +43317,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22641/tennessee-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
       "websiteUrl": "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html",
       "availabilityReview": {
-        "normalizedStatus": "unavailable",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "The stored Tennessee NEVI/TEVI source path returns stale or unavailable program evidence, and no current open or future application round was verified for this DSIRE record during this repair pass.",
+        "evidenceText": "TDOT's FY 2026 TEVI Plan says Tennessee will continue competitive solicitations for EV infrastructure deployment; the earlier TEVI application packet deadline was November 1, 2023.",
         "reasons": [
-          "no_current_open_or_future_round_verified",
-          "source_missing_no_replacement"
+          "future_opening_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html",
-          "https://programs.dsireusa.org/system/program/detail/22641/tennessee-national-electric-vehicle-infrastructure-nevi-formula-grant-program"
+          "https://www.tn.gov/tdot/local-programs-community-investments/community-investments-office/air-quality/tennessee-electric-vehicle-infrastructure--tevi-.html",
+          "https://www.tn.gov/content/dam/tn/tdot/long-range-planning/air-quality/tevi/FY%202026%20TEVI%20Plan_Approved_09222025.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T05:25:06.796Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.74,
-        "researchNotes": "Hide until an official current Tennessee NEVI/TEVI solicitation or application path is documented."
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: no current open grant application window was verified, but official FY 2026 planning materials indicate future competitive solicitations."
       }
     },
     {
@@ -43804,26 +43803,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22663/wyoming-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
       "websiteUrl": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html",
       "availabilityReview": {
-        "normalizedStatus": "active",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "WYDOT's current NEVI page says Wyoming's 2025 NEVI Plan is approved, NEVI funding can be used to incentivize private industry or local governments, and interested parties can use WYDOT's EV infrastructure planning resources.",
+        "evidenceText": "WYDOT says it received full build-out status in 2025, NEVI funding can now be spent on other highways, and Wyoming-specific requirements will be announced.",
         "reasons": [
-          "official_source_active"
+          "future_opening_language"
         ],
         "sourceUrlsChecked": [
-          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/national-electric-vehicle-infrastructure-%28nevi%29-program.html",
-          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/frequently-asked-questions-%28faq%29.html"
+          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/national-electric-vehicle-infrastructure-%28nevi%29-program.html"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.86,
-        "researchNotes": "No single current RFP deadline was found, but the official state NEVI program remains current and funded."
+        "confidence": 0.7,
+        "researchNotes": "Pro answer-key reconciliation: no current open RFP/application was verified, but the official WYDOT page indicates future funding deployment beyond the interstates."
       }
     },
     {
@@ -44633,27 +44631,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers",
       "websiteUrl": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
       "availabilityReview": {
-        "normalizedStatus": "unavailable",
+        "normalizedStatus": "uncertain",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "The stored Ohio Energy Efficiency Program for Manufacturers page is stale or unavailable, and no current official open grant/program page was verified during this repair pass.",
+        "evidenceText": "A current official Ohio source confirming open applications for the Energy Efficiency Program for Manufacturers could not be verified.",
         "reasons": [
-          "source_missing_no_replacement",
-          "no_current_open_or_future_round_verified"
+          "still_uncertain"
         ],
         "sourceUrlsChecked": [
           "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
-          "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers"
+          "https://development.ohio.gov/wps/wcm/connect/gov/f4a2a9d4-c4ed-4394-b71d-a70f521373fd/Guidelines_OhioEEP_2025Edits.%2B130.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T05:25:06.796Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.76,
-        "researchNotes": "Hide until an official current manufacturer efficiency program is found."
+        "confidence": 0.35,
+        "researchNotes": "Pro answer-key reconciliation: official source access and replacement evidence were insufficient to classify the program as active, upcoming, or closed."
       }
     },
     {
@@ -45285,27 +45282,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3330/pay-for-performance-program",
       "websiteUrl": "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
       "availabilityReview": {
-        "normalizedStatus": "unavailable",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "New Jersey Clean Energy now places Pay for Performance under past/legacy program resources rather than a current open program route.",
+        "evidenceText": "BPU says the New Construction Program replaces and consolidates Pay for Performance; NJCEP lists the replacement New Construction Program as open for applications.",
         "reasons": [
-          "official_source_closed"
+          "official_source_active"
         ],
         "sourceUrlsChecked": [
-          "https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction",
-          "https://cleanenergy.nj.gov/programs/energy-efficiency/pay-for-performance-program",
-          "https://cleanenergy.nj.gov/resources/past-programs-energy-efficiency"
+          "https://www.nj.gov/bpu/newsroom/2025/approved/20251021.html",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency/new-construction-program",
+          "https://cleanenergy.nj.gov/programs/energy-efficiency",
+          "https://www.nj.gov/bpu/pdf/boardorders/2026/20260422/8B%20ORDER%20FY26%20True%20Up%20and%20Associated%20Documents.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:32:19.225Z",
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.78,
-        "researchNotes": "Best-judgment archival based on current NJCEP past-program placement and stale old route."
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: the legacy Pay for Performance application path closed, but an official active replacement program exists."
       }
     },
     {
@@ -46027,7 +46025,7 @@
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
   "uncertainRepairConcurrency": 16,
-  "gptProResearchAppliedAt": "2026-06-28T06:32:19.225Z",
-  "gptProResearchAppliedCount": 50,
+  "gptProResearchAppliedAt": "2026-06-28T06:50:12.517Z",
+  "gptProResearchAppliedCount": 9,
   "gptProResearchSkipped": []
 }

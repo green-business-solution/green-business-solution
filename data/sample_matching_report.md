@@ -1,12 +1,12 @@
 # Sample Matching Report
 
-Generated: 2026-06-28T06:37:22.692Z
-Matcher clock: 2026-06-28T06:36:46.037Z
-Opportunities evaluated: 1712
-Archived opportunities skipped: 293
-Upcoming opportunities hidden: 91
+Generated: 2026-06-28T06:54:25.040Z
+Matcher clock: 2026-06-28T06:53:55.814Z
+Opportunities evaluated: 1709
+Archived opportunities skipped: 294
+Upcoming opportunities hidden: 93
 Sample users evaluated: 50
-Pairings evaluated: 85600
+Pairings evaluated: 85450
 
 This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.
 The script evaluates every current visible opportunity against each sample profile, then reports eligible matches and common blockers.
@@ -61,7 +61,7 @@ Status counts:
 ```json
 {
   "eligible": 24,
-  "ineligible": 1688
+  "ineligible": 1685
 }
 ```
 
@@ -108,7 +108,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -149,7 +149,7 @@ Status counts:
 ```json
 {
   "eligible": 23,
-  "ineligible": 1689
+  "ineligible": 1686
 }
 ```
 
@@ -196,7 +196,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (retail_storefront) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -237,7 +237,7 @@ Status counts:
 ```json
 {
   "eligible": 51,
-  "ineligible": 1661
+  "ineligible": 1658
 }
 ```
 
@@ -284,7 +284,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -325,7 +325,7 @@ Status counts:
 ```json
 {
   "eligible": 27,
-  "ineligible": 1685
+  "ineligible": 1682
 }
 ```
 
@@ -372,7 +372,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -413,7 +413,7 @@ Status counts:
 ```json
 {
   "eligible": 23,
-  "ineligible": 1689
+  "ineligible": 1686
 }
 ```
 
@@ -460,7 +460,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -501,7 +501,7 @@ Status counts:
 ```json
 {
   "eligible": 23,
-  "ineligible": 1689
+  "ineligible": 1686
 }
 ```
 
@@ -549,7 +549,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 553
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 
 ### westin-pasadena
@@ -589,7 +589,7 @@ Status counts:
 ```json
 {
   "eligible": 24,
-  "ineligible": 1688
+  "ineligible": 1685
 }
 ```
 
@@ -636,7 +636,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (hospitality_lodging) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -677,7 +677,7 @@ Status counts:
 ```json
 {
   "eligible": 25,
-  "ineligible": 1687
+  "ineligible": 1684
 }
 ```
 
@@ -724,7 +724,7 @@ Retrofit types inferred from promising matches:
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (healthcare) does not match broad_residential eligibility.: 553
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 - Project site state CA does not match opportunity geography MA.: 70
 
@@ -765,7 +765,7 @@ Status counts:
 ```json
 {
   "eligible": 26,
-  "ineligible": 1686
+  "ineligible": 1683
 }
 ```
 
@@ -813,7 +813,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 553
 - User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 
 ### seghesio-healdsburg-winery
@@ -853,7 +853,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -901,7 +901,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 553
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state CA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CA does not match opportunity geography CO.: 74
 
 ### via-verde-bronx-renter-household
@@ -941,7 +941,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -987,10 +987,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 209
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
 - Project site state NY does not match opportunity geography CA.: 176
 - Project site state NY does not match opportunity geography MN.: 112
-- Applicant type residential does not match eligible sectors commercial.: 81
+- Applicant type residential does not match eligible sectors commercial.: 80
 
 ### hoa-mai-gardens-seattle-household
 
@@ -1029,7 +1029,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -1075,10 +1075,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 209
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
 - Project site state WA does not match opportunity geography CA.: 176
 - Project site state WA does not match opportunity geography MN.: 112
-- Applicant type residential does not match eligible sectors commercial.: 81
+- Applicant type residential does not match eligible sectors commercial.: 80
 
 ### tapiz-mariposa-denver-household
 
@@ -1117,7 +1117,7 @@ Status counts:
 ```json
 {
   "eligible": 26,
-  "ineligible": 1686
+  "ineligible": 1683
 }
 ```
 
@@ -1163,10 +1163,10 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 209
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
 - Project site state CO does not match opportunity geography CA.: 176
 - Project site state CO does not match opportunity geography MN.: 112
-- Applicant type residential does not match eligible sectors commercial.: 81
+- Applicant type residential does not match eligible sectors commercial.: 80
 
 ### keauhou-lane-honolulu-renter
 
@@ -1205,7 +1205,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -1245,7 +1245,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 553
 - Project site state HI does not match opportunity geography CA.: 176
 - Project site state HI does not match opportunity geography MN.: 112
-- Applicant type residential does not match eligible sectors commercial.: 81
+- Applicant type residential does not match eligible sectors commercial.: 80
 - Project site state HI does not match opportunity geography CO.: 74
 
 ### the-rose-minneapolis-household
@@ -1285,7 +1285,7 @@ Status counts:
 ```json
 {
   "eligible": 19,
-  "ineligible": 1693
+  "ineligible": 1690
 }
 ```
 
@@ -1331,9 +1331,9 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 209
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
 - Project site state MN does not match opportunity geography CA.: 176
-- Applicant type residential does not match eligible sectors commercial.: 81
+- Applicant type residential does not match eligible sectors commercial.: 80
 - Project site state MN does not match opportunity geography CO.: 74
 
 ### bens-chili-bowl-dc
@@ -1373,7 +1373,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -1413,7 +1413,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 553
 - Project site state DC does not match opportunity geography CA.: 176
 - Project site state DC does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state DC does not match opportunity geography CO.: 74
 
 ### zingermans-deli-ann-arbor
@@ -1453,7 +1453,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1701
+  "ineligible": 1698
 }
 ```
 
@@ -1499,7 +1499,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 553
 - Project site state MI does not match opportunity geography CA.: 176
 - Project site state MI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state MI does not match opportunity geography CO.: 74
 
 ### big-dipper-missoula
@@ -1539,7 +1539,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -1587,7 +1587,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 553
 - Project site state MT does not match opportunity geography CA.: 176
 - Project site state MT does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state MT does not match opportunity geography CO.: 74
 
 ### burlington-beer-company
@@ -1627,7 +1627,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1702
+  "ineligible": 1699
 }
 ```
 
@@ -1672,7 +1672,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state VT does not match opportunity geography CA.: 176
 - Project site state VT does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### bluebird-cafe-nashville
 
@@ -1711,7 +1711,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1705
+  "ineligible": 1702
 }
 ```
 
@@ -1749,7 +1749,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 553
 - Project site state TN does not match opportunity geography CA.: 176
 - Project site state TN does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state TN does not match opportunity geography CO.: 74
 
 ### la-montanita-nob-hill-albuquerque
@@ -1789,7 +1789,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -1837,7 +1837,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 553
 - Project site state NM does not match opportunity geography CA.: 176
 - Project site state NM does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state NM does not match opportunity geography CO.: 74
 
 ### food-bank-rockies-aurora-dc
@@ -1877,7 +1877,7 @@ Status counts:
 ```json
 {
   "eligible": 19,
-  "ineligible": 1693
+  "ineligible": 1690
 }
 ```
 
@@ -1925,7 +1925,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 553
 - Project site state CO does not match opportunity geography CA.: 176
 - Project site state CO does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state CO does not match opportunity geography MA.: 70
 
 ### eastern-market-detroit
@@ -1965,7 +1965,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -2013,7 +2013,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 553
 - Project site state MI does not match opportunity geography CA.: 176
 - Project site state MI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state MI does not match opportunity geography CO.: 74
 
 ### okc-national-memorial-museum
@@ -2053,7 +2053,7 @@ Status counts:
 ```json
 {
   "eligible": 6,
-  "ineligible": 1706
+  "ineligible": 1703
 }
 ```
 
@@ -2090,7 +2090,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
 - Project site state OK does not match opportunity geography CA.: 176
 - Project site state OK does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### museum-life-science-durham
 
@@ -2129,7 +2129,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1705
+  "ineligible": 1702
 }
 ```
 
@@ -2168,7 +2168,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
 - Project site state NC does not match opportunity geography CA.: 176
 - Project site state NC does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### portland-food-coop-maine
 
@@ -2207,7 +2207,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -2255,7 +2255,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 553
 - Project site state ME does not match opportunity geography CA.: 176
 - Project site state ME does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state ME does not match opportunity geography CO.: 74
 
 ### phipps-conservatory-pittsburgh
@@ -2295,7 +2295,7 @@ Status counts:
 ```json
 {
   "eligible": 9,
-  "ineligible": 1703
+  "ineligible": 1700
 }
 ```
 
@@ -2338,7 +2338,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
 - Project site state PA does not match opportunity geography CA.: 176
 - Project site state PA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### boise-coop-north-end
 
@@ -2377,7 +2377,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1701
+  "ineligible": 1698
 }
 ```
 
@@ -2423,7 +2423,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 553
 - Project site state ID does not match opportunity geography CA.: 176
 - Project site state ID does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state ID does not match opportunity geography CO.: 74
 
 ### common-ground-coop-urbana
@@ -2463,7 +2463,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -2511,7 +2511,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 553
 - Project site state IL does not match opportunity geography CA.: 176
 - Project site state IL does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state IL does not match opportunity geography CO.: 74
 
 ### trees-atlanta-kendeda-treehouse
@@ -2551,7 +2551,7 @@ Status counts:
 ```json
 {
   "eligible": 14,
-  "ineligible": 1698
+  "ineligible": 1695
 }
 ```
 
@@ -2599,7 +2599,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 553
 - Project site state GA does not match opportunity geography CA.: 176
 - Project site state GA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state GA does not match opportunity geography CO.: 74
 
 ### boeing-everett-factory
@@ -2639,7 +2639,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -2688,7 +2688,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state WA does not match opportunity geography CA.: 176
 - Project site state WA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### intel-ocotillo-chandler
 
@@ -2727,7 +2727,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1701
+  "ineligible": 1698
 }
 ```
 
@@ -2774,7 +2774,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state AZ does not match opportunity geography CA.: 176
 - Project site state AZ does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### bmw-spartanburg-plant
 
@@ -2813,7 +2813,7 @@ Status counts:
 ```json
 {
   "eligible": 16,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -2862,7 +2862,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state SC does not match opportunity geography CA.: 176
 - Project site state SC does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### whirlpool-clyde-operations
 
@@ -2901,7 +2901,7 @@ Status counts:
 ```json
 {
   "eligible": 14,
-  "ineligible": 1698
+  "ineligible": 1695
 }
 ```
 
@@ -2950,7 +2950,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state OH does not match opportunity geography CA.: 176
 - Project site state OH does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### gm-factory-zero-detroit
 
@@ -2989,7 +2989,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -3038,7 +3038,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state MI does not match opportunity geography CA.: 176
 - Project site state MI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### microsoft-columbia-data-center-quincy
 
@@ -3077,7 +3077,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -3117,7 +3117,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 553
 - Project site state WA does not match opportunity geography CA.: 176
 - Project site state WA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state WA does not match opportunity geography CO.: 74
 
 ### fedex-world-hub-memphis
@@ -3157,7 +3157,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1705
+  "ineligible": 1702
 }
 ```
 
@@ -3195,7 +3195,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 553
 - Project site state TN does not match opportunity geography CA.: 176
 - Project site state TN does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state TN does not match opportunity geography CO.: 74
 
 ### qts-richmond-data-center
@@ -3235,7 +3235,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -3283,7 +3283,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 553
 - Project site state VA does not match opportunity geography CA.: 176
 - Project site state VA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state VA does not match opportunity geography CO.: 74
 
 ### hersheys-chocolate-world-hershey
@@ -3323,7 +3323,7 @@ Status counts:
 ```json
 {
   "eligible": 18,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -3371,7 +3371,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (retail_storefront) does not match broad_residential eligibility.: 553
 - Project site state PA does not match opportunity geography CA.: 176
 - Project site state PA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state PA does not match opportunity geography CO.: 74
 
 ### quaker-oats-cedar-rapids
@@ -3411,7 +3411,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1702
+  "ineligible": 1699
 }
 ```
 
@@ -3456,7 +3456,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
 - Project site state IA does not match opportunity geography CA.: 176
 - Project site state IA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### austin-central-library
 
@@ -3495,7 +3495,7 @@ Status counts:
 ```json
 {
   "eligible": 5,
-  "ineligible": 1707
+  "ineligible": 1704
 }
 ```
 
@@ -3530,7 +3530,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
 - Project site state TX does not match opportunity geography CA.: 176
 - Project site state TX does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### uw-madison-main-campus
 
@@ -3569,7 +3569,7 @@ Status counts:
 ```json
 {
   "eligible": 9,
-  "ineligible": 1703
+  "ineligible": 1700
 }
 ```
 
@@ -3612,7 +3612,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
 - Project site state WI does not match opportunity geography CA.: 176
 - Project site state WI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### boston-latin-school
 
@@ -3651,7 +3651,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -3700,7 +3700,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
 - Project site state MA does not match opportunity geography CA.: 176
 - Project site state MA does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### uaf-akasofu-building
 
@@ -3739,7 +3739,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1702
+  "ineligible": 1699
 }
 ```
 
@@ -3784,7 +3784,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
 - Project site state AK does not match opportunity geography CA.: 176
 - Project site state AK does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### salt-lake-public-safety-building
 
@@ -3823,7 +3823,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1705
+  "ineligible": 1702
 }
 ```
 
@@ -3862,7 +3862,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
 - Project site state UT does not match opportunity geography CA.: 176
 - Project site state UT does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### kauai-coffee-kalaheo
 
@@ -3901,7 +3901,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1702
+  "ineligible": 1699
 }
 ```
 
@@ -3946,7 +3946,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (agricultural_facility) does not match broad_commercial eligibility.: 362
 - Project site state HI does not match opportunity geography CA.: 176
 - Project site state HI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### cherokee-ww-hastings-hospital
 
@@ -3985,7 +3985,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -4025,7 +4025,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (healthcare) does not match broad_residential eligibility.: 553
 - Project site state OK does not match opportunity geography CA.: 176
 - Project site state OK does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state OK does not match opportunity geography CO.: 74
 
 ### organic-valley-lafarge-hq
@@ -4065,7 +4065,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1701
+  "ineligible": 1698
 }
 ```
 
@@ -4111,7 +4111,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 553
 - Project site state WI does not match opportunity geography CA.: 176
 - Project site state WI does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state WI does not match opportunity geography CO.: 74
 
 ### ocracoke-school-island
@@ -4151,7 +4151,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -4192,7 +4192,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
 - Project site state NC does not match opportunity geography CA.: 176
 - Project site state NC does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 
 ### ntua-fort-defiance-headquarters
 
@@ -4231,7 +4231,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1704
+  "ineligible": 1701
 }
 ```
 
@@ -4271,7 +4271,7 @@ Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 553
 - Project site state AZ does not match opportunity geography CA.: 176
 - Project site state AZ does not match opportunity geography MN.: 112
-- Opportunity appears residential-only and the user profile is nonresidential.: 94
+- Opportunity appears residential-only and the user profile is nonresidential.: 93
 - Project site state AZ does not match opportunity geography CO.: 74
 
 ## Immediate Iteration Targets

@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) Pro answer-key availability reconciliation
+
+- Compared the final public opportunity availability repairs against the GPT Pro answer key supplied by the user.
+- Reconciled 9 status mismatches using Pro's stronger official-source evidence, including EV Tourism closed, Pay for Performance active via replacement program, SuSI CSI upcoming, Danville Utilities active, and one Ohio manufacturers record left uncertain.
+
 ## 2026-06-28 - Codex (GPT-5) final public availability uncertainty repair
 
 - Researched and applied the final 50 public opportunity availability repairs using official-source manual research patterns learned from GPT Pro batches.

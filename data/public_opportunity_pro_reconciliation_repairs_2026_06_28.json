@@ -1,0 +1,142 @@
+{
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22521",
+      "opportunityName": "EV Tourism Program",
+      "normalizedStatus": "unavailable",
+      "confidence": 0.95,
+      "evidenceText": "Official Charge Up New Jersey EV Tourism Corridor page says applications are closed as of February 23, 2026 and the total funding status is Program Closed.",
+      "sourceUrlsChecked": [
+        "https://chargeup.njcleanenergy.com/ev-tourism-corridor",
+        "https://www.nj.gov/bpu/newsroom/2025/approved/20250507ev.html"
+      ],
+      "reasons": [
+        "official_source_closed"
+      ],
+      "notes": "Pro answer-key reconciliation: the current official program page confirms the EV Tourism application window is closed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3330",
+      "opportunityName": "Pay for Performance Program",
+      "normalizedStatus": "active",
+      "confidence": 0.75,
+      "evidenceText": "BPU says the New Construction Program replaces and consolidates Pay for Performance; NJCEP lists the replacement New Construction Program as open for applications.",
+      "sourceUrlsChecked": [
+        "https://www.nj.gov/bpu/newsroom/2025/approved/20251021.html",
+        "https://cleanenergy.nj.gov/programs/energy-efficiency/new-construction-program",
+        "https://cleanenergy.nj.gov/programs/energy-efficiency",
+        "https://www.nj.gov/bpu/pdf/boardorders/2026/20260422/8B%20ORDER%20FY26%20True%20Up%20and%20Associated%20Documents.pdf"
+      ],
+      "reasons": [
+        "official_source_active"
+      ],
+      "notes": "Pro answer-key reconciliation: the legacy Pay for Performance application path closed, but an official active replacement program exists."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22480",
+      "opportunityName": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive",
+      "normalizedStatus": "upcoming",
+      "confidence": 0.75,
+      "evidenceText": "NJCEP describes the CSI Program as an annual competitive procurement; BPU launched the fourth solicitation in 2026, which closed April 24, 2026.",
+      "sourceUrlsChecked": [
+        "https://cleanenergy.nj.gov/programs/solar/competitive-solicitation-incentive-csi-program",
+        "https://www.nj.gov/bpu/pdf/boardorders/2026/20260304/8D%20ORDER%20CSI%20Fourth%20Solicitation%20Launch.pdf"
+      ],
+      "reasons": [
+        "future_opening_language"
+      ],
+      "notes": "Pro answer-key reconciliation: latest solicitation is closed as of June 28, 2026, but official materials describe CSI as an annual procurement."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4590",
+      "opportunityName": "NV Energy - Solar Thermal Heating Program",
+      "normalizedStatus": "active",
+      "confidence": 0.75,
+      "evidenceText": "NV Energy's Solar Thermal Heating page references incentive program eligibility requirements for solar water heating equipment.",
+      "sourceUrlsChecked": [
+        "https://www.nvenergy.com/cleanenergy/other-private-generation/solar-thermal-heating",
+        "https://www.nvenergy.com/cleanenergy/solar"
+      ],
+      "reasons": [
+        "official_source_active"
+      ],
+      "notes": "Pro answer-key reconciliation: official NV Energy page supports continued incentive-program eligibility, though the page is more technical than a standard application notice."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4524",
+      "opportunityName": "NV Energy -Energy Smart Schools Program",
+      "normalizedStatus": "rolling",
+      "confidence": 0.9,
+      "evidenceText": "NV Energy's Energy Smart Schools materials state that incentives are available January through December or until funds are exhausted.",
+      "sourceUrlsChecked": [
+        "https://www.nvenergy.com/save-with-powershift/schools",
+        "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/schools/ESS-Facts.pdf",
+        "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-school/EnergySmartSchools_ProgramSummary.pdf"
+      ],
+      "reasons": [
+        "official_source_active",
+        "rolling_or_no_deadline_language"
+      ],
+      "notes": "Pro answer-key reconciliation: official utility materials support current availability while annual funds remain."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5587",
+      "opportunityName": "Energy Efficiency Program for Manufacturers",
+      "normalizedStatus": "uncertain",
+      "confidence": 0.35,
+      "evidenceText": "A current official Ohio source confirming open applications for the Energy Efficiency Program for Manufacturers could not be verified.",
+      "sourceUrlsChecked": [
+        "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
+        "https://development.ohio.gov/wps/wcm/connect/gov/f4a2a9d4-c4ed-4394-b71d-a70f521373fd/Guidelines_OhioEEP_2025Edits.%2B130.pdf"
+      ],
+      "reasons": [
+        "still_uncertain"
+      ],
+      "notes": "Pro answer-key reconciliation: official source access and replacement evidence were insufficient to classify the program as active, upcoming, or closed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22641",
+      "opportunityName": "Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "normalizedStatus": "upcoming",
+      "confidence": 0.75,
+      "evidenceText": "TDOT's FY 2026 TEVI Plan says Tennessee will continue competitive solicitations for EV infrastructure deployment; the earlier TEVI application packet deadline was November 1, 2023.",
+      "sourceUrlsChecked": [
+        "https://www.tn.gov/tdot/local-programs-community-investments/community-investments-office/air-quality/tennessee-electric-vehicle-infrastructure--tevi-.html",
+        "https://www.tn.gov/content/dam/tn/tdot/long-range-planning/air-quality/tevi/FY%202026%20TEVI%20Plan_Approved_09222025.pdf"
+      ],
+      "reasons": [
+        "future_opening_language"
+      ],
+      "notes": "Pro answer-key reconciliation: no current open grant application window was verified, but official FY 2026 planning materials indicate future competitive solicitations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4928",
+      "opportunityName": "City of Danville Utilities - Residential Energy Efficiency Rebate Program",
+      "normalizedStatus": "active",
+      "confidence": 0.9,
+      "evidenceText": "Danville Utilities Home$ave says residential electric customers are eligible for mail-in rebates on qualifying HVAC tune-up services and other residential energy-efficiency measures.",
+      "sourceUrlsChecked": [
+        "https://home.danvilleutilities.com/229/Residential-Energy-Efficiency-Program",
+        "https://home.danvilleutilities.com/222/Homeave-Rebate-Program"
+      ],
+      "reasons": [
+        "official_source_active"
+      ],
+      "notes": "Pro answer-key reconciliation: official city utility replacement pages support active residential rebate availability."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22663",
+      "opportunityName": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "normalizedStatus": "upcoming",
+      "confidence": 0.7,
+      "evidenceText": "WYDOT says it received full build-out status in 2025, NEVI funding can now be spent on other highways, and Wyoming-specific requirements will be announced.",
+      "sourceUrlsChecked": [
+        "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/national-electric-vehicle-infrastructure-%28nevi%29-program.html"
+      ],
+      "reasons": [
+        "future_opening_language"
+      ],
+      "notes": "Pro answer-key reconciliation: no current open RFP/application was verified, but the official WYDOT page indicates future funding deployment beyond the interstates."
+    }
+  ]
+}

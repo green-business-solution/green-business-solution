@@ -1,11 +1,11 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-06-28T06:37:09.317Z",
-  "matchingNow": "2026-06-28T06:36:46.037Z",
-  "opportunityCount": 1522,
+  "generatedAt": "2026-06-28T06:54:18.732Z",
+  "matchingNow": "2026-06-28T06:53:55.814Z",
+  "opportunityCount": 1519,
   "totalOpportunityRecordCount": 2096,
-  "archivedOpportunityCount": 293,
+  "archivedOpportunityCount": 294,
   "retrofitCount": 85,
   "retrofits": [
     {
@@ -4315,7 +4315,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "active"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3138",
@@ -16412,7 +16412,7 @@
           "matchedTerms": [
             "air conditioning"
           ],
-          "availabilityStatus": "active"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
@@ -76773,7 +76773,7 @@
           "matchedTerms": [
             "window"
           ],
-          "availabilityStatus": "active"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4565",
@@ -78366,7 +78366,7 @@
           "matchedTerms": [
             "window film"
           ],
-          "availabilityStatus": "active"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5412",
@@ -79497,7 +79497,7 @@
           "matchedTerms": [
             "energy management"
           ],
-          "availabilityStatus": "active"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
@@ -86722,7 +86722,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 175,
+      "opportunityCount": 174,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
@@ -89251,23 +89251,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22480",
-          "opportunityName": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22480/successor-solar-incentive-susi-program-competitive-solar-incentive",
-          "websiteUrl": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Performance-Based Incentive",
-          "administrator": "Board of Public Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ],
-          "availabilityStatus": "active"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:679",
           "opportunityName": "Sustainable Energy Fund (SEF) Loan Program (PPL Territory)",
           "sourceName": "DSIRE",
@@ -89978,7 +89961,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 353,
+      "opportunityCount": 351,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -92176,21 +92159,6 @@
           "matchedTerms": [
             "ev charging"
           ],
-          "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22521",
-          "opportunityName": "EV Tourism Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
-          "websiteUrl": "https://www.njcleanenergy.com/ev",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Grant Program",
-          "administrator": "NJ Board of Public Utilities",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
           "availabilityStatus": "active"
         },
         {
@@ -95849,24 +95817,6 @@
           "availabilityStatus": "active"
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22663",
-          "opportunityName": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22663/wyoming-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
-          "websiteUrl": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html",
-          "applicationUrl": null,
-          "state": "WY",
-          "programType": "Grant Program",
-          "administrator": "Wyoming Department of Transportation",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charging",
-            "electric vehicle charging"
-          ],
-          "availabilityStatus": "active"
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22255",
           "opportunityName": "Zero-Emission Vehicle Infrastructure Partnerships Program",
           "sourceName": "DSIRE",
@@ -95901,7 +95851,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 248,
+      "opportunityCount": 247,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -97639,24 +97589,6 @@
           "state": "CT",
           "programType": "Rebate Program",
           "administrator": "Eversource and United Illuminating",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ],
-          "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22521",
-          "opportunityName": "EV Tourism Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
-          "websiteUrl": "https://www.njcleanenergy.com/ev",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Grant Program",
-          "administrator": "NJ Board of Public Utilities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -100387,7 +100319,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 54,
+      "opportunityCount": 53,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22549",
@@ -100832,25 +100764,6 @@
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
-            "dcfc"
-          ],
-          "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22521",
-          "opportunityName": "EV Tourism Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22521/ev-tourism-program",
-          "websiteUrl": "https://www.njcleanenergy.com/ev",
-          "applicationUrl": null,
-          "state": "NJ",
-          "programType": "Grant Program",
-          "administrator": "NJ Board of Public Utilities",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dc fast",
-            "fast charger",
             "dcfc"
           ],
           "availabilityStatus": "active"
@@ -120374,14 +120287,15 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T06:32:19.225Z",
+  "availabilityReviewedAt": "2026-06-28T06:50:12.517Z",
   "availabilityStatusCounts": {
-    "active": 1371,
-    "unavailable": 48,
-    "rolling": 151,
-    "upcoming": 49
+    "active": 1370,
+    "unavailable": 44,
+    "rolling": 152,
+    "upcoming": 52,
+    "uncertain": 1
   },
-  "hiddenUpcomingOpportunityCount": 49,
+  "hiddenUpcomingOpportunityCount": 52,
   "upcomingOpportunities": [
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2895",
@@ -121860,7 +121774,102 @@
         "confidence": 0.78
       },
       "retrofitTypes": []
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22480",
+      "opportunityName": "Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22480/successor-solar-incentive-susi-program-competitive-solar-incentive",
+      "websiteUrl": "https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program",
+      "state": "NJ",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "NJCEP describes the CSI Program as an annual competitive procurement; BPU launched the fourth solicitation in 2026, which closed April 24, 2026.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://cleanenergy.nj.gov/programs/solar/competitive-solicitation-incentive-csi-program",
+          "https://www.nj.gov/bpu/pdf/boardorders/2026/20260304/8D%20ORDER%20CSI%20Fourth%20Solicitation%20Launch.pdf"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: latest solicitation is closed as of June 28, 2026, but official materials describe CSI as an annual procurement."
+      },
+      "retrofitTypes": []
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22641",
+      "opportunityName": "Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22641/tennessee-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+      "websiteUrl": "https://www.tn.gov/tdot/long-range-planning-home/air-quality-planning/tennessee-electric-vehicle-infrastructure--tevi-.html",
+      "state": "TN",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "TDOT's FY 2026 TEVI Plan says Tennessee will continue competitive solicitations for EV infrastructure deployment; the earlier TEVI application packet deadline was November 1, 2023.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.tn.gov/tdot/local-programs-community-investments/community-investments-office/air-quality/tennessee-electric-vehicle-infrastructure--tevi-.html",
+          "https://www.tn.gov/content/dam/tn/tdot/long-range-planning/air-quality/tevi/FY%202026%20TEVI%20Plan_Approved_09222025.pdf"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.75,
+        "researchNotes": "Pro answer-key reconciliation: no current open grant application window was verified, but official FY 2026 planning materials indicate future competitive solicitations."
+      },
+      "retrofitTypes": []
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22663",
+      "opportunityName": "Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22663/wyoming-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+      "websiteUrl": "https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html",
+      "state": "WY",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "WYDOT says it received full build-out status in 2025, NEVI funding can now be spent on other highways, and Wyoming-specific requirements will be announced.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.dot.state.wy.us/home/planning_projects/electric-vehicle-infrastructure/national-electric-vehicle-infrastructure-%28nevi%29-program.html"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T06:50:12.517Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.7,
+        "researchNotes": "Pro answer-key reconciliation: no current open RFP/application was verified, but the official WYDOT page indicates future funding deployment beyond the interstates."
+      },
+      "retrofitTypes": []
     }
   ],
-  "archivedUnavailableOpportunityCount": 48
+  "archivedUnavailableOpportunityCount": 44
 }

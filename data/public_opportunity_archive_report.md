@@ -1,18 +1,18 @@
 # Opportunity Archive Report
 
-Generated: 2026-06-28T06:36:28.559Z
-Matcher clock: 2026-06-28T06:36:28.559Z
+Generated: 2026-06-28T06:53:32.611Z
+Matcher clock: 2026-06-28T06:53:32.611Z
 Opportunities reviewed: 1619
 DynamoDB writes: yes
-Unarchive restored opportunities: no
+Unarchive restored opportunities: yes
 Archive low-information records: no
 
 ## Action Counts
 
 ```json
 {
-  "keep_active": 1571,
-  "archive": 48
+  "keep_active": 1575,
+  "archive": 44
 }
 ```
 
@@ -34,9 +34,6 @@ Archive low-information records: no
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
 - archive: City and County of Denver - Home Energy Rebates (SOURCE_DSIRE:dsire_program_id:22760)
-  - archive reason: availability_unavailable
-  - availability reasons: source_missing_no_replacement
-- archive: City of Danville Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4928)
   - archive reason: availability_unavailable
   - availability reasons: source_missing_no_replacement
 - archive: Commercial & Industrial Bulk Fuel-Fed Wood Pellet Central Heating Systems Rebate Program (SOURCE_DSIRE:dsire_program_id:22502)
@@ -75,9 +72,6 @@ Archive low-information records: no
 - archive: Commercial & Industrial Solar Rebate Program (SOURCE_DSIRE:dsire_program_id:4457)
   - archive reason: availability_unavailable
   - availability reasons: source_status_unavailable
-- archive: NV Energy - Solar Thermal Heating Program (SOURCE_DSIRE:dsire_program_id:4590)
-  - archive reason: availability_unavailable
-  - availability reasons: source_missing_no_replacement
 - archive: Santa Clara Water & Sewer - Solar Water Heating Program (SOURCE_DSIRE:dsire_program_id:123)
   - archive reason: availability_unavailable
   - availability reasons: source_missing_no_replacement
@@ -129,6 +123,9 @@ Archive low-information records: no
 - archive: Electric Vehicle Tax Credit (SOURCE_DSIRE:dsire_program_id:22425)
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
+- archive: EV Tourism Program (SOURCE_DSIRE:dsire_program_id:22521)
+  - archive reason: availability_unavailable
+  - availability reasons: official_source_closed
 - archive: Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22645)
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
@@ -141,9 +138,6 @@ Archive low-information records: no
 - archive: Power Your Drive for Workplaces (SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21406)
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
-- archive: Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22641)
-  - archive reason: availability_unavailable
-  - availability reasons: no_current_open_or_future_round_verified, source_missing_no_replacement
 - archive: Tucson Electric Power - Smart EV Charging Program (SOURCE_DSIRE:dsire_program_id:22272)
   - archive reason: availability_unavailable
   - availability reasons: source_status_unavailable
@@ -153,12 +147,6 @@ Archive low-information records: no
 - archive: Volkswagen Trust Electric Vehicle Charging Infrastructure Program (SOURCE_DSIRE:dsire_program_id:22195)
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
-- archive: Energy Efficiency Program for Manufacturers (SOURCE_DSIRE:dsire_program_id:5587)
-  - archive reason: availability_unavailable
-  - availability reasons: source_missing_no_replacement, no_current_open_or_future_round_verified
 - archive: USDA - Rural Energy for America Program (REAP) Energy Audit and Renewable Energy Development Assistance (EA/REDA) Program (SOURCE_DSIRE:dsire_program_id:5681)
   - archive reason: availability_unavailable
   - availability reasons: known_official_application_window_closed
-- archive: Pay for Performance Program (SOURCE_DSIRE:dsire_program_id:3330)
-  - archive reason: availability_unavailable
-  - availability reasons: official_source_closed

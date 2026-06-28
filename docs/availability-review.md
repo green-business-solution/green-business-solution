@@ -216,7 +216,7 @@ When the title is broad, split parent and child programs before deciding. Grant,
 
 Before escalating the next availability batch, apply those patterns to the remaining uncertain rows. If a row still remains uncertain, include the suspected subtype and failed official-source paths in the GPT Pro/manual research packet so the reviewer starts from the right search strategy.
 
-The final June 2026 manual repair pass resolved the last 50 uncertain public rows without a GPT Pro answer key by applying the same subtype-first process more aggressively. The useful additions were:
+The final June 2026 manual repair pass attempted the last 50 uncertain public rows without a GPT Pro answer key by applying the same subtype-first process more aggressively. A later Pro answer-key comparison found 9 status corrections and left one Ohio manufacturers record intentionally `uncertain`. The useful additions were:
 
 - Search official site route replacements, not only the originally stored URL. Redesigned utility and program sites often moved old paths into `/programs/...`, `/rebates/...`, `/ways-to-save/...`, or current-year PDF guides while preserving the same program under a new slug.
 - For JavaScript-heavy official shells, inspect page title/meta/source text and then search the same official domain for current program, application, and PDF routes before accepting uncertainty.
@@ -224,6 +224,7 @@ The final June 2026 manual repair pass resolved the last 50 uncertain public row
 - If an old title-specific route is gone but a current title-specific replacement or program-family page describes the same measure and no closed language appears, classify lower-confidence `active` with the replacement source recorded.
 - If current official pages only show generic conservation tips, energy education, or unrelated program families and no title-specific replacement exists, classify `unavailable` as `source_missing_no_replacement` instead of leaving the row uncertain.
 - Keep parent/child program variants separate. A parent efficiency portfolio may be active while a new homes, solar thermal, diesel mitigation, or old named rebate variant is closed or missing.
+- When a closed current solicitation belongs to a recurring official annual procurement, classify `upcoming` instead of `unavailable` if official materials document future cycles. When a legacy program is explicitly consolidated into a currently open replacement program, classify by the replacement program rather than by the closed legacy route.
 
 ## Future Cron Automation
 
