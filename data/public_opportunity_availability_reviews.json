@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T04:07:10.122Z",
+  "generatedAt": "2026-06-28T04:14:55.705Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,10 +9,10 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "uncertain": 251,
-    "active": 1255,
-    "rolling": 49,
-    "upcoming": 48,
+    "uncertain": 202,
+    "active": 1256,
+    "rolling": 96,
+    "upcoming": 49,
     "unavailable": 16
   },
   "reviews": [
@@ -21604,20 +21604,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3106/prince-george-s-county-solar-and-geothermal-residential-property-tax-credit",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Prince George's County - Solar and Geothermal Residential Property Tax Credit Prince George's County Office of Finance Property Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Prince George's County lists the Alternative Energy/Energy Conservation residential tax credit and says application and proof of claim must be filed with the Director of Finance.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential",
+          "https://princegeorgescountymd.legistar.com/LegislationDetail.aspx?GUID=E1216236-19ED-434B-805F-E1D28694E291&ID=3968041"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official county source supports a standing local property tax credit, though availability may depend on annual cap/waitlist mechanics."
       }
     },
     {
@@ -21686,20 +21693,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3100/property-tax-exemption-for-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Renewable Energy Systems New Jersey Department of the Treasury Property Tax Incentive NJ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "New Jersey Treasury lists the renewable energy system property tax exemption and says property owners apply using Form CRES filed with the tax assessor.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.nj.gov/treasury/taxation/lpt/lpt-abatements.shtml",
+          "https://www.nj.gov/treasury/taxation/pdf/other_forms/lpt/cres.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing property tax exemption process."
       }
     },
     {
@@ -22085,20 +22098,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/137/residential-alternative-energy-tax-deduction",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Residential Alternative Energy Tax Deduction Idaho Tax Commission Personal Tax Deduction ID",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Idaho OEMR says the residential alternative energy deduction allows qualifying taxpayers to deduct portions of solar, wind, geothermal, and certain biomass system costs.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://oemr.idaho.gov/financial-information/incentives/",
+          "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_03-02-2026.pdf",
+          "https://law.justia.com/codes/idaho/title-63/chapter-30/section-63-3022c/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current state energy and tax materials support a standing personal tax deduction."
       }
     },
     {
@@ -23323,20 +23343,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/243/solar-and-chp-sales-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Solar and CHP Sales Tax Exemption Florida Department of Revenue Sales Tax Incentive FL",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Florida law exempts solar energy systems and components from sales and use tax; Florida DOR guidance also recognizes machinery and equipment used to produce electrical or steam energy as exempt under qualifying facts.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0200-0299%2F0212%2FSections%2F0212.08.html",
+          "https://floridarevenue.com/taxes/tips/documents/TIP_19A01-09.pdf",
+          "https://floridarevenue.com/TaxLaw/Documents/TAA%2090A-063.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing statutory/tax-authority sales and use tax exemption with no application window identified."
       }
     },
     {
@@ -25220,20 +25247,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/143/wood-heating-fuel-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Wood Heating Fuel Exemption Sales Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-General §11-207 exempts the sale of wood, wood bark, or residue, or refuse-derived fuel used for heating purposes from sales and use tax.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtg&enactments=false&section=11-207",
+          "https://regs.maryland.gov/us/md/exec/comar/03.06.01.10",
+          "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/Sales_and_Use_Tax-List_of_TPP_and_Services.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales and use tax exemption."
       }
     },
     {
@@ -27032,20 +27066,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1227/income-tax-deduction-for-energy-efficiency-upgrades",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Income Tax Deduction for Energy Efficiency Upgrades Idaho Tax Commission Personal Tax Deduction ID",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Idaho Tax Commission 2026 individual income tax materials include an energy efficiency upgrade deduction on Form 39R and related instructions.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://tax.idaho.gov/wp-content/uploads/forms/EIN00046/EIN00046_03-02-2026.pdf",
+          "https://tax.idaho.gov/wp-content/uploads/forms/EFO00088/EFO00088_03-02-2026.pdf",
+          "https://tax.idaho.gov/document-mngr/0-518-603-776/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current official tax forms support a standing income tax deduction."
       }
     },
     {
@@ -27289,20 +27330,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/978/generation-facility-corporate-tax-exemptions",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Generation Facility Corporate Tax Exemptions Property Tax Incentive MT",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Montana DEQ lists property tax exemptions for renewable generating facilities under 1 MW and property tax reductions or abatements for larger renewable generating facilities.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://deq.mt.gov/energy/resources",
+          "https://www.leg.mt.gov/bills/2019/mca/title_0150/chapter_0240/part_0300/section_0050/0150-0240-0300-0050.html",
+          "https://archive.legmt.gov/content/Committees/Interim/2015-2016/Energy-and-Telecommunications/Meetings/Mar-2016/net-metering-incentives.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official state energy source supports standing generation facility tax incentives, though terminology differs from the DSIRE title."
       }
     },
     {
@@ -27478,20 +27526,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/232/local-option-property-tax-credit-for-renewables-and-energy-conservation-devices",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Property Tax Credit for Renewables and Energy Conservation Devices Programs locally administered Property Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-Property §9-203 authorizes county and municipal property tax credits for structures using solar, geothermal, or energy conservation devices.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-203"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing local-option property tax credit authority."
       }
     },
     {
@@ -27670,20 +27723,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3554/local-option-special-energy-improvement-districts",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Special Energy Improvement Districts PACE Financing OH",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Ohio Revised Code defines special energy improvement projects to include solar photovoltaic, solar thermal, geothermal, customer-generated energy, and energy efficiency improvements, and authorizes special improvement districts and assessments.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://codes.ohio.gov/ohio-revised-code/chapter-1710",
+          "https://codes.ohio.gov/ohio-revised-code/section-1710.01",
+          "https://codes.ohio.gov/ohio-revised-code/section-1710.061"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing statutory local-option PACE/special energy improvement district authority."
       }
     },
     {
@@ -27949,20 +28009,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/184/property-tax-exemption-for-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Renewable Energy Systems Iowa Department of Natural Resources Property Tax Incentive IA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Iowa Department of Revenue guidance says a five-year property tax exemption applies for the value added by solar and wind energy systems.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://revenue.iowa.gov/taxes/tax-guidance/tax-credits-deductions-exemption/tax-credits-and-exemptions",
+          "https://revenue.iowa.gov/media/3176/download?inline="
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing property tax exemption administered through property tax assessment processes."
       }
     },
     {
@@ -28033,20 +28099,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2786/property-tax-exemption-for-wind-solar-and-geothermal-energy-producers",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers Idaho State Tax Commission Property Tax Incentive ID",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Idaho Code §63-602JJ exempts real estate, fixtures, and personal property of wind, solar, and geothermal electricity producers when subject to the gross energy earnings tax.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://legislature.idaho.gov/statutesrules/idstat/Title63/T63CH6/SECT63-602JJ/",
+          "https://law.justia.com/codes/idaho/title-63/chapter-6/section-63-602jj/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Standing statutory property tax exemption; official legislature URL was checked alongside a code mirror."
       }
     },
     {
@@ -28088,20 +28160,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3567/renewable-energy-and-energy-efficiency-project-financing",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Renewable Energy and Energy Efficiency Project Financing Illinois Finance Authority Bond Program IL",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Illinois Finance Authority and Climate Bank materials describe authority to issue bonds and provide financing tools for energy, infrastructure, and climate-aligned projects.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://illinoisclimatebank.com/additional-resources/illinois-finance-authority",
+          "https://www.il-fa.com/",
+          "https://www.il-fa.com/about/join-our-team/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.8,
+        "researchNotes": "Official financing authority sources support a standing bond/financing mechanism, though not a conventional application-window rebate."
       }
     },
     {
@@ -28227,20 +28306,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/75/renewable-energy-property-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Renewable Energy Property Tax Exemption Kansas Corporation Commission Property Tax Incentive KS",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Kansas Department of Revenue guidance describes a renewable energy project property tax exemption granted by BOTA, with annual renewal requirements.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.ksrevenue.gov/pvdptexemptions.html",
+          "https://www.ksrevenue.gov/pdf/RenEnergyExempt-BESS.pdf",
+          "https://www.kslegislature.gov/li_2016/b2015_16/measures/documents/summary_sb_91_2015.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing tax exemption process; no limited funding cycle identified."
       }
     },
     {
@@ -28363,20 +28449,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/158/renewable-energy-systems-property-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Renewable Energy Systems Property Tax Exemption NV Department of Taxation Property Tax Incentive NV",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Nevada NRS 701A.200 provides that a qualified energy system is exempt from certain property taxes; the Governor's Office of Energy also administers renewable energy tax abatements.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.leg.state.nv.us/nrs/nrs-701a.html",
+          "https://www.energy.nv.gov/programs/alternative-fuel/renewable-energy-tax-abatements/",
+          "https://law.justia.com/codes/nevada/chapter-701a/statute-701a-200/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing statutory property tax exemption/abatement framework."
       }
     },
     {
@@ -28474,20 +28567,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2928/sales-and-use-tax-exemption-for-renewable-energy-equipment",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exemption for Renewable Energy Equipment Comptroller of Maryland Sales Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-General §11-230 exempts the sale of geothermal, residential wind, and solar energy equipment from sales and use tax.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtg&enactments=false&section=11-230",
+          "https://regs.maryland.gov/us/md/exec/comar/03.06.01.43",
+          "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/Sales_and_Use_Tax-List_of_TPP_and_Services.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales and use tax exemption."
       }
     },
     {
@@ -29180,20 +29280,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3980/gross-receipts-tax-exemption-for-sales-of-wind-and-solar-systems-to-government-entities",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "New Mexico law provides that prior to July 1, 2034, receipts from selling wind or solar generation equipment to a government for installing a wind or solar electric generation facility may be deducted from gross receipts.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.nmlegis.gov/Sessions/24%20Regular/final/HB0252.PDF",
+          "https://law.justia.com/codes/new-mexico/chapter-7/article-9/section-7-9-54-3/",
+          "https://realfile.tax.newmexico.gov/FYI-105.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing gross receipts tax deduction available before the statutory sunset."
       }
     },
     {
@@ -29406,20 +29513,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4242/mississippi-clean-energy-initiative",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Mississippi Clean Energy Initiative Mississippi Development Authority Industry Recruitment/Support MS",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Mississippi DOR and MDA incentive materials describe Clean Energy incentives for qualifying clean energy component manufacturers, including income/franchise tax and sales/use tax exemptions after MDA certification.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.dor.ms.gov/sites/default/files/resources/Incentives%20and%20Credits/2026%20Incentive%20Booklet%20v1.2.pdf",
+          "https://www.dor.ms.gov/sites/default/files/General%20Forms/ApplicationforEconomicIncentivesfillablecopy.pdf",
+          "https://mississippi.org/wp-content/uploads/clean-energy-incentives.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing state business incentive requiring certification; no competitive application window found."
       }
     },
     {
@@ -29486,20 +29600,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/333/nonrefundable-business-activity-tax-credit",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Nonrefundable Business Activity Tax Credit Michigan Economic Development Corporation Industry Recruitment/Support MI",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Michigan 2025 MBT materials include the Next Energy Business Activity Credit line and instructions for claiming the credit with an MEDC certificate.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/MBT/TY2025/4573_ty2025.pdf",
+          "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/MBT/TY2025/4573_ty2025-instructions.pdf",
+          "https://www.michigan.gov/taxes/business-taxes/mbt/2025-michigan-business-tax-forms/2025-standard-taxpayers"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Current official tax forms support continued claim availability for eligible certificated taxpayers."
       }
     },
     {
@@ -29625,20 +29746,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2542/property-tax-exemption-for-solar-and-wind-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Solar and Wind Energy Systems Maryland Department of Assessments and Taxation Property Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-Property §7-242 provides that residential wind energy equipment and solar energy property are not subject to real property tax.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&enactments=false&section=7-242"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing statutory property tax exemption."
       }
     },
     {
@@ -30147,20 +30273,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1218/solar-energy-sales-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Solar Energy Sales Tax Exemption Department of Revenue Sales Tax Incentive MN",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Minnesota Statutes §297A.67, subdivision 29 exempts solar energy systems from sales and use tax.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.revisor.mn.gov/statutes/cite/297A.67",
+          "https://www.lbo.mn.gov/TERC/meetings/2024/SolarEnergySystemsUpdated-4.27.pdf",
+          "https://www.revenue.state.mn.us/guide/nontaxable-sales"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales tax exemption."
       }
     },
     {
@@ -32354,20 +32487,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4853/sales-and-use-tax-exemption-for-residential-solar-and-wind-electricity-sales",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales Comptroller of Maryland Sales Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-General §11-207 exempts electricity generated by solar energy equipment or residential wind energy equipment for residential property owned by an eligible customer-generator.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtg&enactments=false&section=11-207",
+          "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/Sales_and_Use_Tax-List_of_TPP_and_Services.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales and use tax exemption."
       }
     },
     {
@@ -33481,20 +33620,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22589/guam-photovoltaic-property-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Guam - Photovoltaic Property Tax Exemption Property Tax Incentive GU",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Guam Public Law 37-11 excludes the value added by photovoltaic solar panels, solar shingles, or solar roof tiles from real estate taxation.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://archives.guamlegislature.gov/37th_Guam_Legislature/Public_Laws_37th/Public%20Law%20No.%2037-11.pdf",
+          "https://archives.guamlegislature.gov/37th_Guam_Legislature/Mess_Comms_37th/Doc.%20No.%2037GL-23-0523.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing statutory property tax exemption with no application cycle identified."
       }
     },
     {
@@ -33814,20 +33959,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3036/property-tax-abatement-for-solar-electric-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Abatement for Solar Electric Systems N.C. Department of Revenue Property Tax Incentive NC",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "North Carolina statute excludes 80 percent of the appraised value of a solar energy electric system from property taxation.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.ncleg.gov/enactedlegislation/statutes/html/bysection/chapter_105/gs_105-275.html",
+          "https://www.ncleg.gov/enactedlegislation/statutes/html/byarticle/chapter_105/article_12.html"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing statutory property tax exclusion."
       }
     },
     {
@@ -33924,20 +34075,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5106/sales-and-use-tax-exemption-for-electrical-generating-equipment",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exemption for Electrical Generating Equipment Indiana Department of Revenue Sales Tax Incentive IN",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Indiana DOR Sales Tax Information Bulletin #51 explains exemptions for qualifying public utility production plant and power production equipment.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.in.gov/dor/files/sib51.pdf",
+          "https://iar.iga.in.gov/register/20120829-IR-045120487NRA",
+          "https://www.in.gov/dor/tax-forms/sales-tax-forms/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Standing sales and use tax exemption administered under Indiana tax rules."
       }
     },
     {
@@ -34453,20 +34611,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/601/wind-energy-sales-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Wind Energy Sales Tax Exemption Sales Tax Incentive MN",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Minnesota Statutes §297A.68, subdivision 12 exempts wind energy conversion systems and materials used to manufacture, install, construct, repair, or replace them.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.revisor.mn.gov/statutes/cite/297A.68",
+          "https://www.lbo.mn.gov/TERC/meetings/2024/03152024/TEB-4-26-Wind-Energy-Conversion-Systems.pdf",
+          "https://www.revenue.state.mn.us/guide/nontaxable-sales"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales tax exemption."
       }
     },
     {
@@ -34533,20 +34698,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22221/clean-burning-motor-vehicle-fuel-property-tax-credit-corporate",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate Corporate Tax Credit OK",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Oklahoma Tax Commission 2025 Form 567-A says a credit is allowed for investments in qualified clean-burning motor vehicle fuel property and applies using either an SSN or FEIN.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/software-developers/Dev567-A-25.pdf",
+          "https://oklahoma.gov/tax/helpcenter/income-tax.html",
+          "https://oklegal.onenet.net/oklegal-cgi/get_statute?99%2FTitle.68%2F68-2357.22.html="
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing Oklahoma income tax credit for eligible taxpayers; official tax materials indicate current claim procedures."
       }
     },
     {
@@ -34557,20 +34729,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22222/clean-burning-motor-vehicle-fuel-property-tax-credit-personal",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal Personal Tax Credit OK",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Oklahoma Tax Commission 2025 Form 567-A says a credit is allowed for investments in qualified clean-burning motor vehicle fuel property and carries the credit to Form 511-CR for individuals.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/software-developers/Dev567-A-25.pdf",
+          "https://oklahoma.gov/tax/helpcenter/income-tax.html",
+          "https://oklegal.onenet.net/oklegal-cgi/get_statute?99%2FTitle.68%2F68-2357.22.html="
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing Oklahoma personal income tax credit for eligible clean-burning motor vehicle fuel property."
       }
     },
     {
@@ -34921,20 +35100,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4989/sales-tax-exemption-for-hydrogen-generation-facilities",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales Tax Exemption for Hydrogen Generation Facilities Office of State Tax Commissioner Sales Tax Incentive ND",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "North Dakota Tax Commissioner lists a sales and use tax exemption for tangible personal property used to construct or expand a hydrogen generation facility.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.tax.nd.gov/sales-tax-exemptions-incentives",
+          "https://ndlegis.gov/cencode/t57c39-2.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing sales and use tax exemption."
       }
     },
     {
@@ -35205,20 +35390,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/78/air-quality-improvement-tax-incentives",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Air-Quality Improvement Tax Incentives Ohio Department of Development Other Incentive OH",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Ohio Air Quality Development Authority says qualified Clean Air Improvement Program projects may receive tax benefits including sales and use tax, real property tax, and bond interest income exemptions.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://ohioairquality.ohio.gov/incentives-and-financing/clean-air-improvement-program",
+          "https://ohioairquality.ohio.gov/incentives-and-financing",
+          "https://ohioairquality.ohio.gov/about/02-forms-and-documents/caip-faq"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official administrator source supports ongoing tax incentive/financing availability."
       }
     },
     {
@@ -35229,20 +35422,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4026/assessment-of-farmland-hosting-renewable-energy-systems",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Assessment of Farmland Hosting Renewable Energy Systems Property Tax Incentive NJ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "New Jersey Department of Agriculture farmland assessment materials state that land used for biomass, solar, or wind energy generation may be considered actively devoted to agricultural or horticultural use if the regulatory qualifications are met.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.nj.gov/agriculture/divisions/anr/pdf/farmlandassessmentoverview.pdf",
+          "https://www.nj.gov/treasury/taxation/lpt/lpt-farmland.shtml",
+          "https://www.nj.gov/treasury/taxation/pdf/lpt/renewable_energy.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Standing farmland assessment rule; eligibility depends on compliance with statutory and regulatory conditions."
       }
     },
     {
@@ -35277,20 +35477,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/359/biomass-equipment-and-materials-compensating-tax-deduction",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Biomass Equipment & Materials Compensating Tax Deduction New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "New Mexico Economic Development Department says biomass equipment and biomass materials used for biopower, biofuels, or biobased products may be deducted in computing compensating tax due.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.edd.newmexico.gov/choose-new-mexico/competitive-business-climate/",
+          "https://www.nmlegis.gov/sessions/06%20Regular/bills/house/HB0395.HTML",
+          "https://law.justia.com/codes/new-mexico/chapter-7/article-9/section-7-9-98/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing state tax deduction; no application cycle found."
       }
     },
     {
@@ -35329,20 +35536,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1952/biomass-sales-and-use-tax-exemption",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Biomass Sales and Use Tax Exemption Georgia Department of Revenue Sales Tax Incentive GA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Georgia law exempts the sale or use of biomass material utilized in the production of energy; Georgia DOR exemption materials list this sales and use tax exemption.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://dor.georgia.gov/document/document/2020-list-sales-and-use-tax-exemptions/download",
+          "https://dor.georgia.gov/document/sut-lr/lr-sut-2018-09/download",
+          "https://law.justia.com/codes/georgia/title-48/chapter-8/article-1/part-1/section-48-8-3/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing tax exemption; no application cycle or repeal found."
       }
     },
     {
@@ -35381,20 +35595,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4946/property-tax-exemption-for-renewable-energy-generation-facilities",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Property Tax Exemption for Renewable Energy Generation Facilities Nebraska Department of Revenue Property Tax Incentive NE",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Nebraska DOR says renewable energy generation facilities pay a nameplate capacity tax in place of personal property tax on depreciable tangible personal property used directly in generating electricity from wind, solar, biomass, or landfill gas.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://revenue.nebraska.gov/PAD/nameplate-capacity-tax",
+          "https://nebraskalegislature.gov/laws/statutes.php?statute=77-6203"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing tax treatment with annual filing requirements."
       }
     },
     {
@@ -35453,20 +35673,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2576/sales-and-use-tax-exemption-for-community-renewable-energy-projects",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales and Use Tax Exemption for Community Renewable Energy Projects Nebraska Department of Revenue Sales Tax Incentive NE",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Nebraska DOR guidance says purchases of qualified property for C-BED community-based energy development projects are exempt from Nebraska and local sales taxes after application/certificate approval.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://revenue.nebraska.gov/about/forms/sales-and-use-tax-forms",
+          "https://revenue.nebraska.gov/sites/default/files/doc/info/6-539-2022.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales and use tax exemption process."
       }
     },
     {
@@ -35734,20 +35960,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22735/belmont-light-battery-storage-rebate-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Belmont Light - Battery Storage Rebate Program Rebate Program MA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Belmont Light lists a Battery Storage System Incentive Program and provides an application form for a $500 rebate per account per calendar year.",
+        "reasons": [
+          "official_source_active"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.belmontlight.com/residential-programs/battery-storage-system-incentive-program/",
+          "https://www.belmontlight.com/residential-programs/",
+          "https://www.belmontlight.com/wp-content/uploads/2024/07/Battery-Storage-Rebate-Application-Form-fillable-2024.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official utility page provides current rebate and application materials."
       }
     },
     {
@@ -36135,20 +36368,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3870/hawaii-c-pace-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Hawaii C-PACE program Programs administered locally PACE Financing HI",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "HGIA describes HI C-PACER as a financing program for eligible commercial properties, with a current 2026 program guide and lender registration materials.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://gems.hawaii.gov/hi-c-pacer/",
+          "https://gems.hawaii.gov/wp-content/uploads/2024/06/HI-C-PACER-Program-Guide_2026-05.pdf",
+          "https://gems.hawaii.gov/homepage/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official administrator source supports an ongoing financing program."
       }
     },
     {
@@ -36159,20 +36400,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22652/idaho-commercial-pace-financing-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Idaho Commercial PACE Financing Program PACE Financing ID",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Boise's C-PACE materials describe long-term financing for eligible commercial property improvements, repaid through a voluntary assessment.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.cityofboise.org/business/building-and-planning/c-pace/",
+          "https://www.cityofboise.org/media/20349/boise-city-c-pace-program-guidebook_final.pdf",
+          "https://www.postfalls.gov/251/Economic-Development"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official local sources support ongoing C-PACE availability in participating Idaho jurisdictions."
       }
     },
     {
@@ -36183,20 +36432,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3626/illinois-pace-financing-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Illinois PACE Financing Program Programs administered locally PACE Financing IL",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Illinois Finance Authority says C-PACE finances energy efficiency, renewable energy, resiliency, and water-use improvements, repaid through voluntary property assessments.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.il-fa.com/programs/c-pace/",
+          "https://www.il-fa.com/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official Illinois Finance Authority source supports ongoing C-PACE availability."
       }
     },
     {
@@ -36322,20 +36578,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22669/local-option-commercial-property-assessed-capital-expenditure-c-pace",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Commercial Property Assessed Capital Expenditure (C-PACE) PACE Financing NC",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "EDPNC describes NC C-PACE as long-term financing for qualifying commercial property improvements; North Carolina statutes establish the C-PACE program framework.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://edpnc.com/nc-cpace/",
+          "https://ncleg.gov/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_160A/Article_10B.html"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing local-option C-PACE mechanism."
       }
     },
     {
@@ -36398,20 +36661,29 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4252/local-option-energy-efficiency-and-clean-energy-districts",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Energy Efficiency & Clean Energy Districts Local community PACE Financing NH",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "New Hampshire Business Finance Authority describes C-PACER as financing for qualifying commercial properties in municipalities that opt in, with applications submitted through capital providers.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://nhbfa.com/loans/c-pacer/",
+          "https://nhbfa.com/loans/c-pacer/c-pacer-eligibility-requirements/",
+          "https://nhbfa.com/loans/c-pacer/c-pacer-document-list/",
+          "https://www.governor.nh.gov/news/governor-ayotte-signs-housing-finance-bill-law"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official state financing authority supports ongoing C-PACER availability in participating municipalities."
       }
     },
     {
@@ -36422,20 +36694,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4283/local-option-energy-revolving-loan-fund",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Energy Revolving Loan Fund Programs administered locally PACE Financing MA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Massachusetts General Laws authorize cities and towns to establish an Energy Revolving Loan Fund to make loans for energy conservation or renewable energy projects.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter44/Section53E3~4"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing local-option statutory financing authority."
       }
     },
     {
@@ -36494,20 +36771,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5109/local-option-property-assessed-clean-energy-financing",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Property Assessed Clean Energy Financing PACE Financing NJ",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "NJEDA opened applications for the Garden State C-PACE Program and describes financing for energy efficiency, water conservation, renewable energy, and resiliency improvements repaid through assessments.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.njeda.gov/c-pace/",
+          "https://www.njeda.gov/njeda-opens-applications-for-garden-state-c-pace-program/",
+          "https://njeda.powerappsportals.us/en-US/cpace/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Official NJEDA source supports ongoing C-PACE availability."
       }
     },
     {
@@ -36518,20 +36803,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5869/local-option-property-assessed-clean-energy-financing",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Property-Assessed Clean Energy Financing PACE Financing NE",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Nebraska statute authorizes municipalities to create clean energy assessment districts for PACE financing.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://nebraskalegislature.gov/laws/statutes.php?statute=13-3204"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Standing local-option PACE authority."
       }
     },
     {
@@ -36570,20 +36860,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4177/local-option-special-improvement-districts",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Special Improvement Districts Programs administered locally PACE Financing GA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Invest Atlanta describes its C-PACE program as open-market financing for eligible energy efficiency, solar, water conservation, HVAC, and other clean energy improvements, repaid through an annual property tax assessment.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.investatlanta.com/developers/opportunities-incentives/pace",
+          "https://www.atlantaga.gov/Home/Components/News/News/14814/1338",
+          "https://law.justia.com/codes/georgia/title-36/provisions-applicable-to-counties-and-municipal-corporations/chapter-62/article-2/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Official city development authority source supports current local-option C-PACE availability in Atlanta; Georgia code mirror supports the enabling authority."
       }
     },
     {
@@ -37129,20 +37427,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22572/sales-tax-exemption-machinery-for-new-and-expanded-industry",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Sales Tax Exemption - Machinery for New and Expanded Industry Sales Tax Incentive KY",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Kentucky DOR exemption certificate and regulation support a sales and use tax exemption for machinery for new and expanded industry under KRS 139.480.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://revenue.ky.gov/Forms/51A111%20%289-21%29.pdf",
+          "https://revenue.ky.gov/DOR%20Training%20Materials/103%20KAR%2030.120.%20Machinery%20for%20new%20and%20expanded%20industry.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing sales and use tax exemption with no application window identified."
       }
     },
     {
@@ -38839,13 +39143,19 @@
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "City of Atlanta - Incentivized Green Developments Green Building Incentive GA",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "A current official City of Atlanta source confirming this specific Incentivized Green Developments incentive could not be verified.",
+        "reasons": [
+          "still_uncertain"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.atlantaga.gov/doing-business/grants-loans-incentives",
+          "https://www.atlantaga.gov/Home/Components/News/News/7103/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.3,
+        "researchNotes": "Official Atlanta incentive pages identify general grants, loans, tax benefits, and development incentives, but not enough title-specific evidence to classify this record."
       }
     },
     {
@@ -41363,20 +41673,28 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4521/michigan-local-pace-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Michigan Local PACE Program PACE Financing MI",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Michigan county and city C-PACE pages describe long-term financing for commercial property owners to fund energy efficiency, water efficiency, renewable energy, and environmental hazard projects, repaid through special assessments.",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://www.oakgov.com/business/business-development/pace-financing",
+          "https://miottawa.org/dsi/economic-development/pace/",
+          "https://www.grandrapidsmi.gov/departments/sustainability/city-initiatives/property-assessed-clean-energy-pace-program/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.9,
+        "researchNotes": "Official local administrator pages support ongoing C-PACE availability in participating jurisdictions."
       }
     },
     {
@@ -43670,20 +43988,27 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22575/medium-duty-and-heavy-duty-zero-emission-vehicle-grant-program",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "upcoming",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program. Grant Program MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Energy Administration says the FY27 Medium-Duty and Heavy-Duty Zero-Emission Vehicle Grant Program has an anticipated Funding Opportunity Announcement issue date in Summer 2026 and application deadline in Autumn 2026.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://energy.maryland.gov/transportation/Pages/MediumandHeavyDutyGrant.aspx",
+          "https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx",
+          "https://energy.maryland.gov/SiteAssets/Pages/all-incentives/ACCESSIBLE%20FY27%20General%20Notice%20of%20Upcoming%20Programs.pdf"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current page is a notice of intent for a future FY27 application opening."
       }
     },
     {
@@ -45570,20 +45895,25 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2363/local-option-property-tax-credit-for-high-performance-buildings",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Local Option - Property Tax Credit for High Performance Buildings Programs locally administered Property Tax Incentive MD",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Maryland Tax-Property §9-242 authorizes local governing bodies to grant property tax credits for high-performance buildings.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-242"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Standing local-option property tax credit authority."
       }
     },
     {
@@ -45650,20 +45980,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings",
       "websiteUrl": null,
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "Priority Permit Processing for Green Buildings Green Building Incentive HI",
-        "reasons": [],
-        "sourceUrlsChecked": [],
+        "evidenceText": "Hawaii Revised Statutes §46-19.6 requires county permit agencies to establish priority processing for private projects incorporating energy and environmental design building standards, at no additional cost.",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://data.capitol.hawaii.gov/sessions/session2017/HRS-Chapter-PDF%27s/HRS_0046.pdf",
+          "https://law.justia.com/codes/hawaii/title-6/chapter-46/section-46-19-6/"
+        ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T02:56:16.281Z",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
-        "confidence": 0.42
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.85,
+        "researchNotes": "Standing statutory permitting incentive with no application round."
       }
     },
     {
@@ -45733,7 +46069,7 @@
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
   "uncertainRepairConcurrency": 16,
-  "gptProResearchAppliedAt": "2026-06-28T04:07:10.122Z",
-  "gptProResearchAppliedCount": 2,
+  "gptProResearchAppliedAt": "2026-06-28T04:14:55.705Z",
+  "gptProResearchAppliedCount": 50,
   "gptProResearchSkipped": []
 }

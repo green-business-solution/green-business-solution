@@ -1,27 +1,123 @@
 # Availability Review
 
-Generated: 2026-06-28T04:07:10.122Z
+Generated: 2026-06-28T04:14:55.705Z
 Opportunities reviewed: 1619
-GPT Pro research applied count: 2
+GPT Pro research applied count: 50
 GPT Pro research skipped count: 0
 
 ## Status Counts
 
 ```json
 {
-  "uncertain": 251,
-  "active": 1255,
-  "rolling": 49,
-  "upcoming": 48,
+  "uncertain": 202,
+  "active": 1256,
+  "rolling": 96,
+  "upcoming": 49,
   "unavailable": 16
 }
 ```
 
 ## GPT Pro Research Applied
 
-- active: PECO - Commercial Charger Rebate Program (SOURCE_DSIRE:dsire_program_id:22456)
+- rolling: Solar and CHP Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:243)
   - previous status: uncertain
-- unavailable: CMAQ Incentive Program (SOURCE_DSIRE:dsire_program_id:22253)
+- rolling: Biomass Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:1952)
+  - previous status: uncertain
+- uncertain: City of Atlanta - Incentivized Green Developments (SOURCE_DSIRE:dsire_program_id:22679)
+  - previous status: uncertain
+- rolling: Local Option - Special Improvement Districts (SOURCE_DSIRE:dsire_program_id:4177)
+  - previous status: uncertain
+- rolling: Guam - Photovoltaic Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22589)
+  - previous status: uncertain
+- rolling: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
+  - previous status: uncertain
+- rolling: Priority Permit Processing for Green Buildings (SOURCE_DSIRE:dsire_program_id:2287)
+  - previous status: uncertain
+- rolling: Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:184)
+  - previous status: uncertain
+- rolling: Idaho Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22652)
+  - previous status: uncertain
+- rolling: Income Tax Deduction for Energy Efficiency Upgrades (SOURCE_DSIRE:dsire_program_id:1227)
+  - previous status: uncertain
+- rolling: Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers (SOURCE_DSIRE:dsire_program_id:2786)
+  - previous status: uncertain
+- rolling: Residential Alternative Energy Tax Deduction (SOURCE_DSIRE:dsire_program_id:137)
+  - previous status: uncertain
+- rolling: Illinois PACE Financing Program (SOURCE_DSIRE:dsire_program_id:3626)
+  - previous status: uncertain
+- rolling: Renewable Energy and Energy Efficiency Project Financing (SOURCE_DSIRE:dsire_program_id:3567)
+  - previous status: uncertain
+- rolling: Sales and Use Tax Exemption for Electrical Generating Equipment (SOURCE_DSIRE:dsire_program_id:5106)
+  - previous status: uncertain
+- rolling: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:75)
+  - previous status: uncertain
+- rolling: Sales Tax Exemption - Machinery for New and Expanded Industry (SOURCE_DSIRE:dsire_program_id:22572)
+  - previous status: uncertain
+- active: Belmont Light - Battery Storage Rebate Program (SOURCE_DSIRE:dsire_program_id:22735)
+  - previous status: uncertain
+- rolling: Local Option - Energy Revolving Loan Fund (SOURCE_DSIRE:dsire_program_id:4283)
+  - previous status: uncertain
+- rolling: Local Option - Property Tax Credit for High Performance Buildings (SOURCE_DSIRE:dsire_program_id:2363)
+  - previous status: uncertain
+- rolling: Local Option - Property Tax Credit for Renewables and Energy Conservation Devices (SOURCE_DSIRE:dsire_program_id:232)
+  - previous status: uncertain
+- upcoming: Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program. (SOURCE_DSIRE:dsire_program_id:22575)
+  - previous status: uncertain
+- rolling: Prince George's County - Solar and Geothermal Residential Property Tax Credit (SOURCE_DSIRE:dsire_program_id:3106)
+  - previous status: uncertain
+- rolling: Property Tax Exemption for Solar and Wind Energy Systems (SOURCE_DSIRE:dsire_program_id:2542)
+  - previous status: uncertain
+- rolling: Sales and Use Tax Exemption for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:2928)
+  - previous status: uncertain
+- rolling: Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales (SOURCE_DSIRE:dsire_program_id:4853)
+  - previous status: uncertain
+- rolling: Wood Heating Fuel Exemption (SOURCE_DSIRE:dsire_program_id:143)
+  - previous status: uncertain
+- rolling: Michigan Local PACE Program (SOURCE_DSIRE:dsire_program_id:4521)
+  - previous status: uncertain
+- rolling: Nonrefundable Business Activity Tax Credit (SOURCE_DSIRE:dsire_program_id:333)
+  - previous status: uncertain
+- rolling: Solar Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:1218)
+  - previous status: uncertain
+- rolling: Wind Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:601)
+  - previous status: uncertain
+- rolling: Mississippi Clean Energy Initiative (SOURCE_DSIRE:dsire_program_id:4242)
+  - previous status: uncertain
+- rolling: Generation Facility Corporate Tax Exemptions (SOURCE_DSIRE:dsire_program_id:978)
+  - previous status: uncertain
+- rolling: Local Option - Commercial Property Assessed Capital Expenditure (C-PACE) (SOURCE_DSIRE:dsire_program_id:22669)
+  - previous status: uncertain
+- rolling: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
+  - previous status: uncertain
+- rolling: Sales Tax Exemption for Hydrogen Generation Facilities (SOURCE_DSIRE:dsire_program_id:4989)
+  - previous status: uncertain
+- rolling: Local Option - Property-Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:5869)
+  - previous status: uncertain
+- rolling: Property Tax Exemption for Renewable Energy Generation Facilities (SOURCE_DSIRE:dsire_program_id:4946)
+  - previous status: uncertain
+- rolling: Sales and Use Tax Exemption for Community Renewable Energy Projects (SOURCE_DSIRE:dsire_program_id:2576)
+  - previous status: uncertain
+- rolling: Local Option - Energy Efficiency & Clean Energy Districts (SOURCE_DSIRE:dsire_program_id:4252)
+  - previous status: uncertain
+- rolling: Assessment of Farmland Hosting Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:4026)
+  - previous status: uncertain
+- rolling: Local Option - Property Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:5109)
+  - previous status: uncertain
+- rolling: Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:3100)
+  - previous status: uncertain
+- rolling: Biomass Equipment & Materials Compensating Tax Deduction (SOURCE_DSIRE:dsire_program_id:359)
+  - previous status: uncertain
+- rolling: Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities (SOURCE_DSIRE:dsire_program_id:3980)
+  - previous status: uncertain
+- rolling: Renewable Energy Systems Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:158)
+  - previous status: uncertain
+- rolling: Air-Quality Improvement Tax Incentives (SOURCE_DSIRE:dsire_program_id:78)
+  - previous status: uncertain
+- rolling: Local Option - Special Energy Improvement Districts (SOURCE_DSIRE:dsire_program_id:3554)
+  - previous status: uncertain
+- rolling: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
+  - previous status: uncertain
+- rolling: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal (SOURCE_DSIRE:dsire_program_id:22222)
   - previous status: uncertain
 
 ## Remaining Uncertain Sample
@@ -471,16 +567,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives
   - evidence: Portland General Electric - Residential Energy Efficiency Rebate Program Portland General Electric Rebate Program OR
-- Prince George's County - Solar and Geothermal Residential Property Tax Credit (SOURCE_DSIRE:dsire_program_id:3106)
-  - state: MD
-  - source: DSIRE
-  - checked: none
-  - evidence: Prince George's County - Solar and Geothermal Residential Property Tax Credit Prince George's County Office of Finance Property Tax Incentive MD
-- Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:3100)
-  - state: NJ
-  - source: DSIRE
-  - checked: none
-  - evidence: Property Tax Exemption for Renewable Energy Systems New Jersey Department of the Treasury Property Tax Incentive NJ
 - Randolph EMC - ElecTel Energy Efficiency Loan Program (SOURCE_DSIRE:dsire_program_id:22437)
   - state: NC
   - source: DSIRE
@@ -491,11 +577,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/
   - evidence: Renewable Energy Systems Exemption Montana Department of Revenue Property Tax Incentive MT
-- Residential Alternative Energy Tax Deduction (SOURCE_DSIRE:dsire_program_id:137)
-  - state: ID
-  - source: DSIRE
-  - checked: none
-  - evidence: Residential Alternative Energy Tax Deduction Idaho Tax Commission Personal Tax Deduction ID
 - Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22725)
   - state: RI
   - source: DSIRE
@@ -511,11 +592,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.ecoactionpartners.org/smparebates
   - evidence: San Miguel Power Association - Energy Efficiency Rebate Program Rebate Program CO
-- Solar and CHP Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:243)
-  - state: FL
-  - source: DSIRE
-  - checked: none
-  - evidence: Solar and CHP Sales Tax Exemption Florida Department of Revenue Sales Tax Incentive FL
 - Southern Indiana Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2667)
   - state: IN
   - source: DSIRE
@@ -551,11 +627,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: http://wmgld.com/energy-programs/
   - evidence: Wakefield Municipal Gas & Light Department - Residential Conservation Services Program Rebate Program MA
-- Wood Heating Fuel Exemption (SOURCE_DSIRE:dsire_program_id:143)
-  - state: MD
-  - source: DSIRE
-  - checked: none
-  - evidence: Wood Heating Fuel Exemption Sales Tax Incentive MD
 - Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2249)
   - state: MN
   - source: DSIRE
@@ -596,11 +667,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://nmgcgetrebates.com/new-homes-rebates
   - evidence: New Mexico Gas Company - New Home Construction Rebate Program New Mexico Gas Company Rebate Program NM
-- Income Tax Deduction for Energy Efficiency Upgrades (SOURCE_DSIRE:dsire_program_id:1227)
-  - state: ID
-  - source: DSIRE
-  - checked: none
-  - evidence: Income Tax Deduction for Energy Efficiency Upgrades Idaho Tax Commission Personal Tax Deduction ID
 - City of Chicago - Green Building Permit Programs (SOURCE_DSIRE:dsire_program_id:2466)
   - state: IL
   - source: DSIRE
@@ -611,18 +677,48 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/
   - evidence: Corporate Property Tax Reduction for New/Expanded Generating Facilities Montana Department of Revenue Property Tax Incentive MT
-- Generation Facility Corporate Tax Exemptions (SOURCE_DSIRE:dsire_program_id:978)
-  - state: MT
-  - source: DSIRE
-  - checked: none
-  - evidence: Generation Facility Corporate Tax Exemptions Property Tax Incentive MT
 - Green Energy Property Tax Assessment (SOURCE_DSIRE:dsire_program_id:5216)
   - state: TN
   - source: DSIRE
   - checked: none
   - evidence: Green Energy Property Tax Assessment Tennessee Comptroller of the Treasury Property Tax Incentive TN
-- Local Option - Property Tax Credit for Renewables and Energy Conservation Devices (SOURCE_DSIRE:dsire_program_id:232)
-  - state: MD
+- Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:2801)
+  - state: RI
   - source: DSIRE
   - checked: none
-  - evidence: Local Option - Property Tax Credit for Renewables and Energy Conservation Devices Programs locally administered Property Tax Incentive MD
+  - evidence: Local Option - Property Tax Exemption for Renewable Energy Systems Rhode Island Office of Energy Resources Property Tax Incentive RI
+- Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
+  - state: CA
+  - source: DSIRE
+  - checked: https://www.mcecleanenergy.org/feed-in-tariff/
+  - evidence: Marin Clean Energy - Feed-In Tariff Plus Marin Clean Energy Feed-in Tariff CA
+- Property Tax Exemption for Residential Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:4210)
+  - state: CO
+  - source: DSIRE
+  - checked: https://cdola.colorado.gov/renewable-energy
+  - evidence: Property Tax Exemption for Residential Renewable Energy Equipment Division of Property Taxation / Local Assessors Property Tax Incentive CO
+- Renewable Electricity Production Tax Credit (PTC) (SOURCE_DSIRE:dsire_program_id:734)
+  - state: US
+  - source: DSIRE
+  - checked: https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses
+  - evidence: Renewable Electricity Production Tax Credit (PTC) U.S. Internal Revenue Service Corporate Tax Credit US
+- Renewable Energy Property Tax Assessment (SOURCE_DSIRE:dsire_program_id:2388)
+  - state: CO
+  - source: DSIRE
+  - checked: https://dpt.colorado.gov/renewable-energy
+  - evidence: Renewable Energy Property Tax Assessment Department of Local Affairs Property Tax Incentive CO
+- Sales and Use Tax Exemption for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:3397)
+  - state: CO
+  - source: DSIRE
+  - checked: https://tax.colorado.gov/sales-use-tax-guidance-publications
+  - evidence: Sales and Use Tax Exemption for Renewable Energy Equipment Sales Tax Incentive CO
+- Sales Tax Credit for Clean Energy Technology (SOURCE_DSIRE:dsire_program_id:4919)
+  - state: TN
+  - source: DSIRE
+  - checked: none
+  - evidence: Sales Tax Credit for Clean Energy Technology Tennessee Department of Revenue Sales Tax Incentive TN
+- Texas Gas Service - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1538)
+  - state: TX
+  - source: DSIRE
+  - checked: https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives
+  - evidence: Texas Gas Service - Commercial Energy Efficiency Rebate Program Rebate Program TX

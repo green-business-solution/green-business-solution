@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) GPT Pro availability research batch 2
+
+- Applied 50 additional GPT Pro researched opportunity availability repairs, reducing public uncertain records from 251 to 202.
+- Reclassified mostly standing tax, PACE, statutory, and financing opportunities as `rolling`, with one additional `upcoming` opportunity moved out of active public fixtures.
+- Regenerated public fixtures, archive reports, and the next uncertainty prompt packet.
+
 ## 2026-06-28 - Codex (GPT-5) targeted PECO and CMAQ availability repairs
 
 - Repaired PECO Commercial Charger Rebate Program from `uncertain` to `active` using the official PECO EVsmart Charging Rebate route provided by the user.

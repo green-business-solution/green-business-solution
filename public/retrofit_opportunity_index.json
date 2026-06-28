@@ -3,7 +3,7 @@
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
   "generatedAt": "2026-06-27T00:45:30.865Z",
   "matchingNow": "2026-06-27T00:45:05.723Z",
-  "opportunityCount": 1555,
+  "opportunityCount": 1554,
   "totalOpportunityRecordCount": 2096,
   "archivedOpportunityCount": 245,
   "retrofitCount": 86,
@@ -17693,7 +17693,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
@@ -17770,7 +17770,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4982",
@@ -18104,7 +18104,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
@@ -19242,7 +19242,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4977",
@@ -20871,7 +20871,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2250",
@@ -41451,7 +41451,7 @@
           "matchedTerms": [
             "boiler"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2615",
@@ -43094,7 +43094,7 @@
           "matchedTerms": [
             "duct sealing"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1653",
@@ -45804,7 +45804,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902",
@@ -46539,7 +46539,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5943",
@@ -46658,7 +46658,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5723",
@@ -47996,7 +47996,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
@@ -48098,7 +48098,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:184",
@@ -48115,7 +48115,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:240",
@@ -48166,7 +48166,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2003",
@@ -48269,7 +48269,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:145",
@@ -48406,7 +48406,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3233",
@@ -48491,7 +48491,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:248",
@@ -48576,7 +48576,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
@@ -48870,7 +48870,7 @@
           "matchedTerms": [
             "geothermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5427",
@@ -55851,7 +55851,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4330",
@@ -55885,7 +55885,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1338",
@@ -56140,7 +56140,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
@@ -56259,7 +56259,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
@@ -56327,7 +56327,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4590",
@@ -56467,7 +56467,7 @@
             "solar hot water",
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2542",
@@ -56485,7 +56485,7 @@
             "solar hot water",
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2844",
@@ -56536,7 +56536,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1237",
@@ -56604,7 +56604,7 @@
           "matchedTerms": [
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
@@ -57069,7 +57069,7 @@
             "solar water heating",
             "solar thermal"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5245",
@@ -68559,7 +68559,7 @@
           "matchedTerms": [
             "insulation"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4854",
@@ -81046,7 +81046,7 @@
           "matchedTerms": [
             "metering"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5523",
@@ -81097,7 +81097,7 @@
           "matchedTerms": [
             "metering"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4853",
@@ -81114,7 +81114,7 @@
           "matchedTerms": [
             "metering"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:119",
@@ -82680,7 +82680,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22589",
@@ -82697,7 +82697,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22763",
@@ -82975,7 +82975,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3128",
@@ -83207,7 +83207,7 @@
             "photovoltaic",
             "pv system"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:558",
@@ -83241,7 +83241,7 @@
           "matchedTerms": [
             "solar pv"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2542",
@@ -83259,7 +83259,7 @@
             "solar photovoltaic",
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4605",
@@ -83294,7 +83294,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5523",
@@ -83364,7 +83364,7 @@
           "matchedTerms": [
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:576",
@@ -83538,7 +83538,7 @@
           "matchedTerms": [
             "solar pv"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3397",
@@ -83754,7 +83754,7 @@
             "solar photovoltaic",
             "photovoltaic"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22790",
@@ -84292,7 +84292,7 @@
           "matchedTerms": [
             "wind turbine"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2502",
@@ -84377,7 +84377,7 @@
           "matchedTerms": [
             "wind turbine"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3397",
@@ -84480,7 +84480,7 @@
           "matchedTerms": [
             "wind turbine"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         }
       ]
     },
@@ -84550,7 +84550,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22222",
@@ -84567,7 +84567,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22163",
@@ -84839,7 +84839,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5205",
@@ -84873,7 +84873,7 @@
           "matchedTerms": [
             "fuel cell"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5690",
@@ -85361,7 +85361,7 @@
           "matchedTerms": [
             "chp"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4328",
@@ -85571,7 +85571,7 @@
           "matchedTerms": [
             "chp"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5245",
@@ -85762,7 +85762,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3650",
@@ -85847,7 +85847,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:178",
@@ -85882,7 +85882,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3243",
@@ -85916,7 +85916,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:658",
@@ -86175,7 +86175,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:1106",
@@ -86430,7 +86430,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5723",
@@ -86515,7 +86515,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22541",
@@ -86583,7 +86583,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3999",
@@ -86737,7 +86737,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3100",
@@ -86754,7 +86754,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:240",
@@ -86873,7 +86873,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3080",
@@ -86942,7 +86942,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
@@ -87164,7 +87164,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2325",
@@ -87198,7 +87198,7 @@
           "matchedTerms": [
             "biomass"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3397",
@@ -87524,7 +87524,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22212",
@@ -87676,7 +87676,7 @@
             "battery storage",
             "storage system"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:178",
@@ -88459,7 +88459,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
@@ -88523,7 +88523,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3626",
@@ -88538,7 +88538,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5791",
@@ -88648,7 +88648,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3531",
@@ -88723,7 +88723,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:60",
@@ -88756,7 +88756,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3532",
@@ -88818,7 +88818,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4177",
@@ -88833,7 +88833,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3566",
@@ -89242,7 +89242,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3112",
@@ -89430,7 +89430,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4210",
@@ -89496,7 +89496,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22419",
@@ -89564,7 +89564,7 @@
           "matchedTerms": [
             "energy storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
@@ -89739,7 +89739,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4919",
@@ -89771,7 +89771,7 @@
           "matchedTerms": [
             "battery storage"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22489",
@@ -89949,7 +89949,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5945",
@@ -92018,7 +92018,7 @@
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": [],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22622",
@@ -94405,7 +94405,7 @@
           "matchedTerms": [
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
@@ -97938,7 +97938,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22622",
@@ -102946,7 +102946,7 @@
         "electric",
         "fuel"
       ],
-      "opportunityCount": 11,
+      "opportunityCount": 10,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22149",
@@ -102981,23 +102981,6 @@
             "clean vehicle"
           ],
           "availabilityStatus": "active"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22575",
-          "opportunityName": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22575/medium-duty-and-heavy-duty-zero-emission-vehicle-grant-program",
-          "websiteUrl": null,
-          "applicationUrl": null,
-          "state": "MD",
-          "programType": "Grant Program",
-          "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "zero emission vehicle"
-          ],
-          "availabilityStatus": "uncertain"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22224",
@@ -119588,7 +119571,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5747",
@@ -119623,7 +119606,7 @@
             "energy audit",
             "audit"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3532",
@@ -121665,7 +121648,7 @@
           "matchedTerms": [
             "leed"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5249",
@@ -121716,7 +121699,7 @@
           "matchedTerms": [
             "leed"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "rolling"
         }
       ]
     },
@@ -121873,15 +121856,15 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T04:07:10.122Z",
+  "availabilityReviewedAt": "2026-06-28T04:14:55.705Z",
   "availabilityStatusCounts": {
-    "uncertain": 251,
-    "active": 1255,
-    "rolling": 49,
-    "upcoming": 48,
+    "uncertain": 202,
+    "active": 1256,
+    "rolling": 96,
+    "upcoming": 49,
     "unavailable": 16
   },
-  "hiddenUpcomingOpportunityCount": 48,
+  "hiddenUpcomingOpportunityCount": 49,
   "upcomingOpportunities": [
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2895",
@@ -122754,6 +122737,45 @@
         "confidence": 0.78
       },
       "retrofitTypes": []
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22575",
+      "opportunityName": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22575/medium-duty-and-heavy-duty-zero-emission-vehicle-grant-program",
+      "websiteUrl": null,
+      "state": "MD",
+      "availabilityStatus": "upcoming",
+      "availabilityReview": {
+        "normalizedStatus": "upcoming",
+        "applicationOpenAt": null,
+        "applicationDeadlineAt": null,
+        "questionsDeadlineAt": null,
+        "programEndAt": null,
+        "recurring": false,
+        "noDeadlineExplicit": false,
+        "evidenceText": "Maryland Energy Administration says the FY27 Medium-Duty and Heavy-Duty Zero-Emission Vehicle Grant Program has an anticipated Funding Opportunity Announcement issue date in Summer 2026 and application deadline in Autumn 2026.",
+        "reasons": [
+          "future_opening_language"
+        ],
+        "sourceUrlsChecked": [
+          "https://energy.maryland.gov/transportation/Pages/MediumandHeavyDutyGrant.aspx",
+          "https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx",
+          "https://energy.maryland.gov/SiteAssets/Pages/all-incentives/ACCESSIBLE%20FY27%20General%20Notice%20of%20Upcoming%20Programs.pdf"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-28T04:14:55.705Z",
+        "reviewMethod": "gpt_pro_official_source_research",
+        "confidence": 0.95,
+        "researchNotes": "Current page is a notice of intent for a future FY27 application opening."
+      },
+      "retrofitTypes": [
+        {
+          "retrofitTypeId": "electric_vehicle_purchase",
+          "displayName": "Electric vehicle purchase",
+          "isPhysicalRetrofit": false
+        }
+      ]
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:22795",

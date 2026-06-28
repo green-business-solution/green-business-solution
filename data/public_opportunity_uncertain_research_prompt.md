@@ -55,7 +55,8 @@ Return JSON only:
 
 ```json
 {
-  "no_source_url": 74,
+  "fetched_but_no_supported_status": 1,
+  "no_source_url": 24,
   "source_blocked_403": 54,
   "source_missing_404": 123
 }
@@ -63,43 +64,7 @@ Return JSON only:
 
 ## Targets
 
-### 1. Solar and CHP Sales Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
-  "opportunityName": "Solar and CHP Sales Tax Exemption",
-  "state": "FL",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/243/solar-and-chp-sales-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Solar and CHP Sales Tax Exemption Florida Department of Revenue Sales Tax Incentive FL",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 2. Biomass Sales and Use Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1952",
-  "opportunityName": "Biomass Sales and Use Tax Exemption",
-  "state": "GA",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1952/biomass-sales-and-use-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Biomass Sales and Use Tax Exemption Georgia Department of Revenue Sales Tax Incentive GA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 3. City of Atlanta - Incentivized Green Developments
+### 1. City of Atlanta - Incentivized Green Developments
 
 ```json
 {
@@ -109,861 +74,20 @@ Return JSON only:
   "sourceName": "DSIRE",
   "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22679/city-of-atlanta-incentivized-green-developments",
   "websiteUrl": null,
-  "checkedUrls": [],
+  "checkedUrls": [
+    "https://www.atlantaga.gov/doing-business/grants-loans-incentives",
+    "https://www.atlantaga.gov/Home/Components/News/News/7103/"
+  ],
   "fetchErrors": [],
-  "currentEvidenceText": "City of Atlanta - Incentivized Green Developments Green Building Incentive GA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
+  "currentEvidenceText": "A current official City of Atlanta source confirming this specific Incentivized Green Developments incentive could not be verified.",
+  "currentReasons": [
+    "still_uncertain"
+  ],
+  "failureBucket": "fetched_but_no_supported_status"
 }
 ```
 
-### 4. Local Option - Special Improvement Districts
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4177",
-  "opportunityName": "Local Option - Special Improvement Districts",
-  "state": "GA",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4177/local-option-special-improvement-districts",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Special Improvement Districts Programs administered locally PACE Financing GA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 5. Guam - Photovoltaic Property Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22589",
-  "opportunityName": "Guam - Photovoltaic Property Tax Exemption",
-  "state": "GU",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22589/guam-photovoltaic-property-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Guam - Photovoltaic Property Tax Exemption Property Tax Incentive GU",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 6. Hawaii C-PACE program
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3870",
-  "opportunityName": "Hawaii C-PACE program",
-  "state": "HI",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3870/hawaii-c-pace-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Hawaii C-PACE program Programs administered locally PACE Financing HI",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 7. Priority Permit Processing for Green Buildings
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2287",
-  "opportunityName": "Priority Permit Processing for Green Buildings",
-  "state": "HI",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Priority Permit Processing for Green Buildings Green Building Incentive HI",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 8. Property Tax Exemption for Renewable Energy Systems
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:184",
-  "opportunityName": "Property Tax Exemption for Renewable Energy Systems",
-  "state": "IA",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/184/property-tax-exemption-for-renewable-energy-systems",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Systems Iowa Department of Natural Resources Property Tax Incentive IA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 9. Idaho Commercial PACE Financing Program
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22652",
-  "opportunityName": "Idaho Commercial PACE Financing Program",
-  "state": "ID",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22652/idaho-commercial-pace-financing-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Idaho Commercial PACE Financing Program PACE Financing ID",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 10. Income Tax Deduction for Energy Efficiency Upgrades
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1227",
-  "opportunityName": "Income Tax Deduction for Energy Efficiency Upgrades",
-  "state": "ID",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1227/income-tax-deduction-for-energy-efficiency-upgrades",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Income Tax Deduction for Energy Efficiency Upgrades Idaho Tax Commission Personal Tax Deduction ID",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 11. Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2786",
-  "opportunityName": "Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers",
-  "state": "ID",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2786/property-tax-exemption-for-wind-solar-and-geothermal-energy-producers",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers Idaho State Tax Commission Property Tax Incentive ID",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 12. Residential Alternative Energy Tax Deduction
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:137",
-  "opportunityName": "Residential Alternative Energy Tax Deduction",
-  "state": "ID",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/137/residential-alternative-energy-tax-deduction",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Residential Alternative Energy Tax Deduction Idaho Tax Commission Personal Tax Deduction ID",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 13. Illinois PACE Financing Program
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3626",
-  "opportunityName": "Illinois PACE Financing Program",
-  "state": "IL",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3626/illinois-pace-financing-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Illinois PACE Financing Program Programs administered locally PACE Financing IL",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 14. Renewable Energy and Energy Efficiency Project Financing
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3567",
-  "opportunityName": "Renewable Energy and Energy Efficiency Project Financing",
-  "state": "IL",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3567/renewable-energy-and-energy-efficiency-project-financing",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Renewable Energy and Energy Efficiency Project Financing Illinois Finance Authority Bond Program IL",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 15. Sales and Use Tax Exemption for Electrical Generating Equipment
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5106",
-  "opportunityName": "Sales and Use Tax Exemption for Electrical Generating Equipment",
-  "state": "IN",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5106/sales-and-use-tax-exemption-for-electrical-generating-equipment",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales and Use Tax Exemption for Electrical Generating Equipment Indiana Department of Revenue Sales Tax Incentive IN",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 16. Renewable Energy Property Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:75",
-  "opportunityName": "Renewable Energy Property Tax Exemption",
-  "state": "KS",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/75/renewable-energy-property-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Renewable Energy Property Tax Exemption Kansas Corporation Commission Property Tax Incentive KS",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 17. Sales Tax Exemption - Machinery for New and Expanded Industry
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22572",
-  "opportunityName": "Sales Tax Exemption - Machinery for New and Expanded Industry",
-  "state": "KY",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22572/sales-tax-exemption-machinery-for-new-and-expanded-industry",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales Tax Exemption - Machinery for New and Expanded Industry Sales Tax Incentive KY",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 18. Belmont Light - Battery Storage Rebate Program
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22735",
-  "opportunityName": "Belmont Light - Battery Storage Rebate Program",
-  "state": "MA",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22735/belmont-light-battery-storage-rebate-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Belmont Light - Battery Storage Rebate Program Rebate Program MA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 19. Local Option - Energy Revolving Loan Fund
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4283",
-  "opportunityName": "Local Option - Energy Revolving Loan Fund",
-  "state": "MA",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4283/local-option-energy-revolving-loan-fund",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Energy Revolving Loan Fund Programs administered locally PACE Financing MA",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 20. Local Option - Property Tax Credit for High Performance Buildings
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2363",
-  "opportunityName": "Local Option - Property Tax Credit for High Performance Buildings",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2363/local-option-property-tax-credit-for-high-performance-buildings",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Property Tax Credit for High Performance Buildings Programs locally administered Property Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 21. Local Option - Property Tax Credit for Renewables and Energy Conservation Devices
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:232",
-  "opportunityName": "Local Option - Property Tax Credit for Renewables and Energy Conservation Devices",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/232/local-option-property-tax-credit-for-renewables-and-energy-conservation-devices",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Property Tax Credit for Renewables and Energy Conservation Devices Programs locally administered Property Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 22. Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22575",
-  "opportunityName": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program.",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22575/medium-duty-and-heavy-duty-zero-emission-vehicle-grant-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program. Grant Program MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 23. Prince George's County - Solar and Geothermal Residential Property Tax Credit
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3106",
-  "opportunityName": "Prince George's County - Solar and Geothermal Residential Property Tax Credit",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3106/prince-george-s-county-solar-and-geothermal-residential-property-tax-credit",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Prince George's County - Solar and Geothermal Residential Property Tax Credit Prince George's County Office of Finance Property Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 24. Property Tax Exemption for Solar and Wind Energy Systems
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2542",
-  "opportunityName": "Property Tax Exemption for Solar and Wind Energy Systems",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2542/property-tax-exemption-for-solar-and-wind-energy-systems",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Exemption for Solar and Wind Energy Systems Maryland Department of Assessments and Taxation Property Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 25. Sales and Use Tax Exemption for Renewable Energy Equipment
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2928",
-  "opportunityName": "Sales and Use Tax Exemption for Renewable Energy Equipment",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2928/sales-and-use-tax-exemption-for-renewable-energy-equipment",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales and Use Tax Exemption for Renewable Energy Equipment Comptroller of Maryland Sales Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 26. Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4853",
-  "opportunityName": "Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4853/sales-and-use-tax-exemption-for-residential-solar-and-wind-electricity-sales",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales Comptroller of Maryland Sales Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 27. Wood Heating Fuel Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:143",
-  "opportunityName": "Wood Heating Fuel Exemption",
-  "state": "MD",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/143/wood-heating-fuel-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Wood Heating Fuel Exemption Sales Tax Incentive MD",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 28. Michigan Local PACE Program
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4521",
-  "opportunityName": "Michigan Local PACE Program",
-  "state": "MI",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4521/michigan-local-pace-program",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Michigan Local PACE Program PACE Financing MI",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 29. Nonrefundable Business Activity Tax Credit
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:333",
-  "opportunityName": "Nonrefundable Business Activity Tax Credit",
-  "state": "MI",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/333/nonrefundable-business-activity-tax-credit",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Nonrefundable Business Activity Tax Credit Michigan Economic Development Corporation Industry Recruitment/Support MI",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 30. Solar Energy Sales Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:1218",
-  "opportunityName": "Solar Energy Sales Tax Exemption",
-  "state": "MN",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1218/solar-energy-sales-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Solar Energy Sales Tax Exemption Department of Revenue Sales Tax Incentive MN",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 31. Wind Energy Sales Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:601",
-  "opportunityName": "Wind Energy Sales Tax Exemption",
-  "state": "MN",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/601/wind-energy-sales-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Wind Energy Sales Tax Exemption Sales Tax Incentive MN",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 32. Mississippi Clean Energy Initiative
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4242",
-  "opportunityName": "Mississippi Clean Energy Initiative",
-  "state": "MS",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4242/mississippi-clean-energy-initiative",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Mississippi Clean Energy Initiative Mississippi Development Authority Industry Recruitment/Support MS",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 33. Generation Facility Corporate Tax Exemptions
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:978",
-  "opportunityName": "Generation Facility Corporate Tax Exemptions",
-  "state": "MT",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/978/generation-facility-corporate-tax-exemptions",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Generation Facility Corporate Tax Exemptions Property Tax Incentive MT",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 34. Local Option - Commercial Property Assessed Capital Expenditure (C-PACE)
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22669",
-  "opportunityName": "Local Option - Commercial Property Assessed Capital Expenditure (C-PACE)",
-  "state": "NC",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22669/local-option-commercial-property-assessed-capital-expenditure-c-pace",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Commercial Property Assessed Capital Expenditure (C-PACE) PACE Financing NC",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 35. Property Tax Abatement for Solar Electric Systems
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3036",
-  "opportunityName": "Property Tax Abatement for Solar Electric Systems",
-  "state": "NC",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3036/property-tax-abatement-for-solar-electric-systems",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Abatement for Solar Electric Systems N.C. Department of Revenue Property Tax Incentive NC",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 36. Sales Tax Exemption for Hydrogen Generation Facilities
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4989",
-  "opportunityName": "Sales Tax Exemption for Hydrogen Generation Facilities",
-  "state": "ND",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4989/sales-tax-exemption-for-hydrogen-generation-facilities",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales Tax Exemption for Hydrogen Generation Facilities Office of State Tax Commissioner Sales Tax Incentive ND",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 37. Local Option - Property-Assessed Clean Energy Financing
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5869",
-  "opportunityName": "Local Option - Property-Assessed Clean Energy Financing",
-  "state": "NE",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5869/local-option-property-assessed-clean-energy-financing",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Property-Assessed Clean Energy Financing PACE Financing NE",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 38. Property Tax Exemption for Renewable Energy Generation Facilities
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4946",
-  "opportunityName": "Property Tax Exemption for Renewable Energy Generation Facilities",
-  "state": "NE",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4946/property-tax-exemption-for-renewable-energy-generation-facilities",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Generation Facilities Nebraska Department of Revenue Property Tax Incentive NE",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 39. Sales and Use Tax Exemption for Community Renewable Energy Projects
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:2576",
-  "opportunityName": "Sales and Use Tax Exemption for Community Renewable Energy Projects",
-  "state": "NE",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2576/sales-and-use-tax-exemption-for-community-renewable-energy-projects",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Sales and Use Tax Exemption for Community Renewable Energy Projects Nebraska Department of Revenue Sales Tax Incentive NE",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 40. Local Option - Energy Efficiency & Clean Energy Districts
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4252",
-  "opportunityName": "Local Option - Energy Efficiency & Clean Energy Districts",
-  "state": "NH",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4252/local-option-energy-efficiency-and-clean-energy-districts",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Energy Efficiency & Clean Energy Districts Local community PACE Financing NH",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 41. Assessment of Farmland Hosting Renewable Energy Systems
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:4026",
-  "opportunityName": "Assessment of Farmland Hosting Renewable Energy Systems",
-  "state": "NJ",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4026/assessment-of-farmland-hosting-renewable-energy-systems",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Assessment of Farmland Hosting Renewable Energy Systems Property Tax Incentive NJ",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 42. Local Option - Property Assessed Clean Energy Financing
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5109",
-  "opportunityName": "Local Option - Property Assessed Clean Energy Financing",
-  "state": "NJ",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5109/local-option-property-assessed-clean-energy-financing",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Property Assessed Clean Energy Financing PACE Financing NJ",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 43. Property Tax Exemption for Renewable Energy Systems
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3100",
-  "opportunityName": "Property Tax Exemption for Renewable Energy Systems",
-  "state": "NJ",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3100/property-tax-exemption-for-renewable-energy-systems",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Property Tax Exemption for Renewable Energy Systems New Jersey Department of the Treasury Property Tax Incentive NJ",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 44. Biomass Equipment & Materials Compensating Tax Deduction
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:359",
-  "opportunityName": "Biomass Equipment & Materials Compensating Tax Deduction",
-  "state": "NM",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/359/biomass-equipment-and-materials-compensating-tax-deduction",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Biomass Equipment & Materials Compensating Tax Deduction New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 45. Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
-  "opportunityName": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities",
-  "state": "NM",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3980/gross-receipts-tax-exemption-for-sales-of-wind-and-solar-systems-to-government-entities",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities New Mexico Taxation & Revenue Department Sales Tax Incentive NM",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 46. Renewable Energy Systems Property Tax Exemption
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:158",
-  "opportunityName": "Renewable Energy Systems Property Tax Exemption",
-  "state": "NV",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/158/renewable-energy-systems-property-tax-exemption",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Renewable Energy Systems Property Tax Exemption NV Department of Taxation Property Tax Incentive NV",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 47. Air-Quality Improvement Tax Incentives
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:78",
-  "opportunityName": "Air-Quality Improvement Tax Incentives",
-  "state": "OH",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/78/air-quality-improvement-tax-incentives",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Air-Quality Improvement Tax Incentives Ohio Department of Development Other Incentive OH",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 48. Local Option - Special Energy Improvement Districts
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:3554",
-  "opportunityName": "Local Option - Special Energy Improvement Districts",
-  "state": "OH",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3554/local-option-special-energy-improvement-districts",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Local Option - Special Energy Improvement Districts PACE Financing OH",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 49. Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22221",
-  "opportunityName": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate",
-  "state": "OK",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22221/clean-burning-motor-vehicle-fuel-property-tax-credit-corporate",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate Corporate Tax Credit OK",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 50. Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:22222",
-  "opportunityName": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal",
-  "state": "OK",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22222/clean-burning-motor-vehicle-fuel-property-tax-credit-personal",
-  "websiteUrl": null,
-  "checkedUrls": [],
-  "fetchErrors": [],
-  "currentEvidenceText": "Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal Personal Tax Credit OK",
-  "currentReasons": [],
-  "failureBucket": "no_source_url"
-}
-```
-
-### 51. Electric Vehicle Tax Credit
+### 2. Electric Vehicle Tax Credit
 
 ```json
 {
@@ -981,7 +105,7 @@ Return JSON only:
 }
 ```
 
-### 52. Energy Efficient Residential Construction Tax Credit (Personal)
+### 3. Energy Efficient Residential Construction Tax Credit (Personal)
 
 ```json
 {
@@ -999,7 +123,7 @@ Return JSON only:
 }
 ```
 
-### 53. Local Option - Local Improvement Districts
+### 4. Local Option - Local Improvement Districts
 
 ```json
 {
@@ -1017,7 +141,7 @@ Return JSON only:
 }
 ```
 
-### 54. Puerto Rico - Excise Tax Exemption for Farmers
+### 5. Puerto Rico - Excise Tax Exemption for Farmers
 
 ```json
 {
@@ -1035,7 +159,7 @@ Return JSON only:
 }
 ```
 
-### 55. Puerto Rico - Industry Tax Incentives
+### 6. Puerto Rico - Industry Tax Incentives
 
 ```json
 {
@@ -1053,7 +177,7 @@ Return JSON only:
 }
 ```
 
-### 56. Puerto Rico - Property Tax Exemption for Solar and Renewable Energy Equipment
+### 7. Puerto Rico - Property Tax Exemption for Solar and Renewable Energy Equipment
 
 ```json
 {
@@ -1071,7 +195,7 @@ Return JSON only:
 }
 ```
 
-### 57. Puerto Rico - Sales and Use Tax Exemption for Solar Equipment
+### 8. Puerto Rico - Sales and Use Tax Exemption for Solar Equipment
 
 ```json
 {
@@ -1089,7 +213,7 @@ Return JSON only:
 }
 ```
 
-### 58. Local Option - Property Tax Exemption for Renewable Energy Systems
+### 9. Local Option - Property Tax Exemption for Renewable Energy Systems
 
 ```json
 {
@@ -1107,7 +231,7 @@ Return JSON only:
 }
 ```
 
-### 59. Renewable Energy and Energy Storage Property Tax Exemption
+### 10. Renewable Energy and Energy Storage Property Tax Exemption
 
 ```json
 {
@@ -1125,7 +249,7 @@ Return JSON only:
 }
 ```
 
-### 60. Green Energy Property Tax Assessment
+### 11. Green Energy Property Tax Assessment
 
 ```json
 {
@@ -1143,7 +267,7 @@ Return JSON only:
 }
 ```
 
-### 61. Sales Tax Credit for Clean Energy Technology
+### 12. Sales Tax Credit for Clean Energy Technology
 
 ```json
 {
@@ -1161,7 +285,7 @@ Return JSON only:
 }
 ```
 
-### 62. Business Energy Investment Tax Credit (ITC)
+### 13. Business Energy Investment Tax Credit (ITC)
 
 ```json
 {
@@ -1179,7 +303,7 @@ Return JSON only:
 }
 ```
 
-### 63. Modified Accelerated Cost-Recovery System (MACRS)
+### 14. Modified Accelerated Cost-Recovery System (MACRS)
 
 ```json
 {
@@ -1197,7 +321,7 @@ Return JSON only:
 }
 ```
 
-### 64. Alternative Energy Sales Tax Exemption
+### 15. Alternative Energy Sales Tax Exemption
 
 ```json
 {
@@ -1215,7 +339,7 @@ Return JSON only:
 }
 ```
 
-### 65. Income Tax Deduction for Energy-Efficient Products
+### 16. Income Tax Deduction for Energy-Efficient Products
 
 ```json
 {
@@ -1233,7 +357,7 @@ Return JSON only:
 }
 ```
 
-### 66. Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing
+### 17. Local Option - Commercial Property Assessed Clean Energy (C-PACE) Financing
 
 ```json
 {
@@ -1251,7 +375,7 @@ Return JSON only:
 }
 ```
 
-### 67. Local Option - Property Tax Assessment for Energy Efficient Buildings
+### 18. Local Option - Property Tax Assessment for Energy Efficient Buildings
 
 ```json
 {
@@ -1269,7 +393,7 @@ Return JSON only:
 }
 ```
 
-### 68. Renewable Energy Systems Sales Tax Exemption
+### 19. Renewable Energy Systems Sales Tax Exemption
 
 ```json
 {
@@ -1287,7 +411,7 @@ Return JSON only:
 }
 ```
 
-### 69. Washington Commercial PACER Program
+### 20. Washington Commercial PACER Program
 
 ```json
 {
@@ -1305,7 +429,7 @@ Return JSON only:
 }
 ```
 
-### 70. Biogas, Solar, and Wind Energy Equipment Exemption
+### 21. Biogas, Solar, and Wind Energy Equipment Exemption
 
 ```json
 {
@@ -1323,7 +447,7 @@ Return JSON only:
 }
 ```
 
-### 71. Local Option - Energy-Efficiency Improvement Loans
+### 22. Local Option - Energy-Efficiency Improvement Loans
 
 ```json
 {
@@ -1341,7 +465,7 @@ Return JSON only:
 }
 ```
 
-### 72. Special Assessment for Wind Energy Systems
+### 23. Special Assessment for Wind Energy Systems
 
 ```json
 {
@@ -1359,7 +483,7 @@ Return JSON only:
 }
 ```
 
-### 73. Tax Exemption for Renewable Energy Generation
+### 24. Tax Exemption for Renewable Energy Generation
 
 ```json
 {
@@ -1377,7 +501,7 @@ Return JSON only:
 }
 ```
 
-### 74. Wyoming PACE Financing Program
+### 25. Wyoming PACE Financing Program
 
 ```json
 {
@@ -1395,7 +519,7 @@ Return JSON only:
 }
 ```
 
-### 75. City of Chandler - Expedited Plan Review for Green Buildings
+### 26. City of Chandler - Expedited Plan Review for Green Buildings
 
 ```json
 {
@@ -1420,7 +544,7 @@ Return JSON only:
 }
 ```
 
-### 76. Salt River Project - Business Energy Efficiency Programs
+### 27. Salt River Project - Business Energy Efficiency Programs
 
 ```json
 {
@@ -1445,7 +569,7 @@ Return JSON only:
 }
 ```
 
-### 77. Salt River Project - Business EV Charger Rebate
+### 28. Salt River Project - Business EV Charger Rebate
 
 ```json
 {
@@ -1470,7 +594,7 @@ Return JSON only:
 }
 ```
 
-### 78. SRP - Residential Energy Efficiency Rebate Program
+### 29. SRP - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -1495,7 +619,7 @@ Return JSON only:
 }
 ```
 
-### 79. CaliforniaFIRST
+### 30. CaliforniaFIRST
 
 ```json
 {
@@ -1520,7 +644,7 @@ Return JSON only:
 }
 ```
 
-### 80. Marin Clean Energy - Feed-In Tariff Plus
+### 31. Marin Clean Energy - Feed-In Tariff Plus
 
 ```json
 {
@@ -1545,7 +669,7 @@ Return JSON only:
 }
 ```
 
-### 81. Marin County - Natural Gas Appliance Replacement Rebate Program
+### 32. Marin County - Natural Gas Appliance Replacement Rebate Program
 
 ```json
 {
@@ -1570,7 +694,7 @@ Return JSON only:
 }
 ```
 
-### 82. City and County of Denver - Elevations Energy Loans
+### 33. City and County of Denver - Elevations Energy Loans
 
 ```json
 {
@@ -1595,7 +719,7 @@ Return JSON only:
 }
 ```
 
-### 83. Colorado - Home Electrification and Appliance Rebate (HEAR) Program
+### 34. Colorado - Home Electrification and Appliance Rebate (HEAR) Program
 
 ```json
 {
@@ -1620,7 +744,7 @@ Return JSON only:
 }
 ```
 
-### 84. Electric Vehicle Fast-Charging Plazas Program
+### 35. Electric Vehicle Fast-Charging Plazas Program
 
 ```json
 {
@@ -1645,7 +769,7 @@ Return JSON only:
 }
 ```
 
-### 85. Electric Vehicle Income Tax Credit
+### 36. Electric Vehicle Income Tax Credit
 
 ```json
 {
@@ -1670,7 +794,7 @@ Return JSON only:
 }
 ```
 
-### 86. Mountain View Electric Association, Inc - Energy Efficiency Rebates Program
+### 37. Mountain View Electric Association, Inc - Energy Efficiency Rebates Program
 
 ```json
 {
@@ -1695,7 +819,7 @@ Return JSON only:
 }
 ```
 
-### 87. Property Tax Exemption for Residential Renewable Energy Equipment
+### 38. Property Tax Exemption for Residential Renewable Energy Equipment
 
 ```json
 {
@@ -1720,7 +844,7 @@ Return JSON only:
 }
 ```
 
-### 88. Renewable Energy Property Tax Assessment
+### 39. Renewable Energy Property Tax Assessment
 
 ```json
 {
@@ -1745,7 +869,7 @@ Return JSON only:
 }
 ```
 
-### 89. Sales and Use Tax Exemption for Renewable Energy Equipment
+### 40. Sales and Use Tax Exemption for Renewable Energy Equipment
 
 ```json
 {
@@ -1770,7 +894,7 @@ Return JSON only:
 }
 ```
 
-### 90. Sales Tax Exemption for Energy Storage Systems
+### 41. Sales Tax Exemption for Energy Storage Systems
 
 ```json
 {
@@ -1795,7 +919,7 @@ Return JSON only:
 }
 ```
 
-### 91. Tax Credit for Residential Energy Storage Systems
+### 42. Tax Credit for Residential Energy Storage Systems
 
 ```json
 {
@@ -1820,7 +944,7 @@ Return JSON only:
 }
 ```
 
-### 92. (Electric and Gas)  Residential New Construction Program
+### 43. (Electric and Gas)  Residential New Construction Program
 
 ```json
 {
@@ -1845,7 +969,7 @@ Return JSON only:
 }
 ```
 
-### 93. (Electric and Gas) Residential Rebate Program
+### 44. (Electric and Gas) Residential Rebate Program
 
 ```json
 {
@@ -1870,7 +994,7 @@ Return JSON only:
 }
 ```
 
-### 94. Energize Connecticut Residential and Commercial Rebates
+### 45. Energize Connecticut Residential and Commercial Rebates
 
 ```json
 {
@@ -1895,7 +1019,7 @@ Return JSON only:
 }
 ```
 
-### 95. Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program
+### 46. Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program
 
 ```json
 {
@@ -1920,7 +1044,7 @@ Return JSON only:
 }
 ```
 
-### 96. Sustainable Energy Utility - Residential Energy Efficiency Rebate Program
+### 47. Sustainable Energy Utility - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -1945,7 +1069,7 @@ Return JSON only:
 }
 ```
 
-### 97. Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program
+### 48. Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program
 
 ```json
 {
@@ -1970,7 +1094,7 @@ Return JSON only:
 }
 ```
 
-### 98. Delaware Electric Cooperative - Beat the Peak With Electric Vehicles
+### 49. Delaware Electric Cooperative - Beat the Peak With Electric Vehicles
 
 ```json
 {
@@ -1995,7 +1119,7 @@ Return JSON only:
 }
 ```
 
-### 99. New Smyrna Beach - Energy Efficiency Rebate Program
+### 50. New Smyrna Beach - Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2020,7 +1144,7 @@ Return JSON only:
 }
 ```
 
-### 100. Jackson EMC - Residential Energy Efficiency HomePlus Loan Program
+### 51. Jackson EMC - Residential Energy Efficiency HomePlus Loan Program
 
 ```json
 {
@@ -2045,7 +1169,7 @@ Return JSON only:
 }
 ```
 
-### 101. Jackson EMC - Residential Energy Efficiency Rebate Program
+### 52. Jackson EMC - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2070,7 +1194,7 @@ Return JSON only:
 }
 ```
 
-### 102. Jackson EMC - Residential EV Charger Rebate
+### 53. Jackson EMC - Residential EV Charger Rebate
 
 ```json
 {
@@ -2095,7 +1219,7 @@ Return JSON only:
 }
 ```
 
-### 103. IADG Energy Bank Revolving Loan Program
+### 54. IADG Energy Bank Revolving Loan Program
 
 ```json
 {
@@ -2120,7 +1244,7 @@ Return JSON only:
 }
 ```
 
-### 104. Cleco Power - Commercial EV Rebate
+### 55. Cleco Power - Commercial EV Rebate
 
 ```json
 {
@@ -2145,7 +1269,7 @@ Return JSON only:
 }
 ```
 
-### 105. Cleco Power - Residential EV Rebate
+### 56. Cleco Power - Residential EV Rebate
 
 ```json
 {
@@ -2170,7 +1294,7 @@ Return JSON only:
 }
 ```
 
-### 106. Cleco- Power Wise™ Commercial Program
+### 57. Cleco- Power Wise™ Commercial Program
 
 ```json
 {
@@ -2195,7 +1319,7 @@ Return JSON only:
 }
 ```
 
-### 107. Cleco- Power Wise™ Residential Program
+### 58. Cleco- Power Wise™ Residential Program
 
 ```json
 {
@@ -2220,7 +1344,7 @@ Return JSON only:
 }
 ```
 
-### 108. Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program
+### 59. Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2245,7 +1369,7 @@ Return JSON only:
 }
 ```
 
-### 109. Baltimore County - Property Tax Credit for High Performance Buildings and Homes
+### 60. Baltimore County - Property Tax Credit for High Performance Buildings and Homes
 
 ```json
 {
@@ -2270,7 +1394,7 @@ Return JSON only:
 }
 ```
 
-### 110. Baltimore County - Property Tax Credit for Solar and Geothermal Devices
+### 61. Baltimore County - Property Tax Credit for Solar and Geothermal Devices
 
 ```json
 {
@@ -2295,7 +1419,7 @@ Return JSON only:
 }
 ```
 
-### 111. Rural Minnesota Energy Board PACE Program
+### 62. Rural Minnesota Energy Board PACE Program
 
 ```json
 {
@@ -2320,7 +1444,7 @@ Return JSON only:
 }
 ```
 
-### 112. Entergy Mississippi- Residential Energy Efficiency Program
+### 63. Entergy Mississippi- Residential Energy Efficiency Program
 
 ```json
 {
@@ -2345,7 +1469,7 @@ Return JSON only:
 }
 ```
 
-### 113. City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program
+### 64. City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2370,7 +1494,7 @@ Return JSON only:
 }
 ```
 
-### 114. American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program
+### 65. American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program
 
 ```json
 {
@@ -2395,7 +1519,7 @@ Return JSON only:
 }
 ```
 
-### 115. Emerald PUC Electric Vehicle Charger Rebate Program
+### 66. Emerald PUC Electric Vehicle Charger Rebate Program
 
 ```json
 {
@@ -2420,7 +1544,7 @@ Return JSON only:
 }
 ```
 
-### 116. Monmouth Power & Light - Residential Energy Efficiency Program
+### 67. Monmouth Power & Light - Residential Energy Efficiency Program
 
 ```json
 {
@@ -2445,7 +1569,7 @@ Return JSON only:
 }
 ```
 
-### 117. Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program
+### 68. Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program
 
 ```json
 {
@@ -2470,7 +1594,7 @@ Return JSON only:
 }
 ```
 
-### 118. Fannie Mae Green Financing – Loan Program
+### 69. Fannie Mae Green Financing – Loan Program
 
 ```json
 {
@@ -2495,7 +1619,7 @@ Return JSON only:
 }
 ```
 
-### 119. Agricultural Lighting and Equipment Rebate Program
+### 70. Agricultural Lighting and Equipment Rebate Program
 
 ```json
 {
@@ -2520,7 +1644,7 @@ Return JSON only:
 }
 ```
 
-### 120. Investment Tax Credit
+### 71. Investment Tax Credit
 
 ```json
 {
@@ -2545,7 +1669,7 @@ Return JSON only:
 }
 ```
 
-### 121. Local Option - Property Tax Exemption
+### 72. Local Option - Property Tax Exemption
 
 ```json
 {
@@ -2570,7 +1694,7 @@ Return JSON only:
 }
 ```
 
-### 122. Residential Energy Efficiency Rebate Programs
+### 73. Residential Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -2595,7 +1719,7 @@ Return JSON only:
 }
 ```
 
-### 123. Uniform Capacity Tax and Exemption for Solar
+### 74. Uniform Capacity Tax and Exemption for Solar
 
 ```json
 {
@@ -2620,7 +1744,7 @@ Return JSON only:
 }
 ```
 
-### 124. Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+### 75. Vermont  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
 
 ```json
 {
@@ -2645,7 +1769,7 @@ Return JSON only:
 }
 ```
 
-### 125. Vermont Replace Your Ride Program
+### 76. Vermont Replace Your Ride Program
 
 ```json
 {
@@ -2670,7 +1794,7 @@ Return JSON only:
 }
 ```
 
-### 126. Chelan County PUD - Residential Weatherization Rebate Program
+### 77. Chelan County PUD - Residential Weatherization Rebate Program
 
 ```json
 {
@@ -2695,7 +1819,7 @@ Return JSON only:
 }
 ```
 
-### 127. Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program
+### 78. Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program
 
 ```json
 {
@@ -2720,7 +1844,7 @@ Return JSON only:
 }
 ```
 
-### 128. City of Milwaukee - Milwaukee Shines Solar Financing
+### 79. City of Milwaukee - Milwaukee Shines Solar Financing
 
 ```json
 {
@@ -2745,7 +1869,7 @@ Return JSON only:
 }
 ```
 
-### 129. Entergy Arkansas - Residential Energy Efficiency Programs
+### 80. Entergy Arkansas - Residential Energy Efficiency Programs
 
 ```json
 {
@@ -2770,7 +1894,7 @@ Return JSON only:
 }
 ```
 
-### 130. OGE - Commercial Energy Efficiency Rebate Programs
+### 81. OGE - Commercial Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -2795,7 +1919,7 @@ Return JSON only:
 }
 ```
 
-### 131. APS - Residential Energy Efficiency Rebate Program
+### 82. APS - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2820,7 +1944,7 @@ Return JSON only:
 }
 ```
 
-### 132. Southwest Gas Corporation - Combined Heat and Power Program
+### 83. Southwest Gas Corporation - Combined Heat and Power Program
 
 ```json
 {
@@ -2845,7 +1969,7 @@ Return JSON only:
 }
 ```
 
-### 133. Sulphur Springs Valley EC - SunWatts Rebate Program
+### 84. Sulphur Springs Valley EC - SunWatts Rebate Program
 
 ```json
 {
@@ -2870,7 +1994,7 @@ Return JSON only:
 }
 ```
 
-### 134. Trico Electric Cooperative  - SunWatts Incentive Program
+### 85. Trico Electric Cooperative  - SunWatts Incentive Program
 
 ```json
 {
@@ -2895,7 +2019,7 @@ Return JSON only:
 }
 ```
 
-### 135. Burbank Water & Power - Energy Solutions Business Rebate Program
+### 86. Burbank Water & Power - Energy Solutions Business Rebate Program
 
 ```json
 {
@@ -2920,7 +2044,7 @@ Return JSON only:
 }
 ```
 
-### 136. City of San Francisco - GreenFinanceSF
+### 87. City of San Francisco - GreenFinanceSF
 
 ```json
 {
@@ -2945,7 +2069,7 @@ Return JSON only:
 }
 ```
 
-### 137. Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program
+### 88. Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -2970,7 +2094,7 @@ Return JSON only:
 }
 ```
 
-### 138. Modesto Irrigation District - Commercial New Construction Rebate Program
+### 89. Modesto Irrigation District - Commercial New Construction Rebate Program
 
 ```json
 {
@@ -2995,7 +2119,7 @@ Return JSON only:
 }
 ```
 
-### 139. Modesto Irrigation District - Electric Vehicle  Charger Rebate Program
+### 90. Modesto Irrigation District - Electric Vehicle  Charger Rebate Program
 
 ```json
 {
@@ -3020,7 +2144,7 @@ Return JSON only:
 }
 ```
 
-### 140. Roseville Electric - Residential Energy Efficiency Rebate Program
+### 91. Roseville Electric - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3045,7 +2169,7 @@ Return JSON only:
 }
 ```
 
-### 141. Santa Clara Water & Sewer - Solar Water Heating Program
+### 92. Santa Clara Water & Sewer - Solar Water Heating Program
 
 ```json
 {
@@ -3070,7 +2194,7 @@ Return JSON only:
 }
 ```
 
-### 142. Silicon Valley Power - Residential Energy Efficiency Rebate Program
+### 93. Silicon Valley Power - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3095,7 +2219,7 @@ Return JSON only:
 }
 ```
 
-### 143. Sonoma County Energy Independence Program (SCEIP)
+### 94. Sonoma County Energy Independence Program (SCEIP)
 
 ```json
 {
@@ -3120,7 +2244,7 @@ Return JSON only:
 }
 ```
 
-### 144. Western Riverside Council of Governments - Home Energy Renovation Opportunity (HERO) Financing Program
+### 95. Western Riverside Council of Governments - Home Energy Renovation Opportunity (HERO) Financing Program
 
 ```json
 {
@@ -3145,7 +2269,7 @@ Return JSON only:
 }
 ```
 
-### 145. Charge Ahead Colorado
+### 96. Charge Ahead Colorado
 
 ```json
 {
@@ -3170,7 +2294,7 @@ Return JSON only:
 }
 ```
 
-### 146. City and County of Denver - Home Energy Rebates
+### 97. City and County of Denver - Home Energy Rebates
 
 ```json
 {
@@ -3195,7 +2319,7 @@ Return JSON only:
 }
 ```
 
-### 147. City and County of Denver - Solar and EV Charging for Nonprofits
+### 98. City and County of Denver - Solar and EV Charging for Nonprofits
 
 ```json
 {
@@ -3220,7 +2344,7 @@ Return JSON only:
 }
 ```
 
-### 148. City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants
+### 99. City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants
 
 ```json
 {
@@ -3245,7 +2369,7 @@ Return JSON only:
 }
 ```
 
-### 149. City of Boulder - Solar Sales and Use Tax Rebate
+### 100. City of Boulder - Solar Sales and Use Tax Rebate
 
 ```json
 {
@@ -3270,7 +2394,7 @@ Return JSON only:
 }
 ```
 
-### 150. Eagle County - Walking Mountains Science Center Solar PV Rebate
+### 101. Eagle County - Walking Mountains Science Center Solar PV Rebate
 
 ```json
 {
@@ -3295,7 +2419,7 @@ Return JSON only:
 }
 ```
 
-### 151. San Isabel Electric Association - Commercial Lighting Rebate Program
+### 102. San Isabel Electric Association - Commercial Lighting Rebate Program
 
 ```json
 {
@@ -3320,7 +2444,7 @@ Return JSON only:
 }
 ```
 
-### 152. San Isabel Electric Association - Electric Vehicle Charger Rebates
+### 103. San Isabel Electric Association - Electric Vehicle Charger Rebates
 
 ```json
 {
@@ -3345,7 +2469,7 @@ Return JSON only:
 }
 ```
 
-### 153. San Miguel Power Association - Energy Efficiency Rebate Program
+### 104. San Miguel Power Association - Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3370,7 +2494,7 @@ Return JSON only:
 }
 ```
 
-### 154. Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program
+### 105. Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3395,7 +2519,7 @@ Return JSON only:
 }
 ```
 
-### 155. Energize Delaware  - Energize Delaware Farm Loan Program
+### 106. Energize Delaware  - Energize Delaware Farm Loan Program
 
 ```json
 {
@@ -3420,7 +2544,7 @@ Return JSON only:
 }
 ```
 
-### 156. Energize Delaware - Home Energy-Efficiency Loan Program
+### 107. Energize Delaware - Home Energy-Efficiency Loan Program
 
 ```json
 {
@@ -3445,7 +2569,7 @@ Return JSON only:
 }
 ```
 
-### 157. Energize Delaware - Home Performance with ENERGY STAR
+### 108. Energize Delaware - Home Performance with ENERGY STAR
 
 ```json
 {
@@ -3470,7 +2594,7 @@ Return JSON only:
 }
 ```
 
-### 158. Orlando Utilities Commission - Electric Vehicle Rebate Program
+### 109. Orlando Utilities Commission - Electric Vehicle Rebate Program
 
 ```json
 {
@@ -3495,7 +2619,7 @@ Return JSON only:
 }
 ```
 
-### 159. Georgia Power - Residential Electric Vehicle Charger Program
+### 110. Georgia Power - Residential Electric Vehicle Charger Program
 
 ```json
 {
@@ -3520,7 +2644,7 @@ Return JSON only:
 }
 ```
 
-### 160. City and County of Honolulu - Real Property Tax Exemption for Renewable Energy Property
+### 111. City and County of Honolulu - Real Property Tax Exemption for Renewable Energy Property
 
 ```json
 {
@@ -3545,7 +2669,7 @@ Return JSON only:
 }
 ```
 
-### 161. Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+### 112. Iowa - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
 
 ```json
 {
@@ -3570,7 +2694,7 @@ Return JSON only:
 }
 ```
 
-### 162. Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates
+### 113. Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates
 
 ```json
 {
@@ -3595,7 +2719,7 @@ Return JSON only:
 }
 ```
 
-### 163. Muscatine Power and Water - Residential Energy Efficiency Rebates
+### 114. Muscatine Power and Water - Residential Energy Efficiency Rebates
 
 ```json
 {
@@ -3620,7 +2744,7 @@ Return JSON only:
 }
 ```
 
-### 164. City of Chicago - Green Building Permit Programs
+### 115. City of Chicago - Green Building Permit Programs
 
 ```json
 {
@@ -3645,7 +2769,7 @@ Return JSON only:
 }
 ```
 
-### 165. Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program
+### 116. Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3670,7 +2794,7 @@ Return JSON only:
 }
 ```
 
-### 166. Electric Vehicle Fleet Fee Exemption
+### 117. Electric Vehicle Fleet Fee Exemption
 
 ```json
 {
@@ -3695,7 +2819,7 @@ Return JSON only:
 }
 ```
 
-### 167. Energy Efficiency Revolving Loan Fund
+### 118. Energy Efficiency Revolving Loan Fund
 
 ```json
 {
@@ -3720,7 +2844,7 @@ Return JSON only:
 }
 ```
 
-### 168. MidAmerican Energy - Residential Energy Efficiency Rebate Programs
+### 119. MidAmerican Energy - Residential Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -3745,7 +2869,7 @@ Return JSON only:
 }
 ```
 
-### 169. Nicor Gas - Commercial Energy Efficiency Rebates
+### 120. Nicor Gas - Commercial Energy Efficiency Rebates
 
 ```json
 {
@@ -3770,7 +2894,7 @@ Return JSON only:
 }
 ```
 
-### 170. Nicor Gas - Residential Energy Efficiency Rebates
+### 121. Nicor Gas - Residential Energy Efficiency Rebates
 
 ```json
 {
@@ -3795,7 +2919,7 @@ Return JSON only:
 }
 ```
 
-### 171. Southern Indiana Power - Residential Energy Efficiency Rebate Program
+### 122. Southern Indiana Power - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3820,7 +2944,7 @@ Return JSON only:
 }
 ```
 
-### 172. Owen Electric - Residential Energy Efficiency Rebate Program
+### 123. Owen Electric - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3845,7 +2969,7 @@ Return JSON only:
 }
 ```
 
-### 173. Taylor County RECC - Residential Energy Efficiency Rebate Program
+### 124. Taylor County RECC - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3870,7 +2994,7 @@ Return JSON only:
 }
 ```
 
-### 174. Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program
+### 125. Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program
 
 ```json
 {
@@ -3895,7 +3019,7 @@ Return JSON only:
 }
 ```
 
-### 175. Mass Save  - Residential Energy Efficiency Programs
+### 126. Mass Save  - Residential Energy Efficiency Programs
 
 ```json
 {
@@ -3920,7 +3044,7 @@ Return JSON only:
 }
 ```
 
-### 176. Reading Municipal Light Department - Residential Energy Efficiency Rebate Program
+### 127. Reading Municipal Light Department - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -3945,7 +3069,7 @@ Return JSON only:
 }
 ```
 
-### 177. Wakefield Municipal Gas & Light Department - Residential Conservation Services Program
+### 128. Wakefield Municipal Gas & Light Department - Residential Conservation Services Program
 
 ```json
 {
@@ -3970,7 +3094,7 @@ Return JSON only:
 }
 ```
 
-### 178. City of Baltimore - High-Performance Market-Rate Rental Housing Property Tax Credit
+### 129. City of Baltimore - High-Performance Market-Rate Rental Housing Property Tax Credit
 
 ```json
 {
@@ -3995,7 +3119,7 @@ Return JSON only:
 }
 ```
 
-### 179. MMPA - Commercial and Industrial Energy Efficiency Program
+### 130. MMPA - Commercial and Industrial Energy Efficiency Program
 
 ```json
 {
@@ -4020,7 +3144,7 @@ Return JSON only:
 }
 ```
 
-### 180. MMPA - Residential Energy Efficiency Program
+### 131. MMPA - Residential Energy Efficiency Program
 
 ```json
 {
@@ -4045,7 +3169,7 @@ Return JSON only:
 }
 ```
 
-### 181. North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program
+### 132. North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4070,7 +3194,7 @@ Return JSON only:
 }
 ```
 
-### 182. Rochester Public Utilities - Residential Conserve and Save Rebate
+### 133. Rochester Public Utilities - Residential Conserve and Save Rebate
 
 ```json
 {
@@ -4095,7 +3219,7 @@ Return JSON only:
 }
 ```
 
-### 183. Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program
+### 134. Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4120,7 +3244,7 @@ Return JSON only:
 }
 ```
 
-### 184. Stearns Electric Association - Commercial Energy Efficiency Rebate Program
+### 135. Stearns Electric Association - Commercial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4145,7 +3269,7 @@ Return JSON only:
 }
 ```
 
-### 185. Stearns Electric Association - Residential Energy Efficiency Rebate Program
+### 136. Stearns Electric Association - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4170,7 +3294,7 @@ Return JSON only:
 }
 ```
 
-### 186. Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program
+### 137. Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4195,7 +3319,7 @@ Return JSON only:
 }
 ```
 
-### 187. City Utilities of Springfield - Commercial Energy Efficiency Rebate Program
+### 138. City Utilities of Springfield - Commercial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4220,7 +3344,7 @@ Return JSON only:
 }
 ```
 
-### 188. Kirkwood Electric - Residential Energy Efficiency Rebate Program
+### 139. Kirkwood Electric - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4245,7 +3369,7 @@ Return JSON only:
 }
 ```
 
-### 189. Local Option - Clean Energy Development Boards
+### 140. Local Option - Clean Energy Development Boards
 
 ```json
 {
@@ -4270,7 +3394,7 @@ Return JSON only:
 }
 ```
 
-### 190. Volkswagen Trust Electric Vehicle Charging Infrastructure Program
+### 141. Volkswagen Trust Electric Vehicle Charging Infrastructure Program
 
 ```json
 {
@@ -4295,7 +3419,7 @@ Return JSON only:
 }
 ```
 
-### 191. Corporate Property Tax Reduction for New/Expanded Generating Facilities
+### 142. Corporate Property Tax Reduction for New/Expanded Generating Facilities
 
 ```json
 {
@@ -4320,7 +3444,7 @@ Return JSON only:
 }
 ```
 
-### 192. Renewable Energy Systems Exemption
+### 143. Renewable Energy Systems Exemption
 
 ```json
 {
@@ -4345,7 +3469,7 @@ Return JSON only:
 }
 ```
 
-### 193. Energy United - Residential Heat Pump Rebate
+### 144. Energy United - Residential Heat Pump Rebate
 
 ```json
 {
@@ -4370,7 +3494,7 @@ Return JSON only:
 }
 ```
 
-### 194. EnergyUnited (Electric) - Residential Energy Efficiency Program
+### 145. EnergyUnited (Electric) - Residential Energy Efficiency Program
 
 ```json
 {
@@ -4395,7 +3519,7 @@ Return JSON only:
 }
 ```
 
-### 195. EnergyUnited Commercial Lighting Program
+### 146. EnergyUnited Commercial Lighting Program
 
 ```json
 {
@@ -4420,7 +3544,7 @@ Return JSON only:
 }
 ```
 
-### 196. Four-County EMC - Residential Energy Efficiency Rebate Program
+### 147. Four-County EMC - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -4445,7 +3569,7 @@ Return JSON only:
 }
 ```
 
-### 197. Haywood EMC - Residential Heat Pump and Weatherization Loan Program
+### 148. Haywood EMC - Residential Heat Pump and Weatherization Loan Program
 
 ```json
 {
@@ -4470,7 +3594,7 @@ Return JSON only:
 }
 ```
 
-### 198. Randolph EMC - ElecTel Energy Efficiency Loan Program
+### 149. Randolph EMC - ElecTel Energy Efficiency Loan Program
 
 ```json
 {
@@ -4495,7 +3619,7 @@ Return JSON only:
 }
 ```
 
-### 199. New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs
+### 150. New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -4520,7 +3644,7 @@ Return JSON only:
 }
 ```
 
-### 200. Clean Fleet EV Incentive Program
+### 151. Clean Fleet EV Incentive Program
 
 ```json
 {
@@ -4545,7 +3669,7 @@ Return JSON only:
 }
 ```
 
-### 201. EV Tourism Program
+### 152. EV Tourism Program
 
 ```json
 {
@@ -4570,7 +3694,7 @@ Return JSON only:
 }
 ```
 
-### 202. Large Energy Users Program
+### 153. Large Energy Users Program
 
 ```json
 {
@@ -4595,7 +3719,7 @@ Return JSON only:
 }
 ```
 
-### 203. Local Energy Audit Program
+### 154. Local Energy Audit Program
 
 ```json
 {
@@ -4620,7 +3744,7 @@ Return JSON only:
 }
 ```
 
-### 204. New Jersey SmartStart Buildings - New Construction and Retrofits
+### 155. New Jersey SmartStart Buildings - New Construction and Retrofits
 
 ```json
 {
@@ -4645,7 +3769,7 @@ Return JSON only:
 }
 ```
 
-### 205. NJ Clean Energy- Residential New Construction Program
+### 156. NJ Clean Energy- Residential New Construction Program
 
 ```json
 {
@@ -4670,7 +3794,7 @@ Return JSON only:
 }
 ```
 
-### 206. Pay for Performance Program
+### 157. Pay for Performance Program
 
 ```json
 {
@@ -4695,7 +3819,7 @@ Return JSON only:
 }
 ```
 
-### 207. PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program
+### 158. PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program
 
 ```json
 {
@@ -4720,7 +3844,7 @@ Return JSON only:
 }
 ```
 
-### 208. Small Scale CHP and Fuel Cell Incentive Program
+### 159. Small Scale CHP and Fuel Cell Incentive Program
 
 ```json
 {
@@ -4745,7 +3869,7 @@ Return JSON only:
 }
 ```
 
-### 209. Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive
+### 160. Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive
 
 ```json
 {
@@ -4770,7 +3894,7 @@ Return JSON only:
 }
 ```
 
-### 210. New Mexico Gas Company - New Home Construction Rebate Program
+### 161. New Mexico Gas Company - New Home Construction Rebate Program
 
 ```json
 {
@@ -4795,7 +3919,7 @@ Return JSON only:
 }
 ```
 
-### 211. NV Energy - Solar Thermal Heating Program
+### 162. NV Energy - Solar Thermal Heating Program
 
 ```json
 {
@@ -4820,7 +3944,7 @@ Return JSON only:
 }
 ```
 
-### 212. NV Energy -Energy Smart Schools Program
+### 163. NV Energy -Energy Smart Schools Program
 
 ```json
 {
@@ -4845,7 +3969,7 @@ Return JSON only:
 }
 ```
 
-### 213. Con Ed Demand Management for Industrial and Commercial Customers
+### 164. Con Ed Demand Management for Industrial and Commercial Customers
 
 ```json
 {
@@ -4870,7 +3994,7 @@ Return JSON only:
 }
 ```
 
-### 214. ConEd (Gas and Electric) - Small Business Direct Install Program
+### 165. ConEd (Gas and Electric) - Small Business Direct Install Program
 
 ```json
 {
@@ -4895,7 +4019,7 @@ Return JSON only:
 }
 ```
 
-### 215. NYSEG (Electric) - Commercial and Industrial Efficiency Program
+### 166. NYSEG (Electric) - Commercial and Industrial Efficiency Program
 
 ```json
 {
@@ -4920,7 +4044,7 @@ Return JSON only:
 }
 ```
 
-### 216. Orange and Rockland Utilities (Gas) - Residential Efficiency Program
+### 167. Orange and Rockland Utilities (Gas) - Residential Efficiency Program
 
 ```json
 {
@@ -4945,7 +4069,7 @@ Return JSON only:
 }
 ```
 
-### 217. RG&E (Electric) - Commercial and Industrial Efficiency Program
+### 168. RG&E (Electric) - Commercial and Industrial Efficiency Program
 
 ```json
 {
@@ -4970,7 +4094,7 @@ Return JSON only:
 }
 ```
 
-### 218. RG&E (Electric) - Small Business Lighting Retrofit Program
+### 169. RG&E (Electric) - Small Business Lighting Retrofit Program
 
 ```json
 {
@@ -4995,7 +4119,7 @@ Return JSON only:
 }
 ```
 
-### 219. Advanced Energy Fund Grant
+### 170. Advanced Energy Fund Grant
 
 ```json
 {
@@ -5020,7 +4144,7 @@ Return JSON only:
 }
 ```
 
-### 220. Diesel Mitigation Trust Fund
+### 171. Diesel Mitigation Trust Fund
 
 ```json
 {
@@ -5045,7 +4169,7 @@ Return JSON only:
 }
 ```
 
-### 221. Energy Conversion and Thermal Efficiency Sales Tax Exemption
+### 172. Energy Conversion and Thermal Efficiency Sales Tax Exemption
 
 ```json
 {
@@ -5070,7 +4194,7 @@ Return JSON only:
 }
 ```
 
-### 222. Energy Efficiency Program for Manufacturers
+### 173. Energy Efficiency Program for Manufacturers
 
 ```json
 {
@@ -5095,7 +4219,7 @@ Return JSON only:
 }
 ```
 
-### 223. Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+### 174. Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
 
 ```json
 {
@@ -5120,7 +4244,7 @@ Return JSON only:
 }
 ```
 
-### 224. Qualified Energy Property Tax Exemption for Projects 250 kW or Less
+### 175. Qualified Energy Property Tax Exemption for Projects 250 kW or Less
 
 ```json
 {
@@ -5145,7 +4269,7 @@ Return JSON only:
 }
 ```
 
-### 225. OG&E - Commercial Energy Efficiency Rebate Programs
+### 176. OG&E - Commercial Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -5170,7 +4294,7 @@ Return JSON only:
 }
 ```
 
-### 226. Oklahoma City - Green Home Loan Program
+### 177. Oklahoma City - Green Home Loan Program
 
 ```json
 {
@@ -5195,7 +4319,7 @@ Return JSON only:
 }
 ```
 
-### 227. Oklahoma Electric Cooperative - Energy Efficiency Rebate Program
+### 178. Oklahoma Electric Cooperative - Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5220,7 +4344,7 @@ Return JSON only:
 }
 ```
 
-### 228. Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs
+### 179. Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -5245,7 +4369,7 @@ Return JSON only:
 }
 ```
 
-### 229. OTEC - Agricultural Energy Efficiency Rebate Programs
+### 180. OTEC - Agricultural Energy Efficiency Rebate Programs
 
 ```json
 {
@@ -5270,7 +4394,7 @@ Return JSON only:
 }
 ```
 
-### 230. OTEC - Commercial Energy Efficiency Rebate Program
+### 181. OTEC - Commercial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5295,7 +4419,7 @@ Return JSON only:
 }
 ```
 
-### 231. Portland General Electric - Residential Energy Efficiency Rebate Program
+### 182. Portland General Electric - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5320,7 +4444,7 @@ Return JSON only:
 }
 ```
 
-### 232. Met-Ed / Penelec Sustainable Energy Fund
+### 183. Met-Ed / Penelec Sustainable Energy Fund
 
 ```json
 {
@@ -5345,7 +4469,7 @@ Return JSON only:
 }
 ```
 
-### 233. Metropolitan Edison Company SEF Loans (FirstEnergy Territory)
+### 184. Metropolitan Edison Company SEF Loans (FirstEnergy Territory)
 
 ```json
 {
@@ -5370,7 +4494,7 @@ Return JSON only:
 }
 ```
 
-### 234. National Grid (Electric) - Residential Energy Efficiency Incentive Program
+### 185. National Grid (Electric) - Residential Energy Efficiency Incentive Program
 
 ```json
 {
@@ -5395,7 +4519,7 @@ Return JSON only:
 }
 ```
 
-### 235. Sales Tax Exemption for Hydrogen Fuel Cells
+### 186. Sales Tax Exemption for Hydrogen Fuel Cells
 
 ```json
 {
@@ -5420,7 +4544,7 @@ Return JSON only:
 }
 ```
 
-### 236. Renewable Energy Facility Sales and Use Tax Reimbursement
+### 187. Renewable Energy Facility Sales and Use Tax Reimbursement
 
 ```json
 {
@@ -5445,7 +4569,7 @@ Return JSON only:
 }
 ```
 
-### 237. Middle Tennessee EMC - Residential Heat Pump Loan Program
+### 188. Middle Tennessee EMC - Residential Heat Pump Loan Program
 
 ```json
 {
@@ -5470,7 +4594,7 @@ Return JSON only:
 }
 ```
 
-### 238. Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+### 189. Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
 
 ```json
 {
@@ -5495,7 +4619,7 @@ Return JSON only:
 }
 ```
 
-### 239. Austin Energy - Small Business Energy Efficiency Rebate Program
+### 190. Austin Energy - Small Business Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5520,7 +4644,7 @@ Return JSON only:
 }
 ```
 
-### 240. CenterPoint Energy A/C Distributor Program
+### 191. CenterPoint Energy A/C Distributor Program
 
 ```json
 {
@@ -5545,7 +4669,7 @@ Return JSON only:
 }
 ```
 
-### 241. El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools
+### 192. El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools
 
 ```json
 {
@@ -5570,7 +4694,7 @@ Return JSON only:
 }
 ```
 
-### 242. Texas Gas Service - Commercial Energy Efficiency Rebate Program
+### 193. Texas Gas Service - Commercial Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5595,7 +4719,7 @@ Return JSON only:
 }
 ```
 
-### 243. Texas Gas Service - Residential Energy Efficiency Rebate Program
+### 194. Texas Gas Service - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5620,7 +4744,7 @@ Return JSON only:
 }
 ```
 
-### 244. Renewable Electricity Production Tax Credit (PTC)
+### 195. Renewable Electricity Production Tax Credit (PTC)
 
 ```json
 {
@@ -5645,7 +4769,7 @@ Return JSON only:
 }
 ```
 
-### 245. City of Danville Utilities - Residential Energy Efficiency Rebate Program
+### 196. City of Danville Utilities - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5670,7 +4794,7 @@ Return JSON only:
 }
 ```
 
-### 246. Mason County PUD 3 - Residential Energy Rebates
+### 197. Mason County PUD 3 - Residential Energy Rebates
 
 ```json
 {
@@ -5695,7 +4819,7 @@ Return JSON only:
 }
 ```
 
-### 247. Pend Oreille PUD - Residential Energy Efficiency Rebate Program
+### 198. Pend Oreille PUD - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5720,7 +4844,7 @@ Return JSON only:
 }
 ```
 
-### 248. Vera Water & Power - Residential Energy Efficiency Rebate Program
+### 199. Vera Water & Power - Residential Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5745,7 +4869,7 @@ Return JSON only:
 }
 ```
 
-### 249. Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program
+### 200. Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program
 
 ```json
 {
@@ -5770,7 +4894,7 @@ Return JSON only:
 }
 ```
 
-### 250. Barron Electric Cooperative - Electric Vehicle Charging Station Rebate
+### 201. Barron Electric Cooperative - Electric Vehicle Charging Station Rebate
 
 ```json
 {
@@ -5795,7 +4919,7 @@ Return JSON only:
 }
 ```
 
-### 251. Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
+### 202. Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program
 
 ```json
 {

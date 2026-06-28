@@ -1,7 +1,7 @@
 {
   "schemaVersion": "opportunity-archive-report-v1",
-  "generatedAt": "2026-06-28T04:07:23.313Z",
-  "matcherClock": "2026-06-28T04:07:23.313Z",
+  "generatedAt": "2026-06-28T04:15:10.837Z",
+  "matcherClock": "2026-06-28T04:15:10.837Z",
   "opportunityCount": 1619,
   "writeDynamoDb": false,
   "unarchiveRestored": false,
@@ -14304,11 +14304,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -14359,11 +14362,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -14619,11 +14624,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -15447,11 +15454,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -16704,11 +16713,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -17902,11 +17913,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18067,11 +18080,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18196,11 +18211,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18325,11 +18342,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18511,11 +18530,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18564,11 +18585,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18598,11 +18621,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18689,11 +18714,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18782,11 +18809,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -18854,11 +18883,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -19319,11 +19350,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -19465,11 +19498,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -19520,11 +19555,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -19611,11 +19648,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -19962,11 +20001,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -21430,11 +21471,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22186,11 +22229,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22412,11 +22457,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22486,11 +22533,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22835,11 +22884,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22890,11 +22941,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -22907,11 +22960,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23150,11 +23205,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23334,11 +23391,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23351,11 +23411,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23385,11 +23447,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23421,11 +23485,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23457,11 +23523,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23508,11 +23576,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23697,11 +23767,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "active",
+        "reasons": [
+          "official_source_active"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23953,11 +24025,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23970,11 +24045,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -23987,11 +24065,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24078,11 +24159,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24131,11 +24215,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24148,11 +24235,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24199,11 +24288,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24216,11 +24308,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24252,11 +24346,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -24624,11 +24721,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -25746,10 +25845,12 @@
       "isLowInformation": false,
       "availability": {
         "normalizedStatus": "uncertain",
-        "reasons": [],
+        "reasons": [
+          "still_uncertain"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -27410,11 +27511,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "official_source_active",
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -28928,11 +29032,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "upcoming",
+        "reasons": [
+          "future_opening_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -30180,11 +30286,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
@@ -30235,11 +30343,13 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
-        "reasons": [],
+        "normalizedStatus": "rolling",
+        "reasons": [
+          "rolling_or_no_deadline_language"
+        ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T02:56:16.281Z"
+        "lastVerifiedAt": "2026-06-28T04:14:55.705Z"
       }
     },
     {
