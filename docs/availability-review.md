@@ -28,6 +28,7 @@ The matcher should not treat missing or stale dates as proof that an opportunity
 ## Status Rules
 
 - `active`: the reviewed source indicates current participation, applications, enrollment, incentives, or contact-to-start language.
+- `active` can also mean a lower-confidence official-source finding where the current administrator page is reachable, title-specific, and program-specific, with no closed/upcoming evidence. This is recorded with `reachable_title_specific_program_page`.
 - `rolling`: the source explicitly says no deadline, no time limit, first-come first-served, or open until funds are exhausted.
 - `upcoming`: the source indicates a future opening date or upcoming funding round. These records are hidden from normal UI/matching surfaces until a later review reclassifies them as `active` or `rolling`.
 - `unavailable`: the source says closed, fully subscribed, no longer accepting applications, funding exhausted, cancelled, or the application deadline has passed.
@@ -59,11 +60,20 @@ OPPORTUNITY_SOURCE_PATH=/tmp/retrofi-availability-targets.json \
 To audit the same opportunities currently visible in the public retrofit index without scanning AWS, pass the generated public index:
 
 ```sh
-OPPORTUNITY_SOURCE_PATH=public/retrofit_opportunity_index.json \
-  AVAILABILITY_REVIEW_OUTPUT_PATH=data/public_opportunity_availability_reviews.json \
-  AVAILABILITY_REVIEW_REPORT_PATH=data/public_opportunity_availability_review_report.md \
-  npm run matching:availability-reviews
+AVAILABILITY_REVIEW_FETCH_ATTEMPTS=1 \
+  AVAILABILITY_REVIEW_FETCH_RETRY_DELAY_MS=0 \
+  AVAILABILITY_REVIEW_CONCURRENCY=16 \
+  AVAILABILITY_REVIEW_SEARCH_FALLBACK=1 \
+  AVAILABILITY_REVIEW_SEARCH_FALLBACK_LIMIT=2 \
+  npm run matching:availability-reviews:public
 ```
+
+The public review command uses `public/retrofit_opportunity_index.json` as the source and writes:
+
+- `data/public_opportunity_availability_reviews.json`
+- `data/public_opportunity_availability_review_report.md`
+
+`AVAILABILITY_REVIEW_SEARCH_FALLBACK=1` enables a search fallback for rows that remain `uncertain` after direct source fetches. The fallback searches by opportunity title/state, fetches the top non-DSIRE result URLs, and records those URLs in `sourceUrlsChecked`.
 
 The script writes:
 
@@ -78,6 +88,25 @@ npm run matching:archive-unavailable -- --write-dynamodb
 npm run matching:sample
 ```
 
+For the checked-in public fixtures, apply the public availability review before publishing:
+
+```sh
+npm run matching:availability-public-fixtures
+```
+
+This removes `unavailable` opportunities from active public maps, moves `upcoming` opportunities into the public `upcomingOpportunities` bucket, updates the active opportunity counts, and leaves `uncertain` opportunities visible with `availabilityStatus: "uncertain"` until a stronger source is found.
+
+To dry-run archive actions directly from the public availability artifact:
+
+```sh
+OPPORTUNITY_SOURCE_PATH=data/public_opportunity_availability_reviews.json \
+  OPPORTUNITY_ARCHIVE_OUTPUT_PATH=data/public_opportunity_archive_report.json \
+  OPPORTUNITY_ARCHIVE_REPORT_PATH=data/public_opportunity_archive_report.md \
+  npm run matching:archive-unavailable
+```
+
+Add `-- --write-dynamodb` after refreshing AWS SSO to persist those archive actions.
+
 Then audit mixed special/physical retrofit edges:
 
 ```sh
@@ -89,7 +118,7 @@ The special-edge audit writes:
 - `data/special_retrofit_edge_audit.json`
 - `data/special_retrofit_edge_audit.md`
 
-Use the audit to suppress normal-retrofit edges only when official source text explicitly says an energy audit, LEED certification, engineering feasibility study, or benchmarking/compliance step is required before the normal retrofit incentive can be used. Otherwise keep the normal retrofit edge and show the special category separately in the UI.
+Use the audit to suppress normal-retrofit edges when official source text explicitly says an energy audit, LEED certification, engineering feasibility study, or benchmarking/compliance step is required before the normal retrofit incentive can be used. Also suppress the normal-retrofit edge when the special service is the only source-text match and every normal retrofit match is only a broad fallback. Otherwise keep the normal retrofit edge and show the special category separately in the UI.
 
 When suppression IDs have been added to `SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS` in `server/matching/retrofitTaxonomy.mjs`, regenerate sample data from AWS with `npm run matching:sample`. If AWS credentials are unavailable and the checked-in public fixtures need to be patched immediately, run:
 
@@ -111,6 +140,8 @@ For each opportunity, the script combines:
 - evidence source URLs
 
 The fetched text is searched for supported evidence of active, rolling, upcoming, or unavailable status. Evidence is stored in `availabilityReview.evidenceText` with `sourceUrlsChecked` and `fetchErrors` so the result can be audited later.
+
+Some official pages are JavaScript-heavy and only return a short shell to the fetcher. A reachable title-specific source page can be classified as `active` with lower confidence when it contains program/incentive terms and no closed/upcoming evidence. Pure maintenance shells, such as USDA eWAPS maintenance pages, must not activate a record by themselves.
 
 When manual research is needed, use the same evidence standard:
 
@@ -135,7 +166,8 @@ A future scheduled job should:
 5. Re-fetch source URLs and update DynamoDB review fields.
 6. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
 7. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
-8. Run `matching:special-edge-audit` and review any `remove_normal_edges` or `manual_review_before_edge_removal` rows before publishing regenerated test cases.
-9. Regenerate sample matching fixtures and publish them with the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
+8. Run `matching:special-edge-audit` and review any `remove_normal_edges` rows before publishing regenerated test cases.
+9. Regenerate sample matching fixtures, then run `matching:availability-public-fixtures` and `matching:special-edge-suppressions:public` when working from checked-in public data.
+10. Publish the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-27 - Codex (GPT-5) opportunity availability repair
+
+- Added a searchable public availability-review pass that can fall back to title/state web search for uncertain source pages and classify reachable title-specific program pages as lower-confidence active evidence.
+- Applied the refreshed public availability review to checked-in test fixtures, removing 8 unavailable opportunities from active maps and moving 45 upcoming opportunities into hidden upcoming buckets.
+- Converted the remaining special-retrofit manual-review cases into normal-edge suppressions where only the special service matched source text and the normal retrofit match was a fallback.
+- Added public fixture and archive workflows for applying availability reviews locally and dry-running archive actions from the generated review artifact.
+
 ## 2026-06-27 - Codex (GPT-5) modeled retrofit savings expansion
 
 - Added reusable modeled savings handlers for electric kWh reductions, gas therm reductions, gas-to-electric replacements, demand-charge reductions, solar/export value, EV charging load, water/sewer reductions, waste service reductions, and fleet electrification.

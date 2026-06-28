@@ -64,6 +64,7 @@ export function inferAvailabilityReview(
   const deadline = parseDate(opportunity.deadlineDate) || parseDate(opportunity.endDate);
   const startDate = parseDate(opportunity.startDate) || parseDate(opportunity.releaseDate);
   const reasons = [];
+  const successfulSourceFetchCount = Math.max(0, sourceUrlsChecked.length - fetchErrors.length);
   const noDeadlineExplicit = /\b(no deadline|no expiration|no time limit|rolling|open until funds|until funds (?:are )?(?:exhausted|no longer available)|first[- ]come[, -]first[- ]served)\b/i.test(compactText) ||
     /\b(no_time_limit|no time limit)\b/i.test(statusText);
   const upcomingOrReopening = /\b(?:application window|application period|applications?|funding round|solicitation|program|rebate|incentive|loan|grant)[^.]{0,120}\b(?:currently closed|not currently open|temporarily closed|expected to (?:open|reopen)|anticipated to (?:open|reopen)|expected to open again|will open again|next cycle is expected|future funding|unveiled later this year|coming soon|opens? (?:on|in))\b/i.test(compactText) ||
@@ -102,9 +103,19 @@ export function inferAvailabilityReview(
   ) {
     normalizedStatus = "active";
     reasons.push("active_program_language");
+  } else if (successfulSourceFetchCount > 0 && hasReachableTitleSpecificProgramPage(opportunity, compactText)) {
+    normalizedStatus = "active";
+    reasons.push("reachable_title_specific_program_page");
   }
 
-  let evidenceText = evidenceTextFor(normalizedStatus, compactText);
+  const knownOverride = knownAvailabilityOverride(opportunity);
+  if (knownOverride) {
+    normalizedStatus = knownOverride.normalizedStatus;
+    reasons.length = 0;
+    reasons.push(...knownOverride.reasons);
+  }
+
+  let evidenceText = knownOverride?.evidenceText || evidenceTextFor(normalizedStatus, compactText);
   if (
     normalizedStatus === "unavailable" &&
     reasons.includes("source_status_unavailable") &&
@@ -159,10 +170,32 @@ function findSnippet(text, pattern) {
 function confidenceForStatus(normalizedStatus, reasons) {
   if (normalizedStatus === "uncertain") return 0.42;
   if (reasons.includes("deadline_has_passed") || reasons.includes("source_status_unavailable")) return 0.9;
+  if (reasons.includes("reachable_title_specific_program_page")) return 0.68;
   if (normalizedStatus === "rolling") return 0.88;
   if (normalizedStatus === "active") return 0.82;
   if (normalizedStatus === "upcoming") return 0.78;
   return 0.5;
+}
+
+function hasReachableTitleSpecificProgramPage(opportunity, text) {
+  if (!text || text.length < 80) return false;
+  if (/\beWAPS Platform Portal\b|\bMaintenance: RKE HA Production\b/i.test(text)) return false;
+  if (!isEvidenceSpecificToOpportunity(opportunity, text)) return false;
+  return /\b(rebate|rebates|incentive|incentives|grant|grants|loan|loans|financing|pace|tax credit|tax exemption|property tax|program|application|eligible|eligibility|qualify|savings|energy efficiency|renewable energy|electric vehicle|solar|battery|heat pump|lighting|hvac)\b/i.test(
+    text
+  );
+}
+
+function knownAvailabilityOverride(opportunity) {
+  if (opportunity?.opportunityId === "SOURCE_DSIRE:dsire_program_id:5681") {
+    return {
+      normalizedStatus: "unavailable",
+      reasons: ["known_official_application_window_closed"],
+      evidenceText:
+        "USDA Rural Energy for America Program Energy Audit & Renewable Energy Development Assistance Grants: Application Window: Closed."
+    };
+  }
+  return null;
 }
 
 function isEvidenceSpecificToOpportunity(opportunity, evidenceText) {

@@ -157,7 +157,21 @@ async function writeLifecycleRow(row) {
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
   if (Array.isArray(source)) return source.filter((item) => item?.opportunityId);
+  if (Array.isArray(source.reviews)) return source.reviews.map(opportunityFromAvailabilityReview).filter((item) => item?.opportunityId);
   return (source.Items || []).map((item) => (item.opportunityId ? item : unmarshall(item))).filter((item) => item?.opportunityId);
+}
+
+function opportunityFromAvailabilityReview(row) {
+  return {
+    opportunityId: row.opportunityId,
+    canonicalTitle: row.opportunityName,
+    normalizedTitle: row.opportunityName,
+    sourceName: row.sourceName,
+    state: row.state,
+    sourceUrl: row.sourceUrl,
+    websiteUrl: row.websiteUrl,
+    availabilityReview: row.availabilityReview
+  };
 }
 
 async function scanOpportunitiesFromAws() {

@@ -1,15 +1,14 @@
 # Special Retrofit Edge Audit
-Generated: 2026-06-27T22:27:31.961Z
+Generated: 2026-06-28T02:00:43.678Z
 Retrofit index: `/Users/neer_kuchlous/Code/Green Business Solution/public/retrofit_opportunity_index.json`
-Mixed special/normal opportunities: 132
-Special-only opportunities: 34
+Mixed special/normal opportunities: 113
+Special-only opportunities: 53
 Source-page fetch enabled: yes
 ## Recommended Action Counts
 ```json
 {
   "keep_normal_edges": 104,
-  "remove_normal_edges": 20,
-  "manual_review_before_edge_removal": 8
+  "remove_normal_edges": 9
 }
 ```
 ## Action Meanings
@@ -74,14 +73,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Anne Arundel County - High Performance Building Property Tax Credit DSIRE Property Tax Incentive Anne Arundel County Office of Finance MD LEED certification LED lighting retrofit High-efficiency HVAC replacement Ground-source / geothermal heat pum
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4577/anne-arundel-county-high-performance-building-property-tax-credit, https://www.aacounty.org/finance/tax-information/tax-credits-exemptions
-### remove_normal_edges: Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1935`
-- Source: DSIRE / MN / Rebate Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (text_or_source_technology), High-efficiency HVAC replacement (text_or_source_technology), Heat pump HVAC retrofit (text_or_source_technology), Smart thermostat / zoning retrofit (text_or_source_technology), High-efficiency furnace retrofit (text_or_source_technology), High-efficiency boiler retrofit (text_or_source_technology), Ground-source / geothermal heat pump (text_or_source_technology), Solar water heating system (text_or_source_technology), High-efficiency refrigeration equipment (text_or_source_technology), Insulation upgrade (text_or_source_technology), Air sealing / weatherization (text_or_source_technology), EV charger installation (text_or_source_technology), Level 2 EV charger installation (text_or_source_technology), Low-flow fixture retrofit (text_or_source_technology), High-efficiency toilet / urinal replacement (text_or_source_technology), High-efficiency laundry equipment (text_or_source_technology), High-efficiency commercial dishwasher (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: ir Source/Mini Split/Geothermal Heat Pump Starting at $100 Smart Thermostats for Electric Heating Up to $100 House call energy audit rebates ( CLICK HERE FOR REBATE FORM ) (must have house call energy audit performed and use a Qualified Contractor ) Attic Air Sealing and/or Rim Joist Sealing Insulation $200 Attic Insulation $350 Wall Insulation $200-$300
-- Sources checked: https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program, https://www.austinutilities.com/pages/rebates-programs/
 ### keep_normal_edges: Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3276`
 - Source: DSIRE / WI / Rebate Program
@@ -148,14 +139,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Dakota Electric Association - Commercial and Industrial Energy Efficiency Rebate Program DSIRE Rebate Program Dakota Electric Service MN Energy audit LED lighting retrofit Lighting controls retrofit High-efficiency HVAC replacement Heat pump HVAC retrofit HVAC
 - Sources checked: https://programs.dsireusa.org/system/program/detail/2260/dakota-electric-association-commercial-and-industrial-energy-efficiency-rebate-program, https://www.dakotaelectric.com/member-services/programs-rebates/for-your-business/energy-wise-rebates/
-### remove_normal_edges: Delta-Montrose Electric Association - Residential Weatherization Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3580`
-- Source: DSIRE / CO / Rebate Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (canonical_technology_fallback), High-efficiency HVAC replacement (canonical_technology_fallback), High-efficiency furnace retrofit (text_or_source_technology), Duct sealing and duct insulation (text_or_source_technology), Insulation upgrade (text_or_source_technology), Air sealing / weatherization (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: red to provide low-income DMEA members with free weatherization services. Eligible members will receive a comprehensive energy audit on their home to determine the needed improvements and the improvements will be made free of charge. Weatherization improvements can include, but are not limited to: insulation, duct sealing, appliance replacements, l
-- Sources checked: https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program, https://dmea.com/free-home-weatherization
 ### keep_normal_edges: District of Columbia Property Assessed Clean Energy Financing
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4206`
 - Source: DSIRE / DC / PACE Financing
@@ -188,7 +171,7 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Duluth Comfort Systems - Residential Energy Efficiency Loan Program DSIRE Loan Program Comfort Systems MN Energy audit LED lighting retrofit High-efficiency HVAC replacement High-efficiency furnace retrofit Insulation upgrade Air sealing /
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4687/duluth-comfort-systems-residential-energy-efficiency-loan-program, https://comfortsystemsduluth.com/realtors-home-owners/home-energy-loans
-### manual_review_before_edge_removal: Empire District Electric (Gas) - Commercial and Industrial Gas Efficiency Program
+### remove_normal_edges: Empire District Electric (Gas) - Commercial and Industrial Gas Efficiency Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22056`
 - Source: DSIRE / MO / Rebate Program
 - Special retrofits: Energy audit
@@ -253,14 +236,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: High Performance Building Incentives Program DSIRE Grant Program Department of Community and Economic Development PA LEED certification LED lighting retrofit High-efficiency HVAC replacement Ground-source / geothermal heat pump Biomass
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3354/high-performance-building-incentives-program, https://dced.pa.gov/programs/high-performance-building-program-hpb/
-### remove_normal_edges: Idaho Falls Power - Commercial Energy Conservation Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2030`
-- Source: DSIRE / ID / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (text_or_source_technology), High-efficiency HVAC replacement (canonical_technology_fallback), Insulation upgrade (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: o report an outage: (208) 612-8430 Pay by phone: (855) 594-0612 Question about your bill? (208) 612-8280 To schedule an energy audit: (208) 612-8430 FAQs How do I pay online? How do I open an account? What do I need to do to get my utilities connected? What can I do if I need more time to pay my bill? -- View All -- Home &#124; Account & Services &#124; Community & Recreation &#124; Outages &#124; About Us &#124; Site Map &copy; 2026 Idaho Falls Power,
-- Sources checked: https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program, https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business
 ### keep_normal_edges: Idaho Power - Residential Energy Efficiency Rebate Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3135`
 - Source: DSIRE / ID / Rebate Program
@@ -285,22 +260,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Kentucky Power - Targeted Energy Efficiency Program DSIRE Rebate Program Kentucky Power KY Energy audit LED lighting retrofit Duct sealing and duct insulation Insulation upgrade Air sealing / weatherization DSIRE - Database of State Incentives
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3696/kentucky-power-targeted-energy-efficiency-program, https://www.kentuckypower.com/save/residential/programs/TargetedEnergyEfficiencyProgram.aspx
-### remove_normal_edges: Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3951`
-- Source: DSIRE / KY / Rebate Program
-- Special retrofits: Energy audit, LEED certification
-- Normal retrofits: LED lighting retrofit (canonical_technology_fallback), Lighting controls retrofit (text_or_source_technology), High-efficiency HVAC replacement (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: d air process with an electric motor and saved $5,520 per year and the project was eligible for an incentive of $1,656. Energy Audit Energy Audit Earn back 25% of your energy audit cost Maximum rebate of $3,000 Must qualify for another rebate category when applying Business customers who’ve had an energy audit performed at their facility can earn a rebate to help offset the cost of the audit.
-- Sources checked: https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program, https://lge-ku.com/bizrebates
-### remove_normal_edges: Lakeland Electric - Commercial Conservation Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3617`
-- Source: DSIRE / FL / Rebate Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (canonical_technology_fallback), High-efficiency HVAC replacement (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: systems, HVAC, and motors. Other measures will be evaluated on a case-by-case basis. Process: The customer must have an energy audit completed by Lakeland Electric or a qualified engineering or energy services provider prior to the work being done. The customer will then contact their Account Executive to notify them the audit has been completed. The Account Executive will review the energy-saving measur
-- Sources checked: https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program, https://lakelandelectric.com/news/___commercial-customers-conservation-rebate
 ### keep_normal_edges: Lane Electric Cooperative - Residential Weatherization Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2470`
 - Source: DSIRE / OR / Loan Program
@@ -365,14 +324,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Midstate Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program DSIRE Rebate Program Midstate Electric Cooperative OR Energy audit LED lighting retrofit High-efficiency HVAC replacement Insulation upgrade DSIRE - Database of State Ince
 - Sources checked: https://programs.dsireusa.org/system/program/detail/1299/midstate-electric-cooperative-commercial-and-industrial-energy-efficiency-rebate-program, https://www.midstateelectric.coop/commercial-industrial
-### remove_normal_edges: Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3187`
-- Source: DSIRE / KS / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (canonical_technology_fallback), High-efficiency HVAC replacement (canonical_technology_fallback), Insulation upgrade (text_or_source_technology), Air sealing / weatherization (text_or_source_technology), Battery storage system (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: mart&reg; principal balance can be paid &lsquo;in full&rsquo; with no penalty for early payoff. Participating customers must start with an energy audit to determine potential savings. Midwest Energy will develop a conservation plan with recommended improvements. Customers may choose the contractor to complete the work. Contractor
-- Sources checked: https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program, https://www.mwenergy.com/environmental/energy-efficiency/howsmart
 ### keep_normal_edges: Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2253`
 - Source: DSIRE / MN / Rebate Program
@@ -397,14 +348,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: NextZero - Offered by 21 Utilities through the MMWEC DSIRE Rebate Program MMWEC in collaboration with municipal utilities MA Energy audit LED lighting retrofit High-efficiency HVAC replacement Heat pump HVAC retrofit Battery storage system DSIRE
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3217/nextzero-offered-by-21-utilities-through-the-mmwec, https://nextzero.org/
-### remove_normal_edges: North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2042`
-- Source: DSIRE / AR / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (text_or_source_technology), High-efficiency HVAC replacement (canonical_technology_fallback), Heat pump HVAC retrofit (text_or_source_technology), Ground-source / geothermal heat pump (text_or_source_technology), Insulation upgrade (text_or_source_technology), Air sealing / weatherization (text_or_source_technology), Battery storage system (text_or_source_technology), EV charger installation (canonical_technology_fallback), Level 2 EV charger installation (text_or_source_technology), High-efficiency commercial dishwasher (text_or_source_technology), Efficient fan/blower replacement (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: , a Member Services representative reviews the loan process with the borrower, including liens, copy of warranty deeds, audits and/or blower-door tests (if needed), necessary documents, invoices and payment procedures. Results of the audit and/or blower-door test must show the installation of energy-efficiency measures would be cost effecti
-- Sources checked: https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program, http://www.naeci.com/eecl
 ### keep_normal_edges: OG&E - Commercial Energy Efficiency Rebate Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3639`
 - Source: DSIRE / OK / Rebate Program
@@ -463,14 +406,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program DSIRE Rebate Program Rochester Public Utilities MN Energy audit LED lighting retrofit High-efficiency HVAC replacement Heat pump HVAC retrofit Smart thermostat / zoning re
 - Sources checked: https://programs.dsireusa.org/system/program/detail/1946/rochester-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program, https://www.rpu.org/rebates-programs/commercial/conserve-save-rebates.php
-### remove_normal_edges: Tillamook County PUD - Dairy Lighting Retrofit Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2187`
-- Source: DSIRE / OR / Rebate Program
-- Special retrofits: Energy audit
-- Normal retrofits: LED lighting retrofit (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: ction PUD issues check to customer Customer pays lighting contractor or electrician To qualify for a rebate or loan, an audit must be done PRIOR to any work being completed. PUD will inspect the project when it is completed. The rebate program is a limited time offer, based on availability of funds, and is subject to change w
-- Sources checked: https://programs.dsireusa.org/system/program/detail/2187/tillamook-county-pud-dairy-lighting-retrofit-rebate-program, http://www.tpud.org/energy-efficiency/commercial-dairy-programs/
 ### keep_normal_edges: Unitil (Electric) - Residential Energy Efficiency Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1373`
 - Source: DSIRE / NH / Rebate Program
@@ -527,14 +462,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Atmos Energy (Gas) Residential Appliance Rebate Program DSIRE Rebate Program CLEAResult MS Energy audit High-efficiency HVAC replacement Smart thermostat / zoning retrofit DSIRE - Database of State Incentives for Renewables & E
 - Sources checked: https://programs.dsireusa.org/system/program/detail/21867/atmos-energy-gas-residential-appliance-rebate-program, https://www.atmosenergy.com/ways-to-save/mississippi-smartchoice-appliance-rebates#atmos-accordion-item-1
-### remove_normal_edges: Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3331`
-- Source: DSIRE / OH / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: High-efficiency HVAC replacement (canonical_technology_fallback), Heat pump HVAC retrofit (text_or_source_technology), Ground-source / geothermal heat pump (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: . A $15 application fee will be applied to all applications approved or denied. For a loan application, click here . An energy audit will be required for all HVAC loans prior to approval. This requirement is to ensure the home is energy efficient and that the new system is a good investment for the home. The cooperative offers energy audits for $150. The
-- Sources checked: https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program, https://www.butlerrural.coop/low-interest-loans
 ### keep_normal_edges: Colorado Natural Gas - Energy Efficiency Rebate Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3308`
 - Source: DSIRE / CO / Rebate Program
@@ -559,14 +486,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Duke Energy - Improve & Save DSIRE Loan Program Duke Energy NC Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Duct sealing and duct insulation Insulation upgrade Air sealing / weatherization Batte
 - Sources checked: https://programs.dsireusa.org/system/program/detail/22608/duke-energy-improve-and-save, https://www.duke-energy.com/home/products/improve-and-save
-### remove_normal_edges: East Central Electric Cooperative - Residential Rebate Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5250`
-- Source: DSIRE / OK / Rebate Program
-- Special retrofits: Energy audit
-- Normal retrofits: High-efficiency HVAC replacement (text_or_source_technology), Heat pump HVAC retrofit (text_or_source_technology), Smart thermostat / zoning retrofit (text_or_source_technology), Ground-source / geothermal heat pump (text_or_source_technology), Air sealing / weatherization (text_or_source_technology), EV charger installation (text_or_source_technology), Level 2 EV charger installation (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: heat pump water heater is eligible for this program Click here for Energy Star heat pump water heater rebate form HOME ENERGY AUDIT WEATHERIZATION REBATE You must have completed a home energy audit through East Central Electric Cooperative to qualify. Learn More. 50% up to $750 rebate of cost of repairs/improvements by auditors report . Cli
-- Sources checked: https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program, https://ecoec.com/rebates
 ### keep_normal_edges: Edmond Electric - Energy Efficiency Rebate Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2008`
 - Source: DSIRE / OK / Rebate Program
@@ -575,14 +494,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Edmond Electric - Energy Efficiency Rebate Programs DSIRE Rebate Program City of Edmond Utility Office OK Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Ground-source / geothermal heat pump DSIRE - D
 - Sources checked: https://programs.dsireusa.org/system/program/detail/2008/edmond-electric-energy-efficiency-rebate-programs, https://www.edmondok.gov/1290/Rebates-Programs
-### remove_normal_edges: Energize Delaware - Low Interest Commercial Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5448`
-- Source: DSIRE / DE / Loan Program
-- Special retrofits: Energy audit, Engineering feasibility study
-- Normal retrofits: High-efficiency HVAC replacement (canonical_technology_fallback), Ground-source / geothermal heat pump (text_or_source_technology), Biomass / biogas energy system (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: d savings Minimum Requirements Projects must be supported by: &#8211; Energy assessment for efficiency measures &#8211; Feasibility study for renewable energy systems Contractors must comply with: Energize Delaware’s Responsible Contractor Policy Delaware prevailing wage (if contracts exceed $50,000) Applicants must show: Strong credit history , financials , an
-- Sources checked: https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program, https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/
 ### keep_normal_edges: FirstEnergy (MetEdison, Penelec, Penn Power, West Penn Power)  - Residential Energy Efficiency Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4133`
 - Source: DSIRE / PA / Rebate Program
@@ -607,14 +518,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Grays Harbor PUD - Residential Energy Efficiency Rebate Program DSIRE Rebate Program Grays Harbor PUD WA Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Duct sealing and duct insulation Insulation upgrade Air seal
 - Sources checked: https://programs.dsireusa.org/system/program/detail/2478/grays-harbor-pud-residential-energy-efficiency-rebate-program, https://www.ghpud.org/energy-efficiency/residential-programs/
-### remove_normal_edges: Holyoke Gas & Electric - Residential Energy Assistance Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1337`
-- Source: DSIRE / MA / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: High-efficiency HVAC replacement (text_or_source_technology), Heat pump HVAC retrofit (text_or_source_technology), High-efficiency boiler retrofit (text_or_source_technology), Solar water heating system (text_or_source_technology), Insulation upgrade (text_or_source_technology), Air sealing / weatherization (text_or_source_technology), Rooftop solar PV (text_or_source_technology), Battery storage system (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: the same time or multiple systems are being installed, the installation quote must be itemized by system or service. 9. Energy Audits are required for select projects. Free residential energy audits are available through MuniHELPS by calling (888) 333--7525. Please note, HG&E reserves the right to waive the energy audit requ
-- Sources checked: https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program, https://www.hged.com/residential/ee-home/reap/default.aspx
 ### keep_normal_edges: Lewis County PUD - Residential Energy Efficiency Rebate Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5759`
 - Source: DSIRE / WA / Rebate Program
@@ -665,14 +568,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Midstate Electric Cooperative - Residential Conservation Rebates DSIRE Rebate Program Midstate Electric Cooperative OR Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Duct sealing and duct insulation Ground-source / geothermal heat pum
 - Sources checked: https://programs.dsireusa.org/system/program/detail/1296/midstate-electric-cooperative-residential-conservation-rebates, https://www.midstateelectric.coop/residential
-### remove_normal_edges: Multifamily Navigator Pre-Development Energy Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22044`
-- Source: DSIRE / CT / Loan Program
-- Special retrofits: Building benchmarking compliance
-- Normal retrofits: High-efficiency HVAC replacement (canonical_technology_fallback), Ground-source / geothermal heat pump (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: ees. If you want to understand what implementation approaches to take, Navigator finances the predevelopment activities needed to assess, design, and scope energy and resiliency upgrades, including the following items: Energy benchmarking, opportunity assessments, and audits Green/integrated physical needs assessments Green charrettes Assessments of energy-related health and safety and resiliency issues Design, eng
-- Sources checked: https://programs.dsireusa.org/system/program/detail/22044/multifamily-navigator-pre-development-energy-loan-program, https://inclusiveprosperitycapital.org/products/navigator/
 ### keep_normal_edges: National Grid (Gas) - Commercial Energy Efficiency Rebate Programs (Metro New York)
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4371`
 - Source: DSIRE / NY / Rebate Program
@@ -697,6 +592,7 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: NYSERDA - Residential Financing Options DSIRE Loan Program New York State Energy Research and Development Authority (NYSERDA) NY Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Rooftop sola
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4563/nyserda-residential-financing-options, https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Options
+- Fetch errors: https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Options: This operation was aborted
 ### keep_normal_edges: Pee Dee Electric Cooperative - Energy Resource Conservation Loan Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2097`
 - Source: DSIRE / SC / Loan Program
@@ -795,14 +691,6 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Tampa Electric - Residential Energy Efficiency Rebate Program DSIRE Rebate Program Tampa Electric FL Energy audit High-efficiency HVAC replacement Heat pump HVAC retrofit Ground-source / geothermal heat pump Insulation upgrade Air se
 - Sources checked: https://programs.dsireusa.org/system/program/detail/1356/tampa-electric-residential-energy-efficiency-rebate-program, http://www.tampaelectric.com/residential/saveenergy/
-### remove_normal_edges: The Green Energy Loan Fund (GELF)
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22779`
-- Source: DSIRE / PA / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: High-efficiency HVAC replacement (canonical_technology_fallback), Automated demand response controls (text_or_source_technology), Combined heat and power system (text_or_source_technology), Battery storage system (text_or_source_technology), Retro-commissioning study (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: GELF borrowers will need to complete before loan closing and provide information about ENERGY STAR’s Portfolio Manager benchmarking tool that borrowers will need to use to report energy consumption. Once a loan application has been underwritten and approved and prior to loan closing, a GELF loan recipient will need to complete six affidavi
-- Sources checked: https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf, https://www.reinvestment.com/gelf/
 ### keep_normal_edges: Wakefield Municipal Gas & Light Department - Residential Conservation Services Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1342`
 - Source: DSIRE / MA / Rebate Program
@@ -855,30 +743,6 @@ Source-page fetch enabled: yes
 - Evidence: Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments DSIRE PACE Financing Programs administered locally NM Energy audit Ground-source / geothermal heat pump Solar water heating s
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3532/local-option-renewable-energy-financing-district-solar-energy-improvement-special-assessments, http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html
 - Fetch errors: http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html: fetch failed
-### remove_normal_edges: City of Tallahassee Utilities - Solar Loans
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1777`
-- Source: DSIRE / FL / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: High-efficiency gas water heater (text_or_source_technology), Solar water heating system (text_or_source_technology), Rooftop solar PV (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: 4968 . Loans available: Financing is available for various energy-saving appliances, measures, and systems. A free home energy audit is required for many loan measures. The City of Tallahassee offers 5-percent interest financing for more than 25 energy-efficiency measures. These include: energy efficient air conditioners;
-- Sources checked: https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans, http://www.talgov.com/you/you-products-home-loans.aspx
-### remove_normal_edges: 2021 Sustainable Building Tax Credit (Corporate)
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22423`
-- Source: DSIRE / NM / Corporate Tax Credit
-- Special retrofits: LEED certification
-- Normal retrofits: Solar water heating system (text_or_source_technology), Rooftop solar PV (text_or_source_technology), EV charger installation (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: d or Emerald or LEED-H Gold or Platinum Certification New Commercial Construction $1,000,000 1/1/2022 Project must meet LEED Certification Manufactured Housing $ 250,000 1/1/2022 Project must comply with Energy Star Program Large Commercial Renovation $1,000,000 1/1/2021 Project must be 50% better than ASHRAE Standard Total SBTC Allocation $7,150,000 Divisions Administ
-- Sources checked: https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate, https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/
-### remove_normal_edges: 2021 Sustainable Building Tax Credit (Personal)
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22424`
-- Source: DSIRE / NM / Personal Tax Credit
-- Special retrofits: LEED certification
-- Normal retrofits: Solar water heating system (text_or_source_technology), Rooftop solar PV (text_or_source_technology), EV charger installation (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: d or Emerald or LEED-H Gold or Platinum Certification New Commercial Construction $1,000,000 1/1/2022 Project must meet LEED Certification Manufactured Housing $ 250,000 1/1/2022 Project must comply with Energy Star Program Large Commercial Renovation $1,000,000 1/1/2021 Project must be 50% better than ASHRAE Standard Total SBTC Allocation $7,150,000 Divisions Administ
-- Sources checked: https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal, https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/
 ### keep_normal_edges: Austin Utilities - Solar Rebate Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4333`
 - Source: DSIRE / MN / Rebate Program
@@ -986,7 +850,7 @@ Source-page fetch enabled: yes
 - Evidence: City of San Francisco - GreenFinanceSF DSIRE PACE Financing CA Energy audit Battery storage system Water audit DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or inst
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4091/city-of-san-francisco-greenfinancesf, https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program
 - Fetch errors: https://sfenvironment.org/article/financing/greenfinancesf-commercial-pace-program: HTTP 404
-### manual_review_before_edge_removal: Lean and Green Michigan PACE
+### remove_normal_edges: Lean and Green Michigan PACE
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5543`
 - Source: DSIRE / MI / PACE Financing
 - Special retrofits: Energy audit
@@ -994,7 +858,7 @@ Source-page fetch enabled: yes
 - Reasons: special_text_match_only_normal_edges_are_fallback
 - Evidence: Lean and Green Michigan PACE DSIRE PACE Financing Levin Energy Partners MI Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/5543/lean-and-green-michigan-pace, https://leanandgreenmi.com/about-pace/how-pace-works/
-### manual_review_before_edge_removal: Local Option - County Energy District Authority
+### remove_normal_edges: Local Option - County Energy District Authority
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3534`
 - Source: DSIRE / OK / PACE Financing
 - Special retrofits: Energy audit
@@ -1002,7 +866,7 @@ Source-page fetch enabled: yes
 - Reasons: special_text_match_only_normal_edges_are_fallback
 - Evidence: Local Option - County Energy District Authority DSIRE PACE Financing Programs administered locally OK Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3534/local-option-county-energy-district-authority, https://oklahomacpace.org/
-### manual_review_before_edge_removal: Local Option - Energy Efficiency & Clean Energy Districts
+### remove_normal_edges: Local Option - Energy Efficiency & Clean Energy Districts
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4252`
 - Source: DSIRE / NH / PACE Financing
 - Special retrofits: Energy audit
@@ -1010,7 +874,7 @@ Source-page fetch enabled: yes
 - Reasons: special_text_match_only_normal_edges_are_fallback
 - Evidence: Local Option - Energy Efficiency & Clean Energy Districts DSIRE PACE Financing Local community NH Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4252/local-option-energy-efficiency-and-clean-energy-districts
-### manual_review_before_edge_removal: Local Option - Energy Revolving Loan Fund
+### remove_normal_edges: Local Option - Energy Revolving Loan Fund
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4283`
 - Source: DSIRE / MA / PACE Financing
 - Special retrofits: Energy audit
@@ -1018,15 +882,7 @@ Source-page fetch enabled: yes
 - Reasons: special_text_match_only_normal_edges_are_fallback
 - Evidence: Local Option - Energy Revolving Loan Fund DSIRE PACE Financing Programs administered locally MA Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/4283/local-option-energy-revolving-loan-fund
-### remove_normal_edges: Lodi Electric Utility - Commercial and Industrial Energy Efficiency Loan Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5854`
-- Source: DSIRE / CA / Loan Program
-- Special retrofits: Energy audit
-- Normal retrofits: Battery storage system (canonical_technology_fallback)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: ll utility charges with no late charges for the past 18 months; must have an active COL account for the past 18 months; must receive a rebate through the COL Electric Utility Public Benefits/Energy Efficiency Program; and submit an energy efficiency audit/contractor&apos;s proposal. The project cost - after rebate is applied - must be a minimum of $1,500. Loan maximum per "customer of record" is $50,000 for G1 and G2 customers and
-- Sources checked: https://programs.dsireusa.org/system/program/detail/5854/lodi-electric-utility-commercial-and-industrial-energy-efficiency-loan-program, http://lodielectric.com/908/Commercial-Programs
-### manual_review_before_edge_removal: Rural Minnesota Energy Board PACE Program
+### remove_normal_edges: Rural Minnesota Energy Board PACE Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5751`
 - Source: DSIRE / MN / PACE Financing
 - Special retrofits: Energy audit
@@ -1035,7 +891,7 @@ Source-page fetch enabled: yes
 - Evidence: Rural Minnesota Energy Board PACE Program DSIRE PACE Financing MN Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/5751/rural-minnesota-energy-board-pace-program, http://rmeb.org/pace.htm
 - Fetch errors: http://rmeb.org/pace.htm: HTTP 403
-### manual_review_before_edge_removal: SCE - Multi-Family Residential Energy Efficiency Programs
+### remove_normal_edges: SCE - Multi-Family Residential Energy Efficiency Programs
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1459`
 - Source: DSIRE / CA / Rebate Program
 - Special retrofits: Building benchmarking compliance
@@ -1051,7 +907,7 @@ Source-page fetch enabled: yes
 - Reasons: normal_retrofit_text_match_or_no_prerequisite_found
 - Evidence: Solar Planning Program DSIRE Rebate Program Energy Trust of Oregon OR Engineering feasibility study Battery storage system Solar-plus-storage system DSIRE - Database of State Incentives for Renewables & Efficiency Y
 - Sources checked: https://programs.dsireusa.org/system/program/detail/22566/solar-planning-program, https://www.energytrust.org/incentives/solar-planning/
-### manual_review_before_edge_removal: Sonoma County Energy Independence Program (SCEIP)
+### remove_normal_edges: Sonoma County Energy Independence Program (SCEIP)
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3334`
 - Source: DSIRE / CA / PACE Financing
 - Special retrofits: Energy audit
@@ -1060,22 +916,14 @@ Source-page fetch enabled: yes
 - Evidence: Sonoma County Energy Independence Program (SCEIP) DSIRE PACE Financing CA Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e
 - Sources checked: https://programs.dsireusa.org/system/program/detail/3334/sonoma-county-energy-independence-program-sceip, https://sonomacountyenergy.force.com/financing/s/about-sceip-financing
 - Fetch errors: https://sonomacountyenergy.force.com/financing/s/about-sceip-financing: HTTP 404
-### remove_normal_edges: Local Government Energy Audit/Retrofits
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5892`
-- Source: DSIRE / WY / Grant Program
-- Special retrofits: Energy audit
-- Normal retrofits: EV charger installation (canonical_technology_fallback), Level 2 EV charger installation (text_or_source_technology)
-- Reasons: explicit_special_prerequisite_language
-- Evidence: s, and small businesses for energy audits and retrofits. Read the 2025/26 Program Overview for more information. WYLite Energy Audit Free energy audits for local municipalities and Wyoming school districts Requirement for applicants to the K-12 Schools Retrofit Grant Program and Local Government Retrofit Grant Program Once applicants have signed up online for the WYLite Energy Audit, they will
-- Sources checked: https://programs.dsireusa.org/system/program/detail/5892/local-government-energy-audit-retrofits, https://www.wyoenergy.org/financing/
-### remove_normal_edges: Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program
-- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22777`
+### remove_normal_edges: The Green Energy Loan Fund (GELF)
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22779`
 - Source: DSIRE / PA / Loan Program
 - Special retrofits: Energy audit
-- Normal retrofits: EV charger installation (canonical_technology_fallback), Level 2 EV charger installation (text_or_source_technology)
+- Normal retrofits: Retro-commissioning study (text_or_source_technology)
 - Reasons: explicit_special_prerequisite_language
-- Evidence: below-market interest rates; however, MORE Grant recipients can buy down their interest rate to as low as 0%. Borrowers must have a level 2 commercial energy audit and energy conservation measure project design/scope to apply for the loan. MORE Loans can be used for the following:&lt;/p>\r\n&lt;ul>\r\n&lt;li>Energy efficiency upgrades&lt;/li
-- Sources checked: https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program, https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency
+- Evidence: GELF borrowers will need to complete before loan closing and provide information about ENERGY STAR’s Portfolio Manager benchmarking tool that borrowers will need to use to report energy consumption. Once a loan application has been underwritten and approved and prior to loan closing, a GELF loan recipient will need to complete six affidavi
+- Sources checked: https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf, https://www.reinvestment.com/gelf/
 ### keep_normal_edges: High Performance Buildings Incentive Program
 - Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3602`
 - Source: DSIRE / PA / Loan Program

@@ -21,6 +21,8 @@ const fetchTimeoutMs = Number(process.env.AVAILABILITY_REVIEW_FETCH_TIMEOUT_MS |
 const fetchAttempts = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_FETCH_ATTEMPTS || 3));
 const fetchRetryDelayMs = Math.max(0, Number(process.env.AVAILABILITY_REVIEW_FETCH_RETRY_DELAY_MS || 30000));
 const concurrency = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_CONCURRENCY || 8));
+const searchFallback = process.env.AVAILABILITY_REVIEW_SEARCH_FALLBACK === "1";
+const searchFallbackLimit = Math.max(1, Number(process.env.AVAILABILITY_REVIEW_SEARCH_FALLBACK_LIMIT || 3));
 const writeDynamoDb = process.argv.includes("--write-dynamodb");
 const generatedAt = new Date().toISOString();
 
@@ -41,6 +43,8 @@ const output = {
   fetchTimeoutMs,
   fetchAttempts,
   fetchRetryDelayMs,
+  searchFallback,
+  searchFallbackLimit,
   statusCounts,
   reviews
 };
@@ -52,6 +56,7 @@ fs.writeFileSync(reportPath, buildReport(output), "utf8");
 console.log("Availability review complete.");
 console.log(`Opportunities reviewed: ${opportunities.length}`);
 console.log(`Fetch source pages: ${fetchSources ? "yes" : "no"}`);
+console.log(`Search fallback: ${searchFallback ? "yes" : "no"}`);
 console.log(`Wrote: ${outputPath}`);
 console.log(`Report: ${reportPath}`);
 if (writeDynamoDb) console.log(`DynamoDB updates written to ${tableName}.`);
@@ -64,13 +69,18 @@ async function reviewOpportunity(opportunity) {
   const corpusText = buildExtractionCorpus(opportunity).map((segment) => segment.text).join("\n");
   const urls = sourceUrlsFor(opportunity);
   const fetched = fetchSources ? await mapWithConcurrency(urls, 2, fetchSourceText) : [];
-  const fetchedText = fetched.filter((result) => result.ok).map((result) => result.text).join("\n");
-  const availabilityReview = inferAvailabilityReview(opportunity, [corpusText, fetchedText].filter(Boolean).join("\n"), {
-    fetchErrors: fetched.filter((result) => !result.ok).map(({ error, url }) => ({ error, url })),
-    reviewedAt: generatedAt,
-    reviewMethod: fetchSources ? "source_url_fetch_and_deterministic_corpus" : "deterministic_source_corpus",
-    sourceUrlsChecked: fetched.map((result) => result.url)
-  });
+  const baseAvailabilityReview = availabilityReviewFromFetchedSources(opportunity, corpusText, fetched, []);
+  const searchFetched =
+    searchFallback && baseAvailabilityReview.normalizedStatus === "uncertain"
+      ? await fetchSearchFallbackSources(opportunity)
+      : [];
+  const availabilityReview =
+    searchFetched.length > 0
+      ? availabilityReviewFromFetchedSources(opportunity, corpusText, fetched, searchFetched, {
+          reviewMethod: "source_url_fetch_search_fallback_and_deterministic_corpus"
+        })
+      : baseAvailabilityReview;
+  const allFetched = [...fetched, ...searchFetched];
   const row = {
     opportunityId: opportunity.opportunityId,
     opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
@@ -97,7 +107,94 @@ async function reviewOpportunity(opportunity) {
     );
   }
 
-  return row;
+  return {
+    ...row,
+    availabilityReview: {
+      ...availabilityReview,
+      sourceUrlsChecked: allFetched.map((result) => result.url),
+      fetchErrors: allFetched.filter((result) => !result.ok).map(({ error, url }) => ({ error, url }))
+    }
+  };
+}
+
+function availabilityReviewFromFetchedSources(opportunity, corpusText, fetched, extraFetched, overrides = {}) {
+  const allFetched = [...fetched, ...extraFetched];
+  const fetchedText = allFetched.filter((result) => result.ok).map((result) => result.text).join("\n");
+  return inferAvailabilityReview(opportunity, [corpusText, fetchedText].filter(Boolean).join("\n"), {
+    fetchErrors: allFetched.filter((result) => !result.ok).map(({ error, url }) => ({ error, url })),
+    reviewedAt: generatedAt,
+    reviewMethod: overrides.reviewMethod || (fetchSources ? "source_url_fetch_and_deterministic_corpus" : "deterministic_source_corpus"),
+    sourceUrlsChecked: allFetched.map((result) => result.url)
+  });
+}
+
+async function fetchSearchFallbackSources(opportunity) {
+  const searchResults = await searchOpportunitySources(opportunity);
+  const urls = searchResults
+    .map((result) => result.url)
+    .filter((url) => /^https?:\/\//i.test(url))
+    .filter((url) => !isLowValueAvailabilitySourceUrl(url))
+    .slice(0, searchFallbackLimit);
+  if (urls.length === 0) return [];
+  return mapWithConcurrency(urls, 2, fetchSourceText);
+}
+
+async function searchOpportunitySources(opportunity) {
+  const query = [
+    opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityName || opportunity.opportunityId,
+    opportunity.state,
+    opportunity.sourceName && opportunity.sourceName !== "DSIRE" ? opportunity.sourceName : null
+  ].filter(Boolean).join(" ");
+  const url = `https://duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "user-agent": "RetroFi availability review/1.0"
+      }
+    });
+    if (!response.ok) return [];
+    const html = await response.text();
+    return parseDuckDuckGoResults(html);
+  } catch {
+    return [];
+  }
+}
+
+function parseDuckDuckGoResults(html) {
+  const results = [];
+  for (const match of String(html || "").matchAll(/<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>(.*?)<\/a>/g)) {
+    const url = normalizeDuckDuckGoUrl(decodeHtml(match[1]));
+    const title = stripHtmlFragment(match[2]);
+    if (!url) continue;
+    results.push({ url, title });
+  }
+  return results;
+}
+
+function normalizeDuckDuckGoUrl(rawUrl) {
+  const value = String(rawUrl || "");
+  try {
+    const parsed = new URL(value.startsWith("//") ? `https:${value}` : value);
+    const redirected = parsed.searchParams.get("uddg");
+    return redirected || parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+function stripHtmlFragment(value) {
+  return decodeHtml(String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+}
+
+function decodeHtml(value) {
+  return String(value || "")
+    .replace(/&amp;/g, "&")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
 }
 
 function readOpportunitySource(filePath) {
@@ -203,6 +300,8 @@ function buildReport(output) {
     `Source-page fetch enabled: ${output.fetchSources ? "yes" : "no"}`,
     `Source fetch attempts: ${output.fetchAttempts}`,
     `Source fetch retry delay: ${output.fetchRetryDelayMs} ms`,
+    `Search fallback enabled: ${output.searchFallback ? "yes" : "no"}`,
+    `Search fallback source limit: ${output.searchFallbackLimit}`,
     "",
     "## Status Counts",
     "",

@@ -134,7 +134,15 @@ export const SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS = new Set([
   "SOURCE_DSIRE:dsire_program_id:22424",
   "SOURCE_DSIRE:dsire_program_id:5854",
   "SOURCE_DSIRE:dsire_program_id:5892",
-  "SOURCE_DSIRE:dsire_program_id:22777"
+  "SOURCE_DSIRE:dsire_program_id:22777",
+  "SOURCE_DSIRE:dsire_program_id:22056",
+  "SOURCE_DSIRE:dsire_program_id:5543",
+  "SOURCE_DSIRE:dsire_program_id:3534",
+  "SOURCE_DSIRE:dsire_program_id:4252",
+  "SOURCE_DSIRE:dsire_program_id:4283",
+  "SOURCE_DSIRE:dsire_program_id:5751",
+  "SOURCE_DSIRE:dsire_program_id:1459",
+  "SOURCE_DSIRE:dsire_program_id:3334"
 ]);
 
 export function classifyRetrofitsForOpportunity(opportunity, matchProfile) {

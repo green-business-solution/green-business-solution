@@ -1,18 +1,17 @@
 {
   "schemaVersion": "special-retrofit-edge-audit-v1",
-  "generatedAt": "2026-06-27T22:27:31.961Z",
+  "generatedAt": "2026-06-28T02:00:43.678Z",
   "retrofitIndexPath": "/Users/neer_kuchlous/Code/Green Business Solution/public/retrofit_opportunity_index.json",
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
-  "fetchAttempts": 2,
-  "fetchRetryDelayMs": 5000,
+  "fetchAttempts": 1,
+  "fetchRetryDelayMs": 0,
   "opportunityCount": 1619,
-  "mixedSpecialNormalOpportunityCount": 132,
-  "specialOnlyOpportunityCount": 34,
+  "mixedSpecialNormalOpportunityCount": 113,
+  "specialOnlyOpportunityCount": 53,
   "actionCounts": {
     "keep_normal_edges": 104,
-    "remove_normal_edges": 20,
-    "manual_review_before_edge_removal": 8
+    "remove_normal_edges": 9
   },
   "rows": [
     {
@@ -578,200 +577,6 @@
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/4577/anne-arundel-county-high-performance-building-property-tax-credit",
         "https://www.aacounty.org/finance/tax-information/tax-credits-exemptions"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
-      "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "MN",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-      "websiteUrl": "https://www.austinutilities.com/pages/rebates-programs/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioner"
-          ]
-        },
-        {
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "displayName": "Heat pump HVAC retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump",
-            "mini split",
-            "ductless"
-          ]
-        },
-        {
-          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
-          "displayName": "Smart thermostat / zoning retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "smart thermostat",
-            "thermostat"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_furnace_retrofit",
-          "displayName": "High-efficiency furnace retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "furnace"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_boiler_retrofit",
-          "displayName": "High-efficiency boiler retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "boiler"
-          ]
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "solar_water_heating_system",
-          "displayName": "Solar water heating system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating",
-            "solar hot water"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
-          "displayName": "High-efficiency refrigeration equipment",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "refrigerator",
-            "freezer"
-          ]
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing"
-          ]
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "ev charger"
-          ]
-        },
-        {
-          "retrofitTypeId": "level_2_ev_charger_installation",
-          "displayName": "Level 2 EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
-          "retrofitTypeId": "low_flow_fixture_retrofit",
-          "displayName": "Low-flow fixture retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "fixture",
-            "showerhead"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_toilet_urinal",
-          "displayName": "High-efficiency toilet / urinal replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "toilet"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_laundry_equipment",
-          "displayName": "High-efficiency laundry equipment",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "clothes washer"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
-          "displayName": "High-efficiency commercial dishwasher",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dishwasher"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "ir Source/Mini Split/Geothermal Heat Pump Starting at $100 Smart Thermostats for Electric Heating Up to $100 House call energy audit rebates ( CLICK HERE FOR REBATE FORM ) (must have house call energy audit performed and use a Qualified Contractor ) Attic Air Sealing and/or Rim Joist Sealing Insulation $200 Attic Insulation $350 Wall Insulation $200-$300",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/1935/austin-utilities-gas-and-electric-residential-conserve-and-save-rebate-program",
-        "https://www.austinutilities.com/pages/rebates-programs/"
       ],
       "fetchErrors": []
     },
@@ -1639,90 +1444,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
-      "opportunityName": "Delta-Montrose Electric Association - Residential Weatherization Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "CO",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-      "websiteUrl": "https://dmea.com/free-home-weatherization",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "high_efficiency_furnace_retrofit",
-          "displayName": "High-efficiency furnace retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "furnace"
-          ]
-        },
-        {
-          "retrofitTypeId": "duct_sealing_and_insulation",
-          "displayName": "Duct sealing and duct insulation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "duct sealing"
-          ]
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "red to provide low-income DMEA members with free weatherization services. Eligible members will receive a comprehensive energy audit on their home to determine the needed improvements and the improvements will be made free of charge. Weatherization improvements can include, but are not limited to: insulation, duct sealing, appliance replacements, l",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program",
-        "https://dmea.com/free-home-weatherization"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4206",
       "opportunityName": "District of Columbia Property Assessed Clean Energy Financing",
       "sourceName": "DSIRE",
@@ -2083,7 +1804,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -2700,65 +2421,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2030",
-      "opportunityName": "Idaho Falls Power - Commercial Energy Conservation Loan Program",
-      "sourceName": "DSIRE",
-      "state": "ID",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program",
-      "websiteUrl": "https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "o report an outage: (208) 612-8430 Pay by phone: (855) 594-0612 Question about your bill? (208) 612-8280 To schedule an energy audit: (208) 612-8430 FAQs How do I pay online? How do I open an account? What do I need to do to get my utilities connected? What can I do if I need more time to pay my bill? -- View All -- Home &#124; Account & Services &#124; Community & Recreation &#124; Outages &#124; About Us &#124; Site Map &copy; 2026 Idaho Falls Power,",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/2030/idaho-falls-power-commercial-energy-conservation-loan-program",
-        "https://www.ifpower.org/accounts-and-services/energy-efficiency/your-business"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3135",
       "opportunityName": "Idaho Power - Residential Energy Efficiency Rebate Programs",
       "sourceName": "DSIRE",
@@ -3120,120 +2782,6 @@
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/3696/kentucky-power-targeted-energy-efficiency-program",
         "https://www.kentuckypower.com/save/residential/programs/TargetedEnergyEfficiencyProgram.aspx"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
-      "opportunityName": "Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "KY",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
-      "websiteUrl": "https://lge-ku.com/bizrebates",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        },
-        {
-          "retrofitTypeId": "leed_certification",
-          "displayName": "LEED certification",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "leed"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "lighting_controls_retrofit",
-          "displayName": "Lighting controls retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "lighting controls"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "d air process with an electric motor and saved $5,520 per year and the project was eligible for an incentive of $1,656. Energy Audit Energy Audit Earn back 25% of your energy audit cost Maximum rebate of $3,000 Must qualify for another rebate category when applying Business customers who’ve had an energy audit performed at their facility can earn a rebate to help offset the cost of the audit.",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
-        "https://lge-ku.com/bizrebates"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3617",
-      "opportunityName": "Lakeland Electric - Commercial Conservation Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "FL",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program",
-      "websiteUrl": "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "systems, HVAC, and motors. Other measures will be evaluated on a case-by-case basis. Process: The customer must have an energy audit completed by Lakeland Electric or a qualified engineering or energy services provider prior to the work being done. The customer will then contact their Account Executive to notify them the audit has been completed. The Account Executive will review the energy-saving measur",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program",
-        "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate"
       ],
       "fetchErrors": []
     },
@@ -3919,79 +3467,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
-      "opportunityName": "Midwest Energy (Gas and Electric) - How$mart Energy Efficiency Finance Program",
-      "sourceName": "DSIRE",
-      "state": "KS",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-      "websiteUrl": "https://www.mwenergy.com/environmental/energy-efficiency/howsmart",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing"
-          ]
-        },
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "mart&reg; principal balance can be paid &lsquo;in full&rsquo; with no penalty for early payoff. Participating customers must start with an energy audit to determine potential savings. Midwest Energy will develop a conservation plan with recommended improvements. Customers may choose the contractor to complete the work. Contractor",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/3187/midwest-energy-gas-and-electric-how-mart-energy-efficiency-finance-program",
-        "https://www.mwenergy.com/environmental/energy-efficiency/howsmart"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
       "opportunityName": "Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
@@ -4341,137 +3816,6 @@
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/3217/nextzero-offered-by-21-utilities-through-the-mmwec",
         "https://nextzero.org/"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2042",
-      "opportunityName": "North Arkansas Electric Cooperative, Inc - Energy Efficiency Loan Program",
-      "sourceName": "DSIRE",
-      "state": "AR",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-      "websiteUrl": "http://www.naeci.com/eecl",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "led lighting"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "displayName": "Heat pump HVAC retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "mini split"
-          ]
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air sealing",
-            "weatherization"
-          ]
-        },
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ]
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "level_2_ev_charger_installation",
-          "displayName": "Level 2 EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
-          "displayName": "High-efficiency commercial dishwasher",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dishwasher"
-          ]
-        },
-        {
-          "retrofitTypeId": "efficient_fan_blower_replacement",
-          "displayName": "Efficient fan/blower replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "blower"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": ", a Member Services representative reviews the loan process with the borrower, including liens, copy of warranty deeds, audits and/or blower-door tests (if needed), necessary documents, invoices and payment procedures. Results of the audit and/or blower-door test must show the installation of energy-efficiency measures would be cost effecti",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/2042/north-arkansas-electric-cooperative-inc-energy-efficiency-loan-program",
-        "http://www.naeci.com/eecl"
       ],
       "fetchErrors": []
     },
@@ -5295,48 +4639,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2187",
-      "opportunityName": "Tillamook County PUD - Dairy Lighting Retrofit Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "OR",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2187/tillamook-county-pud-dairy-lighting-retrofit-rebate-program",
-      "websiteUrl": "http://www.tpud.org/energy-efficiency/commercial-dairy-programs/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "lighting retrofit"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "ction PUD issues check to customer Customer pays lighting contractor or electrician To qualify for a rebate or loan, an audit must be done PRIOR to any work being completed. PUD will inspect the project when it is completed. The rebate program is a limited time offer, based on availability of funds, and is subject to change w",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/2187/tillamook-county-pud-dairy-lighting-retrofit-rebate-program",
-        "http://www.tpud.org/energy-efficiency/commercial-dairy-programs/"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:1373",
       "opportunityName": "Unitil (Electric) - Residential Energy Efficiency Programs",
       "sourceName": "DSIRE",
@@ -6045,65 +5347,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3331",
-      "opportunityName": "Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program",
-      "sourceName": "DSIRE",
-      "state": "OH",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
-      "websiteUrl": "https://www.butlerrural.coop/low-interest-loans",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "displayName": "Heat pump HVAC retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
-          ]
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": ". A $15 application fee will be applied to all applications approved or denied. For a loan application, click here . An energy audit will be required for all HVAC loans prior to approval. This requirement is to ensure the home is energy efficient and that the new system is a good investment for the home. The cooperative offers energy audits for $150. The",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
-        "https://www.butlerrural.coop/low-interest-loans"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3308",
       "opportunityName": "Colorado Natural Gas - Energy Efficiency Rebate Program",
       "sourceName": "DSIRE",
@@ -6381,106 +5624,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
-      "opportunityName": "East Central Electric Cooperative - Residential Rebate Program",
-      "sourceName": "DSIRE",
-      "state": "OK",
-      "programType": "Rebate Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-      "websiteUrl": "https://ecoec.com/rebates",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioning"
-          ]
-        },
-        {
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "displayName": "Heat pump HVAC retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump",
-            "mini split"
-          ]
-        },
-        {
-          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
-          "displayName": "Smart thermostat / zoning retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "programmable thermostat",
-            "thermostat"
-          ]
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
-          ]
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "electric vehicle charging"
-          ]
-        },
-        {
-          "retrofitTypeId": "level_2_ev_charger_installation",
-          "displayName": "Level 2 EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "heat pump water heater is eligible for this program Click here for Energy Star heat pump water heater rebate form HOME ENERGY AUDIT WEATHERIZATION REBATE You must have completed a home energy audit through East Central Electric Cooperative to qualify. Learn More. 50% up to $750 rebate of cost of repairs/improvements by auditors report . Cli",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program",
-        "https://ecoec.com/rebates"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2008",
       "opportunityName": "Edmond Electric - Energy Efficiency Rebate Programs",
       "sourceName": "DSIRE",
@@ -6538,73 +5681,6 @@
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/2008/edmond-electric-energy-efficiency-rebate-programs",
         "https://www.edmondok.gov/1290/Rebates-Programs"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5448",
-      "opportunityName": "Energize Delaware - Low Interest Commercial Loan Program",
-      "sourceName": "DSIRE",
-      "state": "DE",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program",
-      "websiteUrl": "https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "audit"
-          ]
-        },
-        {
-          "retrofitTypeId": "engineering_feasibility_study",
-          "displayName": "Engineering feasibility study",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "feasibility study"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "biomass_biogas_energy_system",
-          "displayName": "Biomass / biogas energy system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "biomass"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "d savings Minimum Requirements Projects must be supported by: &#8211; Energy assessment for efficiency measures &#8211; Feasibility study for renewable energy systems Contractors must comply with: Energize Delaware’s Responsible Contractor Policy Delaware prevailing wage (if contracts exceed $50,000) Applicants must show: Strong credit history , financials , an",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/5448/energize-delaware-low-interest-commercial-loan-program",
-        "https://www.energizedelaware.org/nonresidential/business/low-interest-commercial-loan/"
       ],
       "fetchErrors": []
     },
@@ -6937,110 +6013,6 @@
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/2478/grays-harbor-pud-residential-energy-efficiency-rebate-program",
         "https://www.ghpud.org/energy-efficiency/residential-programs/"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
-      "opportunityName": "Holyoke Gas & Electric - Residential Energy Assistance Program",
-      "sourceName": "DSIRE",
-      "state": "MA",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-      "websiteUrl": "https://www.hged.com/residential/ee-home/reap/default.aspx",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air conditioning"
-          ]
-        },
-        {
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "displayName": "Heat pump HVAC retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "mini split"
-          ]
-        },
-        {
-          "retrofitTypeId": "high_efficiency_boiler_retrofit",
-          "displayName": "High-efficiency boiler retrofit",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "boiler"
-          ]
-        },
-        {
-          "retrofitTypeId": "solar_water_heating_system",
-          "displayName": "Solar water heating system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar hot water"
-          ]
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "retrofitTypeId": "air_sealing_weatherization",
-          "displayName": "Air sealing / weatherization",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "weatherization"
-          ]
-        },
-        {
-          "retrofitTypeId": "rooftop_solar_pv",
-          "displayName": "Rooftop solar PV",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar pv"
-          ]
-        },
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "the same time or multiple systems are being installed, the installation quote must be itemized by system or service. 9. Energy Audits are required for select projects. Free residential energy audits are available through MuniHELPS by calling (888) 333--7525. Please note, HG&E reserves the right to waive the energy audit requ",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/1337/holyoke-gas-and-electric-residential-energy-assistance-program",
-        "https://www.hged.com/residential/ee-home/reap/default.aspx"
       ],
       "fetchErrors": []
     },
@@ -7671,55 +6643,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22044",
-      "opportunityName": "Multifamily Navigator Pre-Development Energy Loan Program",
-      "sourceName": "DSIRE",
-      "state": "CT",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22044/multifamily-navigator-pre-development-energy-loan-program",
-      "websiteUrl": "https://inclusiveprosperitycapital.org/products/navigator/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "building_benchmarking_compliance",
-          "displayName": "Building benchmarking compliance",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "benchmarking"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "geothermal"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "ees. If you want to understand what implementation approaches to take, Navigator finances the predevelopment activities needed to assess, design, and scope energy and resiliency upgrades, including the following items: Energy benchmarking, opportunity assessments, and audits Green/integrated physical needs assessments Green charrettes Assessments of energy-related health and safety and resiliency issues Design, eng",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/22044/multifamily-navigator-pre-development-energy-loan-program",
-        "https://inclusiveprosperitycapital.org/products/navigator/"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4371",
       "opportunityName": "National Grid (Gas) - Commercial Energy Efficiency Rebate Programs (Metro New York)",
       "sourceName": "DSIRE",
@@ -7951,7 +6874,12 @@
         "https://programs.dsireusa.org/system/program/detail/4563/nyserda-residential-financing-options",
         "https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Options"
       ],
-      "fetchErrors": []
+      "fetchErrors": [
+        {
+          "error": "This operation was aborted",
+          "url": "https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Options"
+        }
+      ]
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:2097",
@@ -9089,83 +8017,6 @@
       "fetchErrors": []
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
-      "opportunityName": "The Green Energy Loan Fund (GELF)",
-      "sourceName": "DSIRE",
-      "state": "PA",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-      "websiteUrl": "https://www.reinvestment.com/gelf/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "automated_demand_response_controls",
-          "displayName": "Automated demand response controls",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "demand response"
-          ]
-        },
-        {
-          "retrofitTypeId": "combined_heat_and_power_system",
-          "displayName": "Combined heat and power system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "combined heat and power"
-          ]
-        },
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy storage"
-          ]
-        },
-        {
-          "retrofitTypeId": "retro_commissioning_study",
-          "displayName": "Retro-commissioning study",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "commissioning"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "GELF borrowers will need to complete before loan closing and provide information about ENERGY STAR’s Portfolio Manager benchmarking tool that borrowers will need to use to report energy consumption. Once a loan application has been underwritten and approved and prior to loan closing, a GELF loan recipient will need to complete six affidavi",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
-        "https://www.reinvestment.com/gelf/"
-      ],
-      "fetchErrors": []
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:1342",
       "opportunityName": "Wakefield Municipal Gas & Light Department - Residential Conservation Services Program",
       "sourceName": "DSIRE",
@@ -9660,184 +8511,6 @@
           "url": "http://www.emnrd.state.nm.us/ECMD/CleanEnergyTaxIncentives/PACE.html"
         }
       ]
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1777",
-      "opportunityName": "City of Tallahassee Utilities - Solar Loans",
-      "sourceName": "DSIRE",
-      "state": "FL",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans",
-      "websiteUrl": "http://www.talgov.com/you/you-products-home-loans.aspx",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "high_efficiency_gas_water_heater",
-          "displayName": "High-efficiency gas water heater",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "gas water heater"
-          ]
-        },
-        {
-          "retrofitTypeId": "solar_water_heating_system",
-          "displayName": "Solar water heating system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar water heating"
-          ]
-        },
-        {
-          "retrofitTypeId": "rooftop_solar_pv",
-          "displayName": "Rooftop solar PV",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar pv",
-            "photovoltaic"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "4968 . Loans available: Financing is available for various energy-saving appliances, measures, and systems. A free home energy audit is required for many loan measures. The City of Tallahassee offers 5-percent interest financing for more than 25 energy-efficiency measures. These include: energy efficient air conditioners;",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/1777/city-of-tallahassee-utilities-solar-loans",
-        "http://www.talgov.com/you/you-products-home-loans.aspx"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
-      "opportunityName": "2021 Sustainable Building Tax Credit (Corporate)",
-      "sourceName": "DSIRE",
-      "state": "NM",
-      "programType": "Corporate Tax Credit",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate",
-      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "leed_certification",
-          "displayName": "LEED certification",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "leed"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "solar_water_heating_system",
-          "displayName": "Solar water heating system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar thermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "rooftop_solar_pv",
-          "displayName": "Rooftop solar PV",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "photovoltaic"
-          ]
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "d or Emerald or LEED-H Gold or Platinum Certification New Commercial Construction $1,000,000 1/1/2022 Project must meet LEED Certification Manufactured Housing $ 250,000 1/1/2022 Project must comply with Energy Star Program Large Commercial Renovation $1,000,000 1/1/2021 Project must be 50% better than ASHRAE Standard Total SBTC Allocation $7,150,000 Divisions Administ",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate",
-        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
-      "opportunityName": "2021 Sustainable Building Tax Credit (Personal)",
-      "sourceName": "DSIRE",
-      "state": "NM",
-      "programType": "Personal Tax Credit",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal",
-      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "leed_certification",
-          "displayName": "LEED certification",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "leed"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "solar_water_heating_system",
-          "displayName": "Solar water heating system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "solar thermal"
-          ]
-        },
-        {
-          "retrofitTypeId": "rooftop_solar_pv",
-          "displayName": "Rooftop solar PV",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "photovoltaic"
-          ]
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "d or Emerald or LEED-H Gold or Platinum Certification New Commercial Construction $1,000,000 1/1/2022 Project must meet LEED Certification Manufactured Housing $ 250,000 1/1/2022 Project must comply with Energy Star Program Large Commercial Renovation $1,000,000 1/1/2021 Project must be 50% better than ASHRAE Standard Total SBTC Allocation $7,150,000 Divisions Administ",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal",
-        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/"
-      ],
-      "fetchErrors": []
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4333",
@@ -10569,7 +9242,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10610,7 +9283,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10651,7 +9324,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10691,53 +9364,13 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
       "evidenceText": "Local Option - Energy Revolving Loan Fund DSIRE PACE Financing Programs administered locally MA Energy audit Battery storage system DSIRE - Database of State Incentives for Renewables & Efficiency Your browser is ancient! Upgrade to a different browser or install Google Chrome Frame to e",
       "sourceUrlsChecked": [
         "https://programs.dsireusa.org/system/program/detail/4283/local-option-energy-revolving-loan-fund"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5854",
-      "opportunityName": "Lodi Electric Utility - Commercial and Industrial Energy Efficiency Loan Program",
-      "sourceName": "DSIRE",
-      "state": "CA",
-      "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5854/lodi-electric-utility-commercial-and-industrial-energy-efficiency-loan-program",
-      "websiteUrl": "http://lodielectric.com/908/Commercial-Programs",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "ll utility charges with no late charges for the past 18 months; must have an active COL account for the past 18 months; must receive a rebate through the COL Electric Utility Public Benefits/Energy Efficiency Program; and submit an energy efficiency audit/contractor&apos;s proposal. The project cost - after rebate is applied - must be a minimum of $1,500. Loan maximum per \"customer of record\" is $50,000 for G1 and G2 customers and",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/5854/lodi-electric-utility-commercial-and-industrial-energy-efficiency-loan-program",
-        "http://lodielectric.com/908/Commercial-Programs"
       ],
       "fetchErrors": []
     },
@@ -10771,7 +9404,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10816,7 +9449,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10908,7 +9541,7 @@
           "matchedTerms": []
         }
       ],
-      "recommendedAction": "manual_review_before_edge_removal",
+      "recommendedAction": "remove_normal_edges",
       "reasons": [
         "special_text_match_only_normal_edges_are_fallback"
       ],
@@ -10925,64 +9558,13 @@
       ]
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5892",
-      "opportunityName": "Local Government Energy Audit/Retrofits",
-      "sourceName": "DSIRE",
-      "state": "WY",
-      "programType": "Grant Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5892/local-government-energy-audit-retrofits",
-      "websiteUrl": "https://www.wyoenergy.org/financing/",
-      "applicationUrl": null,
-      "specialRetrofits": [
-        {
-          "retrofitTypeId": "energy_audit",
-          "displayName": "Energy audit",
-          "isPhysicalRetrofit": false,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "energy audit",
-            "audit"
-          ]
-        }
-      ],
-      "normalRetrofits": [
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "level_2_ev_charger_installation",
-          "displayName": "Level 2 EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ]
-        }
-      ],
-      "recommendedAction": "remove_normal_edges",
-      "reasons": [
-        "explicit_special_prerequisite_language"
-      ],
-      "evidenceText": "s, and small businesses for energy audits and retrofits. Read the 2025/26 Program Overview for more information. WYLite Energy Audit Free energy audits for local municipalities and Wyoming school districts Requirement for applicants to the K-12 Schools Retrofit Grant Program and Local Government Retrofit Grant Program Once applicants have signed up online for the WYLite Energy Audit, they will",
-      "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/5892/local-government-energy-audit-retrofits",
-        "https://www.wyoenergy.org/financing/"
-      ],
-      "fetchErrors": []
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22777",
-      "opportunityName": "Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
+      "opportunityName": "The Green Energy Loan Fund (GELF)",
       "sourceName": "DSIRE",
       "state": "PA",
       "programType": "Loan Program",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
-      "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
+      "websiteUrl": "https://www.reinvestment.com/gelf/",
       "applicationUrl": null,
       "specialRetrofits": [
         {
@@ -10998,20 +9580,12 @@
       ],
       "normalRetrofits": [
         {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "retrofitTypeId": "level_2_ev_charger_installation",
-          "displayName": "Level 2 EV charger installation",
-          "isPhysicalRetrofit": true,
+          "retrofitTypeId": "retro_commissioning_study",
+          "displayName": "Retro-commissioning study",
+          "isPhysicalRetrofit": false,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
-            "level 2",
-            "level-2"
+            "commissioning"
           ]
         }
       ],
@@ -11019,10 +9593,10 @@
       "reasons": [
         "explicit_special_prerequisite_language"
       ],
-      "evidenceText": "below-market interest rates; however, MORE Grant recipients can buy down their interest rate to as low as 0%. Borrowers must have a level 2 commercial energy audit and energy conservation measure project design/scope to apply for the loan. MORE Loans can be used for the following:&lt;/p>\\r\\n&lt;ul>\\r\\n&lt;li>Energy efficiency upgrades&lt;/li",
+      "evidenceText": "GELF borrowers will need to complete before loan closing and provide information about ENERGY STAR’s Portfolio Manager benchmarking tool that borrowers will need to use to report energy consumption. Once a loan application has been underwritten and approved and prior to loan closing, a GELF loan recipient will need to complete six affidavi",
       "sourceUrlsChecked": [
-        "https://programs.dsireusa.org/system/program/detail/22777/municipal-opportunities-for-retrofits-and-energy-efficiency-more-program",
-        "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency"
+        "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
+        "https://www.reinvestment.com/gelf/"
       ],
       "fetchErrors": []
     },

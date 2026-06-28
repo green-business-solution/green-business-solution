@@ -118,7 +118,7 @@ function classifySpecialEdge(row, text) {
   if (specialTextMatches > 0 && normalTextMatches === 0) {
     reasons.push("special_text_match_only_normal_edges_are_fallback");
     return {
-      recommendedAction: "manual_review_before_edge_removal",
+      recommendedAction: "remove_normal_edges",
       reasons,
       evidenceText: findSnippet(compactText, /\b(?:energy audit|audit|leed|benchmarking|feasibility study|engineering study)\b/i)
     };
