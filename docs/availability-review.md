@@ -197,7 +197,17 @@ The June 2026 GPT Pro repair batch classified records that the deterministic cra
 - separating similarly named program variants, such as REAP grants versus REAP guaranteed loans or MORE grants versus MORE loans;
 - treating recurring tax holidays or scheduled future windows as `upcoming` when the current window had passed but an official future cycle was documented.
 
-Before escalating the next availability batch, manually apply those patterns to the remaining uncertain rows.
+The crawler intentionally failed closed on many of those rows because broad search fallback can produce false positives for generic program names. GPT Pro did better by classifying the opportunity type first, then looking for the right kind of official proof instead of relying on the originally stored URL. Future repair jobs should apply that same subtype triage before escalating to manual review:
+
+1. `statutory_tax_pace_bond_tariff`: search official state code, tax authority guidance, treasurer/controller pages, current tax forms, tariff sheets, program guides, and sunset dates. Use `rolling` when the official source shows a standing incentive with no expired sunset, `upcoming` when a future window is scheduled, and `unavailable` when the statute/program is repealed or expired.
+2. `utility_rebate_or_portal`: search the utility's business/residential rebate portal, enrollment portal, measure-specific rebate page, application PDF, and trade-ally or claim workflow. A reachable title-specific official portal can support lower-confidence `active` when it contains program/rebate terms and no closed language.
+3. `grant_or_solicitation`: search current NOFO/FOA/solicitation pages, application schedules, program administrator notices, and current PDFs. Use the review date against application deadlines and distinguish current, future, and closed rounds.
+4. `local_option_or_adopted_local_program`: distinguish enabling authority from actual adopted local programs. A local-option statute can support a `rolling` authority record, but a city/county-named record should prefer the active local administrator page.
+5. `stale_dsire_or_aggregator_only`: search official replacement pages before marking unavailable. Leave `uncertain` only when no title-specific official or administrator evidence can be found.
+
+When the title is broad, split parent and child programs before deciding. Grant, loan, tax credit, tariff, residential, commercial, personal, corporate, and measure-specific variants can have different statuses even under the same parent program. Current forms, instructions, application portals, program guides, and official PDFs can be stronger evidence than a generic program homepage.
+
+Before escalating the next availability batch, apply those patterns to the remaining uncertain rows. If a row still remains uncertain, include the suspected subtype and failed official-source paths in the GPT Pro/manual research packet so the reviewer starts from the right search strategy.
 
 ## Future Cron Automation
 
@@ -208,10 +218,13 @@ A future scheduled job should:
 3. Include visible opportunities with `availabilityReview.normalizedStatus = uncertain`.
 4. Include opportunities that are currently causing `likely_eligible` sample results because of uncertain availability.
 5. Re-fetch source URLs and update DynamoDB review fields.
-6. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
-7. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
-8. Run `matching:special-edge-audit` and review any `remove_normal_edges` rows before publishing regenerated test cases.
-9. Regenerate sample matching fixtures, then run `matching:availability-public-fixtures` and `matching:special-edge-suppressions:public` when working from checked-in public data.
-10. Publish the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
+6. Classify remaining uncertain rows by subtype before broad search or LLM escalation: statutory/tax/PACE/bond/tariff, utility rebate portal, grant/solicitation, local-option implementation, or stale DSIRE/aggregator-only.
+7. Run subtype-specific official-source searches. For statutes and tax incentives, check current code, tax authority pages, current forms, and sunset dates. For utility programs, check measure pages, portals, application PDFs, and claim workflows. For grants, check current FOAs/NOFOs and official schedules. For local-option records, distinguish enabling law from adopted local programs.
+8. Generate the GPT Pro/manual research packet only after subtype search fails, and include the suspected subtype, checked official URLs, and why deterministic review could not decide.
+9. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
+10. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
+11. Run `matching:special-edge-audit` and review any `remove_normal_edges` rows before publishing regenerated test cases.
+12. Regenerate sample matching fixtures, then run `matching:availability-public-fixtures` and `matching:special-edge-suppressions:public` when working from checked-in public data.
+13. Publish the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

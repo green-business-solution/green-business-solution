@@ -26,6 +26,11 @@ For each target opportunity below, determine one normalized availability status:
 8. For tax incentives, PACE programs, bond authorities, tariffs, and recurring tax holidays, official statutes, tax authority guidance, treasurer/controller pages, and current program schedules are valid evidence.
 9. Distinguish similarly named program variants. For example, grant and loan versions of the same program can have different availability statuses.
 10. For utility/business program records, check the utility's business rebate portal, enrollment portal, application PDFs, and measure-specific rebate pages before leaving the record uncertain.
+11. Before returning `uncertain`, identify the likely subtype: `statutory_tax_pace_bond_tariff`, `utility_rebate_or_portal`, `grant_or_solicitation`, `local_option_or_adopted_local_program`, or `stale_dsire_or_aggregator_only`.
+12. For statutory/tax/PACE/bond/tariff records, check current code, revenue/tax authority pages, treasurer/controller pages, current tax forms or instructions, tariff sheets, program guides, and sunset dates.
+13. For grant or solicitation records, check current FOA/NOFO/solicitation pages, current PDFs, application schedules, deadline notices, and reopening notices before deciding active, upcoming, or unavailable.
+14. For local-option records, separate an enabling law from an adopted local program. A state enabling law can support a rolling authority record, but a city/county-named opportunity should use a current local administrator page when possible.
+15. If the final status is still `uncertain`, include the suspected subtype and the official-source paths that failed in `notes`.
 
 ## Output Format
 

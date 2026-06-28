@@ -775,3 +775,4 @@
 - Extended the availability review workflow to accept the public retrofit-opportunity index, skip low-value DSIRE shell pages during source fetches, add a USDA EA/REDA source URL repair, and conservatively leave unverified rows as `uncertain`.
 - Added a mixed special/physical retrofit edge audit and suppressed physical retrofit edges for 20 opportunities whose source text explicitly requires an audit, study, certification, or benchmarking step first.
 - Generated public availability and special-edge audit artifacts documenting current review counts, source evidence, and future cron workflow inputs.
+- Documented GPT Pro availability-repair lessons for future cron/manual review, including subtype triage for statutory, tax, PACE, bond, tariff, utility portal, grant, local-option, and stale DSIRE records.
