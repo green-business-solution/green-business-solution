@@ -42,6 +42,7 @@ const retrofitTemplates = {
     taxRate: 0.0875,
     billLines: { electric: { annual_kwh: 20000, average_cost_per_kwh: 0.18 } },
     userAnswers: {
+      unit_count: 12,
       fixture_count: 12,
       existing_fixture_watts: 100,
       new_fixture_watts: 60,
@@ -375,7 +376,13 @@ const serviceOnlyRetrofitIds = new Set([
   "building_benchmarking_compliance"
 ]);
 
-export function buildAdminTestCaseSavingsPreview({ retrofitGroup, sampleUserId, normalizedProfile, calculationDate }) {
+export function buildAdminTestCaseSavingsPreview({
+  retrofitGroup,
+  sampleUserId,
+  normalizedProfile,
+  calculationDate,
+  opportunityIncentiveRules = []
+}) {
   const template = retrofitTemplates[retrofitGroup?.retrofitTypeId];
   if (!template) {
     const reason = serviceOnlyRetrofitIds.has(retrofitGroup?.retrofitTypeId)
@@ -386,8 +393,21 @@ export function buildAdminTestCaseSavingsPreview({ retrofitGroup, sampleUserId, 
 
   const state = normalizedProfile?.site?.geo?.stateCode || normalizedProfile?.site?.addressStructured?.stateCode || "CA";
   const countyFips = normalizedProfile?.site?.geo?.countyFips || "00000";
-  const fixture = buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips, calculationDate });
+  const selectedIncentiveRules = selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiveRules);
+  const fixture = buildFixture({
+    template,
+    retrofitGroup,
+    sampleUserId,
+    state,
+    countyFips,
+    calculationDate,
+    opportunityIncentiveRules: selectedIncentiveRules
+  });
   const estimate = calculateRetrofitSavingsEstimate(fixture);
+  const incentiveAssumption =
+    selectedIncentiveRules.length > 0
+      ? "One-time opportunity savings use the highest-ranked matched opportunity with an extracted source-backed incentive rule; other connected opportunities may still need rule extraction."
+      : "No extracted source-backed OpportunityIncentiveRule is available for this retrofit preview yet, so one-time opportunity savings are shown as $0.";
 
   return {
     schemaVersion: ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION,
@@ -415,15 +435,16 @@ export function buildAdminTestCaseSavingsPreview({ retrofitGroup, sampleUserId, 
     assumptions: [
       ...template.assumptions,
       "Admin test-case fixture uses fixed project inputs until real project inputs are collected.",
-      "Opportunity incentive values are not extracted into OpportunityIncentiveRule records yet, so one-time opportunity savings are shown as $0 for this preview.",
+      incentiveAssumption,
       "This is not a customer quote or final savings estimate."
     ],
     unsupportedReason: estimate.status === "blocked" ? "Savings preview is blocked by missing fixture inputs." : null
   };
 }
 
-function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips, calculationDate }) {
+function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips, calculationDate, opportunityIncentiveRules = [] }) {
   const retrofitTypeId = template.retrofitTypeId || `rt_${template.engineSlug}`;
+  const selectedOpportunityIds = opportunityIncentiveRules.map((rule) => rule.opportunityId);
   return {
     projectId: `admin_test_${sampleUserId}`,
     businessId: `admin_test_${sampleUserId}`,
@@ -437,7 +458,7 @@ function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips
       id: `ri_${sampleUserId}_${retrofitGroup.retrofitTypeId}`,
       retrofitTypeId,
       retrofitTypeSlug: template.engineSlug,
-      selectedOpportunityIds: []
+      selectedOpportunityIds
     },
     billLines: deepMerge(commonBillLines, template.billLines || {}),
     userAnswers: toAnswerMap(template.userAnswers),
@@ -446,9 +467,28 @@ function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips
     laborUnitAnswerKey: template.laborUnitAnswerKey,
     laborCostRules: template.laborRequired === false ? [] : [buildLaborRule({ template, retrofitTypeId, state, countyFips })],
     geographicTaxRules: [buildTaxRule({ template, state, countyFips })],
-    opportunityIncentiveRules: [],
+    opportunityIncentiveRules,
     stackingRules: []
   };
+}
+
+function selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiveRules = []) {
+  if (!retrofitGroup?.opportunities?.length || !opportunityIncentiveRules.length) return [];
+
+  const rulesByOpportunityId = new Map();
+  for (const rule of opportunityIncentiveRules) {
+    if (!rule?.opportunityId || rule.active === false || rule.confidence === "low") continue;
+    const current = rulesByOpportunityId.get(rule.opportunityId) || [];
+    current.push(rule);
+    rulesByOpportunityId.set(rule.opportunityId, current);
+  }
+
+  for (const opportunity of retrofitGroup.opportunities) {
+    const rules = rulesByOpportunityId.get(opportunity.opportunityId);
+    if (rules?.length) return rules.slice(0, 1);
+  }
+
+  return [];
 }
 
 function buildLaborRule({ template, retrofitTypeId, state, countyFips }) {
@@ -563,7 +603,9 @@ function solarTemplate({
       estimated_annual_production_kwh: productionKwh,
       self_consumption_percent: selfConsumptionPercent,
       export_percent: exportPercent,
-      installed_cost_cents: installedCostCents
+      installed_cost_cents: installedCostCents,
+      system_kw: Math.max(1, Math.round(productionKwh / 1400)),
+      unit_count: 1
     },
     assumptions
   };
@@ -596,7 +638,8 @@ function evTemplate({ monthlyKwh, equipmentCostCents, laborCostCents, assumption
     userAnswers: {
       unit_count: 1,
       expected_monthly_kwh: monthlyKwh,
-      equipment_cost_cents: equipmentCostCents
+      equipment_cost_cents: equipmentCostCents,
+      charger_kw: monthlyKwh >= 8000 ? 150 : 19.2
     },
     assumptions
   };
@@ -610,6 +653,7 @@ function fleetTemplate({ vehicleCount, annualMilesPerVehicle, existingMpg, evKwh
     laborRequired: false,
     taxRate: 0,
     userAnswers: {
+      unit_count: vehicleCount,
       vehicle_count: vehicleCount,
       annual_miles_per_vehicle: annualMilesPerVehicle,
       existing_mpg: existingMpg,

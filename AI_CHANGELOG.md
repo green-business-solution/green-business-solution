@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) source-backed one-time incentive rule repair
+
+- Added a repeatable opportunity incentive rule repair script that fetches source pages/PDFs, extracts conservative source-backed one-time incentive formulas, and records unresolved rows as manual repair targets.
+- Generated `data/opportunity_incentive_rules.json` with 125 extracted active/rolling upfront incentive rules and 933 explicit manual repair targets from 1,058 active/rolling upfront-cost-reduction opportunities.
+- Wired extracted rules into admin test-case savings previews using the highest-ranked matched opportunity with a source-backed rule, avoiding unsupported stacking across unrelated connected incentives.
+- Refreshed public sample test cases so 81 calculated retrofit previews now show nonzero one-time opportunity savings where a repaired rule is available.
+
 ## 2026-06-28 - Codex (GPT-5) final Ohio availability repair
 
 - Researched the last remaining uncertain opportunity, Ohio Energy Efficiency Program for Manufacturers, against DSIRE, Ohio Development, Fairfield County grant listings, and the 2025 ODOD energy-grants workshop toolkit.

@@ -27,6 +27,7 @@ const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDi
 const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
 const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
 const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
+const incentiveRulesPath = process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(dataDir, "opportunity_incentive_rules.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
@@ -50,6 +51,7 @@ const sampleUsers =
     : allSampleUsers;
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
+const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
 const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
 const candidateOpportunities = opportunityRecords
@@ -113,6 +115,8 @@ const output = {
   facilityReviewCount: facilityReviewsByOpportunityId.size,
   utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
+  opportunityIncentiveRulesPath: opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
+  opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
   sampleUsers: userProfiles,
   fullResultsOmitted: !writeFullOutput,
   results: writeFullOutput ? allResults : []
@@ -131,6 +135,7 @@ const adminTestCases = {
   hiddenUpcomingOpportunityCount: output.hiddenUpcomingOpportunityCount,
   sampleUserCount: existingAdminTestCases?.sampleUserCount || output.sampleUserCount,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
+  opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
   testCases: adminTestCaseRows
 };
 
@@ -169,6 +174,7 @@ console.log(`Patch existing admin test cases: ${patchExistingTestCases ? "yes" :
 console.log(`Retrofit opportunity index: ${writeRetrofitIndex ? retrofitIndexPath : "not written"}`);
 console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`);
 console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
+console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
 
 function readReviewMap(filePath, reviewFieldName) {
   if (!fs.existsSync(filePath)) return new Map();
@@ -183,6 +189,15 @@ function readReviewMap(filePath, reviewFieldName) {
 
 function readUtilityReviews(filePath) {
   return readReviewMap(filePath, "utilityRestrictionReview");
+}
+
+function readOpportunityIncentiveRules(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = readJson(filePath);
+  return (source.rules || [])
+    .filter((rule) => rule?.opportunityId)
+    .filter((rule) => rule.active !== false)
+    .filter((rule) => rule.confidence !== "low");
 }
 
 function applyFacilityReview(opportunity) {
@@ -319,7 +334,8 @@ function buildUserRetrofitGroups(results, userProfile) {
         retrofitGroup: group,
         sampleUserId: userProfile.sampleUserId,
         normalizedProfile: userProfile.userMatchProfile,
-        calculationDate: generatedAt.slice(0, 10)
+        calculationDate: generatedAt.slice(0, 10),
+        opportunityIncentiveRules
       })
     }))
     .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
@@ -336,6 +352,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     `Upcoming opportunities hidden: ${hiddenUpcomingOpportunityCount}`,
     `Sample users evaluated: ${userReports.length}`,
     `Pairings evaluated: ${opportunities.length * userReports.length}`,
+    `Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`,
     "",
     "This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.",
     "The script evaluates every current visible opportunity against each sample profile, then reports eligible matches and common blockers.",
@@ -347,6 +364,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "- Utility restrictions use the generated review artifact when present. `required` gates matching; `none`, `not_applicable`, and `none_found_after_review` are treated as pass; only unresolved ambiguous utility evidence remains `unknown`.",
     `- Facility eligibility uses the generated review artifact when present. Artifact: ${facilityReviewsByOpportunityId.size > 0 ? `\`${facilityReviewsPath}\` (${facilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
     `- Utility review artifact: ${utilityReviewsByOpportunityId.size > 0 ? `\`${utilityReviewsPath}\` (${utilityReviewsByOpportunityId.size} reviewed opportunities)` : "not loaded"}.`,
+    `- One-time opportunity savings use extracted source-backed incentive rules when available. Artifact: ${opportunityIncentiveRules.length > 0 ? `\`${incentiveRulesPath}\` (${opportunityIncentiveRules.length} active rules)` : "not loaded"}.`,
     "- The admin fixture intentionally fails generation if visible results contain any status other than `eligible` or `ineligible`.",
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
