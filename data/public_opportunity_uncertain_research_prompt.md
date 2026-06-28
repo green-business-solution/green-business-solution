@@ -22,6 +22,10 @@ For each target opportunity below, determine one normalized availability status:
 4. If a program has a tax statute or standing utility tariff with no application cycle, use `rolling` only when the official source supports ongoing availability.
 5. If a closed page also says a future cycle is expected, use `upcoming` instead of `unavailable`.
 6. Capture a short evidence quote and the source URL for every non-uncertain decision.
+7. If the stored URL is stale, blocked, JavaScript-heavy, or too generic, search the official administrator site for a replacement program page, application portal, current PDF, tariff, statute, tax bulletin, or program guide.
+8. For tax incentives, PACE programs, bond authorities, tariffs, and recurring tax holidays, official statutes, tax authority guidance, treasurer/controller pages, and current program schedules are valid evidence.
+9. Distinguish similarly named program variants. For example, grant and loan versions of the same program can have different availability statuses.
+10. For utility/business program records, check the utility's business rebate portal, enrollment portal, application PDFs, and measure-specific rebate pages before leaving the record uncertain.
 
 ## Output Format
 

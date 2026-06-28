@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) availability research guidance update
+
+- Added official-source fallback research lessons from the GPT Pro repair batch to the availability review workflow.
+- Updated the GPT Pro uncertainty prompt to ask for replacement official pages, statutes, tax guidance, tariffs, PDFs, portals, and program-variant checks before leaving opportunities uncertain.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro availability research batch
 
 - Added `matching:availability-apply-repairs` to import official-source GPT Pro/manual availability repair JSON into the public opportunity review artifact.

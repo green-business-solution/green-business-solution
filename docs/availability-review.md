@@ -182,6 +182,22 @@ When manual research is needed, use the same evidence standard:
 8. If a DSIRE record is only a maintenance/update note with no detail URL or useful program corpus, archive it as `low_information_update_record` instead of letting it remain in `manual_review`.
 9. If a visible sample match still produces `likely_eligible` or `needs_information`, repair the specific unknown canonical field and rerun the sample generator. The admin fixture should not be published with unresolved visible statuses.
 10. Do not classify from generic search snippets or unrelated pages that happen to contain title words like city, county, energy, business, utility, or residential.
+11. If the stored source URL is stale, blocked, JavaScript-heavy, or too generic, search the official administrator site for replacement program pages, application portals, current PDFs, tariff sheets, statutes, tax bulletins, measure-specific rebate pages, and program guides before leaving the row uncertain.
+12. For tax incentives, PACE programs, bond authorities, utility tariffs, and recurring tax holidays, use official statutes, tax authority guidance, treasurer/controller pages, current application schedules, and official code pages as availability evidence. These often classify as `rolling` or `upcoming`, not `active`.
+13. Distinguish program variants with similar names. Grant and loan versions, residential and commercial versions, and parent program pages can have different current statuses.
+14. For utility business opportunities, check business rebate portals, enrollment portals, application PDFs, and measure-specific rebate pages. The top-level utility page often lacks enough status language for deterministic classification.
+
+## GPT Pro Batch Lessons
+
+The June 2026 GPT Pro repair batch classified records that the deterministic crawler could not because it could perform semantic official-source research beyond the stored URL list. The successful patterns were:
+
+- finding current official replacement pages when DSIRE or the stored source URL was stale, blocked, or too generic;
+- using official statutes, tax authority guidance, treasurer pages, and code sections for standing tax/PACE/bond/tariff incentives;
+- finding current application portals and program PDFs for utility programs whose fetched HTML was sparse or JavaScript-heavy;
+- separating similarly named program variants, such as REAP grants versus REAP guaranteed loans or MORE grants versus MORE loans;
+- treating recurring tax holidays or scheduled future windows as `upcoming` when the current window had passed but an official future cycle was documented.
+
+Before escalating the next availability batch, manually apply those patterns to the remaining uncertain rows.
 
 ## Future Cron Automation
 
