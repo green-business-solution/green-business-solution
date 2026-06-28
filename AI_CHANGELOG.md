@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 2
+
+- Applied the second GPT Pro one-time incentive repair batch through the repeatable importer: 46 source-backed rules added and 41 opportunities reviewed without a safe one-time rule.
+- Reduced manual incentive rule repair targets from 858 to 783, with `SOURCE_DSIRE:dsire_program_id:22308` recorded as the next GPT Pro continuation point.
+- Refreshed public sample test cases so 102 calculated retrofit previews now show nonzero upfront opportunity savings with 198 usable rules loaded.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 1
 
 - Added a repeatable GPT Pro research repair importer for opportunity incentive rules, preserving raw research batches and moving reviewed no-rule opportunities out of the active repair queue.
