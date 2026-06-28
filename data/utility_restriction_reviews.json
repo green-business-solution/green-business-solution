@@ -1,14 +1,14 @@
 {
   "schemaVersion": "utility-restriction-review-v1",
-  "generatedAt": "2026-06-26T23:27:30.942Z",
+  "generatedAt": "2026-06-28T05:25:30.474Z",
   "opportunityCount": 2096,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
   "statusCounts": {
-    "required": 1156,
-    "not_applicable": 505,
+    "required": 1157,
+    "not_applicable": 507,
     "none_found_after_review": 205,
-    "unknown": 57,
+    "unknown": 54,
     "none": 173
   },
   "reviews": [
@@ -35982,22 +35982,23 @@
       "state": "PA",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22228/electric-cargo-handling-grant-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "not_applicable",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "Electric Cargo Handling Grant Program / Department of Environmental Protection",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "The Pennsylvania DEP Electric Cargo Handling Grant Program is a state transportation/equipment grant under Driving PA Forward; reviewed program evidence does not gate eligibility by electric distribution utility service territory.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
-          "https://programs.dsireusa.org/system/program/detail/22228/electric-cargo-handling-grant-program",
-          "https://gis.dep.pa.gov/DrivingPAForward/"
+          "https://gis.dep.pa.gov/DrivingPAForward/",
+          "https://programs.dsireusa.org/system/program/detail/22228/electric-cargo-handling-grant-program"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
-      }
+        "reviewedAt": "2026-06-28T05:25:30.474Z",
+        "confidence": 0.86
+      },
+      "websiteUrl": "https://gis.dep.pa.gov/DrivingPAForward/"
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4091",
@@ -49702,22 +49703,32 @@
       "state": "NY",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22210/electric-vehicle-supply-equipment-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
-        "requiredUtilityNames": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_CONED"
+        ],
+        "requiredUtilityNames": [
+          "Central Hudson Gas & Electric",
+          "Consolidated Edison",
+          "National Grid",
+          "New York State Electric and Gas",
+          "Orange and Rockland Utilities",
+          "Rochester Gas and Electric"
+        ],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": true,
-        "evidenceText": "s. Participants must apply to the program through the utility in whose electric service territory the proposed EV charging station will be located. See individual utility programs listed below for more information. Ce",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "The New York Joint Utilities EV Make-Ready program is delivered by New York investor-owned utilities; the Joint Utilities page directs customers to each participating utility's make-ready program, including Central Hudson, Con Edison, National Grid, NYSEG, Orange & Rockland, and RG&E.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
-          "https://programs.dsireusa.org/system/program/detail/22210/electric-vehicle-supply-equipment-rebate-program",
-          "https://jointutilitiesofny.org/ev/make-ready"
+          "https://jointutilitiesofny.org/ev/make-ready",
+          "https://programs.dsireusa.org/system/program/detail/22210/electric-vehicle-supply-equipment-rebate-program"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
-      }
+        "reviewedAt": "2026-06-28T05:01:05.392Z",
+        "confidence": 0.9
+      },
+      "websiteUrl": "https://jointutilitiesofny.org/ev/make-ready"
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3681",
@@ -52573,22 +52584,23 @@
       "state": "MN",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22194/e-zpass-minnesota-electric-vehicle-incentive",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
+        "restrictionStatus": "not_applicable",
         "requiredUtilityIds": [],
         "requiredUtilityNames": [],
         "allowedSupplierIds": [],
         "rateClasses": [],
         "customerRelationshipRequired": false,
-        "evidenceText": "E-ZPass Minnesota Electric Vehicle Incentive / Minnesota Department of Transportation",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "evidenceText": "Minnesota DOT administers the E-ZPass Minnesota EV incentive as a transportation/tolling incentive; reviewed source text does not gate eligibility by electric distribution utility service territory.",
+        "reviewMethod": "manual_source_research_repair",
         "sourceUrlsChecked": [
-          "https://programs.dsireusa.org/system/program/detail/22194/e-zpass-minnesota-electric-vehicle-incentive",
-          "https://www.dot.state.mn.us/ezpassmn/news.html"
+          "https://www.dot.state.mn.us/ezpassmn/news.html",
+          "https://programs.dsireusa.org/system/program/detail/22194/e-zpass-minnesota-electric-vehicle-incentive"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
-      }
+        "reviewedAt": "2026-06-28T05:05:25.193Z",
+        "confidence": 0.86
+      },
+      "websiteUrl": "https://www.dot.state.mn.us/ezpassmn/news.html"
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4275",

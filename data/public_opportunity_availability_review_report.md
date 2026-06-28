@@ -1,262 +1,81 @@
 # Availability Review
 
-Generated: 2026-06-28T04:14:55.705Z
+Generated: 2026-06-28T05:25:06.796Z
 Opportunities reviewed: 1619
-GPT Pro research applied count: 50
+GPT Pro research applied count: 12
 GPT Pro research skipped count: 0
 
 ## Status Counts
 
 ```json
 {
-  "uncertain": 202,
-  "active": 1256,
-  "rolling": 96,
+  "active": 1339,
+  "uncertain": 50,
+  "rolling": 148,
   "upcoming": 49,
-  "unavailable": 16
+  "unavailable": 33
 }
 ```
 
 ## GPT Pro Research Applied
 
-- rolling: Solar and CHP Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:243)
+- unavailable: Tennessee  - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22641)
   - previous status: uncertain
-- rolling: Biomass Sales and Use Tax Exemption (SOURCE_DSIRE:dsire_program_id:1952)
+- unavailable: City and County of Denver - Home Energy Rebates (SOURCE_DSIRE:dsire_program_id:22760)
   - previous status: uncertain
-- uncertain: City of Atlanta - Incentivized Green Developments (SOURCE_DSIRE:dsire_program_id:22679)
+- unavailable: City and County of Denver - Solar and EV Charging for Nonprofits (SOURCE_DSIRE:dsire_program_id:22754)
   - previous status: uncertain
-- rolling: Local Option - Special Improvement Districts (SOURCE_DSIRE:dsire_program_id:4177)
+- unavailable: Charge Ahead Colorado (SOURCE_DSIRE:dsire_program_id:22157)
   - previous status: uncertain
-- rolling: Guam - Photovoltaic Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22589)
+- active: OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
   - previous status: uncertain
-- rolling: Hawaii C-PACE program (SOURCE_DSIRE:dsire_program_id:3870)
+- unavailable: EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
   - previous status: uncertain
-- rolling: Priority Permit Processing for Green Buildings (SOURCE_DSIRE:dsire_program_id:2287)
+- rolling: Sales Tax Exemption for Hydrogen Fuel Cells (SOURCE_DSIRE:dsire_program_id:2755)
   - previous status: uncertain
-- rolling: Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:184)
+- rolling: Qualified Energy Property Tax Exemption for Projects 250 kW or Less (SOURCE_DSIRE:dsire_program_id:4217)
   - previous status: uncertain
-- rolling: Idaho Commercial PACE Financing Program (SOURCE_DSIRE:dsire_program_id:22652)
+- unavailable: Ohio - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22649)
   - previous status: uncertain
-- rolling: Income Tax Deduction for Energy Efficiency Upgrades (SOURCE_DSIRE:dsire_program_id:1227)
+- unavailable: Energy Efficiency Program for Manufacturers (SOURCE_DSIRE:dsire_program_id:5587)
   - previous status: uncertain
-- rolling: Property Tax Exemption for Wind, Solar, and Geothermal Energy Producers (SOURCE_DSIRE:dsire_program_id:2786)
+- rolling: Energy Conversion and Thermal Efficiency Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:77)
   - previous status: uncertain
-- rolling: Residential Alternative Energy Tax Deduction (SOURCE_DSIRE:dsire_program_id:137)
-  - previous status: uncertain
-- rolling: Illinois PACE Financing Program (SOURCE_DSIRE:dsire_program_id:3626)
-  - previous status: uncertain
-- rolling: Renewable Energy and Energy Efficiency Project Financing (SOURCE_DSIRE:dsire_program_id:3567)
-  - previous status: uncertain
-- rolling: Sales and Use Tax Exemption for Electrical Generating Equipment (SOURCE_DSIRE:dsire_program_id:5106)
-  - previous status: uncertain
-- rolling: Renewable Energy Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:75)
-  - previous status: uncertain
-- rolling: Sales Tax Exemption - Machinery for New and Expanded Industry (SOURCE_DSIRE:dsire_program_id:22572)
-  - previous status: uncertain
-- active: Belmont Light - Battery Storage Rebate Program (SOURCE_DSIRE:dsire_program_id:22735)
-  - previous status: uncertain
-- rolling: Local Option - Energy Revolving Loan Fund (SOURCE_DSIRE:dsire_program_id:4283)
-  - previous status: uncertain
-- rolling: Local Option - Property Tax Credit for High Performance Buildings (SOURCE_DSIRE:dsire_program_id:2363)
-  - previous status: uncertain
-- rolling: Local Option - Property Tax Credit for Renewables and Energy Conservation Devices (SOURCE_DSIRE:dsire_program_id:232)
-  - previous status: uncertain
-- upcoming: Medium–Duty and Heavy–Duty Zero–Emission Vehicle Grant Program. (SOURCE_DSIRE:dsire_program_id:22575)
-  - previous status: uncertain
-- rolling: Prince George's County - Solar and Geothermal Residential Property Tax Credit (SOURCE_DSIRE:dsire_program_id:3106)
-  - previous status: uncertain
-- rolling: Property Tax Exemption for Solar and Wind Energy Systems (SOURCE_DSIRE:dsire_program_id:2542)
-  - previous status: uncertain
-- rolling: Sales and Use Tax Exemption for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:2928)
-  - previous status: uncertain
-- rolling: Sales and Use Tax Exemption for Residential Solar and Wind Electricity Sales (SOURCE_DSIRE:dsire_program_id:4853)
-  - previous status: uncertain
-- rolling: Wood Heating Fuel Exemption (SOURCE_DSIRE:dsire_program_id:143)
-  - previous status: uncertain
-- rolling: Michigan Local PACE Program (SOURCE_DSIRE:dsire_program_id:4521)
-  - previous status: uncertain
-- rolling: Nonrefundable Business Activity Tax Credit (SOURCE_DSIRE:dsire_program_id:333)
-  - previous status: uncertain
-- rolling: Solar Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:1218)
-  - previous status: uncertain
-- rolling: Wind Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:601)
-  - previous status: uncertain
-- rolling: Mississippi Clean Energy Initiative (SOURCE_DSIRE:dsire_program_id:4242)
-  - previous status: uncertain
-- rolling: Generation Facility Corporate Tax Exemptions (SOURCE_DSIRE:dsire_program_id:978)
-  - previous status: uncertain
-- rolling: Local Option - Commercial Property Assessed Capital Expenditure (C-PACE) (SOURCE_DSIRE:dsire_program_id:22669)
-  - previous status: uncertain
-- rolling: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
-  - previous status: uncertain
-- rolling: Sales Tax Exemption for Hydrogen Generation Facilities (SOURCE_DSIRE:dsire_program_id:4989)
-  - previous status: uncertain
-- rolling: Local Option - Property-Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:5869)
-  - previous status: uncertain
-- rolling: Property Tax Exemption for Renewable Energy Generation Facilities (SOURCE_DSIRE:dsire_program_id:4946)
-  - previous status: uncertain
-- rolling: Sales and Use Tax Exemption for Community Renewable Energy Projects (SOURCE_DSIRE:dsire_program_id:2576)
-  - previous status: uncertain
-- rolling: Local Option - Energy Efficiency & Clean Energy Districts (SOURCE_DSIRE:dsire_program_id:4252)
-  - previous status: uncertain
-- rolling: Assessment of Farmland Hosting Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:4026)
-  - previous status: uncertain
-- rolling: Local Option - Property Assessed Clean Energy Financing (SOURCE_DSIRE:dsire_program_id:5109)
-  - previous status: uncertain
-- rolling: Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:3100)
-  - previous status: uncertain
-- rolling: Biomass Equipment & Materials Compensating Tax Deduction (SOURCE_DSIRE:dsire_program_id:359)
-  - previous status: uncertain
-- rolling: Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities (SOURCE_DSIRE:dsire_program_id:3980)
-  - previous status: uncertain
-- rolling: Renewable Energy Systems Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:158)
-  - previous status: uncertain
-- rolling: Air-Quality Improvement Tax Incentives (SOURCE_DSIRE:dsire_program_id:78)
-  - previous status: uncertain
-- rolling: Local Option - Special Energy Improvement Districts (SOURCE_DSIRE:dsire_program_id:3554)
-  - previous status: uncertain
-- rolling: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Corporate (SOURCE_DSIRE:dsire_program_id:22221)
-  - previous status: uncertain
-- rolling: Clean-Burning Motor Vehicle Fuel Property Tax Credit - Personal (SOURCE_DSIRE:dsire_program_id:22222)
+- rolling: Renewable Electricity Production Tax Credit (PTC) (SOURCE_DSIRE:dsire_program_id:734)
   - previous status: uncertain
 
 ## Remaining Uncertain Sample
 
-- (Electric and Gas) Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:5738)
-  - state: CT
-  - source: DSIRE
-  - checked: https://energizect.com/your-home/rebates-and-incentives
-  - evidence: (Electric and Gas) Residential Rebate Program Rebate Program CT
 - Advanced Energy Fund Grant (SOURCE_DSIRE:dsire_program_id:22746)
   - state: OH
   - source: DSIRE
   - checked: https://development.ohio.gov/community/redevelopment/advanced-energy-fund-grant?utm_medium=email&utm_source=govdelivery
   - evidence: Advanced Energy Fund Grant Grant Program OH
-- Agricultural Lighting and Equipment Rebate Program (SOURCE_DSIRE:dsire_program_id:4056)
-  - state: VT
-  - source: DSIRE
-  - checked: https://www.efficiencyvermont.com/products-technologies/agricultural-equipment
-  - evidence: Agricultural Lighting and Equipment Rebate Program Efficiency Vermont Rebate Program VT
-- Alternative Energy Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:1070)
-  - state: UT
-  - source: DSIRE
-  - checked: none
-  - evidence: Alternative Energy Sales Tax Exemption Utah State Tax Commission Sales Tax Incentive UT
 - Austin Energy - Small Business Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2014)
   - state: TX
   - source: DSIRE
   - checked: https://savings.austinenergy.com/rebates/commercial/offerings/property-improvements/hpwes-sm-bus
   - evidence: Austin Energy - Small Business Energy Efficiency Rebate Program Austin Energy Rebate Program TX
-- Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program (SOURCE_DSIRE:dsire_program_id:3276)
-  - state: WI
-  - source: DSIRE
-  - checked: https://www.barronelectric.com/rebates-2023
-  - evidence: Barron Electric Cooperative - ENERGY STAR Appliance, Energy Efficient Lighting, HVAC and Water Heater Rebate Program Barron Electric Cooperative Rebate Program WI
-- Burbank Water & Power - Energy Solutions Business Rebate Program (SOURCE_DSIRE:dsire_program_id:1630)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs
-  - evidence: Burbank Water & Power - Energy Solutions Business Rebate Program Burbank Water and Power Rebate Program CA
-- Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658)
-  - state: US
-  - source: DSIRE
-  - checked: none
-  - evidence: Business Energy Investment Tax Credit (ITC) U.S. Internal Revenue Service Corporate Tax Credit US
 - Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3629)
   - state: OR
   - source: DSIRE
   - checked: https://clpud.org/energy-efficiency/residential-rebate-programs/
   - evidence: Central Lincoln People's Utility District - Residential Energy Efficiency Rebate Programs Central Lincoln People's Utility District Rebate Program OR
-- City and County of Denver - Elevations Energy Loans (SOURCE_DSIRE:dsire_program_id:5307)
-  - state: CO
-  - source: DSIRE
-  - checked: https://www.elevationscu.com/loans/energy-loans
-  - evidence: City and County of Denver - Elevations Energy Loans Elevations Credit Union Loan Program CO
-- City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2007)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.statesvillenc.net/departments/electric_utilities/rebates
-  - evidence: City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program City of Statesville Rebate Program NC
-- City Utilities of Springfield - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2702)
-  - state: MO
-  - source: DSIRE
-  - checked: https://www.cityutilities.net/save/commercial/
-  - evidence: City Utilities of Springfield - Commercial Energy Efficiency Rebate Program City Utilities of Springfield, Missouri Rebate Program MO
-- Cleco- Power Wise™ Commercial Program (SOURCE_DSIRE:dsire_program_id:5832)
-  - state: LA
-  - source: DSIRE
-  - checked: https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/small-large-commercial
-  - evidence: Cleco- Power Wise™ Commercial Program Rebate Program LA
 - ConEd (Gas and Electric) - Small Business Direct Install Program (SOURCE_DSIRE:dsire_program_id:5424)
   - state: NY
   - source: DSIRE
   - checked: https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/small-business
   - evidence: ConEd (Gas and Electric) - Small Business Direct Install Program Rebate Program NY
-- Energize Delaware - Home Performance with ENERGY STAR (SOURCE_DSIRE:dsire_program_id:5449)
-  - state: DE
-  - source: DSIRE
-  - checked: https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/
-  - evidence: Energize Delaware - Home Performance with ENERGY STAR Energize Delaware Rebate Program DE
-- Energy Conversion and Thermal Efficiency Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:77)
-  - state: OH
-  - source: DSIRE
-  - checked: https://tax.ohio.gov/help-center/faqs/sales-and-use-applying-the-tax-what-is-and-isnt-taxable
-  - evidence: Energy Conversion and Thermal Efficiency Sales Tax Exemption Ohio Department of Taxation Sales Tax Incentive OH
-- EnergyUnited Commercial Lighting Program (SOURCE_DSIRE:dsire_program_id:22096)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/
-  - evidence: EnergyUnited Commercial Lighting Program Rebate Program NC
-- Entergy Arkansas - Residential Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:3680)
-  - state: AR
-  - source: DSIRE
-  - checked: https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/
-  - evidence: Entergy Arkansas - Residential Energy Efficiency Programs Entergy Arkansas, Inc. Rebate Program AR
-- Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program (SOURCE_DSIRE:dsire_program_id:3754)
-  - state: LA
-  - source: DSIRE
-  - checked: https://www.energysmartnola.info/custom-and-prescriptive-incentives/
-  - evidence: Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program Energy Smart Rebate Program LA
 - Large Energy Users Program (SOURCE_DSIRE:dsire_program_id:5568)
   - state: NJ
   - source: DSIRE
   - checked: https://www.njcleanenergy.com/LEUP
   - evidence: Large Energy Users Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ
-- Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1718)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.lmud.org/customer-services/rebates-solar/residential-rebates/
-  - evidence: Lassen Municipal Utility District - Residential Energy Efficiency Rebate Program Public Benefits Specialist Rebate Program CA
-- Local Option - Clean Energy Development Boards (SOURCE_DSIRE:dsire_program_id:4248)
-  - state: MO
-  - source: DSIRE
-  - checked: https://dnr.mo.gov/energy/business-industry/financial-opportunities/property-assessed-clean-energy-pace
-  - evidence: Local Option - Clean Energy Development Boards PACE Financing MO
-- MMPA - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4739)
-  - state: MN
-  - source: DSIRE
-  - checked: http://mmpa.org/conservation/we-save-business/
-  - evidence: MMPA - Commercial and Industrial Energy Efficiency Program Rebate Program MN
-- MMPA - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4740)
-  - state: MN
-  - source: DSIRE
-  - checked: http://mmpa.org/conservation/we-save-home/
-  - evidence: MMPA - Residential Energy Efficiency Program Rebate Program MN
-- Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
-  - state: US
-  - source: DSIRE
-  - checked: none
-  - evidence: Modified Accelerated Cost-Recovery System (MACRS) U.S. Internal Revenue Service Corporate Depreciation US
 - National Grid (Electric) - Residential Energy Efficiency Incentive Program (SOURCE_DSIRE:dsire_program_id:3025)
   - state: RI
   - source: DSIRE
   - checked: https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs
   - evidence: National Grid (Electric) - Residential Energy Efficiency Incentive Program Rebate Program RI
-- New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2163)
-  - state: NH
-  - source: DSIRE
-  - checked: https://www.nhec.com/home-energy-solutions/
-  - evidence: New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs New Hampshire Electric Co-op Rebate Program NH
 - New Jersey SmartStart Buildings - New Construction and Retrofits (SOURCE_DSIRE:dsire_program_id:2359)
   - state: NJ
   - source: DSIRE
@@ -266,7 +85,7 @@ GPT Pro research skipped count: 0
   - state: MN
   - source: DSIRE
   - checked: https://smmpa.com/members/north-branch
-  - evidence: North Branch Municipal Water & Light - Commercial & Industrial Energy Efficiency Rebate Program North Branch Municipal Water & Light Rebate Program MN
+  - evidence: A current official North Branch or SMMPA source confirming this specific commercial and industrial rebate program could not be verified.
 - NV Energy -Energy Smart Schools Program (SOURCE_DSIRE:dsire_program_id:4524)
   - state: NV
   - source: DSIRE
@@ -277,11 +96,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS
   - evidence: NYSEG (Electric) - Commercial and Industrial Efficiency Program Franklin Energy Rebate Program NY
-- OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639)
-  - state: OK
-  - source: DSIRE
-  - checked: https://www.oge.com/wps/portal/ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency/!ut/p/z1/lZHLDoIwEEU_qUNbSruEVFvEpKAI2I1hRUgUXRi_XwwJCS_F2TVzz5zMFFlUINuUr7oqn_W9Ka_t-2zZBYNWWnDsxCmXwIQ-iiighGuC8i6gJdM7BUYlkQsJgY2fUUoACLJreF
-  - evidence: OG&E - Commercial Energy Efficiency Rebate Programs OGE Energy Rebate Program OK
 - Oklahoma City - Green Home Loan Program (SOURCE_DSIRE:dsire_program_id:4477)
   - state: OK
   - source: DSIRE
@@ -297,11 +111,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://bizsave.pseg.com/home/direct-install/
   - evidence: PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program PSE&G Grant Program NJ
-- Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2325)
-  - state: VT
-  - source: DSIRE
-  - checked: https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=res
-  - evidence: Residential Energy Efficiency Rebate Programs Efficiency Vermont Rebate Program VT
 - RG&E (Electric) - Commercial and Industrial Efficiency Program (SOURCE_DSIRE:dsire_program_id:4245)
   - state: NY
   - source: DSIRE
@@ -312,236 +121,36 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.rge.com/wps/portal/rge/saveenergy/!ut/p/z1/jZDNDoIwEISfhiu7CpjqrSFG4w_RAwF7MSXWggFK2sLzi_GKlb3tZr6ZzAKDHFjLh0pyW6mW1-N-Y6t7sDhv92GMyW5NKF4xjsklOS6RhJA5BRgBm8Pjj6E4j3cImNs-A-aM-DT453EAJmtVfN9F2yIgEpgWT6GF9ns9nktrO7Px0MNOK6l5Y_yHqbToDfeVlh5OkaUy
   - evidence: RG&E (Electric) - Small Business Lighting Retrofit Program Rebate Program NY
-- Rochester Public Utilities - Residential Conserve and Save Rebate (SOURCE_DSIRE:dsire_program_id:2865)
-  - state: MN
-  - source: DSIRE
-  - checked: http://www.rpu.org/your-home/rebates-programs/conserve-and-save.html
-  - evidence: Rochester Public Utilities - Residential Conserve and Save Rebate Rochester Public Utilities Rebate Program MN
-- Salt River Project - Business Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:3256)
-  - state: AZ
-  - source: DSIRE
-  - checked: https://www.srpnet.com/energy-savings-rebates/business/savings-tools
-  - evidence: Salt River Project - Business Energy Efficiency Programs Salt River Project Rebate Program AZ
-- San Isabel Electric Association - Commercial Lighting Rebate Program (SOURCE_DSIRE:dsire_program_id:22083)
-  - state: CO
-  - source: DSIRE
-  - checked: https://siea.com/empower-commercial-lighting-efficiency/
-  - evidence: San Isabel Electric Association - Commercial Lighting Rebate Program San Isabel Electric Association Rebate Program CO
-- Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1948)
-  - state: MN
-  - source: DSIRE
-  - checked: https://shakopeeutilities.com/business/2024-commercial-rebates/
-  - evidence: Shakopee Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program Shakopee Public Utilities Rebate Program MN
-- Stearns Electric Association - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2449)
-  - state: MN
-  - source: DSIRE
-  - checked: https://www.stearnselectric.org/save-money-and-energy/commercial-and-argiculture/commercial-equipment-rebates/
-  - evidence: Stearns Electric Association - Commercial Energy Efficiency Rebate Program Stearns Electric Association Rebate Program MN
-- Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:22092)
-  - state: DC
-  - source: DSIRE
-  - checked: https://www.dcseu.com/business-rebates/lighting-instant
-  - evidence: Sustainable Energy Utility - Commercial and Multifamily Energy Efficiency Rebate Program Sustainable Energy Utility Rebate Program DC
-- Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program (SOURCE_DSIRE:dsire_program_id:5167)
-  - state: DC
-  - source: DSIRE
-  - checked: https://www.dcseu.com/commercial-and-multifamily
-  - evidence: Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program District of Columbia Sustainable Energy Utility Rebate Program DC
-- Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:2862)
-  - state: IA
-  - source: DSIRE
-  - checked: https://mpw.org/rebates/#section-1-slider-commercial-lighting-and-fixtures
-  - evidence: Muscatine Power and Water - Commercial and Industrial Energy Efficiency Rebates Muscatine Power and Water Rebate Program IA
-- (Electric and Gas)  Residential New Construction Program (SOURCE_DSIRE:dsire_program_id:4342)
-  - state: CT
-  - source: DSIRE
-  - checked: https://energizect.com/your-home/solutions-list/residential-new-construction-program
-  - evidence: (Electric and Gas) Residential New Construction Program Eversource Energy, UI, SCG, CNG Rebate Program CT
-- APS - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1716)
-  - state: AZ
-  - source: DSIRE
-  - checked: https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options/Rebates
-  - evidence: APS - Residential Energy Efficiency Rebate Program Arizona Public Service Rebate Program AZ
-- Baltimore County - Property Tax Credit for Solar and Geothermal Devices (SOURCE_DSIRE:dsire_program_id:5042)
-  - state: MD
-  - source: DSIRE
-  - checked: https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/energy
-  - evidence: Baltimore County - Property Tax Credit for Solar and Geothermal Devices Baltimore County Office of Budget and Finance Property Tax Incentive MD
 - CenterPoint Energy A/C Distributor Program (SOURCE_DSIRE:dsire_program_id:5745)
   - state: TX
   - source: DSIRE
   - checked: https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/ac-distributor-program.aspx?sa=ho&au=res
   - evidence: CenterPoint Energy A/C Distributor Program Rebate Program TX
-- Chelan County PUD - Residential Weatherization Rebate Program (SOURCE_DSIRE:dsire_program_id:3179)
-  - state: WA
-  - source: DSIRE
-  - checked: http://www.chelanpud.org/conservationhome/residential
-  - evidence: Chelan County PUD - Residential Weatherization Rebate Program Chelan County Public Utility District Rebate Program WA
-- City and County of Denver - Home Energy Rebates (SOURCE_DSIRE:dsire_program_id:22760)
-  - state: CO
-  - source: DSIRE
-  - checked: https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Electrifying-Denvers-Homes/Resources-for-Home-and-Townhouse-Owners
-  - evidence: City and County of Denver - Home Energy Rebates APTIM Rebate Program CO
-- City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants (SOURCE_DSIRE:dsire_program_id:5558)
-  - state: CO
-  - source: DSIRE
-  - checked: http://aspencore.org/grants/
-  - evidence: City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants Community Office for Resource Efficiency Grant Program CO
 - City of Danville Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4928)
   - state: VA
   - source: DSIRE
   - checked: https://danvilleutilities.com/resources/homesave/homesave-rebate-program.html
   - evidence: City of Danville Utilities - Residential Energy Efficiency Rebate Program Danville Utilities Rebate Program VA
-- Cleco- Power Wise™ Residential Program (SOURCE_DSIRE:dsire_program_id:5831)
-  - state: LA
-  - source: DSIRE
-  - checked: https://www.cleco.com/residential-commercial/energy-efficiency-renewables/power-wise/residential
-  - evidence: Cleco- Power Wise™ Residential Program Rebate Program LA
-- Colorado - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22718)
-  - state: CO
-  - source: DSIRE
-  - checked: https://energyoffice.colorado.gov/home-energy-rebates
-  - evidence: Colorado - Home Electrification and Appliance Rebate (HEAR) Program Rebate Program CO
 - Con Ed Demand Management for Industrial and Commercial Customers (SOURCE_DSIRE:dsire_program_id:22108)
   - state: NY
   - source: DSIRE
   - checked: https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems
   - evidence: Con Ed Demand Management for Industrial and Commercial Customers ConEdison Rebate Program NY
-- Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4234)
-  - state: IL
-  - source: DSIRE
-  - checked: http://www.cornbeltenergy.com/programs-services/rebate-program.html
-  - evidence: Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program Power Moves - Wabash Valley Power Association Rebate Program IL
-- Energize Connecticut Residential and Commercial Rebates (SOURCE_DSIRE:dsire_program_id:5737)
-  - state: CT
-  - source: DSIRE
-  - checked: https://energizect.com/rebates-and-incentives
-  - evidence: Energize Connecticut Residential and Commercial Rebates Rebate Program CT
-- Energize Delaware - Home Energy-Efficiency Loan Program (SOURCE_DSIRE:dsire_program_id:22556)
-  - state: DE
-  - source: DSIRE
-  - checked: https://www.energizedelaware.org/residential/home-performance-with-energy-star/home-energy-efficiency-loan-program/
-  - evidence: Energize Delaware - Home Energy-Efficiency Loan Program Energize Delaware Loan Program DE
-- Energy Efficiency Revolving Loan Fund (SOURCE_DSIRE:dsire_program_id:22747)
-  - state: IL
-  - source: DSIRE
-  - checked: https://www.il-fa.com/programs/ee-rlf
-  - evidence: Energy Efficiency Revolving Loan Fund Illinois Finance Authority & Climate Bank Loan Program IL
-- Energy Efficient Residential Construction Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:1230)
-  - state: OK
-  - source: DSIRE
-  - checked: none
-  - evidence: Energy Efficient Residential Construction Tax Credit (Personal) Oklahoma Tax Commission Personal Tax Credit OK
-- Energy United - Residential Heat Pump Rebate (SOURCE_DSIRE:dsire_program_id:22522)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.energyunited.com/energy-services/rebates/pev-programs/
-  - evidence: Energy United - Residential Heat Pump Rebate Rebate Program NC
-- EnergyUnited (Electric) - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:22094)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/
-  - evidence: EnergyUnited (Electric) - Residential Energy Efficiency Program Rebate Program NC
-- Four-County EMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3320)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.fourcty.org/rates-rebates-free-checkup/
-  - evidence: Four-County EMC - Residential Energy Efficiency Rebate Program Four County EMC Rebate Program NC
-- Haywood EMC - Residential Heat Pump and Weatherization Loan Program (SOURCE_DSIRE:dsire_program_id:3589)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.haywoodemc.com/heat-pumpweatherization-loan
-  - evidence: Haywood EMC - Residential Heat Pump and Weatherization Loan Program Haywood EMC Loan Program NC
-- Income Tax Deduction for Energy-Efficient Products (SOURCE_DSIRE:dsire_program_id:4362)
-  - state: VA
-  - source: DSIRE
-  - checked: none
-  - evidence: Income Tax Deduction for Energy-Efficient Products Virginia Department of Taxation Personal Tax Deduction VA
-- Investment Tax Credit (SOURCE_DSIRE:dsire_program_id:3428)
-  - state: VT
-  - source: DSIRE
-  - checked: http://tax.vermont.gov/business-and-corp/corp-and-business-income-taxes/tax-credits
-  - evidence: Investment Tax Credit Vermont Department of Taxes Personal Tax Credit VT
-- Jackson EMC - Residential Energy Efficiency HomePlus Loan Program (SOURCE_DSIRE:dsire_program_id:2272)
-  - state: GA
-  - source: DSIRE
-  - checked: https://www.jacksonemc.com/homeplus
-  - evidence: Jackson EMC - Residential Energy Efficiency HomePlus Loan Program Jackson Electric Membership Corporation Loan Program GA
-- Jackson EMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5236)
-  - state: GA
-  - source: DSIRE
-  - checked: http://www.jacksonemc.com/rebates
-  - evidence: Jackson EMC - Residential Energy Efficiency Rebate Program Jackson Electric Membership Corporation Rebate Program GA
-- Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1811)
-  - state: MA
-  - source: DSIRE
-  - checked: https://www.mansfieldelectric.com/rebates-savings
-  - evidence: Mansfield Municipal Electric Department - Residential Energy Efficiency Rebate Program Mansfield Municipal Electric Department Rebate Program MA
-- Marin County - Natural Gas Appliance Replacement Rebate Program (SOURCE_DSIRE:dsire_program_id:22106)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.marincounty.org/depts/cd/divisions/sustainability/electrify
-  - evidence: Marin County - Natural Gas Appliance Replacement Rebate Program Rebate Program CA
 - Mason County PUD 3 - Residential Energy Rebates (SOURCE_DSIRE:dsire_program_id:2197)
   - state: WA
   - source: DSIRE
   - checked: http://www.pud3.org/service/conservation-incentives
   - evidence: Mason County PUD 3 - Residential Energy Rebates Mason County PUD 3 Rebate Program WA
-- Mass Save  - Residential Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:4799)
-  - state: MA
-  - source: DSIRE
-  - checked: https://www.masssave.com/en/saving/residential-rebates/
-  - evidence: Mass Save - Residential Energy Efficiency Programs Berkshire Gas, Cape Light Compact, Eversource, Liberty, National Grid, Unitil Rebate Program MA
-- MidAmerican Energy - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3507)
-  - state: IL
-  - source: DSIRE
-  - checked: https://www.midamericanenergy.com/il-ee-rebates
-  - evidence: MidAmerican Energy - Residential Energy Efficiency Rebate Programs MidAmerican Energy Company Rebate Program IL
 - Middle Tennessee EMC - Residential Heat Pump Loan Program (SOURCE_DSIRE:dsire_program_id:2234)
   - state: TN
   - source: DSIRE
   - checked: http://www.mtemc.com/pages.cfm/name/r09_heatingac
   - evidence: Middle Tennessee EMC - Residential Heat Pump Loan Program Middle Tennessee Electric Membership Corporation Loan Program TN
-- Modesto Irrigation District - Commercial New Construction Rebate Program (SOURCE_DSIRE:dsire_program_id:3219)
-  - state: CA
-  - source: DSIRE
-  - checked: http://www.mid.org/rebates/commercial/default.html
-  - evidence: Modesto Irrigation District - Commercial New Construction Rebate Program Energy Management Department Rebate Program CA
-- Monmouth Power & Light - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3337)
-  - state: OR
-  - source: DSIRE
-  - checked: http://www.ci.monmouth.or.us/pview.aspx?id=4776
-  - evidence: Monmouth Power & Light - Residential Energy Efficiency Program Monmouth Power & Light Rebate Program OR
-- Mountain View Electric Association, Inc - Energy Efficiency Rebates Program (SOURCE_DSIRE:dsire_program_id:2103)
-  - state: CO
-  - source: DSIRE
-  - checked: https://www.mvea.coop/save-energy-money/rebates/
-  - evidence: Mountain View Electric Association, Inc - Energy Efficiency Rebates Program Mountain View Electric Association, Inc. Rebate Program CO
-- Muscatine Power and Water - Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:2861)
-  - state: IA
-  - source: DSIRE
-  - checked: https://mpw.org/rebates/#residential-rebates
-  - evidence: Muscatine Power and Water - Residential Energy Efficiency Rebates Muscatine Power and Water Rebate Program IA
 - New Smyrna Beach - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3335)
   - state: FL
   - source: DSIRE
   - checked: https://www.nsbufl.com/energy-conservation
-  - evidence: New Smyrna Beach - Energy Efficiency Rebate Program New Smyrna Beach Utilities Commission Rebate Program FL
-- Nicor Gas - Commercial Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4130)
-  - state: IL
-  - source: DSIRE
-  - checked: https://www.nicorgas.com/business/ways-to-save/rebates.html
-  - evidence: Nicor Gas - Commercial Energy Efficiency Rebates Rebate Program IL
-- Nicor Gas - Residential Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:4128)
-  - state: IL
-  - source: DSIRE
-  - checked: https://www.nicorgas.com/residential/ways-to-save/rebates.html.html
-  - evidence: Nicor Gas - Residential Energy Efficiency Rebates CLEAResult Rebate Program IL
-- Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3112)
-  - state: CT
-  - source: DSIRE
-  - checked: https://norwichpublicutilities.com/residential/efficiency-programs-rebates/#nav-anchor-to-2
-  - evidence: Norwich Public Utilities (Electric) - Residential Energy Efficiency Rebate Program Norwich Public Utilities Rebate Program CT
+  - evidence: A current official New Smyrna Beach Utilities source confirming this specific rebate program could not be verified.
 - Orange and Rockland Utilities (Gas) - Residential Efficiency Program (SOURCE_DSIRE:dsire_program_id:3905)
   - state: NY
   - source: DSIRE
@@ -552,11 +161,6 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.directefficiency.com/otec-rebates/#otec-commercial
   - evidence: OTEC - Commercial Energy Efficiency Rebate Program Oregon Trail Electric Cooperative Rebate Program OR
-- Owen Electric - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2301)
-  - state: KY
-  - source: DSIRE
-  - checked: https://www.owenelectric.com/energy-efficiency-info-programs-rebates
-  - evidence: Owen Electric - Residential Energy Efficiency Rebate Program Owen Electric Cooperative, Inc. Rebate Program KY
 - Pend Oreille PUD - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4599)
   - state: WA
   - source: DSIRE
@@ -567,158 +171,128 @@ GPT Pro research skipped count: 0
   - source: DSIRE
   - checked: https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives
   - evidence: Portland General Electric - Residential Energy Efficiency Rebate Program Portland General Electric Rebate Program OR
-- Randolph EMC - ElecTel Energy Efficiency Loan Program (SOURCE_DSIRE:dsire_program_id:22437)
-  - state: NC
-  - source: DSIRE
-  - checked: https://www.randolphemc.com/financing-electel
-  - evidence: Randolph EMC - ElecTel Energy Efficiency Loan Program Randolph Electric Membership Corporation Loan Program NC
-- Renewable Energy Systems Exemption (SOURCE_DSIRE:dsire_program_id:154)
-  - state: MT
-  - source: DSIRE
-  - checked: https://mtrevenue.gov/publications/application-for-tax-incentive-assessment-of-energy-generating-property-form-ab-14/
-  - evidence: Renewable Energy Systems Exemption Montana Department of Revenue Property Tax Incentive MT
-- Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22725)
-  - state: RI
-  - source: DSIRE
-  - checked: https://energy.ri.gov/energy-incentives/home-energy-rebate-program
-  - evidence: Rhode Island – Home Electrification and Appliance Rebate (HEAR) Program Office of Energy Resources Rebate Program RI
-- Roseville Electric - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1902)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359
-  - evidence: Roseville Electric - Residential Energy Efficiency Rebate Program Rebate Program CA
-- San Miguel Power Association - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4312)
-  - state: CO
-  - source: DSIRE
-  - checked: https://www.ecoactionpartners.org/smparebates
-  - evidence: San Miguel Power Association - Energy Efficiency Rebate Program Rebate Program CO
-- Southern Indiana Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2667)
-  - state: IN
-  - source: DSIRE
-  - checked: http://www.sinpwr.com/content/2020-residential-rebates
-  - evidence: Southern Indiana Power - Residential Energy Efficiency Rebate Program Southern Indiana Rural Electric Cooperative Rebate Program IN
-- SRP - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4051)
-  - state: AZ
-  - source: DSIRE
-  - checked: https://srpnet.com/menu/savings/rebates_discounts.aspx
-  - evidence: SRP - Residential Energy Efficiency Rebate Program SRP Rebate Program AZ
-- Stearns Electric Association - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3433)
-  - state: MN
-  - source: DSIRE
-  - checked: https://www.stearnselectric.org/save-money-and-energy/tools-and-resources/appliance-rebates/
-  - evidence: Stearns Electric Association - Residential Energy Efficiency Rebate Program Stearns Electric Association Rebate Program MN
-- Sustainable Energy Utility - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5399)
-  - state: DC
-  - source: DSIRE
-  - checked: https://www.dcseu.com/homes
-  - evidence: Sustainable Energy Utility - Residential Energy Efficiency Rebate Program Sustainable Energy Utility Rebate Program DC
-- Taylor County RECC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3262)
-  - state: KY
-  - source: DSIRE
-  - checked: http://www.tcrecc.com/rebates.php
-  - evidence: Taylor County RECC - Residential Energy Efficiency Rebate Program Taylor County RECC Rebate Program KY
 - Texas Gas Service - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1536)
   - state: TX
   - source: DSIRE
   - checked: https://www.texasgasservice.com/save-money/rebates-and-incentives/ctx-rebates-and-incentives
   - evidence: Texas Gas Service - Residential Energy Efficiency Rebate Program Texas Gas Service Rebate Program TX
-- Wakefield Municipal Gas & Light Department - Residential Conservation Services Program (SOURCE_DSIRE:dsire_program_id:1342)
-  - state: MA
-  - source: DSIRE
-  - checked: http://wmgld.com/energy-programs/
-  - evidence: Wakefield Municipal Gas & Light Department - Residential Conservation Services Program Rebate Program MA
-- Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2249)
-  - state: MN
-  - source: DSIRE
-  - checked: http://www.whe.org/for-my-home/resources/rebates.html
-  - evidence: Wright-Hennepin Cooperative Electric Association - Residential Energy Efficiency Rebate Program Wright-Hennepin Cooperative Electric Association Rebate Program MN
-- American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program (SOURCE_DSIRE:dsire_program_id:4845)
-  - state: OH
-  - source: DSIRE
-  - checked: http://www.efficiencysmart.org/
-  - evidence: American Municipal Power (Public Electric Utilities) - Efficiency Smart Residential Program Rebate Program OH
-- Entergy Mississippi- Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:5793)
-  - state: MS
-  - source: DSIRE
-  - checked: http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx
-  - evidence: Entergy Mississippi- Residential Energy Efficiency Program Rebate Program MS
-- Reading Municipal Light Department - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1829)
-  - state: MA
-  - source: DSIRE
-  - checked: https://www.rmld.com/my-residence/pages/residential-rebates
-  - evidence: Reading Municipal Light Department - Residential Energy Efficiency Rebate Program Customer Service Rebate Program MA
-- Silicon Valley Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1920)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.siliconvalleypower.com/residents/rebates-6214
-  - evidence: Silicon Valley Power - Residential Energy Efficiency Rebate Program Silicon Valley Power Rebate Program CA
 - Vera Water & Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2241)
   - state: WA
   - source: DSIRE
   - checked: https://verawaterandpower.com/residential-rebates-2/
   - evidence: Vera Water & Power - Residential Energy Efficiency Rebate Program Rebate Program WA
-- Delaware Electric Cooperative - Beat the Peak With Electric Vehicles (SOURCE_DSIRE:dsire_program_id:22304)
-  - state: DE
-  - source: DSIRE
-  - checked: https://www.delaware.coop/btp
-  - evidence: Delaware Electric Cooperative - Beat the Peak With Electric Vehicles Delaware Electric Cooperative Rebate Program DE
 - New Mexico Gas Company - New Home Construction Rebate Program (SOURCE_DSIRE:dsire_program_id:22140)
   - state: NM
   - source: DSIRE
   - checked: https://nmgcgetrebates.com/new-homes-rebates
   - evidence: New Mexico Gas Company - New Home Construction Rebate Program New Mexico Gas Company Rebate Program NM
-- City of Chicago - Green Building Permit Programs (SOURCE_DSIRE:dsire_program_id:2466)
-  - state: IL
-  - source: DSIRE
-  - checked: https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html
-  - evidence: City of Chicago - Green Building Permit Programs City of Chicago Green Building Incentive IL
-- Corporate Property Tax Reduction for New/Expanded Generating Facilities (SOURCE_DSIRE:dsire_program_id:496)
-  - state: MT
-  - source: DSIRE
-  - checked: https://mtrevenue.gov/publications/new-or-expanding-industry-classification-application-form-cab-1/
-  - evidence: Corporate Property Tax Reduction for New/Expanded Generating Facilities Montana Department of Revenue Property Tax Incentive MT
-- Green Energy Property Tax Assessment (SOURCE_DSIRE:dsire_program_id:5216)
-  - state: TN
-  - source: DSIRE
-  - checked: none
-  - evidence: Green Energy Property Tax Assessment Tennessee Comptroller of the Treasury Property Tax Incentive TN
-- Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:2801)
-  - state: RI
-  - source: DSIRE
-  - checked: none
-  - evidence: Local Option - Property Tax Exemption for Renewable Energy Systems Rhode Island Office of Energy Resources Property Tax Incentive RI
-- Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615)
-  - state: CA
-  - source: DSIRE
-  - checked: https://www.mcecleanenergy.org/feed-in-tariff/
-  - evidence: Marin Clean Energy - Feed-In Tariff Plus Marin Clean Energy Feed-in Tariff CA
-- Property Tax Exemption for Residential Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:4210)
-  - state: CO
-  - source: DSIRE
-  - checked: https://cdola.colorado.gov/renewable-energy
-  - evidence: Property Tax Exemption for Residential Renewable Energy Equipment Division of Property Taxation / Local Assessors Property Tax Incentive CO
-- Renewable Electricity Production Tax Credit (PTC) (SOURCE_DSIRE:dsire_program_id:734)
-  - state: US
-  - source: DSIRE
-  - checked: https://www.energy.gov/eere/solar/federal-solar-tax-credits-businesses
-  - evidence: Renewable Electricity Production Tax Credit (PTC) U.S. Internal Revenue Service Corporate Tax Credit US
-- Renewable Energy Property Tax Assessment (SOURCE_DSIRE:dsire_program_id:2388)
-  - state: CO
-  - source: DSIRE
-  - checked: https://dpt.colorado.gov/renewable-energy
-  - evidence: Renewable Energy Property Tax Assessment Department of Local Affairs Property Tax Incentive CO
-- Sales and Use Tax Exemption for Renewable Energy Equipment (SOURCE_DSIRE:dsire_program_id:3397)
-  - state: CO
-  - source: DSIRE
-  - checked: https://tax.colorado.gov/sales-use-tax-guidance-publications
-  - evidence: Sales and Use Tax Exemption for Renewable Energy Equipment Sales Tax Incentive CO
-- Sales Tax Credit for Clean Energy Technology (SOURCE_DSIRE:dsire_program_id:4919)
-  - state: TN
-  - source: DSIRE
-  - checked: none
-  - evidence: Sales Tax Credit for Clean Energy Technology Tennessee Department of Revenue Sales Tax Incentive TN
 - Texas Gas Service - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1538)
   - state: TX
   - source: DSIRE
   - checked: https://www.texasgasservice.com/save-money/rebates-and-incentives/rgv-rebates-and-incentives/rgv-commercial-rebates-incentives
   - evidence: Texas Gas Service - Commercial Energy Efficiency Rebate Program Rebate Program TX
+- Met-Ed / Penelec Sustainable Energy Fund (SOURCE_DSIRE:dsire_program_id:678)
+  - state: PA
+  - source: DSIRE
+  - checked: https://bccf.org/overview-sustainable-energy-funds/
+  - evidence: Met-Ed / Penelec Sustainable Energy Fund Berks County Community Foundation Grant Program PA
+- NV Energy - Solar Thermal Heating Program (SOURCE_DSIRE:dsire_program_id:4590)
+  - state: NV
+  - source: DSIRE
+  - checked: https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating
+  - evidence: NV Energy - Solar Thermal Heating Program NV Energy Rebate Program NV
+- Sulphur Springs Valley EC - SunWatts Rebate Program (SOURCE_DSIRE:dsire_program_id:186)
+  - state: AZ
+  - source: DSIRE
+  - checked: https://www.ssvec.org/downloads/programs/renewable/2022/2022-SunWatts-Handbook.pdf, https://www.ssvec.org/downloads/programs/renewable/2022/The-SunWatts-Solar-Water-Heating.pdf, https://www.ssvec.org/programs/rebates.php
+  - evidence: Current official Sulphur Springs Valley EC rebate pages did not safely confirm the SunWatts rebate program as currently open.
+- Trico Electric Cooperative  - SunWatts Incentive Program (SOURCE_DSIRE:dsire_program_id:2402)
+  - state: AZ
+  - source: DSIRE
+  - checked: https://trico.coop/sustainable-programs/solar/, https://trico.coop/wp-content/uploads/2026/01/RESFM.pdf
+  - evidence: Current Trico solar and renewable materials did not safely confirm an active SunWatts incentive program.
+- Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3277)
+  - state: WI
+  - source: DSIRE
+  - checked: https://www.barronelectric.com/2024-energy-rebates
+  - evidence: Barron Electric Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program Barron Electric Cooperative Rebate Program WI
+- NJ Clean Energy- Residential New Construction Program (SOURCE_DSIRE:dsire_program_id:5811)
+  - state: NJ
+  - source: DSIRE
+  - checked: https://www.njcleanenergy.com/residential/programs/residential-new-construction
+  - evidence: NJ Clean Energy- Residential New Construction Program Rebate Program NJ
+- Renewable Energy Facility Sales and Use Tax Reimbursement (SOURCE_DSIRE:dsire_program_id:5422)
+  - state: SD
+  - source: DSIRE
+  - checked: https://sdreadytowork.com/financing-incentives/tax-incentives/
+  - evidence: Renewable Energy Facility Sales and Use Tax Reimbursement Governor's Office of Economic Development Sales Tax Incentive SD
+- Small Scale CHP and Fuel Cell Incentive Program (SOURCE_DSIRE:dsire_program_id:5205)
+  - state: NJ
+  - source: DSIRE
+  - checked: http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power
+  - evidence: Small Scale CHP and Fuel Cell Incentive Program TRC Solutions Grant Program NJ
+- Southwest Gas Corporation - Combined Heat and Power Program (SOURCE_DSIRE:dsire_program_id:4066)
+  - state: AZ
+  - source: DSIRE
+  - checked: https://www.swgas.com/en/rebates-and-promotions-search-residential-arizona, https://www.swgas.com/1409181751727/F915-09-Arizona-Smarter-Greener-Better-Distributed-Generation-Program-Rebate-Application.pdf, https://www.swgas.com/1409210069209/230531-APP-23-XXXX-SWG-2023-EE-RET-Application-.pdf
+  - evidence: A current official Southwest Gas source confirming the Arizona Combined Heat and Power Program as open could not be verified.
+- Metropolitan Edison Company SEF Loans (FirstEnergy Territory) (SOURCE_DSIRE:dsire_program_id:1051)
+  - state: PA
+  - source: DSIRE
+  - checked: http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86
+  - evidence: Metropolitan Edison Company SEF Loans (FirstEnergy Territory) Berks County Community Foundation Loan Program PA
+- Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive (SOURCE_DSIRE:dsire_program_id:22480)
+  - state: NJ
+  - source: DSIRE
+  - checked: https://njcleanenergy.com/renewable-energy/programs/susi-program/csi-program
+  - evidence: Successor Solar Incentive (SuSI) Program - Competitive Solar Incentive Board of Public Utilities Performance-Based Incentive NJ
+- Wyoming PACE Financing Program (SOURCE_DSIRE:dsire_program_id:4914)
+  - state: WY
+  - source: DSIRE
+  - checked: https://programs.dsireusa.org/system/program/detail/4914/wyoming-pace-financing-program, https://www.epa.gov/statelocalenergy/commercial-property-assessed-clean-energy
+  - evidence: A current official Wyoming administrator or statutory source confirming active PACE financing availability could not be verified.
+- Barron Electric Cooperative - Electric Vehicle Charging Station Rebate (SOURCE_DSIRE:dsire_program_id:22357)
+  - state: WI
+  - source: DSIRE
+  - checked: https://www.barronelectric.com/2024-energy-rebates
+  - evidence: Barron Electric Cooperative - Electric Vehicle Charging Station Rebate Barron Electric Cooperative Rebate Program WI
+- City of Atlanta - Incentivized Green Developments (SOURCE_DSIRE:dsire_program_id:22679)
+  - state: GA
+  - source: DSIRE
+  - checked: https://www.atlantaga.gov/doing-business/grants-loans-incentives, https://www.atlantaga.gov/Home/Components/News/News/7103/
+  - evidence: A current official City of Atlanta source confirming this specific Incentivized Green Developments incentive could not be verified.
+- Diesel Mitigation Trust Fund (SOURCE_DSIRE:dsire_program_id:22216)
+  - state: OH
+  - source: DSIRE
+  - checked: https://epa.ohio.gov/divisions-and-offices/environmental-education/grant-programs/vw-mitigation-grants
+  - evidence: Diesel Mitigation Trust Fund Ohio Environmental Protection Agency Grant Program OH
+- EV Tourism Program (SOURCE_DSIRE:dsire_program_id:22521)
+  - state: NJ
+  - source: DSIRE
+  - checked: https://www.njcleanenergy.com/ev
+  - evidence: EV Tourism Program NJ Board of Public Utilities Grant Program NJ
+- Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22663)
+  - state: WY
+  - source: DSIRE
+  - checked: https://www.dot.state.wy.us/home/planning_projects/zero-emission-vehicles/national-electric-vehicle-infrastructure-(nevi)-program.html
+  - evidence: Wyoming - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program Wyoming Department of Transportation Grant Program WY
+- OTEC - Agricultural Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3136)
+  - state: OR
+  - source: DSIRE
+  - checked: https://www.directefficiency.com/otec-rebates/
+  - evidence: OTEC - Agricultural Energy Efficiency Rebate Programs Oregon Trail Electric Cooperative Rebate Program OR
+- Local Energy Audit Program (SOURCE_DSIRE:dsire_program_id:5567)
+  - state: NJ
+  - source: DSIRE
+  - checked: https://www.njcleanenergy.com/lgea
+  - evidence: Local Energy Audit Program New Jersey Clean Energy Program (NJCEP) Rebate Program NJ
+- Pay for Performance Program (SOURCE_DSIRE:dsire_program_id:3330)
+  - state: NJ
+  - source: DSIRE
+  - checked: https://www.njcleanenergy.com/commercial-industrial/programs/pay-performance/new-construction/new-construction
+  - evidence: Pay for Performance Program New Jersey Board of Public Utilities, Office of Clean Energy Rebate Program NJ
+- El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools (SOURCE_DSIRE:dsire_program_id:4593)
+  - state: TX
+  - source: DSIRE
+  - checked: https://www.epelectric.com/tx/business/program-manuals-and-guidelines
+  - evidence: El Paso Electric Company - SCORE Program for Counties, Municipalities, and Schools CLEAResult Consulting Company Rebate Program TX

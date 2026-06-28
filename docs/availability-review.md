@@ -50,6 +50,13 @@ To persist results to DynamoDB:
 npm run matching:availability-reviews -- --write-dynamodb
 ```
 
+To persist an existing review artifact, including a GPT/manual-repaired public artifact, to DynamoDB:
+
+```sh
+AVAILABILITY_REVIEW_OUTPUT_PATH=data/public_opportunity_availability_reviews.json \
+  npm run matching:availability-reviews:write
+```
+
 For a targeted repair, export or build a JSON list of opportunities and pass it through `OPPORTUNITY_SOURCE_PATH`:
 
 ```sh
@@ -221,10 +228,11 @@ A future scheduled job should:
 6. Classify remaining uncertain rows by subtype before broad search or LLM escalation: statutory/tax/PACE/bond/tariff, utility rebate portal, grant/solicitation, local-option implementation, or stale DSIRE/aggregator-only.
 7. Run subtype-specific official-source searches. For statutes and tax incentives, check current code, tax authority pages, current forms, and sunset dates. For utility programs, check measure pages, portals, application PDFs, and claim workflows. For grants, check current FOAs/NOFOs and official schedules. For local-option records, distinguish enabling law from adopted local programs.
 8. Generate the GPT Pro/manual research packet only after subtype search fails, and include the suspected subtype, checked official URLs, and why deterministic review could not decide.
-9. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
-10. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
-11. Run `matching:special-edge-audit` and review any `remove_normal_edges` rows before publishing regenerated test cases.
-12. Regenerate sample matching fixtures, then run `matching:availability-public-fixtures` and `matching:special-edge-suppressions:public` when working from checked-in public data.
-13. Publish the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
+9. Write the repaired availability artifact back to DynamoDB with `matching:availability-reviews:write` so the canonical opportunity records carry the same evidence and status as the generated public artifact.
+10. Run `matching:archive-unavailable -- --write-dynamodb --unarchive-restored --archive-low-information` so closed opportunities are hidden, update-only fragments are retired, and reopened opportunities can return.
+11. Run `matching:status-bucket-repairs -- --write-dynamodb` for targeted reviewed repairs that convert remaining visible ambiguous matches into eligible, ineligible, archived, or hidden-upcoming outcomes.
+12. Run `matching:special-edge-audit` and review any `remove_normal_edges` rows before publishing regenerated test cases.
+13. Regenerate sample matching fixtures, then run `matching:availability-public-fixtures` and `matching:special-edge-suppressions:public` when working from checked-in public data.
+14. Publish the frontend. The sample generator fails when visible results contain any status other than `eligible` or `ineligible`.
 
 This keeps the canonical opportunity table authoritative while preserving the original source records and the evidence used for availability decisions.

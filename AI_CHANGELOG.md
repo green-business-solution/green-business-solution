@@ -776,3 +776,4 @@
 - Added a mixed special/physical retrofit edge audit and suppressed physical retrofit edges for 20 opportunities whose source text explicitly requires an audit, study, certification, or benchmarking step first.
 - Generated public availability and special-edge audit artifacts documenting current review counts, source evidence, and future cron workflow inputs.
 - Documented GPT Pro availability-repair lessons for future cron/manual review, including subtype triage for statutory, tax, PACE, bond, tariff, utility portal, grant, local-option, and stale DSIRE records.
+- Applied the next GPT Pro/manual public availability repair batches, reduced uncertain public opportunities to 50, regenerated public matching fixtures with savings previews, and added an availability review artifact writer for DynamoDB syncs.

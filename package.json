@@ -18,6 +18,7 @@
     "matching:utility-reviews": "node scripts/research-utility-restrictions.mjs",
     "matching:utility-reviews:write": "node scripts/write-utility-restriction-reviews.mjs",
     "matching:availability-reviews": "node scripts/research-availability.mjs",
+    "matching:availability-reviews:write": "node scripts/write-availability-reviews.mjs",
     "matching:availability-reviews:public": "OPPORTUNITY_SOURCE_PATH=public/retrofit_opportunity_index.json AVAILABILITY_REVIEW_OUTPUT_PATH=data/public_opportunity_availability_reviews.json AVAILABILITY_REVIEW_REPORT_PATH=data/public_opportunity_availability_review_report.md node scripts/research-availability.mjs",
     "matching:availability-reviews:public:uncertain": "OPPORTUNITY_SOURCE_PATH=public/retrofit_opportunity_index.json AVAILABILITY_REVIEW_OUTPUT_PATH=data/public_opportunity_availability_reviews.json AVAILABILITY_REVIEW_REPORT_PATH=data/public_opportunity_availability_review_report.md node scripts/research-uncertain-availability.mjs",
     "matching:availability-research-prompt": "node scripts/write-availability-research-prompt.mjs",
