@@ -225,6 +225,7 @@ The final June 2026 manual repair pass attempted the last 50 uncertain public ro
 - If current official pages only show generic conservation tips, energy education, or unrelated program families and no title-specific replacement exists, classify `unavailable` as `source_missing_no_replacement` instead of leaving the row uncertain.
 - Keep parent/child program variants separate. A parent efficiency portfolio may be active while a new homes, solar thermal, diesel mitigation, or old named rebate variant is closed or missing.
 - When a closed current solicitation belongs to a recurring official annual procurement, classify `upcoming` instead of `unavailable` if official materials document future cycles. When a legacy program is explicitly consolidated into a currently open replacement program, classify by the replacement program rather than by the closed legacy route.
+- If an official route is stale but the source record itself is still published, has no end date, and credible current grant listings or administrator workshop materials describe a no-formal-application / funding-until-exhausted path, classify lower-confidence `rolling` and record the stale official URL explicitly.
 
 ## Future Cron Automation
 

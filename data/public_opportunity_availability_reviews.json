@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T06:50:12.517Z",
+  "generatedAt": "2026-06-28T07:17:42.822Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -11,9 +11,8 @@
   "statusCounts": {
     "active": 1370,
     "unavailable": 44,
-    "rolling": 152,
-    "upcoming": 52,
-    "uncertain": 1
+    "rolling": 153,
+    "upcoming": 52
   },
   "reviews": [
     {
@@ -44631,26 +44630,29 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers",
       "websiteUrl": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official Ohio source confirming open applications for the Energy Efficiency Program for Manufacturers could not be verified.",
+        "evidenceText": "DSIRE still lists the Ohio Energy Efficiency Program for Manufacturers as published with no end date and says applicants participate by contacting a participating audit contractor. Fairfield County's grant portal describes the Ohio Energy Efficiency Program as no formal application, ongoing until funds are expended, and the 2025 ODOD energy-grants workshop toolkit says the Energy Efficiency Program for Manufacturers/Non-manufacturers has funding available until it runs out.",
         "reasons": [
-          "still_uncertain"
+          "rolling_or_no_deadline_language",
+          "official_source_stale_secondary_confirmation"
         ],
         "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers",
           "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
-          "https://development.ohio.gov/wps/wcm/connect/gov/f4a2a9d4-c4ed-4394-b71d-a70f521373fd/Guidelines_OhioEEP_2025Edits.%2B130.pdf"
+          "https://www.fairfieldgrants.org/grant-alerts/",
+          "https://fcgg.org/wp-content/uploads/2025/02/for-toolkit-How-to-Apply-for-Ohio-Energy-Efficiency-Grants-Workshop-1.9.25-ODOD-Energy-Grants_Final_010925.pdf"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T06:50:12.517Z",
+        "reviewedAt": "2026-06-28T07:17:42.822Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.35,
-        "researchNotes": "Pro answer-key reconciliation: official source access and replacement evidence were insufficient to classify the program as active, upcoming, or closed."
+        "confidence": 0.72,
+        "researchNotes": "The official Ohio Development URL currently returns a 404 to direct browser/HTTP checks, so confidence stays below high. This is distinct from the FY26 Advanced Energy Fund Grant, which has a closed application window. The best supported classification for DSIRE 5587 is rolling because the program path uses participating audit contractors/no formal application and secondary grant references say funding is available until exhausted."
       }
     },
     {
@@ -46025,7 +46027,7 @@
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
   "uncertainRepairConcurrency": 16,
-  "gptProResearchAppliedAt": "2026-06-28T06:50:12.517Z",
-  "gptProResearchAppliedCount": 9,
+  "gptProResearchAppliedAt": "2026-06-28T07:17:42.822Z",
+  "gptProResearchAppliedCount": 1,
   "gptProResearchSkipped": []
 }

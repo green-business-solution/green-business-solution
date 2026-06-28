@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) final Ohio availability repair
+
+- Researched the last remaining uncertain opportunity, Ohio Energy Efficiency Program for Manufacturers, against DSIRE, Ohio Development, Fairfield County grant listings, and the 2025 ODOD energy-grants workshop toolkit.
+- Reclassified the record from `uncertain` to lower-confidence `rolling` because the program is described as no-formal-application / funding available until funds are expended, while the official Ohio Development URL is stale.
+
 ## 2026-06-28 - Codex (GPT-5) Pro answer-key availability reconciliation
 
 - Compared the final public opportunity availability repairs against the GPT Pro answer key supplied by the user.

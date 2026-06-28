@@ -1,8 +1,8 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-06-28T06:54:18.732Z",
-  "matchingNow": "2026-06-28T06:53:55.814Z",
+  "generatedAt": "2026-06-28T07:20:22.441Z",
+  "matchingNow": "2026-06-28T07:20:03.073Z",
   "opportunityCount": 1519,
   "totalOpportunityRecordCount": 2096,
   "archivedOpportunityCount": 294,
@@ -120287,13 +120287,12 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T06:50:12.517Z",
+  "availabilityReviewedAt": "2026-06-28T07:17:42.822Z",
   "availabilityStatusCounts": {
     "active": 1370,
     "unavailable": 44,
-    "rolling": 152,
-    "upcoming": 52,
-    "uncertain": 1
+    "rolling": 153,
+    "upcoming": 52
   },
   "hiddenUpcomingOpportunityCount": 52,
   "upcomingOpportunities": [

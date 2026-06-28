@@ -59,32 +59,7 @@ Return JSON only:
 ## Failure Buckets
 
 ```json
-{
-  "fetched_but_no_supported_status": 1
-}
+{}
 ```
 
 ## Targets
-
-### 1. Energy Efficiency Program for Manufacturers
-
-```json
-{
-  "opportunityId": "SOURCE_DSIRE:dsire_program_id:5587",
-  "opportunityName": "Energy Efficiency Program for Manufacturers",
-  "state": "OH",
-  "sourceName": "DSIRE",
-  "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5587/energy-efficiency-program-for-manufacturers",
-  "websiteUrl": "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
-  "checkedUrls": [
-    "https://development.ohio.gov/community/redevelopment/energy-efficiency-program",
-    "https://development.ohio.gov/wps/wcm/connect/gov/f4a2a9d4-c4ed-4394-b71d-a70f521373fd/Guidelines_OhioEEP_2025Edits.%2B130.pdf"
-  ],
-  "fetchErrors": [],
-  "currentEvidenceText": "A current official Ohio source confirming open applications for the Energy Efficiency Program for Manufacturers could not be verified.",
-  "currentReasons": [
-    "still_uncertain"
-  ],
-  "failureBucket": "fetched_but_no_supported_status"
-}
-```

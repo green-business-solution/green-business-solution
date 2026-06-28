@@ -1,7 +1,7 @@
 {
   "schemaVersion": "opportunity-archive-report-v1",
-  "generatedAt": "2026-06-28T06:53:32.611Z",
-  "matcherClock": "2026-06-28T06:53:32.611Z",
+  "generatedAt": "2026-06-28T07:19:45.991Z",
+  "matcherClock": "2026-06-28T07:19:45.991Z",
   "opportunityCount": 1619,
   "writeDynamoDb": true,
   "unarchiveRestored": true,
@@ -29889,13 +29889,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "rolling",
         "reasons": [
-          "still_uncertain"
+          "rolling_or_no_deadline_language",
+          "official_source_stale_secondary_confirmation"
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T06:50:12.517Z"
+        "lastVerifiedAt": "2026-06-28T07:17:42.822Z"
       }
     },
     {
