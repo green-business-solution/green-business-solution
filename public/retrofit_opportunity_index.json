@@ -3,7 +3,7 @@
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
   "generatedAt": "2026-06-27T00:45:30.865Z",
   "matchingNow": "2026-06-27T00:45:05.723Z",
-  "opportunityCount": 1556,
+  "opportunityCount": 1555,
   "totalOpportunityRecordCount": 2096,
   "archivedOpportunityCount": 245,
   "retrofitCount": 86,
@@ -90844,7 +90844,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 367,
+      "opportunityCount": 366,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -92050,21 +92050,6 @@
           "matchedTerms": [
             "ev charger"
           ],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22253",
-          "opportunityName": "CMAQ Incentive Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22253/cmaq-incentive-program",
-          "websiteUrl": "https://vacleancities.org/reports-2/cmaq-incentive-program/",
-          "applicationUrl": null,
-          "state": "VA",
-          "programType": "Rebate Program",
-          "administrator": "Virginia Clean Cities",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": [],
           "availabilityStatus": "uncertain"
         },
         {
@@ -95352,7 +95337,7 @@
           "matchedTerms": [
             "electric vehicle charging"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22377",
@@ -97002,7 +96987,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 255,
+      "opportunityCount": 254,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22746",
@@ -97983,24 +97968,6 @@
           "state": "LA",
           "programType": "Rebate Program",
           "administrator": "Cleco Power",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "level 2",
-            "level-2"
-          ],
-          "availabilityStatus": "uncertain"
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22253",
-          "opportunityName": "CMAQ Incentive Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22253/cmaq-incentive-program",
-          "websiteUrl": "https://vacleancities.org/reports-2/cmaq-incentive-program/",
-          "applicationUrl": null,
-          "state": "VA",
-          "programType": "Rebate Program",
-          "administrator": "Virginia Clean Cities",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -100459,7 +100426,7 @@
             "level 2",
             "level-2"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22320",
@@ -102888,7 +102855,7 @@
             "make ready",
             "make-ready"
           ],
-          "availabilityStatus": "uncertain"
+          "availabilityStatus": "active"
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:22320",
@@ -121906,13 +121873,13 @@
       ]
     }
   ],
-  "availabilityReviewedAt": "2026-06-28T03:42:01.909Z",
+  "availabilityReviewedAt": "2026-06-28T04:07:10.122Z",
   "availabilityStatusCounts": {
-    "uncertain": 253,
-    "active": 1254,
+    "uncertain": 251,
+    "active": 1255,
     "rolling": 49,
     "upcoming": 48,
-    "unavailable": 15
+    "unavailable": 16
   },
   "hiddenUpcomingOpportunityCount": 48,
   "upcomingOpportunities": [
@@ -122636,48 +122603,7 @@
         "confidence": 0.9,
         "researchNotes": "Official page is closed now but expressly indicates a future reopening."
       },
-      "retrofitTypes": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "insulation_upgrade",
-          "displayName": "Insulation upgrade",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "energy_management_system",
-          "displayName": "Energy management system",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "combined_heat_and_power_system",
-          "displayName": "Combined heat and power system",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "battery_storage_system",
-          "displayName": "Battery storage system",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "thermal_energy_storage",
-          "displayName": "Thermal energy storage",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true
-        }
-      ]
+      "retrofitTypes": []
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:22634",
@@ -123279,23 +123205,7 @@
         "confidence": 0.95,
         "researchNotes": "Current date is between scheduled application windows, but an official future window is scheduled."
       },
-      "retrofitTypes": [
-        {
-          "retrofitTypeId": "rooftop_solar_pv",
-          "displayName": "Rooftop solar PV",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "biomass_biogas_energy_system",
-          "displayName": "Biomass / biogas energy system",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "ev_charger_installation",
-          "displayName": "EV charger installation",
-          "isPhysicalRetrofit": true
-        }
-      ]
+      "retrofitTypes": []
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:4426",
@@ -123326,28 +123236,7 @@
         "confidence": 0.9,
         "researchNotes": "The 2026 event has passed as of June 28, 2026, but official source supports a recurring future holiday."
       },
-      "retrofitTypes": [
-        {
-          "retrofitTypeId": "led_lighting_retrofit",
-          "displayName": "LED lighting retrofit",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "displayName": "High-efficiency HVAC replacement",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "displayName": "Ground-source / geothermal heat pump",
-          "isPhysicalRetrofit": true
-        },
-        {
-          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
-          "displayName": "High-efficiency refrigeration equipment",
-          "isPhysicalRetrofit": true
-        }
-      ]
+      "retrofitTypes": []
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:236",
@@ -123440,5 +123329,5 @@
       "retrofitTypes": []
     }
   ],
-  "archivedUnavailableOpportunityCount": 15
+  "archivedUnavailableOpportunityCount": 16
 }

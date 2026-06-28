@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) targeted PECO and CMAQ availability repairs
+
+- Repaired PECO Commercial Charger Rebate Program from `uncertain` to `active` using the official PECO EVsmart Charging Rebate route provided by the user.
+- Marked the CMAQ Incentive Program unavailable after official-source research could not confirm current availability and the user directed archival.
+- Regenerated public fixtures, archive reports, and the remaining uncertainty prompt packet, reducing public uncertain records from 253 to 251.
+
 ## 2026-06-28 - Codex (GPT-5) availability research guidance update
 
 - Added official-source fallback research lessons from the GPT Pro repair batch to the availability review workflow.

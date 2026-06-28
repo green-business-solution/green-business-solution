@@ -1,7 +1,7 @@
 # Opportunity Archive Report
 
-Generated: 2026-06-28T03:42:20.230Z
-Matcher clock: 2026-06-28T03:42:20.230Z
+Generated: 2026-06-28T04:07:23.313Z
+Matcher clock: 2026-06-28T04:07:23.313Z
 Opportunities reviewed: 1619
 DynamoDB writes: no
 Unarchive restored opportunities: no
@@ -11,8 +11,8 @@ Archive low-information records: no
 
 ```json
 {
-  "keep_active": 1604,
-  "archive": 15
+  "keep_active": 1603,
+  "archive": 16
 }
 ```
 
@@ -45,6 +45,9 @@ Archive low-information records: no
 - archive: Sustainable Rebuilding Program (SOURCE_DSIRE:dsire_program_id:22496)
   - archive reason: availability_unavailable
   - availability reasons: official_source_closed
+- archive: CMAQ Incentive Program (SOURCE_DSIRE:dsire_program_id:22253)
+  - archive reason: availability_unavailable
+  - availability reasons: source_missing_no_replacement, manual_user_directed_unavailable
 - archive: Diesel Emissions Mitigation Program (SOURCE_DSIRE:dsire_program_id:22408)
   - archive reason: availability_unavailable
   - availability reasons: source_status_unavailable

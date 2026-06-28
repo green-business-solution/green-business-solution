@@ -1,223 +1,28 @@
 # Availability Review
 
-Generated: 2026-06-28T03:42:01.909Z
+Generated: 2026-06-28T04:07:10.122Z
 Opportunities reviewed: 1619
-GPT Pro research applied count: 50
+GPT Pro research applied count: 2
+GPT Pro research skipped count: 0
 
 ## Status Counts
 
 ```json
 {
-  "uncertain": 253,
-  "active": 1254,
+  "uncertain": 251,
+  "active": 1255,
   "rolling": 49,
   "upcoming": 48,
-  "unavailable": 15
+  "unavailable": 16
 }
 ```
 
 ## GPT Pro Research Applied
 
-- active: AEP (SWEPCO) - Louisiana Commercial Solutions Standard Offer Program (SOURCE_DSIRE:dsire_program_id:5823)
-  - reasons: official_source_active
-  - evidence: SWEPCO and its program portal describe business incentives for eligible new construction and retrofit projects and provide an Enroll Now path.
-  - sources: https://www.swepco.com/savings/business/rebates/, https://swepcosolutions.com/programs/business-programs/louisiana-commercial-solutions-standard-offer-program/
-- upcoming: Energy Efficiency Financing for Public Sector Projects (SOURCE_DSIRE:dsire_program_id:5131)
-  - reasons: future_opening_language
-  - evidence: California Energy Commission says it is no longer accepting new applications effective November 28, 2025, but is updating the solicitations and plans to reopen them in the future.
-  - sources: https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act, https://www.energy.ca.gov/programs-and-topics/programs/energy-conservation-assistance-act/low-interest-loans
-- active: Energy Efficient Schools Initiative - Loans (SOURCE_DSIRE:dsire_program_id:3801)
-  - reasons: official_source_active
-  - evidence: Tennessee EESI pages state Apply Now and describe the current low-interest revolving loan mechanism for school energy efficiency projects; the application portal provides a Start Application action.
-  - sources: https://www.tn.gov/eesi.html, https://www.tn.gov/eesi/eesi-programs.html, https://eesi.tvaenergyrightsolutions.com/
-- active: Poudre Valley REA - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4815)
-  - reasons: official_source_active
-  - evidence: Poudre Valley REA lists appliance, heating, and cooling rebates and instructs members to submit rebate applications within 90 days, with rebates subject to funding and availability.
-  - sources: https://pvrea.coop/for-members/rebates/, https://pvrea.coop/for-members/rebates/heating-cooling-rebates/, https://pvrea.coop/for-members/rebates/appliance-rebates/
-- active: PSE&G - Residential Efficiency Program (SOURCE_DSIRE:dsire_program_id:3907)
-  - reasons: official_source_active
-  - evidence: PSE&G's Home Energy and appliance rebate pages provide 2026 residential rebate application paths for qualifying purchases submitted within the stated time period.
-  - sources: https://homeenergy.pseg.com/, https://appliancerebate.pseg.com/
-- active: Puget Sound Energy - Multi-Family Efficiency Retrofit Program (SOURCE_DSIRE:dsire_program_id:3206)
-  - reasons: official_source_active
-  - evidence: PSE says it offers rebates and grants to offset the cost of in-unit and common area multifamily upgrades, with eligible properties potentially qualifying for higher rebates.
-  - sources: https://www.pse.com/en/rebates/multifamily-retrofit
-- upcoming: Sales Tax Holiday for Energy-Efficient Appliances (SOURCE_DSIRE:dsire_program_id:4426)
-  - reasons: future_opening_language
-  - evidence: Maryland Comptroller describes the ENERGY STAR tax holiday as recurring from the Saturday before the third Monday in February through the third Monday in February; the 2026 event was February 14-16.
-  - sources: https://www.marylandcomptroller.gov/about/comptroller/programs.html
-- active: Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs (SOURCE_DSIRE:dsire_program_id:1543)
-  - reasons: official_source_active
-  - evidence: TNMP's residential existing homes page describes Residential and Hard-to-Reach Standard Offer Programs and provides enrollment/application paths for project sponsors.
-  - sources: https://tnmp.com/energy-efficiency/residential/existing-homes
-- active: Town of Babylon - Long Island Green Homes Program (SOURCE_DSIRE:dsire_program_id:3652)
-  - reasons: official_source_active
-  - evidence: Town of Babylon's Green Homes page directs homeowners to fill out an intake form to apply for a loan and describes low-cost financing for eligible improvements.
-  - sources: https://www.townofbabylonny.gov/145/Green-Homes, https://townofbabylonny.gov/924/About-Us
-- unavailable: California - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22709)
-  - reasons: official_source_closed
-  - evidence: TECH Clean California says HEEHRA single family rebates are fully reserved and no longer accepting new income verification applications; multifamily Stage 1 is paused while existing applications are processed.
-  - sources: https://techcleanca.com/incentives/heehrarebates/
-- active: Coast Electric Power Association - Comfort Advantage Home Program (SOURCE_DSIRE:dsire_program_id:2222)
-  - reasons: official_source_active
-  - evidence: Coast Electric's Comfort Advantage page describes cash incentives and forms for members installing qualifying efficient homes or heat pumps.
-  - sources: https://coastelectric.coop/comfort-advantage/
-- active: Custom Measure Rebates - Heat Recovery Chillers and Heat Pump Pool Heaters (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:custom-measure-rebates-heat-recovery-chillers-and-heat-pump-pool-heaters)
-  - reasons: official_source_active
-  - evidence: Silicon Valley Power lists custom electrification rebates for heat recovery chillers and heat pump pool heaters and says pre-approval is required.
-  - sources: https://www.siliconvalleypower.com/businesses/electrification-programs-rebates
-- active: Customer Directed Electrification Rebate (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate)
-  - reasons: official_source_active
-  - evidence: Silicon Valley Power describes rebates for replacing natural gas equipment with efficient all-electric equipment; the 2025-2026 application says nonresidential SVP customers are eligible to apply, with pre-approval required.
-  - sources: https://www.siliconvalleypower.com/businesses/electrification-programs-rebates, https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000
-- active: Heat Pump Air Conditioner Rebates - Conversion to All Electric Heating and Cooling (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:heat-pump-air-conditioner-rebates-conversion-to-all-electric-heating-and-cooling)
-  - reasons: official_source_active
-  - evidence: Silicon Valley Power lists heat pump HVAC rebates for conversion to all-electric heating and cooling and directs customers to apply with pre-approval.
-  - sources: https://www.siliconvalleypower.com/businesses/electrification-programs-rebates
-- rolling: Multifamily Boiler Electrification Pilot Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:multifamily-boiler-electrification-pilot-program)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: Silicon Valley Power's pilot application says rebates are available to three participants and applications are accepted first-come, first-served until the program is fully subscribed.
-  - sources: https://www.siliconvalleypower.com/businesses/electrification-programs-rebates, https://www.siliconvalleypower.com/home/showpublisheddocument/77783/638877473842570000
-- rolling: Philadelphia Gas Works - Residential Incentives Program (SOURCE_DSIRE:dsire_program_id:5354)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: PGW EnergySense says residential rebates are available from September 1, 2024 through August 31, 2027 and are first-come, first-served and subject to funding.
-  - sources: https://pgwenergysense.com/, https://pgwenergysense.com/residential-rebates/
-- rolling: Property Tax Abatement for Renewable Energy Property (SOURCE_DSIRE:dsire_program_id:5426)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Florida statute provides that the just value attributable to renewable energy source devices may not be considered for residential property and that 80 percent may not be considered for certain nonresidential property; the tangible personal property exemption expires December 31, 2037.
-  - sources: https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199%2F0193%2FSections%2F0193.624.html, https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&Search_String=&URL=0100-0199%2F0196%2FSections%2F0196.182.html
-- active: Puget Sound Energy - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1692)
-  - reasons: official_source_active
-  - evidence: PSE lists current residential rebates and offers, including cash-back incentives for qualifying heating and water-heating equipment.
-  - sources: https://www.pse.com/en/rebates, https://www.pse.com/en/rebates/heating, https://www.pse.com/en/rebates/water-heating
-- rolling: Qualifying Wood Stove Deduction (SOURCE_DSIRE:dsire_program_id:2)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Arizona statute allows a subtraction for up to $500 of costs to convert an existing fireplace to a qualified wood stove, qualified wood fireplace, or gas-fired fireplace.
-  - sources: https://www.azleg.gov/ars/43/01027.htm, https://www.azleg.gov/ars/43/01022.htm
-- unavailable: Technology and Equipment for Clean Heating (TECH) Initiative (SOURCE_DSIRE:dsire_program_id:22427)
-  - reasons: official_source_closed
-  - evidence: TECH Clean California incentive pages state that single-family and commercial/small multifamily heat pump incentives are fully reserved or no longer accepting reservations; multifamily Stage 1 is paused or closed.
-  - sources: https://techcleanca.com/incentives/, https://techcleanca.com/incentives/single-family-incentives/, https://techcleanca.com/incentives/multifamily-information/
-- rolling: Clean Energy Project Bond Program (SOURCE_DSIRE:dsire_program_id:365)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Idaho's clean energy generation project statute authorizes the Idaho Energy Resources Authority to undertake clean energy projects and issue bonds to finance costs.
-  - sources: https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH89/, https://law.justia.com/codes/idaho/title-67/chapter-89/section-67-8925/
-- rolling: Energy Equipment Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:1683)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Arizona statute provides that renewable energy equipment, energy efficient building components, and combined heat and power systems may be considered to add no value for property tax when documentation is submitted.
-  - sources: https://www.azleg.gov/ars/42/11054.htm
-- rolling: Local Option - Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:5423)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Connecticut General Assembly OLR describes municipal authority to provide property tax exemptions or abatements for certain solar and Class I renewable energy systems.
-  - sources: https://www.cga.ct.gov/2023/rpt/pdf/2023-R-0214.pdf
-- rolling: Local Option - Renewable Energy Financing District/Solar Energy Improvement Special Assessments (SOURCE_DSIRE:dsire_program_id:3532)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: New Mexico Economic Development Department describes C-PACE as a local-option financing tool where eligible property owners access long-term fixed-rate financing repaid through a local government special assessment.
-  - sources: https://www.edd.newmexico.gov/programs-and-services/c-pace/, https://www.edd.newmexico.gov/press-releases/new-mexico-clears-path-for-more-clean-energy-financing/
-- rolling: Local Option - Sales and Use Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:2502)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Colorado Department of Revenue guidance says Colorado allows a sales and use tax exemption for components used to produce electricity from renewable sources, and local exemptions apply where adopted by ordinance or resolution.
-  - sources: https://tax.colorado.gov/sites/tax/files/documents/SUTT_Renewable_Energy_Components_Sep_2021.pdf
-- rolling: Property Tax Exemption for Renewable Energy Systems (SOURCE_DSIRE:dsire_program_id:240)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Connecticut General Assembly OLR describes property tax exemptions for certain Class I renewable energy sources and solar heating systems, with filing to the assessor by November 1 for the assessment year.
-  - sources: https://www.cga.ct.gov/2023/rpt/pdf/2023-R-0214.pdf
-- rolling: Sales and Use Tax Exemption for Solar and Geothermal Systems (SOURCE_DSIRE:dsire_program_id:2613)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Connecticut DRS guidance describes a sales and use tax exemption for machinery, equipment, tools, materials, and fuel used directly in renewable or clean energy technology industries, including solar and geothermal systems.
-  - sources: https://portal.ct.gov/drs/publications/special-notices/2010/sn-2010-9-1, https://portal.ct.gov/drs/sales-tax/exemptions-from-sales-and-use-taxes
-- unavailable: USDA - Rural Energy for America Program (REAP) Grants (SOURCE_DSIRE:dsire_program_id:917)
-  - reasons: official_source_closed
-  - evidence: USDA Rural Development says the agency is not accepting REAP grant applications at this time; guaranteed loan applications may be submitted.
-  - sources: https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans
-- active: City and County of Honolulu - Solar Loan Program (SOURCE_DSIRE:dsire_program_id:943)
-  - reasons: official_source_active
-  - evidence: Honolulu's homeowner loan program page and Hawaii State Energy Office resources describe interest-free loans for income-eligible homeowners, including solar PV and solar water heating improvements.
-  - sources: https://www.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/, https://energy.hawaii.gov/energy-efficiency-programs-rebates-and-solar-initiatives/
-- rolling: Solar and Wind Equipment Sales Tax Exemption (SOURCE_DSIRE:dsire_program_id:119)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Arizona law deducts sales of solar energy devices from the transaction privilege tax base, and state guidance describes sales and installation of solar and wind energy devices as exempt.
-  - sources: https://www.azleg.gov/ars/42/05061.htm, https://azdor.gov/business/transaction-privilege-tax/tpt-exemptions, https://resilient.az.gov/clean-energy-hub/tax-exempt-entities/renewable-energy-generation-incentives
-- rolling: Solar Energy System and Cogeneration System Personal Property Tax Credit (SOURCE_DSIRE:dsire_program_id:5245)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: D.C. Code exempts personal property systems using exclusively solar energy and, beginning October 1, 2016, cogeneration systems.
-  - sources: https://code.dccouncil.gov/us/dc/council/code/sections/47-1508
-- rolling: Solar, Storage, and Electric Vehicle  Charging Real Property Tax Exemption (SOURCE_DSIRE:dsire_program_id:22803)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: D.C. Code section 47-1005 provides that its taxation rule does not apply to buildings or grounds used for solar energy generation, energy storage, solar energy management, or electric vehicle charging.
-  - sources: https://code.dccouncil.gov/us/dc/council/code/sections/47-1005
-- upcoming: Sales and Use Tax Exclusion for Advanced Transportation and Alternative Energy Manufacturing Program (SOURCE_DSIRE:dsire_program_id:4054)
-  - reasons: future_opening_language
-  - evidence: CAEATFA's 2026 application schedule shows an upcoming August 7-August 28, 2026 application window, and the program is authorized through January 1, 2028.
-  - sources: https://www.treasurer.ca.gov/caeatfa/ste, https://www.treasurer.ca.gov/sites/default/files/2026-03/amended.pdf
-- rolling: Clean Energy Revenue Bond Program (SOURCE_DSIRE:dsire_program_id:364)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: New Mexico EMNRD lists the Energy Efficiency and Renewable Energy Bonding Act, and current code text authorizes energy efficiency bonds for energy efficiency measures.
-  - sources: https://www.emnrd.nm.gov/ecmd/statutes/, https://law.justia.com/codes/new-mexico/chapter-6/article-21d/section-6-21d-8/
-- rolling: Wood-Burning Heating System Deduction (SOURCE_DSIRE:dsire_program_id:46)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: Alabama income tax law allows a deduction for the cost of converting from gas or electricity to wood as the primary energy source when completed.
-  - sources: https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2025RS/HB389-int.pdf, https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/
-- rolling: Arkansas PACE Program (SOURCE_DSIRE:dsire_program_id:5408)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: Arkansas Advanced Energy Foundation says it acts as program administrator for Arkansas C-PACE, and county materials describe financing repaid through property tax assessments.
-  - sources: https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program, https://www.pulaskicounty.net/news/posts/pulaski-pace
-- unavailable: Sustainable Rebuilding Program (SOURCE_DSIRE:dsire_program_id:22498)
-  - reasons: official_source_closed
-  - evidence: The State of Colorado Housing Recovery Program administrator states the program closed in June 2025; related electrification rebate applications were due by April 30, 2026.
-  - sources: https://cdola.colorado.gov/housing-recovery-program, https://disaster-recovery.impactdf.org/, https://rebuildingbetter.org/energy-incentives/
-- unavailable: Sustainable Rebuilding Program (SOURCE_DSIRE:dsire_program_id:22496)
-  - reasons: official_source_closed
-  - evidence: The State of Colorado Housing Recovery Program administrator states the program closed in June 2025; related grant/rebate application deadlines had passed by April 30, 2026.
-  - sources: https://cdola.colorado.gov/housing-recovery-program, https://disaster-recovery.impactdf.org/, https://rebuildingbetter.org/energy-incentives/
-- active: CA Clean Fuel Reward (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:ca-clean-fuel-reward)
-  - reasons: official_source_active
-  - evidence: Official program site says California Clean Fuel Reward is available to commercial vehicle buyers, and CARB announced rebates available beginning June 26, 2026.
-  - sources: https://cleanfuelreward.com/, https://cleanfuelreward.com/site/home, https://ww2.arb.ca.gov/news/california-launching-1-billion-rebate-program-electric-trucks
-- rolling: Charge Ready Program (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-program)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: SCE says Charge Ready applications will be accepted through June 30, 2026, or until all funds are allocated, and provides an Apply Now action.
-  - sources: https://www.sce.com/business/smart-energy-solar/charge-ready
-- active: Charge Ready Transport (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-transport)
-  - reasons: official_source_active
-  - evidence: SCE says Charge Ready Transport applications will be accepted through June 30, 2026, with participation agreements required by December 31, 2026.
-  - sources: https://crt.sce.com/overview, https://crt.sce.com/ready-to-apply-form
-- uncertain: CMAQ Incentive Program (SOURCE_DSIRE:dsire_program_id:22253)
-  - reasons: still_uncertain
-  - evidence: A current official administrator source confirming open CMAQ Incentive Program availability could not be verified.
-  - sources: https://vacleancities.org/reports-2/cmaq-incentive-program/, https://afdc.energy.gov/laws/all?state=VA, https://climatepartners.org/local/cmaq-vehicle-fuel-conversion-incentive-program/
-- rolling: Community EV Chargers Incentive Program (SOURCE_DSIRE:dsire_program_id:22529)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: Charge Vermont says applications are accepted on a first-come, first-served basis through August 1, 2026 while funds last.
-  - sources: https://www.vermontevchargers.com/, https://www.chargevermont.com/
-- uncertain: PECO - Commercial Charger Rebate Program (SOURCE_DSIRE:dsire_program_id:22456)
-  - reasons: still_uncertain
-  - evidence: A current official source specifically confirming the PECO Commercial Charger Rebate Program could not be verified.
-  - sources: https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx, https://www.peco.com/smart-energy/innovation-technology/electric-vehicles, https://www.peco.com/business/electric-vehicles
-- active: PECO - EV Rebate Program (SOURCE_DSIRE:dsire_program_id:22377)
-  - reasons: official_source_active
-  - evidence: PECO says customers can earn $50 per car by notifying PECO they purchased an electric vehicle and provides an Apply Online path for residential and business customers.
-  - sources: https://secure.peco.com/WaystoSave/ForYourHome/Pages/PECOSmartDriverRebate.aspx
-- unavailable: Power Your Drive for Apartments and Condos (SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21401)
-  - reasons: official_source_closed
-  - evidence: SDG&E says the program is fully subscribed and it is no longer accepting applications.
-  - sources: https://www.sdge.com/business/electric-vehicles/power-your-drive-apartments-and-condos
-- unavailable: Power Your Drive for Workplaces (SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_21406)
-  - reasons: official_source_closed
-  - evidence: SDG&E says the program is fully subscribed and it is no longer accepting applications.
-  - sources: https://www.sdge.com/business/electric-vehicles/power-your-drive-workplaces
-- active: ReCharge Rebate (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate)
-  - reasons: official_source_active
-  - evidence: SCE's ReCharge Rebate portal provides current retailer registration, enrollment, and claim workflow instructions; the pause notice applies to the Drayage Truck Rebate, not ReCharge.
-  - sources: https://commercialevrebates.sce.com/consumer/recharge, https://commercialevrebates.sce.com/consumer/how-to-enroll
-- rolling: Rule 29 EV Guide (SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:rule-29-ev-guide)
-  - reasons: rolling_or_no_deadline_language
-  - evidence: SCE describes Rule 29 Electric Vehicle Infrastructure as an optional EV charging infrastructure guide and tariff framework for business customers, with no competitive application window.
-  - sources: https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure, https://www.sce.com/sites/default/files/custom-files/PDF_Files/ELECTRIC_RULES_29.pdf
-- rolling: Municipal Opportunities for Retrofits and Energy Efficiency (MORE) Program (SOURCE_DSIRE:dsire_program_id:22777)
-  - reasons: official_source_active, rolling_or_no_deadline_language
-  - evidence: Pennsylvania DEP says MORE Loan applications opened December 27, 2024, have no closing date, and will remain open as long as funds are available.
-  - sources: https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/municipal-opportunities-for-retrofits-and-energy-efficiency
+- active: PECO - Commercial Charger Rebate Program (SOURCE_DSIRE:dsire_program_id:22456)
+  - previous status: uncertain
+- unavailable: CMAQ Incentive Program (SOURCE_DSIRE:dsire_program_id:22253)
+  - previous status: uncertain
 
 ## Remaining Uncertain Sample
 

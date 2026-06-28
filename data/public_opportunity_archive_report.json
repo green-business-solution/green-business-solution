@@ -1,14 +1,14 @@
 {
   "schemaVersion": "opportunity-archive-report-v1",
-  "generatedAt": "2026-06-28T03:42:20.230Z",
-  "matcherClock": "2026-06-28T03:42:20.230Z",
+  "generatedAt": "2026-06-28T04:07:23.313Z",
+  "matcherClock": "2026-06-28T04:07:23.313Z",
   "opportunityCount": 1619,
   "writeDynamoDb": false,
   "unarchiveRestored": false,
   "archiveLowInformation": false,
   "actionCounts": {
-    "keep_active": 1604,
-    "archive": 15
+    "keep_active": 1603,
+    "archive": 16
   },
   "rows": [
     {
@@ -25866,17 +25866,18 @@
       "sourceName": "DSIRE",
       "state": "VA",
       "currentLifecycleStatus": null,
-      "action": "keep_active",
-      "archiveReason": null,
+      "action": "archive",
+      "archiveReason": "availability_unavailable",
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement",
+          "manual_user_directed_unavailable"
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T03:42:01.909Z"
+        "lastVerifiedAt": "2026-06-28T04:07:10.122Z"
       }
     },
     {
@@ -27933,13 +27934,14 @@
       "archiveReason": null,
       "isLowInformation": false,
       "availability": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "reasons": [
-          "still_uncertain"
+          "official_source_active",
+          "reachable_title_specific_program_url"
         ],
         "applicationDeadlineAt": null,
         "programEndAt": null,
-        "lastVerifiedAt": "2026-06-28T03:42:01.909Z"
+        "lastVerifiedAt": "2026-06-28T04:07:10.122Z"
       }
     },
     {

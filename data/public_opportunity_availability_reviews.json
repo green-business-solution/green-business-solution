@@ -1,6 +1,6 @@
 {
   "schemaVersion": "availability-review-v1",
-  "generatedAt": "2026-06-28T03:42:01.909Z",
+  "generatedAt": "2026-06-28T04:07:10.122Z",
   "opportunityCount": 1619,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -9,11 +9,11 @@
   "searchFallback": true,
   "searchFallbackLimit": 2,
   "statusCounts": {
-    "uncertain": 253,
-    "active": 1254,
+    "uncertain": 251,
+    "active": 1255,
     "rolling": 49,
     "upcoming": 48,
-    "unavailable": 15
+    "unavailable": 16
   },
   "reviews": [
     {
@@ -39033,16 +39033,17 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22253/cmaq-incentive-program",
       "websiteUrl": "https://vacleancities.org/reports-2/cmaq-incentive-program/",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "unavailable",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official administrator source confirming open CMAQ Incentive Program availability could not be verified.",
+        "evidenceText": "Marked unavailable after GPT Pro research could not verify a current official administrator source confirming open CMAQ Incentive Program availability.",
         "reasons": [
-          "still_uncertain"
+          "source_missing_no_replacement",
+          "manual_user_directed_unavailable"
         ],
         "sourceUrlsChecked": [
           "https://vacleancities.org/reports-2/cmaq-incentive-program/",
@@ -39050,10 +39051,10 @@
           "https://climatepartners.org/local/cmaq-vehicle-fuel-conversion-incentive-program/"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewedAt": "2026-06-28T04:07:10.122Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.3,
-        "researchNotes": "Available non-administrator references were not sufficient to classify current availability."
+        "confidence": 0.75,
+        "researchNotes": "User directed this record to be marked unavailable after the official-source research batch left it uncertain."
       }
     },
     {
@@ -42152,27 +42153,26 @@
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22456/peco-commercial-charger-rebate-program",
       "websiteUrl": "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
       "availabilityReview": {
-        "normalizedStatus": "uncertain",
+        "normalizedStatus": "active",
         "applicationOpenAt": null,
         "applicationDeadlineAt": null,
         "questionsDeadlineAt": null,
         "programEndAt": null,
         "recurring": false,
         "noDeadlineExplicit": false,
-        "evidenceText": "A current official source specifically confirming the PECO Commercial Charger Rebate Program could not be verified.",
+        "evidenceText": "Official PECO page is reachable at a title-specific EVsmart Charging Rebate route for commercial EV incentives; HTTP 200 with a June 24, 2026 last-modified header.",
         "reasons": [
-          "still_uncertain"
+          "official_source_active",
+          "reachable_title_specific_program_url"
         ],
         "sourceUrlsChecked": [
-          "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
-          "https://www.peco.com/smart-energy/innovation-technology/electric-vehicles",
-          "https://www.peco.com/business/electric-vehicles"
+          "https://www.peco.com/smart-energy/innovation-technology/electric-vehicles/commercial-evs/incentives/evsmart-charging-rebate"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-28T03:42:01.909Z",
+        "reviewedAt": "2026-06-28T04:07:10.122Z",
         "reviewMethod": "gpt_pro_official_source_research",
-        "confidence": 0.35,
-        "researchNotes": "Current PECO EV and tariff materials exist, but they did not safely confirm this specific commercial charger rebate record."
+        "confidence": 0.78,
+        "researchNotes": "The PECO page is JavaScript-rendered and does not expose readable rebate copy to the simple crawler, but the official route is current and specific to the EVsmart Charging Rebate."
       }
     },
     {
@@ -45733,7 +45733,7 @@
   "uncertainRepairFetchAttempts": 1,
   "uncertainRepairFetchTimeoutMs": 10000,
   "uncertainRepairConcurrency": 16,
-  "gptProResearchAppliedAt": "2026-06-28T03:42:01.909Z",
-  "gptProResearchAppliedCount": 50,
+  "gptProResearchAppliedAt": "2026-06-28T04:07:10.122Z",
+  "gptProResearchAppliedCount": 2,
   "gptProResearchSkipped": []
 }

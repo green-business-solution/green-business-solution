@@ -1,47 +1,9 @@
 {
   "schemaVersion": "availability-research-targets-v1",
-  "generatedAt": "2026-06-28T03:54:50.628Z",
+  "generatedAt": "2026-06-28T04:07:23.936Z",
   "sourceReviewPath": "data/public_opportunity_availability_reviews.json",
-  "targetCount": 253,
+  "targetCount": 251,
   "targets": [
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22456",
-      "opportunityName": "PECO - Commercial Charger Rebate Program",
-      "state": "PA",
-      "sourceName": "DSIRE",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22456/peco-commercial-charger-rebate-program",
-      "websiteUrl": "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
-      "checkedUrls": [
-        "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
-        "https://www.peco.com/smart-energy/innovation-technology/electric-vehicles",
-        "https://www.peco.com/business/electric-vehicles"
-      ],
-      "fetchErrors": [],
-      "currentEvidenceText": "A current official source specifically confirming the PECO Commercial Charger Rebate Program could not be verified.",
-      "currentReasons": [
-        "still_uncertain"
-      ],
-      "failureBucket": "fetched_but_no_supported_status"
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22253",
-      "opportunityName": "CMAQ Incentive Program",
-      "state": "VA",
-      "sourceName": "DSIRE",
-      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22253/cmaq-incentive-program",
-      "websiteUrl": "https://vacleancities.org/reports-2/cmaq-incentive-program/",
-      "checkedUrls": [
-        "https://vacleancities.org/reports-2/cmaq-incentive-program/",
-        "https://afdc.energy.gov/laws/all?state=VA",
-        "https://climatepartners.org/local/cmaq-vehicle-fuel-conversion-incentive-program/"
-      ],
-      "fetchErrors": [],
-      "currentEvidenceText": "A current official administrator source confirming open CMAQ Incentive Program availability could not be verified.",
-      "currentReasons": [
-        "still_uncertain"
-      ],
-      "failureBucket": "fetched_but_no_supported_status"
-    },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
       "opportunityName": "Solar and CHP Sales Tax Exemption",
