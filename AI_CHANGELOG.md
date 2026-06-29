@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) recurring expense and grant savings buckets
+
+- Added explicit savings-engine fields for gross recurring savings, recurring expenses, net recurring savings, deterministic one-time savings, and separate possible grant money.
+- Added `rate_per_battery_kwh` incentive rule support plus storage-capacity fixture answers for battery, solar-plus-storage, and microgrid previews.
+- Refreshed the admin test-case savings previews and updated the UI savings card to show possible grants and recurring expenses separately from net recurring savings.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair final batch
 
 - Applied the final GPT Pro one-time incentive repair batch through the importer: 37 source-backed rules added and 12 opportunities reviewed without a safe one-time rule.

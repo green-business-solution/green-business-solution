@@ -1,8 +1,14 @@
 import {
+  aggregateAnnualRecurringExpenses,
+  aggregateAnnualRecurringSavings,
   aggregateAnnualSavings,
+  aggregateMonthlyRecurringExpenses,
+  aggregateMonthlyRecurringSavings,
   aggregateMonthlySavings,
+  aggregatePossibleGrantMoney,
   aggregateUpfrontCost,
-  aggregateUpfrontCostAfterSavings
+  aggregateUpfrontCostAfterSavings,
+  aggregateUpfrontSavings
 } from "./aggregation.mjs";
 import { annualEnergySavingsCents, annualKwhReduction, roundCents } from "./formulas.mjs";
 import { answerValue, hasAnswer, resolveLaborCost } from "./labor.mjs";
@@ -51,7 +57,15 @@ function blockedEstimate({ projectId, businessId, retrofitInstance, missingInput
     status: "blocked",
     missingInputs,
     upfrontCostCents: null,
+    oneTimeSavingsCents: null,
+    possibleGrantMoneyCents: null,
     upfrontCostAfterSavingsCents: null,
+    monthlyRecurringSavingsCents: null,
+    annualRecurringSavingsCents: null,
+    monthlyRecurringExpensesCents: null,
+    annualRecurringExpensesCents: null,
+    netMonthlyRecurringSavingsCents: null,
+    netAnnualRecurringSavingsCents: null,
     monthlySavingsCents: null,
     annualSavingsCents: null,
     costBreakdown: [],
@@ -71,6 +85,32 @@ function blockedEstimate({ projectId, businessId, retrofitInstance, missingInput
       inputSnapshot: [],
       outputChecks: []
     }
+  };
+}
+
+function calculateFinalSavingsMetrics({ finalCostBreakdown, finalRecurringSavingsEntries }) {
+  const upfrontCostAfterSavingsCents = aggregateUpfrontCostAfterSavings(finalCostBreakdown);
+  const oneTimeSavingsCents = aggregateUpfrontSavings(finalCostBreakdown);
+  const possibleGrantMoneyCents = aggregatePossibleGrantMoney(finalCostBreakdown);
+  const monthlyRecurringSavingsCents = aggregateMonthlyRecurringSavings(finalRecurringSavingsEntries);
+  const annualRecurringSavingsCents = aggregateAnnualRecurringSavings(finalRecurringSavingsEntries);
+  const monthlyRecurringExpensesCents = aggregateMonthlyRecurringExpenses(finalRecurringSavingsEntries);
+  const annualRecurringExpensesCents = aggregateAnnualRecurringExpenses(finalRecurringSavingsEntries);
+  const netMonthlyRecurringSavingsCents = aggregateMonthlySavings(finalRecurringSavingsEntries);
+  const netAnnualRecurringSavingsCents = aggregateAnnualSavings(finalRecurringSavingsEntries);
+
+  return {
+    upfrontCostAfterSavingsCents,
+    oneTimeSavingsCents,
+    possibleGrantMoneyCents,
+    monthlyRecurringSavingsCents,
+    annualRecurringSavingsCents,
+    monthlyRecurringExpensesCents,
+    annualRecurringExpensesCents,
+    netMonthlyRecurringSavingsCents,
+    netAnnualRecurringSavingsCents,
+    monthlySavingsCents: netMonthlyRecurringSavingsCents,
+    annualSavingsCents: netAnnualRecurringSavingsCents
   };
 }
 
@@ -320,7 +360,10 @@ function finalizeCalculatedEstimate({
     upfrontSavingsEntries: [],
     recurringSavingsEntries: [],
     totalUpfrontSavingsCents: 0,
+    possibleGrantMoneyCents: 0,
     firstYearRecurringSavingsCents: 0,
+    firstYearRecurringExpensesCents: 0,
+    firstYearNetRecurringSavingsCents: 0,
     firstYearTotalBenefitCents: 0,
     upfrontCostAfterSavingsCents: upfrontCostCents,
     conflictExplanations: [],
@@ -329,9 +372,7 @@ function finalizeCalculatedEstimate({
 
   const finalCostBreakdown = [...costBreakdown, ...selectedScenario.upfrontSavingsEntries];
   const finalRecurringSavingsEntries = [...baseRecurringSavingsEntries, ...selectedScenario.recurringSavingsEntries];
-  const upfrontCostAfterSavingsCents = aggregateUpfrontCostAfterSavings(finalCostBreakdown);
-  const monthlySavingsCents = aggregateMonthlySavings(finalRecurringSavingsEntries);
-  const annualSavingsCents = aggregateAnnualSavings(finalRecurringSavingsEntries);
+  const finalSavingsMetrics = calculateFinalSavingsMetrics({ finalCostBreakdown, finalRecurringSavingsEntries });
 
   traceSteps.push(
     ...selectedScenario.upfrontSavingsEntries.map((entry) =>
@@ -349,8 +390,8 @@ function finalizeCalculatedEstimate({
       "Headline aggregation",
       "aggregation",
       "upfront_cost - upfront_savings",
-      { upfrontCostCents, upfrontSavingsCents: upfrontCostCents - upfrontCostAfterSavingsCents },
-      { value: upfrontCostAfterSavingsCents, unit: "cents" }
+      { upfrontCostCents, upfrontSavingsCents: finalSavingsMetrics.oneTimeSavingsCents },
+      { value: finalSavingsMetrics.upfrontCostAfterSavingsCents, unit: "cents" }
     )
   );
 
@@ -365,9 +406,7 @@ function finalizeCalculatedEstimate({
     selectedOpportunityIds: selectedScenario.opportunityIds,
     missingInputs: [],
     upfrontCostCents,
-    upfrontCostAfterSavingsCents,
-    monthlySavingsCents,
-    annualSavingsCents,
+    ...finalSavingsMetrics,
     costBreakdown: finalCostBreakdown,
     savingsBreakdown: finalRecurringSavingsEntries,
     billLineDeltas,
@@ -389,14 +428,14 @@ function finalizeCalculatedEstimate({
       outputChecks: [
         {
           name: "upfrontCostAfterSavings matches ledger",
-          expectedCents: upfrontCostAfterSavingsCents,
-          actualCents: upfrontCostAfterSavingsCents,
+          expectedCents: finalSavingsMetrics.upfrontCostAfterSavingsCents,
+          actualCents: finalSavingsMetrics.upfrontCostAfterSavingsCents,
           passed: true
         },
         {
           name: "annual savings matches recurring entries",
-          expectedCents: annualSavingsCents,
-          actualCents: annualSavingsCents,
+          expectedCents: finalSavingsMetrics.annualSavingsCents,
+          actualCents: finalSavingsMetrics.annualSavingsCents,
           passed: true
         }
       ]
@@ -1320,7 +1359,10 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     upfrontSavingsEntries: [],
     recurringSavingsEntries: [],
     totalUpfrontSavingsCents: 0,
+    possibleGrantMoneyCents: 0,
     firstYearRecurringSavingsCents: 0,
+    firstYearRecurringExpensesCents: 0,
+    firstYearNetRecurringSavingsCents: 0,
     firstYearTotalBenefitCents: 0,
     upfrontCostAfterSavingsCents: upfrontCostCents,
     conflictExplanations: [],
@@ -1329,9 +1371,7 @@ export function calculateRetrofitSavingsEstimate(fixture) {
 
   const finalCostBreakdown = [...costBreakdown, ...selectedScenario.upfrontSavingsEntries];
   const finalRecurringSavingsEntries = [...baseRecurringSavingsEntries, ...selectedScenario.recurringSavingsEntries];
-  const upfrontCostAfterSavingsCents = aggregateUpfrontCostAfterSavings(finalCostBreakdown);
-  const monthlySavingsCents = aggregateMonthlySavings(finalRecurringSavingsEntries);
-  const annualSavingsCents = aggregateAnnualSavings(finalRecurringSavingsEntries);
+  const finalSavingsMetrics = calculateFinalSavingsMetrics({ finalCostBreakdown, finalRecurringSavingsEntries });
 
   traceSteps.push(
     ...selectedScenario.upfrontSavingsEntries.map((entry) =>
@@ -1349,8 +1389,8 @@ export function calculateRetrofitSavingsEstimate(fixture) {
       "Headline aggregation",
       "aggregation",
       "upfront_cost - upfront_savings",
-      { upfrontCostCents, upfrontSavingsCents: upfrontCostCents - upfrontCostAfterSavingsCents },
-      { value: upfrontCostAfterSavingsCents, unit: "cents" }
+      { upfrontCostCents, upfrontSavingsCents: finalSavingsMetrics.oneTimeSavingsCents },
+      { value: finalSavingsMetrics.upfrontCostAfterSavingsCents, unit: "cents" }
     )
   );
 
@@ -1365,9 +1405,7 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     selectedOpportunityIds: selectedScenario.opportunityIds,
     missingInputs: [],
     upfrontCostCents,
-    upfrontCostAfterSavingsCents,
-    monthlySavingsCents,
-    annualSavingsCents,
+    ...finalSavingsMetrics,
     costBreakdown: finalCostBreakdown,
     savingsBreakdown: finalRecurringSavingsEntries,
     billLineDeltas,
@@ -1389,14 +1427,14 @@ export function calculateRetrofitSavingsEstimate(fixture) {
       outputChecks: [
         {
           name: "upfrontCostAfterSavings matches ledger",
-          expectedCents: upfrontCostAfterSavingsCents,
-          actualCents: upfrontCostAfterSavingsCents,
+          expectedCents: finalSavingsMetrics.upfrontCostAfterSavingsCents,
+          actualCents: finalSavingsMetrics.upfrontCostAfterSavingsCents,
           passed: true
         },
         {
           name: "annual savings matches recurring entries",
-          expectedCents: annualSavingsCents,
-          actualCents: annualSavingsCents,
+          expectedCents: finalSavingsMetrics.annualSavingsCents,
+          actualCents: finalSavingsMetrics.annualSavingsCents,
           passed: true
         }
       ]

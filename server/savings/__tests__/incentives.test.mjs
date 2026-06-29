@@ -77,6 +77,34 @@ describe("incentive rules", () => {
     expect(award.amountCents).toBe(13543);
   });
 
+  it("calculates battery storage capacity rebates from battery kWh answers", () => {
+    const award = calculateIncentiveAward(
+      {
+        id: "oir_battery_kwh_v1",
+        opportunityId: "opp_battery",
+        name: "Battery Storage Rebate",
+        incentiveType: "fixed_per_unit_rebate",
+        timing: "upfront",
+        amountRule: {
+          kind: "rate_per_battery_kwh",
+          amountCentsPerBatteryKwh: 20000,
+          batteryKwhSource: "battery_storage_kwh"
+        },
+        basisPolicy: { basis: "gross_project_cost", applicationOrder: 10 },
+        active: true
+      },
+      baseCtx({
+        answers: {
+          battery_storage_kwh: { value: 80 }
+        },
+        upfrontCostCents: 1000000
+      })
+    );
+
+    expect(award.amountCents).toBe(1600000);
+    expect(award.upfrontSavingsEntry.amountCents).toBe(1600000);
+  });
+
   it("models property tax exemptions as annual recurring savings", () => {
     const award = calculateIncentiveAward(
       {

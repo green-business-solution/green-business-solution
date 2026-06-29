@@ -278,6 +278,7 @@ const retrofitTemplates = {
   }),
   battery_storage_system: demandTemplate({
     peakKwReduction: 20,
+    batteryStorageKwh: 80,
     equipmentCostCents: 6000000,
     laborCostCents: 800000
   }),
@@ -288,6 +289,7 @@ const retrofitTemplates = {
   }),
   microgrid_system: demandTemplate({
     peakKwReduction: 25,
+    batteryStorageKwh: 100,
     equipmentCostCents: 9000000,
     laborCostCents: 1200000
   }),
@@ -298,6 +300,7 @@ const retrofitTemplates = {
   }),
   solar_plus_storage_system: demandTemplate({
     peakKwReduction: 20,
+    batteryStorageKwh: 80,
     equipmentCostCents: 11000000,
     laborCostCents: 1200000
   }),
@@ -406,8 +409,8 @@ export function buildAdminTestCaseSavingsPreview({
   const estimate = calculateRetrofitSavingsEstimate(fixture);
   const incentiveAssumption =
     selectedIncentiveRules.length > 0
-      ? "One-time opportunity savings use the highest-ranked matched opportunity with an extracted source-backed incentive rule; other connected opportunities may still need rule extraction."
-      : "No extracted source-backed OpportunityIncentiveRule is available for this retrofit preview yet, so one-time opportunity savings are shown as $0.";
+      ? "Opportunity savings use source-backed incentive rules extracted from reviewed opportunities where a matched rule exists."
+      : "No source-backed OpportunityIncentiveRule matched this retrofit preview, so opportunity savings are shown as $0.";
 
   return {
     schemaVersion: ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION,
@@ -423,7 +426,15 @@ export function buildAdminTestCaseSavingsPreview({
       estimate.upfrontCostCents != null && estimate.upfrontCostAfterSavingsCents != null
         ? estimate.upfrontCostCents - estimate.upfrontCostAfterSavingsCents
         : null,
+    oneTimeSavingsCents: estimate.oneTimeSavingsCents ?? null,
+    possibleGrantMoneyCents: estimate.possibleGrantMoneyCents ?? 0,
     upfrontCostAfterSavingsCents: estimate.upfrontCostAfterSavingsCents,
+    monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents,
+    annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents,
+    monthlyRecurringExpensesCents: estimate.monthlyRecurringExpensesCents ?? 0,
+    annualRecurringExpensesCents: estimate.annualRecurringExpensesCents ?? 0,
+    netMonthlyRecurringSavingsCents: estimate.netMonthlyRecurringSavingsCents ?? estimate.monthlySavingsCents,
+    netAnnualRecurringSavingsCents: estimate.netAnnualRecurringSavingsCents ?? estimate.annualSavingsCents,
     monthlySavingsCents: estimate.monthlySavingsCents,
     annualSavingsCents: estimate.annualSavingsCents,
     costBreakdown: estimate.costBreakdown,
@@ -611,7 +622,15 @@ function solarTemplate({
   };
 }
 
-function demandTemplate({ peakKwReduction, equipmentCostCents, laborCostCents, assumptions = [] }) {
+function demandTemplate({ peakKwReduction, batteryStorageKwh = null, equipmentCostCents, laborCostCents, assumptions = [] }) {
+  const storageAnswers =
+    batteryStorageKwh == null
+      ? {}
+      : {
+          battery_storage_kwh: batteryStorageKwh,
+          storage_capacity_kwh: batteryStorageKwh
+        };
+
   return {
     engineSlug: "demand_charge_reduction",
     retrofitTypeId: "rt_demand_charge_reduction",
@@ -621,6 +640,7 @@ function demandTemplate({ peakKwReduction, equipmentCostCents, laborCostCents, a
     userAnswers: {
       unit_count: 1,
       peak_kw_reduction: peakKwReduction,
+      ...storageAnswers,
       billing_months: 12,
       equipment_cost_cents: equipmentCostCents
     },
@@ -734,7 +754,15 @@ function unsupportedPreview({ retrofitGroup, sampleUserId, reason }) {
     calculationDate: null,
     upfrontCostCents: null,
     upfrontSavingsCents: null,
+    oneTimeSavingsCents: null,
+    possibleGrantMoneyCents: 0,
     upfrontCostAfterSavingsCents: null,
+    monthlyRecurringSavingsCents: null,
+    annualRecurringSavingsCents: null,
+    monthlyRecurringExpensesCents: null,
+    annualRecurringExpensesCents: null,
+    netMonthlyRecurringSavingsCents: null,
+    netAnnualRecurringSavingsCents: null,
     monthlySavingsCents: null,
     annualSavingsCents: null,
     costBreakdown: [],

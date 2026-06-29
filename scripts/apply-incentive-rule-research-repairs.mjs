@@ -185,6 +185,13 @@ function normalizeAmountRule(amountRule) {
       kwhSource: amountRule.kwhSource || "annual_kwh_delta_abs"
     };
   }
+  if (amountRule.kind === "rate_per_battery_kwh") {
+    return {
+      kind: "rate_per_battery_kwh",
+      amountCentsPerBatteryKwh: integer(amountRule.amountCentsPerBatteryKwh),
+      batteryKwhSource: amountRule.batteryKwhSource || "battery_storage_kwh"
+    };
+  }
   throw new Error(`Unsupported amountRule.kind: ${amountRule.kind}`);
 }
 

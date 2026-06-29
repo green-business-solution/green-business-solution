@@ -12,32 +12,76 @@ export function aggregateUpfrontSavings(entries = []) {
   return sum(entries.filter((entry) => entry.kind === "upfront_savings").map((entry) => entry.amountCents));
 }
 
+export function aggregatePossibleGrantMoney(entries = []) {
+  return sum(entries.filter((entry) => entry.kind === "possible_grant").map((entry) => entry.amountCents));
+}
+
 export function aggregateUpfrontCostAfterSavings(entries = []) {
   return aggregateUpfrontCost(entries) - aggregateUpfrontSavings(entries);
 }
 
-export function aggregateMonthlySavings(entries = []) {
+function recurringAmountForPeriod(entry, targetPeriod) {
+  if (targetPeriod === "monthly") {
+    if (entry.period === "monthly") return Number(entry.amountCents || 0);
+    if (entry.period === "annual" && entry.allowMonthlyProration) return annualToMonthlyCents(entry.amountCents);
+    return 0;
+  }
+
+  if (entry.period === "annual") return Number(entry.amountCents || 0);
+  if (entry.period === "monthly" && entry.allowAnnualization) return monthlyToAnnualCents(entry.amountCents);
+  return 0;
+}
+
+export function isRecurringExpenseEntry(entry) {
+  return entry?.kind === "recurring_expense" || Number(entry?.amountCents || 0) < 0;
+}
+
+export function isRecurringSavingsEntry(entry) {
+  return !isRecurringExpenseEntry(entry);
+}
+
+export function aggregateMonthlyRecurringSavings(entries = []) {
   return sum(
-    entries.map((entry) => {
-      if (entry.period === "monthly") return entry.amountCents;
-      if (entry.period === "annual" && entry.allowMonthlyProration) return annualToMonthlyCents(entry.amountCents);
-      return 0;
-    })
+    entries.filter(isRecurringSavingsEntry).map((entry) => Math.max(0, recurringAmountForPeriod(entry, "monthly")))
   );
+}
+
+export function aggregateAnnualRecurringSavings(entries = []) {
+  return sum(
+    entries.filter(isRecurringSavingsEntry).map((entry) => Math.max(0, recurringAmountForPeriod(entry, "annual")))
+  );
+}
+
+export function aggregateMonthlyRecurringExpenses(entries = []) {
+  return sum(
+    entries.filter(isRecurringExpenseEntry).map((entry) => Math.abs(recurringAmountForPeriod(entry, "monthly")))
+  );
+}
+
+export function aggregateAnnualRecurringExpenses(entries = []) {
+  return sum(
+    entries.filter(isRecurringExpenseEntry).map((entry) => Math.abs(recurringAmountForPeriod(entry, "annual")))
+  );
+}
+
+export function aggregateMonthlyNetRecurringSavings(entries = []) {
+  return aggregateMonthlyRecurringSavings(entries) - aggregateMonthlyRecurringExpenses(entries);
+}
+
+export function aggregateAnnualNetRecurringSavings(entries = []) {
+  return aggregateAnnualRecurringSavings(entries) - aggregateAnnualRecurringExpenses(entries);
+}
+
+export function aggregateMonthlySavings(entries = []) {
+  return aggregateMonthlyNetRecurringSavings(entries);
 }
 
 export function aggregateAnnualSavings(entries = []) {
-  return sum(
-    entries.map((entry) => {
-      if (entry.period === "annual") return entry.amountCents;
-      if (entry.period === "monthly" && entry.allowAnnualization) return monthlyToAnnualCents(entry.amountCents);
-      return 0;
-    })
-  );
+  return aggregateAnnualNetRecurringSavings(entries);
 }
 
 export function firstYearRecurringSavings(entries = []) {
-  return sum(entries.map((entry) => entry.annualizedAmountCents));
+  return aggregateAnnualNetRecurringSavings(entries);
 }
 
 export function aggregateBillLineDeltas(deltas = []) {

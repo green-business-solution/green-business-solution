@@ -9,6 +9,8 @@ export function incentiveCategory(rule) {
   switch (rule.incentiveType) {
     case "grant":
       return "grant";
+    case "possible_grant":
+      return "possible_grant";
     case "tax_credit":
       return "tax_credit";
     case "sales_tax_exemption":
@@ -17,6 +19,10 @@ export function incentiveCategory(rule) {
       return "property_tax_abatement";
     case "recurring_bill_credit":
       return "recurring_bill_credit";
+    case "recurring_bill_charge":
+      return "recurring_bill_charge";
+    case "tariff_charge":
+      return "tariff_charge";
     case "rate_discount":
       return "rate_discount";
     case "demand_response_credit":
@@ -125,6 +131,15 @@ function resolveKw(source, ctx) {
   }
 }
 
+function resolveBatteryKwh(source, ctx) {
+  switch (source) {
+    case "battery_storage_kwh":
+    case "storage_capacity_kwh":
+    default:
+      return Number(answerValue(ctx.answers, source) || 0);
+  }
+}
+
 function calculateRawIncentiveAmount(rule, basisCents, ctx) {
   if (rule.incentiveType === "property_tax_exemption") {
     const propertyTaxRate = Number(ctx.billLines?.tax?.property_tax_rate || 0);
@@ -150,6 +165,11 @@ function calculateRawIncentiveAmount(rule, basisCents, ctx) {
       return roundCents(resolveKwh(amountRule.kwhSource, ctx) * Number(amountRule.amountCentsPerKwh || 0));
     case "rate_per_kw":
       return roundCents(resolveKw(amountRule.kwSource, ctx) * Number(amountRule.amountCentsPerKw || 0));
+    case "rate_per_battery_kwh":
+      return roundCents(
+        resolveBatteryKwh(amountRule.batteryKwhSource || "battery_storage_kwh", ctx) *
+          Number(amountRule.amountCentsPerBatteryKwh || 0)
+      );
     case "bill_discount":
       return percentOfCents(Number(ctx.billChargeBasisCents?.[amountRule.billChargeBasis] || 0), amountRule.percent || 0);
     default:
@@ -178,9 +198,11 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
   };
 
   if (timing === "upfront") {
+    const isPossibleGrant =
+      rule.incentiveType === "possible_grant" || rule.estimateTreatment === "possible_grant" || rule.amountCertainty === "possible";
     award.upfrontSavingsEntry = {
       id: `cle_${rule.id}`,
-      kind: "upfront_savings",
+      kind: isPossibleGrant ? "possible_grant" : "upfront_savings",
       category,
       label: rule.name || rule.id,
       amountCents,
@@ -191,8 +213,14 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
       formula: rule.formula || null
     };
   } else {
+    const isRecurringExpense =
+      rule.recurringEffect === "expense" ||
+      rule.recurringTreatment === "expense" ||
+      rule.incentiveType === "recurring_bill_charge" ||
+      rule.incentiveType === "tariff_charge";
     award.recurringSavingsEntry = {
       id: `rse_${rule.id}`,
+      kind: isRecurringExpense ? "recurring_expense" : "recurring_savings",
       category,
       label: rule.name || rule.id,
       amountCents,

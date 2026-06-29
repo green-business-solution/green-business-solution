@@ -395,7 +395,7 @@ type SampleMatchResult = {
 
 type SampleSavingsLedgerEntry = {
   id?: string;
-  kind?: "upfront_cost" | "upfront_savings";
+  kind?: "upfront_cost" | "upfront_savings" | "possible_grant";
   category: string;
   label?: string;
   amountCents: number;
@@ -405,6 +405,7 @@ type SampleSavingsLedgerEntry = {
 
 type SampleRecurringSavingsEntry = {
   id?: string;
+  kind?: "recurring_savings" | "recurring_expense";
   category: string;
   label?: string;
   amountCents: number;
@@ -436,7 +437,15 @@ type SampleSavingsPreview = {
   calculationDate?: string | null;
   upfrontCostCents: number | null;
   upfrontSavingsCents: number | null;
+  oneTimeSavingsCents?: number | null;
+  possibleGrantMoneyCents?: number | null;
   upfrontCostAfterSavingsCents: number | null;
+  monthlyRecurringSavingsCents?: number | null;
+  annualRecurringSavingsCents?: number | null;
+  monthlyRecurringExpensesCents?: number | null;
+  annualRecurringExpensesCents?: number | null;
+  netMonthlyRecurringSavingsCents?: number | null;
+  netAnnualRecurringSavingsCents?: number | null;
   monthlySavingsCents: number | null;
   annualSavingsCents: number | null;
   costBreakdown: SampleSavingsLedgerEntry[];
@@ -456,7 +465,10 @@ type SampleSavingsPreview = {
     incentiveRuleIds?: string[];
     status?: string;
     totalUpfrontSavingsCents?: number;
+    possibleGrantMoneyCents?: number;
     firstYearRecurringSavingsCents?: number;
+    firstYearRecurringExpensesCents?: number;
+    firstYearNetRecurringSavingsCents?: number;
     firstYearTotalBenefitCents?: number;
     conflictExplanations?: Array<{ reason: string }>;
   } | null;
@@ -4894,10 +4906,14 @@ function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null 
     );
   }
 
-  const upfrontSavings = preview.upfrontSavingsCents ?? 0;
+  const oneTimeSavings = preview.oneTimeSavingsCents ?? preview.upfrontSavingsCents ?? 0;
+  const possibleGrantMoney = preview.possibleGrantMoneyCents ?? 0;
   const recurringEntries = preview.savingsBreakdown || [];
+  const recurringSavingsEntries = recurringEntries.filter((entry) => entry.kind !== "recurring_expense" && entry.amountCents >= 0);
+  const recurringExpenseEntries = recurringEntries.filter((entry) => entry.kind === "recurring_expense" || entry.amountCents < 0);
   const upfrontCostEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_cost");
   const upfrontSavingsEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_savings");
+  const possibleGrantEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "possible_grant");
   const traceSteps = preview.calculationTrace?.steps || [];
 
   return (
@@ -4907,23 +4923,28 @@ function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null 
         <h3>{preview.retrofitDisplayName}</h3>
         <p className="muted-message">
           {preview.modelCoverage === "retrofit_only"
-            ? "Admin test-fixture estimate. Opportunity incentive amounts are not extracted yet."
+            ? "Admin test-fixture estimate using source-backed incentive rules where matched."
             : "Savings estimate generated from the available test-case data."}
         </p>
       </div>
 
       <div className="savings-headline-grid">
         <SavingsMetric label="Upfront cost" value={formatCents(preview.upfrontCostCents)} />
-        <SavingsMetric label="One-time savings" value={formatCents(upfrontSavings)} />
+        <SavingsMetric label="One-time savings" value={formatCents(oneTimeSavings)} />
+        <SavingsMetric label="Possible grants" value={formatCents(possibleGrantMoney)} />
         <SavingsMetric label="After savings" value={formatCents(preview.upfrontCostAfterSavingsCents)} />
-        <SavingsMetric label="Saved / month" value={formatCents(preview.monthlySavingsCents)} />
-        <SavingsMetric label="Saved / year" value={formatCents(preview.annualSavingsCents)} />
+        <SavingsMetric label="Recurring saved / month" value={formatCents(preview.monthlyRecurringSavingsCents ?? preview.monthlySavingsCents)} />
+        <SavingsMetric label="Recurring expenses / month" value={formatCents(preview.monthlyRecurringExpensesCents ?? 0)} />
+        <SavingsMetric label="Net recurring / month" value={formatCents(preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents)} />
+        <SavingsMetric label="Net recurring / year" value={formatCents(preview.netAnnualRecurringSavingsCents ?? preview.annualSavingsCents)} />
       </div>
 
       <div className="savings-breakdown-grid">
         <SavingsLedgerList title="Upfront costs" entries={upfrontCostEntries} emptyMessage="No upfront costs calculated." />
         <SavingsLedgerList title="One-time savings" entries={upfrontSavingsEntries} emptyMessage="No one-time opportunity savings modeled yet." />
-        <RecurringSavingsList entries={recurringEntries} />
+        <SavingsLedgerList title="Possible grant money" entries={possibleGrantEntries} emptyMessage="No possible grant money modeled." />
+        <RecurringSavingsList title="Recurring savings" entries={recurringSavingsEntries} emptyMessage="No recurring savings calculated." />
+        <RecurringSavingsList title="Recurring expenses" entries={recurringExpenseEntries} emptyMessage="No recurring expenses calculated." />
       </div>
 
       {preview.assumptions?.length ? (
@@ -4996,10 +5017,18 @@ function SavingsLedgerList({
   );
 }
 
-function RecurringSavingsList({ entries }: { entries: SampleRecurringSavingsEntry[] }) {
+function RecurringSavingsList({
+  emptyMessage,
+  entries,
+  title
+}: {
+  emptyMessage: string;
+  entries: SampleRecurringSavingsEntry[];
+  title: string;
+}) {
   return (
     <section className="savings-ledger-section">
-      <h4>Recurring savings</h4>
+      <h4>{title}</h4>
       {entries.length > 0 ? (
         <ul>
           {entries.map((entry) => (
@@ -5007,12 +5036,12 @@ function RecurringSavingsList({ entries }: { entries: SampleRecurringSavingsEntr
               <span>
                 {entry.label || formatSavingsCategory(entry.category)} / {entry.period}
               </span>
-              <strong>{formatCents(entry.amountCents)}</strong>
+              <strong>{formatCents(Math.abs(entry.amountCents))}</strong>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No recurring savings calculated.</p>
+        <p>{emptyMessage}</p>
       )}
     </section>
   );

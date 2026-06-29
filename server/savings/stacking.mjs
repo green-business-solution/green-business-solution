@@ -1,4 +1,10 @@
-import { aggregateUpfrontSavings, firstYearRecurringSavings } from "./aggregation.mjs";
+import {
+  aggregateAnnualRecurringExpenses,
+  aggregateAnnualRecurringSavings,
+  aggregateAnnualNetRecurringSavings,
+  aggregatePossibleGrantMoney,
+  aggregateUpfrontSavings
+} from "./aggregation.mjs";
 import { calculateIncentiveAward } from "./incentives.mjs";
 
 function idsMatch(a, b, x, y) {
@@ -120,8 +126,11 @@ export function calculateScenario({ scenarioRules, allRules, baseCostLedgerEntri
   }
 
   const totalUpfrontSavingsCents = aggregateUpfrontSavings(upfrontSavingsEntries);
-  const firstYearRecurringSavingsCents = firstYearRecurringSavings(recurringSavingsEntries);
-  const firstYearTotalBenefitCents = totalUpfrontSavingsCents + firstYearRecurringSavingsCents;
+  const possibleGrantMoneyCents = aggregatePossibleGrantMoney(upfrontSavingsEntries);
+  const firstYearRecurringSavingsCents = aggregateAnnualRecurringSavings(recurringSavingsEntries);
+  const firstYearRecurringExpensesCents = aggregateAnnualRecurringExpenses(recurringSavingsEntries);
+  const firstYearNetRecurringSavingsCents = aggregateAnnualNetRecurringSavings(recurringSavingsEntries);
+  const firstYearTotalBenefitCents = totalUpfrontSavingsCents + firstYearNetRecurringSavingsCents;
   const upfrontCostAfterSavingsCents = ctx.upfrontCostCents - totalUpfrontSavingsCents;
   const opportunityIds = [...new Set(sortedRules.map((rule) => rule.opportunityId))];
 
@@ -134,7 +143,10 @@ export function calculateScenario({ scenarioRules, allRules, baseCostLedgerEntri
     upfrontSavingsEntries,
     recurringSavingsEntries,
     totalUpfrontSavingsCents,
+    possibleGrantMoneyCents,
     firstYearRecurringSavingsCents,
+    firstYearRecurringExpensesCents,
+    firstYearNetRecurringSavingsCents,
     firstYearTotalBenefitCents,
     upfrontCostAfterSavingsCents,
     conflictExplanations: conflictExplanationsForScenario({ scenarioRules: sortedRules, allRules, stackingRules }),
