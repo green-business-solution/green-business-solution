@@ -1,14 +1,14 @@
 {
   "schemaVersion": "opportunity-incentive-rules-v1",
-  "generatedAt": "2026-06-29T05:09:27.291Z",
+  "generatedAt": "2026-06-29T06:01:02.997Z",
   "mappingPath": "data/opportunity_savings_mapping.json",
   "publicIndexPath": "public/retrofit_opportunity_index.json",
   "targetCount": 1058,
-  "repairedThisRunCount": 37,
+  "repairedThisRunCount": 25,
   "manualThisRunCount": 0,
   "onlyManualFromPath": null,
   "mergeExistingPath": null,
-  "repairedRuleCount": 743,
+  "repairedRuleCount": 768,
   "manualRepairTargetCount": 0,
   "fetchSources": true,
   "fetchTimeoutMs": 8000,
@@ -27,10 +27,10 @@
   },
   "ruleExtractionCounts": {
     "source_url_fetch": 125,
-    "gpt_pro_research": 618
+    "gpt_pro_research": 643
   },
   "ruleConfidenceCounts": {
-    "medium": 332,
+    "medium": 357,
     "high": 410,
     "low": 1
   },
@@ -26433,10 +26433,810 @@
       "cap": {
         "maxPercentOfBasis": 0.5
       }
+    },
+    {
+      "id": "oir_7a764213f222f1c1_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22643",
+      "name": "Illinois - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://idot.illinois.gov/transportation-system/environment/drive-electric.html"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_778844e961dc7f31_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22650",
+      "name": "Wisconsin - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_b5e633b1b47733ea_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22633",
+      "name": "Arkansas - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.adeq.state.ar.us/energy/opportunities/nevi/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_f331616aec0bcc04_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22659",
+      "name": "Oregon - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.oregon.gov/odot/climate/pages/nevi.aspx"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_7065bfcf650192ca_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22658",
+      "name": "North Dakota - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.dot.nd.gov/nevi"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_5982af7e26bbac1d_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22637",
+      "name": "Maine - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_f4dcc306aa7f6c6b_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22656",
+      "name": "Montana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://deq.mt.gov/energy/Programs/fuels"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_1b581e436bdb9f62_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22638",
+      "name": "Massachusetts - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.mass.gov/info-details/national-electric-vehicle-infrastructure-nevi-formula-program"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_50b0d43042e1907d_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22660",
+      "name": "South Dakota - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://dot.sd.gov/projects-studies/planning/nevi"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_7db9935fc4322459_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "name": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.energy.ca.gov/programs-and-topics/programs/national-electric-vehicle-infrastructure-nevi-formula-program"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_2cc922298131371c_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22635",
+      "name": "Georgia - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://nevi-gdot.hub.arcgis.com/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_45c8121fcfa3239c_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22639",
+      "name": "Mississippi - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://mdot.ms.gov/portal/electric_vehicle_charging_infrastructure"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_042c3dc72189e3a2_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22655",
+      "name": "Idaho - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://oemr.idaho.gov/programs/national-electric-vehicle-infrastructure-program/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_c3f8fb1e89c2c7ca_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
+      "name": "GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; CEC NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.energy.ca.gov/solicitations/2026-03/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_3b02229564744171_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
+      "name": "Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.michigan.gov/mdot/travel/mobility/initiatives/nevi"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_99f17b891d2a0c86_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891",
+      "name": "National Electric Vehicle Infrastructure (NEVI) Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.sdge.com/node/23891"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_4e0c9ad6e33432e7_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22661",
+      "name": "Utah - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://udotinput.utah.gov/evplan?HTTPSRedirected=true"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_20b9bb3d316562b7_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22662",
+      "name": "Washington - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://wsdot.wa.gov/construction-planning/statewide-plans/washington-state-plan-electric-vehicle-infrastructure-deployment"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_b4570306af10d8b8_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22631",
+      "name": "Nevada - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.dot.nv.gov/mobility/alternative-fuels/nevi"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_25ece7929e784e1d_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22666",
+      "name": "Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.akenergyauthority.org/What-We-Do/Alternative-Energy-and-Energy-Efficiency-Programs/Electric-Vehicles/EV-Infrastructure-Implementation-Plan"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_673532394529451d_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22630",
+      "name": "Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://hidot.hawaii.gov/highways/hawaii-nevi-state-plan/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_50fc4ef9b7342815_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22636",
+      "name": "Louisiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_965e63451ef920e2_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22644",
+      "name": "Indiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://chargingthecrossroads.com/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_fddabea404cf7f45_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22640",
+      "name": "New Hampshire - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.nh.gov/dot/projects/nevi/"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
+    },
+    {
+      "id": "oir_09e0e215eb311de9_v1",
+      "version": 1,
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22665",
+      "name": "South Carolina - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "incentiveType": "possible_grant",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.8
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "active": true,
+      "source": "gpt_pro_opportunity_incentive_rule_repair",
+      "extractionMethod": "gpt_pro_research",
+      "researchBatchId": "codex_2026-06-29_nevi_possible_grants",
+      "confidence": "medium",
+      "formula": "Possible grant up to 80% of eligible NEVI EV charging project cost",
+      "evidenceText": "USDOT NEVI funding guidance lists the federal share of eligible project costs at 80%; state NEVI awards remain solicitation- and site-specific.",
+      "sourceUrlsChecked": [
+        "https://www.transportation.gov/rural/ev/toolkit/ev-infrastructure-funding-and-financing/federal-funding-programs",
+        "https://www.scdot.org/projects/nevi.aspx"
+      ],
+      "reasoningNotes": "Modeled as possible grant money, not deterministic one-time savings, because award selection and approved eligible cost are project-specific.",
+      "mapping": null,
+      "cap": {
+        "maxPercentOfBasis": 0.8
+      }
     }
   ],
   "manualRepairTargets": [],
-  "researchReviewedNoRuleCount": 534,
+  "researchReviewedNoRuleCount": 509,
   "appliedResearchBatches": [
     {
       "batchId": "gpt_pro_2026-06-28_batch1",
@@ -26554,20 +27354,29 @@
       "reviewedNoRuleCount": 12,
       "reviewedOpportunityCount": 33,
       "continueFromOpportunityId": null
+    },
+    {
+      "batchId": "codex_2026-06-29_nevi_possible_grants",
+      "appliedAt": "2026-06-29T06:01:02.991Z",
+      "repairsPath": "data/opportunity_incentive_rule_research_repairs_codex_2026-06-29_nevi_possible_grants.json",
+      "ruleCount": 25,
+      "reviewedNoRuleCount": 0,
+      "reviewedOpportunityCount": 25,
+      "continueFromOpportunityId": null
     }
   ],
   "lastResearchRepairBatch": {
-    "batchId": "gpt_pro_2026-06-28_batch13",
-    "appliedAt": "2026-06-29T05:09:27.285Z",
-    "repairsPath": "data/opportunity_incentive_rule_research_repairs_gpt_pro_2026-06-28_batch13.json",
-    "ruleCount": 37,
-    "reviewedNoRuleCount": 12,
-    "reviewedOpportunityCount": 33,
+    "batchId": "codex_2026-06-29_nevi_possible_grants",
+    "appliedAt": "2026-06-29T06:01:02.991Z",
+    "repairsPath": "data/opportunity_incentive_rule_research_repairs_codex_2026-06-29_nevi_possible_grants.json",
+    "ruleCount": 25,
+    "reviewedNoRuleCount": 0,
+    "reviewedOpportunityCount": 25,
     "continueFromOpportunityId": null
   },
   "researchNoRuleStatusCounts": {
-    "manual_review_required": 189,
-    "formula_not_found": 223,
+    "manual_review_required": 188,
+    "formula_not_found": 199,
     "not_applicable_for_one_time_savings": 90,
     "unavailable": 6,
     "source_inaccessible": 26
@@ -26633,26 +27442,6 @@
         "primarySavingsModelId": "project_cost_reduction_only",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_equipment_details",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22643",
-      "opportunityName": "Illinois - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "NEVI award amount and scope depend on project solicitation details.",
-      "sourceUrlsChecked": [
-        "https://idot.illinois.gov/transportation-system/environment/drive-electric.html"
-      ],
-      "reasoningNotes": "No safe reusable one-time formula was found on the official program page.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch1",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -27324,26 +28113,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22650",
-      "opportunityName": "Wisconsin - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "NEVI award amount and scope depend on solicitation/project details.",
-      "sourceUrlsChecked": [
-        "https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx"
-      ],
-      "reasoningNotes": "No reusable one-time EV charging formula was found on the official page.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch1",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:hvac-optimization-program",
       "opportunityName": "HVAC Optimization Program",
       "repairStatus": "formula_not_found",
@@ -27480,26 +28249,6 @@
         "primarySavingsModelId": "whole_building_custom_efficiency",
         "incentiveValueMethod": "per_kwh_saved",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22633",
-      "opportunityName": "Arkansas - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "NEVI grant award amount and scope depend on project details.",
-      "sourceUrlsChecked": [
-        "https://www.adeq.state.ar.us/energy/opportunities/nevi/"
-      ],
-      "reasoningNotes": "No reusable one-time charging grant formula was found on the official source.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch1",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -27725,26 +28474,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22659",
-      "opportunityName": "Oregon - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Oregon NEVI materials describe grant funding, but awards depend on solicitation and site details.",
-      "sourceUrlsChecked": [
-        "https://www.oregon.gov/odot/climate/pages/nevi.aspx"
-      ],
-      "reasoningNotes": "No reusable one-time EV charging grant formula was found.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch2",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:5782",
       "opportunityName": "Cape Light Compact- Residential Energy Efficiency Rebate Program",
       "repairStatus": "formula_not_found",
@@ -27821,26 +28550,6 @@
         "primarySavingsModelId": "whole_building_custom_efficiency",
         "incentiveValueMethod": "per_kwh_saved",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22658",
-      "opportunityName": "North Dakota - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "North Dakota NEVI page describes implementation but no reusable charger award formula.",
-      "sourceUrlsChecked": [
-        "https://www.dot.nd.gov/nevi"
-      ],
-      "reasoningNotes": "NEVI funding is solicitation- and site-specific.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch2",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -28145,26 +28854,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22637",
-      "opportunityName": "Maine - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Efficiency Maine EVSE initiative materials do not provide a reusable per-charger NEVI award formula.",
-      "sourceUrlsChecked": [
-        "https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/"
-      ],
-      "reasoningNotes": "NEVI awards depend on solicitation, site, charger, and corridor details.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch2",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:5238",
       "opportunityName": "Columbia Gas of Kentucky - Low Income Furnace Replacement Program",
       "repairStatus": "formula_not_found",
@@ -28403,26 +29092,6 @@
         "primarySavingsModelId": "hvac_electric_efficiency",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22656",
-      "opportunityName": "Montana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Montana fuels/NEVI pages do not provide a reusable one-time charger grant formula.",
-      "sourceUrlsChecked": [
-        "https://deq.mt.gov/energy/Programs/fuels"
-      ],
-      "reasoningNotes": "NEVI funding is solicitation- and site-specific.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch2",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -30475,27 +31144,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22638",
-      "opportunityName": "Massachusetts - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Massachusetts NEVI materials describe federally funded charging deployment but awards depend on site and solicitation details.",
-      "sourceUrlsChecked": [
-        "https://www.mass.gov/info-details/national-electric-vehicle-infrastructure-nevi-formula-program",
-        "https://programs.dsireusa.org/system/program/detail/22638"
-      ],
-      "reasoningNotes": "NEVI funding is solicitation- and site-specific and should not be forced into a generic upfront rule.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch5",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
       "opportunityName": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program (REMP) Grants",
       "repairStatus": "manual_review_required",
@@ -30935,27 +31583,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22660",
-      "opportunityName": "South Dakota - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "South Dakota NEVI charging awards depend on solicitation and site details.",
-      "sourceUrlsChecked": [
-        "https://dot.sd.gov/projects-studies/planning/nevi",
-        "https://programs.dsireusa.org/system/program/detail/22660"
-      ],
-      "reasoningNotes": "NEVI funding is not a reusable one-time charger rule for arbitrary projects.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch5",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:1773",
       "opportunityName": "Groton Utilities - Commercial and Industrial Energy Efficiency Rebate Programs",
       "repairStatus": "formula_not_found",
@@ -31354,26 +31981,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
-      "opportunityName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "California NEVI awards depend on solicitation, corridor/site, charger design, and application details.",
-      "sourceUrlsChecked": [
-        "https://www.energy.ca.gov/programs-and-topics/programs/national-electric-vehicle-infrastructure-nevi-formula-program"
-      ],
-      "reasoningNotes": "NEVI funding is solicitation- and site-specific; no reusable one-time formula should be created.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch6",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3680",
       "opportunityName": "Entergy Arkansas - Residential Energy Efficiency Programs",
       "repairStatus": "formula_not_found",
@@ -31390,26 +31997,6 @@
         "primarySavingsModelId": "refrigeration_electric_efficiency",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_equipment_details",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22635",
-      "opportunityName": "Georgia - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Georgia NEVI page describes charging deployment, but awards depend on project solicitation and site details.",
-      "sourceUrlsChecked": [
-        "https://nevi-gdot.hub.arcgis.com/"
-      ],
-      "reasoningNotes": "No generic one-time charging grant formula was verified.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch6",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "source_text_unavailable",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -31939,26 +32526,6 @@
         "primarySavingsModelId": "commercial_kitchen_equipment_efficiency",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_equipment_details",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22639",
-      "opportunityName": "Mississippi - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Mississippi NEVI charging awards depend on solicitation and site/project details.",
-      "sourceUrlsChecked": [
-        "https://mdot.ms.gov/portal/electric_vehicle_charging_infrastructure"
-      ],
-      "reasoningNotes": "NEVI funding is not a reusable one-time charger formula.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch6",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "source_text_unavailable",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -32804,26 +33371,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22655",
-      "opportunityName": "Idaho - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Idaho NEVI awards depend on project solicitation, site, corridor and charger details.",
-      "sourceUrlsChecked": [
-        "https://oemr.idaho.gov/programs/national-electric-vehicle-infrastructure-program/"
-      ],
-      "reasoningNotes": "NEVI funding is solicitation- and site-specific and should not be modeled as a generic one-time rule.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch7",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:5712",
       "opportunityName": "Low Income Home Energy Assistance Program (LIHEAP)",
       "repairStatus": "not_applicable_for_one_time_savings",
@@ -33081,26 +33628,6 @@
         "https://www.energy.gov/scep/wap/weatherization-assistance-program"
       ],
       "reasoningNotes": "No-cost service programs should not be converted into one-time project savings rules.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch8",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
-      "opportunityName": "GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging",
-      "repairStatus": "manual_review_required",
-      "confidence": "medium",
-      "evidenceText": "CEC NEVI community charging is a competitive solicitation with award amounts based on project application and solicitation budget category.",
-      "sourceUrlsChecked": [
-        "https://www.energy.ca.gov/solicitations/2026-03/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula"
-      ],
-      "reasoningNotes": "No generic one-time EV charging formula should be created for arbitrary projects.",
       "researchBatchId": "gpt_pro_2026-06-28_batch8",
       "reviewedAt": "2026-06-28",
       "originalGapReason": "formula_not_found_in_source_text",
@@ -33723,26 +34250,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
-      "opportunityName": "Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Michigan NEVI funding is site- and solicitation-specific; no reusable per-charger formula was verified.",
-      "sourceUrlsChecked": [
-        "https://www.michigan.gov/mdot/travel/mobility/initiatives/nevi"
-      ],
-      "reasoningNotes": "NEVI awards depend on corridor/site, solicitation terms, and approved project budget.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch9",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:lighting-rebate",
       "opportunityName": "Lighting Rebate",
       "repairStatus": "formula_not_found",
@@ -33947,26 +34454,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891",
-      "opportunityName": "National Electric Vehicle Infrastructure (NEVI) Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "NEVI funding is solicitation- and site-specific; no direct SDG&E upfront charger formula was verified.",
-      "sourceUrlsChecked": [
-        "https://www.sdge.com/node/23891"
-      ],
-      "reasoningNotes": "NEVI should not be modeled as a generic per-unit EV charging rebate.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch9",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "ev_charging_site_load",
-        "incentiveValueMethod": "per_unit",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3086",
       "opportunityName": "IID Energy - Commercial Rebate Program",
       "repairStatus": "formula_not_found",
@@ -33983,26 +34470,6 @@
         "primarySavingsModelId": "motor_vfd_efficiency",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_equipment_details",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22661",
-      "opportunityName": "Utah - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Utah NEVI awards depend on charging site, corridor, solicitation, and application scope.",
-      "sourceUrlsChecked": [
-        "https://udotinput.utah.gov/evplan?HTTPSRedirected=true"
-      ],
-      "reasoningNotes": "No reusable one-time EV charging grant formula was found.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch9",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -34205,26 +34672,6 @@
         "primarySavingsModelId": "whole_building_custom_efficiency",
         "incentiveValueMethod": "per_kwh_saved",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22662",
-      "opportunityName": "Washington - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Washington NEVI awards depend on corridors, site selection, solicitation, and approved project costs.",
-      "sourceUrlsChecked": [
-        "https://wsdot.wa.gov/construction-planning/statewide-plans/washington-state-plan-electric-vehicle-infrastructure-deployment"
-      ],
-      "reasoningNotes": "No reusable one-time EV charging grant formula was found.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch9",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -35044,27 +35491,6 @@
         "primarySavingsModelId": "whole_building_custom_efficiency",
         "incentiveValueMethod": "per_kwh_saved",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22631",
-      "opportunityName": "Nevada - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Nevada NEVI funding is allocated through corridor/site solicitations and does not publish a reusable charger formula.",
-      "sourceUrlsChecked": [
-        "https://www.dot.nv.gov/mobility/alternative-fuels/nevi",
-        "https://programs.dsireusa.org/system/program/detail/22631"
-      ],
-      "reasoningNotes": "NEVI awards are solicitation- and site-specific.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch10",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -35962,26 +36388,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22666",
-      "opportunityName": "Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Alaska NEVI funding depends on corridor/site solicitation and application details.",
-      "sourceUrlsChecked": [
-        "https://www.akenergyauthority.org/What-We-Do/Alternative-Energy-and-Energy-Efficiency-Programs/Electric-Vehicles/EV-Infrastructure-Implementation-Plan"
-      ],
-      "reasoningNotes": "NEVI is not a reusable one-time charger formula for arbitrary projects.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch11",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:22576",
       "opportunityName": "Eversource - Home Battery Storage Rebate",
       "repairStatus": "not_applicable_for_one_time_savings",
@@ -36018,26 +36424,6 @@
         "primarySavingsModelId": "fleet_fuel_replacement",
         "incentiveValueMethod": "per_unit",
         "calculationReadiness": "needs_equipment_details",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22630",
-      "opportunityName": "Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Hawaii NEVI awards are corridor/project specific and depend on the state plan and solicitations.",
-      "sourceUrlsChecked": [
-        "https://hidot.hawaii.gov/highways/hawaii-nevi-state-plan/"
-      ],
-      "reasoningNotes": "No reusable one-time grant formula was verified.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch11",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },
@@ -36184,26 +36570,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22636",
-      "opportunityName": "Louisiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Louisiana NEVI funding depends on corridor/site solicitation and project details.",
-      "sourceUrlsChecked": [
-        "http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx"
-      ],
-      "reasoningNotes": "No generic one-time EV charging grant formula was verified.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch11",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
       "opportunityName": "Oklahoma Electric Cooperative - Energy Efficiency Rebate Program",
       "repairStatus": "formula_not_found",
@@ -36219,26 +36585,6 @@
       "mapping": {
         "primarySavingsModelId": "ev_charging_site_load",
         "incentiveValueMethod": "per_unit",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22644",
-      "opportunityName": "Indiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "Indiana NEVI program awards depend on charging corridor solicitation and approved project cost share.",
-      "sourceUrlsChecked": [
-        "https://chargingthecrossroads.com/"
-      ],
-      "reasoningNotes": "NEVI is project-specific and should not be forced into a generic rule.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch11",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
         "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
@@ -37118,26 +37464,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22640",
-      "opportunityName": "New Hampshire - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "New Hampshire NEVI funding is solicitation- and site-specific with awards determined by project application.",
-      "sourceUrlsChecked": [
-        "https://www.nh.gov/dot/projects/nevi/"
-      ],
-      "reasoningNotes": "No reusable one-time EV charging formula applies across projects.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch12",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
-        "calculationInputNeed": null
-      }
-    },
-    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:22071",
       "opportunityName": "Turlock Irrigation District - Commercial Energy Efficiency Rebate Program",
       "repairStatus": "manual_review_required",
@@ -37195,26 +37521,6 @@
         "primarySavingsModelId": "whole_building_custom_efficiency",
         "incentiveValueMethod": "per_kwh_saved",
         "calculationReadiness": "needs_bill",
-        "calculationInputNeed": null
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22665",
-      "opportunityName": "South Carolina - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
-      "repairStatus": "formula_not_found",
-      "confidence": "medium",
-      "evidenceText": "South Carolina NEVI charging awards depend on solicitation, corridor/site, and project details.",
-      "sourceUrlsChecked": [
-        "https://www.scdot.org/projects/nevi.aspx"
-      ],
-      "reasoningNotes": "NEVI funding is not a reusable one-time charger formula for arbitrary projects.",
-      "researchBatchId": "gpt_pro_2026-06-28_batch12",
-      "reviewedAt": "2026-06-28",
-      "originalGapReason": "formula_not_found_in_source_text",
-      "mapping": {
-        "primarySavingsModelId": "grant_funding",
-        "incentiveValueMethod": "grant_amount",
-        "calculationReadiness": "needs_quote",
         "calculationInputNeed": null
       }
     },

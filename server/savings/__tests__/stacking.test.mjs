@@ -98,4 +98,28 @@ describe("incentive stacking", () => {
     expect(selected.opportunityIds).toEqual(["opp_recurring"]);
     expect(selected.firstYearTotalBenefitCents).toBe(45000);
   });
+
+  it("selects possible grant scenarios as a tiebreaker without counting them as upfront savings", () => {
+    const possibleGrantRule = {
+      id: "oir_possible_grant_v1",
+      opportunityId: "opp_possible_grant",
+      name: "Possible Grant",
+      incentiveType: "possible_grant",
+      timing: "upfront",
+      amountRule: { kind: "percent_of_basis", percent: 0.8 },
+      basisPolicy: { basis: "gross_project_cost", applicationOrder: 10 },
+      active: true
+    };
+
+    const scenarios = scenarioCtx([possibleGrantRule]);
+    const selected = selectBestScenario(scenarios);
+
+    expect(selected.opportunityIds).toEqual(["opp_possible_grant"]);
+    expect(selected.totalUpfrontSavingsCents).toBe(0);
+    expect(selected.possibleGrantMoneyCents).toBe(128340);
+    expect(selected.upfrontSavingsEntries[0]).toMatchObject({
+      kind: "possible_grant",
+      amountCents: 128340
+    });
+  });
 });

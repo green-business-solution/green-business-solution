@@ -220,6 +220,7 @@ export function selectBestScenario(scenarios = []) {
       (a, b) =>
         b.firstYearTotalBenefitCents - a.firstYearTotalBenefitCents ||
         b.totalUpfrontSavingsCents - a.totalUpfrontSavingsCents ||
+        b.possibleGrantMoneyCents - a.possibleGrantMoneyCents ||
         a.upfrontCostAfterSavingsCents - b.upfrontCostAfterSavingsCents
     )[0] || null;
 }

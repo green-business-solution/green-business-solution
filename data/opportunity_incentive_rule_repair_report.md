@@ -1,17 +1,17 @@
 # Opportunity Incentive Rule Repair Report
 
-Generated: 2026-06-29T05:09:27.291Z
+Generated: 2026-06-29T06:01:02.997Z
 Targets reviewed: 1058
-Rules generated: 743
+Rules generated: 768
 Manual repair targets: 0
-Research-reviewed no-rule targets: 534
+Research-reviewed no-rule targets: 509
 
 ## Rule Extraction Counts
 
 ```json
 {
   "source_url_fetch": 125,
-  "gpt_pro_research": 618
+  "gpt_pro_research": 643
 }
 ```
 
@@ -19,7 +19,7 @@ Research-reviewed no-rule targets: 534
 
 ```json
 {
-  "medium": 332,
+  "medium": 357,
   "high": 410,
   "low": 1
 }
@@ -35,8 +35,8 @@ Research-reviewed no-rule targets: 534
 
 ```json
 {
-  "manual_review_required": 189,
-  "formula_not_found": 223,
+  "manual_review_required": 188,
+  "formula_not_found": 199,
   "not_applicable_for_one_time_savings": 90,
   "unavailable": 6,
   "source_inaccessible": 26
@@ -162,6 +162,15 @@ Research-reviewed no-rule targets: 534
     "ruleCount": 37,
     "reviewedNoRuleCount": 12,
     "reviewedOpportunityCount": 33,
+    "continueFromOpportunityId": null
+  },
+  {
+    "batchId": "codex_2026-06-29_nevi_possible_grants",
+    "appliedAt": "2026-06-29T06:01:02.991Z",
+    "repairsPath": "data/opportunity_incentive_rule_research_repairs_codex_2026-06-29_nevi_possible_grants.json",
+    "ruleCount": 25,
+    "reviewedNoRuleCount": 0,
+    "reviewedOpportunityCount": 25,
     "continueFromOpportunityId": null
   }
 ]

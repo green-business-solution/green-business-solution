@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) NEVI possible grant money rules
+
+- Added 25 NEVI-style `possible_grant` rules using the 80% eligible project cost federal-share cap for solicitation-specific EV charging grants.
+- Kept possible grant money separate from deterministic one-time savings so it does not reduce upfront after-savings cost.
+- Refreshed admin test-case savings previews so 18 existing EV charging previews now show possible grant money.
+
 ## 2026-06-28 - Codex (GPT-5) recurring expense and grant savings buckets
 
 - Added explicit savings-engine fields for gross recurring savings, recurring expenses, net recurring savings, deterministic one-time savings, and separate possible grant money.
