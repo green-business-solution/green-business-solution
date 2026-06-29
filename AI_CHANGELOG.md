@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) opportunity data repair targets
+
+- Generated a focused GPT Pro input file with 75 active or rolling opportunities prioritized for opportunity-data confidence repair.
+
 ## 2026-06-29 - Codex (GPT-5) savings estimate equation layout
 
 - Replaced duplicate savings metric and ledger cards with three compact equation cards: one-time costs/savings, recurring monthly costs/savings, and possible grant money.
