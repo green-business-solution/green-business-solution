@@ -81,6 +81,7 @@
 - Updated the production deploy packaging to include the calculator data files and to reuse the existing Google client secret when the deploy shell does not provide a fresh one.
 - Fixed the production API health route to return the configured AWS data region instead of crashing on an undefined variable in Lambda.
 - Added a temporary admin-only `/portal-preview?userId=...` route plus `Open portal preview` actions in Client Intake Summary so admins can inspect a specific client portal without separate client login.
+- Updated Client Intake Summary so client rows are explicitly selectable, the selected row stays highlighted, and a floating portal-preview popup appears after selection instead of relying on an always-visible page-level action.
 
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 5
 

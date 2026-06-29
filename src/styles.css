@@ -1058,6 +1058,15 @@ dd {
   background: #f5faf6;
 }
 
+.admin-intake-summary-table-row.is-selected {
+  background: #ecf6ef;
+  box-shadow: inset 4px 0 0 #2f6c43;
+}
+
+.admin-intake-summary-table-row.is-selected:hover {
+  background: #e6f2ea;
+}
+
 .admin-intake-summary-table-row:focus-visible {
   outline: 2px solid #2f6c43;
   outline-offset: -2px;
@@ -1103,6 +1112,52 @@ dd {
 .admin-status-pill.ready {
   background: #dff4e5;
   color: #1f6a39;
+}
+
+.admin-selection-popover {
+  align-items: end;
+  background: rgba(18, 31, 24, 0.94);
+  border: 1px solid rgba(228, 238, 232, 0.16);
+  border-radius: 18px;
+  bottom: 28px;
+  box-shadow: 0 22px 48px rgba(14, 35, 26, 0.28);
+  display: grid;
+  gap: 14px;
+  max-width: 360px;
+  padding: 18px;
+  position: fixed;
+  right: 28px;
+  z-index: 60;
+}
+
+.admin-selection-popover .eyebrow,
+.admin-selection-popover h3,
+.admin-selection-popover p {
+  color: #f5fbf7;
+  margin: 0;
+}
+
+.admin-selection-popover-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-selection-popover .eyebrow {
+  color: #bdd8c8;
+}
+
+.admin-selection-popover .link-list {
+  gap: 10px;
+}
+
+.admin-selection-popover .secondary-button {
+  background: #f3f8f4;
+  border-color: transparent;
+  color: #173f2c;
+}
+
+.admin-selection-popover .secondary-button:hover {
+  background: #e3efe7;
 }
 
 .data-grid {

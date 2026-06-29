@@ -6193,6 +6193,7 @@ function ClientIntakeSummaryPanel({
   const activeUtilityTabConfig = adminUtilitySummaryTabs.find((tab) => tab.id === activeUtilityTab) || adminUtilitySummaryTabs[0];
   const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows, activeUtilityTab), [activeUtilityTab, rows]);
   const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
+  const selectedSummaryRow = summaryRows.find((row) => row.userId === selectedUserId) || null;
   const handleSummaryRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>, userId: string) => {
     if (event.key !== "Enter" && event.key !== " ") {
       return;
@@ -6208,8 +6209,8 @@ function ClientIntakeSummaryPanel({
   }
 
   useEffect(() => {
-    if (!selectedUserId && summaryRows[0]?.userId) {
-      setSelectedUserId(summaryRows[0].userId);
+    if (selectedUserId && !summaryRows.some((row) => row.userId === selectedUserId)) {
+      setSelectedUserId(null);
     }
   }, [selectedUserId, summaryRows]);
 
@@ -6217,6 +6218,7 @@ function ClientIntakeSummaryPanel({
     let isMounted = true;
 
     if (!selectedUserId || !credential) {
+      setDebugPayload(null);
       return () => {
         isMounted = false;
       };
@@ -6257,9 +6259,6 @@ function ClientIntakeSummaryPanel({
           </button>
           <button className="secondary-button" onClick={onOpenIntakeTable} type="button">
             Open raw intake table
-          </button>
-          <button className="secondary-button" disabled={!selectedUserId} onClick={() => openPortalPreview(selectedUserId)} type="button">
-            Open portal preview
           </button>
         </div>
       </div>
@@ -6343,7 +6342,8 @@ function ClientIntakeSummaryPanel({
                 </tr>
               ) : summaryRows.map((row) => (
                 <tr
-                  className="admin-intake-summary-table-row"
+                  aria-pressed={row.userId === selectedUserId}
+                  className={`admin-intake-summary-table-row${row.userId === selectedUserId ? " is-selected" : ""}`}
                   key={row.userId}
                   onClick={() => setSelectedUserId(row.userId)}
                   onKeyDown={(event) => handleSummaryRowKeyDown(event, row.userId)}
@@ -6393,6 +6393,24 @@ function ClientIntakeSummaryPanel({
         </div>
       </div>
 
+      {selectedSummaryRow ? (
+        <div className="admin-selection-popover" role="dialog" aria-label="Selected client actions">
+          <div className="admin-selection-popover-copy">
+            <p className="eyebrow">Client selected</p>
+            <h3>{selectedSummaryRow.clientName}</h3>
+            <p>{selectedSummaryRow.email}</p>
+          </div>
+          <div className="link-list">
+            <button className="secondary-button" onClick={() => openPortalPreview(selectedSummaryRow.userId)} type="button">
+              Open portal preview
+            </button>
+            <button className="secondary-button" onClick={() => setSelectedUserId(null)} type="button">
+              Clear selection
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <section className="database-detail-panel retrofit-result-group">
         <div className="database-detail-header">
           <div>
@@ -6407,11 +6425,6 @@ function ClientIntakeSummaryPanel({
           <p className="empty-state">Loading matched opportunities and calculator output...</p>
         ) : debugPayload?.results ? (
           <div className="retrofit-result-group-list">
-            <div className="link-list">
-              <button className="secondary-button" onClick={() => openPortalPreview(selectedUserId)} type="button">
-                Open this client's portal preview
-              </button>
-            </div>
             <RetrofitResultGroup
               description="Best first-pass calculations currently ready for this client."
               emptyMessage="No ready estimates for this client yet."
