@@ -78,6 +78,7 @@
 - Added the first client-specific retrofit calculation pipeline, including normalized incentive summaries, calculation requirements, project-cost benchmarks, missing-info detection, and first-pass savings/payback/ROI estimates built from matched opportunities plus uploaded utility data.
 - Added new backend routes for signed-in client portal retrofit results and admin client retrofit debug results, without mutating intake or opportunity records.
 - Added a new user-portal `Retrofit estimates` workspace tab plus focused Vitest coverage for electric, water, incentive-only, financing, missing-cost, and zero-savings edge cases.
+- Updated the production deploy packaging to include the calculator data files and to reuse the existing Google client secret when the deploy shell does not provide a fresh one.
 
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 5
 

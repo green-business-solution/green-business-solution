@@ -58,11 +58,6 @@ ensure_energy_data_table() {
 
 cd "${ROOT_DIR}"
 
-if [ -z "${GOOGLE_CLIENT_SECRET}" ]; then
-  echo "GOOGLE_CLIENT_SECRET must be set to deploy Google redirect sign-in." >&2
-  exit 1
-fi
-
 ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
 ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
 LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
@@ -104,21 +99,29 @@ aws_region s3 cp "${LAMBDA_ZIP}" "s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}"
 ensure_energy_data_table
 
 echo "Deploying CloudFormation stack ${STACK_NAME}..."
+parameter_overrides=(
+  "DomainName=${DOMAIN_NAME}"
+  "HostedZoneId=${HOSTED_ZONE_ID}"
+  "LambdaCodeBucket=${ARTIFACT_BUCKET}"
+  "LambdaCodeKey=${LAMBDA_CODE_KEY}"
+  "GoogleClientId=${GOOGLE_CLIENT_ID}"
+  "GoogleRedirectUri=${GOOGLE_REDIRECT_URI}"
+  "AdminEmails=${ADMIN_EMAILS}"
+  "DataRegion=${DATA_REGION}"
+  "EnergyDataTable=${ENERGY_DATA_TABLE}"
+)
+
+if [ -n "${GOOGLE_CLIENT_SECRET}" ]; then
+  parameter_overrides+=("GoogleClientSecret=${GOOGLE_CLIENT_SECRET}")
+else
+  echo "GOOGLE_CLIENT_SECRET not set; reusing the existing CloudFormation parameter value."
+fi
+
 aws_region cloudformation deploy \
   --stack-name "${STACK_NAME}" \
   --template-file infra/production-hosting.yaml \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides \
-    DomainName="${DOMAIN_NAME}" \
-    HostedZoneId="${HOSTED_ZONE_ID}" \
-    LambdaCodeBucket="${ARTIFACT_BUCKET}" \
-    LambdaCodeKey="${LAMBDA_CODE_KEY}" \
-    GoogleClientId="${GOOGLE_CLIENT_ID}" \
-    GoogleClientSecret="${GOOGLE_CLIENT_SECRET}" \
-    GoogleRedirectUri="${GOOGLE_REDIRECT_URI}" \
-    AdminEmails="${ADMIN_EMAILS}" \
-    DataRegion="${DATA_REGION}" \
-    EnergyDataTable="${ENERGY_DATA_TABLE}"
+  --parameter-overrides "${parameter_overrides[@]}"
 
 FRONTEND_BUCKET="$(stack_output FrontendBucketName)"
 DISTRIBUTION_ID="$(stack_output CloudFrontDistributionId)"
