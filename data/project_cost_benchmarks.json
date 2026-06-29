@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "project-cost-benchmarks-v1",
+  "generatedAt": "2026-06-29T21:44:03.282Z",
+  "benchmarks": [
+    {
+      "key": "electric_general",
+      "model_ids": [
+        "electric_usage_reduction",
+        "whole_building_custom_efficiency",
+        "battery_tou_demand_savings"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 1.5,
+      "typical": 3,
+      "high": 6
+    },
+    {
+      "key": "hvac_electric",
+      "model_ids": [
+        "hvac_electric_efficiency",
+        "envelope_insulation_savings"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 4,
+      "typical": 9,
+      "high": 18
+    },
+    {
+      "key": "gas_efficiency",
+      "model_ids": [
+        "gas_usage_reduction"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 2.5,
+      "typical": 5,
+      "high": 10
+    },
+    {
+      "key": "gas_to_electric",
+      "model_ids": [
+        "gas_to_electric_replacement"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 6,
+      "typical": 14,
+      "high": 28
+    },
+    {
+      "key": "water_efficiency",
+      "model_ids": [
+        "water_sewer_reduction"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 0.75,
+      "typical": 1.5,
+      "high": 3
+    },
+    {
+      "key": "solar_pv",
+      "model_ids": [
+        "solar_electric_offset",
+        "renewable_generation_credit_market_value",
+        "net_metering_or_export_value"
+      ],
+      "basis": "per_annual_kwh",
+      "unit": "usd_per_annual_kwh_offset",
+      "low": 1.8,
+      "typical": 2.4,
+      "high": 3.1
+    },
+    {
+      "key": "ev_load_management",
+      "model_ids": [
+        "ev_charging_site_load"
+      ],
+      "basis": "per_site",
+      "unit": "usd_per_site",
+      "low": 15000,
+      "typical": 50000,
+      "high": 120000
+    },
+    {
+      "key": "refrigeration",
+      "model_ids": [
+        "refrigeration_electric_efficiency"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 2,
+      "typical": 4.5,
+      "high": 9
+    },
+    {
+      "key": "motor_vfd",
+      "model_ids": [
+        "motor_vfd_efficiency"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 1.5,
+      "typical": 3.5,
+      "high": 7
+    },
+    {
+      "key": "controls",
+      "model_ids": [
+        "controls_building_automation"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 1,
+      "typical": 2.5,
+      "high": 5
+    },
+    {
+      "key": "commercial_kitchen",
+      "model_ids": [
+        "commercial_kitchen_equipment_efficiency"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 3,
+      "typical": 8,
+      "high": 16
+    },
+    {
+      "key": "financing",
+      "model_ids": [
+        "financing_cash_flow",
+        "pace_or_on_bill_financing"
+      ],
+      "basis": "none",
+      "unit": "usd",
+      "low": 0,
+      "typical": 0,
+      "high": 0
+    },
+    {
+      "key": "tax_benefit",
+      "model_ids": [
+        "tax_benefit_project_cost_reduction",
+        "sales_or_property_tax_exemption"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 2,
+      "typical": 6,
+      "high": 12
+    },
+    {
+      "key": "grant_funding",
+      "model_ids": [
+        "grant_funding",
+        "program_rule_value_only",
+        "interconnection_or_grid_access_value",
+        "policy_or_permitting_value"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 1,
+      "typical": 3,
+      "high": 8
+    },
+    {
+      "key": "rebate_only",
+      "model_ids": [
+        "project_cost_reduction_only"
+      ],
+      "basis": "per_sqft",
+      "unit": "usd_per_sqft",
+      "low": 1,
+      "typical": 2.5,
+      "high": 6
+    }
+  ]
+}

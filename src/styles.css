@@ -1772,6 +1772,51 @@ dd {
   padding: 18px;
 }
 
+.retrofit-results-shell {
+  gap: 24px;
+}
+
+.retrofit-results-summary-grid {
+  margin-bottom: 8px;
+}
+
+.retrofit-result-group-list {
+  display: grid;
+  gap: 24px;
+}
+
+.retrofit-result-group {
+  display: grid;
+  gap: 20px;
+}
+
+.retrofit-result-card-list {
+  display: grid;
+  gap: 18px;
+}
+
+.retrofit-result-card {
+  display: grid;
+  gap: 18px;
+}
+
+.retrofit-result-header {
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.retrofit-result-header p {
+  margin: 6px 0 0;
+}
+
+.retrofit-result-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.retrofit-result-detail-grid {
+  align-items: start;
+}
+
 @media (max-width: 980px) {
   .hero-band,
   .form-shell,

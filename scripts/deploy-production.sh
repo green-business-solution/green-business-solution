@@ -77,6 +77,12 @@ cp package.json package-lock.json "${LAMBDA_PACKAGE_DIR}/"
 cp -R server "${LAMBDA_PACKAGE_DIR}/server"
 mkdir -p "${LAMBDA_PACKAGE_DIR}/data"
 cp data/bill_field_dictionary.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/savings_models.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/opportunity_savings_mapping.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/opportunity_incentive_rules.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/calculation_requirements.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/project_cost_benchmarks.json "${LAMBDA_PACKAGE_DIR}/data/"
+cp data/savings_calculation_methods.json "${LAMBDA_PACKAGE_DIR}/data/"
 
 (
   cd "${LAMBDA_PACKAGE_DIR}"

@@ -14,6 +14,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
+import { buildClientRetrofitResults } from "./lib/retrofitCalculator/index.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -1379,6 +1380,18 @@ async function requirePasswordSessionUser(sessionToken) {
   return findUserByPasswordSession(sessionToken);
 }
 
+async function requireAuthenticatedUserFromAuth({ credential, passwordSessionToken }) {
+  if (!cleanText(credential) && !cleanText(passwordSessionToken)) {
+    const error = new Error("Sign-in is required.");
+    error.status = 401;
+    throw error;
+  }
+
+  return cleanText(passwordSessionToken)
+    ? requirePasswordSessionUser(passwordSessionToken)
+    : requireGoogleUser(credential);
+}
+
 async function requireAdminFromAuth({ credential, passwordSessionToken }) {
   if (!cleanText(credential) && !cleanText(passwordSessionToken)) {
     const error = new Error("Admin sign-in is required.");
@@ -1414,6 +1427,30 @@ function adminAuthFromRequest(req) {
 
 async function requireAdminFromRequest(req) {
   return requireAdminFromAuth(adminAuthFromRequest(req));
+}
+
+async function requireAuthenticatedUserFromRequest(req) {
+  return requireAuthenticatedUserFromAuth(adminAuthFromRequest(req));
+}
+
+async function getUserRecord(userId) {
+  const result = await db.send(
+    new GetCommand({
+      TableName: usersTable,
+      Key: { userId }
+    })
+  );
+
+  return result.Item || null;
+}
+
+async function buildRetrofitResultsForIntake(intake) {
+  const opportunities = await scanAll(opportunitiesTable);
+  return buildClientRetrofitResults({
+    intake,
+    opportunities,
+    now: new Date().toISOString()
+  });
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -2823,6 +2860,26 @@ app.post("/api/auth/password/session", async (req, res) => {
   }
 });
 
+app.get("/api/portal/retrofit-results", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    if (user.role !== "client") {
+      const error = new Error("Retrofit results are only available for client accounts.");
+      error.status = 403;
+      throw error;
+    }
+
+    const intake = await getIntake(user.userId);
+    res.json({
+      client: publicUser(user),
+      intake,
+      results: await buildRetrofitResultsForIntake(intake)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.get("/api/admin/users", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
@@ -2836,6 +2893,27 @@ app.get("/api/admin/tables/:tableName", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
     res.json({ table: await buildAdminTableSnapshot(req.params.tableName) });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/client-retrofit-results/:userId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const user = await getUserRecord(cleanText(req.params.userId));
+    if (!user || user.role !== "client") {
+      const error = new Error("Client account was not found.");
+      error.status = 404;
+      throw error;
+    }
+
+    const intake = await getIntake(user.userId);
+    res.json({
+      client: publicUser(user),
+      intake,
+      results: await buildRetrofitResultsForIntake(intake)
+    });
   } catch (error) {
     handleError(res, error);
   }

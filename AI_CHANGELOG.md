@@ -73,6 +73,12 @@
 - Reduced manual incentive rule repair targets from 558 to 333, with `SOURCE_DSIRE:dsire_program_id:22647` recorded as the next GPT Pro continuation point.
 - Refreshed public sample test cases so 156 calculated retrofit previews now show nonzero upfront opportunity savings with 502 usable rules loaded.
 
+## 2026-06-29 - Codex (GPT-5) first end-to-end retrofit calculation pipeline
+
+- Added the first client-specific retrofit calculation pipeline, including normalized incentive summaries, calculation requirements, project-cost benchmarks, missing-info detection, and first-pass savings/payback/ROI estimates built from matched opportunities plus uploaded utility data.
+- Added new backend routes for signed-in client portal retrofit results and admin client retrofit debug results, without mutating intake or opportunity records.
+- Added a new user-portal `Retrofit estimates` workspace tab plus focused Vitest coverage for electric, water, incentive-only, financing, missing-cost, and zero-savings edge cases.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 5
 
 - Applied the fifth GPT Pro one-time incentive repair batch through the importer: 26 source-backed rules added and 56 opportunities reviewed without a safe one-time rule.
