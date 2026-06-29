@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) restart handoff
+
+- Added a restart handoff document summarizing completed availability, incentive-rule, savings-model, UI, deployment, and opportunity-data repair work.
+- Captured remaining next steps, including the goal of repairing all matching opportunities to complete source-backed data confidence.
+
 ## 2026-06-29 - Codex (GPT-5) GPT Pro opportunity data repair batch 1
 
 - Imported the first GPT Pro opportunity-data repair batch for 20 checked opportunities and preserved source-backed geography, applicant, retrofit category, requirement, blocker, and evidence fields.
