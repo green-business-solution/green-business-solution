@@ -1,17 +1,17 @@
 # Opportunity Incentive Rule Repair Report
 
-Generated: 2026-06-29T02:45:00.503Z
+Generated: 2026-06-29T03:17:48.172Z
 Targets reviewed: 1058
-Rules generated: 541
-Manual repair targets: 258
-Research-reviewed no-rule targets: 399
+Rules generated: 584
+Manual repair targets: 183
+Research-reviewed no-rule targets: 443
 
 ## Rule Extraction Counts
 
 ```json
 {
   "source_url_fetch": 125,
-  "gpt_pro_research": 416
+  "gpt_pro_research": 459
 }
 ```
 
@@ -19,8 +19,8 @@ Research-reviewed no-rule targets: 399
 
 ```json
 {
-  "medium": 268,
-  "high": 272,
+  "medium": 279,
+  "high": 304,
   "low": 1
 }
 ```
@@ -29,8 +29,8 @@ Research-reviewed no-rule targets: 399
 
 ```json
 {
-  "formula_not_found_in_source_text": 212,
-  "source_text_unavailable": 46
+  "source_text_unavailable": 35,
+  "formula_not_found_in_source_text": 148
 }
 ```
 
@@ -38,11 +38,11 @@ Research-reviewed no-rule targets: 399
 
 ```json
 {
-  "manual_review_required": 136,
-  "formula_not_found": 165,
-  "not_applicable_for_one_time_savings": 71,
-  "unavailable": 4,
-  "source_inaccessible": 23
+  "manual_review_required": 160,
+  "formula_not_found": 175,
+  "not_applicable_for_one_time_savings": 78,
+  "unavailable": 5,
+  "source_inaccessible": 25
 }
 ```
 
@@ -130,6 +130,15 @@ Research-reviewed no-rule targets: 399
     "reviewedNoRuleCount": 48,
     "reviewedOpportunityCount": 75,
     "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:3406"
+  },
+  {
+    "batchId": "gpt_pro_2026-06-28_batch10",
+    "appliedAt": "2026-06-29T03:17:48.166Z",
+    "repairsPath": "data/opportunity_incentive_rule_research_repairs_gpt_pro_2026-06-28_batch10.json",
+    "ruleCount": 43,
+    "reviewedNoRuleCount": 44,
+    "reviewedOpportunityCount": 75,
+    "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:4812"
   }
 ]
 ```
@@ -143,103 +152,103 @@ Research-reviewed no-rule targets: 399
 
 ## First Manual Repair Targets
 
-- Connexus Energy - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3406)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs
-- AEP (Central and SWEPCO) - Coolsaver A/C Tune Up or Replacement (SOURCE_DSIRE:dsire_program_id:4594)
-  - reason: source_text_unavailable; method: per_unit; source: https://aeptexasefficiency.com/#/commercial/coolsaver
-- Sawnee EMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2278)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.sawnee.com/rebates-and-incentives
-- PPL Electric Utilities - Commercial, Industrial and Agricultural Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3853)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.pplelectricbusinesssavings.com/ppl-business/incentives/overview/
-- City and County of Denver - Solar Rebate (SOURCE_DSIRE:dsire_program_id:22753)
-  - reason: source_text_unavailable; method: per_kw; source: https://switchtogether.com/en/solar/denver/info/denver-solar-rebate-program
-- Redwood Falls Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2584)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: http://www.SaveEnergyInRedwoodFalls.com
-- Charging Infrastructure Grant Program (SOURCE_DSIRE:dsire_program_id:22555)
-  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://epa.illinois.gov/topics/ceja.html
-- Duke Energy Indiana - Electric School Bus Charging (SOURCE_DSIRE:dsire_program_id:22602)
-  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://www.duke-energy.com/business/products/park-and-plug/electric-school-buses?_gl=1*yb3xfn*_ga*NDkyMTYxOTIuMTY3NjkyMDEyNg..*_ga_HB58MJRNTY*MTY3Njk4MDUxMy42LjEuMTY3Njk4MDY3NC4wLjAuMA..&_ga=2.11200564.1441956738.1676920127-49216192.1676920126
-- Indiana Michigan Power - Energy Savings Rebate Program (SOURCE_DSIRE:dsire_program_id:4615)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.electricideas.com/home/home-energy-products-program/
-- Evergy - Residential Rebate Programs (SOURCE_DSIRE:dsire_program_id:2932)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.evergy.com/ways-to-save/discounts
-- Xcel Energy (Electric and Gas) - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4813)
-  - reason: source_text_unavailable; method: per_unit; source: https://www.xcelenergy.com/programs_and_rebates/residential_programs_and_rebates
-- National Grid - Charge Smart MA (SOURCE_DSIRE:dsire_program_id:22742)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.nationalgridus.com/Charge-Smart-MA
-- Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1946)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.rpu.org/rebates-programs/commercial/conserve-save-rebates.php
-- Consumers Energy (Gas) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3594)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.consumersenergy.com/business/energy-efficiency/rebates-and-programs
-- San Isabel Electric Association - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5128)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://siea.com/rebates/
-- Orange County REMC - Energy Efficient Equipment Rebate Program (SOURCE_DSIRE:dsire_program_id:2678)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.myremc.coop/rebates
-- CenterPoint Energy (Gas) - Commercial Energy Efficiency Rebates (SOURCE_DSIRE:dsire_program_id:3065)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://midwest.centerpointenergy.com/savings/in-business/rebates/gas
-- Duke Energy -  Residential Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1549)
+- Minnesota Xcel Energy - Business Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:4812)
+  - reason: source_text_unavailable; method: per_unit; source: https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates
+- Kootenai Electric Cooperative - Residential Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2453)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.directefficiency.com/kec-residential-rebates/
+- Controls Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:controls-program)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.siliconvalleypower.com/businesses/rebates
+- Delaware Clean Vehicle Rebate Program (SOURCE_DSIRE:dsire_program_id:22165)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://dnrec.alpha.delaware.gov/climate-coastal-energy/clean-transportation/vehicle-rebates/
+- NIPSCO (Gas & Electric) Small Business Direct Install Program (SOURCE_DSIRE:dsire_program_id:5726)
+  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://www.nipsco.com/energy-efficiency/for-your-business/small-business-direct-install-program
+- Agricultural Lighting and Equipment Rebate Program (SOURCE_DSIRE:dsire_program_id:4056)
+  - reason: source_text_unavailable; method: per_unit; source: https://www.efficiencyvermont.com/products-technologies/agricultural-equipment
+- Idaho Power - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3134)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.idahopower.com/ways-to-save/savings-for-your-home/
+- Anoka Municipal Utility - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3409)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.anokamunicipalutility.com/381/Commercial-Rebates
+- Tampa Electric - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3355)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.tampaelectric.com/business/saveenergy/
+- Ameren Illinois - Instant Incentives Program (SOURCE_DSIRE:dsire_program_id:3812)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://amerenillinoissavings.com/business/incentives-services/instant-incentives/
+- (Electric and Gas)  Residential New Construction Program (SOURCE_DSIRE:dsire_program_id:4342)
+  - reason: source_text_unavailable; method: per_unit; source: https://energizect.com/your-home/solutions-list/residential-new-construction-program
+- Questar Gas - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4785)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.thermwise.com/business-applications-wyoming/
+- Energy Efficiency Program for Manufacturers (SOURCE_DSIRE:dsire_program_id:5587)
+  - reason: source_text_unavailable; method: grant_amount; source: https://development.ohio.gov/community/redevelopment/energy-efficiency-program
+- It Pay$ to Plug in Program (SOURCE_DSIRE:dsire_program_id:22199)
+  - reason: source_text_unavailable; method: grant_amount; source: https://www.drivegreen.nj.gov/plugin.html
+- SoCalGas - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1461)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.socalgas.com/save-money-and-energy/rebates-and-incentives/natural-gas-appliance-rebates
+- Peoples Gas - Single Family Direct Install (SOURCE_DSIRE:dsire_program_id:5403)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.peoplesgasdelivery.com/home/rebates_direct.aspx
+- MMPA - Commercial and Industrial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4739)
+  - reason: source_text_unavailable; method: per_unit; source: http://mmpa.org/conservation/we-save-business/
+- AEP Public Service Company of Oklahoma - Commercial Rebate Program (SOURCE_DSIRE:dsire_program_id:3659)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://powerforwardwithpso.com/rebates/
+- El Paso Electric Company - Commercial Efficiency Program (SOURCE_DSIRE:dsire_program_id:3841)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.epesaver.com/
+- Baltimore Gas & Electric Company (Electric) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3385)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://bgesmartenergy.com/business/business-programs/energy-solutions-business
+- Alexandria Light and Power - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1931)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.alputilities.com/rebate-category/business/
+- Duke Energy Florida - Off-Peak Charging Credit (SOURCE_DSIRE:dsire_program_id:22741)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.duke-energy.com/home/products/ev-complete/off-peak-credit
+- Vera Water & Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2241)
+  - reason: source_text_unavailable; method: per_unit; source: https://verawaterandpower.com/residential-rebates-2/
+- Ameren Illinois - Energy-Efficiency Program (SOURCE_DSIRE:dsire_program_id:4698)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://amerenillinoissavings.com/business/incentives-services/
+- Fort Pierce Utilities Authority - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3619)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://fpua.com/ways-to-save/
+- Southeastern Electric - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5138)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://southeasternelectric.com/member-rebates-incentives/
+- Gainesville Regional Utilities - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1450)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.gru.com/TabID/3659/Default.aspx
+- Groton Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:1772)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://grotonutilities.com/energy-conservation/rebate-center/
+- Butler Rural Electric Cooperative - Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:3329)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.butlerrural.coop/geothermal-rebates
+- Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22666)
+  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://www.akenergyauthority.org/What-We-Do/Alternative-Energy-and-Energy-Efficiency-Programs/Electric-Vehicles/EV-Infrastructure-Implementation-Plan#:~:text=Through%20the%20NEVI%20program%2C%20Alaska,and%20urban%20areas%20across%20Alaska.
+- Owen Electric - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2301)
+  - reason: source_text_unavailable; method: per_unit; source: https://www.owenelectric.com/energy-efficiency-info-programs-rebates
+- Eversource - Home Battery Storage Rebate (SOURCE_DSIRE:dsire_program_id:22576)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.eversource.com/content/residential/save-money-energy/energy-efficiency-programs/demand-response/battery-storage-demand-response/nh
+- Saint Peter Municipal Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2586)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.SaveEnergyInSaintPeter.com
+- Alaska Power and Telephone - AMP-UP Program (SOURCE_DSIRE:dsire_program_id:22263)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.aptalaska.com/amp-up/
+- WIN Energy REMC - Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:2670)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.winenergyremc.com/residential-rebate-program
+- Rhode Island Energy (Gas) - Residential Gas Heating Rebate Programs (SOURCE_DSIRE:dsire_program_id:3024)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/natural-gas-heating
+- Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22630)
+  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://hidot.hawaii.gov/highways/hawaii-nevi-state-plan/
+- FirstEnergy (MetEdison, Penelec, Penn Power, West Penn Power)  - Residential Energy Efficiency Programs (SOURCE_DSIRE:dsire_program_id:4133)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.firstenergycorp.com/save_energy/save_energy_pennsylvania/for_your_home_pa.html
+- Missouri Rural Electric Cooperative - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4482)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.morec.org/rebates-products/
+- DC Fast Charging and Hydrogen Fueling Grant Program (SOURCE_DSIRE:dsire_program_id:22229)
+  - reason: source_text_unavailable; method: grant_amount; source: https://gis.dep.pa.gov/DrivingPAForward/
+- Critical Peak Pricing Plans (SOURCE_SDGE_BUSINESS:program_url:myenergycenter_com)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://myenergycenter.com/
+- Lansing Board of Water & Light - Hometown Energy Savers Commercial Rebates (SOURCE_DSIRE:dsire_program_id:4754)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.lbwl.com/EnergySavers
+- Duke Energy - Residential and Builder Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2296)
   - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.duke-energy.com/home/products/smart-saver
-- Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
-  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://www.energy.gov/indianenergy/office-indian-energy-policy-and-programs
-- Sulphur Springs Valley EC - Residential Energy Efficiency Rebate (SOURCE_DSIRE:dsire_program_id:2035)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.ssvec.org/programs/rebates.php
-- Duquesne Light Company - PEV Bill Credit Program (SOURCE_DSIRE:dsire_program_id:22376)
-  - reason: source_text_unavailable; method: per_unit; source: https://www.duquesnelight.com/energy-money-savings/electric-vehicles
-- Fairmont Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2538)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: http://www.SaveEnergyInFairmont.com
-- Marshfield Utilities - Heat Pump Rebate Program (SOURCE_DSIRE:dsire_program_id:2051)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://marshfieldutilities.org/efficiency-conservation/save-energy-money.php
-- Consumers Energy (Electric) - Commercial Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4299)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.consumersenergy.com/business/energy-efficiency/rebates-and-programs
-- Berkeley Electric Cooperative - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3344)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.berkeleyelectric.coop/
-- Kentucky Power - Targeted Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3696)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.kentuckypower.com/save/residential/programs/TargetedEnergyEfficiencyProgram.aspx
-- Grays Harbor PUD - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2195)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.ghpud.org/energy-efficiency
-- Nevada - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22631)
-  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://www.dot.nv.gov/mobility/alternative-fueling-infrastructure-plan
-- Minnesota Energy Resources (Gas) - Low-Income New Construction Rebates (SOURCE_DSIRE:dsire_program_id:4787)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.minnesotaenergyresources.com/business/builders_low_income_rebates.aspx
-- JEA - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4608)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.jea.com/business_resources/rebates_for_businesses/
-- Columbia River PUD - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:2152)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: http://crpud.net/ways-to-save/at-work
-- Indiana Michigan Power - EV Incentive (SOURCE_DSIRE:dsire_program_id:22331)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.indianamichiganpower.com/clean-energy/electric-cars/
-- Spire Energy - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5874)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.spireenergy.com/commercial-rebates
-- Lake Country Power - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2256)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.lakecountrypower.coop/rates-and-rebates
-- Peoples Gas - Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:5233)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.peoplesgasdelivery.com/home/rebates.aspx
-- Duke Energy Carolinas - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3465)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.duke-energy.com/home/products/smart-saver
-- Beaches Energy Services - Solar Water Heating Rebate Program (SOURCE_DSIRE:dsire_program_id:4438)
-  - reason: formula_not_found_in_source_text; method: per_kw; source: https://www.beachesenergy.com/my-account/rebates
-- New Hampshire Electric Cooperative - Electric Vehicle Rebates (SOURCE_DSIRE:dsire_program_id:22383)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.nhec.com/electric-vehicle-charging/
-- Consolidated Electric Cooperative - Residential Rebate Program (SOURCE_DSIRE:dsire_program_id:3291)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.consolidated.coop/electric/residential/rebates/
-- Commercial Energy Efficiency Rebates (Offered by 12 Utilities) (SOURCE_DSIRE:dsire_program_id:22561)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.brightenergysolutions.com/members
-- PG&E - EV Fleet Program (SOURCE_DSIRE:dsire_program_id:22283)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.pge.com/en_US/large-business/solar-and-vehicles/clean-vehicles/ev-fleet-program/ev-fleet-program.page?ctx=small-medium-business
-- Potomac Edison - EV Driven Program (SOURCE_DSIRE:dsire_program_id:22321)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.evdrivenpe.com/
-- Salem Electric - Residential, Commercial, and Industrial Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2493)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.salemelectric.com/energy-efficiency/incentives/
-- Central New Mexico Electric Cooperative - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2599)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: https://cnmec.org/cnmec-member-rebates
-- New Mexico Gas Company - Residential Efficiency Programs (SOURCE_DSIRE:dsire_program_id:4619)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://www.nmgco.com/en/residential_rebate_programs
-- Unitil (Gas) - Residential Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:4822)
-  - reason: formula_not_found_in_source_text; method: per_unit; source: http://unitil.com/energy-efficiency/energy-efficiency-programs/natural-gas-programs-rebates-assistance
-- Pacific Power - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3325)
-  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://wattsmartsavings.net/california-residential/
-- NV Energy - Solar Thermal Heating Program (SOURCE_DSIRE:dsire_program_id:4590)
-  - reason: source_text_unavailable; method: per_unit; source: https://www.nvenergy.com/cleanenergy/renewable-energy-incentives/solar-heating
-- Wakefield Municipal Gas & Light Department - Residential Conservation Services Program (SOURCE_DSIRE:dsire_program_id:1342)
-  - reason: source_text_unavailable; method: per_unit; source: http://wmgld.com/energy-programs/
-- Jackson EMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5236)
-  - reason: source_text_unavailable; method: per_unit; source: http://www.jacksonemc.com/rebates
+- Owatonna Public Utilities - Residential Conserve and Save Rebate Program (SOURCE_DSIRE:dsire_program_id:1944)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.owatonnautilities.com/residential-customers/residential-rebates
+- Johnson County REMC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:5381)
+  - reason: formula_not_found_in_source_text; method: per_kwh_saved; source: https://jcremc.com/savings/rebates/
+- Lake City Utilities - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2543)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: http://www.SaveEnergyInLakeCity.com
+- Dominion Energy - ThermWise Home Builder Rebate Program (SOURCE_DSIRE:dsire_program_id:5036)
+  - reason: formula_not_found_in_source_text; method: per_unit; source: https://www.thermwise.com/builder-rebates/
+- Louisiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22636)
+  - reason: formula_not_found_in_source_text; method: grant_amount; source: http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx
+- Oklahoma Electric Cooperative - Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3590)
+  - reason: source_text_unavailable; method: per_unit; source: https://okcoop.org/energy-efficiency-rebates/
+- Indiana - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22644)
+  - reason: formula_not_found_in_source_text; method: grant_amount; source: https://chargingthecrossroads.com/
