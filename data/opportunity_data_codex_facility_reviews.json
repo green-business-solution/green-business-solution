@@ -1,0 +1,1717 @@
+{
+  "schemaVersion": "facility-eligibility-review-v1",
+  "generatedAt": "2026-06-29T06:44:43.047Z",
+  "opportunityCount": 75,
+  "fetchSources": true,
+  "fetchTimeoutMs": 12000,
+  "fetchAttempts": 2,
+  "fetchRetryDelayMs": 1000,
+  "statusCounts": {
+    "required": 4,
+    "broad_commercial": 32,
+    "broad_residential": 24,
+    "broad_nonresidential": 12,
+    "not_applicable": 3
+  },
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4698",
+      "opportunityName": "Ameren Illinois - Energy-Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "IL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4698/ameren-illinois-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "required",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "restaurant_foodservice",
+          "hospitality_lodging",
+          "industrial_manufacturing",
+          "healthcare",
+          "education_campus",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, restaurant_foodservice, hospitality_lodging, industrial_manufacturing, healthcare, education_campus, agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4698/ameren-illinois-energy-efficiency-program",
+          "https://amerenillinoissavings.com/business/incentives-services/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4637",
+      "opportunityName": "Avista Utilities (Gas) - Commercial Energy Efficiency Incentives Program",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4637/avista-utilities-gas-commercial-energy-efficiency-incentives-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "grocery_food_retail"
+        ],
+        "evidenceText": "elebrate Our Rivers Recreation Water Flow Information Contact Us Give us a call Residential customers: (800) 227-9187 Business customers: (800) 936-6629 Hearing impaired: dial 711 Our phone lines are open: 7:00 am - 6:00",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4637/avista-utilities-gas-commercial-energy-efficiency-incentives-program",
+          "https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1939",
+      "opportunityName": "Elk River Municipal Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1939/elk-river-municipal-utilities-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1939/elk-river-municipal-utilities-residential-energy-efficiency-rebate-program",
+          "https://www.ermumn.com/programs-rebates/residential-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1946",
+      "opportunityName": "Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1946/rochester-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1946/rochester-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+          "https://www.rpu.org/rebates-programs/commercial/conserve-save-rebates.php"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
+      "opportunityName": "AEP Public Service Company of Oklahoma - Commercial Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OK",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3659/aep-public-service-company-of-oklahoma-commercial-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "hospitality_lodging"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, hospitality_lodging",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3659/aep-public-service-company-of-oklahoma-commercial-rebate-program",
+          "https://powerforwardwithpso.com/rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3157",
+      "opportunityName": "Black Hills Energy - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "WY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3157/black-hills-energy-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Black Hills Energy - Residential Energy Efficiency Rebate Program / Black Hills Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3157/black-hills-energy-residential-energy-efficiency-rebate-program",
+          "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1580",
+      "opportunityName": "Xcel Energy - Commercial Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1580/xcel-energy-commercial-energy-efficiency-rebate-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Xcel Energy - Commercial Energy Efficiency Rebate Programs / Xcel Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1580/xcel-energy-commercial-energy-efficiency-rebate-programs",
+          "https://co.my.xcelenergy.com/s/business/lighting-equipment-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
+      "opportunityName": "AES Indiana - Business Energy Incentives Program",
+      "sourceName": "DSIRE",
+      "state": "IN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4365/aes-indiana-business-energy-incentives-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "agricultural_facility"
+        ],
+        "evidenceText": "a few dollars more each month. Enroll now Learn more Customer opt-out Eligible commercial and industrial customers may opt out of AES Indiana's energy efficiency programs. Learn more Back to top Footer: Indiana My Account Pay / View B",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4365/aes-indiana-business-energy-incentives-program",
+          "https://www.aesindiana.com/your-business"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1810",
+      "opportunityName": "Lodi Electric Utility - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1810/lodi-electric-utility-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Lodi Electric Utility - Residential Energy Efficiency Rebate Program / Customer Programs",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1810/lodi-electric-utility-residential-energy-efficiency-rebate-program",
+          "http://lodielectric.com/909/Residential-Rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1885",
+      "opportunityName": "Modesto Irrigation District - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1885/modesto-irrigation-district-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / Energy Management Department",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1885/modesto-irrigation-district-commercial-energy-efficiency-rebate-program",
+          "https://www.mid.org/saving-energy-money/rebates/business-rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
+      "opportunityName": "Alameda Municipal Power - Commercial Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1613/alameda-municipal-power-commercial-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice"
+        ],
+        "evidenceText": "nicipal Power's Commercial Customized Program is designed to provide rebates to commercial customers who install energy-efficiency equipment that does not qualify for the Commercial Lighting Retrofit Program or the HVAC",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1613/alameda-municipal-power-commercial-rebate-program",
+          "https://www.alamedamp.com/217/Businesses"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
+      "opportunityName": "Corn Belt Energy Coop - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "IL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5136/corn-belt-energy-coop-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Corn Belt Energy Coop - Commercial Energy Efficiency Rebate Program / Wabash Valley Power Association",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5136/corn-belt-energy-coop-commercial-energy-efficiency-rebate-program",
+          "https://www.powermoves.com/energy-efficiency/businesses-and-farms/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5796",
+      "opportunityName": "Efficiency Works - Business Energy Efficiency Rebate Program (Offered by 4 Utilities)",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5796/efficiency-works-business-energy-efficiency-rebate-program-offered-by-4-utilities",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "restaurant_foodservice",
+          "grocery_food_retail"
+        ],
+        "evidenceText": "energy advisor for assistance. Electric efficiency incentives are available to commercial electric customers of Estes Park Power and Communications, Fort Collins Utilities, Longmont Power & Communications, and City of Loveland U",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5796/efficiency-works-business-energy-efficiency-rebate-program-offered-by-4-utilities",
+          "https://efficiencyworks.org/business/rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2620",
+      "opportunityName": "Idaho Power - Easy Upgrades for Simple Retrofits Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2620/idaho-power-easy-upgrades-for-simple-retrofits-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "required",
+        "eligibleBuildingTypes": [
+          "education_campus",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: education_campus, agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2620/idaho-power-easy-upgrades-for-simple-retrofits-rebate-program",
+          "https://www.idahopower.com/ways-to-save/savings-for-your-business/retrofits/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
+      "opportunityName": "Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2253/minnesota-valley-electric-cooperative-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2253/minnesota-valley-electric-cooperative-commercial-and-industrial-energy-efficiency-rebate-program",
+          "https://www.mvec.net/business-solutions/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
+      "opportunityName": "NYSEG (Electric) - Commercial and Industrial Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "NY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "NYSEG (Electric) - Commercial and Industrial Efficiency Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
+          "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 404",
+            "url": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4586",
+      "opportunityName": "Otter Tail Power Company - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4586/otter-tail-power-company-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "er Instructions Rebates and Efficiency Programs Rebates and Efficiency Programs Residential Programs Business Programs Contractor Resources Log In Pay My Bill Report an Outage Manage Service Call 800-257-4044 or Contact",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4586/otter-tail-power-company-residential-energy-efficiency-rebate-program",
+          "https://www.otpco.com/ways-to-save/residential/programs/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1889",
+      "opportunityName": "Pasadena Water and Power - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1889/pasadena-water-and-power-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "education_campus"
+        ],
+        "evidenceText": "l Rebates and Programs Residential Rebates and Programs PWP offers a variety of residential programs and services to help customers save money while embracing water and energy efficiency. Making your home more energy an",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1889/pasadena-water-and-power-residential-energy-efficiency-rebate-program",
+          "https://ww5.cityofpasadena.net/water-and-power/savemoney/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
+      "opportunityName": "Riverland Energy Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "WI",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2516/riverland-energy-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2516/riverland-energy-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+          "https://riverlandenergy.com/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4952",
+      "opportunityName": "SoCalGas - Custom Non-Residential Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4952/socalgas-custom-non-residential-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "agricultural_facility"
+        ],
+        "evidenceText": "$0.50 - $3 / MBtuh Steam Boiler Stack Economizer $1 - $2 / MButh Steam Trap for Commercial Customers $100 / unit Storage/Tankless Commercial Water Heaters C $.45 - $15 / Mbtuh Tank Insulation $2 - $3 / sq. ft. This measu",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4952/socalgas-custom-non-residential-energy-efficiency-program",
+          "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22050",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "MO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22050/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/22050/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+          "https://www.powermoves.com/rebates/business/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4653",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "IN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4653/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4653/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+          "https://www.powermoves.com/rebates/business/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2650",
+      "opportunityName": "CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "TX",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2650/centerpoint-energy-residential-and-hard-to-reach-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program / CenterPoint Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2650/centerpoint-energy-residential-and-hard-to-reach-energy-efficiency-program",
+          "https://cnpres.programprocessing.com/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+      "opportunityName": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program",
+      "sourceName": "DSIRE",
+      "state": "LA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+          "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 404",
+            "url": "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
+      "opportunityName": "PECO Energy (Electric) - Non-Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "PA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4052/peco-energy-electric-non-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "grocery_food_retail",
+          "hospitality_lodging",
+          "industrial_manufacturing",
+          "healthcare"
+        ],
+        "evidenceText": "Facility types inferred: restaurant_foodservice, grocery_food_retail, hospitality_lodging, industrial_manufacturing, healthcare",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4052/peco-energy-electric-non-residential-energy-efficiency-rebate-program",
+          "https://solutions.peco-energy.com/equipment-incentives"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3689",
+      "opportunityName": "PEPCO - Commercial and Industrial Energy Efficiency Incentives Program",
+      "sourceName": "DSIRE",
+      "state": "MD",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3689/pepco-commercial-and-industrial-energy-efficiency-incentives-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "agricultural_facility"
+        ],
+        "evidenceText": "PEPCO - Commercial and Industrial Energy Efficiency Incentives Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3689/pepco-commercial-and-industrial-energy-efficiency-incentives-program",
+          "https://homeenergysavings.pepco.com/business/applyMLB?_ga=2.121639691.1070240287.1533837187-1129095877.1533837187"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
+      "opportunityName": "Residential Energy Efficiency Rebate (Offered by 18 Utilities)",
+      "sourceName": "DSIRE",
+      "state": "IA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5144/residential-energy-efficiency-rebate-offered-by-18-utilities",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "cipal Utilities We offer incentives for energy-saving projects and products for residential customers and businesses, and access to our network of Trade Ally contractors. Contact Us Home Rebates Business Rebates Get rewar",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5144/residential-energy-efficiency-rebate-offered-by-18-utilities",
+          "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2183",
+      "opportunityName": "Springfield Utility Board - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2183/springfield-utility-board-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "lity Board (SUB) offers energy audits and Energy Efficiency Incentives (EEI) to Commercial and Industrial customers for eligible, pre-qualified energy efficiency upgrades. Non-residential buildings and facilities are included such as c",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2183/springfield-utility-board-commercial-energy-efficiency-rebate-program",
+          "http://www.subutil.com/conservation/for-your-business/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3154",
+      "opportunityName": "Black Hills Energy - Commercial Energy Efficiency Programs",
+      "sourceName": "DSIRE",
+      "state": "SD",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3154/black-hills-energy-commercial-energy-efficiency-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "of the cost of Level 2 electric vehicle charging equipment and installation for commercial customers wanting to install chargers for their employees, customers, and fleets. Download Level 3/DC Fast Charger Please contact",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3154/black-hills-energy-commercial-energy-efficiency-programs",
+          "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/south-dakota-commercial-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
+      "opportunityName": "Black Hills Energy (Electric) - Residential Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4281/black-hills-energy-electric-residential-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Printable application Residential rebate program Black Hills Energy encourages residential customers to purchase and install qualifying energy efficient equipment. We have rebates for many energy products to help custome",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4281/black-hills-energy-electric-residential-energy-efficiency-program",
+          "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4636",
+      "opportunityName": "Burlington Electric Department - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "VT",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4636/burlington-electric-department-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "d in Full” or a copy of the qualifying fan and controller purchase invoices for homeowner self-installation. Terms & Conditions This rebate form must be submitted within 90 days of installation. Total rebate a",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4636/burlington-electric-department-residential-energy-efficiency-rebate-program",
+          "https://www.burlingtonelectric.com/rebate-form"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2290",
+      "opportunityName": "Carbon Power & Light - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "WY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2290/carbon-power-and-light-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2290/carbon-power-and-light-residential-energy-efficiency-rebate-program",
+          "https://www.carbonpower.com/rebates-2020"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
+      "opportunityName": "Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "HI",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5355/commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "restaurant_foodservice",
+          "grocery_food_retail",
+          "hospitality_lodging",
+          "warehouse_logistics",
+          "industrial_manufacturing",
+          "healthcare",
+          "agricultural_facility",
+          "office_admin",
+          "retail_storefront",
+          "mixed_use"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, restaurant_foodservice, grocery_food_retail, hospitality_lodging, warehouse_logistics, industrial_manufacturing, healthcare, agricultural_facility, office_admin, retail_storefront, mixed_use",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5355/commercial-energy-efficiency-rebate-program",
+          "https://www.hawaiienergy.com/for-business/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5449",
+      "opportunityName": "Energize Delaware - Home Performance with ENERGY STAR",
+      "sourceName": "DSIRE",
+      "state": "DE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "not_applicable",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Program type/source appears not facility-type gated.",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star",
+          "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 404",
+            "url": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2593",
+      "opportunityName": "EWEB - Commercial Energy Efficiency Rebates Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2593/eweb-commercial-energy-efficiency-rebates-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "industrial_manufacturing",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2593/eweb-commercial-energy-efficiency-rebates-program",
+          "http://www.eweb.org/business-customers/rebates-loans-and-conservation"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "opportunityName": "Gunnison County Electric - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Gunnison County Electric - Residential Energy Efficiency Rebate Program / Gunnison County Electric Association, Inc.",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program",
+          "http://www.gcea.coop/content/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4608",
+      "opportunityName": "JEA - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "FL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4608/jea-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "education_campus"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, education_campus",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4608/jea-commercial-energy-efficiency-rebate-program",
+          "https://www.jea.com/business_resources/rebates_for_businesses/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4723",
+      "opportunityName": "JEA - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "FL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4723/jea-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "education_campus"
+        ],
+        "evidenceText": "Residential Rebates | Ways to Save | Residential Customers | JEA Skip to main content JavaScript Disabled This site will not function properly without JavaScript enabled. To make",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4723/jea-residential-energy-efficiency-rebate-program",
+          "https://www.jea.com/Ways_to_Save/Residential_Rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4791",
+      "opportunityName": "MassSAVE (Electric) - Commercial New Construction/Major Renovation Program",
+      "sourceName": "DSIRE",
+      "state": "MA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4791/masssave-electric-commercial-new-construction-major-renovation-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "grocery_food_retail",
+          "agricultural_facility"
+        ],
+        "evidenceText": "s. Back to Explore Rebates, Offers and Services The Sponsors of Mass Save offer commercial and industrial customers a variety of incentives toward the purchase and installation of specialty equipment, including, but not limited to, com",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4791/masssave-electric-commercial-new-construction-major-renovation-program",
+          "http://www.masssave.com/en/business/incentive-programs/new-construction-renovation"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3026",
+      "opportunityName": "National Grid (Electric) - Non-Residential Energy Efficiency Program (Upstate New York)",
+      "sourceName": "DSIRE",
+      "state": "NY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3026/national-grid-electric-non-residential-energy-efficiency-program-upstate-new-york",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "National Grid (Electric) - Non-Residential Energy Efficiency Program (Upstate New York)",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3026/national-grid-electric-non-residential-energy-efficiency-program-upstate-new-york",
+          "https://www.nationalgridus.com/Upstate-NY-Business/Default"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2176",
+      "opportunityName": "New Hampshire Electric Co-op - Commercial and Municipal Retrofit Energy Efficiency Programs",
+      "sourceName": "DSIRE",
+      "state": "NH",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2176/new-hampshire-electric-co-op-commercial-and-municipal-retrofit-energy-efficiency-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice"
+        ],
+        "evidenceText": "r facility. Visit NHSaves® powered by NHEC for more information. Visit NHSaves® Commercial and Industrial Programs Owning a business is hard enough without worrying about your energy budget and the comfort of your employees a",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2176/new-hampshire-electric-co-op-commercial-and-municipal-retrofit-energy-efficiency-programs",
+          "https://www.nhec.com/commercial-savings-programs/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2549",
+      "opportunityName": "New Prague Utilities Commission - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2549/new-prague-utilities-commission-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing"
+        ],
+        "evidenceText": "Rate - Enrollment Form EV Info and Resources Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2549/new-prague-utilities-commission-commercial-and-industrial-energy-efficiency-rebate-program",
+          "https://smmpa.com/members/new-prague"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4130",
+      "opportunityName": "Nicor Gas - Commercial Energy Efficiency Rebates",
+      "sourceName": "DSIRE",
+      "state": "IL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Nicor Gas - Commercial Energy Efficiency Rebates",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+          "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 404",
+            "url": "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2415",
+      "opportunityName": "Pacific Power - wattsmart Business Program",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2415/pacific-power-wattsmart-business-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "healthcare",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: healthcare, agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2415/pacific-power-wattsmart-business-program",
+          "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington.html"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4312",
+      "opportunityName": "San Miguel Power Association - Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "not_applicable",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Program type/source appears not facility-type gated.",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+          "https://www.ecoactionpartners.org/smparebates"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 404",
+            "url": "https://www.ecoactionpartners.org/smparebates"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
+      "opportunityName": "Silicon Valley Power - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1924/silicon-valley-power-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "industrial_manufacturing",
+          "education_campus"
+        ],
+        "evidenceText": "Facility types inferred: industrial_manufacturing, education_campus",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1924/silicon-valley-power-commercial-energy-efficiency-rebate-program",
+          "https://www.siliconvalleypower.com/businesses/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1463",
+      "opportunityName": "SoCalGas - Non-Residential Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1463/socalgas-non-residential-energy-efficiency-rebate-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "agricultural_facility"
+        ],
+        "evidenceText": "$0.50 - $3 / MBtuh Steam Boiler Stack Economizer $1 - $2 / MButh Steam Trap for Commercial Customers $100 / unit Storage/Tankless Commercial Water Heaters C $.45 - $15 / Mbtuh Tank Insulation $2 - $3 / sq. ft. This measu",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1463/socalgas-non-residential-energy-efficiency-rebate-programs",
+          "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+      "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
+      "sourceName": "DSIRE",
+      "state": "TX",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs / Frontier Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+          "https://tnmpefficiency.com/residential.php#existing-homes"
+        ],
+        "fetchErrors": [
+          {
+            "error": "fetch failed",
+            "url": "https://tnmpefficiency.com/residential.php#existing-homes"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+      "opportunityName": "(Electric and Gas) Residential Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CT",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "(Electric and Gas) Residential Rebate Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+          "https://energizect.com/your-home/rebates-and-incentives"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 403",
+            "url": "https://energizect.com/your-home/rebates-and-incentives"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
+      "opportunityName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1615/anaheim-public-utilities-commercial-energy-efficiency-rebate-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1615/anaheim-public-utilities-commercial-energy-efficiency-rebate-programs",
+          "http://www.anaheim.net/5353/Business-Energy-Rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2639",
+      "opportunityName": "Clark Public Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2639/clark-public-utilities-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Search: Login Search Register MyAccount Login About Us | Contact Us Navigation Residential Customers About My Service My Account Login Pay My Bill Start, Stop or Transfer Service About My Bill Currents Customer Newslette",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2639/clark-public-utilities-residential-energy-efficiency-rebate-program",
+          "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5349",
+      "opportunityName": "Colorado Residential Energy Upgrade (RENU) Loan program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5349/colorado-residential-energy-upgrade-renu-loan-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "t, long-term financing for energy efficiency and renewable energy improvements. Homeowners Contractors Colorado RENU Dave Harris 2026-05-07T10:26:49-06:00 Colorado RENU Loan About the Program CCEF's Residential",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5349/colorado-residential-energy-upgrade-renu-loan-program",
+          "https://www.cocleanenergyfund.com/renu#homeowners"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2036",
+      "opportunityName": "CPS Energy (Electric) - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "TX",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2036/cps-energy-electric-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "education_campus"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, education_campus",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2036/cps-energy-electric-residential-energy-efficiency-rebate-program",
+          "https://www.cpsenergy.com/en/my-home/savenow.html"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2288",
+      "opportunityName": "Crow Wing Power - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2288/crow-wing-power-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2288/crow-wing-power-residential-energy-efficiency-rebate-program",
+          "https://www.cwpower.com/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2689",
+      "opportunityName": "Dominion Energy - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "UT",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2689/dominion-energy-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "ss. Start now Everyone can be ThermWise ThermWise is a program designed to help homeowners and businesses conserve energy and save money. Get simple energy-saving tips to improve efficiency now and learn about",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2689/dominion-energy-commercial-energy-efficiency-rebate-program",
+          "https://www.thermwise.com/business-rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4810",
+      "opportunityName": "Dominion Energy - Commercial EnergyWise Program",
+      "sourceName": "DSIRE",
+      "state": "SC",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4810/dominion-energy-commercial-energywise-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "grocery_food_retail",
+          "hospitality_lodging",
+          "healthcare",
+          "agricultural_facility"
+        ],
+        "evidenceText": "nergy Check-up Energy Star Products Business Programs Small Business Incentives Commercial and Industrial Renewable Energy Programs Solar Programs Electric Vehicles Natural Gas Carbon Offset Products & Services Outdoor Lighti",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4810/dominion-energy-commercial-energywise-program",
+          "https://www.dominionenergy.com/south-carolina/save-energy?tab=2"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2538",
+      "opportunityName": "Fairmont Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2538/fairmont-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing",
+          "education_campus"
+        ],
+        "evidenceText": "om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2538/fairmont-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInFairmont.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3919",
+      "opportunityName": "Firelands Electric Cooperative - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OH",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3919/firelands-electric-cooperative-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Firelands Electric Cooperative - Residential Energy Efficiency Rebate Program / Firelands Electric Cooperative",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3919/firelands-electric-cooperative-residential-energy-efficiency-rebate-program",
+          "https://www.firelandsec.com/member-programs"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2540",
+      "opportunityName": "Grand Marais PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2540/grand-marais-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "restaurant_foodservice",
+          "industrial_manufacturing",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Rate - Enrollment Form EV Info and Resources Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2540/grand-marais-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInGrandMarais.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3348",
+      "opportunityName": "Hutchinson Utilities Commission - Residential Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3348/hutchinson-utilities-commission-residential-energy-efficiency-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "ties Commission We offer incentives for energy-saving projects and products for residential customers and businesses, and access to our network of Trade Ally contractors. Contact Us Home Rebates Business Rebates Get rewar",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3348/hutchinson-utilities-commission-residential-energy-efficiency-program",
+          "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission?rebates=residential"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2453",
+      "opportunityName": "Kootenai Electric Cooperative - Residential Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "ID",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2453/kootenai-electric-cooperative-residential-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Kootenai Electric Cooperative - Residential Efficiency Rebate Program / Kootenai Electric Cooperative",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2453/kootenai-electric-cooperative-residential-efficiency-rebate-program",
+          "https://www.directefficiency.com/kec-residential-rebates/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2545",
+      "opportunityName": "Litchfield Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2545/litchfield-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing",
+          "healthcare",
+          "agricultural_facility"
+        ],
+        "evidenceText": "om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2545/litchfield-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInLitchfield.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1941",
+      "opportunityName": "Marshall Municipal Utilities - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1941/marshall-municipal-utilities-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice"
+        ],
+        "evidenceText": "vity and significantly reduce your energy consumption. Rebates are available to commercial and industrial customers of MMU for qualifying lighting retrofits or new construction. All products must be installed in facilities in MMU's ser",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1941/marshall-municipal-utilities-commercial-energy-efficiency-rebate-program",
+          "https://www.marshallutilities.com/index.php/business/commercial-rebates-conservation"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1940",
+      "opportunityName": "Marshall Municipal Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1940/marshall-municipal-utilities-residential-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice"
+        ],
+        "evidenceText": "nservation Marshall Municipal Utilities offers energy efficiency rebates to our residential customers to help conserve energy, save money, and keep our utility rates among the lowest in the area. Energy Star Appliance Reb",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1940/marshall-municipal-utilities-residential-energy-efficiency-rebate-program",
+          "https://www.marshallutilities.com/index.php/residential/rebates-conservation"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5156",
+      "opportunityName": "Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5156/minnesota-energy-resources-gas-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_nonresidential",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "restaurant_foodservice",
+          "grocery_food_retail",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5156/minnesota-energy-resources-gas-commercial-and-industrial-energy-efficiency-rebate-program",
+          "https://www.minnesotaenergyresources.com/savings/business/rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4812",
+      "opportunityName": "Minnesota Xcel Energy - Business Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4812/minnesota-xcel-energy-business-energy-efficiency-rebate-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Minnesota Xcel Energy - Business Energy Efficiency Rebate Programs / Xcel Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4812/minnesota-xcel-energy-business-energy-efficiency-rebate-programs",
+          "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2546",
+      "opportunityName": "Mora Municipal Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2546/mora-municipal-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing"
+        ],
+        "evidenceText": "om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2546/mora-municipal-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInMora.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
+      "opportunityName": "Multifamily Home Energy Solutions Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5183/multifamily-home-energy-solutions-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "required",
+        "eligibleBuildingTypes": [
+          "multifamily_residential",
+          "industrial_manufacturing",
+          "agricultural_facility"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5183/multifamily-home-energy-solutions-program",
+          "http://www.energytrust.org/programs/multifamily/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+      "opportunityName": "Poudre Valley REA - Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "not_applicable",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Program type/source appears not facility-type gated.",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+          "https://www.pvrea.com/rebates"
+        ],
+        "fetchErrors": [
+          {
+            "error": "fetch failed",
+            "url": "https://www.pvrea.com/rebates"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.82
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
+      "opportunityName": "Preston Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2553/preston-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing",
+          "agricultural_facility"
+        ],
+        "evidenceText": "om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2553/preston-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInPreston.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
+      "opportunityName": "Princeton PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "MN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2554/princeton-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [
+          "restaurant_foodservice",
+          "industrial_manufacturing",
+          "agricultural_facility"
+        ],
+        "evidenceText": "om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/2554/princeton-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+          "http://www.SaveEnergyInPrinceton.com"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
+      "opportunityName": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "required",
+        "eligibleBuildingTypes": [
+          "multifamily_residential"
+        ],
+        "evidenceText": "Facility types inferred: multifamily_residential",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+          "https://www.pse.com/rebates/multifamily-retrofit"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 500",
+            "url": "https://www.pse.com/rebates/multifamily-retrofit"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.78
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
+      "opportunityName": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs / Puget Sound Energy",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+          "https://www.pse.com/rebates"
+        ],
+        "fetchErrors": [
+          {
+            "error": "HTTP 500",
+            "url": "https://www.pse.com/rebates"
+          }
+        ],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
+      "opportunityName": "Questar Gas - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "WY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4785/questar-gas-commercial-energy-efficiency-rebate-program",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_commercial",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "ss. Start now Everyone can be ThermWise ThermWise is a program designed to help homeowners and businesses conserve energy and save money. Get simple energy-saving tips to improve efficiency now and learn about",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/4785/questar-gas-commercial-energy-efficiency-rebate-program",
+          "https://www.thermwise.com/business-applications-wyoming/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5141",
+      "opportunityName": "Residential Energy Efficiency Rebates (Offered by 12 Utilities)",
+      "sourceName": "DSIRE",
+      "state": "SD",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5141/residential-energy-efficiency-rebates-offered-by-12-utilities",
+      "facilityEligibilityReview": {
+        "eligibilityStatus": "broad_residential",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "Residential Energy Efficiency Rebates (Offered by 12 Utilities) / Bright Energy Solutions/Missouri River Energy Services",
+        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "sourceUrlsChecked": [
+          "https://programs.dsireusa.org/system/program/detail/5141/residential-energy-efficiency-rebates-offered-by-12-utilities",
+          "https://www.brightenergysolutions.com/find-a-rebate/"
+        ],
+        "fetchErrors": [],
+        "reviewedAt": "2026-06-29T06:44:43.047Z",
+        "confidence": 0.7
+      }
+    }
+  ]
+}

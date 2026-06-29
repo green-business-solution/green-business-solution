@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) Codex opportunity data baseline repairs
+
+- Ran a Codex source-fetch and deterministic inference pass for the 75 GPT Pro opportunity-data repair targets.
+- Saved baseline facility, utility, and combined opportunity-data repair artifacts for later comparison against GPT Pro output.
+
 ## 2026-06-29 - Codex (GPT-5) opportunity data repair targets
 
 - Generated a focused GPT Pro input file with 75 active or rolling opportunities prioritized for opportunity-data confidence repair.

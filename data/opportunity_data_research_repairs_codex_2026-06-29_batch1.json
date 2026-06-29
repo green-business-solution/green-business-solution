@@ -1,0 +1,4101 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-29",
+  "researchMethod": "codex_source_fetch_and_deterministic_inference",
+  "sourceTargetPath": "data/opportunity_data_research_targets_for_gpt_pro.json",
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4698",
+      "opportunityName": "Ameren Illinois - Energy-Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_AMEREN_IL"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "school"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "school",
+        "multifamily_residential",
+        "restaurant_foodservice",
+        "hospitality_lodging",
+        "industrial_manufacturing",
+        "healthcare",
+        "education_campus",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Eligible facility/building types: multifamily_residential, restaurant_foodservice, hospitality_lodging, industrial_manufacturing, healthcare, education_campus, agricultural_facility.",
+        "Utility/customer territory requirement: UTIL_AMEREN_IL."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://amerenillinoissavings.com/business/incentives-services/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4698/ameren-illinois-energy-efficiency-program",
+        "https://amerenillinoissavings.com/business/incentives-services/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, restaurant_foodservice, hospitality_lodging, industrial_manufacturing, healthcare, education_campus, agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Ameren Illinois",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 25 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4637",
+      "opportunityName": "Avista Utilities (Gas) - Commercial Energy Efficiency Incentives Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Avista Utilities (Gas)",
+          "Avista Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "restaurant_foodservice",
+        "grocery_food_retail"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Avista Utilities (Gas), Avista Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Avista Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4637/avista-utilities-gas-commercial-energy-efficiency-incentives-program",
+        "https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington"
+      ],
+      "evidenceText": "Facility: elebrate Our Rivers Recreation Water Flow Information Contact Us Give us a call Residential customers: (800) 227-9187 Business customers: (800) 936-6629 Hearing impaired: dial 711 Our phone lines are open: 7:00 am - 6:00 | Utility: Inferred from utility-like source/title/administrator: Avista Utilities (Gas), Avista Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 20 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1939",
+      "opportunityName": "Elk River Municipal Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Elk River Municipal Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "agricultural",
+        "government"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "agricultural",
+        "government",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Elk River Municipal Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Elk River Municipal Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ermumn.com/programs-rebates/residential-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1939/elk-river-municipal-utilities-residential-energy-efficiency-rebate-program",
+        "https://www.ermumn.com/programs-rebates/residential-rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Elk River Municipal Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 18 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1946",
+      "opportunityName": "Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Rochester Public Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "compressed_air_industrial",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Rochester Public Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Rochester Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.rpu.org/rebates-programs/commercial/conserve-save-rebates.php",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1946/rochester-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://www.rpu.org/rebates-programs/commercial/conserve-save-rebates.php"
+      ],
+      "evidenceText": "Facility: Rochester Public Utilities - Commercial and Industrial Energy Efficiency Rebate Program | Utility: Inferred from utility-like source/title/administrator: Rochester Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 18 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
+      "opportunityName": "AEP Public Service Company of Oklahoma - Commercial Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OK"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "AEP Public Service Company of Oklahoma"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily_residential",
+        "hospitality_lodging"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: AEP Public Service Company of Oklahoma."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "AEP Public Service Company of Oklahoma",
+      "applicationUrl": null,
+      "websiteUrl": "https://powerforwardwithpso.com/rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3659/aep-public-service-company-of-oklahoma-commercial-rebate-program",
+        "https://powerforwardwithpso.com/rebates/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, hospitality_lodging | Utility: Inferred from utility-like source/title/administrator: AEP Public Service Company of Oklahoma",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 17 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3157",
+      "opportunityName": "Black Hills Energy - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Black Hills Energy."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3157/black-hills-energy-residential-energy-efficiency-rebate-program",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates"
+      ],
+      "evidenceText": "Facility: Black Hills Energy - Residential Energy Efficiency Rebate Program / Black Hills Energy | Utility: Inferred from utility-like source/title/administrator: Black Hills Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 16 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1580",
+      "opportunityName": "Xcel Energy - Commercial Energy Efficiency Rebate Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_XCEL"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_XCEL."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://co.my.xcelenergy.com/s/business/lighting-equipment-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1580/xcel-energy-commercial-energy-efficiency-rebate-programs",
+        "https://co.my.xcelenergy.com/s/business/lighting-equipment-rebates"
+      ],
+      "evidenceText": "Facility: Xcel Energy - Commercial Energy Efficiency Rebate Programs / Xcel Energy | Utility: Inferred from utility-like source/title/administrator: Xcel Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 16 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
+      "opportunityName": "AES Indiana - Business Energy Incentives Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "AES Indiana"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "agricultural",
+        "multifamily_residential",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: AES Indiana."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "AES Indiana",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.aesindiana.com/your-business",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4365/aes-indiana-business-energy-incentives-program",
+        "https://www.aesindiana.com/your-business"
+      ],
+      "evidenceText": "Facility: a few dollars more each month. Enroll now Learn more Customer opt-out Eligible commercial and industrial customers may opt out of AES Indiana's energy efficiency programs. Learn more Back to top Footer: Indiana My Account Pay / View B | Utility: Inferred from utility-like source/title/administrator: AES Indiana",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 15 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1810",
+      "opportunityName": "Lodi Electric Utility - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Lodi Electric Utility"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Lodi Electric Utility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Customer Programs",
+      "applicationUrl": null,
+      "websiteUrl": "http://lodielectric.com/909/Residential-Rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1810/lodi-electric-utility-residential-energy-efficiency-rebate-program",
+        "http://lodielectric.com/909/Residential-Rebates"
+      ],
+      "evidenceText": "Facility: Lodi Electric Utility - Residential Energy Efficiency Rebate Program / Customer Programs | Utility: Inferred from utility-like source/title/administrator: Lodi Electric Utility",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 15 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1885",
+      "opportunityName": "Modesto Irrigation District - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Modesto Irrigation District"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "ev_charging_transportation",
+        "motors / VFD",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Modesto Irrigation District."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Energy Management Department",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mid.org/saving-energy-money/rebates/business-rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1885/modesto-irrigation-district-commercial-energy-efficiency-rebate-program",
+        "https://www.mid.org/saving-energy-money/rebates/business-rebates/"
+      ],
+      "evidenceText": "Facility: Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / Energy Management Department | Utility: Inferred from utility-like source/title/administrator: Modesto Irrigation District",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 15 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
+      "opportunityName": "Alameda Municipal Power - Commercial Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Alameda Municipal Power"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "government"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "government",
+        "restaurant_foodservice"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Alameda Municipal Power."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Alameda Municipal Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.alamedamp.com/217/Businesses",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1613/alameda-municipal-power-commercial-rebate-program",
+        "https://www.alamedamp.com/217/Businesses"
+      ],
+      "evidenceText": "Facility: nicipal Power's Commercial Customized Program is designed to provide rebates to commercial customers who install energy-efficiency equipment that does not qualify for the Commercial Lighting Retrofit Program or the HVAC | Utility: Inferred from utility-like source/title/administrator: Alameda Municipal Power",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
+      "opportunityName": "Corn Belt Energy Coop - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Wabash Valley Power Association"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Wabash Valley Power Association."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Wabash Valley Power Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.powermoves.com/energy-efficiency/businesses-and-farms/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5136/corn-belt-energy-coop-commercial-energy-efficiency-rebate-program",
+        "https://www.powermoves.com/energy-efficiency/businesses-and-farms/"
+      ],
+      "evidenceText": "Facility: Corn Belt Energy Coop - Commercial Energy Efficiency Rebate Program / Wabash Valley Power Association | Utility: Inferred from utility-like source/title/administrator: Wabash Valley Power Association",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5796",
+      "opportunityName": "Efficiency Works - Business Energy Efficiency Rebate Program (Offered by 4 Utilities)",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Estes Park Power",
+          "Fort Collins Utilities",
+          "Longmont Power & Communications",
+          "City of Loveland Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily_residential",
+        "restaurant_foodservice",
+        "grocery_food_retail"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Estes Park Power, Fort Collins Utilities, Longmont Power & Communications, City of Loveland Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://efficiencyworks.org/business/rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5796/efficiency-works-business-energy-efficiency-rebate-program-offered-by-4-utilities",
+        "https://efficiencyworks.org/business/rebates/"
+      ],
+      "evidenceText": "Facility: energy advisor for assistance. Electric efficiency incentives are available to commercial electric customers of Estes Park Power and Communications, Fort Collins Utilities, Longmont Power & Communications, and City of Loveland U | Utility: isor for assistance. Electric efficiency incentives are available to commercial electric customers of Estes Park Power and Communications, Fort Collins Utilities, Longmont Power & Communications, and City of Loveland",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2620",
+      "opportunityName": "Idaho Power - Easy Upgrades for Simple Retrofits Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_IDAHO_POWER"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "agricultural",
+        "school"
+      ],
+      "eligibleSectors": [
+        "agricultural",
+        "school",
+        "education_campus",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Eligible facility/building types: education_campus, agricultural_facility.",
+        "Utility/customer territory requirement: UTIL_IDAHO_POWER."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Idaho Power Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.idahopower.com/ways-to-save/savings-for-your-business/retrofits/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2620/idaho-power-easy-upgrades-for-simple-retrofits-rebate-program",
+        "https://www.idahopower.com/ways-to-save/savings-for-your-business/retrofits/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: education_campus, agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Idaho Power, Idaho Power Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
+      "opportunityName": "Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Valley Electric Cooperative"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "restaurant_foodservice",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "ev_charging_transportation",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "indoor_air_quality_ventilation",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Minnesota Valley Electric Cooperative."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Minnesota Valley Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mvec.net/business-solutions/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2253/minnesota-valley-electric-cooperative-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://www.mvec.net/business-solutions/"
+      ],
+      "evidenceText": "Facility: Minnesota Valley Electric Cooperative - Commercial and Industrial Energy Efficiency Rebate Program | Utility: Inferred from utility-like source/title/administrator: Minnesota Valley Electric Cooperative",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
+      "opportunityName": "NYSEG (Electric) - Commercial and Industrial Efficiency Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "NYSEG (Electric)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: NYSEG (Electric)."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Franklin Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
+        "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+      ],
+      "evidenceText": "Facility: NYSEG (Electric) - Commercial and Industrial Efficiency Program | Utility: Inferred from utility-like source/title/administrator: NYSEG (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4586",
+      "opportunityName": "Otter Tail Power Company - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Otter Tail Power Company"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Otter Tail Power Company."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Customer Service",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.otpco.com/ways-to-save/residential/programs/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4586/otter-tail-power-company-residential-energy-efficiency-rebate-program",
+        "https://www.otpco.com/ways-to-save/residential/programs/"
+      ],
+      "evidenceText": "Facility: er Instructions Rebates and Efficiency Programs Rebates and Efficiency Programs Residential Programs Business Programs Contractor Resources Log In Pay My Bill Report an Outage Manage Service Call 800-257-4044 or Contact | Utility: Inferred from utility-like source/title/administrator: Otter Tail Power Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1889",
+      "opportunityName": "Pasadena Water and Power - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_PWP"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "school"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "school",
+        "multifamily_residential",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: UTIL_PWP."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "PWP Business Center",
+      "applicationUrl": null,
+      "websiteUrl": "https://ww5.cityofpasadena.net/water-and-power/savemoney/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1889/pasadena-water-and-power-residential-energy-efficiency-rebate-program",
+        "https://ww5.cityofpasadena.net/water-and-power/savemoney/"
+      ],
+      "evidenceText": "Facility: l Rebates and Programs Residential Rebates and Programs PWP offers a variety of residential programs and services to help customers save money while embracing water and energy efficiency. Making your home more energy an | Utility: Inferred from utility-like source/title/administrator: Pasadena Water and Power, PWP Business Center",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
+      "opportunityName": "Riverland Energy Cooperative - Commercial, Industrial, and Agricultural Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Riverland Energy Cooperative",
+          "the cooperative"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Riverland Energy Cooperative, the cooperative."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Riverland Energy Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://riverlandenergy.com/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2516/riverland-energy-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+        "https://riverlandenergy.com/rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Riverland Energy Cooperative",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4952",
+      "opportunityName": "SoCalGas - Custom Non-Residential Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "SoCalGas",
+          "Southern California Gas Company"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "agricultural",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: SoCalGas, Southern California Gas Company."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Southern California Gas Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4952/socalgas-custom-non-residential-energy-efficiency-program",
+        "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives"
+      ],
+      "evidenceText": "Facility: $0.50 - $3 / MBtuh Steam Boiler Stack Economizer $1 - $2 / MButh Steam Trap for Commercial Customers $100 / unit Storage/Tankless Commercial Water Heaters C $.45 - $15 / Mbtuh Tank Insulation $2 - $3 / sq. ft. This measu | Utility: Inferred from utility-like source/title/administrator: SoCalGas, Southern California Gas Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22050",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Wabash Valley Power Association (23 Member Cooperatives)",
+          "Wabash Valley Power Association"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Wabash Valley Power Association (23 Member Cooperatives), Wabash Valley Power Association."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Wabash Valley Power Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.powermoves.com/rebates/business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22050/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+        "https://www.powermoves.com/rebates/business/"
+      ],
+      "evidenceText": "Facility: Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program | Utility: Inferred from utility-like source/title/administrator: Wabash Valley Power Association (23 Member Cooperatives), Wabash Valley Power Association",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4653",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Wabash Valley Power Association (23 Member Cooperatives)",
+          "Wabash Valley Power Association"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Wabash Valley Power Association (23 Member Cooperatives), Wabash Valley Power Association."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Wabash Valley Power Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.powermoves.com/rebates/business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4653/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+        "https://www.powermoves.com/rebates/business/"
+      ],
+      "evidenceText": "Facility: Wabash Valley Power Association (23 Member Cooperatives) - Commercial and Industrial Energy Efficiency Program | Utility: Inferred from utility-like source/title/administrator: Wabash Valley Power Association (23 Member Cooperatives), Wabash Valley Power Association",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2650",
+      "opportunityName": "CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "CenterPoint Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: CenterPoint Energy."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "CenterPoint Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://cnpres.programprocessing.com/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2650/centerpoint-energy-residential-and-hard-to-reach-energy-efficiency-program",
+        "https://cnpres.programprocessing.com/"
+      ],
+      "evidenceText": "Facility: CenterPoint Energy - Residential and Hard-to-Reach Energy Efficiency Program / CenterPoint Energy | Utility: Inferred from utility-like source/title/administrator: CenterPoint Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+      "opportunityName": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "LA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Entergy New Orleans"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Entergy New Orleans."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energy Smart",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energysmartnola.info/custom-and-prescriptive-incentives/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+        "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+      ],
+      "evidenceText": "Facility: Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program | Utility: Inferred from utility-like source/title/administrator: Entergy New Orleans",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
+      "opportunityName": "PECO Energy (Electric) - Non-Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "PECO Energy (Electric)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "restaurant_foodservice",
+        "grocery_food_retail",
+        "hospitality_lodging",
+        "industrial_manufacturing",
+        "healthcare"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: PECO Energy (Electric)."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://solutions.peco-energy.com/equipment-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4052/peco-energy-electric-non-residential-energy-efficiency-rebate-program",
+        "https://solutions.peco-energy.com/equipment-incentives"
+      ],
+      "evidenceText": "Facility: Facility types inferred: restaurant_foodservice, grocery_food_retail, hospitality_lodging, industrial_manufacturing, healthcare | Utility: Inferred from utility-like source/title/administrator: PECO Energy (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3689",
+      "opportunityName": "PEPCO - Commercial and Industrial Energy Efficiency Incentives Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_PEPCO",
+          "Potomac Electric Power Co."
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_PEPCO, Potomac Electric Power Co.."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Potomac Electric Power Co.",
+      "applicationUrl": null,
+      "websiteUrl": "https://homeenergysavings.pepco.com/business/applyMLB?_ga=2.121639691.1070240287.1533837187-1129095877.1533837187",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3689/pepco-commercial-and-industrial-energy-efficiency-incentives-program",
+        "https://homeenergysavings.pepco.com/business/applyMLB?_ga=2.121639691.1070240287.1533837187-1129095877.1533837187"
+      ],
+      "evidenceText": "Facility: PEPCO - Commercial and Industrial Energy Efficiency Incentives Program | Utility: Inferred from utility-like source/title/administrator: PEPCO, Potomac Electric Power Co.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
+      "opportunityName": "Residential Energy Efficiency Rebate (Offered by 18 Utilities)",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_SCE"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: UTIL_SCE."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Bright Energy Solutions/Missouri River Energy Services",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5144/residential-energy-efficiency-rebate-offered-by-18-utilities",
+        "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential"
+      ],
+      "evidenceText": "Facility: cipal Utilities We offer incentives for energy-saving projects and products for residential customers and businesses, and access to our network of Trade Ally contractors. Contact Us Home Rebates Business Rebates Get rewar | Utility: Residential Energy Efficiency Rebate (Offered by 18 Utilities) / Bright Energy Solutions/Missouri River Energy Services",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2183",
+      "opportunityName": "Springfield Utility Board - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Springfield Utility Board"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Springfield Utility Board."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Springfield Utility Board",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.subutil.com/conservation/for-your-business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2183/springfield-utility-board-commercial-energy-efficiency-rebate-program",
+        "http://www.subutil.com/conservation/for-your-business/"
+      ],
+      "evidenceText": "Facility: lity Board (SUB) offers energy audits and Energy Efficiency Incentives (EEI) to Commercial and Industrial customers for eligible, pre-qualified energy efficiency upgrades. Non-residential buildings and facilities are included such as c | Utility: Inferred from utility-like source/title/administrator: Springfield Utility Board",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3154",
+      "opportunityName": "Black Hills Energy - Commercial Energy Efficiency Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Black Hills Energy."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/south-dakota-commercial-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3154/black-hills-energy-commercial-energy-efficiency-programs",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/south-dakota-commercial-rebates"
+      ],
+      "evidenceText": "Facility: of the cost of Level 2 electric vehicle charging equipment and installation for commercial customers wanting to install chargers for their employees, customers, and fleets. Download Level 3/DC Fast Charger Please contact | Utility: Inferred from utility-like source/title/administrator: Black Hills Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
+      "opportunityName": "Black Hills Energy (Electric) - Residential Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy (Electric)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Black Hills Energy (Electric)."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4281/black-hills-energy-electric-residential-energy-efficiency-program",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates"
+      ],
+      "evidenceText": "Facility: Printable application Residential rebate program Black Hills Energy encourages residential customers to purchase and install qualifying energy efficient equipment. We have rebates for many energy products to help custome | Utility: Inferred from utility-like source/title/administrator: Black Hills Energy (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4636",
+      "opportunityName": "Burlington Electric Department - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_BURLINGTON_ELECTRIC"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: UTIL_BURLINGTON_ELECTRIC."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Burlington Electric Department",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.burlingtonelectric.com/rebate-form",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4636/burlington-electric-department-residential-energy-efficiency-rebate-program",
+        "https://www.burlingtonelectric.com/rebate-form"
+      ],
+      "evidenceText": "Facility: d in Full” or a copy of the qualifying fan and controller purchase invoices for homeowner self-installation. Terms & Conditions This rebate form must be submitted within 90 days of installation. Total rebate a | Utility: Inferred from utility-like source/title/administrator: Burlington Electric Department",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2290",
+      "opportunityName": "Carbon Power & Light - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Carbon Power & Light",
+          "Carbon Power & Light, Inc."
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Carbon Power & Light, Carbon Power & Light, Inc.."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Carbon Power & Light, Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.carbonpower.com/rebates-2020",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2290/carbon-power-and-light-residential-energy-efficiency-rebate-program",
+        "https://www.carbonpower.com/rebates-2020"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential | Utility: Inferred from utility-like source/title/administrator: Carbon Power & Light, Carbon Power & Light, Inc.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
+      "opportunityName": "Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "HI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "restaurant_foodservice",
+        "grocery_food_retail",
+        "hospitality_lodging",
+        "warehouse_logistics",
+        "industrial_manufacturing",
+        "healthcare",
+        "agricultural_facility",
+        "office_admin",
+        "retail_storefront",
+        "mixed_use"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "energy_storage_resilience",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Hawaii Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.hawaiienergy.com/for-business/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5355/commercial-energy-efficiency-rebate-program",
+        "https://www.hawaiienergy.com/for-business/rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, restaurant_foodservice, grocery_food_retail, hospitality_lodging, warehouse_logistics, industrial_manufacturing, healthcare, agricultural_facility, office_admin, retail_storefront, mixed_use | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5449",
+      "opportunityName": "Energize Delaware - Home Performance with ENERGY STAR",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "design assistance / study"
+      ],
+      "hardRequirements": [],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energize Delaware",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star",
+        "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2593",
+      "opportunityName": "EWEB - Commercial Energy Efficiency Rebates Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Eugene Water & Electric Board"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "industrial_manufacturing",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Eugene Water & Electric Board."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Eugene Water & Electric Board",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.eweb.org/business-customers/rebates-loans-and-conservation",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2593/eweb-commercial-energy-efficiency-rebates-program",
+        "http://www.eweb.org/business-customers/rebates-loans-and-conservation"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Eugene Water & Electric Board",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "opportunityName": "Gunnison County Electric - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Gunnison County Electric",
+          "Gunnison County Electric Association, Inc."
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "certifications_compliance"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Gunnison County Electric, Gunnison County Electric Association, Inc.."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Gunnison County Electric Association, Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.gcea.coop/content/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program",
+        "http://www.gcea.coop/content/rebates"
+      ],
+      "evidenceText": "Facility: Gunnison County Electric - Residential Energy Efficiency Rebate Program / Gunnison County Electric Association, Inc. | Utility: Inferred from utility-like source/title/administrator: Gunnison County Electric, Gunnison County Electric Association, Inc.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4608",
+      "opportunityName": "JEA - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "school"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "school",
+        "multifamily_residential",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "JEA",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.jea.com/business_resources/rebates_for_businesses/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4608/jea-commercial-energy-efficiency-rebate-program",
+        "https://www.jea.com/business_resources/rebates_for_businesses/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, education_campus | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4723",
+      "opportunityName": "JEA - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "school"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "school",
+        "multifamily_residential",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "JEA",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.jea.com/Ways_to_Save/Residential_Rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4723/jea-residential-energy-efficiency-rebate-program",
+        "https://www.jea.com/Ways_to_Save/Residential_Rebates/"
+      ],
+      "evidenceText": "Facility: Residential Rebates | Ways to Save | Residential Customers | JEA Skip to main content JavaScript Disabled This site will not function properly without JavaScript enabled. To make | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4791",
+      "opportunityName": "MassSAVE (Electric) - Commercial New Construction/Major Renovation Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_EVERSOURCE",
+          "MassSAVE (Electric)",
+          "Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusets Electric"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "agricultural",
+        "restaurant_foodservice",
+        "grocery_food_retail",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "solar_renewable_electricity",
+        "energy_storage_resilience",
+        "commercial kitchen / food service",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_EVERSOURCE, MassSAVE (Electric), Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusets Electric."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusets Electric",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.masssave.com/en/business/incentive-programs/new-construction-renovation",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4791/masssave-electric-commercial-new-construction-major-renovation-program",
+        "http://www.masssave.com/en/business/incentive-programs/new-construction-renovation"
+      ],
+      "evidenceText": "Facility: s. Back to Explore Rebates, Offers and Services The Sponsors of Mass Save offer commercial and industrial customers a variety of incentives toward the purchase and installation of specialty equipment, including, but not limited to, com | Utility: Inferred from utility-like source/title/administrator: MassSAVE (Electric), Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusets Electric",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3026",
+      "opportunityName": "National Grid (Electric) - Non-Residential Energy Efficiency Program (Upstate New York)",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "National Grid (Electric)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "water efficiency",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: National Grid (Electric)."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nationalgridus.com/Upstate-NY-Business/Default",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3026/national-grid-electric-non-residential-energy-efficiency-program-upstate-new-york",
+        "https://www.nationalgridus.com/Upstate-NY-Business/Default"
+      ],
+      "evidenceText": "Facility: National Grid (Electric) - Non-Residential Energy Efficiency Program (Upstate New York) | Utility: Inferred from utility-like source/title/administrator: National Grid (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2176",
+      "opportunityName": "New Hampshire Electric Co-op - Commercial and Municipal Retrofit Energy Efficiency Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "New Hampshire Electric Co-op"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "government"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "government",
+        "restaurant_foodservice"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "ev_charging_transportation",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: New Hampshire Electric Co-op."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "New Hampshire Electric Co-op",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nhec.com/commercial-savings-programs/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2176/new-hampshire-electric-co-op-commercial-and-municipal-retrofit-energy-efficiency-programs",
+        "https://www.nhec.com/commercial-savings-programs/"
+      ],
+      "evidenceText": "Facility: r facility. Visit NHSaves® powered by NHEC for more information. Visit NHSaves® Commercial and Industrial Programs Owning a business is hard enough without worrying about your energy budget and the comfort of your employees a | Utility: Inferred from utility-like source/title/administrator: New Hampshire Electric Co-op",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2549",
+      "opportunityName": "New Prague Utilities Commission - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "New Prague Utilities Commission"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "restaurant_foodservice",
+        "industrial_manufacturing"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: New Prague Utilities Commission."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "New Prague Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/new-prague",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2549/new-prague-utilities-commission-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://smmpa.com/members/new-prague"
+      ],
+      "evidenceText": "Facility: Rate - Enrollment Form EV Info and Resources Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Inferred from utility-like source/title/administrator: New Prague Utilities Commission",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4130",
+      "opportunityName": "Nicor Gas - Commercial Energy Efficiency Rebates",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Nicor Gas"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "insulation / air sealing",
+        "water efficiency",
+        "compressed_air_industrial",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Nicor Gas."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nicorgas.com/business/ways-to-save/rebates.html",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+        "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+      ],
+      "evidenceText": "Facility: Nicor Gas - Commercial Energy Efficiency Rebates | Utility: Inferred from utility-like source/title/administrator: Nicor Gas",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2415",
+      "opportunityName": "Pacific Power - wattsmart Business Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_ROCKY_MOUNTAIN_POWER",
+          "Pacific Power"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "agricultural",
+        "healthcare",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "water efficiency"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_ROCKY_MOUNTAIN_POWER, Pacific Power."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Pacific Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington.html",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2415/pacific-power-wattsmart-business-program",
+        "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington.html"
+      ],
+      "evidenceText": "Facility: Facility types inferred: healthcare, agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Pacific Power",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4312",
+      "opportunityName": "San Miguel Power Association - Energy Efficiency Rebate Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "San Miguel Power Association"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "other"
+      ],
+      "eligibleSectors": [
+        "other"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "ev_charging_transportation",
+        "commercial kitchen / food service",
+        "motors / VFD",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Utility/customer territory requirement: San Miguel Power Association."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ecoactionpartners.org/smparebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+        "https://www.ecoactionpartners.org/smparebates"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Inferred from utility-like source/title/administrator: San Miguel Power Association",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
+      "opportunityName": "Silicon Valley Power - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_SVP"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "school"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "school",
+        "industrial_manufacturing",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "building controls / energy management",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_SVP."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1924/silicon-valley-power-commercial-energy-efficiency-rebate-program",
+        "https://www.siliconvalleypower.com/businesses/rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: industrial_manufacturing, education_campus | Utility: Inferred from utility-like source/title/administrator: Silicon Valley Power",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1463",
+      "opportunityName": "SoCalGas - Non-Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "SoCalGas",
+          "Southern California Gas Company"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "agricultural",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "commercial kitchen / food service",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: SoCalGas, Southern California Gas Company."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Southern California Gas Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1463/socalgas-non-residential-energy-efficiency-rebate-programs",
+        "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives"
+      ],
+      "evidenceText": "Facility: $0.50 - $3 / MBtuh Steam Boiler Stack Economizer $1 - $2 / MButh Steam Trap for Commercial Customers $100 / unit Storage/Tankless Commercial Water Heaters C $.45 - $15 / Mbtuh Tank Insulation $2 - $3 / sq. ft. This measu | Utility: Inferred from utility-like source/title/administrator: SoCalGas, Southern California Gas Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+      "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Texas-New Mexico Power Company"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "energy_storage_resilience",
+        "ev_charging_transportation",
+        "water efficiency"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Texas-New Mexico Power Company."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Frontier Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://tnmpefficiency.com/residential.php#existing-homes",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+        "https://tnmpefficiency.com/residential.php#existing-homes"
+      ],
+      "evidenceText": "Facility: Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs / Frontier Energy | Utility: Inferred from utility-like source/title/administrator: Texas-New Mexico Power Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+      "opportunityName": "(Electric and Gas) Residential Rebate Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "State is known, but utility/service-territory restriction is ambiguous."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/service-territory requirement is ambiguous and needs manual source confirmation."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review.",
+        "Utility restriction remained unknown after deterministic source review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://energizect.com/your-home/rebates-and-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+        "https://energizect.com/your-home/rebates-and-incentives"
+      ],
+      "evidenceText": "Facility: (Electric and Gas) Residential Rebate Program | Utility: (Electric and Gas) Residential Rebate Program",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.42."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
+      "opportunityName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_ANAHEIM"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "ev_charging_transportation",
+        "water efficiency",
+        "motors / VFD",
+        "design assistance / study"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_ANAHEIM."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Anaheim Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.anaheim.net/5353/Business-Energy-Rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1615/anaheim-public-utilities-commercial-energy-efficiency-rebate-programs",
+        "http://www.anaheim.net/5353/Business-Energy-Rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential | Utility: Inferred from utility-like source/title/administrator: Anaheim Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2639",
+      "opportunityName": "Clark Public Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Clark Public Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Clark Public Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Clark Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2639/clark-public-utilities-residential-energy-efficiency-rebate-program",
+        "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/"
+      ],
+      "evidenceText": "Facility: Search: Login Search Register MyAccount Login About Us | Contact Us Navigation Residential Customers About My Service My Account Login Pay My Bill Start, Stop or Transfer Service About My Bill Currents Customer Newslette | Utility: Inferred from utility-like source/title/administrator: Clark Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5349",
+      "opportunityName": "Colorado Residential Energy Upgrade (RENU) Loan program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "ev_charging_transportation",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility."
+      ],
+      "blockers": [],
+      "programType": "Loan Program",
+      "administrator": "Energy Smart Colorado",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cocleanenergyfund.com/renu#homeowners",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5349/colorado-residential-energy-upgrade-renu-loan-program",
+        "https://www.cocleanenergyfund.com/renu#homeowners"
+      ],
+      "evidenceText": "Facility: t, long-term financing for energy efficiency and renewable energy improvements. Homeowners Contractors Colorado RENU Dave Harris 2026-05-07T10:26:49-06:00 Colorado RENU Loan About the Program CCEF's Residential | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2036",
+      "opportunityName": "CPS Energy (Electric) - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "CPS Energy (Electric)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "school"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "school",
+        "multifamily_residential",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "solar_renewable_electricity",
+        "ev_charging_transportation"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: CPS Energy (Electric)."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "CPS Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cpsenergy.com/en/my-home/savenow.html",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2036/cps-energy-electric-residential-energy-efficiency-rebate-program",
+        "https://www.cpsenergy.com/en/my-home/savenow.html"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, education_campus | Utility: Inferred from utility-like source/title/administrator: CPS Energy (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2288",
+      "opportunityName": "Crow Wing Power - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Crow Wing Power"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "agricultural",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "energy_storage_resilience",
+        "water efficiency",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Crow Wing Power."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Crow Wing Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cwpower.com/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2288/crow-wing-power-residential-energy-efficiency-rebate-program",
+        "https://www.cwpower.com/rebates"
+      ],
+      "evidenceText": "Facility: Facility types inferred: agricultural_facility | Utility: Inferred from utility-like source/title/administrator: Crow Wing Power",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2689",
+      "opportunityName": "Dominion Energy - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "UT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Dominion Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "water efficiency",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Dominion Energy."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Dominion Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.thermwise.com/business-rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2689/dominion-energy-commercial-energy-efficiency-rebate-program",
+        "https://www.thermwise.com/business-rebates/"
+      ],
+      "evidenceText": "Facility: ss. Start now Everyone can be ThermWise ThermWise is a program designed to help homeowners and businesses conserve energy and save money. Get simple energy-saving tips to improve efficiency now and learn about | Utility: Inferred from utility-like source/title/administrator: Dominion Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4810",
+      "opportunityName": "Dominion Energy - Commercial EnergyWise Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Dominion Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "agricultural",
+        "restaurant_foodservice",
+        "grocery_food_retail",
+        "hospitality_lodging",
+        "healthcare",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Dominion Energy."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.dominionenergy.com/south-carolina/save-energy?tab=2",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4810/dominion-energy-commercial-energywise-program",
+        "https://www.dominionenergy.com/south-carolina/save-energy?tab=2"
+      ],
+      "evidenceText": "Facility: nergy Check-up Energy Star Products Business Programs Small Business Incentives Commercial and Industrial Renewable Energy Programs Solar Programs Electric Vehicles Natural Gas Carbon Offset Products & Services Outdoor Lighti | Utility: Inferred from utility-like source/title/administrator: Dominion Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2538",
+      "opportunityName": "Fairmont Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_SCE",
+          "Fairmont Public Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "school"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "school",
+        "restaurant_foodservice",
+        "industrial_manufacturing",
+        "education_campus"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_SCE, Fairmont Public Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Fairmont Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInFairmont.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2538/fairmont-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInFairmont.com"
+      ],
+      "evidenceText": "Facility: om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Inferred from utility-like source/title/administrator: Fairmont Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3919",
+      "opportunityName": "Firelands Electric Cooperative - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_XCEL",
+          "Firelands Electric Cooperative"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "refrigeration",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: UTIL_XCEL, Firelands Electric Cooperative."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Firelands Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.firelandsec.com/member-programs",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3919/firelands-electric-cooperative-residential-energy-efficiency-rebate-program",
+        "https://www.firelandsec.com/member-programs"
+      ],
+      "evidenceText": "Facility: Firelands Electric Cooperative - Residential Energy Efficiency Rebate Program / Firelands Electric Cooperative | Utility: Inferred from utility-like source/title/administrator: Firelands Electric Cooperative",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2540",
+      "opportunityName": "Grand Marais PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "restaurant_foodservice",
+        "industrial_manufacturing",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Grand Marais PUC",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInGrandMarais.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2540/grand-marais-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInGrandMarais.com"
+      ],
+      "evidenceText": "Facility: Rate - Enrollment Form EV Info and Resources Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3348",
+      "opportunityName": "Hutchinson Utilities Commission - Residential Energy Efficiency Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_SCE",
+          "Hutchinson Utilities Commission"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: UTIL_SCE, Hutchinson Utilities Commission."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Hutchinson Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission?rebates=residential",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3348/hutchinson-utilities-commission-residential-energy-efficiency-program",
+        "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission?rebates=residential"
+      ],
+      "evidenceText": "Facility: ties Commission We offer incentives for energy-saving projects and products for residential customers and businesses, and access to our network of Trade Ally contractors. Contact Us Home Rebates Business Rebates Get rewar | Utility: Inferred from utility-like source/title/administrator: Hutchinson Utilities Commission",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2453",
+      "opportunityName": "Kootenai Electric Cooperative - Residential Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ID"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Kootenai Electric Cooperative"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "ev_charging_transportation",
+        "water efficiency"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Kootenai Electric Cooperative."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Kootenai Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.directefficiency.com/kec-residential-rebates/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2453/kootenai-electric-cooperative-residential-efficiency-rebate-program",
+        "https://www.directefficiency.com/kec-residential-rebates/"
+      ],
+      "evidenceText": "Facility: Kootenai Electric Cooperative - Residential Efficiency Rebate Program / Kootenai Electric Cooperative | Utility: Inferred from utility-like source/title/administrator: Kootenai Electric Cooperative",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2545",
+      "opportunityName": "Litchfield Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_SCE",
+          "Litchfield Public Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "restaurant_foodservice",
+        "industrial_manufacturing",
+        "healthcare",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_SCE, Litchfield Public Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Litchfield Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInLitchfield.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2545/litchfield-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInLitchfield.com"
+      ],
+      "evidenceText": "Facility: om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Inferred from utility-like source/title/administrator: Litchfield Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1941",
+      "opportunityName": "Marshall Municipal Utilities - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Marshall Municipal Utilities",
+          "Marshall Municipal Utilities/Missouri River Energy Services"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "government"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "government",
+        "restaurant_foodservice"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "motors / VFD",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Marshall Municipal Utilities, Marshall Municipal Utilities/Missouri River Energy Services."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Marshall Municipal Utilities/Missouri River Energy Services",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.marshallutilities.com/index.php/business/commercial-rebates-conservation",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1941/marshall-municipal-utilities-commercial-energy-efficiency-rebate-program",
+        "https://www.marshallutilities.com/index.php/business/commercial-rebates-conservation"
+      ],
+      "evidenceText": "Facility: vity and significantly reduce your energy consumption. Rebates are available to commercial and industrial customers of MMU for qualifying lighting retrofits or new construction. All products must be installed in facilities in MMU's ser | Utility: Inferred from utility-like source/title/administrator: Marshall Municipal Utilities, Marshall Municipal Utilities/Missouri River Energy Services",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1940",
+      "opportunityName": "Marshall Municipal Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Marshall Municipal Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "government"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "government",
+        "restaurant_foodservice"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Marshall Municipal Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Marshall Municipal Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.marshallutilities.com/index.php/residential/rebates-conservation",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1940/marshall-municipal-utilities-residential-energy-efficiency-rebate-program",
+        "https://www.marshallutilities.com/index.php/residential/rebates-conservation"
+      ],
+      "evidenceText": "Facility: nservation Marshall Municipal Utilities offers energy efficiency rebates to our residential customers to help conserve energy, save money, and keep our utility rates among the lowest in the area. Energy Star Appliance Reb | Utility: Inferred from utility-like source/title/administrator: Marshall Municipal Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5156",
+      "opportunityName": "Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Energy Resources (Gas)"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "restaurant_foodservice",
+        "grocery_food_retail",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "water efficiency",
+        "compressed_air_industrial",
+        "certifications_compliance"
+      ],
+      "hardRequirements": [
+        "Nonresidential/commercial-industrial customer or facility eligibility.",
+        "Utility/customer territory requirement: Minnesota Energy Resources (Gas)."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Minnesota Energy Resources",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.minnesotaenergyresources.com/savings/business/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5156/minnesota-energy-resources-gas-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://www.minnesotaenergyresources.com/savings/business/rebates"
+      ],
+      "evidenceText": "Facility: Minnesota Energy Resources (Gas) - Commercial and Industrial Energy Efficiency Rebate Program | Utility: Inferred from utility-like source/title/administrator: Minnesota Energy Resources (Gas)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4812",
+      "opportunityName": "Minnesota Xcel Energy - Business Energy Efficiency Rebate Programs",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "UTIL_XCEL"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: UTIL_XCEL."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4812/minnesota-xcel-energy-business-energy-efficiency-rebate-programs",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates"
+      ],
+      "evidenceText": "Facility: Minnesota Xcel Energy - Business Energy Efficiency Rebate Programs / Xcel Energy | Utility: Inferred from utility-like source/title/administrator: Minnesota Xcel Energy, Xcel Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2546",
+      "opportunityName": "Mora Municipal Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Mora Municipal Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "government"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "restaurant_foodservice",
+        "industrial_manufacturing"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Mora Municipal Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Mora Municipal Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInMora.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2546/mora-municipal-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInMora.com"
+      ],
+      "evidenceText": "Facility: om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Inferred from utility-like source/title/administrator: Mora Municipal Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
+      "opportunityName": "Multifamily Home Energy Solutions Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "State is known, but utility/service-territory restriction is ambiguous."
+      },
+      "eligibleApplicantTypes": [
+        "residential",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "industrial",
+        "agricultural",
+        "multifamily_residential",
+        "industrial_manufacturing",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "refrigeration",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "motors / VFD"
+      ],
+      "hardRequirements": [
+        "Eligible facility/building types: multifamily_residential, industrial_manufacturing, agricultural_facility.",
+        "Utility/service-territory requirement is ambiguous and needs manual source confirmation."
+      ],
+      "blockers": [
+        "Utility restriction remained unknown after deterministic source review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energy Trust of Oregon",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.energytrust.org/programs/multifamily/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5183/multifamily-home-energy-solutions-program",
+        "http://www.energytrust.org/programs/multifamily/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility | Utility: tay in Touch Contact Us Known Scams Facebook Instagram LinkedIn YouTube Serving Customers of &copy; 2026 Energy Trust of Oregon, Inc. FAQs Privacy Policy Your Privacy Choices Social Media Commenting Policy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.78. Utility review confidence 0.42."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+      "opportunityName": "Poudre Valley REA - Energy Efficiency Rebate Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "other"
+      ],
+      "eligibleSectors": [
+        "other"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "ev_charging_transportation",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Poudre Valley REA",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pvrea.com/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+        "https://www.pvrea.com/rebates"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
+      "opportunityName": "Preston Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Preston Public Utilities"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "restaurant_foodservice",
+        "industrial_manufacturing",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Preston Public Utilities."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Preston Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInPreston.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2553/preston-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInPreston.com"
+      ],
+      "evidenceText": "Facility: om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Inferred from utility-like source/title/administrator: Preston Public Utilities",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
+      "opportunityName": "Princeton PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "No utility territory restriction inferred for this program type."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "restaurant_foodservice",
+        "industrial_manufacturing",
+        "agricultural_facility"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "refrigeration",
+        "building controls / energy management",
+        "water efficiency",
+        "motors / VFD",
+        "compressed_air_industrial"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Princeton PUC",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInPrinceton.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2554/princeton-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInPrinceton.com"
+      ],
+      "evidenceText": "Facility: om Rebate Form Other Resources + Residential Air Source Heat Pump Resources for Homeowners Air Source Heat Pump Resources for HVAC Contractors Right Light Guide Vampire Power Guide Single-Family Home Energy Gui | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.78. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
+      "opportunityName": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Puget Sound Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "water efficiency"
+      ],
+      "hardRequirements": [
+        "Eligible facility/building types: multifamily_residential.",
+        "Utility/customer territory requirement: Puget Sound Energy."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Puget Sound Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pse.com/rebates/multifamily-retrofit",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+        "https://www.pse.com/rebates/multifamily-retrofit"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential | Utility: Inferred from utility-like source/title/administrator: Puget Sound Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
+      "opportunityName": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Puget Sound Energy"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "building controls / energy management",
+        "water efficiency"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/customer territory requirement: Puget Sound Energy."
+      ],
+      "blockers": [
+        "One or more source URLs could not be fetched during Codex review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Puget Sound Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pse.com/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+        "https://www.pse.com/rebates"
+      ],
+      "evidenceText": "Facility: Puget Sound Energy - Residential Energy Efficiency Rebate Programs / Puget Sound Energy | Utility: Inferred from utility-like source/title/administrator: Puget Sound Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
+      "opportunityName": "Questar Gas - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Questar Gas"
+        ],
+        "notes": "State plus utility/customer restriction inferred from source/title/review."
+      },
+      "eligibleApplicantTypes": [
+        "commercial"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "insulation / air sealing",
+        "water efficiency",
+        "commercial kitchen / food service",
+        "indoor_air_quality_ventilation"
+      ],
+      "hardRequirements": [
+        "Commercial/business customer or facility eligibility.",
+        "Utility/customer territory requirement: Questar Gas."
+      ],
+      "blockers": [],
+      "programType": "Rebate Program",
+      "administrator": "Questar Gas",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.thermwise.com/business-applications-wyoming/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4785/questar-gas-commercial-energy-efficiency-rebate-program",
+        "https://www.thermwise.com/business-applications-wyoming/"
+      ],
+      "evidenceText": "Facility: ss. Start now Everyone can be ThermWise ThermWise is a program designed to help homeowners and businesses conserve energy and save money. Get simple energy-saving tips to improve efficiency now and learn about | Utility: Inferred from utility-like source/title/administrator: Questar Gas",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5141",
+      "opportunityName": "Residential Energy Efficiency Rebates (Offered by 12 Utilities)",
+      "repairStatus": "partial_data_found",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "State is known, but utility/service-territory restriction is ambiguous."
+      },
+      "eligibleApplicantTypes": [
+        "residential"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting",
+        "HVAC / heat pump",
+        "heat pump water heater",
+        "ev_charging_transportation",
+        "water efficiency",
+        "commercial kitchen / food service"
+      ],
+      "hardRequirements": [
+        "Residential customer or home eligibility.",
+        "Utility/service-territory requirement is ambiguous and needs manual source confirmation."
+      ],
+      "blockers": [
+        "Utility restriction remained unknown after deterministic source review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Bright Energy Solutions/Missouri River Energy Services",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.brightenergysolutions.com/find-a-rebate/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5141/residential-energy-efficiency-rebates-offered-by-12-utilities",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "evidenceText": "Facility: Residential Energy Efficiency Rebates (Offered by 12 Utilities) / Bright Energy Solutions/Missouri River Energy Services | Utility: Residential Energy Efficiency Rebates (Offered by 12 Utilities) / Bright Energy Solutions/Missouri River Energy Services",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.42."
+    }
+  ],
+  "unresolved": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
+      "opportunityName": "NYSEG (Electric) - Commercial and Industrial Efficiency Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4244/nyseg-electric-commercial-and-industrial-efficiency-program",
+        "https://www.nyseg.com/wps/portal/nyseg/home/search/!ut/p/z1/lVPbjoIwEP0V92EfsVUuwiNrDMZ4WXUR2xdSoWh3pchN9O-3xX0xUVibJs2kM3POzJkBGGwB5uTM9qRgCSdHYSNs-GpvNhprQzg3Z5oFl5o6dR1nA1VLBd69w2K66MMlnDiW5a7U0UQHuDl-AzDAAS9OxQEgfs3pnuwz_5DE9B3mlGTBQTrkSZkFdJjwgvJinoS"
+      ],
+      "evidenceText": "Facility: NYSEG (Electric) - Commercial and Industrial Efficiency Program | Utility: Inferred from utility-like source/title/administrator: NYSEG (Electric)",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 14 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+      "opportunityName": "Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+        "https://www.energysmartnola.info/custom-and-prescriptive-incentives/"
+      ],
+      "evidenceText": "Facility: Entergy New Orleans - Small and Large Commercial and Industrial Incentives Program | Utility: Inferred from utility-like source/title/administrator: Entergy New Orleans",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 13 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5449",
+      "opportunityName": "Energize Delaware - Home Performance with ENERGY STAR",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star",
+        "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4130",
+      "opportunityName": "Nicor Gas - Commercial Energy Efficiency Rebates",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+        "https://www.nicorgas.com/business/ways-to-save/rebates.html"
+      ],
+      "evidenceText": "Facility: Nicor Gas - Commercial Energy Efficiency Rebates | Utility: Inferred from utility-like source/title/administrator: Nicor Gas",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4312",
+      "opportunityName": "San Miguel Power Association - Energy Efficiency Rebate Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+        "https://www.ecoactionpartners.org/smparebates"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Inferred from utility-like source/title/administrator: San Miguel Power Association",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+      "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+        "https://tnmpefficiency.com/residential.php#existing-homes"
+      ],
+      "evidenceText": "Facility: Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs / Frontier Energy | Utility: Inferred from utility-like source/title/administrator: Texas-New Mexico Power Company",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 12 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+      "opportunityName": "(Electric and Gas) Residential Rebate Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+        "https://energizect.com/your-home/rebates-and-incentives"
+      ],
+      "evidenceText": "Facility: (Electric and Gas) Residential Rebate Program | Utility: (Electric and Gas) Residential Rebate Program",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.42."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5183",
+      "opportunityName": "Multifamily Home Energy Solutions Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5183/multifamily-home-energy-solutions-program",
+        "http://www.energytrust.org/programs/multifamily/"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential, industrial_manufacturing, agricultural_facility | Utility: tay in Touch Contact Us Known Scams Facebook Instagram LinkedIn YouTube Serving Customers of &copy; 2026 Energy Trust of Oregon, Inc. FAQs Privacy Policy Your Privacy Choices Social Media Commenting Policy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.78. Utility review confidence 0.42."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+      "opportunityName": "Poudre Valley REA - Energy Efficiency Rebate Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+        "https://www.pvrea.com/rebates"
+      ],
+      "evidenceText": "Facility: Program type/source appears not facility-type gated. | Utility: Program type/source appears not utility-gated.",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.82. Utility review confidence 0.82."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
+      "opportunityName": "Puget Sound Energy - Multi-Family Efficiency Retrofit Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+        "https://www.pse.com/rebates/multifamily-retrofit"
+      ],
+      "evidenceText": "Facility: Facility types inferred: multifamily_residential | Utility: Inferred from utility-like source/title/administrator: Puget Sound Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.78. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
+      "opportunityName": "Puget Sound Energy - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+        "https://www.pse.com/rebates"
+      ],
+      "evidenceText": "Facility: Puget Sound Energy - Residential Energy Efficiency Rebate Programs / Puget Sound Energy | Utility: Inferred from utility-like source/title/administrator: Puget Sound Energy",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.78."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5141",
+      "opportunityName": "Residential Energy Efficiency Rebates (Offered by 12 Utilities)",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5141/residential-energy-efficiency-rebates-offered-by-12-utilities",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "evidenceText": "Facility: Residential Energy Efficiency Rebates (Offered by 12 Utilities) / Bright Energy Solutions/Missouri River Energy Services | Utility: Residential Energy Efficiency Rebates (Offered by 12 Utilities) / Bright Energy Solutions/Missouri River Energy Services",
+      "reasoningNotes": "Codex baseline repair generated from source fetch plus deterministic eligibility inference for 11 related retrofit categories. At least one eligibility dimension remained ambiguous or source fetch had an error; compare against GPT Pro/manual research before applying as final high-confidence data. Facility review confidence 0.7. Utility review confidence 0.42."
+    }
+  ],
+  "continueFromOpportunityId": null
+}
