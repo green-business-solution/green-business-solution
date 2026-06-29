@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) GPT Pro opportunity data repair batch 1
+
+- Imported the first GPT Pro opportunity-data repair batch for 20 checked opportunities and preserved source-backed geography, applicant, retrofit category, requirement, blocker, and evidence fields.
+- Added a repeatable opportunity-data repair importer and wired sample matching generation to load the repair artifact before extracting match profiles.
+- Refreshed public admin fixtures so the repaired data is attached to matching/test opportunity summaries, including uncertain status for source-inaccessible or temporarily closed records.
+
 ## 2026-06-29 - Codex (GPT-5) Codex opportunity data baseline repairs
 
 - Ran a Codex source-fetch and deterministic inference pass for the 75 GPT Pro opportunity-data repair targets.

@@ -28,6 +28,9 @@ const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir
 const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
 const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
 const incentiveRulesPath = process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(dataDir, "opportunity_incentive_rules.json");
+const opportunityDataRepairsPath =
+  process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH ||
+  path.join(dataDir, "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json");
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
@@ -52,10 +55,12 @@ const sampleUsers =
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
+const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(opportunityDataRepairsPath);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
 const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
 const candidateOpportunities = opportunityRecords
   .filter(isVisibleOpportunity)
+  .map(applyOpportunityDataRepair)
   .map(applyFacilityReview)
   .map(applyUtilityReview);
 const userProfiles = sampleUsers.map((sample) => ({
@@ -115,6 +120,8 @@ const output = {
   facilityReviewCount: facilityReviewsByOpportunityId.size,
   utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
+  opportunityDataRepairsPath: opportunityDataRepairsByOpportunityId.size > 0 ? opportunityDataRepairsPath : null,
+  opportunityDataRepairCount: opportunityDataRepairsByOpportunityId.size,
   opportunityIncentiveRulesPath: opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
   sampleUsers: userProfiles,
@@ -174,6 +181,7 @@ console.log(`Patch existing admin test cases: ${patchExistingTestCases ? "yes" :
 console.log(`Retrofit opportunity index: ${writeRetrofitIndex ? retrofitIndexPath : "not written"}`);
 console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`);
 console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
+console.log(`Opportunity data repairs loaded: ${opportunityDataRepairsByOpportunityId.size}`);
 console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
 
 function readReviewMap(filePath, reviewFieldName) {
@@ -198,6 +206,54 @@ function readOpportunityIncentiveRules(filePath) {
     .filter((rule) => rule?.opportunityId)
     .filter((rule) => rule.active !== false)
     .filter((rule) => rule.confidence !== "low");
+}
+
+function readOpportunityDataRepairs(filePath) {
+  if (!fs.existsSync(filePath)) return new Map();
+  const source = readJson(filePath);
+  return new Map(
+    (source.repairs || [])
+      .filter((repair) => repair?.opportunityId)
+      .map((repair) => [repair.opportunityId, normalizeOpportunityDataRepair(repair, source, filePath)])
+  );
+}
+
+function normalizeOpportunityDataRepair(repair, source, filePath) {
+  return {
+    schemaVersion: source.schemaVersion || "opportunity_data_research_repairs.v1",
+    batchId: source.batchId || path.basename(filePath, ".json"),
+    researchedAt: source.researchedAt || null,
+    source: source.source || "gpt_pro",
+    ...repair,
+    sourceUrlsChecked: normalizeRepairUrls(repair.sourceUrlsChecked),
+    websiteUrl: normalizeRepairUrl(repair.websiteUrl),
+    applicationUrl: normalizeRepairUrl(repair.applicationUrl)
+  };
+}
+
+function normalizeRepairUrls(values = []) {
+  return [...new Set(values.map(normalizeRepairUrl).filter(Boolean))];
+}
+
+function normalizeRepairUrl(value) {
+  const raw = String(value || "").trim();
+  const markdownMatch = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(raw);
+  const url = markdownMatch ? markdownMatch[2] : raw;
+  return /^https?:\/\//i.test(url) ? url : null;
+}
+
+function applyOpportunityDataRepair(opportunity) {
+  const opportunityDataRepair = opportunityDataRepairsByOpportunityId.get(opportunity.opportunityId);
+  if (!opportunityDataRepair) return opportunity;
+  return {
+    ...opportunity,
+    state: opportunityDataRepair.geography?.states?.[0] || opportunity.state,
+    programType: opportunityDataRepair.programType || opportunity.programType,
+    administrator: opportunityDataRepair.administrator || opportunity.administrator,
+    websiteUrl: opportunityDataRepair.websiteUrl || opportunity.websiteUrl,
+    applicationUrl: opportunityDataRepair.applicationUrl || opportunity.applicationUrl,
+    opportunityDataRepair
+  };
 }
 
 function applyFacilityReview(opportunity) {

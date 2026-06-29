@@ -103,6 +103,7 @@ export function buildExtractionCorpus(opportunity) {
   addObjectSegments(segments, "parameterSets", opportunity.parameterSets);
   addObjectSegments(segments, "matchingParameters", opportunity.matchingParameters);
   addObjectSegments(segments, "eligibilityRules", opportunity.eligibilityRules);
+  addObjectSegments(segments, "opportunityDataRepair", opportunity.opportunityDataRepair);
   addObjectSegments(segments, "cec", opportunity.cec);
   addObjectSegments(segments, "sce", opportunity.sce);
   addObjectSegments(segments, "sdge", opportunity.sdge);
@@ -120,6 +121,8 @@ export function buildExtractionCorpus(opportunity) {
 function normalizeAvailability(opportunity, searchableText, now) {
   const reviewedAvailability = availabilityFromReview(opportunity.availabilityReview, opportunity);
   if (reviewedAvailability) return reviewedAvailability;
+  const repairedAvailability = availabilityFromOpportunityDataRepair(opportunity.opportunityDataRepair, opportunity);
+  if (repairedAvailability) return repairedAvailability;
 
   const statusText = normalizeText([opportunity.status, opportunity.sourceStatus, opportunity.reviewStatus].join(" "));
   const availabilityText = normalizeText(searchableText);
@@ -184,7 +187,49 @@ function normalizeAvailability(opportunity, searchableText, now) {
   };
 }
 
+function availabilityFromOpportunityDataRepair(repair, opportunity) {
+  if (!repair?.availabilityStatus) return null;
+  const status = String(repair.availabilityStatus);
+  const normalizedStatus =
+    status === "active" || status === "rolling" || status === "upcoming" || status === "unavailable"
+      ? status
+      : status === "temporarily_closed" || status === "unknown"
+        ? "uncertain"
+        : null;
+  if (!normalizedStatus) return null;
+
+  return {
+    normalizedStatus,
+    applicationOpenAt: null,
+    applicationDeadlineAt: null,
+    questionsDeadlineAt: null,
+    programEndAt: null,
+    recurring: false,
+    noDeadlineExplicit: false,
+    lastVerifiedAt: repair.researchedAt || opportunity.lastSeenAt || opportunity.updatedAt || null,
+    confidence: confidenceValue(repair.confidence),
+    reasons: [`opportunity_data_repair_${status}`],
+    evidenceText: repair.evidenceText || null,
+    sourceUrlsChecked: repair.sourceUrlsChecked || []
+  };
+}
+
 function extractGeography(opportunity, searchableText) {
+  const repairedStates = unique(asArray(opportunity.opportunityDataRepair?.geography?.states).filter(Boolean));
+  if (repairedStates.length > 0) {
+    const include = repairedStates.map((stateCode) => ({
+      kind: stateCode === "US" ? "nationwide" : "state",
+      id: stateCode,
+      confidence: confidenceValue(opportunity.opportunityDataRepair?.confidence)
+    }));
+    return {
+      include,
+      exclude: [],
+      scopeStatus: "known",
+      confidence: Math.max(...include.map((item) => item.confidence))
+    };
+  }
+
   const states = unique([
     opportunity.state,
     extractStateCode(opportunity.stateName),
@@ -207,6 +252,21 @@ function extractGeography(opportunity, searchableText) {
 }
 
 function extractApplicant(opportunity, searchableText) {
+  const repairedApplicantTypes = unique([
+    ...asArray(opportunity.opportunityDataRepair?.eligibleApplicantTypes),
+    ...asArray(opportunity.opportunityDataRepair?.eligibleSectors)
+  ].flatMap(canonicalRepairApplicantType).filter(Boolean));
+  if (repairedApplicantTypes.length > 0) {
+    return {
+      eligibleOrganizationTypes: repairedApplicantTypes,
+      excludedOrganizationTypes: [],
+      residentialOnly:
+        repairedApplicantTypes.includes("residential") &&
+        !repairedApplicantTypes.some((type) => ["commercial", "industrial", "agricultural", "multifamily", "nonprofit", "government"].includes(type)),
+      confidence: confidenceValue(opportunity.opportunityDataRepair?.confidence)
+    };
+  }
+
   const sourceValues = [
     ...lookupNames(opportunity.eligibleSectors),
     ...lookupNames(opportunity.sectors),
@@ -248,6 +308,9 @@ function extractSite(opportunity, searchableText) {
 
 function extractProject(opportunity, searchableText) {
   const technologyText = [
+    ...asArray(opportunity.opportunityDataRepair?.eligibleRetrofitCategories),
+    opportunity.opportunityDataRepair?.evidenceText,
+    opportunity.opportunityDataRepair?.reasoningNotes,
     ...lookupNames(opportunity.technologies),
     ...lookupNames(opportunity.technologyRecords),
     ...asArray(opportunity.parameterSets).flatMap((set) => lookupNames(set?.technologies)),
@@ -288,6 +351,14 @@ function extractProject(opportunity, searchableText) {
 function refineTechnologyIds(technologyIds, technologyText) {
   const normalized = normalizeText(technologyText);
   let refined = [...technologyIds];
+
+  if (
+    refined.includes("solar") &&
+    /\b(solar thermal|solar water heating|solar hot water)\b/i.test(technologyText) &&
+    !/\b(solar pv|photovoltaic|pv system|solar photovoltaic|solar panel|solar panels)\b/i.test(technologyText)
+  ) {
+    refined = refined.filter((technologyId) => technologyId !== "solar");
+  }
 
   if (
     refined.includes("battery_storage") &&
@@ -492,6 +563,19 @@ function inferApplicantTypesFromText(value) {
     if (text.includes("residential") || text.includes("homeowner")) types.push("residential");
   }
   return unique(types);
+}
+
+function canonicalRepairApplicantType(value) {
+  const normalized = normalizeText(value);
+  if (!normalized) return [];
+  if (normalized.includes("non residential") || normalized.includes("nonresidential")) return ["commercial"];
+  if (normalized.includes("low income") || normalized.includes("income qualified")) return ["residential"];
+  if (normalized === "business" || normalized === "small business") return ["commercial"];
+  if (normalized === "public sector" || normalized === "local government" || normalized === "municipal") return ["government"];
+  if (normalized === "farm") return ["agricultural"];
+  if (normalized === "other") return [];
+  const canonical = canonicalOrganizationType(value);
+  return canonical && canonical !== "other" ? [canonical] : [];
 }
 
 function inferApplicantTypesFromProgram(opportunity, searchableText) {
