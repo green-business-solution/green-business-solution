@@ -79,6 +79,7 @@
 - Added new backend routes for signed-in client portal retrofit results and admin client retrofit debug results, without mutating intake or opportunity records.
 - Added a new user-portal `Retrofit estimates` workspace tab plus focused Vitest coverage for electric, water, incentive-only, financing, missing-cost, and zero-savings edge cases.
 - Updated the production deploy packaging to include the calculator data files and to reuse the existing Google client secret when the deploy shell does not provide a fresh one.
+- Fixed the production API health route to return the configured AWS data region instead of crashing on an undefined variable in Lambda.
 
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 5
 

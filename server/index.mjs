@@ -2315,7 +2315,7 @@ function handleError(res, error) {
 app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
-    region,
+    region: dataRegion,
     usersTable,
     intakeTable,
     energyDataTable,
