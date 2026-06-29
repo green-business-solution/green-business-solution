@@ -1,0 +1,10 @@
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+project_root_markers = ["package.json", ".git", "AGENTS.md"]
+web_search = "cached"
+
+[shell_environment_policy]
+inherit = "all"
+experimental_use_profile = true
+set = { AWS_PROFILE = "gbs", GBS_AWS_REGION = "us-east-2", GBS_ENERGY_DATA_BUCKET_REGION = "us-east-1" }

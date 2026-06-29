@@ -831,3 +831,4 @@
 - Generated public availability and special-edge audit artifacts documenting current review counts, source evidence, and future cron workflow inputs.
 - Documented GPT Pro availability-repair lessons for future cron/manual review, including subtype triage for statutory, tax, PACE, bond, tariff, utility portal, grant, local-option, and stale DSIRE records.
 - Applied the next GPT Pro/manual public availability repair batches, reduced uncertain public opportunities to 50, regenerated public matching fixtures with savings previews, and added an availability review artifact writer for DynamoDB syncs.
+- Added repo-local Codex app setup under `.codex/` so the desktop app can open this project in Local mode with shared defaults for AWS profile/regions and a bootstrap script for dependency and session checks.
