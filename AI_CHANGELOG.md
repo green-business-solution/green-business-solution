@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 4
+
+- Applied the fourth GPT Pro one-time incentive repair batch through the importer: 50 source-backed rules added and 40 opportunities reviewed without a safe one-time rule.
+- Reduced manual incentive rule repair targets from 708 to 633, with `SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605` recorded as the next GPT Pro continuation point.
+- Refreshed public sample test cases so 111 calculated retrofit previews now show nonzero upfront opportunity savings with 301 usable rules loaded.
+
 ## 2026-06-28 - Codex (GPT-5) GPT Pro incentive rule repair batch 3
 
 - Applied the third GPT Pro one-time incentive repair batch through the importer: 53 source-backed rules added and 39 opportunities reviewed without a safe one-time rule.
