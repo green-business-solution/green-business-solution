@@ -1,0 +1,1986 @@
+{
+  "schemaVersion": "opportunity_incentive_rule_research_repairs.v1",
+  "batchId": "gpt_pro_2026-06-28_batch8",
+  "researchedAt": "2026-06-28",
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2590",
+      "opportunityName": "Waseca Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 50000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$500 per connected ChargePoint Home Flex Level 2 charger",
+      "evidenceText": "Bright Energy Solutions says connected ChargePoint Home Flex chargers receive a $500 rebate.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://smmpa.com/members/waseca"
+      ],
+      "reasoningNotes": "Matched EV charging and Level 2 terms. Confidence is medium because Bright Energy Solutions participation should be verified by utility."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2590",
+      "opportunityName": "Waseca Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 15000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$150 per other qualifying Level 2 charger",
+      "evidenceText": "Bright Energy Solutions says other qualifying Level 2 chargers receive a $150 rebate.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://smmpa.com/members/waseca"
+      ],
+      "reasoningNotes": "Returned separately because non-ChargePoint Level 2 chargers have a lower amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5137",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Residential Energy Efficiency Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 80000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$800 per eligible heat pump water heater",
+      "evidenceText": "PowerMoves 2026 residential rebate flyer lists heat pump water heater at $800.",
+      "sourceUrlsChecked": [
+        "https://www.powermoves.com/rebates/residential/",
+        "https://www.mjmec.coop/sites/default/files/documents/2026%20Power%20Moves%20Residential%20Rebates%20Flyer.pdf"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Use one unit as one qualifying HPWH."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5137",
+      "opportunityName": "Wabash Valley Power Association (23 Member Cooperatives) - Residential Energy Efficiency Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 7500,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$75 per Wi-Fi thermostat replacing non-Wi-Fi thermostat",
+      "evidenceText": "PowerMoves says installing a new Wi-Fi thermostat earns a $75 rebate.",
+      "sourceUrlsChecked": [
+        "https://www.powermoves.com/rebates/residential/wifi-thermostats/",
+        "https://www.powermoves.com/rebates/residential/"
+      ],
+      "reasoningNotes": "Matched thermostat term. Use one unit as one qualifying Wi-Fi thermostat."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3029",
+      "opportunityName": "City of Tallahassee Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 30000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$300 per ENERGY STAR heat pump water heater",
+      "evidenceText": "Tallahassee Utilities HVAC rebate page lists heat pump-style water heater at $300.",
+      "sourceUrlsChecked": [
+        "https://www.talgov.com/you/you-products-home-hvac-rebates.aspx"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Rebate is credited on the utility bill for existing homes."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3029",
+      "opportunityName": "City of Tallahassee Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 75000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$750 per qualifying water-source heat pump",
+      "evidenceText": "Tallahassee Utilities lists water-source heat pump rebate at $750.",
+      "sourceUrlsChecked": [
+        "https://www.talgov.com/you/you-products-home-hvac-rebates.aspx"
+      ],
+      "reasoningNotes": "Matched heat pump term. Returned separately because it is a distinct HVAC system measure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22333",
+      "opportunityName": "Connexus Energy - Electric Vehicle Incentive Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.5
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 50000
+      },
+      "formula": "50% of Level 2 EV charger project cost, capped at $500",
+      "evidenceText": "Connexus lists qualifying Level 2 EV charger rebate as up to 50% of project cost or $500.",
+      "sourceUrlsChecked": [
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/electric-vehicles/electric-vehicle-charger-rebate"
+      ],
+      "reasoningNotes": "Matched Level 2 EV charger terms. Use eligible charger, equipment, and installation costs."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22333",
+      "opportunityName": "Connexus Energy - Electric Vehicle Incentive Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 10000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$100 per qualifying Level 2 PHEV charger installation",
+      "evidenceText": "Connexus lists $100 for qualifying Level 2 PHEV charger with meter socket installation.",
+      "sourceUrlsChecked": [
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/electric-vehicles/electric-vehicle-charger-rebate"
+      ],
+      "reasoningNotes": "Returned separately because PHEV charger installations have a lower fixed amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5166",
+      "opportunityName": "Fort Pierce Utilities Authority - Solar Water Heating Rebate",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 45000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$450 per new solar hot water heater system",
+      "evidenceText": "FPUA rebate materials list Solar Hot Water Heater at $450.",
+      "sourceUrlsChecked": [
+        "https://fpua.com/ways-to-save/",
+        "https://fpua.com/wp-content/uploads/2025/10/Residential-Electric-Rebate-Form-Updated-10-2-25.pdf"
+      ],
+      "reasoningNotes": "Matched solar water heating term. Use one unit as one qualifying system."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
+      "opportunityName": "Azusa Light & Water - EV Charger Rebate",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 15000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$150 per ENERGY STAR certified Level 2 EV charger",
+      "evidenceText": "DSIRE/Azusa EV rebate summary identifies a $150 rebate for Level 2 residential chargers.",
+      "sourceUrlsChecked": [
+        "https://www.azusaca.gov/1625/Plug-In-Electric-Vehicles",
+        "https://programs.dsireusa.org/system/program/detail/22278/azusa-light-water-ev-charger-rebate"
+      ],
+      "reasoningNotes": "Matched Level 2 charger terms. Confidence is medium because the official city page did not expose amount in fetched text."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1394",
+      "opportunityName": "Liberty Utilities (Electric) - Commercial Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 8500,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$85 per wireless thermostat",
+      "evidenceText": "2026 NHSaves commercial gas rebate PDF lists wireless thermostat at $85.",
+      "sourceUrlsChecked": [
+        "https://nhsaves.com/wp-content/uploads/2026/01/2026_NaturalGasRebates_Commercial.pdf",
+        "https://new-hampshire.libertyutilities.com/allenstown/commercial/smart-energy-use/natural-gas/natural-gas-programs.html"
+      ],
+      "reasoningNotes": "Matched thermostat/control term for Liberty/NHSaves commercial customers."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1394",
+      "opportunityName": "Liberty Utilities (Electric) - Commercial Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 5000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$50 per repaired or replaced steam trap",
+      "evidenceText": "2026 NHSaves commercial gas rebate PDF lists steam traps at $50 per repaired/replaced trap.",
+      "sourceUrlsChecked": [
+        "https://nhsaves.com/wp-content/uploads/2026/01/2026_NaturalGasRebates_Commercial.pdf",
+        "https://new-hampshire.libertyutilities.com/allenstown/commercial/smart-energy-use/natural-gas/natural-gas-programs.html"
+      ],
+      "reasoningNotes": "Returned because steam traps are a clear commercial prescriptive measure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22404",
+      "opportunityName": "Green Mountain Power EV Charging Station Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 120000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$1,200 per public, workplace, or multifamily Level 2 charging port",
+      "evidenceText": "GMP business EV page lists Level 2 charger installation incentive at $1,200 per port.",
+      "sourceUrlsChecked": [
+        "https://greenmountainpower.com/rebates-programs/business-innovation/electric-vehicles/"
+      ],
+      "reasoningNotes": "Matched public/workplace/multifamily Level 2 charging. Use one unit as one charging port."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22404",
+      "opportunityName": "Green Mountain Power EV Charging Station Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 1000000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$10,000 per public Level 3 charging station",
+      "evidenceText": "GMP business EV page lists Level 3 public charging station incentive at $10,000.",
+      "sourceUrlsChecked": [
+        "https://greenmountainpower.com/rebates-programs/business-innovation/electric-vehicles/"
+      ],
+      "reasoningNotes": "Returned separately because Level 3 stations have a distinct published amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2039",
+      "opportunityName": "Denton Municipal Electric - Residential GreenSense Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.3
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 30000
+      },
+      "formula": "30% of heat pump water heater cost, capped at $300",
+      "evidenceText": "Denton sustainability incentives list Heat Pump Water Heater at 30% up to $300.",
+      "sourceUrlsChecked": [
+        "https://www.cityofdenton.com/1192/Sustainability-Incentives"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Use eligible installed project cost where permitted."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2039",
+      "opportunityName": "Denton Municipal Electric - Residential GreenSense Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.3
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 30000
+      },
+      "formula": "30% of solar hot water heater cost, capped at $300",
+      "evidenceText": "Denton sustainability incentives list Solar Hot Water Heater at 30% up to $300.",
+      "sourceUrlsChecked": [
+        "https://www.cityofdenton.com/1192/Sustainability-Incentives"
+      ],
+      "reasoningNotes": "Returned separately because the source gives a solar-water-heating value."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1658",
+      "opportunityName": "NorthWestern Energy (Electric) - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 1500,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$15 per foot for refrigerated or freezer case LED lighting",
+      "evidenceText": "NorthWestern 2026 commercial lighting form lists refrigerated/freezer case LED lighting at $15 per foot.",
+      "sourceUrlsChecked": [
+        "https://northwesternenergy.com/docs/default-source/default-document-library/billing-and-payment/e-programs/montana-commercial-electric-lighting-rebate-2021.pdf",
+        "https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/rebates-incentives/commercial-electric-rebates"
+      ],
+      "reasoningNotes": "Matched refrigeration terms. Use unit_count as eligible linear feet of case lighting."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2364",
+      "opportunityName": "Rocky Mountain Power - wattsmart Residential Efficiency Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 180000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $1,800 per air-source heat pump",
+      "evidenceText": "Rocky Mountain Power says Wattsmart Homes offers rebates up to $1,800 for air-source heat pumps.",
+      "sourceUrlsChecked": [
+        "https://www.rockymountainpower.net/savings-energy-choices/home/green-housing.html",
+        "https://wattsmarthomes.com/"
+      ],
+      "reasoningNotes": "Matched heat pump term. Amount depends on equipment and eligibility tier."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2364",
+      "opportunityName": "Rocky Mountain Power - wattsmart Residential Efficiency Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 55000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $550 per heat pump water heater",
+      "evidenceText": "Rocky Mountain Power says Wattsmart Homes offers rebates up to $550 for heat pump water heaters.",
+      "sourceUrlsChecked": [
+        "https://www.rockymountainpower.net/savings-energy-choices/home/green-housing.html",
+        "https://wattsmarthomes.com/rebates/heat-pump-water-heaters-ut/"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Final amount depends on product and replacement path."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
+      "opportunityName": "Arizona – Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 800000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $8,000 for eligible heat pump for space heating and cooling",
+      "evidenceText": "Efficiency Arizona lists up to $8,000 for heat pump for space heating and cooling.",
+      "sourceUrlsChecked": [
+        "https://efficiencyarizona.com/",
+        "https://resilient.az.gov/clean-energy-hub/households/home-electrification-and-appliance-rebate"
+      ],
+      "reasoningNotes": "HEAR amount depends on income, eligibility, and project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
+      "opportunityName": "Arizona – Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 175000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $1,750 for eligible heat pump water heater",
+      "evidenceText": "Efficiency Arizona lists up to $1,750 for heat pump water heater.",
+      "sourceUrlsChecked": [
+        "https://efficiencyarizona.com/",
+        "https://resilient.az.gov/clean-energy-hub/households/home-electrification-and-appliance-rebate"
+      ],
+      "reasoningNotes": "HEAR amount depends on income, eligibility, and project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
+      "opportunityName": "Arizona – Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 84000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $840 for eligible electric stove, cooktop, range, or oven",
+      "evidenceText": "Efficiency Arizona lists up to $840 for electric stove, cooktop, range, or oven.",
+      "sourceUrlsChecked": [
+        "https://efficiencyarizona.com/",
+        "https://resilient.az.gov/clean-energy-hub/households/home-electrification-and-appliance-rebate"
+      ],
+      "reasoningNotes": "HEAR amount depends on income, eligibility, and project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
+      "opportunityName": "Arizona – Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_amount_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_amount",
+        "amountCents": 160000
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $1,600 for eligible insulation, air sealing, and ventilation",
+      "evidenceText": "Efficiency Arizona lists up to $1,600 for insulation, air sealing, and ventilation.",
+      "sourceUrlsChecked": [
+        "https://efficiencyarizona.com/",
+        "https://resilient.az.gov/clean-energy-hub/households/home-electrification-and-appliance-rebate"
+      ],
+      "reasoningNotes": "HEAR amount depends on income, eligibility, and project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22103",
+      "opportunityName": "Burlington Electric Department - Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 80000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $800 per heat pump water heater",
+      "evidenceText": "BED rebates page lists heat pump water heaters purchased at HVAC distributor at up to $800 cash back.",
+      "sourceUrlsChecked": [
+        "https://www.burlingtonelectric.com/rebates",
+        "https://www.burlingtonelectric.com/rebate-form/"
+      ],
+      "reasoningNotes": "Matched heat recovery/water heating context more closely than refrigeration; use one unit per qualifying HPWH."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5713",
+      "opportunityName": "Washington Gas - Commercial Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 40000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$400 per high-pressure steam trap",
+      "evidenceText": "DSIRE commercial Washington Gas summary lists high-pressure steam trap at $400.",
+      "sourceUrlsChecked": [
+        "https://wgsmartsavings.com/programs-rebates/business/va",
+        "https://programs.dsireusa.org/system/program/detail/5713"
+      ],
+      "reasoningNotes": "Matched steam trap/commercial efficiency terms. Confidence is medium pending official application extraction."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5713",
+      "opportunityName": "Washington Gas - Commercial Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 25000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$250 per medium-pressure steam trap",
+      "evidenceText": "DSIRE commercial Washington Gas summary lists medium-pressure steam trap at $250.",
+      "sourceUrlsChecked": [
+        "https://wgsmartsavings.com/programs-rebates/business/va",
+        "https://programs.dsireusa.org/system/program/detail/5713"
+      ],
+      "reasoningNotes": "Returned separately because pressure class changes rebate amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22186",
+      "opportunityName": "MassEVIP Workplace and Fleet Charging Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.6
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 5000000,
+        "maxPercentOfBasis": 0.6
+      },
+      "formula": "60% of Level 1 or Level 2 EVSE hardware and installation costs, capped at $50,000 per address",
+      "evidenceText": "MassEVIP Workplace & Fleet Charging provides up to 60% of costs, to $50,000 per street address.",
+      "sourceUrlsChecked": [
+        "https://www.mass.gov/how-to/apply-for-massevip-workplace-fleet-charging-incentives",
+        "https://www.mass.gov/how-to/apply-for-massevip-fleets-incentives"
+      ],
+      "reasoningNotes": "Matched workplace/fleet charging. Use eligible hardware and installation cost basis."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3625",
+      "opportunityName": "Southern Power District - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 7500,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$75 per qualifying smart thermostat",
+      "evidenceText": "Southern Power District smart thermostat page lists a $75 EnergyWise incentive.",
+      "sourceUrlsChecked": [
+        "https://southernpd.com/smart-thermostats/",
+        "https://nppd.energywisenebraska.com/residential/"
+      ],
+      "reasoningNotes": "Matched smart thermostat term. Use one unit as one qualifying thermostat."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1930",
+      "opportunityName": "Alexandria Light and Power - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 50000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$500 per connected ChargePoint Home Flex Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists ChargePoint Home Flex connected charger at $500.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.alputilities.com/wp-content/uploads/2026-EV-Charger-Rebate-Form.pdf"
+      ],
+      "reasoningNotes": "Matched Level 2 EV charging. Medium confidence because local utility participation should be verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1930",
+      "opportunityName": "Alexandria Light and Power - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 15000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$150 per other qualifying Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists other Level 2 charger rebate at $150.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.alputilities.com/wp-content/uploads/2026-EV-Charger-Rebate-Form.pdf"
+      ],
+      "reasoningNotes": "Returned separately from ChargePoint-specific amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22337",
+      "opportunityName": "Runestone Electric Association - EVSE Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 50000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $500 per qualifying EV charger on a storage rate",
+      "evidenceText": "Runestone EV charger application lists up to $500 for chargers on a storage rate.",
+      "sourceUrlsChecked": [
+        "https://www.runestoneelectric.com/energy-wise-programs/electric-vehicles/",
+        "https://www.runestoneelectric.com/wp-content/uploads/2022/01/Rebate-Form-2022.pdf"
+      ],
+      "reasoningNotes": "Matched EVSE and Level 2 terms. Confidence is medium because accessible detailed form is older."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22337",
+      "opportunityName": "Runestone Electric Association - EVSE Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 25000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $250 per uncontrolled EV charger",
+      "evidenceText": "Runestone EV charger application lists up to $250 for qualifying uncontrolled EV chargers.",
+      "sourceUrlsChecked": [
+        "https://www.runestoneelectric.com/energy-wise-programs/electric-vehicles/",
+        "https://www.runestoneelectric.com/wp-content/uploads/2022/01/Rebate-Form-2022.pdf"
+      ],
+      "reasoningNotes": "Returned separately because uncontrolled chargers have a lower maximum."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
+      "opportunityName": "LADWP - Non-Residential Energy Efficiency Incentive Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "custom_efficiency_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "rate_per_kwh",
+        "amountCentsPerKwh": 40,
+        "kwhSource": "annual_kwh_delta_abs"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$0.40 per annualized kWh saved for LADWP Preferred lighting projects",
+      "evidenceText": "LADWP lighting incentive page lists LADWP Preferred fixture replacements at $0.40/kWh annualized savings.",
+      "sourceUrlsChecked": [
+        "https://www.ladwp.com/commercial-services/programs-and-rebates-commercial/commercial-lighting-incentive-program",
+        "https://www.ladwp.com/commercial-services/programs-and-rebates-commercial/business-offerings-sustainable-solutions-boss"
+      ],
+      "reasoningNotes": "Use only for verified nonresidential lighting projects; target lacks a clearer commercial-kitchen amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5035",
+      "opportunityName": "Dominion Energy - ThermWise Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 7500,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$75 per Tier 2 smart thermostat",
+      "evidenceText": "ThermWise appliance rebates list Smart Thermostat Tier 2 at $75.",
+      "sourceUrlsChecked": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates"
+      ],
+      "reasoningNotes": "Matched smart thermostat term. Tier 2 is the relevant connected-control candidate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5035",
+      "opportunityName": "Dominion Energy - ThermWise Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 30000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$300 per residential energy recovery ventilation system",
+      "evidenceText": "ThermWise appliance rebates list Energy Recovery Ventilation at $300.",
+      "sourceUrlsChecked": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates"
+      ],
+      "reasoningNotes": "Matched energy recovery ventilation term. Returned as a separate candidate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5035",
+      "opportunityName": "Dominion Energy - ThermWise Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 10000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$100 per residential gas boiler reset control",
+      "evidenceText": "ThermWise appliance rebates list Residential Gas Boiler Reset Control at $100.",
+      "sourceUrlsChecked": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates"
+      ],
+      "reasoningNotes": "Matched boiler reset term. Applies to eligible after-market controls."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22711",
+      "opportunityName": "Michigan - Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 800000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $8,000 for eligible heat pump for space heating and cooling",
+      "evidenceText": "DOE/Michigan MiHER materials list up to $8,000 for heat pump for space heating and cooling.",
+      "sourceUrlsChecked": [
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate",
+        "https://content.govdelivery.com/accounts/USDOESCEP/bulletins/3bedb4f"
+      ],
+      "reasoningNotes": "HEAR rebates depend on income qualification and approved project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22711",
+      "opportunityName": "Michigan - Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 175000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $1,750 for eligible heat pump water heater",
+      "evidenceText": "DOE/Michigan MiHER materials list up to $1,750 for heat pump water heater.",
+      "sourceUrlsChecked": [
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate",
+        "https://content.govdelivery.com/accounts/USDOESCEP/bulletins/3bedb4f"
+      ],
+      "reasoningNotes": "HEAR rebates depend on income qualification and approved project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22711",
+      "opportunityName": "Michigan - Home Electrification and Appliance Rebate (HEAR) Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_amount_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_amount",
+        "amountCents": 160000
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 1
+      },
+      "formula": "Up to $1,600 for eligible insulation, air sealing, and mechanical ventilation",
+      "evidenceText": "DOE/Michigan MiHER materials list up to $1,600 for insulation, air sealing, and mechanical ventilation.",
+      "sourceUrlsChecked": [
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate",
+        "https://content.govdelivery.com/accounts/USDOESCEP/bulletins/3bedb4f"
+      ],
+      "reasoningNotes": "HEAR rebates depend on income qualification and approved project pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22786",
+      "opportunityName": "Eagle County - Walking Mountains Science Center Solar PV Rebate",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_amount_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_amount",
+        "amountCents": 100000
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 100000
+      },
+      "formula": "Match Holy Cross Energy solar PV incentive up to $1,000",
+      "evidenceText": "Walking Mountains says it will match the Holy Cross Energy solar PV rebate up to $1,000.",
+      "sourceUrlsChecked": [
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/rebates-incentives/"
+      ],
+      "reasoningNotes": "Matched solar PV. Modeled as fixed project-level maximum because source expresses the incentive as a match up to $1,000."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22623",
+      "opportunityName": "Cleco Power - Residential EV Rebate",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 25000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "equipment_cost",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxPercentOfBasis": 0.5
+      },
+      "formula": "$250 per residential Level 2 EV charger, approximately 50% of equipment cost",
+      "evidenceText": "Cleco says residential customers can receive a $250 Level 2 EV charger incentive.",
+      "sourceUrlsChecked": [
+        "https://www.cleco.com/residential-commercial/energy-efficiency-renewables/residential-evs",
+        "https://clecomarketplace.com/level-2-ev-charger-rebate/"
+      ],
+      "reasoningNotes": "Matched Level 2 EV charger terms. Use one unit as one eligible charger."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2582",
+      "opportunityName": "Redwood Falls Public Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 50000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$500 per connected ChargePoint Home Flex Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists ChargePoint Home Flex connected charger at $500.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "reasoningNotes": "Matched residential EV charging terms. Utility-specific participation should be verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2582",
+      "opportunityName": "Redwood Falls Public Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 15000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$150 per other qualifying Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists other qualifying Level 2 chargers at $150.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "reasoningNotes": "Returned separately from the connected ChargePoint amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3965",
+      "opportunityName": "Parke County REMC - Energy Efficient Equipment Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 20000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$200 per heat pump water heater bill credit",
+      "evidenceText": "Parke County REMC rebate page lists a $200 bill credit for qualifying heat pump water heaters.",
+      "sourceUrlsChecked": [
+        "https://www.pcremc.com/rebates"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Use one unit as one qualifying HPWH."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3965",
+      "opportunityName": "Parke County REMC - Energy Efficient Equipment Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 80000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$800 per qualifying geothermal heat pump",
+      "evidenceText": "Parke County REMC rebate page lists geothermal heat pump bill credit at $800.",
+      "sourceUrlsChecked": [
+        "https://www.pcremc.com/rebates"
+      ],
+      "reasoningNotes": "Matched geothermal term. Returned separately from HPWH."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1356",
+      "opportunityName": "Tampa Electric - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 55000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$550 per high-efficiency heat pump, AC, or geothermal system",
+      "evidenceText": "Tampa Electric heating/cooling page lists $550 rebate for 17 SEER/16.2 SEER2 tier systems.",
+      "sourceUrlsChecked": [
+        "https://www.tampaelectric.com/residential/saveenergy/heatingcooling/",
+        "https://www.tampaelectric.com/residential/saveenergy/"
+      ],
+      "reasoningNotes": "Matched heat pump/geothermal terms. Use one unit as one qualifying replacement system."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1356",
+      "opportunityName": "Tampa Electric - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 4000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$40 per lower-tier qualifying heat pump, AC, or geothermal system",
+      "evidenceText": "Tampa Electric heating/cooling page lists $40 rebate for 16 SEER/15.2 SEER2 tier systems.",
+      "sourceUrlsChecked": [
+        "https://www.tampaelectric.com/residential/saveenergy/heatingcooling/",
+        "https://www.tampaelectric.com/residential/saveenergy/"
+      ],
+      "reasoningNotes": "Returned separately because the source publishes two efficiency tiers."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22395",
+      "opportunityName": "Austin Energy - Workplace EV Charging Station Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 300000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $3,000 per OCPP-compliant Level 2 charging station",
+      "evidenceText": "Austin Energy business EV charger rebate table lists Level 2 at up to $3,000 per station.",
+      "sourceUrlsChecked": [
+        "https://savings.austinenergy.com/rebates/commercial/ev-charging-station-rebate"
+      ],
+      "reasoningNotes": "Matched workplace Level 2 charging. Confidence is medium because source uses “up to.”"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22395",
+      "opportunityName": "Austin Energy - Workplace EV Charging Station Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 500000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "Up to $5,000 per OCPP-compliant DC fast charging station",
+      "evidenceText": "Austin Energy business EV charger rebate table lists DC Fast at up to $5,000 per station.",
+      "sourceUrlsChecked": [
+        "https://savings.austinenergy.com/rebates/commercial/ev-charging-station-rebate"
+      ],
+      "reasoningNotes": "Returned separately because DC fast charger stations have a distinct amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22163",
+      "opportunityName": "Connecticut Hydrogen and Electric Automobile Purchase Rebate (CHEAPR)",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 100000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$1,000 per eligible new fuel cell electric vehicle",
+      "evidenceText": "CHEAPR/DSIRE lists Fuel Cell Electric Vehicle rebate at $1,000.",
+      "sourceUrlsChecked": [
+        "https://portal.ct.gov/deep/air/mobile-sources/cheapr",
+        "https://programs.dsireusa.org/system/program/detail/22163/connecticut-hydrogen-and-electric-automobile-purchase-rebate-cheapr"
+      ],
+      "reasoningNotes": "Matched fuel-cell vehicle term. Confidence is medium because CHEAPR rebate levels changed in 2025 and should be checked at application."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2163",
+      "opportunityName": "New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 25000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$250 per ton for standard air-source heat pump",
+      "evidenceText": "NHEC heat pump page lists air-source heat pump standard incentive at $250 per ton.",
+      "sourceUrlsChecked": [
+        "https://www.nhec.com/heat-pumps-and-heat-pump-water-heaters/"
+      ],
+      "reasoningNotes": "Matched heat pump term. Use unit_count as eligible tons."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2163",
+      "opportunityName": "New Hampshire Electric Co-op - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 75000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$750 per qualifying heat pump water heater",
+      "evidenceText": "NHSaves/NHEC materials identify $750 rebates for heat pump water heaters.",
+      "sourceUrlsChecked": [
+        "https://www.nhec.com/heat-pumps-and-heat-pump-water-heaters/",
+        "https://nhsaves.com/rebates-services-appliances/"
+      ],
+      "reasoningNotes": "Matched heat pump water heater term. Medium confidence because HPWH amount is described through NHSaves materials."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4234",
+      "opportunityName": "Corn Belt Energy Coop - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 20000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$200 per 240V 50A EV circuit installation",
+      "evidenceText": "Corn Belt Energy says it offers a $200 rebate for 240-volt 50-amp EV circuit installation.",
+      "sourceUrlsChecked": [
+        "https://cornbeltenergy.com/programs-services/rebate-programs/"
+      ],
+      "reasoningNotes": "Matched EV charging/circuit installation; although target terms are HVAC, this is the clearest current source-backed item in the target source."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2794",
+      "opportunityName": "CPS Energy - Solar PV Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "solar_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "rate_per_kw",
+        "amountCentsPerKw": 60000,
+        "kwSource": "system_kw"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 8000000,
+        "maxPercentOfBasis": 0.5
+      },
+      "formula": "$0.60 per AC watt for first 25 kW of qualifying commercial solar, capped at $80,000 and 50% of invoice cost",
+      "evidenceText": "CPS Energy commercial solar incentives list $0.60/W for first 25 kW and $0.40/W thereafter.",
+      "sourceUrlsChecked": [
+        "https://www.cpsenergy.com/en/my-home/savenow/solar-photovoltaic-rebate/comm-solar-rebate-incentive-tiers.html",
+        "https://www.cpsenergy.com/content/dam/corporate/en/Documents/EnergyEfficiency/solar-programs-general-terms-conditions.pdf"
+      ],
+      "reasoningNotes": "Residential solar rebate ended; this rule applies only to current commercial/school/nonprofit rooftop solar incentive tiers."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22751",
+      "opportunityName": "JEA - Commercial Fleet Electrification Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.6
+      },
+      "basisPolicy": {
+        "basis": "eligible_cost_categories",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 1500000,
+        "maxPercentOfBasis": 0.6
+      },
+      "formula": "60% of customer-side make-ready costs, capped at $15,000",
+      "evidenceText": "JEA fleet electrification page lists Make Ready Incentive up to $15,000, capped at 60% of project cost.",
+      "sourceUrlsChecked": [
+        "https://www.jea.com/business_resources/fleet_electrification_program/",
+        "https://www.jea.com/Business_Resources/2023_JEA_MakeReady_Application_FINAL/"
+      ],
+      "reasoningNotes": "Matched make-ready terms. Applies to eligible customer-side make-ready infrastructure, not charger revenue."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22751",
+      "opportunityName": "JEA - Commercial Fleet Electrification Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 85000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$850 minimum per Level 2 EV charger",
+      "evidenceText": "JEA EV charger rebate sheet lists $850 minimum per Level 2 charger.",
+      "sourceUrlsChecked": [
+        "https://www.jea.com/uploadedFiles/jea.com/Business_Resources/Commercial_Rebates/ElectrificationRebateProgram_EV%20Chargers_v2_12.25.pdf",
+        "https://www.jea.com/business_resources/rebates_for_businesses/electrification_rebates_program/"
+      ],
+      "reasoningNotes": "Returned separately for charger hardware rebate; final incentive may vary with projected kWh."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2592",
+      "opportunityName": "Southern Minnesota Municipal Power Agency - (17 Municipal Utilities) - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 50000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$500 per connected ChargePoint Home Flex Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists connected ChargePoint Home Flex charger at $500.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "reasoningNotes": "Matched Level 2 EV charger terms. Municipal participation should be verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2592",
+      "opportunityName": "Southern Minnesota Municipal Power Agency - (17 Municipal Utilities) - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "medium",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 15000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$150 per other qualifying Level 2 charger",
+      "evidenceText": "Bright Energy Solutions EV form lists other qualifying Level 2 chargers at $150.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.brightenergysolutions.com/find-a-rebate/"
+      ],
+      "reasoningNotes": "Returned separately because charger type changes amount."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2115",
+      "opportunityName": "South Central Indiana REMC - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "fixed_per_unit_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "fixed_per_unit",
+        "amountCentsPerUnit": 200000,
+        "unitAnswerKey": "unit_count"
+      },
+      "basisPolicy": {
+        "basis": "gross_project_cost",
+        "applicationOrder": 10
+      },
+      "cap": null,
+      "formula": "$2,000 per new geothermal heat pump system",
+      "evidenceText": "SCI REMC geothermal rebate page says new geothermal heat pump systems receive a $2,000 rebate.",
+      "sourceUrlsChecked": [
+        "https://www.sciremc.com/save-energy-money/rebates-credits/geothermal/",
+        "https://www.sciremc.com/save-energy-money/rebates-credits/"
+      ],
+      "reasoningNotes": "Matched geothermal term. Use one unit as one qualifying geothermal system."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2115",
+      "opportunityName": "South Central Indiana REMC - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "rule_found",
+      "confidence": "high",
+      "incentiveType": "percent_of_basis_rebate",
+      "timing": "upfront",
+      "amountRule": {
+        "kind": "percent_of_basis",
+        "percent": 0.5
+      },
+      "basisPolicy": {
+        "basis": "equipment_plus_labor",
+        "applicationOrder": 10
+      },
+      "cap": {
+        "maxAmountCents": 5000
+      },
+      "formula": "50% of HVAC tune-up cost, capped at $50",
+      "evidenceText": "SCI REMC HVAC tune-up page lists 50% off tune-up cost, up to $50.",
+      "sourceUrlsChecked": [
+        "https://www.sciremc.com/save-energy-money/rebates-credits/hvac-tune-up/"
+      ],
+      "reasoningNotes": "Matched heat pump/air-conditioning maintenance; use only for qualifying tune-up service."
+    }
+  ],
+  "unresolved": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
+      "opportunityName": "AEP (Central) - CitySmart Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "CitySmart is a project-based public-sector efficiency program; no reusable refrigeration formula was verified.",
+      "sourceUrlsChecked": [
+        "https://www.aeptexasefficiency.com/#/commercial/citysmart",
+        "https://programs.dsireusa.org/system/program/detail/5171"
+      ],
+      "reasoningNotes": "The target includes refrigeration and compressor terms, but the source does not publish one safe per-unit value."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1589",
+      "opportunityName": "Xcel Energy (Electric) - Business Energy Efficiency Rebate Programs",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Xcel Minnesota business rebates include multiple refrigeration and lighting-control measures, but exact current measure value was not selected.",
+      "sourceUrlsChecked": [
+        "https://mn.my.xcelenergy.com/s/business/energy-savings/business-rebates",
+        "https://www.xcelenergy.com/programs_and_rebates"
+      ],
+      "reasoningNotes": "Target includes many refrigeration submeasures; a current measure table extraction is needed before creating a rule."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22766",
+      "opportunityName": "EV Charging Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Connecticut EV charging incentives depend on utility, site type, make-ready scope, and program application path.",
+      "sourceUrlsChecked": [
+        "https://portal.ct.gov/deep/air/mobile-sources/electric-vehicle-charging-program",
+        "https://uinet.chooseev.com/"
+      ],
+      "reasoningNotes": "No single one-time Level 2/DCFC formula was verified for the broad statewide target."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22714",
+      "opportunityName": "Efficiency Maine - Large Battery Management Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "high",
+      "evidenceText": "Large battery management incentives are dispatch/performance compensation for enrolled storage, not an upfront rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.efficiencymaine.com/at-work/large-battery-management-program/"
+      ],
+      "reasoningNotes": "Battery demand-response or managed-storage payments should not be forced into a one-time rule."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2426",
+      "opportunityName": "Home Energy Solutions for Existing Homes",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Energy Trust existing-home offers are measure-specific; battery storage and thermostat terms do not expose one safe upfront formula.",
+      "sourceUrlsChecked": [
+        "https://www.energytrust.org/residential/",
+        "https://www.energytrust.org/incentives/"
+      ],
+      "reasoningNotes": "The target is battery/demand related, but source offers mostly efficiency services and measure rebates."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22481",
+      "opportunityName": "Dominion Energy Virginia - EV Charger Rewards",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "high",
+      "evidenceText": "EV Charger Rewards is a managed-charging/rewards program rather than a direct upfront charger rebate.",
+      "sourceUrlsChecked": [
+        "https://www.dominionenergy.com/virginia/save-energy/electric-vehicles/ev-charger-rewards"
+      ],
+      "reasoningNotes": "Recurring charging rewards and demand-response credits are excluded from one-time savings rules."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4527",
+      "opportunityName": "Upper Peninsula Power Company - Residential Programs",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Official/current UPPCO residential measure amounts were not verified from accessible source text.",
+      "sourceUrlsChecked": [
+        "https://www.uppco.com/energy-efficiency/",
+        "https://programs.dsireusa.org/system/program/detail/4527"
+      ],
+      "reasoningNotes": "Target is broad whole-building efficiency; no safe single rebate formula was found."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2961",
+      "opportunityName": "Singing River Electric Power Association - Comfort Advantage Home Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Comfort Advantage materials describe eligible efficient new homes, but no safe heat-pump/geothermal formula was verified.",
+      "sourceUrlsChecked": [
+        "https://singingriver.com/comfort-advantage/",
+        "https://programs.dsireusa.org/system/program/detail/2961"
+      ],
+      "reasoningNotes": "No current official measure-specific amount was found for this target."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4982",
+      "opportunityName": "PSE&G - Government and Non-Profit Facility Direct Install Efficiency Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Direct-install incentives depend on facility assessment and approved measures; no reusable one-time formula was verified.",
+      "sourceUrlsChecked": [
+        "https://bizsave.pseg.com/government-nonprofit-direct-install",
+        "https://homeenergy.pseg.com/business"
+      ],
+      "reasoningNotes": "Project-specific direct-install services should not be encoded without final approved measure cost-share or table."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5725",
+      "opportunityName": "Weatherization Assistance Program (WAP)",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "high",
+      "evidenceText": "WAP provides income-qualified weatherization services through agencies rather than a published customer rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.energy.gov/scep/wap/weatherization-assistance-program"
+      ],
+      "reasoningNotes": "No-cost service programs should not be converted into one-time project savings rules."
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
+      "opportunityName": "GFO-25-603 - California’s National Electric Vehicle Infrastructure Formula Program – Solicitation 6 Community Charging",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "CEC NEVI community charging is a competitive solicitation with award amounts based on project application and solicitation budget category.",
+      "sourceUrlsChecked": [
+        "https://www.energy.ca.gov/solicitations/2026-03/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula"
+      ],
+      "reasoningNotes": "No generic one-time EV charging formula should be created for arbitrary projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1663",
+      "opportunityName": "City of Lompoc Utilities - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Current Lompoc residential rebate amounts for the broad whole-building target were not verified.",
+      "sourceUrlsChecked": [
+        "https://www.cityoflompoc.com/utilities/conservation/",
+        "https://programs.dsireusa.org/system/program/detail/1663"
+      ],
+      "reasoningNotes": "No safe per-kWh or specific measure rule was found from official current text."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
+      "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
+      "repairStatus": "source_inaccessible",
+      "confidence": "low",
+      "evidenceText": "Duke Energy Smart Saver pages require dynamic content and did not expose current refrigeration or compressed-air formulas.",
+      "sourceUrlsChecked": [
+        "https://www.duke-energy.com/business/products/smart-saver"
+      ],
+      "reasoningNotes": "Do not rely on DSIRE-only values without accessible official proof."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2933",
+      "opportunityName": "Evergy - Energy Savings Kit",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Energy savings kits provide free or direct-installed items; no customer upfront rebate formula was identified.",
+      "sourceUrlsChecked": [
+        "https://www.evergy.com/ways-to-save/programs/link-to-savings"
+      ],
+      "reasoningNotes": "Kit/free-service programs should not be modeled as one-time project incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4816",
+      "opportunityName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Xcel North Dakota gas furnace/boiler rebate amounts were not verified from accessible official current source text.",
+      "sourceUrlsChecked": [
+        "https://nd.my.xcelenergy.com/s/residential/home-rebates",
+        "https://www.xcelenergy.com/programs_and_rebates"
+      ],
+      "reasoningNotes": "Matched gas equipment terms require current table extraction before a rule is merged."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5140",
+      "opportunityName": "Business Energy Efficiency Rebate (Offered by 11 Utilities)",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Bright Energy Solutions business rebates vary by municipal utility and measure category; geothermal value was not safely verified.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/find-a-rebate/",
+        "https://www.brightenergysolutions.com/resources/business"
+      ],
+      "reasoningNotes": "Utility-specific form selection is needed before creating a rule."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2180",
+      "opportunityName": "Flathead Electric Cooperative - Commercial Incentive Programs",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Flathead commercial incentives appear measure-specific and no target terms were provided to select a value.",
+      "sourceUrlsChecked": [
+        "https://www.flatheadelectric.com/energy-solutions/energy-efficiency-rebate-programs/business-rebate-programs/"
+      ],
+      "reasoningNotes": "No safe formula should be created without a matched measure or current application table."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1935",
+      "opportunityName": "Austin Utilities (Gas and Electric) - Residential Conserve and Save Rebate Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Matched target is energy audit; no direct upfront equipment rebate formula was selected.",
+      "sourceUrlsChecked": [
+        "https://www.austinutilities.com/pages/ways-to-save"
+      ],
+      "reasoningNotes": "Audit-only services should not be modeled as one-time project incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5744",
+      "opportunityName": "CenterPoint Energy Advanced Residential Lighting Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Advanced residential lighting programs are typically upstream or midstream product discounts, not a customer project rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.centerpointenergy.com/en-us/residential/save-energy-money/efficiency-programs-and-rebates"
+      ],
+      "reasoningNotes": "No direct upfront savings-engine rule was verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2007",
+      "opportunityName": "City of Statesville Electric Utility Department - Residential and Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Official current geothermal or heat-pump rebate amounts were not verified from accessible source text.",
+      "sourceUrlsChecked": [
+        "https://www.statesvillenc.net/departments/electric-utilities/energy-efficiency"
+      ],
+      "reasoningNotes": "No safe motor/HVAC measure rule was found."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5295",
+      "opportunityName": "Xcel Energy - Solar Rewards Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Solar Rewards is a renewable energy credit/production-payment style program, not a direct upfront solar rebate formula.",
+      "sourceUrlsChecked": [
+        "https://co.my.xcelenergy.com/s/renewable/solar-rewards"
+      ],
+      "reasoningNotes": "Recurring production/REC incentives should not be forced into upfront savings rules."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3142",
+      "opportunityName": "New Homes Incentive Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Energy Trust new homes incentives are project/design-path specific and no solar PV per-kW formula was verified.",
+      "sourceUrlsChecked": [
+        "https://www.energytrust.org/residential/new-homes/",
+        "https://www.energytrust.org/incentives/"
+      ],
+      "reasoningNotes": "Target maps to solar offset but source is new-home efficiency support rather than a clear solar rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22264",
+      "opportunityName": "Chugach Electric - Residential EV Charging Program",
+      "repairStatus": "source_inaccessible",
+      "confidence": "low",
+      "evidenceText": "A current official Chugach residential EV charging rebate amount was not verified from accessible source text.",
+      "sourceUrlsChecked": [
+        "https://www.chugachelectric.com/",
+        "https://programs.dsireusa.org/system/program/detail/22264"
+      ],
+      "reasoningNotes": "Do not rely on DSIRE-only charger values without official proof."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22563",
+      "opportunityName": "Making Solar Equitable Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Making Solar Equitable supports income-qualified solar or solar-plus-storage through project-specific pathways.",
+      "sourceUrlsChecked": [
+        "https://www.energytrust.org/incentives/making-solar-equitable/"
+      ],
+      "reasoningNotes": "No single supported upfront battery or solar rule was verified for arbitrary projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22545",
+      "opportunityName": "Madison Gas & Electric - Charge Ahead Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "high",
+      "evidenceText": "Charge Ahead provides off-peak managed charging credits, not an upfront charger rebate.",
+      "sourceUrlsChecked": [
+        "https://www.mge.com/smart-energy/electric-vehicles/ev-programs/charge-ahead"
+      ],
+      "reasoningNotes": "Monthly/seasonal bill credits are excluded from one-time savings rules."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2591",
+      "opportunityName": "Southern Minnesota Municipal Power Agency  - (17 Municipal Utilities) Commercial & Industrial Energy Efficiency Rebate Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "SMMPA/Bright Energy business rebates vary by utility and measure; no current refrigeration value was selected.",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/resources/business",
+        "https://smmpa.com/"
+      ],
+      "reasoningNotes": "Target refrigeration and energy-management terms require current utility-specific form extraction."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4637",
+      "opportunityName": "Avista Utilities (Gas) - Commercial Energy Efficiency Incentives Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Avista commercial gas/electric incentives are measure- and state-specific; no whole-building per-kWh formula was verified.",
+      "sourceUrlsChecked": [
+        "https://www.myavista.com/energy-savings/tools-for-your-business/rebates-washington"
+      ],
+      "reasoningNotes": "The target has many matched measures; later pass should extract a current table."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1132",
+      "opportunityName": "State Home Oil Weatherization (SHOW) Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "SHOW is weatherization assistance for oil-heated homes, not a direct customer rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.oregon.gov/ohcs/energy-weatherization/Pages/energy-conservation-help.aspx"
+      ],
+      "reasoningNotes": "Assistance/weatherization service delivery should not be modeled as fixed upfront project savings."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5759",
+      "opportunityName": "Lewis County PUD - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Lewis County PUD residential pages point to rebates and audits, but no current heat-pump or insulation amount was verified.",
+      "sourceUrlsChecked": [
+        "https://www.lcpud.org/save-energy/residential/",
+        "https://www.lcpud.org/save-energy/rebates/"
+      ],
+      "reasoningNotes": "Matched audit terms and residential measures need application values before rule creation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3932",
+      "opportunityName": "FirstEnergy (Potomac Edison) - Commercial and Industrial Efficiency Rebate Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Potomac Edison business efficiency source did not expose current lighting-control or VFD values in accessible text.",
+      "sourceUrlsChecked": [
+        "https://energysavemd-business.com/",
+        "https://www.firstenergycorp.com/save_energy/save_energy_maryland.html"
+      ],
+      "reasoningNotes": "No safe one-time C&I measure rule was verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3433",
+      "opportunityName": "Stearns Electric Association - Residential Energy Efficiency Rebate Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Stearns residential rebates include heat pump, geothermal, water-heating, thermostat and appliance measures, but exact current target value was not selected.",
+      "sourceUrlsChecked": [
+        "https://www.stearnselectric.org/rebates/"
+      ],
+      "reasoningNotes": "Target is refrigeration-electric efficiency despite HVAC matched terms; a current measure table should be reviewed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
+      "opportunityName": "Commercial Energy Efficiency Rebate Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Hawaii Energy commercial rebates cover many measures, but no battery-storage upfront rule was verified.",
+      "sourceUrlsChecked": [
+        "https://hawaiienergy.com/for-businesses/rebates/"
+      ],
+      "reasoningNotes": "Target is battery/demand related; no direct storage rebate formula was found."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2653",
+      "opportunityName": "Entergy Texas - Commercial Solutions Programs",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Entergy Texas commercial solutions are project-specific and no reusable lighting or refrigeration formula was verified.",
+      "sourceUrlsChecked": [
+        "https://www.entergy-texas.com/energyefficiency/business/"
+      ],
+      "reasoningNotes": "No safe per-kWh or per-unit rule was found in accessible source text."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4345",
+      "opportunityName": "Mohave Electric Cooperative - Renewable Energy Incentive Program",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "Mohave renewable incentive source did not verify a current solar water heating or PV per-kW formula.",
+      "sourceUrlsChecked": [
+        "https://www.mohaveelectric.com/energy-solutions/rebates/"
+      ],
+      "reasoningNotes": "No current source-backed renewable rebate amount was found."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5402",
+      "opportunityName": "North Shore Gas - Home Energy Jumpstart Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Home Energy Jumpstart provides assessment/direct-install services, not a clear customer upfront rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.northshoregasdelivery.com/savings/home-energy-jumpstart"
+      ],
+      "reasoningNotes": "Direct-install service programs should not be forced into one-time savings rules."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4740",
+      "opportunityName": "MMPA - Residential Energy Efficiency Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "MMPA/Efficiency Smart residential rebates include many measures; current refrigerator/freezer amounts were not safely selected.",
+      "sourceUrlsChecked": [
+        "https://www.efficiencysmart.org/home-energy-rebates",
+        "https://www.mmpa.org/"
+      ],
+      "reasoningNotes": "Target maps to refrigeration; utility-specific current rebate table review is needed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22040",
+      "opportunityName": "El Paso Electric Company - Low-Income Residential Program",
+      "repairStatus": "not_applicable_for_one_time_savings",
+      "confidence": "medium",
+      "evidenceText": "Low-income residential program provides direct-install or assistance measures rather than a customer project rebate formula.",
+      "sourceUrlsChecked": [
+        "https://www.epelectric.com/energy-efficiency/new-mexico-residential-energy-efficiency-programs"
+      ],
+      "reasoningNotes": "Assistance/direct-install programs should not be modeled as direct upfront incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22255",
+      "opportunityName": "Zero-Emission Vehicle Infrastructure Partnerships Program",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Washington ZEV infrastructure grants are award/project specific and depend on solicitation round and site details.",
+      "sourceUrlsChecked": [
+        "https://www.commerce.wa.gov/growing-the-economy/energy/clean-transportation/zero-emission-vehicle-infrastructure-partnerships/"
+      ],
+      "reasoningNotes": "No reusable one-time charger formula was verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3637",
+      "opportunityName": "Liberty Utilities - Commercial & Industrial Energy Efficiency Rebates",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Liberty Arkansas C&I efficiency rebates are measure-specific and no current whole-building/custom formula was verified.",
+      "sourceUrlsChecked": [
+        "https://central.libertyutilities.com/all/residential/ways-to-save/rebates.html",
+        "https://central.libertyutilities.com/all/commercial/ways-to-save.html"
+      ],
+      "reasoningNotes": "Target includes many C&I measures; a current application table is needed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2649",
+      "opportunityName": "CenterPoint Energy - Commercial and Industrial Energy Efficiency Programs",
+      "repairStatus": "formula_not_found",
+      "confidence": "medium",
+      "evidenceText": "CenterPoint Texas C&I programs are standard-offer/project-savings based; no direct solar or lighting customer formula was verified.",
+      "sourceUrlsChecked": [
+        "https://www.centerpointenergy.com/en-us/business/save-energy-money/efficiency-programs-and-rebates"
+      ],
+      "reasoningNotes": "No reusable one-time rule should be created without approved project savings and sponsor terms."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22300",
+      "opportunityName": "Holy Cross Energy - EV Charger Incentives",
+      "repairStatus": "manual_review_required",
+      "confidence": "medium",
+      "evidenceText": "Holy Cross Charge at Home/Work funding is available by program application, but current per-charger amount was not verified in official text.",
+      "sourceUrlsChecked": [
+        "https://www.holycross.com/member-programs/charge-at-home/apply-for-ev-charger",
+        "https://www.holycross.com/member-programs/charge-at-work"
+      ],
+      "reasoningNotes": "Search results indicate charger rebates, but a current source-backed amount should be confirmed before merging."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:22647"
+}
