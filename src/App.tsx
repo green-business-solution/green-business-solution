@@ -269,6 +269,8 @@ type PortalRetrofitResultsResponse = {
   results: RetrofitResultsPayload;
 };
 
+type AdminClientPortalPreviewPayload = PortalRetrofitResultsResponse;
+
 type EnergyDataUploadSession = {
   userId: string;
   submissionId: string;
@@ -4636,6 +4638,113 @@ function PortalRetrofitResultsPanel({ credential }: { credential: AuthCredential
   );
 }
 
+function AdminClientPortalPreviewPage({
+  credential,
+  onSignOut,
+  userId,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  userId: string;
+  viewer: UserRecord;
+}) {
+  const [payload, setPayload] = useState<AdminClientPortalPreviewPayload | null>(null);
+  const [activeTab, setActiveTab] = useState("My information");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!credential || !userId) {
+      setError("Admin sign-in is required to preview a client portal.");
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    apiGet<AdminClientPortalPreviewPayload>(`/api/admin/client-retrofit-results/${encodeURIComponent(userId)}`, {
+      headers: adminAuthHeaders(credential)
+    })
+      .then((response) => {
+        if (!isMounted) return;
+        setPayload(response);
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load the client portal preview.");
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, userId]);
+
+  return (
+    <WorkspaceLayout
+      activeNavItem={activeTab}
+      navItems={["My information", "Retrofit estimates"]}
+      onNavItemChange={setActiveTab}
+      onSignOut={onSignOut}
+      title="Client portal preview"
+      user={payload?.client || viewer}
+    >
+      <section className="database-shell retrofit-results-shell">
+        <div className="database-toolbar">
+          <div>
+            <p className="eyebrow">Admin-only portal preview</p>
+            <h1>{payload?.client.fullName || "Client portal preview"}</h1>
+            <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
+          </div>
+          <div className="database-stats">
+            <strong>{isLoading ? "..." : payload?.results.summary.totalResults.toLocaleString() || 0}</strong>
+            <span>{isLoading ? "loading preview" : "matched opportunities"}</span>
+          </div>
+        </div>
+
+        {error ? <p className="error-message">{error}</p> : null}
+
+        {isLoading ? (
+          <section className="database-detail-panel">
+            <p className="empty-state">Loading the client portal preview...</p>
+          </section>
+        ) : activeTab === "Retrofit estimates" ? (
+          <div className="retrofit-result-group-list">
+            <RetrofitResultGroup
+              description="Matched opportunities with enough information for a first-pass estimate."
+              emptyMessage="No opportunities are fully ready yet."
+              results={payload?.results.groups.readyToEstimate || []}
+              title="Ready to estimate"
+            />
+            <RetrofitResultGroup
+              description="Matched opportunities where key bill, scope, quote, or incentive data is still missing."
+              emptyMessage="No partially-complete opportunities right now."
+              results={payload?.results.groups.needsMoreInformation || []}
+              title="Needs more information"
+            />
+            <RetrofitResultGroup
+              description="Programs that are blocked by eligibility or not enough baseline data."
+              emptyMessage="No blocked opportunities right now."
+              results={payload?.results.groups.notCurrentlyApplicable || []}
+              title="Not currently applicable"
+            />
+          </div>
+        ) : (
+          <ProfilePanel intake={payload?.intake || null} user={payload?.client || viewer} />
+        )}
+      </section>
+    </WorkspaceLayout>
+  );
+}
+
 function RetrofitResultGroup({
   description,
   emptyMessage,
@@ -6093,6 +6202,11 @@ function ClientIntakeSummaryPanel({
     setSelectedUserId(userId);
   };
 
+  function openPortalPreview(userId: string | null) {
+    if (!userId) return;
+    window.open(`${pathForRoute("portal-preview")}?userId=${encodeURIComponent(userId)}`, "_blank", "noopener,noreferrer");
+  }
+
   useEffect(() => {
     if (!selectedUserId && summaryRows[0]?.userId) {
       setSelectedUserId(summaryRows[0].userId);
@@ -6143,6 +6257,9 @@ function ClientIntakeSummaryPanel({
           </button>
           <button className="secondary-button" onClick={onOpenIntakeTable} type="button">
             Open raw intake table
+          </button>
+          <button className="secondary-button" disabled={!selectedUserId} onClick={() => openPortalPreview(selectedUserId)} type="button">
+            Open portal preview
           </button>
         </div>
       </div>
@@ -6267,7 +6384,7 @@ function ClientIntakeSummaryPanel({
                   </td>
                   <td>
                     {formatDate(row.lastUpdated)}
-                    <small>Opens the intake table view</small>
+                    <small>Selects this client for the debug preview below</small>
                   </td>
                 </tr>
               ))}
@@ -6290,6 +6407,11 @@ function ClientIntakeSummaryPanel({
           <p className="empty-state">Loading matched opportunities and calculator output...</p>
         ) : debugPayload?.results ? (
           <div className="retrofit-result-group-list">
+            <div className="link-list">
+              <button className="secondary-button" onClick={() => openPortalPreview(selectedUserId)} type="button">
+                Open this client's portal preview
+              </button>
+            </div>
             <RetrofitResultGroup
               description="Best first-pass calculations currently ready for this client."
               emptyMessage="No ready estimates for this client yet."
@@ -7332,6 +7454,8 @@ export function App() {
     onSignOut: signOut
   };
   const effectiveRoute = route;
+  const portalPreviewUserId =
+    typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("userId") || "" : "";
 
   if (effectiveRoute === "how-it-works") {
     return <HowItWorksPage navigate={navigate} publicAuth={publicAuth} />;
@@ -7395,6 +7519,32 @@ export function App() {
         message={signInMessage}
         onAuthSuccess={handleAuthSuccess}
         publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "portal-preview") {
+    if (!authPayload) {
+      return (
+        <SignInPage
+          navigate={navigate}
+          message={signInMessage}
+          onAuthSuccess={handleAuthSuccess}
+          publicAuth={publicAuth}
+        />
+      );
+    }
+
+    if (authPayload.dashboard !== "admin") {
+      return <HomePage navigate={navigate} publicAuth={publicAuth} />;
+    }
+
+    return (
+      <AdminClientPortalPreviewPage
+        credential={authCredential}
+        onSignOut={signOut}
+        userId={portalPreviewUserId}
+        viewer={authPayload.user}
       />
     );
   }
