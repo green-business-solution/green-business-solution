@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-29 - Codex (GPT-5) savings estimate equation layout
+
+- Replaced duplicate savings metric and ledger cards with three compact equation cards: one-time costs/savings, recurring monthly costs/savings, and possible grant money.
+- Styled savings as green positive lines and costs/fees as red negative lines, with net labels changing between cost/gain or fee/savings based on sign.
+
 ## 2026-06-29 - Codex (GPT-5) NEVI possible grant money rules
 
 - Added 25 NEVI-style `possible_grant` rules using the 80% eligible project cost federal-share cap for solicitation-specific EV charging grants.

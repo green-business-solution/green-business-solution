@@ -1448,24 +1448,24 @@ dd {
   font-size: 13px;
 }
 
-.savings-headline-grid {
+.savings-equation-grid {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.savings-metric {
+.savings-equation-card,
+.savings-assumption-list,
+.savings-trace {
   background: #f7faf7;
-  border: 1px solid #e1e9e3;
+  border: 1px solid #e4ebe6;
   border-radius: 6px;
   display: grid;
-  gap: 4px;
-  min-height: 78px;
+  gap: 10px;
   padding: 10px;
 }
 
-.savings-metric span,
-.savings-ledger-section h4,
+.savings-equation-card h4,
 .savings-assumption-list h4 {
   color: #5e6d64;
   font-size: 11px;
@@ -1475,48 +1475,32 @@ dd {
   text-transform: uppercase;
 }
 
-.savings-metric strong {
-  align-self: end;
-  color: #16231b;
-  font-size: 16px;
-  line-height: 1.2;
-}
-
-.savings-breakdown-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.savings-ledger-section,
-.savings-assumption-list,
-.savings-trace {
-  background: #f7faf7;
-  border: 1px solid #e4ebe6;
-  border-radius: 6px;
-  display: grid;
-  gap: 8px;
-  padding: 10px;
-}
-
-.savings-ledger-section ul,
+.savings-equation-list,
 .savings-assumption-list ul {
   display: grid;
-  gap: 7px;
+  gap: 8px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.savings-ledger-section li {
+.savings-equation-list li,
+.savings-equation-total {
   align-items: start;
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(108px, max-content) minmax(0, 1fr);
 }
 
-.savings-ledger-section li span,
-.savings-ledger-section p,
+.savings-equation-total {
+  border-top: 1px solid #d8e3dc;
+  margin-top: 2px;
+  padding-top: 9px;
+}
+
+.savings-equation-list span,
+.savings-equation-card p,
+.savings-equation-total span,
 .savings-assumption-list li,
 .savings-trace p {
   color: #4f5e56;
@@ -1524,9 +1508,23 @@ dd {
   margin: 0;
 }
 
-.savings-ledger-section li strong {
-  color: #16231b;
+.savings-equation-list strong,
+.savings-equation-total strong {
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.savings-equation-total strong,
+.savings-equation-total span {
+  font-weight: 850;
+}
+
+.savings-positive {
+  color: #167345;
+}
+
+.savings-negative {
+  color: #a13c2f;
 }
 
 .savings-trace summary {
@@ -1831,8 +1829,7 @@ dd {
   .test-site-profile-header,
   .test-case-layout,
   .match-detail-grid,
-  .savings-headline-grid,
-  .savings-breakdown-grid,
+  .savings-equation-grid,
   .special-retrofit-grid,
   .opportunity-review-layout,
   .opportunity-summary-grid {
