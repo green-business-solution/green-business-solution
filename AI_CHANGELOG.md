@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) portal preview timeout hardening
+
+- Added server-side caching for opportunity table loads, per-day opportunity match profiles, and per-intake retrofit result payloads so admin portal previews and debug panels do not recompute the full opportunity universe on every request.
+- Updated the admin portal preview UI to keep showing the selected client identity on failures instead of falling back to the signed-in admin account, and added a clearer timeout-oriented error message for HTTP 500 preview failures.
+- Raised the production API Lambda configuration in infrastructure code from 512 MB / 20 s to 1024 MB / 60 s so heavy retrofit calculations have enough CPU and timeout headroom in production.
+
 ## 2026-06-30 - Codex (GPT-5) admin portal preview date normalization
 
 - Fixed the admin portal preview crash where retrofit matching received `now` as a string and attempted to call `getTime()` on it.

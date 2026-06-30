@@ -160,10 +160,10 @@ Resources:
           GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
           GBS_ADMIN_EMAILS: !Ref AdminEmails
       Handler: server/lambda.handler
-      MemorySize: 512
+      MemorySize: 1024
       Role: !GetAtt ApiExecutionRole.Arn
       Runtime: nodejs24.x
-      Timeout: 20
+      Timeout: 60
 
   ApiLogGroup:
     Type: AWS::Logs::LogGroup

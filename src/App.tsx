@@ -271,6 +271,12 @@ type PortalRetrofitResultsResponse = {
 
 type AdminClientPortalPreviewPayload = PortalRetrofitResultsResponse;
 
+type PortalPreviewHint = {
+  clientName: string;
+  companyName: string | null;
+  email: string;
+};
+
 type EnergyDataUploadSession = {
   userId: string;
   submissionId: string;
@@ -4641,11 +4647,13 @@ function PortalRetrofitResultsPanel({ credential }: { credential: AuthCredential
 function AdminClientPortalPreviewPage({
   credential,
   onSignOut,
+  previewHint,
   userId,
   viewer
 }: {
   credential: AuthCredential | null;
   onSignOut: () => void;
+  previewHint: PortalPreviewHint | null;
   userId: string;
   viewer: UserRecord;
 }) {
@@ -4653,6 +4661,13 @@ function AdminClientPortalPreviewPage({
   const [activeTab, setActiveTab] = useState("My information");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const previewUser = payload?.client || {
+    ...viewer,
+    role: "client" as const,
+    fullName: previewHint?.clientName || "Selected client",
+    email: previewHint?.email || viewer.email,
+    companyName: previewHint?.companyName || viewer.companyName
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -4677,7 +4692,12 @@ function AdminClientPortalPreviewPage({
       })
       .catch((requestError) => {
         if (!isMounted) return;
-        setError(requestError instanceof Error ? requestError.message : "Could not load the client portal preview.");
+        const message = requestError instanceof Error ? requestError.message : "Could not load the client portal preview.";
+        setError(
+          message === "Request failed with HTTP 500."
+            ? "The preview timed out while calculating retrofit results for this client. Try again in a moment."
+            : message
+        );
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);
@@ -4695,13 +4715,13 @@ function AdminClientPortalPreviewPage({
       onNavItemChange={setActiveTab}
       onSignOut={onSignOut}
       title="Client portal preview"
-      user={payload?.client || viewer}
+      user={previewUser}
     >
       <section className="database-shell retrofit-results-shell">
         <div className="database-toolbar">
           <div>
             <p className="eyebrow">Admin-only portal preview</p>
-            <h1>{payload?.client.fullName || "Client portal preview"}</h1>
+            <h1>{previewUser.fullName || "Client portal preview"}</h1>
             <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
           </div>
           <div className="database-stats">
@@ -4738,7 +4758,7 @@ function AdminClientPortalPreviewPage({
             />
           </div>
         ) : (
-          <ProfilePanel intake={payload?.intake || null} user={payload?.client || viewer} />
+          <ProfilePanel intake={payload?.intake || null} user={previewUser} />
         )}
       </section>
     </WorkspaceLayout>
@@ -6203,9 +6223,17 @@ function ClientIntakeSummaryPanel({
     setSelectedUserId(userId);
   };
 
-  function openPortalPreview(userId: string | null) {
-    if (!userId) return;
-    window.open(`${pathForRoute("portal-preview")}?userId=${encodeURIComponent(userId)}`, "_blank", "noopener,noreferrer");
+  function openPortalPreview(row: ClientIntakeSummaryRow | null) {
+    if (!row?.userId) return;
+    const params = new URLSearchParams({
+      userId: row.userId,
+      clientName: row.clientName,
+      email: row.email
+    });
+    if (row.companyName) {
+      params.set("companyName", row.companyName);
+    }
+    window.open(`${pathForRoute("portal-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
   }
 
   useEffect(() => {
@@ -6401,7 +6429,7 @@ function ClientIntakeSummaryPanel({
             <p>{selectedSummaryRow.email}</p>
           </div>
           <div className="link-list">
-            <button className="secondary-button" onClick={() => openPortalPreview(selectedSummaryRow.userId)} type="button">
+            <button className="secondary-button" onClick={() => openPortalPreview(selectedSummaryRow)} type="button">
               Open portal preview
             </button>
             <button className="secondary-button" onClick={() => setSelectedUserId(null)} type="button">
@@ -7467,8 +7495,17 @@ export function App() {
     onSignOut: signOut
   };
   const effectiveRoute = route;
-  const portalPreviewUserId =
-    typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("userId") || "" : "";
+  const portalPreviewSearchParams =
+    typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+  const portalPreviewUserId = portalPreviewSearchParams.get("userId") || "";
+  const portalPreviewHint =
+    portalPreviewUserId
+      ? {
+          clientName: portalPreviewSearchParams.get("clientName") || "Selected client",
+          companyName: portalPreviewSearchParams.get("companyName"),
+          email: portalPreviewSearchParams.get("email") || ""
+        }
+      : null;
 
   if (effectiveRoute === "how-it-works") {
     return <HowItWorksPage navigate={navigate} publicAuth={publicAuth} />;
@@ -7556,6 +7593,7 @@ export function App() {
       <AdminClientPortalPreviewPage
         credential={authCredential}
         onSignOut={signOut}
+        previewHint={portalPreviewHint}
         userId={portalPreviewUserId}
         viewer={authPayload.user}
       />

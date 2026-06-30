@@ -14,6 +14,7 @@ import {
 } from "./data.mjs";
 
 export const RETROFIT_RESULTS_SCHEMA_VERSION = "retrofit-results-v1";
+const opportunityMatchProfileCache = new Map();
 
 const readinessRank = {
   ready_for_estimate: 0,
@@ -97,6 +98,23 @@ function compareExtractedValues(left, right) {
     parseDateValue(right?.periodEnd).localeCompare(parseDateValue(left?.periodEnd)) ||
     parseDateValue(right?.periodStart).localeCompare(parseDateValue(left?.periodStart))
   );
+}
+
+function opportunityProfileCacheKey(opportunity, now) {
+  const dateKey = now.toISOString().slice(0, 10);
+  return `${opportunity?.opportunityId || "unknown"}:${dateKey}`;
+}
+
+function getCachedOpportunityMatchProfile(opportunity, now) {
+  const cacheKey = opportunityProfileCacheKey(opportunity, now);
+  const cached = opportunityMatchProfileCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const profile = buildOpportunityMatchProfile(opportunity, { now });
+  opportunityMatchProfileCache.set(cacheKey, profile);
+  return profile;
 }
 
 function buildFieldSnapshot(intake) {
@@ -736,15 +754,21 @@ export function buildClientRetrofitResults({ intake, opportunities, now = new Da
 
   const userMatchProfile = normalizeUserProfile(intake);
   const fieldSnapshot = buildFieldSnapshot(intake);
-  const visibleOpportunities = (opportunities || []).filter((opportunity) => {
-    if (!isVisibleOpportunity(opportunity)) return false;
-    return isVisibleAvailability(buildOpportunityMatchProfile(opportunity, { now: effectiveNow }).availability);
-  });
+  const visibleOpportunities = [];
+  const matchProfilesByOpportunityId = new Map();
+
+  for (const opportunity of opportunities || []) {
+    if (!isVisibleOpportunity(opportunity)) continue;
+    const matchProfile = getCachedOpportunityMatchProfile(opportunity, effectiveNow);
+    if (!isVisibleAvailability(matchProfile.availability)) continue;
+    visibleOpportunities.push(opportunity);
+    matchProfilesByOpportunityId.set(opportunity.opportunityId, matchProfile);
+  }
 
   const results = [];
 
   for (const opportunity of visibleOpportunities) {
-    const matchProfile = buildOpportunityMatchProfile(opportunity, { now: effectiveNow });
+    const matchProfile = matchProfilesByOpportunityId.get(opportunity.opportunityId) || getCachedOpportunityMatchProfile(opportunity, effectiveNow);
     const match = evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now: effectiveNow });
     const mapping = opportunitySavingsMappingByOpportunityId.get(opportunity.opportunityId) || null;
 

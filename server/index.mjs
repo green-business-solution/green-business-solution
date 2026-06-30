@@ -113,6 +113,21 @@ let googleKeysCache = {
   expiresAt: 0,
   keys: []
 };
+const opportunityCacheTtlMs = Math.max(
+  60_000,
+  Number.parseInt(process.env.GBS_OPPORTUNITY_CACHE_TTL_MS || "300000", 10) || 300_000
+);
+let opportunitiesCache = {
+  loadedAt: 0,
+  items: [],
+  promise: null
+};
+const retrofitResultsCacheTtlMs = Math.max(
+  60_000,
+  Number.parseInt(process.env.GBS_RETROFIT_RESULTS_CACHE_TTL_MS || "300000", 10) || 300_000
+);
+const retrofitResultsCache = new Map();
+const retrofitResultsPromiseCache = new Map();
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -1009,6 +1024,67 @@ async function scanAll(TableName) {
   return items;
 }
 
+async function getCachedOpportunities() {
+  const now = Date.now();
+  if (opportunitiesCache.items.length > 0 && now - opportunitiesCache.loadedAt < opportunityCacheTtlMs) {
+    return opportunitiesCache.items;
+  }
+
+  if (!opportunitiesCache.promise) {
+    opportunitiesCache.promise = scanAll(opportunitiesTable)
+      .then((items) => {
+        opportunitiesCache = {
+          loadedAt: Date.now(),
+          items,
+          promise: null
+        };
+        return items;
+      })
+      .catch((error) => {
+        opportunitiesCache.promise = null;
+        throw error;
+      });
+  }
+
+  return opportunitiesCache.promise;
+}
+
+function retrofitResultsCacheKey(intake) {
+  if (!intake) {
+    return "empty-intake";
+  }
+
+  return [
+    intake.userId || "",
+    intake.submissionId || "",
+    intake.updatedAt || "",
+    intake.utilityExtractedValues?.length || 0,
+    intake.uploadedUtilityFiles?.length || 0
+  ].join(":");
+}
+
+function readCachedRetrofitResults(intake) {
+  const key = retrofitResultsCacheKey(intake);
+  const cached = retrofitResultsCache.get(key);
+  if (!cached) {
+    return null;
+  }
+
+  if (Date.now() - cached.createdAt > retrofitResultsCacheTtlMs) {
+    retrofitResultsCache.delete(key);
+    return null;
+  }
+
+  return cached.results;
+}
+
+function writeCachedRetrofitResults(intake, results) {
+  retrofitResultsCache.set(retrofitResultsCacheKey(intake), {
+    createdAt: Date.now(),
+    results
+  });
+}
+
 function encodeScanCursor(key) {
   if (!key) {
     return null;
@@ -1445,12 +1521,31 @@ async function getUserRecord(userId) {
 }
 
 async function buildRetrofitResultsForIntake(intake) {
-  const opportunities = await scanAll(opportunitiesTable);
-  return buildClientRetrofitResults({
-    intake,
-    opportunities,
-    now: new Date().toISOString()
-  });
+  const cached = readCachedRetrofitResults(intake);
+  if (cached) {
+    return cached;
+  }
+
+  const cacheKey = retrofitResultsCacheKey(intake);
+  if (!retrofitResultsPromiseCache.has(cacheKey)) {
+    retrofitResultsPromiseCache.set(
+      cacheKey,
+      (async () => {
+        const opportunities = await getCachedOpportunities();
+        const results = buildClientRetrofitResults({
+          intake,
+          opportunities,
+          now: new Date().toISOString()
+        });
+        writeCachedRetrofitResults(intake, results);
+        return results;
+      })().finally(() => {
+        retrofitResultsPromiseCache.delete(cacheKey);
+      })
+    );
+  }
+
+  return retrofitResultsPromiseCache.get(cacheKey);
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
