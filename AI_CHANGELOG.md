@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) incentive calculation v2 design
+
+- Added a GPT Pro-informed incentive calculation model v2 design note covering calculation packages, measure catalogs, rate tables, expected-value grants, missing inputs, stacking, migration, repair workflow, and the first safe implementation slice.
+- Linked the v2 model from the product TODO backlog.
+
 ## 2026-06-30 - Codex (GPT-5) multi-batch opportunity data repairs
 
 - Updated opportunity-data repair import tooling so future GPT Pro repair batches can be applied together from multiple JSON files while preserving existing single-file behavior.
