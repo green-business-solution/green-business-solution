@@ -269,7 +269,6 @@ type PortalRetrofitResultsResponse = {
   results: RetrofitResultsPayload;
 };
 
-type AdminClientPortalPreviewPayload = PortalRetrofitResultsResponse;
 type AdminClientPortalProfilePayload = PortalPayload;
 
 type PortalPreviewHint = {
@@ -4659,12 +4658,9 @@ function AdminClientPortalPreviewPage({
   viewer: UserRecord;
 }) {
   const [profilePayload, setProfilePayload] = useState<AdminClientPortalProfilePayload | null>(null);
-  const [resultsPayload, setResultsPayload] = useState<PortalRetrofitResultsResponse["results"] | null>(null);
   const [activeTab, setActiveTab] = useState("My information");
   const [isProfileLoading, setIsProfileLoading] = useState(true);
-  const [isResultsLoading, setIsResultsLoading] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
-  const [resultsError, setResultsError] = useState<string | null>(null);
   const previewUser = profilePayload?.user || {
     ...viewer,
     role: "client" as const,
@@ -4707,44 +4703,6 @@ function AdminClientPortalPreviewPage({
     };
   }, [credential, userId]);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    if (!credential || !userId || activeTab !== "Retrofit estimates" || resultsPayload || isResultsLoading) {
-      return () => {
-        isMounted = false;
-      };
-    }
-
-    setIsResultsLoading(true);
-    setResultsError(null);
-
-    apiGet<AdminClientPortalPreviewPayload>(`/api/admin/client-retrofit-results/${encodeURIComponent(userId)}`, {
-      headers: adminAuthHeaders(credential)
-    })
-      .then((response) => {
-        if (!isMounted) return;
-        setResultsPayload(response.results);
-        setProfilePayload((current) => current || { user: response.client, intake: response.intake });
-      })
-      .catch((requestError) => {
-        if (!isMounted) return;
-        const message = requestError instanceof Error ? requestError.message : "Could not load retrofit estimates for this client.";
-        setResultsError(
-          message === "Request failed with HTTP 500."
-            ? "Retrofit estimates for this client are taking too long to calculate right now. Try again in a moment."
-            : message
-        );
-      })
-      .finally(() => {
-        if (isMounted) setIsResultsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [activeTab, credential, isResultsLoading, resultsPayload, userId]);
-
   return (
     <WorkspaceLayout
       activeNavItem={activeTab}
@@ -4761,47 +4719,22 @@ function AdminClientPortalPreviewPage({
             <h1>{previewUser.fullName || "Client portal preview"}</h1>
             <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
           </div>
-          <div className="database-stats">
-            <strong>{isResultsLoading ? "..." : resultsPayload?.summary.totalResults.toLocaleString() || 0}</strong>
-            <span>{isResultsLoading ? "loading estimates" : "matched opportunities"}</span>
-          </div>
+          {activeTab === "Retrofit estimates" ? null : (
+            <div className="database-stats">
+              <strong>{profilePayload?.intake ? "Loaded" : "..."}</strong>
+              <span>profile</span>
+            </div>
+          )}
         </div>
 
-        {activeTab === "Retrofit estimates"
-          ? resultsError ? <p className="error-message">{resultsError}</p> : null
-          : profileError ? <p className="error-message">{profileError}</p> : null}
+        {activeTab === "Retrofit estimates" ? null : profileError ? <p className="error-message">{profileError}</p> : null}
 
-        {isProfileLoading ? (
+        {activeTab === "Retrofit estimates" ? (
+          <div aria-label="Retrofit estimates preview" />
+        ) : isProfileLoading ? (
           <section className="database-detail-panel">
             <p className="empty-state">Loading the client portal preview...</p>
           </section>
-        ) : activeTab === "Retrofit estimates" ? (
-          isResultsLoading ? (
-            <section className="database-detail-panel">
-              <p className="empty-state">Building retrofit estimates for this client...</p>
-            </section>
-          ) : (
-          <div className="retrofit-result-group-list">
-            <RetrofitResultGroup
-              description="Matched opportunities with enough information for a first-pass estimate."
-              emptyMessage="No opportunities are fully ready yet."
-              results={resultsPayload?.groups.readyToEstimate || []}
-              title="Ready to estimate"
-            />
-            <RetrofitResultGroup
-              description="Matched opportunities where key bill, scope, quote, or incentive data is still missing."
-              emptyMessage="No partially-complete opportunities right now."
-              results={resultsPayload?.groups.needsMoreInformation || []}
-              title="Needs more information"
-            />
-            <RetrofitResultGroup
-              description="Programs that are blocked by eligibility or not enough baseline data."
-              emptyMessage="No blocked opportunities right now."
-              results={resultsPayload?.groups.notCurrentlyApplicable || []}
-              title="Not currently applicable"
-            />
-          </div>
-          )
         ) : (
           <ProfilePanel intake={profilePayload?.intake || null} user={previewUser} />
         )}

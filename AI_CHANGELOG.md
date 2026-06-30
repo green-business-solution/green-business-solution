@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) admin preview retrofit tab blanking
+
+- Disabled the admin client portal preview's Retrofit estimates tab content so it no longer triggers the broken retrofit-results request path.
+- Kept the My information preview tab loading from the lightweight client profile endpoint.
+
 ## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 2
 
 - Imported the second GPT Pro opportunity-data repair batch for 10 checked opportunities, including WVPA/PowerMoves, CenterPoint Houston, Energy Smart NOLA, PECO, Pepco, Bright Energy Solutions, Springfield Utility Board, and Black Hills Energy records.
