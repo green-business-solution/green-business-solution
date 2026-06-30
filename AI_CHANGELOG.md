@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) incentive calculation v2 foundation
+
+- Added a parallel v2 incentive calculation module with package validation, legacy simple-rule conversion, and basic calculation support for fixed amount, per-unit, per-kW, per-kWh, percent-of-cost, recurring, expected-grant, and measure-catalog effects.
+- Added migration compatibility tests that compare v2 output against current v1 behavior for known simple legacy rules without treating v1 as the long-term source of truth.
+- Added a Consumers Energy-style measure-catalog test fixture covering selected measures, household quantity limits, and missing selected-measure inputs.
+
 ## 2026-06-30 - Codex (GPT-5) incentive calculation v2 design
 
 - Added a GPT Pro-informed incentive calculation model v2 design note covering calculation packages, measure catalogs, rate tables, expected-value grants, missing inputs, stacking, migration, repair workflow, and the first safe implementation slice.
