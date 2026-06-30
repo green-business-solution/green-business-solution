@@ -3,6 +3,7 @@
 ## 2026-06-30 - Codex (GPT-5) product TODO planning notes
 
 - Added a product TODO document for GPT Pro-assisted opportunity-data repair, grant estimate treatment, scenario/math verification, user-selected opportunity planning, user portal audit work, and future publish-gate automation.
+- Added follow-up TODOs for fact-checking existing simple incentive rules, supporting rate-card/measure-catalog opportunity models, escalating failed automated repairs to admins, and planning future non-DSIRE source collection.
 - Linked the TODO document from the product vision so future agents can find the current backlog.
 
 ## 2026-06-30 - Codex (GPT-5) portal preview timeout hardening

@@ -12,6 +12,8 @@ This document captures product, data-quality, and verification work that should 
 ## Grant And Incentive Estimates
 
 - Replace the `possible_grant` treatment with expected-value grant estimates. Every matched grant should have a rule or heuristic for estimating the amount the user is expected to receive.
+- Redesign incentive rules so an opportunity can hold rate tables, measure catalogs, multiple calculation components, caps, per-customer limits, eligibility conditions, and both one-time and recurring effects. Do not assume one opportunity maps to one simple formula.
+- Fact-check existing simple-formula rules with GPT Pro help. Some opportunities currently modeled with simple formulas may actually require rate-card or measure-catalog extraction, and those rules should be repaired before they are trusted in user-facing estimates.
 - Classify grant estimates into the correct calculation bucket:
   - deterministic upfront grants or rebates should reduce one-time cost;
   - recurring credits, tariffs, or bill effects should affect recurring savings or expenses;
@@ -43,3 +45,5 @@ This document captures product, data-quality, and verification work that should 
 - Add a backend publish gate so opportunities cannot become user-accessible until they are fully repaired and can resolve to deterministic user-facing outcomes.
 - Automate DSIRE opportunity collection, availability repair, opportunity-data repair, incentive-rule extraction, scenario verification, and fixture regeneration as later workflow work.
 - The automated repair system should use GPT Pro or another review process to validate Codex extraction strategies until deterministic parsing is reliable enough for routine updates.
+- Add an admin escalation path for failed automated repair. If source access, extraction, or confidence checks fail, the system should notify an admin, preserve the failed record and evidence, and support a GPT Pro/manual research response that Codex can import to repair, archive, or discard the opportunity.
+- Plan for future opportunity collection beyond DSIRE. When approved by the team, add other databases and consider a dynamic source-link tree that follows aggregator records back to primary source pages so RetroFi can collect and verify opportunities from the sources themselves.
