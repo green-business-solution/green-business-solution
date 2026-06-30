@@ -710,11 +710,15 @@ export function validateRequirementFieldIds() {
   };
 }
 
-export function buildClientRetrofitResults({ intake, opportunities, now = new Date().toISOString() }) {
+export function buildClientRetrofitResults({ intake, opportunities, now = new Date() }) {
+  const normalizedNow = now instanceof Date ? now : new Date(now);
+  const effectiveNow = Number.isNaN(normalizedNow.getTime()) ? new Date() : normalizedNow;
+  const generatedAt = effectiveNow.toISOString();
+
   if (!intake) {
     return {
       schemaVersion: RETROFIT_RESULTS_SCHEMA_VERSION,
-      generatedAt: now,
+      generatedAt,
       intakeId: null,
       summary: {
         totalResults: 0,
@@ -734,14 +738,14 @@ export function buildClientRetrofitResults({ intake, opportunities, now = new Da
   const fieldSnapshot = buildFieldSnapshot(intake);
   const visibleOpportunities = (opportunities || []).filter((opportunity) => {
     if (!isVisibleOpportunity(opportunity)) return false;
-    return isVisibleAvailability(buildOpportunityMatchProfile(opportunity, { now }).availability);
+    return isVisibleAvailability(buildOpportunityMatchProfile(opportunity, { now: effectiveNow }).availability);
   });
 
   const results = [];
 
   for (const opportunity of visibleOpportunities) {
-    const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
-    const match = evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now });
+    const matchProfile = buildOpportunityMatchProfile(opportunity, { now: effectiveNow });
+    const match = evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now: effectiveNow });
     const mapping = opportunitySavingsMappingByOpportunityId.get(opportunity.opportunityId) || null;
 
     if (!mapping || ["ineligible", "unavailable"].includes(match.eligibilityStatus)) {
@@ -893,7 +897,7 @@ export function buildClientRetrofitResults({ intake, opportunities, now = new Da
 
   return {
     schemaVersion: RETROFIT_RESULTS_SCHEMA_VERSION,
-    generatedAt: now,
+    generatedAt,
     intakeId: intake.submissionId || intake.userId || null,
     summary: {
       totalResults: sorted.length,

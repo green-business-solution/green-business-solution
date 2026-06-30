@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) admin portal preview date normalization
+
+- Fixed the admin portal preview crash where retrofit matching received `now` as a string and attempted to call `getTime()` on it.
+- Hardened the retrofit-results builder so it normalizes either `Date` or ISO-string inputs before filtering opportunity availability or generating preview timestamps.
+
 ## 2026-06-29 - Codex (GPT-5) restart handoff
 
 - Added a restart handoff document summarizing completed availability, incentive-rule, savings-model, UI, deployment, and opportunity-data repair work.
