@@ -193,7 +193,7 @@ function availabilityFromOpportunityDataRepair(repair, opportunity) {
   const normalizedStatus =
     status === "active" || status === "rolling" || status === "upcoming" || status === "unavailable"
       ? status
-      : status === "temporarily_closed" || status === "unknown"
+      : status === "temporarily_closed" || status === "unknown" || status === "source_inaccessible"
         ? "uncertain"
         : null;
   if (!normalizedStatus) return null;

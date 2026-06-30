@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 2
+
+- Imported the second GPT Pro opportunity-data repair batch for 10 checked opportunities, including WVPA/PowerMoves, CenterPoint Houston, Energy Smart NOLA, PECO, Pepco, Bright Energy Solutions, Springfield Utility Board, and Black Hills Energy records.
+- Applied both GPT Pro repair batches cumulatively to the public opportunity index and sample matching fixtures so repaired geography, availability, eligibility, blockers, evidence, and confidence metadata stay attached to matched opportunities.
+- Treated `source_inaccessible` opportunity-data repairs as uncertain availability in the importer and matching profile builder.
+
 ## 2026-06-30 - Codex (GPT-5) incentive calculation v2 foundation
 
 - Added a parallel v2 incentive calculation module with package validation, legacy simple-rule conversion, and basic calculation support for fixed amount, per-unit, per-kW, per-kWh, percent-of-cost, recurring, expected-grant, and measure-catalog effects.

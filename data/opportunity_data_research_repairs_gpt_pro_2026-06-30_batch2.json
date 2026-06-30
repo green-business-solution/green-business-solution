@@ -1,0 +1,768 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-30",
+  "source": "gpt_pro",
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22050",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": ["MO"],
+        "counties": [
+          "Perry County",
+          "Ste. Genevieve County",
+          "Cape Girardeau County (parts)",
+          "Bollinger County (parts)",
+          "Jefferson County (parts)",
+          "St. Francois County (parts)"
+        ],
+        "cities": [],
+        "utilityTerritories": ["Former Citizens Electric Corporation / Wabash Valley PowerMoves territory"],
+        "notes": "The Missouri record appears to have depended on Citizens Electric Corporation. Current official sources say Citizens Electric separated from Wabash Valley Power Alliance effective June 1, 2025; current WVPA membership no longer includes a Missouri member cooperative."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "For the current WVPA PowerMoves C&I program, the project must be for a non-residential member with an electric account/facility on a participating WVPA member cooperative line; this Missouri record does not satisfy that current utility-territory requirement."
+      ],
+      "blockers": [
+        "Citizens Electric Corporation members were no longer eligible for Wabash Valley PowerMoves after May 31, 2025.",
+        "Current WVPA member list shows 21 member distribution cooperatives and no Missouri member cooperative.",
+        "Citizens Electric now points business customers to a separate current business rebate offering, not this WVPA opportunity."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Wabash Valley Power Alliance / PowerMoves (historical Missouri record)",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.powermoves.com/rebates/business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22050/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+        "https://www.powermoves.com/rebates/business/",
+        "https://www.wvpa.com/who-we-are/member-co-ops/",
+        "https://www.cecmo.com/ferc-approves-citizens-electric-corporations-request-separation-wabash-valley-power-alliance",
+        "https://www.cecmo.com/business-rebates"
+      ],
+      "evidenceText": "Citizens Electric states that its transition away from Wabash Valley became effective June 1, 2025 and that Citizens members were no longer eligible for Wabash Valley PowerMoves after May 31, 2025. WVPA's current member page describes 21 member distribution cooperatives and lists Indiana and Illinois cooperatives, not Missouri. Citizens Electric's current business rebate page is separate from WVPA PowerMoves.",
+      "reasoningNotes": "DSIRE's record title still references a 23-member WVPA program and a Missouri record, but current official utility and administrator sources show the Missouri service-territory basis is no longer valid. Current Citizens business rebates should be modeled as a different opportunity if needed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4653",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["IN"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Boone Power",
+          "Carroll White REMC",
+          "Fulton County REMC",
+          "Heartland REMC",
+          "Hendricks Power Cooperative",
+          "Jasper County REMC",
+          "Jay County REMC",
+          "Kankakee Valley REMC",
+          "Kosciusko REMC",
+          "LaGrange County REMC",
+          "Marshall County REMC",
+          "Miami-Cass REMC",
+          "Newton County REMC",
+          "NineStar Connect",
+          "Noble REMC",
+          "Parke County REMC",
+          "Steuben County REMC",
+          "Warren County REMC"
+        ],
+        "notes": "This is the Indiana DSIRE record for the current WVPA PowerMoves C&I program. The official WVPA member list also includes Illinois cooperatives, but this repair is limited to the Indiana record."
+      },
+      "eligibleApplicantTypes": [
+        "Non-residential electric members of participating WVPA member cooperatives",
+        "Commercial customers",
+        "Industrial customers",
+        "Agricultural non-residential customers",
+        "Institutional, nonprofit, public, or other non-residential customers served by a participating member cooperative"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Agricultural",
+        "Institutional",
+        "Nonprofit",
+        "Government/Public",
+        "Education",
+        "Healthcare",
+        "Hospitality/Lodging",
+        "Retail",
+        "Office",
+        "Warehouse/Distribution",
+        "Manufacturing",
+        "Grocery/Cold storage",
+        "Restaurant/Food service"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "Lighting controls retrofit",
+        "Exterior/site lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Smart thermostat / zoning retrofit",
+        "HVAC controls retrofit",
+        "Ground-source / geothermal heat pump",
+        "Heat pump water heater",
+        "High-efficiency refrigeration equipment",
+        "Refrigeration controls retrofit",
+        "Refrigeration EC motor retrofit",
+        "Anti-sweat heater controls",
+        "Door gasket / strip curtain / night cover retrofit",
+        "Energy management system",
+        "Demand-controlled kitchen ventilation",
+        "Variable frequency drive retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a non-residential member of a participating electric cooperative.",
+        "The facility/project must be on an existing electric account served by a participating cooperative line.",
+        "Equipment must be new, meet program specifications, and be installed at the qualifying cooperative account.",
+        "Prescriptive retrofit applications generally must be submitted within the required post-installation window; custom and new-construction projects require pre-purchase or design-stage review.",
+        "For the 2026 program year, qualifying equipment must be installed and operational in the program year and submitted by the stated deadline.",
+        "Funding is limited and processed first-come, first-served; the program may inspect projects or change offerings."
+      ],
+      "blockers": [
+        "Do not use the outdated DSIRE title phrase 23 member cooperatives for territory matching; current official WVPA materials identify 21 member distribution cooperatives.",
+        "Do not match Missouri Citizens Electric accounts to this WVPA record after May 31, 2025.",
+        "Low-flow plumbing fixture retrofit was not found in current PowerMoves C&I materials and should not be included for this opportunity."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Wabash Valley Power Alliance / PowerMoves",
+      "applicationUrl": "https://www.powermoves.com/rebates/business/",
+      "websiteUrl": "https://www.powermoves.com/rebates/business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4653/wabash-valley-power-association-23-member-cooperatives-commercial-and-industrial-energy-efficiency-program",
+        "https://www.powermoves.com/rebates/business/",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Web-CI-Booklet.pdf",
+        "https://www.wvpa.com/who-we-are/member-co-ops/"
+      ],
+      "evidenceText": "PowerMoves' business page describes rebates for existing-building retrofit projects, prescriptive lighting and non-lighting retrofits, custom rebates, and new-construction rebates. The 2026 booklet states the C&I rebate program is for non-residential members of participating electric cooperatives and includes LED lighting, VFDs, HVAC, geothermal heat pumps, heat-pump water heaters, smart thermostats, guest-room energy management, demand-controlled kitchen ventilation, and refrigeration measures. Current WVPA membership is 21 distribution cooperatives.",
+      "reasoningNotes": "The official source supports lighting, HVAC, heat pump, geothermal, heat-pump water heater, refrigeration, EMS, kitchen ventilation, and VFD matches. Low-flow fixtures were treated as a false keyword match because current PowerMoves materials did not show low-flow, aerator, faucet, or similar plumbing-fixture measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2650",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["TX"],
+        "counties": [],
+        "cities": ["Houston"],
+        "utilityTerritories": ["CenterPoint Energy Houston Electric service territory"],
+        "notes": "Current public pages describe CenterPoint Energy Houston Electric residential efficiency programs for the Greater Houston electric service territory. Some detailed measure support is from older official program manuals still surfaced by CenterPoint search/current program links, so exact submeasure confidence is medium."
+      },
+      "eligibleApplicantTypes": [
+        "Approved third-party contractors",
+        "Approved project sponsors",
+        "Community agencies and service companies participating in CenterPoint residential programs",
+        "Residential electric customers as host participants",
+        "Income-qualified residential customers for hard-to-reach/weatherization programs"
+      ],
+      "eligibleSectors": ["Residential", "Income-qualified residential", "Individually metered multifamily dwelling units"],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Duct sealing and duct insulation",
+        "Ground-source / geothermal heat pump",
+        "Heat pump water heater",
+        "High-efficiency refrigeration equipment",
+        "Insulation upgrade",
+        "Air sealing / weatherization",
+        "Window replacement",
+        "Low-flow fixture retrofit",
+        "Efficient pump replacement"
+      ],
+      "hardRequirements": [
+        "Texas law prevents CenterPoint from offering programs directly to residential customers; programs are implemented through third-party contractors, project sponsors, retailers, or agencies.",
+        "Host customer must be in CenterPoint Energy Houston Electric service territory.",
+        "HVAC replacement incentives must be provided through participating contractors and qualifying high-efficiency equipment.",
+        "ComfortCheck tune-up eligibility requires a central A/C or heat pump in CenterPoint Houston Electric territory, with measure-specific system and participation limits.",
+        "Hard-to-reach/weatherization offerings require income or location qualification and homes in suitable repair; Agencies in Action has additional home age, size, service-area, and income/public-assistance requirements.",
+        "Measure eligibility and savings must satisfy CenterPoint program rules and technical review."
+      ],
+      "blockers": [
+        "The application portal redirects to a JavaScript-only customer application page that could not be inspected in text form.",
+        "This is a residential and hard-to-reach program, not a business C&I rebate.",
+        "High-efficiency commercial dishwasher is a false match for this record.",
+        "High-efficiency refrigeration, where supported, means residential refrigerator/freezer measures, not commercial refrigeration."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "CenterPoint Energy",
+      "applicationUrl": "https://cnpres.customerapplication.com",
+      "websiteUrl": "https://www.centerpointenergy.com/en-us/residential/save-energy-money/electric-efficiency-programs/residential-electric-efficiency?sa=ho",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2650/centerpoint-energy-residential-and-hard-to-reach-energy-efficiency-program",
+        "https://cnpres.programprocessing.com/",
+        "https://cnpres.customerapplication.com",
+        "https://www.centerpointenergy.com/en-us/residential/save-energy-money/electric-efficiency-programs/residential-electric-efficiency?sa=ho",
+        "https://www.centerpointenergy.com/en-us/residential/save-energy-money/electric-efficiency-programs/heating-and-cooling?sa=ho",
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/electric-efficiency-programs-we-offer.aspx?au=res&sa=HO",
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/residential-standard-offer-program.aspx?au=res&sa=ho",
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/agencies-in-action-program.aspx?au=res&sa=ho",
+        "https://www.centerpointenergy.com/en-us/Documents/Electric-Efficiency/2019-RSOP-manual.pdf"
+      ],
+      "evidenceText": "CenterPoint's current residential page says Texas law prevents direct residential offerings and that programs are implemented by third-party contractors; it lists ComfortCheck A/C tune-ups, HVAC replacement incentives, smart thermostats, LED discounts, insulation/sealing, and variable-speed pool pumps. Program pages include ceiling insulation, HVAC replacement, LED lighting, smart thermostat, and variable-speed pool pump programs. Residential Standard Offer materials describe contractor-paid incentives for retrofit projects in CenterPoint's electric territory, and Agencies in Action lists weatherization measures for qualified residents.",
+      "reasoningNotes": "The CenterPoint portal was source-access limited because it requires JavaScript. Detailed legacy official manuals still surface eligible residential measures such as duct sealing, ground-source heat pumps, heat-pump water heaters, low-flow showerheads, and residential refrigerators/freezer recycling, but those details are not as clearly exposed on current public landing pages; confidence is therefore medium."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["LA"],
+        "counties": ["Orleans Parish"],
+        "cities": ["New Orleans"],
+        "utilityTerritories": ["Entergy New Orleans electric service territory"],
+        "notes": "Energy Smart is a New Orleans program administered by Entergy New Orleans for qualifying business projects in the Entergy New Orleans service territory."
+      },
+      "eligibleApplicantTypes": [
+        "Entergy New Orleans business electric customers",
+        "Commercial customers",
+        "Industrial customers",
+        "Small business customers",
+        "Large commercial and industrial customers",
+        "Trade allies or contractors assisting eligible customers"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Small business",
+        "Large commercial",
+        "Institutional",
+        "Education",
+        "Healthcare",
+        "Hospitality/Lodging",
+        "Restaurant/Food service",
+        "Grocery/Cold storage",
+        "Office",
+        "Retail"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "Lighting controls retrofit",
+        "Exterior/site lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Smart thermostat / zoning retrofit",
+        "HVAC controls retrofit",
+        "Duct sealing and duct insulation",
+        "High-efficiency refrigeration equipment",
+        "Refrigeration EC motor retrofit",
+        "Refrigeration controls retrofit",
+        "Anti-sweat heater controls",
+        "Door gasket / strip curtain / night cover retrofit",
+        "Energy management system",
+        "Low-flow fixture retrofit",
+        "High-efficiency commercial dishwasher",
+        "High-efficiency fryer",
+        "High-efficiency oven",
+        "Demand-controlled kitchen ventilation",
+        "Window replacement",
+        "Window film / shading retrofit",
+        "Variable frequency drive retrofit"
+      ],
+      "hardRequirements": [
+        "Project must be for a qualifying New Orleans business customer served by Entergy New Orleans.",
+        "Prescriptive projects use the current lighting or non-lighting workbook/application and must meet equipment-list specifications.",
+        "Custom projects require pre-approval and verifiable electricity reduction.",
+        "Required documentation can include application/calculator, Entergy New Orleans utility bill, proposal or estimate, equipment specifications/certifications, W-9, and photos.",
+        "Custom measures outside the prescriptive list are reviewed case by case."
+      ],
+      "blockers": [
+        "The target DSIRE website URL now lands on a New Construction incentives page rather than the active equipment-replacement/custom retrofit page.",
+        "Use the current Equipment Replacement and Custom Incentives pages for retrofit matching, not the stale custom-and-prescriptive URL path alone."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energy Smart, administered by Entergy New Orleans",
+      "applicationUrl": "https://energysmartnola.info/businesses/equipment-replacement/",
+      "websiteUrl": "https://energysmartnola.info/businesses/equipment-replacement/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3754/entergy-new-orleans-small-and-large-commercial-and-industrial-incentives-program",
+        "https://www.energysmartnola.info/custom-and-prescriptive-incentives/",
+        "https://energysmartnola.info/businesses/equipment-replacement/",
+        "https://energysmartnola.info/custom-incentives/",
+        "https://energysmartnola.info/wp-content/uploads/2026/03/ENO_Equipment_Incentive_List_February2026.pdf"
+      ],
+      "evidenceText": "The current Equipment Replacement page says incentives are available for HVAC, lighting, refrigeration and more, and directs lighting projects to the lighting workbook and HVAC, refrigeration, commercial kitchen equipment, and window-film projects to the non-lighting workbook. The Custom Incentives page supports custom upgrades such as building automation systems, premium-efficiency motors, and VFDs with pre-approval. The 2026 equipment list shows interior/exterior lighting, lighting controls, HVAC including heat pumps, smart thermostats, guest-room energy management, commercial duct sealing, refrigeration controls and EC motors, anti-sweat controls, night covers, strip curtains, door gaskets, commercial kitchen equipment, kitchen exhaust controls, window film/windows, and low-flow fixtures.",
+      "reasoningNotes": "The official current source corrects the DSIRE URL mismatch: the stale custom-and-prescriptive URL is now a new-construction page, while active retrofit support is on Equipment Replacement and Custom Incentives pages."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4052",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["PA"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["PECO Energy electric service territory"],
+        "notes": "Current PECO Ways to Save business pages cover PECO commercial electric customers in the PECO service territory. The current FAQ says Phase V begins June 1, 2026 and continues through May 31, 2031 or until funds run out."
+      },
+      "eligibleApplicantTypes": [
+        "PECO commercial electric customers",
+        "Small business customers on qualifying GS rate classes",
+        "Large commercial and industrial customers on qualifying HT, PD, or EP rate classes",
+        "Contractors, distributors, program allies, or third parties acting for eligible customers"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Small business",
+        "Large commercial and industrial",
+        "Agricultural",
+        "Education",
+        "Healthcare",
+        "Hospitality",
+        "Food service",
+        "Grocery",
+        "Retail",
+        "Office",
+        "Municipal/Government",
+        "Manufacturing",
+        "Warehouse/Distribution"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "Lighting controls retrofit",
+        "Exterior/site lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "High-efficiency refrigeration equipment",
+        "Refrigeration controls retrofit",
+        "Refrigeration EC motor retrofit",
+        "Anti-sweat heater controls",
+        "Door gasket / strip curtain / night cover retrofit",
+        "Combined heat and power system",
+        "Pump/fan controls retrofit",
+        "Variable frequency drive retrofit",
+        "Efficient air compressor",
+        "Energy management system",
+        "Demand-controlled ventilation"
+      ],
+      "hardRequirements": [
+        "Applicant must be a PECO commercial electric customer or an authorized party acting for one.",
+        "Eligibility depends on business size/rate class; small business and large business pathways have different requirements.",
+        "Applications require account information and supporting documents such as a PECO bill, project estimate, equipment specification sheets, savings estimator, W-9, and third-party authorization when applicable.",
+        "Prescriptive projects use savings estimators and standard applications; custom projects generally need pre-approval and site-specific analysis.",
+        "Projects may be subject to pre-review, site verification, final documentation, and limited program funding."
+      ],
+      "blockers": [
+        "The input insulation-upgrade match appears to be a false building-envelope match; current PECO C&I materials support refrigeration suction-pipe insulation but did not show a general building insulation rebate in the non-residential equipment program.",
+        "Exact measure eligibility must be checked against the current PECO application manual and estimator for the selected project pathway."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "PECO Energy Company",
+      "applicationUrl": "https://cr101.my.salesforce-sites.com/PECO",
+      "websiteUrl": "https://pecobizsavings.com/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4052/peco-energy-electric-non-residential-energy-efficiency-rebate-program",
+        "https://solutions.peco-energy.com/equipment-incentives",
+        "https://pecobizsavings.com/",
+        "https://pecobizsavings.com/peco/incentives-overview/prescriptive-incentives/",
+        "https://pecobizsavings.com/peco/resources/how-to-apply-for-incentives/",
+        "https://pecobizsavings.com/peco/resources/savings-estimators/",
+        "https://pecobizsavings.com/peco/incentives-overview/custom-incentives/",
+        "https://pecobizsavings.com/peco/resources/faqs/",
+        "https://webtools.dnv.com/projects/Portals/12/PECO_Application_Manual.pdf?ver=0pWbIYNEZG81puuK_9Ik3g%3D%3D"
+      ],
+      "evidenceText": "PECO Ways to Save supports businesses upgrading energy-efficient products and equipment, including lighting, compressed air, refrigeration, solar and more. Current prescriptive pages list Agriculture, Compressed Air, Domestic Hot Water, Food Service and Office Equipment, HVAC and Tune Ups, Lighting, Motor and Pumps, and Refrigeration. Current FAQ says Phase V runs from June 1, 2026 to May 31, 2031 or until funds run out and identifies eligible rate classes. The current C&I application manual shows lighting controls, HVAC and heat pumps, VFDs, compressed-air measures, and detailed refrigeration measures.",
+      "reasoningNotes": "PECO's custom page supports building control systems, demand-controlled ventilation, exhaust-air heat recovery, compressed-air upgrades, economizers, EMS installation, process upgrades, and water/wastewater facility improvements. Some natural-gas-fueled equipment such as CHP may be eligible, but CHP should be treated as contact-program/engineering-review rather than an automatic prescriptive rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3689",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["MD"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Pepco Maryland electric service territory"],
+        "notes": "Current Pepco Maryland business pages describe incentives for Maryland businesses and nonprofits with commercial electric accounts. Medium/large business pathway is generally for customers with monthly demand greater than 100 kW; smaller customers are directed to the Small Business program."
+      },
+      "eligibleApplicantTypes": [
+        "Maryland businesses with Pepco commercial electric accounts",
+        "Maryland nonprofits with Pepco commercial electric accounts",
+        "Medium and large business customers with demand over 100 kW",
+        "Small business customers through the separate small-business pathway when demand is 100 kW or less",
+        "Contractors or service providers acting for eligible customers"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Nonprofit",
+        "Government/Public",
+        "Institutional",
+        "Education",
+        "Healthcare",
+        "Hospitality/Lodging",
+        "Food service",
+        "Grocery/Cold storage",
+        "Retail",
+        "Office",
+        "Manufacturing",
+        "Multifamily common-area or commercial equipment where eligible"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "Lighting controls retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "HVAC controls retrofit",
+        "Ground-source / geothermal heat pump",
+        "High-efficiency refrigeration equipment",
+        "Refrigeration controls retrofit",
+        "Refrigeration EC motor retrofit",
+        "Anti-sweat heater controls",
+        "Door gasket / strip curtain / night cover retrofit",
+        "Window film / shading retrofit",
+        "High-efficiency laundry equipment",
+        "Variable frequency drive retrofit",
+        "Efficient air compressor",
+        "Energy management system",
+        "High-efficiency commercial dishwasher",
+        "Low-flow fixture retrofit",
+        "High-efficiency fryer",
+        "High-efficiency oven",
+        "Demand-controlled kitchen ventilation"
+      ],
+      "hardRequirements": [
+        "Customer must be a Maryland business or nonprofit with a Pepco commercial electric account.",
+        "Medium/large business program is for accounts with monthly demand greater than 100 kW over the prior 12 months; accounts at or below 100 kW are directed to the Small Business program.",
+        "Equipment-specific applications require active commercial account eligibility and project-specific documentation.",
+        "All medium/large business equipment projects require pre-approval before purchase or start of work.",
+        "Custom measures require pre-approval and minimum savings/technical eligibility; demand-reduction-only, O&M, and code-required projects are not eligible."
+      ],
+      "blockers": [
+        "Heat pump water heater was a false match for this Pepco C&I record; current searched HVAC/business incentive materials did not show a heat-pump-water-heater incentive.",
+        "Window replacement was a false match; current business incentive materials support window film, not general window replacement.",
+        "Direct application portals redirect to customerapplication.com and may not expose content without the interactive workflow."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Potomac Electric Power Company",
+      "applicationUrl": "https://pepco-ci.customerapplication.com",
+      "websiteUrl": "https://homeenergysavings.pepco.com/md/business/applymlb",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3689/pepco-commercial-and-industrial-energy-efficiency-incentives-program",
+        "https://homeenergysavings.pepco.com/business/applyMLB",
+        "https://homeenergysavings.pepco.com/md/business/applymlb",
+        "https://homeenergysavings.pepco.com/md/business/business-incentives",
+        "https://pepco-ci.customerapplication.com",
+        "https://homeenergysavings.pepco.com/md/business/resources"
+      ],
+      "evidenceText": "Pepco's Maryland medium/large business page says eligible customers are Maryland businesses or nonprofits with commercial electric accounts and demand over 100 kW, with prescriptive and custom pathways. Pepco's business-incentives page lists refrigeration and commercial kitchen measures, HVAC, lighting and controls, specialized controls, VFDs, clothes washers, dehumidifiers, window film, and custom projects such as EMS, compressed air, central chiller plant, process equipment, and whole-building systems. Equipment PDFs show commercial-account eligibility, required preapproval, commercial dishwashers, refrigeration controls, anti-sweat controls, door closers, strip curtains, gaskets, ECM motors, HVAC heat pumps, geothermal heat pumps, smart thermostats, VFDs, and lighting controls.",
+      "reasoningNotes": "The source-backed repair keeps window film but excludes window replacement, and keeps geothermal heat pumps but excludes heat-pump water heaters. The custom technical sheet supports custom non-prescriptive measures with preapproval and minimum savings, including compressed air and EMS-type projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["IA"],
+        "counties": [],
+        "cities": [
+          "Alton",
+          "Atlantic",
+          "Denison",
+          "Hartley",
+          "Hawarden",
+          "Kimballton",
+          "Lake Park",
+          "Manilla",
+          "Orange City",
+          "Paullina",
+          "Pella",
+          "Primghar",
+          "Remsen",
+          "Rock Rapids",
+          "Sanborn",
+          "Shelby",
+          "Sioux Center",
+          "Woodbine"
+        ],
+        "utilityTerritories": [
+          "Alton Municipal Utilities",
+          "Atlantic Municipal Utilities",
+          "Denison Municipal Utilities",
+          "Hartley Municipal Utilities",
+          "Hawarden Municipal Utilities",
+          "Kimballton Municipal Utilities",
+          "Lake Park Municipal Utilities",
+          "Manilla Municipal Utilities",
+          "Orange City Municipal Utilities",
+          "Paullina Municipal Utilities",
+          "Pella Municipal Electric Utility",
+          "Primghar Municipal Utilities",
+          "Remsen Municipal Utilities",
+          "Rock Rapids Municipal Utilities",
+          "Sanborn Municipal Utilities",
+          "Shelby Municipal Utilities",
+          "Sioux Center Municipal Utilities",
+          "Woodbine Municipal Light And Power"
+        ],
+        "notes": "The target URL is the Manilla Municipal Utilities residential rebate page. Bright Energy Solutions' member page confirms 18 participating Iowa public power utilities."
+      },
+      "eligibleApplicantTypes": ["Residential customers of participating Bright Energy Solutions / Missouri River Energy Services municipal utilities"],
+      "eligibleSectors": ["Residential"],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Smart thermostat / zoning retrofit",
+        "Ground-source / geothermal heat pump",
+        "Heat pump water heater",
+        "EV charger installation",
+        "Level 2 EV charger installation",
+        "High-efficiency laundry equipment",
+        "High-efficiency residential dishwasher",
+        "Efficient pump replacement"
+      ],
+      "hardRequirements": [
+        "Applicant must be a residential customer of a participating municipal utility.",
+        "Program availability and forms are utility-specific; customer must use the local utility's Bright Energy Solutions rebate page and forms.",
+        "Equipment must meet measure-specific eligibility, such as qualifying Level 2 EV charger criteria, ENERGY STAR appliance criteria, or qualifying HVAC/heat-pump criteria.",
+        "Some measures have additional limits, such as clothes washer availability for homes with electric water heaters."
+      ],
+      "blockers": [
+        "High-efficiency commercial dishwasher is a false match; the current Manilla residential page lists residential dishwasher, not commercial food-service dishwasher.",
+        "High-efficiency refrigeration equipment and refrigeration EC motor retrofit were not supported by the current Manilla residential rebate list checked.",
+        "Air sealing/weatherization was not supported by the current Manilla residential rebate list checked."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Bright Energy Solutions / Missouri River Energy Services",
+      "applicationUrl": "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential",
+      "websiteUrl": "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5144/residential-energy-efficiency-rebate-offered-by-18-utilities",
+        "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential",
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/",
+        "https://www.mrenergy.com/services/energy-efficiency",
+        "https://www.mrenergy.com/news/bes-updates-several-rebates-for-2025"
+      ],
+      "evidenceText": "The Manilla Municipal Utilities page shows 13 home rebates including central A/C or heat-pump tune-up, clothes washer, dishwasher, EV chargers including qualifying Level 2 chargers, heat-pump water heater, heating/cooling measures including air-source heat pump, mini-split heat pump, geothermal heat pump, ENERGY STAR smart thermostat, ECM domestic-hot-water recirculating pumps, and LED recessed downlights. The Bright Energy Solutions member page lists 18 Iowa participating public power utilities. MRES describes BES as cash-incentive programs for residential and business customers of member utilities, and a 2025 MRES update discusses LED recessed downlights, heat-pump water heaters, HVAC, and Level 2 EV chargers.",
+      "reasoningNotes": "Because the website URL in the target record is member-specific, the repair uses the Manilla page for exact measure eligibility and the Bright Energy Solutions member page for the 18 Iowa utility-territory list. Program availability may vary by local utility, so matching should verify the customer's local municipal utility page."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2183",
+      "confidence": "low",
+      "availabilityStatus": "source_inaccessible",
+      "geography": {
+        "country": "US",
+        "states": ["OR"],
+        "counties": ["Lane County"],
+        "cities": ["Springfield"],
+        "utilityTerritories": ["Springfield Utility Board electric service territory"],
+        "notes": "Official SUB conservation pages returned 403 Forbidden during source checking. Search snippets from official SUB pages and secondary summaries indicate a C&I Energy Efficiency Incentives program, but full current program terms could not be verified."
+      },
+      "eligibleApplicantTypes": [
+        "Commercial electric customers of Springfield Utility Board",
+        "Industrial electric customers of Springfield Utility Board"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Restaurant/Food service",
+        "Grocery/Cold storage",
+        "Institutional",
+        "Office",
+        "Retail"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Energy recovery ventilation retrofit",
+        "Heat pump water heater",
+        "High-efficiency refrigeration equipment",
+        "Insulation upgrade",
+        "Demand-controlled kitchen ventilation",
+        "Variable frequency drive retrofit"
+      ],
+      "hardRequirements": [
+        "Customer must be a Springfield Utility Board commercial or industrial electric customer.",
+        "Measures appear to require pre-qualification and/or BPA-qualified equipment, based on official snippets and secondary sources.",
+        "Commercial EEI application appears to require SUB customer signature and supporting project documentation.",
+        "Preapproval should be assumed required until current official documents can be accessed."
+      ],
+      "blockers": [
+        "Official SUB business conservation page returned 403 Forbidden and could not be inspected.",
+        "Measure details are based on official search snippets plus secondary DSIRE-like summaries, not a fully accessible current official page.",
+        "Smart thermostat / zoning retrofit, refrigeration EC motor retrofit, anti-sweat heater controls, and waste heat recovery were not retained because the accessible current evidence was insufficient or only supported different concepts such as heat recovery ventilation."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Springfield Utility Board",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.subutil.com/conservation/for-your-business/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2183/springfield-utility-board-commercial-energy-efficiency-rebate-program",
+        "http://www.subutil.com/conservation/for-your-business/",
+        "https://www.subutil.com/conservation/for-your-business/",
+        "https://www.subutil.com/conservation/",
+        "https://rebates.energy/or/162/commercial/or70f-springfield-utility-board-commercial-energy-efficiency-rebat-u2507-commercial/"
+      ],
+      "evidenceText": "Opening the official SUB business conservation page returned 403 Forbidden. Official search snippets for the SUB page say SUB offers energy audits and Energy Efficiency Incentives to commercial and industrial customers for eligible pre-qualified measures, and snippets reference Demand-Controlled Kitchen Ventilation, Heat Recovery, Commercial Packaged Terminal Heat Pump, and Variable Frequency Drive on Air Handling Unit Fan measures. Secondary summaries list commercial refrigeration, heat pumps, heat-pump water heaters, insulation, and related measures, but those could not substitute for a fully accessible current official source.",
+      "reasoningNotes": "Status is source_inaccessible rather than active because the current official page could not be read. The categories retained are the ones with at least official-snippet or corroborating secondary support; exact rebate terms, application URL, current deadlines, and measure-level rules need administrator confirmation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3154",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["SD", "WY"],
+        "counties": ["Weston County, WY"],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy commercial and industrial electric service territory in South Dakota",
+          "Black Hills Energy commercial and industrial electric service territory in northeastern Wyoming / Weston County"
+        ],
+        "notes": "The DSIRE target state is South Dakota, but the current official Black Hills Energy page and 2026 application cover South Dakota and northeastern Wyoming / Weston County commercial and industrial electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "Black Hills Energy commercial electric customers",
+        "Black Hills Energy industrial electric customers"
+      ],
+      "eligibleSectors": [
+        "Commercial",
+        "Industrial",
+        "Office",
+        "Retail",
+        "Healthcare",
+        "Restaurant/Food service",
+        "Education",
+        "Lodging",
+        "Grocery/Cold storage",
+        "Warehouse",
+        "Manufacturing"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "Lighting controls retrofit",
+        "Exterior/site lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Smart thermostat / zoning retrofit",
+        "HVAC controls retrofit",
+        "High-efficiency refrigeration equipment",
+        "Walk-in cooler/freezer upgrade",
+        "Refrigeration EC motor retrofit",
+        "Refrigeration controls retrofit",
+        "Anti-sweat heater controls",
+        "Door gasket / strip curtain / night cover retrofit",
+        "Energy management system",
+        "Demand-controlled kitchen ventilation",
+        "Variable frequency drive retrofit",
+        "Efficient air compressor",
+        "Low-flow fixture retrofit"
+      ],
+      "hardRequirements": [
+        "Participant must be a Black Hills Energy commercial or industrial electric customer located in South Dakota or northeastern Wyoming.",
+        "Applications must be complete and include invoices, specifications, signatures, and required documentation.",
+        "New equipment must be installed on the customer premises and must not be purchased for resale.",
+        "For the 2026 program form, purchase and installation must be completed between January 1, 2026 and December 31, 2026, with rebate applications received by December 31, 2026.",
+        "Funding is limited and applications are processed first-come, first-served.",
+        "Black Hills Energy may verify receipts and inspect installations."
+      ],
+      "blockers": [
+        "Do not limit matching to South Dakota only; the current official page includes Weston County / northeastern Wyoming.",
+        "Online application portal is JavaScript-only, but official printable 2026 application is accessible."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": "https://bhpciprescriptive.customerapplication.com/",
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/commercial-rebates-south-dakota-and-weston-county-wyoming",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3154/black-hills-energy-commercial-energy-efficiency-programs",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/south-dakota-commercial-rebates",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/commercial-rebates/commercial-rebates-south-dakota-and-weston-county-wyoming",
+        "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/BHP-2026-SD-Commercial-Prescriptive-Form.pdf",
+        "https://bhpciprescriptive.customerapplication.com/"
+      ],
+      "evidenceText": "The current Black Hills Energy page is titled Commercial rebates for South Dakota and Weston County, Wyoming and lists LED lighting projects, commercial equipment including HVAC, heat pumps, thermostats, sensors, controls, PTACs, PTHPs and VFDs, plus online and printable applications. The 2026 Commercial Prescriptive Program form states it is for South Dakota / Northeast Wyoming commercial and industrial electric customers and lists LED lighting, exterior lighting, lighting controls, refrigeration strip curtains, HVAC demand control ventilation, ECMs for coolers/freezers, evaporator fan controls, add-doors, low/no-heat doors, anti-sweat heat controls, kitchen demand control ventilation, VSD air compressors, VFDs on fans and pumps, packaged terminal and air-source heat pumps, guest-room energy-management controls, smart thermostats, pre-rinse spray valves, and walk-in cooler/freezer automatic door closers.",
+      "reasoningNotes": "The source-backed repair expands geography to the current official SD plus Weston County/northeastern Wyoming page. Low-flow fixture retrofit is included only for the specific pre-rinse spray-valve measure; it should not be interpreted as broad restroom plumbing retrofit eligibility."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CO"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Black Hills Energy Colorado electric residential service territory"],
+        "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+      },
+      "eligibleApplicantTypes": [
+        "Black Hills Energy Colorado electric residential customers",
+        "Homeowners",
+        "Tenants where allowed by program requirements",
+        "Landlords where allowed by program requirements",
+        "Builders for residential new-construction pathways",
+        "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
+        "Trade allies or contractors assisting customers"
+      ],
+      "eligibleSectors": [
+        "Residential",
+        "Income-qualified residential",
+        "Multifamily residential",
+        "New residential construction",
+        "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+      ],
+      "eligibleRetrofitCategories": [
+        "LED lighting retrofit",
+        "High-efficiency HVAC replacement",
+        "Heat pump HVAC retrofit",
+        "Smart thermostat / zoning retrofit",
+        "Ground-source / geothermal heat pump",
+        "Heat pump water heater",
+        "Duct sealing and duct insulation",
+        "Insulation upgrade",
+        "Air sealing / weatherization",
+        "High-efficiency refrigeration equipment",
+        "High-efficiency laundry equipment",
+        "Efficient fan/blower replacement",
+        "Home energy management / smart power strip"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
+        "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+        "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
+        "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
+        "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
+        "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+      ],
+      "blockers": [
+        "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
+        "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
+        "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4281/black-hills-energy-electric-residential-energy-efficiency-program",
+        "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
+        "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
+        "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
+        "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+      ],
+      "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
+      "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:4636"
+}

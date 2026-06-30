@@ -178,7 +178,7 @@ function publicAvailabilityStatus(status, fallback = "active") {
   if (status === "rolling") return "rolling";
   if (status === "unavailable") return "unavailable";
   if (status === "upcoming") return "upcoming";
-  if (status === "temporarily_closed" || status === "unknown") return "uncertain";
+  if (status === "temporarily_closed" || status === "unknown" || status === "source_inaccessible") return "uncertain";
   return fallback || "uncertain";
 }
 
