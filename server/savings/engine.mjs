@@ -385,6 +385,16 @@ function finalizeCalculatedEstimate({
         { value: entry.amountCents, unit: "cents" }
       )
     ),
+    ...selectedScenario.recurringSavingsEntries.map((entry) =>
+      createTraceStep(
+        `trace_${entry.incentiveRuleId}`,
+        entry.label,
+        entry.kind === "recurring_expense" ? "recurring_incentive_expense" : "recurring_incentive",
+        entry.formula || "recurring incentive rule",
+        { opportunityId: entry.opportunityId, period: entry.period },
+        { value: entry.annualizedAmountCents ?? entry.amountCents, unit: "cents_annualized" }
+      )
+    ),
     createTraceStep(
       "trace_aggregation",
       "Headline aggregation",
@@ -1382,6 +1392,16 @@ export function calculateRetrofitSavingsEstimate(fixture) {
         entry.formula || "incentive rule",
         { opportunityId: entry.opportunityId },
         { value: entry.amountCents, unit: "cents" }
+      )
+    ),
+    ...selectedScenario.recurringSavingsEntries.map((entry) =>
+      createTraceStep(
+        `trace_${entry.incentiveRuleId}`,
+        entry.label,
+        entry.kind === "recurring_expense" ? "recurring_incentive_expense" : "recurring_incentive",
+        entry.formula || "recurring incentive rule",
+        { opportunityId: entry.opportunityId, period: entry.period },
+        { value: entry.annualizedAmountCents ?? entry.amountCents, unit: "cents_annualized" }
       )
     ),
     createTraceStep(

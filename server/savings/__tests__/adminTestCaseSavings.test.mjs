@@ -69,6 +69,58 @@ describe("admin test-case savings previews", () => {
     );
   });
 
+  it("keeps multiple incentive effects for one matched opportunity-retrofit pair", () => {
+    const preview = buildAdminTestCaseSavingsPreview({
+      sampleUserId: "sample_led_combo",
+      calculationDate: "2026-06-27",
+      normalizedProfile: {},
+      retrofitGroup: {
+        retrofitTypeId: "led_lighting_retrofit",
+        displayName: "LED lighting retrofit",
+        opportunityCount: 1,
+        opportunities: [{ opportunityId: "opp_combo_led" }]
+      },
+      opportunityIncentiveRules: [
+        {
+          id: "oir_combo_led_rebate_v1",
+          version: 1,
+          opportunityId: "opp_combo_led",
+          name: "Combo LED Rebate",
+          incentiveType: "fixed_per_unit_rebate",
+          timing: "upfront",
+          amountRule: { kind: "fixed_amount", amountCents: 10000 },
+          basisPolicy: { basis: "gross_project_cost", applicationOrder: 10 },
+          confidence: "high",
+          active: true
+        },
+        {
+          id: "oir_combo_led_bill_credit_v1",
+          version: 1,
+          opportunityId: "opp_combo_led",
+          name: "Combo LED Bill Credit",
+          incentiveType: "recurring_bill_credit",
+          timing: "annual",
+          amountRule: { kind: "fixed_amount", amountCents: 12000 },
+          basisPolicy: { basis: "gross_project_cost", applicationOrder: 20 },
+          confidence: "high",
+          active: true
+        }
+      ]
+    });
+
+    expect(preview.oneTimeSavingsCents).toBe(10000);
+    expect(preview.annualRecurringSavingsCents).toBe(34464);
+    expect(preview.netAnnualRecurringSavingsCents).toBe(34464);
+    expect(preview.selectedIncentiveScenario).toMatchObject({
+      opportunityIds: ["opp_combo_led"],
+      incentiveRuleIds: ["oir_combo_led_rebate_v1", "oir_combo_led_bill_credit_v1"],
+      totalUpfrontSavingsCents: 10000,
+      firstYearRecurringSavingsCents: 12000
+    });
+    expect(preview.selectedIncentiveScenario.upfrontSavingsEntries).toHaveLength(1);
+    expect(preview.selectedIncentiveScenario.recurringSavingsEntries).toHaveLength(1);
+  });
+
   it("keeps service-only matched items unsupported until modeled savings are available", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       sampleUserId: "sample_audit",

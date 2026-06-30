@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) multiple incentive effects bridge
+
+- Updated admin test-case savings previews so a matched opportunity can pass through multiple incentive rules instead of keeping only the first rule for that opportunity.
+- Added recurring incentive effects to calculation traces and made incentive scenario IDs depend on rule IDs to avoid collisions when one opportunity has multiple effects.
+- Updated incentive repair process notes and deterministic rule generation so future repairs can preserve non-upfront timing for recurring credits, charges, tariffs, or performance incentives.
+
 ## 2026-06-30 - Codex (GPT-5) admin preview retrofit tab blanking
 
 - Disabled the admin client portal preview's Retrofit estimates tab content so it no longer triggers the broken retrofit-results request path.

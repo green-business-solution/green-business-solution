@@ -14,6 +14,7 @@ This document captures product, data-quality, and verification work that should 
 - Replace the `possible_grant` treatment with expected-value grant estimates. Every matched grant should have a rule or heuristic for estimating the amount the user is expected to receive.
 - Use the v2 incentive calculation model in [Incentive Calculation Model V2](./incentive-calculation-model-v2.md) as the implementation direction for replacing simple one-rule opportunity incentives.
 - Redesign incentive rules so an opportunity can hold rate tables, measure catalogs, multiple calculation components, caps, per-customer limits, eligibility conditions, and both one-time and recurring effects. Do not assume one opportunity maps to one simple formula.
+- Preserve multiple incentive effects even before the full v2 schema lands: an opportunity-retrofit pair may have separate upfront, recurring savings, recurring expense, tax, and grant-estimate rules with the same `opportunityId`.
 - Fact-check existing simple-formula rules with GPT Pro help. Some opportunities currently modeled with simple formulas may actually require rate-card or measure-catalog extraction, and those rules should be repaired before they are trusted in user-facing estimates.
 - Classify grant estimates into the correct calculation bucket:
   - deterministic upfront grants or rebates should reduce one-time cost;

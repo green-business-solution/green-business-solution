@@ -768,7 +768,7 @@ function buildRule(target, extraction, fetched, extractionMethod) {
     opportunityId: target.opportunityId,
     name: target.opportunityName,
     incentiveType: extraction.incentiveType || incentiveTypeFor(target),
-    timing: "upfront",
+    timing: extraction.timing || "upfront",
     amountRule: extraction.amountRule,
     basisPolicy,
     cap: extraction.cap,

@@ -63,9 +63,59 @@ export function enumerateCompatibleRuleSets(rules = [], stackingRules = []) {
   return scenarios;
 }
 
+function groupRulesByOpportunity(rules = []) {
+  const groupsByOpportunityId = new Map();
+  for (const rule of rules) {
+    const key = rule.opportunityId || rule.id;
+    const group = groupsByOpportunityId.get(key) || [];
+    group.push(rule);
+    groupsByOpportunityId.set(key, group);
+  }
+  return [...groupsByOpportunityId.values()];
+}
+
+function groupCompatibleWithCurrent(group, currentRules, stackingRules) {
+  return group.every((rule) => currentRules.every((existing) => areCompatible(existing, rule, stackingRules)));
+}
+
+function groupRequirementsSatisfied(selectedRules) {
+  return selectedRules.every((rule) => requirementsSatisfied(rule, selectedRules));
+}
+
+export function enumerateCompatibleOpportunityRuleSets(rules = [], stackingRules = []) {
+  const groups = groupRulesByOpportunity(rules);
+  const scenarios = [];
+
+  function backtrack(index, currentGroups) {
+    if (index === groups.length) {
+      const currentRules = currentGroups.flat();
+      if (groupRequirementsSatisfied(currentRules)) scenarios.push(currentRules);
+      return;
+    }
+
+    const group = groups[index];
+    backtrack(index + 1, currentGroups);
+
+    if (groupCompatibleWithCurrent(group, currentGroups.flat(), stackingRules)) {
+      backtrack(index + 1, [...currentGroups, group]);
+    }
+  }
+
+  backtrack(0, []);
+  return scenarios;
+}
+
 function scenarioIdForRules(rules) {
   if (rules.length === 0) return "scenario_no_incentives";
-  return `scenario_${rules.map((rule) => rule.opportunityId.replace(/^opp_/, "")).sort().join("_plus_")}`;
+  return `scenario_${rules.map(scenarioKeyForRule).sort().join("_plus_")}`;
+}
+
+function scenarioKeyForRule(rule) {
+  return String(rule.id || rule.opportunityId)
+    .replace(/^oir_/, "")
+    .replace(/[^a-z0-9]+/gi, "_")
+    .replace(/^_+|_+$/g, "")
+    .toLowerCase();
 }
 
 function conflictExplanationsForScenario({ scenarioRules, allRules, stackingRules }) {
@@ -201,7 +251,7 @@ export function buildIncentiveScenarios({
     upfrontCostCents
   };
 
-  return enumerateCompatibleRuleSets(candidateRules, stackingRules).map((scenarioRules) =>
+  return enumerateCompatibleOpportunityRuleSets(candidateRules, stackingRules).map((scenarioRules) =>
     calculateScenario({
       scenarioRules,
       allRules: candidateRules,

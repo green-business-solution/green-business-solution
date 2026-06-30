@@ -496,7 +496,7 @@ function selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiv
 
   for (const opportunity of retrofitGroup.opportunities) {
     const rules = rulesByOpportunityId.get(opportunity.opportunityId);
-    if (rules?.length) return rules.slice(0, 1);
+    if (rules?.length) return rules;
   }
 
   return [];

@@ -58,4 +58,46 @@ describe("savings engine integration", () => {
       ])
     );
   });
+
+  it("traces upfront and recurring incentive effects from the same opportunity", () => {
+    const estimate = calculateRetrofitSavingsEstimate(
+      baseLedFixture({
+        retrofitInstance: {
+          selectedOpportunityIds: ["opp_combo_led"]
+        },
+        opportunityIncentiveRules: [
+          utilityLedRebate({
+            id: "oir_combo_led_rebate_v1",
+            opportunityId: "opp_combo_led",
+            name: "Combo LED Rebate",
+            amountRule: { kind: "fixed_amount", amountCents: 10000 }
+          }),
+          {
+            id: "oir_combo_led_bill_credit_v1",
+            version: 1,
+            opportunityId: "opp_combo_led",
+            name: "Combo LED Bill Credit",
+            incentiveType: "recurring_bill_credit",
+            timing: "annual",
+            amountRule: { kind: "fixed_amount", amountCents: 12000 },
+            basisPolicy: { basis: "gross_project_cost", applicationOrder: 20 },
+            active: true
+          }
+        ]
+      })
+    );
+
+    expect(estimate.oneTimeSavingsCents).toBe(10000);
+    expect(estimate.annualRecurringSavingsCents).toBe(34464);
+    expect(estimate.selectedIncentiveScenario).toMatchObject({
+      opportunityIds: ["opp_combo_led"],
+      incentiveRuleIds: ["oir_combo_led_rebate_v1", "oir_combo_led_bill_credit_v1"]
+    });
+    expect(estimate.calculationTrace.steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "trace_oir_combo_led_rebate_v1", category: "incentive" }),
+        expect.objectContaining({ id: "trace_oir_combo_led_bill_credit_v1", category: "recurring_incentive" })
+      ])
+    );
+  });
 });

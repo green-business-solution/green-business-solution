@@ -44,6 +44,17 @@ One opportunity may contain multiple effects:
 
 The calculator should aggregate these separately before computing first-year benefit, net recurring benefit, payback, ROI, and NPV.
 
+## Current V1 Bridge Guardrails
+
+Until the full v2 calculation-package table exists, the current `OpportunityIncentiveRule` bridge should still preserve multiple effects:
+
+- One opportunity may have multiple active rules with the same `opportunityId`.
+- Scenario selection must treat rules with the same `opportunityId` as one opportunity-level bundle unless future effect-specific eligibility explicitly says otherwise. It must not keep a positive rebate while dropping a required recurring charge from the same selected opportunity.
+- Upfront rebates, deterministic upfront grants, tax credits, and exemptions should use `timing: "upfront"` when they affect one-time project economics.
+- Recurring bill credits, demand-response payments, rate discounts, tariffs, feed-in compensation, performance incentives, and recurring charges should be saved as rules with non-upfront `timing`, such as `monthly` or `annual`.
+- No repair process should classify a source-backed recurring monetary effect as `not_applicable_for_one_time_savings`; it should be a monetary rule/effect, just not an upfront one.
+- `researchReviewedNoRule` should mean no safe monetary effect was found, not merely no simple upfront formula.
+
 ## Rule Types
 
 The v2 model should support:

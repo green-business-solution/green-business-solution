@@ -96,7 +96,39 @@ describe("incentive stacking", () => {
     const selected = selectBestScenario(scenarios);
 
     expect(selected.opportunityIds).toEqual(["opp_recurring"]);
+    expect(selected.id).toBe("scenario_recurring_250_v1_plus_upfront_200_v1");
+    expect(selected.incentiveRuleIds).toEqual(["oir_upfront_200_v1", "oir_recurring_250_v1"]);
     expect(selected.firstYearTotalBenefitCents).toBe(45000);
+  });
+
+  it("bundles multiple effects from the same opportunity when enumerating scenarios", () => {
+    const upfrontRule = {
+      id: "oir_bundle_upfront_v1",
+      opportunityId: "opp_bundle",
+      name: "Bundled Upfront Rebate",
+      incentiveType: "fixed_per_unit_rebate",
+      timing: "upfront",
+      amountRule: { kind: "fixed_amount", amountCents: 20000 },
+      basisPolicy: { basis: "gross_project_cost", applicationOrder: 10 },
+      active: true
+    };
+    const recurringExpenseRule = {
+      id: "oir_bundle_annual_fee_v1",
+      opportunityId: "opp_bundle",
+      name: "Bundled Annual Fee",
+      incentiveType: "recurring_bill_charge",
+      recurringEffect: "expense",
+      timing: "annual",
+      amountRule: { kind: "fixed_amount", amountCents: 50000 },
+      basisPolicy: { basis: "gross_project_cost", applicationOrder: 20 },
+      active: true
+    };
+
+    const scenarios = scenarioCtx([upfrontRule, recurringExpenseRule], ["opp_bundle"]);
+    const ruleSets = scenarios.map((scenario) => scenario.incentiveRuleIds);
+
+    expect(ruleSets).toEqual([[], ["oir_bundle_upfront_v1", "oir_bundle_annual_fee_v1"]]);
+    expect(selectBestScenario(scenarios).incentiveRuleIds).toEqual([]);
   });
 
   it("selects possible grant scenarios as a tiebreaker without counting them as upfront savings", () => {
