@@ -1,11 +1,11 @@
 # Opportunity Data Repair Import Report
 
-Generated: 2026-06-30T23:15:29.847Z
-Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2
-Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json
-Repairs supplied: 30
+Generated: 2026-06-30T23:47:28.510Z
+Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3
+Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json
+Repairs supplied: 31
 Unique repairs supplied: 30
-Duplicate opportunity repairs overwritten by later files: 0
+Duplicate opportunity repairs overwritten by later files: 1
 Retrofit index edges patched: 445
 Retrofit index unique opportunities patched: 30
 Test case opportunity edges patched: 16

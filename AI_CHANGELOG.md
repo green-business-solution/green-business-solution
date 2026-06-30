@@ -1,5 +1,15 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 3
+
+- Imported a refined GPT Pro repair for `SOURCE_DSIRE:dsire_program_id:4281`, tightening Black Hills Energy Colorado electric residential eligibility, blockers, source URLs, and category boundaries.
+- Applied opportunity-data repair batches 1-3 cumulatively so the refined batch 3 record overwrites the older batch 2 version in public fixtures.
+- Corrected the next local continuation point to `SOURCE_DSIRE:dsire_program_id:4636` based on the target list.
+
+## 2026-06-30 - Codex (GPT-5) admin energy-data tab removal
+
+- Hid the stale `gbs-energy-data` raw table from the admin sidebar because current utility uploads are surfaced through client intake records instead.
+
 ## 2026-06-30 - Codex (GPT-5) multiple incentive effects bridge
 
 - Updated admin test-case savings previews so a matched opportunity can pass through multiple incentive rules instead of keeping only the first rule for that opportunity.

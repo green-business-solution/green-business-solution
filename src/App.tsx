@@ -4853,6 +4853,7 @@ const ADMIN_OPPORTUNITIES_TAB = "Opportunities";
 const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const CLIENT_INTAKE_SUMMARY_TAB = "Client Intake Summary";
+const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-energy-data"]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
 const SAMPLE_MATCH_STATUS_ORDER = [
@@ -4901,7 +4902,9 @@ function AdminDashboard({
     "Users",
     CLIENT_INTAKE_SUMMARY_TAB,
     ADMIN_TEST_CASES_TAB,
-    ...dataTables.filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME).map((table) => table.name),
+    ...dataTables
+      .filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME && !ADMIN_HIDDEN_DATA_TABLE_NAMES.has(table.name))
+      .map((table) => table.name),
     ADMIN_OPPORTUNITIES_TAB,
     ADMIN_RETROFITS_TAB
   ];
@@ -5006,6 +5009,7 @@ function AdminDashboard({
   useEffect(() => {
     const isVisibleDataTable =
       activeTab !== OPPORTUNITIES_TABLE_NAME &&
+      !ADMIN_HIDDEN_DATA_TABLE_NAMES.has(activeTab) &&
       dataTables.some((table) => table.name === activeTab);
 
     if (

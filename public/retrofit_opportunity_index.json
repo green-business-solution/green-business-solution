@@ -13652,10 +13652,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -13670,26 +13670,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -13701,20 +13698,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -13725,10 +13730,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -28019,10 +28026,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -28037,26 +28044,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -28068,20 +28072,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -28092,10 +28104,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -38886,10 +38900,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -38904,26 +38918,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -38935,20 +38946,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -38959,10 +38978,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -47351,10 +47372,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -47369,26 +47390,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -47400,20 +47418,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -47424,10 +47450,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -53073,10 +53101,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -53091,26 +53119,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -53122,20 +53147,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -53146,10 +53179,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -55293,10 +55328,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -55311,26 +55346,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -55342,20 +55374,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -55366,10 +55406,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -62815,10 +62857,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -62833,26 +62875,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -62864,20 +62903,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -62888,10 +62935,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -85188,10 +85237,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -85206,26 +85255,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -85237,20 +85283,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -85261,10 +85315,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -92358,10 +92414,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -92376,26 +92432,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -92407,20 +92460,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -92431,10 +92492,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -101654,10 +101717,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -101672,26 +101735,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -101703,20 +101763,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -101727,10 +101795,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -131766,10 +131836,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -131784,26 +131854,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -131815,20 +131882,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -131839,10 +131914,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -146176,10 +146253,10 @@
           "dataRepairConfidence": 0.9,
           "opportunityDataRepair": {
             "schemaVersion": "opportunity_data_research_repairs.v1",
-            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+            "batchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
             "researchedAt": "2026-06-30",
             "source": "gpt_pro",
-            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+            "repairsPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json",
             "opportunityId": "SOURCE_DSIRE:dsire_program_id:4281",
             "repairStatus": "data_found",
             "confidence": "high",
@@ -146194,26 +146271,23 @@
               "utilityTerritories": [
                 "Black Hills Energy Colorado electric residential service territory"
               ],
-              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy."
+              "notes": "The current official page and 2026 application are for Colorado electric residential customers of Black Hills Energy. Do not use this electric record for Colorado natural-gas furnace rebates; Black Hills Energy has a separate Colorado gas residential rebate page."
             },
             "eligibleApplicantTypes": [
-              "Black Hills Energy Colorado electric residential customers",
+              "Current Colorado electric residential customers of Black Hills Energy",
               "Homeowners",
               "Tenants where allowed by program requirements",
               "Landlords where allowed by program requirements",
-              "Builders for residential new-construction pathways",
-              "Income-qualified residential customers for income-qualified and beneficial-electrification pathways",
-              "Trade allies or contractors assisting customers"
+              "Residential builders and contractors for the Ready Home Electric new-construction pathway",
+              "Income-qualified residential customers for beneficial-electrification and weatherization pathways"
             ],
             "eligibleSectors": [
               "Residential",
               "Income-qualified residential",
-              "Multifamily residential",
-              "New residential construction",
-              "Nonprofit facilities under eligible income-qualified nonprofit offerings"
+              "Multifamily residential where eligible under residential weatherization or residential electric program rules",
+              "Residential new construction"
             ],
             "eligibleRetrofitCategories": [
-              "LED lighting retrofit",
               "High-efficiency HVAC replacement",
               "Heat pump HVAC retrofit",
               "Smart thermostat / zoning retrofit",
@@ -146225,20 +146299,28 @@
               "High-efficiency refrigeration equipment",
               "High-efficiency laundry equipment",
               "Efficient fan/blower replacement",
-              "Home energy management / smart power strip"
+              "Home energy management / smart power strip",
+              "Low-flow fixture retrofit",
+              "LED lighting retrofit"
             ],
             "hardRequirements": [
               "Applicant must be a current Colorado electric residential customer of Black Hills Energy.",
               "For the 2026 residential rebate form, purchases and installations must be completed between January 1, 2026 and December 31, 2026, and applications for 2026 work must be received by January 31, 2027.",
+              "Customer must purchase and install the new equipment before submitting the rebate application.",
               "Equipment and envelope measures must be installed in conditioned living spaces; garages and shops are not eligible.",
-              "Insulation, air sealing, and duct sealing require a home with a central cooling system, and air/duct sealing require blower-door or duct-blaster testing as specified.",
-              "Receipts, invoices, AHRI specification sheets for central HVAC/heat pumps, contractor information where applicable, and other required documentation must be submitted.",
-              "Funding is limited, applications are first-come, first-served, and installations may be inspected."
+              "Insulation, air sealing, and duct sealing require a home with a central cooling system.",
+              "Air sealing requires blower-door testing and duct sealing requires duct-blaster testing when applicable.",
+              "Central air conditioners and heat pumps require AHRI specification sheets and matched-system eligibility where applicable.",
+              "Applications must include receipts or itemized invoices with installation/service address, equipment details, manufacturer/model/serial numbers, installation date, costs, and contractor information where applicable.",
+              "Funding is limited; applications are processed first-come, first-served; installations may be inspected; used, reconditioned, or resale equipment is not eligible."
             ],
             "blockers": [
-              "High-efficiency furnace retrofit is a false match for this Colorado electric residential rebate; the current electric residential form supports furnace blower motor ECMs, not a general furnace replacement rebate.",
-              "Generic business energy-management-system matching should not use this record; the source supports residential smart power strips/home energy management, not C&I EMS.",
-              "Residential Demand Response and Residential Online Marketplace programs were discontinued as of December 31, 2025 and should not be matched as current active rebates."
+              "High-efficiency furnace retrofit is a false match for this electric residential record. The current electric rebate application supports furnace blower motor ECMs, not general furnace replacement; furnace rebates are on the separate Colorado gas residential program.",
+              "Generic commercial energy-management-system matching is not supported by this residential electric record. The supported current measure is residential home energy management, specifically smart power strips, and related residential controls.",
+              "Duct sealing is supported; a separate duct-insulation rebate was not found in the current electric residential application. The combined category is retained only because the taxonomy label includes duct sealing.",
+              "High-efficiency refrigeration is limited to residential refrigerator measures; do not map this record to commercial refrigeration, walk-in coolers/freezers, or refrigeration controls.",
+              "The official page includes EV charger rebate programs, but those appear as a separate Ready EV program on the same page and should be modeled as separate EV opportunities rather than folded into this DSIRE energy-efficiency record.",
+              "Residential Demand Response and Residential Online Marketplace programs are discontinued as of December 31, 2025 and should not be matched as current active rebates."
             ],
             "programType": "Rebate Program",
             "administrator": "Black Hills Energy",
@@ -146249,10 +146331,12 @@
               "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-electric-residential-rebates",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Residential-Precriptive-Rebate-App.pdf",
               "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE_Residential_Beneficial_Electification_Rebate_Application.pdf",
-              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf"
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/2026-COE-EE-Ready-Home-Electric-Program-App.pdf",
+              "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/COE-EE-90-Day-Notice.pdf",
+              "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/colorado-gas-residential-rebates"
             ],
-            "evidenceText": "The current Black Hills Colorado electric residential page lists products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also describes a free virtual assessment kit with LED bulbs, faucet aerators, showerheads, door weatherstripping and more, and notes residential demand response and online marketplace discontinuation. The 2026 residential application lists air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, clothes washers, refrigerators, and eligibility/terms for Colorado electric residential customers.",
-            "reasoningNotes": "The official beneficial-electrification application additionally supports electrification measures such as air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, subject to separate eligibility. The repair excludes high-efficiency furnace replacement because current electric residential sources support blower motors or conversion away from gas baseline, not a standalone efficient furnace rebate."
+            "evidenceText": "Black Hills Energy's current Colorado electric residential rebate page lists a residential rebate program with products including heat pumps, air conditioners, evaporative coolers, smart thermostats, water heaters, furnace blower motors, home appliances, and insulation and sealing; it also lists a home energy assessment kit with LED bulbs, faucet aerators, showerheads, and door weatherstripping. The same page says Residential Demand Response and Residential Online Marketplace are discontinued as of Dec. 31, 2025. The 2026 Colorado electric residential application lists central and room air conditioners, air-source, ductless mini-split, cold-climate, and geothermal heat pumps, smart thermostats, ENERGY STAR heat-pump water heaters, furnace blower ECMs, insulation, air sealing, duct sealing, smart power strips, air purifiers, dehumidifiers, ceiling fans, clothes washers, refrigerators, and radon fans. The application terms require current Colorado electric residential customer status, 2026 purchase/installation timing, application submission by Jan. 31, 2027, conditioned living-space installation, complete documentation, limited funding, and possible inspections. The beneficial-electrification application separately supports residential conversion from natural gas space or water heating to efficient electric equipment, including air-source heat pumps, geothermal heat pumps, ductless mini-splits, heat-pump water heaters, air sealing, insulation, duct sealing, panel upgrades, and heat-pump clothes dryers, with income-qualified provisions.",
+            "reasoningNotes": "Continued from the uploaded target list after SOURCE_DSIRE:dsire_program_id:3154; the next local target record is SOURCE_DSIRE:dsire_program_id:4636. The repaired category set excludes high-efficiency furnace retrofit because the current electric application supports furnace blower motor ECMs only. It retains high-efficiency refrigeration only for residential refrigerators and home energy management only for residential smart power strips. Low-flow and LED categories are included only as home energy assessment kit/direct-install style measures from the current official page, not as broad standalone equipment rebates."
           }
         },
         {
@@ -156172,14 +156256,16 @@
     }
   ],
   "archivedUnavailableOpportunityCount": 44,
-  "opportunityDataRepairedAt": "2026-06-30T23:15:29.847Z",
-  "opportunityDataRepairBatch": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+  "opportunityDataRepairedAt": "2026-06-30T23:47:28.510Z",
+  "opportunityDataRepairBatch": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3",
   "opportunityDataRepairBatches": [
     "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1",
-    "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2"
+    "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2",
+    "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3"
   ],
   "opportunityDataRepairPaths": [
     "data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json",
-    "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json"
+    "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json",
+    "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json"
   ]
 }
