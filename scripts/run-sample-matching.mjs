@@ -28,9 +28,12 @@ const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir
 const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
 const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
 const incentiveRulesPath = process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(dataDir, "opportunity_incentive_rules.json");
-const opportunityDataRepairsPath =
-  process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH ||
-  path.join(dataDir, "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json");
+const defaultOpportunityDataRepairsPath = path.join(
+  dataDir,
+  "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json"
+);
+const opportunityDataRepairsPaths = resolveRepairPaths();
+const existingOpportunityDataRepairsPaths = opportunityDataRepairsPaths.filter((filePath) => fs.existsSync(filePath));
 const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
@@ -55,7 +58,7 @@ const sampleUsers =
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
-const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(opportunityDataRepairsPath);
+const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(existingOpportunityDataRepairsPaths);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
 const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
 const candidateOpportunities = opportunityRecords
@@ -120,7 +123,14 @@ const output = {
   facilityReviewCount: facilityReviewsByOpportunityId.size,
   utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
-  opportunityDataRepairsPath: opportunityDataRepairsByOpportunityId.size > 0 ? opportunityDataRepairsPath : null,
+  opportunityDataRepairsPath:
+    opportunityDataRepairsByOpportunityId.size > 0
+      ? existingOpportunityDataRepairsPaths.map((filePath) => path.relative(repoRoot, filePath)).join(",")
+      : null,
+  opportunityDataRepairsPaths:
+    opportunityDataRepairsByOpportunityId.size > 0
+      ? existingOpportunityDataRepairsPaths.map((filePath) => path.relative(repoRoot, filePath))
+      : [],
   opportunityDataRepairCount: opportunityDataRepairsByOpportunityId.size,
   opportunityIncentiveRulesPath: opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
@@ -208,14 +218,17 @@ function readOpportunityIncentiveRules(filePath) {
     .filter((rule) => rule.confidence !== "low");
 }
 
-function readOpportunityDataRepairs(filePath) {
-  if (!fs.existsSync(filePath)) return new Map();
-  const source = readJson(filePath);
-  return new Map(
-    (source.repairs || [])
-      .filter((repair) => repair?.opportunityId)
-      .map((repair) => [repair.opportunityId, normalizeOpportunityDataRepair(repair, source, filePath)])
-  );
+function readOpportunityDataRepairs(filePaths) {
+  const repairsById = new Map();
+  for (const filePath of filePaths) {
+    if (!fs.existsSync(filePath)) continue;
+    const source = readJson(filePath);
+    for (const repair of source.repairs || []) {
+      if (!repair?.opportunityId) continue;
+      repairsById.set(repair.opportunityId, normalizeOpportunityDataRepair(repair, source, filePath));
+    }
+  }
+  return repairsById;
 }
 
 function normalizeOpportunityDataRepair(repair, source, filePath) {
@@ -521,4 +534,23 @@ function statusRank(status) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function resolveRepairPaths() {
+  const envPaths =
+    process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATHS || process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH || "";
+  if (envPaths.trim()) return uniqueResolvedPaths(splitPathList(envPaths));
+  return [defaultOpportunityDataRepairsPath];
+}
+
+function splitPathList(value) {
+  return value
+    .split(/[,\n]/)
+    .flatMap((part) => part.split(path.delimiter))
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function uniqueResolvedPaths(values) {
+  return [...new Set(values.map((value) => path.resolve(repoRoot, value)))];
 }

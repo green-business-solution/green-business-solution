@@ -5,37 +5,51 @@ const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
 const publicDir = path.join(repoRoot, "public");
 
-const repairsPath =
-  process.argv[2] ||
-  process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH ||
-  path.join(dataDir, "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json");
+const defaultRepairsPath = path.join(dataDir, "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json");
+const repairsPaths = resolveRepairPaths();
 const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
 const reportPath =
   process.env.OPPORTUNITY_DATA_REPAIR_REPORT_PATH || path.join(dataDir, "opportunity_data_repair_import_report.md");
 const appliedAt = new Date().toISOString();
 
-const repairsArtifact = readJson(repairsPath);
-const repairs = (repairsArtifact.repairs || []).filter((repair) => repair?.opportunityId);
-const repairsById = new Map(repairs.map((repair) => [repair.opportunityId, normalizeRepair(repair)]));
+const repairArtifacts = repairsPaths.map((filePath) => ({ filePath, artifact: readJson(filePath) }));
+const repairRows = repairArtifacts.flatMap(({ filePath, artifact }) =>
+  (artifact.repairs || [])
+    .filter((repair) => repair?.opportunityId)
+    .map((repair) => ({ filePath, artifact, repair }))
+);
+const repairsById = new Map();
+for (const row of repairRows) {
+  repairsById.set(row.repair.opportunityId, normalizeRepair(row.repair, row.artifact, row.filePath));
+}
 const retrofitIndex = readJson(retrofitIndexPath);
 const testCases = readJson(testCasesPath);
 
 const retrofitPatch = patchRetrofitIndex(retrofitIndex);
 const testCasePatch = patchTestCases(testCases);
+const appliedBatchIds = repairArtifacts.map(({ filePath, artifact }) => batchId(artifact, filePath));
+const appliedRelativePaths = repairsPaths.map((filePath) => path.relative(repoRoot, path.resolve(filePath)));
 
 retrofitIndex.opportunityDataRepairedAt = appliedAt;
-retrofitIndex.opportunityDataRepairBatch = batchId();
+retrofitIndex.opportunityDataRepairBatch = appliedBatchIds.at(-1) || null;
+retrofitIndex.opportunityDataRepairBatches = appliedBatchIds;
+retrofitIndex.opportunityDataRepairPaths = appliedRelativePaths;
 testCases.opportunityDataRepairedAt = appliedAt;
-testCases.opportunityDataRepairBatch = batchId();
+testCases.opportunityDataRepairBatch = appliedBatchIds.at(-1) || null;
+testCases.opportunityDataRepairBatches = appliedBatchIds;
+testCases.opportunityDataRepairPaths = appliedRelativePaths;
 
 writeJson(retrofitIndexPath, retrofitIndex);
 writeJson(testCasesPath, testCases);
 fs.writeFileSync(reportPath, buildReport({ retrofitPatch, testCasePatch }), "utf8");
 
 console.log("Applied opportunity data research repairs.");
-console.log(`Batch: ${batchId()}`);
-console.log(`Repairs supplied: ${repairs.length}`);
+console.log(`Batches: ${appliedBatchIds.join(", ")}`);
+console.log(`Repair files: ${appliedRelativePaths.join(", ")}`);
+console.log(`Repairs supplied: ${repairRows.length}`);
+console.log(`Unique repairs supplied: ${repairsById.size}`);
+console.log(`Duplicate opportunity repairs overwritten by later files: ${repairRows.length - repairsById.size}`);
 console.log(`Retrofit index opportunity edges patched: ${retrofitPatch.edgeCount}`);
 console.log(`Retrofit index unique opportunities patched: ${retrofitPatch.uniqueOpportunityCount}`);
 console.log(`Test case opportunity edges patched: ${testCasePatch.edgeCount}`);
@@ -125,12 +139,13 @@ function patchedOpportunityFields(opportunity, repair) {
   };
 }
 
-function normalizeRepair(repair) {
+function normalizeRepair(repair, repairsArtifact, repairsPath) {
   return {
     schemaVersion: repairsArtifact.schemaVersion || "opportunity_data_research_repairs.v1",
-    batchId: batchId(),
+    batchId: batchId(repairsArtifact, repairsPath),
     researchedAt: repairsArtifact.researchedAt || null,
     source: repairsArtifact.source || "gpt_pro",
+    repairsPath: path.relative(repoRoot, path.resolve(repairsPath)),
     opportunityId: repair.opportunityId,
     repairStatus: repair.repairStatus || "data_found",
     confidence: repair.confidence || "medium",
@@ -186,7 +201,7 @@ function confidenceNumber(value) {
   return Number.isFinite(number) ? Math.max(0, Math.min(1, number)) : 0.62;
 }
 
-function batchId() {
+function batchId(repairsArtifact, repairsPath) {
   return repairsArtifact.batchId || path.basename(repairsPath, ".json");
 }
 
@@ -195,8 +210,11 @@ function buildReport({ retrofitPatch, testCasePatch }) {
     "# Opportunity Data Repair Import Report",
     "",
     `Generated: ${appliedAt}`,
-    `Batch: ${batchId()}`,
-    `Repairs supplied: ${repairs.length}`,
+    `Batches: ${appliedBatchIds.join(", ")}`,
+    `Repair files: ${appliedRelativePaths.join(", ")}`,
+    `Repairs supplied: ${repairRows.length}`,
+    `Unique repairs supplied: ${repairsById.size}`,
+    `Duplicate opportunity repairs overwritten by later files: ${repairRows.length - repairsById.size}`,
     `Retrofit index edges patched: ${retrofitPatch.edgeCount}`,
     `Retrofit index unique opportunities patched: ${retrofitPatch.uniqueOpportunityCount}`,
     `Test case opportunity edges patched: ${testCasePatch.edgeCount}`,
@@ -223,4 +241,27 @@ function readJson(filePath) {
 function writeJson(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+function resolveRepairPaths() {
+  const cliPaths = process.argv.slice(2).filter((value) => value && !value.startsWith("--"));
+  if (cliPaths.length > 0) return uniqueResolvedPaths(cliPaths);
+
+  const envPaths =
+    process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATHS || process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH || "";
+  if (envPaths.trim()) return uniqueResolvedPaths(splitPathList(envPaths));
+
+  return [defaultRepairsPath];
+}
+
+function splitPathList(value) {
+  return value
+    .split(/[,\n]/)
+    .flatMap((part) => part.split(path.delimiter))
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function uniqueResolvedPaths(values) {
+  return [...new Set(values.map((value) => path.resolve(repoRoot, value)))];
 }

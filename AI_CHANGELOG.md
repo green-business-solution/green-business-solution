@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) multi-batch opportunity data repairs
+
+- Updated opportunity-data repair import tooling so future GPT Pro repair batches can be applied together from multiple JSON files while preserving existing single-file behavior.
+- Updated sample matching regeneration to load multiple accepted opportunity-data repair files, with later files taking precedence for duplicate opportunity IDs.
+- Added an npm script for applying opportunity-data repair batches.
+
 ## 2026-06-30 - Codex (GPT-5) product TODO planning notes
 
 - Added a product TODO document for GPT Pro-assisted opportunity-data repair, grant estimate treatment, scenario/math verification, user-selected opportunity planning, user portal audit work, and future publish-gate automation.

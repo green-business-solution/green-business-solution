@@ -29,6 +29,7 @@
     "matching:archive-unavailable": "node scripts/archive-unavailable-opportunities.mjs",
     "matching:review-repairs": "node scripts/apply-targeted-review-repairs.mjs",
     "matching:status-bucket-repairs": "node scripts/apply-status-bucket-cleanup-repairs.mjs",
+    "matching:opportunity-data-repairs": "node scripts/apply-opportunity-data-research-repairs.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "matching:test-case-savings": "node scripts/patch-admin-test-case-savings.mjs",
     "test": "vitest run",
