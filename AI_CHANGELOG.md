@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) admin raw table cleanup
+
+- Hid the raw `gbs-users` and `gbs-client-intake` table tabs from the admin sidebar while keeping the curated `Users` and `Client Intake Summary` views.
+- Removed the Client Intake Summary button that opened the raw intake table.
+
 ## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 3
 
 - Imported a refined GPT Pro repair for `SOURCE_DSIRE:dsire_program_id:4281`, tightening Black Hills Energy Colorado electric residential eligibility, blockers, source URLs, and category boundaries.
