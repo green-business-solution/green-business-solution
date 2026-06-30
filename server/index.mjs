@@ -3014,6 +3014,26 @@ app.get("/api/admin/client-retrofit-results/:userId", async (req, res) => {
   }
 });
 
+app.get("/api/admin/client-portal-profile/:userId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const user = await getUserRecord(cleanText(req.params.userId));
+    if (!user || user.role !== "client") {
+      const error = new Error("Client account was not found.");
+      error.status = 404;
+      throw error;
+    }
+
+    const intake = await getIntake(user.userId);
+    res.json({
+      user: publicUser(user),
+      intake
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
   try {
     const opportunity = await updateOpportunityReview({

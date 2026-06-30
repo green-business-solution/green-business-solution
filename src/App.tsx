@@ -270,6 +270,7 @@ type PortalRetrofitResultsResponse = {
 };
 
 type AdminClientPortalPreviewPayload = PortalRetrofitResultsResponse;
+type AdminClientPortalProfilePayload = PortalPayload;
 
 type PortalPreviewHint = {
   clientName: string;
@@ -4657,11 +4658,14 @@ function AdminClientPortalPreviewPage({
   userId: string;
   viewer: UserRecord;
 }) {
-  const [payload, setPayload] = useState<AdminClientPortalPreviewPayload | null>(null);
+  const [profilePayload, setProfilePayload] = useState<AdminClientPortalProfilePayload | null>(null);
+  const [resultsPayload, setResultsPayload] = useState<PortalRetrofitResultsResponse["results"] | null>(null);
   const [activeTab, setActiveTab] = useState("My information");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const previewUser = payload?.client || {
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
+  const [isResultsLoading, setIsResultsLoading] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [resultsError, setResultsError] = useState<string | null>(null);
+  const previewUser = profilePayload?.user || {
     ...viewer,
     role: "client" as const,
     fullName: previewHint?.clientName || "Selected client",
@@ -4673,40 +4677,73 @@ function AdminClientPortalPreviewPage({
     let isMounted = true;
 
     if (!credential || !userId) {
-      setError("Admin sign-in is required to preview a client portal.");
-      setIsLoading(false);
+      setProfileError("Admin sign-in is required to preview a client portal.");
+      setIsProfileLoading(false);
       return () => {
         isMounted = false;
       };
     }
 
-    setIsLoading(true);
-    setError(null);
+    setIsProfileLoading(true);
+    setProfileError(null);
 
-    apiGet<AdminClientPortalPreviewPayload>(`/api/admin/client-retrofit-results/${encodeURIComponent(userId)}`, {
+    apiGet<AdminClientPortalProfilePayload>(`/api/admin/client-portal-profile/${encodeURIComponent(userId)}`, {
       headers: adminAuthHeaders(credential)
     })
       .then((response) => {
         if (!isMounted) return;
-        setPayload(response);
+        setProfilePayload(response);
       })
       .catch((requestError) => {
         if (!isMounted) return;
-        const message = requestError instanceof Error ? requestError.message : "Could not load the client portal preview.";
-        setError(
-          message === "Request failed with HTTP 500."
-            ? "The preview timed out while calculating retrofit results for this client. Try again in a moment."
-            : message
-        );
+        setProfileError(requestError instanceof Error ? requestError.message : "Could not load the client portal preview.");
       })
       .finally(() => {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) setIsProfileLoading(false);
       });
 
     return () => {
       isMounted = false;
     };
   }, [credential, userId]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!credential || !userId || activeTab !== "Retrofit estimates" || resultsPayload || isResultsLoading) {
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsResultsLoading(true);
+    setResultsError(null);
+
+    apiGet<AdminClientPortalPreviewPayload>(`/api/admin/client-retrofit-results/${encodeURIComponent(userId)}`, {
+      headers: adminAuthHeaders(credential)
+    })
+      .then((response) => {
+        if (!isMounted) return;
+        setResultsPayload(response.results);
+        setProfilePayload((current) => current || { user: response.client, intake: response.intake });
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        const message = requestError instanceof Error ? requestError.message : "Could not load retrofit estimates for this client.";
+        setResultsError(
+          message === "Request failed with HTTP 500."
+            ? "Retrofit estimates for this client are taking too long to calculate right now. Try again in a moment."
+            : message
+        );
+      })
+      .finally(() => {
+        if (isMounted) setIsResultsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeTab, credential, isResultsLoading, resultsPayload, userId]);
 
   return (
     <WorkspaceLayout
@@ -4725,40 +4762,48 @@ function AdminClientPortalPreviewPage({
             <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
           </div>
           <div className="database-stats">
-            <strong>{isLoading ? "..." : payload?.results.summary.totalResults.toLocaleString() || 0}</strong>
-            <span>{isLoading ? "loading preview" : "matched opportunities"}</span>
+            <strong>{isResultsLoading ? "..." : resultsPayload?.summary.totalResults.toLocaleString() || 0}</strong>
+            <span>{isResultsLoading ? "loading estimates" : "matched opportunities"}</span>
           </div>
         </div>
 
-        {error ? <p className="error-message">{error}</p> : null}
+        {activeTab === "Retrofit estimates"
+          ? resultsError ? <p className="error-message">{resultsError}</p> : null
+          : profileError ? <p className="error-message">{profileError}</p> : null}
 
-        {isLoading ? (
+        {isProfileLoading ? (
           <section className="database-detail-panel">
             <p className="empty-state">Loading the client portal preview...</p>
           </section>
         ) : activeTab === "Retrofit estimates" ? (
+          isResultsLoading ? (
+            <section className="database-detail-panel">
+              <p className="empty-state">Building retrofit estimates for this client...</p>
+            </section>
+          ) : (
           <div className="retrofit-result-group-list">
             <RetrofitResultGroup
               description="Matched opportunities with enough information for a first-pass estimate."
               emptyMessage="No opportunities are fully ready yet."
-              results={payload?.results.groups.readyToEstimate || []}
+              results={resultsPayload?.groups.readyToEstimate || []}
               title="Ready to estimate"
             />
             <RetrofitResultGroup
               description="Matched opportunities where key bill, scope, quote, or incentive data is still missing."
               emptyMessage="No partially-complete opportunities right now."
-              results={payload?.results.groups.needsMoreInformation || []}
+              results={resultsPayload?.groups.needsMoreInformation || []}
               title="Needs more information"
             />
             <RetrofitResultGroup
               description="Programs that are blocked by eligibility or not enough baseline data."
               emptyMessage="No blocked opportunities right now."
-              results={payload?.results.groups.notCurrentlyApplicable || []}
+              results={resultsPayload?.groups.notCurrentlyApplicable || []}
               title="Not currently applicable"
             />
           </div>
+          )
         ) : (
-          <ProfilePanel intake={payload?.intake || null} user={previewUser} />
+          <ProfilePanel intake={profilePayload?.intake || null} user={previewUser} />
         )}
       </section>
     </WorkspaceLayout>
