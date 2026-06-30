@@ -2,6 +2,8 @@
 
 This document is the shared product source of truth for Codex sessions and other AI agents working on the RetroFi website. Keep it updated as product decisions are made.
 
+Open product, data-quality, and verification work is tracked in [RetroFi Product TODOs](./product-todos.md).
+
 ## End Goal
 
 RetroFi is a B2B sustainability retrofit platform for medium-sized businesses. It helps businesses identify eligible sustainability incentives, estimate potential savings, and create a clear retrofit roadmap.

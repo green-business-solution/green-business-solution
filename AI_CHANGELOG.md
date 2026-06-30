@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) product TODO planning notes
+
+- Added a product TODO document for GPT Pro-assisted opportunity-data repair, grant estimate treatment, scenario/math verification, user-selected opportunity planning, user portal audit work, and future publish-gate automation.
+- Linked the TODO document from the product vision so future agents can find the current backlog.
+
 ## 2026-06-30 - Codex (GPT-5) portal preview timeout hardening
 
 - Added server-side caching for opportunity table loads, per-day opportunity match profiles, and per-intake retrofit result payloads so admin portal previews and debug panels do not recompute the full opportunity universe on every request.
