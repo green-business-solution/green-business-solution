@@ -5,6 +5,8 @@
 - Regenerated the current 75-target opportunity-data research list after batch 13.
 - Added a ready-to-send GPT Pro prompt for the first 15 targets in the next low-confidence repair batch, with `SOURCE_DSIRE:dsire_program_id:5512` as the continuation marker.
 - Added four more disjoint GPT Pro prompt files so targets 16-75 can be researched in parallel while preserving deterministic import order.
+- Added a guarded GPT Pro opportunity-data repair intake script that normalizes common output formatting damage, validates exact prompt target order, and can append validated batches to the repair manifest.
+- Added a post-batch13 sample matching audit that separates remaining opportunity-data cleanup from matching/ranking issues in the 50 main test cases.
 
 ## 2026-07-01 - Codex (GPT-5) opportunity repair manifest and batch 13
 
