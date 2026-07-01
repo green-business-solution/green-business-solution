@@ -943,6 +943,16 @@ dd {
   margin-top: 4px;
 }
 
+.admin-user-preview-table .admin-row {
+  grid-template-columns:
+    minmax(170px, 1fr)
+    minmax(160px, 0.9fr)
+    minmax(120px, 0.7fr)
+    minmax(96px, 0.55fr)
+    minmax(130px, 0.7fr)
+    minmax(170px, auto);
+}
+
 .admin-summary-card-grid {
   align-items: stretch;
 }

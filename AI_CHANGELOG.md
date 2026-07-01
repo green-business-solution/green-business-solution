@@ -28,6 +28,11 @@
 - Normalized copied markdown URLs and evidence fragments, then applied all 18 opportunity-data repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
 - Regenerated the next 75 opportunity-data research targets from the current repaired fixture state and refreshed the sample matching opportunity-data audit with current report language.
 
+## 2026-07-01 - Codex (GPT-5) admin user preview tab
+
+- Added a dedicated `User Preview` tab to the admin workspace that opens the customer-facing portal preview for selected client users.
+- Removed the portal preview action from `Client Intake Summary` so intake readiness and preview navigation are separated.
+
 ## 2026-07-01 - Codex (GPT-5) admin retrofit recommendations preview redesign
 
 - Reworked the admin-launched client portal preview retrofit tab into the main post-intake `Retrofit Recommendations` preview UI, keeping the existing `/portal-preview?userId=...` route and live recommendation endpoint.

@@ -5842,6 +5842,7 @@ const ADMIN_OPPORTUNITIES_TAB = "Opportunities";
 const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const CLIENT_INTAKE_SUMMARY_TAB = "Client Intake Summary";
+const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-client-intake", "gbs-energy-data", "gbs-users"]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
@@ -5865,6 +5866,7 @@ const utilitySummaryFieldsByType = new Map(
 );
 
 function adminSectionKey(tab: string) {
+  if (tab === ADMIN_USER_PREVIEW_TAB) return "user-preview";
   if (tab === CLIENT_INTAKE_SUMMARY_TAB) return "client-intake-summary";
   if (tab === ADMIN_OPPORTUNITIES_TAB) return "database:opportunities";
   if (tab === ADMIN_RETROFITS_TAB) return "database:retrofits";
@@ -5889,6 +5891,7 @@ function AdminDashboard({
   const { admin, users: rows, dataTables } = adminPayload;
   const navItems = [
     "Users",
+    ADMIN_USER_PREVIEW_TAB,
     CLIENT_INTAKE_SUMMARY_TAB,
     ADMIN_TEST_CASES_TAB,
     ...dataTables
@@ -5901,6 +5904,7 @@ function AdminDashboard({
     activeTab === ADMIN_OPPORTUNITIES_TAB ||
     activeTab === ADMIN_RETROFITS_TAB ||
     activeTab === ADMIN_TEST_CASES_TAB ||
+    activeTab === ADMIN_USER_PREVIEW_TAB ||
     activeTab === CLIENT_INTAKE_SUMMARY_TAB
       ? null
       : dataTables.find((table) => table.name === activeTab) || null;
@@ -5956,7 +5960,7 @@ function AdminDashboard({
     setLoadingSectionKey(sectionKey);
 
     try {
-      if (tab === "Users" || tab === CLIENT_INTAKE_SUMMARY_TAB) {
+      if (tab === "Users" || tab === ADMIN_USER_PREVIEW_TAB || tab === CLIENT_INTAKE_SUMMARY_TAB) {
         const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
           headers: adminAuthHeaders(credential)
         });
@@ -6003,6 +6007,7 @@ function AdminDashboard({
 
     if (
       activeTab !== "Users" &&
+      activeTab !== ADMIN_USER_PREVIEW_TAB &&
       activeTab !== CLIENT_INTAKE_SUMMARY_TAB &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_OPPORTUNITIES_TAB &&
@@ -6037,6 +6042,8 @@ function AdminDashboard({
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
+      ) : activeTab === ADMIN_USER_PREVIEW_TAB ? (
+        <AdminUserPreviewPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : activeTab === CLIENT_INTAKE_SUMMARY_TAB ? (
         <ClientIntakeSummaryPanel
           isLoading={isCurrentSectionLoading}
@@ -7231,19 +7238,6 @@ function ClientIntakeSummaryPanel({
     setSelectedUserId(userId);
   };
 
-  function openPortalPreview(row: ClientIntakeSummaryRow | null) {
-    if (!row?.userId) return;
-    const params = new URLSearchParams({
-      userId: row.userId,
-      clientName: row.clientName,
-      email: row.email
-    });
-    if (row.companyName) {
-      params.set("companyName", row.companyName);
-    }
-    window.open(`${pathForRoute("portal-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
-  }
-
   useEffect(() => {
     if (selectedUserId && !summaryRows.some((row) => row.userId === selectedUserId)) {
       setSelectedUserId(null);
@@ -7385,7 +7379,7 @@ function ClientIntakeSummaryPanel({
                   </td>
                   <td>
                     {formatDate(row.lastUpdated)}
-                    <small>Selects this client for the debug preview below</small>
+                    <small>Selects this client for the readiness note below</small>
                   </td>
                 </tr>
               ))}
@@ -7402,9 +7396,6 @@ function ClientIntakeSummaryPanel({
             <p>{selectedSummaryRow.email}</p>
           </div>
           <div className="link-list">
-            <button className="secondary-button" onClick={() => openPortalPreview(selectedSummaryRow)} type="button">
-              Open portal preview
-            </button>
             <button className="secondary-button" onClick={() => setSelectedUserId(null)} type="button">
               Clear selection
             </button>
@@ -7422,10 +7413,100 @@ function ClientIntakeSummaryPanel({
         </div>
         <p className="empty-state">
           {selectedSummaryRow
-            ? "Open portal preview to confirm the profile and utility-upload context for this client. Savings, incentive, payback, and ROI outputs will return once the shared calculation engine is wired back in."
-            : "Select a client to inspect utility-upload readiness and open the profile preview."}
+            ? "Use this summary to confirm profile and utility-upload readiness. Open user previews from the User Preview admin tab."
+            : "Select a client to inspect utility-upload readiness."}
         </p>
       </section>
+    </section>
+  );
+}
+
+function AdminUserPreviewPanel({
+  isLoading,
+  onRefresh,
+  rows
+}: {
+  isLoading: boolean;
+  onRefresh: () => void;
+  rows: AdminRow[];
+}) {
+  const previewRows = useMemo(
+    () =>
+      rows
+        .filter((row) => row.user.role === "client")
+        .map((row) => ({
+          userId: row.user.userId,
+          clientName: row.user.fullName || row.intake?.contact.fullName || row.user.email,
+          companyName: row.user.companyName || row.intake?.business.companyName || null,
+          email: row.user.email,
+          hasIntake: Boolean(row.intake),
+          uploadedFileCount: row.intake?.uploadedUtilityFiles.length || 0,
+          createdAt: row.user.createdAt
+        }))
+        .sort((a, b) => a.clientName.localeCompare(b.clientName)),
+    [rows]
+  );
+
+  function openPortalPreview(row: { userId: string; clientName: string; companyName: string | null; email: string }) {
+    const params = new URLSearchParams({
+      userId: row.userId,
+      clientName: row.clientName,
+      email: row.email
+    });
+    if (row.companyName) {
+      params.set("companyName", row.companyName);
+    }
+    window.open(`${pathForRoute("portal-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
+  }
+
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Admin shortcut</p>
+          <h2>User Preview</h2>
+          <p>Open the customer-facing post-intake preview page for a selected client.</p>
+        </div>
+        <div className="link-list">
+          <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
+            {isLoading ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
+      </div>
+
+      <div className="admin-table admin-user-preview-table">
+        <div className="admin-row admin-head">
+          <span>Client</span>
+          <span>Company</span>
+          <span>Intake</span>
+          <span>Utility files</span>
+          <span>Created</span>
+          <span>Preview</span>
+        </div>
+        {previewRows.length === 0 ? (
+          <p className="empty-state">
+            {isLoading ? "Loading clients..." : "No client users are available for portal preview yet."}
+          </p>
+        ) : (
+          previewRows.map((row) => (
+            <div className="admin-row" key={row.userId}>
+              <span>
+                {row.clientName}
+                <small>{row.email}</small>
+              </span>
+              <span>{row.companyName || "No company listed"}</span>
+              <span>{row.hasIntake ? "Intake available" : "No intake yet"}</span>
+              <span>{row.uploadedFileCount.toLocaleString()}</span>
+              <span>{formatDate(row.createdAt)}</span>
+              <span>
+                <button className="secondary-button" onClick={() => openPortalPreview(row)} type="button">
+                  Open user preview
+                </button>
+              </span>
+            </div>
+          ))
+        )}
+      </div>
     </section>
   );
 }
