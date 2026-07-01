@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 8
+
+- Imported eight new GPT Pro opportunity-data repairs covering CEC GFO-25-608, Duke Energy Kentucky, Rocky Mountain Power Idaho, PECO EV, SCE AP-I, Nicor Gas residential, SDG&E Rule 45, and Otter Tail Power South Dakota.
+- Omitted duplicate repairs for `SOURCE_DSIRE:dsire_program_id:2639` and `SOURCE_DSIRE:dsire_program_id:1942` so the newer batch 7 repairs remain authoritative.
+- Applied opportunity-data repair batches 1-8 cumulatively to the public retrofit opportunity index and sample matching fixtures, with `SOURCE_DSIRE:dsire_program_id:4198` recorded as the next continuation point.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 7
 
 - Imported the seventh GPT Pro opportunity-data repair batch for 10 opportunities, from Clark Public Utilities through Elk River Municipal Utilities residential rebates.

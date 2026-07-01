@@ -1,20 +1,22 @@
 # Opportunity Data Repair Import Report
 
-Generated: 2026-07-01T01:21:23.396Z
-Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7
-Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json
-Repairs supplied: 68
-Unique repairs supplied: 64
+Generated: 2026-07-01T01:30:05.747Z
+Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8
+Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json
+Repairs supplied: 76
+Unique repairs supplied: 72
 Duplicate opportunity repairs overwritten by later files: 4
-Retrofit index edges patched: 802
-Retrofit index unique opportunities patched: 64
-Test case opportunity edges patched: 33
-Test case top result edges patched: 1
+Retrofit index edges patched: 840
+Retrofit index unique opportunities patched: 72
+Test case opportunity edges patched: 36
+Test case top result edges patched: 3
 
 ## Patched Opportunities
 
+- SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608
 - SOURCE_DSIRE:dsire_program_id:1463
 - SOURCE_DSIRE:dsire_program_id:1543
+- SOURCE_DSIRE:dsire_program_id:1553
 - SOURCE_DSIRE:dsire_program_id:1580
 - SOURCE_DSIRE:dsire_program_id:1613
 - SOURCE_DSIRE:dsire_program_id:1615
@@ -34,8 +36,10 @@ Test case top result edges patched: 1
 - SOURCE_DSIRE:dsire_program_id:2183
 - SOURCE_DSIRE:dsire_program_id:22050
 - SOURCE_DSIRE:dsire_program_id:22345
+- SOURCE_DSIRE:dsire_program_id:22377
 - SOURCE_DSIRE:dsire_program_id:2253
 - SOURCE_DSIRE:dsire_program_id:2290
+- SOURCE_DSIRE:dsire_program_id:2410
 - SOURCE_DSIRE:dsire_program_id:2415
 - SOURCE_DSIRE:dsire_program_id:2516
 - SOURCE_DSIRE:dsire_program_id:2549
@@ -45,6 +49,7 @@ Test case top result edges patched: 1
 - SOURCE_DSIRE:dsire_program_id:2639
 - SOURCE_DSIRE:dsire_program_id:2650
 - SOURCE_DSIRE:dsire_program_id:3026
+- SOURCE_DSIRE:dsire_program_id:3146
 - SOURCE_DSIRE:dsire_program_id:3154
 - SOURCE_DSIRE:dsire_program_id:3157
 - SOURCE_DSIRE:dsire_program_id:3235
@@ -55,6 +60,7 @@ Test case top result edges patched: 1
 - SOURCE_DSIRE:dsire_program_id:3689
 - SOURCE_DSIRE:dsire_program_id:3754
 - SOURCE_DSIRE:dsire_program_id:4052
+- SOURCE_DSIRE:dsire_program_id:4128
 - SOURCE_DSIRE:dsire_program_id:4130
 - SOURCE_DSIRE:dsire_program_id:4244
 - SOURCE_DSIRE:dsire_program_id:4281
@@ -77,3 +83,5 @@ Test case top result edges patched: 1
 - SOURCE_DSIRE:dsire_program_id:5449
 - SOURCE_DSIRE:dsire_program_id:5738
 - SOURCE_DSIRE:dsire_program_id:5796
+- SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:agricultural-and-pumping-interruptible-ap-i-program
+- SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_22121
