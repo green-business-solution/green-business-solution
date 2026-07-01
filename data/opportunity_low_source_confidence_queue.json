@@ -1,6 +1,6 @@
 {
   "schemaVersion": "opportunity_low_source_confidence_queue.v1",
-  "generatedAt": "2026-07-01T22:38:32.283Z",
+  "generatedAt": "2026-07-01T22:58:06.409Z",
   "sourceConfidenceDefinition": "The historical GPT Pro repair confidence field is interpreted as source_confidence, not deterministic match_confidence.",
   "selection": {
     "manifestPath": "data/opportunity_data_repair_batches.json",
@@ -10,19 +10,19 @@
     "recommendedUse": "Queue these records for deeper GPT Pro research or human/admin verification before treating source evidence as fully trusted."
   },
   "summary": {
-    "repairBatchCount": 48,
-    "totalRepairRows": 651,
-    "uniqueRepairedOpportunityCount": 635,
-    "lowSourceConfidenceCount": 11,
+    "repairBatchCount": 58,
+    "totalRepairRows": 801,
+    "uniqueRepairedOpportunityCount": 785,
+    "lowSourceConfidenceCount": 15,
     "lowSourceConfidenceByAvailabilityStatus": {
-      "active": 3,
-      "source_inaccessible": 7,
+      "active": 4,
+      "source_inaccessible": 10,
       "unknown": 1
     },
     "lowSourceConfidenceByRecommendedNextStep": {
-      "deeper_gpt_pro_research_before_trusting_active_program": 3,
+      "deeper_gpt_pro_research_before_trusting_active_program": 4,
       "human_or_gpt_pro_availability_verification": 1,
-      "human_or_gpt_pro_source_access_followup": 7
+      "human_or_gpt_pro_source_access_followup": 10
     }
   },
   "opportunities": [
@@ -338,6 +338,83 @@
       ],
       "evidenceText": "Duke’s]( official business Smart $aver pages are current but blocked to the browser; readable Duke material identifies Indiana business rebates for lighting, HVAC, agriculture and custom measures.",
       "reasoningNotes": "Because current Duke detail pages were inaccessible, this repair is conservative: unsupported refrigeration and insulation matches were removed rather than inferred from DSIRE."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1968",
+      "opportunityName": "Dixie Electric Cooperative - Residential Energy Efficiency Loan Program",
+      "sourceName": "DSIRE",
+      "state": "AL",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1968/dixie-electric-cooperative-residential-energy-efficiency-loan-program",
+      "websiteUrl": "https://www.dixie.coop/energy-efficiency-program",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "active",
+      "currentPublicAvailabilityStatus": "active",
+      "recommendedNextStep": "deeper_gpt_pro_research_before_trusting_active_program",
+      "latestRepairBatchNumber": 51,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Loan Program",
+      "administrator": "Dixie Electric Cooperative",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Dixie Electric Cooperative"
+        ],
+        "notes": "Applies to eligible Dixie Electric Cooperative residential members in Alabama; current detailed terms could not be fully read from the official page."
+      },
+      "eligibleApplicantTypes": [
+        "residential_member",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "residential_energy_efficiency_loan",
+        "heat_pump_hvac_financing",
+        "high_efficiency_hvac_financing"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Dixie Electric Cooperative residential member.",
+        "Loan terms and approval requirements must be verified with the cooperative because the current official detail page was not fully accessible.",
+        "Heat-pump financing is supported by official snippets, but exact specifications and credit requirements were not readable."
+      ],
+      "blockers": [
+        "This is financing, not a rebate.",
+        "Do not match commercial, industrial, or agricultural measures.",
+        "Do not infer biomass, refrigeration, lighting, or unrelated weatherization measures from this record.",
+        "The official detail page returned access errors, so rates, caps, and current underwriting rules require administrator verification."
+      ],
+      "relatedRetrofitCount": 2,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.dixie.coop/energy-efficiency-program",
+        "https://www.dixie.coop/manufacturedhomeprogram",
+        "http://www.dixie.coop/content.cfm?id=2049&download_id=59#attached_content"
+      ],
+      "evidenceText": "Official]( search snippets identify an active Co-op Energy Efficiency Loan Program and low-interest financing related to heat-pump upgrades, but the detail page returned access errors.",
+      "reasoningNotes": "Retain heat-pump and high-efficiency HVAC only as financing categories. Confidence is low because official current terms were not readable beyond official snippets."
     },
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:1885",
@@ -1188,6 +1265,220 @@
       ],
       "evidenceText": "The current Farmers Electric Cooperative conservation-grants, rebates, and ways-to-save pages returned 502 Bad Gateway. Search snippets showed only page titles and a partial insulation reference, insufficient to verify current eligible measures.",
       "reasoningNotes": "Source inaccessible; cleared retrofit categories until official terms can be read. Retained only minimal geography and applicant context from the program name and official URL."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4816",
+      "opportunityName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "state": "ND",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4816/xcel-energy-residential-energy-efficiency-rebate-programs",
+      "websiteUrl": "https://nd.my.xcelenergy.com/s/residential/heating-cooling/heating-upgrade-rebates",
+      "applicationUrl": "https://www.xcelenergy.com/digital_application",
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 49,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate",
+      "administrator": "Xcel Energy",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ND"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy"
+        ],
+        "notes": "Likely limited to Xcel Energy North Dakota residential service territory, but current official measure-level eligibility could not be verified from readable sources."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [],
+      "blockers": [
+        "Current Xcel North Dakota heating-upgrade rebate page is JavaScript/dynamic and did not expose current eligibility details.",
+        "Do not match boiler, furnace, or generic HVAC replacement until current Xcel North Dakota measure terms are verified from an official readable source.",
+        "Older Xcel documents and search snippets are insufficient to confirm 2026 North Dakota eligibility."
+      ],
+      "relatedRetrofitCount": 3,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_boiler_retrofit",
+          "displayName": "High-efficiency boiler retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://nd.my.xcelenergy.com/s/residential/heating-cooling/heating-upgrade-rebates",
+        "https://www.xcelenergy.com/digital_application",
+        "https://xcelenergy.com/staticfiles/xe/Marketing/Files/MN-Res-Heating-Rebate-Application.pdf"
+      ],
+      "evidenceText": "The current Xcel North Dakota rebate page could not be read beyond dynamic loading; the digital application is active but does not show measure-level eligibility.",
+      "reasoningNotes": "Marked source_inaccessible to prevent matching on outdated furnace/boiler assumptions. Current official details must be verified before restoring categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22551",
+      "opportunityName": "Duke Energy Indiana Off-Peak Charging Credit",
+      "sourceName": "DSIRE",
+      "state": "IN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22551/duke-energy-indiana-off-peak-charging-credit",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 51,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Performance-Based Incentive / Bill Credit",
+      "administrator": "Duke Energy Indiana",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Duke Energy Indiana"
+        ],
+        "notes": "Historic pilot applied to Duke Energy Indiana residential customers; current continuation could not be verified from an accessible official current product page."
+      },
+      "eligibleApplicantTypes": [
+        "duke_energy_indiana_residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Current official eligibility could not be verified from a readable Duke Energy product page.",
+        "The accessible official release described a two-year pilot launched October 1, 2022.",
+        "Historic pilot participation was capped and required a residential Level 2 EV charger."
+      ],
+      "blockers": [
+        "Do not match this as active until a current Duke Energy Indiana program page or tariff confirms availability.",
+        "The historic pilot was time-limited and capped at 500 residential participants.",
+        "This was an off-peak charging credit, not an EV charger installation rebate.",
+        "Commercial charger rebates, fleet advisory services, and school bus programs were separate pilot offerings."
+      ],
+      "relatedRetrofitCount": 2,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://news.duke-energy.com/releases/duke-energy-indiana-plans-two-year-electric-transportation-pilot-programs",
+        "https://www.duke-energy.com/home/products/ev-complete/off-peak-credit"
+      ],
+      "evidenceText": "Accessible]( Duke release describes a two-year Indiana pilot launched October 1, 2022, capped at 500 residential Level 2 participants; current continuation was not readable.",
+      "reasoningNotes": "Cleared retrofit categories because current official sources were not readable enough to verify ongoing availability after the original pilot period."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2180",
+      "opportunityName": "Flathead Electric Cooperative - Commercial Incentive Programs",
+      "sourceName": "DSIRE",
+      "state": "MT",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2180/flathead-electric-cooperative-commercial-incentive-programs",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 51,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate Program",
+      "administrator": "Flathead Electric Cooperative",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Flathead Electric Cooperative"
+        ],
+        "notes": "Likely limited to Flathead Electric Cooperative commercial and industrial members, but current official program details were not readable enough to verify."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_member",
+        "industrial_member"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Current official commercial rebate requirements must be obtained from Flathead Electric Cooperative before matching.",
+        "Current measure lists, rebate amounts, forms, and eligibility requirements were not readable from the official page."
+      ],
+      "blockers": [
+        "Do not match HVAC, lighting, kitchen, insulation, window, or refrigeration measures until current official program materials are accessible.",
+        "Do not infer residential rebates from a commercial incentive record.",
+        "Older official snippets are insufficient to verify current eligible measures or availability.",
+        "The current official commercial rebate page could not be read well enough for reliable matching."
+      ],
+      "relatedRetrofitCount": 2,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.flatheadelectric.com/commercial/business-energy-savings/",
+        "https://www.flatheadelectric.com/energy-solutions/energy-efficiency-rebate-programs/commercial-rebate-programs/",
+        "https://www.flatheadelectric.com/energy-solutions/energy-efficiency-rebate-programs/",
+        "https://www.flatheadelectric.com/co-op-announces-2022-energy-efficiency-savings-862574-paid-out-to-members-and-partners/"
+      ],
+      "evidenceText": "Current]( official commercial rebate page could not be fetched; snippets identify commercial and industrial lighting, while older official snippets mention broader measures.",
+      "reasoningNotes": "Cleared categories under source_inaccessible because current official program materials were not readable enough to verify measure eligibility."
     }
   ]
 }

@@ -20,6 +20,12 @@
 - Replaced the top `How it Works` hero plus step-section text block with a single animated cartoon-style walkthrough that loops through all five RetroFi steps inside a video-like player.
 - Kept the implementation frontend-only by building the short explainer with existing icons, CSS scene animation, and a lightweight scrubber/progress treatment instead of changing routing or backend behavior.
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 49-58
+
+- Validated the ten GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-49-53/` and `GPT Pro Work/opportunity-data-repair-batches-54-58/` and confirmed none were cut off.
+- Imported the outputs as normalized opportunity-data repair batches 49-58 and appended them to the ordered repair manifest.
+- Applied all 58 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures, then refreshed the low source-confidence queue.
+
 ## 2026-07-01 - Codex (GPT-5) low source-confidence opportunity queue
 
 - Added a repeatable low-source-confidence queue generator for repaired opportunity-data records.

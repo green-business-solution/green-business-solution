@@ -1,0 +1,899 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"inputFileCitation": "",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1345",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Vermont Gas Systems"
+],
+"notes": "Available to eligible Vermont Gas residential customers in VGS service territory; some WRAP options are income- and housing-type-limited."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"landlord",
+"tenant_with_owner_approval",
+"manufactured_home_owner"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"multifamily_1_to_4_units",
+"manufactured_housing"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_weatherization",
+"duct_sealing",
+"heat_pump_hvac_retrofit",
+"advanced_wood_heating_system",
+"health_and_safety_weatherization_enabling_work"
+],
+"hardRequirements": [
+"Customer must be in Vermont Gas service territory.",
+"Weatherization work must use a BPI-certified contractor.",
+"Weatherization projects must achieve at least 10% air leakage reduction where applicable.",
+"Loan approval is subject to lender or on-bill financing program requirements.",
+"Heat pump and other energy upgrades are financed as part of or alongside eligible weatherization financing, not as a generic HVAC replacement rebate."
+],
+"blockers": [
+"Do not match broad high-efficiency HVAC replacement unless the measure is an eligible heat pump or advanced wood heating measure under the financing terms.",
+"Do not treat this as an upfront rebate; it is financing or on-bill repayment support.",
+"Do not match commercial, industrial, or large multifamily properties outside the stated residential scope."
+],
+"programType": "Loan Program",
+"administrator": "Vermont Gas Systems",
+"applicationUrl": null,
+"websiteUrl": "[https://vgsvt.com/savings/residentialrebate/energy-audits-weatherization/](https://vgsvt.com/savings/residentialrebate/energy-audits-weatherization/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/1345/vermont-gas-residential-energy-efficiency-loan-program](https://programs.dsireusa.org/system/program/detail/1345/vermont-gas-residential-energy-efficiency-loan-program)",
+"[https://vgsvt.com/savings/residentialrebate/energy-audits-weatherization/](https://vgsvt.com/savings/residentialrebate/energy-audits-weatherization/)"
+],
+"evidenceText": "Vermont Gas lists 0% weatherization financing, financing when heat pumps are included, and WRAP on-bill options for weatherization, insulation, air sealing, heat pumps, and advanced wood heating.",
+"reasoningNotes": "The original weatherization match is valid. The generic high-efficiency HVAC match was narrowed to heat pumps and advanced wood heating because the official page does not support all HVAC replacements."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2281",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"GA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Walton EMC"
+],
+"notes": "Limited to existing homes in Georgia receiving Walton EMC service."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"walton_emc_customer_owner"
+],
+"eligibleSectors": [
+"residential",
+"existing_single_family_home"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"central_air_conditioner_replacement",
+"heat_pump_water_heater",
+"solar_water_heating_system",
+"replacement_windows",
+"roof_replacement",
+"energy_star_appliances",
+"whole_house_backup_generator"
+],
+"hardRequirements": [
+"Applicant must be an existing homeowner receiving Walton EMC service.",
+"Home must be in Georgia.",
+"Loan qualification depends on creditworthiness, underwriting, and Walton EMC payment history.",
+"Financing is provided and serviced by Go Energy Financial rather than Walton EMC directly."
+],
+"blockers": [
+"Do not match generic air sealing or weatherization; the current official eligible list supports windows, roofs, HVAC, water heating, appliances, and generators, not broad weatherization.",
+"Do not treat this as a rebate.",
+"Do not match homes outside Walton EMC service territory."
+],
+"programType": "Loan Program",
+"administrator": "Walton EMC and Go Energy Financial",
+"applicationUrl": "[https://connect.goenergyfinancial.com/](https://connect.goenergyfinancial.com/)",
+"websiteUrl": "[https://www.waltonemc.com/residential/homeplus-loan/](https://www.waltonemc.com/residential/homeplus-loan/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/2281/walton-emc-homeplus-loan-program](https://programs.dsireusa.org/system/program/detail/2281/walton-emc-homeplus-loan-program)",
+"[https://www.waltonemc.com/residential/homeplus-loan/](https://www.waltonemc.com/residential/homeplus-loan/)",
+"[https://connect.goenergyfinancial.com/](https://connect.goenergyfinancial.com/)"
+],
+"evidenceText": "Walton EMC says HomePlus helps customer-owners finance central heat pumps and air conditioners, heat pump water heaters, solar water heating, replacement windows, roofs, appliances, and whole-house generators.",
+"reasoningNotes": "The original weatherization match was a false positive. HVAC remains only as central heat pump or air-conditioner replacement financing, not a generic weatherization opportunity."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:682",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"PA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"West Penn Power"
+],
+"notes": "Limited to projects in the West Penn Power service region."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"institutional_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"act129_energy_efficiency_improvements",
+"commercial_energy_efficiency_retrofit"
+],
+"hardRequirements": [
+"Applicant must be a commercial, industrial, or institutional entity in the West Penn Power service region.",
+"Project must be an eligible Act 129 energy efficiency improvement.",
+"Applicant must complete a project overview.",
+"Applicant must attach a West Penn Power pre-approval letter.",
+"Loan amount is limited to the current micro-loan range published by the program."
+],
+"blockers": [
+"No current official source supports biomass or biogas systems under this loan record.",
+"No current official source supports battery storage under this loan record.",
+"Do not match residential projects.",
+"Do not treat this as a grant or rebate."
+],
+"programType": "Loan Program",
+"administrator": "West Penn Power Sustainable Energy Fund",
+"applicationUrl": null,
+"websiteUrl": "[https://www.westpennenergyfund.org/get-funding](https://www.westpennenergyfund.org/get-funding)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/682/west-penn-power-sef-commercial-loan-program](https://programs.dsireusa.org/system/program/detail/682/west-penn-power-sef-commercial-loan-program)",
+"[https://www.westpennenergyfund.org/get-funding](https://www.westpennenergyfund.org/get-funding)",
+"[https://thesef.org/our-programs/commercial-loan/](https://thesef.org/our-programs/commercial-loan/)"
+],
+"evidenceText": "The current West Penn Energy Fund funding page describes Act 129 Energy Micro Loans for commercial, industrial, and institutional energy efficiency improvements in the West Penn Power region.",
+"reasoningNotes": "The biomass and battery matches should be removed. Current official materials support a commercial energy-efficiency loan, not renewable generation or storage categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3599",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"PA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Pennsylvania program administered through DCED and the Commonwealth Financing Authority."
+},
+"eligibleApplicantTypes": [
+"business",
+"economic_development_organization",
+"individual_for_geothermal_only",
+"local_government",
+"county_government",
+"municipal_government",
+"school_district"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"local_government",
+"school",
+"residential_geothermal_only"
+],
+"eligibleRetrofitCategories": [
+"geothermal_system",
+"ground_source_geothermal_heat_pump",
+"wind_energy_generation",
+"wind_energy_distribution",
+"renewable_energy_component_manufacturing",
+"renewable_energy_planning_feasibility_study"
+],
+"hardRequirements": [
+"Project must involve eligible geothermal technologies or wind energy projects.",
+"Applicants must meet DCED applicant-type limits, including individuals only for geothermal projects.",
+"Program requires at least a 1:1 match investment.",
+"Application fee and loan commitment fee requirements apply where relevant.",
+"Project must satisfy DCED cost caps and Commonwealth Financing Authority approval requirements."
+],
+"blockers": [
+"Do not match generic high-efficiency HVAC replacement.",
+"Do not match non-geothermal HVAC equipment.",
+"Do not match solar, battery storage, biomass, or unrelated renewable technologies under this program record."
+],
+"programType": "Grant and Loan Program",
+"administrator": "Pennsylvania Department of Community and Economic Development",
+"applicationUrl": null,
+"websiteUrl": "[https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/](https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/3599/wind-and-geothermal-incentives-program](https://programs.dsireusa.org/system/program/detail/3599/wind-and-geothermal-incentives-program)",
+"[https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/](https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/)"
+],
+"evidenceText": "DCED states the Renewable Energy Program supports geothermal technologies and wind energy projects with loans, grants, and guarantees, subject to applicant and matching-investment requirements.",
+"reasoningNotes": "The geothermal match is valid but should be narrowed to geothermal systems. The broad high-efficiency HVAC category is not supported."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5627",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Xcel Energy Colorado"
+],
+"notes": "Xcel directs Colorado residential customers to Colorado RENU financing; RENU itself is a statewide Colorado residential energy-upgrade loan product."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"property_owner"
+],
+"eligibleSectors": [
+"residential",
+"existing_single_family_home",
+"townhome",
+"condominium_without_shared_hvac"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_weatherization",
+"heat_pump_hvac_retrofit",
+"space_heating_cooling_upgrade",
+"heat_pump_water_heater",
+"windows_doors_replacement",
+"solar_pv_system",
+"battery_storage_system",
+"ev_charger_installation"
+],
+"hardRequirements": [
+"Property must be an eligible existing Colorado residence.",
+"Loan must be approved by a participating lender.",
+"Work must meet Colorado RENU eligible-improvement and contractor requirements.",
+"Townhomes and condominiums must not have shared HVAC systems where the RENU rules exclude shared systems.",
+"Financing terms and maximum loan amount depend on the current RENU lender product."
+],
+"blockers": [
+"Do not treat this as an Xcel rebate.",
+"Do not match commercial or industrial projects.",
+"Do not infer measures outside the current RENU eligible-improvements list.",
+"Xcel-specific eligibility should not be expanded beyond Colorado customers without checking the current Xcel page."
+],
+"programType": "Loan Program",
+"administrator": "Xcel Energy Colorado and Colorado Clean Energy Fund",
+"applicationUrl": null,
+"websiteUrl": "[https://co.my.xcelenergy.com/s/residential/home-rebates/energy-efficiency-financing](https://co.my.xcelenergy.com/s/residential/home-rebates/energy-efficiency-financing)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/5627/xcel-energy-residential-energy-efficiency-financing](https://programs.dsireusa.org/system/program/detail/5627/xcel-energy-residential-energy-efficiency-financing)",
+"[https://co.my.xcelenergy.com/s/residential/home-rebates/energy-efficiency-financing](https://co.my.xcelenergy.com/s/residential/home-rebates/energy-efficiency-financing)",
+"[https://cocleanenergyfund.com/products/residential-products/renu/](https://cocleanenergyfund.com/products/residential-products/renu/)",
+"[https://www.xcelenergy.com/staticfiles/xe/Marketing/Files/CO-Res-Energy-Efficiency-Financing-Information-Sheet.pdf](https://www.xcelenergy.com/staticfiles/xe/Marketing/Files/CO-Res-Energy-Efficiency-Financing-Information-Sheet.pdf)"
+],
+"evidenceText": "Colorado RENU financing covers residential upgrades including heat pumps, windows and doors, air sealing and insulation, solar PV, battery storage, EV charging, and water heating.",
+"reasoningNotes": "The air sealing match is supported. Generic high-efficiency HVAC was narrowed to heat pump and space-heating or cooling upgrades under RENU financing."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3607",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"SC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"York Electric Cooperative"
+],
+"notes": "Limited to York Electric Cooperative members in its South Carolina service territory."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"electric_cooperative_member"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"dual_fuel_heat_pump",
+"heat_pump_hvac_retrofit"
+],
+"hardRequirements": [
+"Applicant must be a York Electric Cooperative member.",
+"Installed equipment must be a qualifying dual-fuel heat pump system.",
+"Rebate application or form requirements must be met.",
+"Additional systems receive lower incentive amounts than the first qualifying system."
+],
+"blockers": [
+"Do not match generic high-efficiency HVAC replacement unless the project is a qualifying dual-fuel heat pump.",
+"Do not match air conditioners, furnaces, weatherization, or water heating as standalone measures.",
+"Do not match customers outside York Electric Cooperative territory."
+],
+"programType": "Rebate Program",
+"administrator": "York Electric Cooperative, Inc.",
+"applicationUrl": null,
+"websiteUrl": "[https://www.yorkelectric.net/energy-savings/heat-pump-rebate/](https://www.yorkelectric.net/energy-savings/heat-pump-rebate/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/3607/york-electric-cooperative-dual-fuel-heat-pump-rebate-program](https://programs.dsireusa.org/system/program/detail/3607/york-electric-cooperative-dual-fuel-heat-pump-rebate-program)",
+"[https://www.yorkelectric.net/energy-savings/heat-pump-rebate/](https://www.yorkelectric.net/energy-savings/heat-pump-rebate/)"
+],
+"evidenceText": "York Electric describes a dual-fuel heat pump as an electric heat pump paired with a gas furnace and lists rebates for qualifying first and additional systems.",
+"reasoningNotes": "The heat-pump retrofit match is valid. The broad high-efficiency HVAC category should be narrowed to qualifying dual-fuel heat pump systems."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4594",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"AEP Texas"
+],
+"notes": "Applies within AEP Texas territory; DSIRE labels Central and SWEPCO should not override the current AEP Texas program manual."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"single_family_homeowner",
+"commercial_customer",
+"hvac_contractor"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"hvac_tune_up",
+"central_air_conditioner_replacement",
+"heat_pump_hvac_replacement",
+"airflow_correction",
+"refrigerant_charge_correction",
+"coil_cleaning"
+],
+"hardRequirements": [
+"Tune-ups apply to residential and commercial AEP Texas customers with eligible air conditioning or heat pump systems up to and including 25 tons.",
+"Residential replacement applies to qualifying single-family systems up to 5 tons.",
+"New replacement equipment must meet published SEER and ENERGY STAR or AHRI matching requirements.",
+"Systems installed within the past year and systems tuned up within the past five years are excluded from tune-up incentives.",
+"Incentives are typically contractor-delivered or invoice-discounted under the program manual."
+],
+"blockers": [
+"Do not match generic HVAC replacement for non-qualifying equipment.",
+"Do not match weatherization, water heating, motors, or industrial process equipment.",
+"Commercial eligibility is for tune-up measures; replacement incentives are limited by the manual to single-family residential systems."
+],
+"programType": "Rebate Program",
+"administrator": "AEP Texas and CLEAResult",
+"applicationUrl": null,
+"websiteUrl": "[https://aeptexasefficiency.com/#/commercial/coolsaver](https://aeptexasefficiency.com/#/commercial/coolsaver)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/4594/aep-central-and-swepco-coolsaver-a-c-tune-up-or-replacement](https://programs.dsireusa.org/system/program/detail/4594/aep-central-and-swepco-coolsaver-a-c-tune-up-or-replacement)",
+"[https://aeptexasefficiency.com/#/commercial/coolsaver](https://aeptexasefficiency.com/#/commercial/coolsaver)",
+"[https://aeptexasefficiency.com/downloads/2025/AEP-TX_CoolSaver_Program%20Manual_2025.pdf?2004=](https://aeptexasefficiency.com/downloads/2025/AEP-TX_CoolSaver_Program%20Manual_2025.pdf?2004=)"
+],
+"evidenceText": "The 2025 AEP Texas CoolSaver manual covers AC and heat-pump tune-ups, airflow and refrigerant corrections, and single-family residential replacement incentives for qualifying systems.",
+"reasoningNotes": "The HVAC match is valid but must distinguish tune-up measures from residential replacement and not broaden to all HVAC equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22263",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Alaska Power and Telephone electric service areas"
+],
+"notes": "Limited to AP&T electric service communities, primarily in Southeast Alaska and other AP&T served areas."
+},
+"eligibleApplicantTypes": [
+"local_government",
+"tribal_government",
+"electric_customer",
+"employee"
+],
+"eligibleSectors": [
+"local_government",
+"tribal",
+"residential_customer_vehicle_purchase"
+],
+"eligibleRetrofitCategories": [
+"public_ev_charging_station"
+],
+"hardRequirements": [
+"Public charging station incentive is limited to local and tribal governments installing community charging stations.",
+"Project must be in an AP&T electric service area.",
+"EV purchase incentives require a 100% electric vehicle, minimum battery capacity, customer title, physical presence verification, and application within the stated deadline.",
+"Plug-in hybrids and extended-range electric vehicles are not eligible for the EV purchase incentive."
+],
+"blockers": [
+"Do not match private residential EV charger installation.",
+"Do not match EV purchase rebates as a building retrofit.",
+"Do not include AP&T heat pump or e-bike incentives in this AMP-UP EV record unless modeled as separate opportunities.",
+"Do not match plug-in hybrid vehicles."
+],
+"programType": "Rebate Program",
+"administrator": "Alaska Power and Telephone",
+"applicationUrl": null,
+"websiteUrl": "[https://aptalaska.com/power/incentives/](https://aptalaska.com/power/incentives/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/22263/alaska-power-and-telephone-amp-up-program](https://programs.dsireusa.org/system/program/detail/22263/alaska-power-and-telephone-amp-up-program)",
+"[https://www.aptalaska.com/amp-up/](https://www.aptalaska.com/amp-up/)",
+"[https://aptalaska.com/power/incentives/](https://aptalaska.com/power/incentives/)"
+],
+"evidenceText": "AP&T lists AMP-UP EV incentives and states community charging stations are eligible for local and tribal governments, while EV purchase incentives have separate vehicle requirements.",
+"reasoningNotes": "The EV charger match should be narrowed to public or community charging stations. The main EV purchase incentive is not a property retrofit."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5408",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AR"
+],
+"counties": [
+"Pulaski County"
+],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Current AAEF materials state the program is accepting applications in Pulaski County, with expansion planned to other central Arkansas counties."
+},
+"eligibleApplicantTypes": [
+"commercial_property_owner",
+"industrial_property_owner",
+"agricultural_property_owner",
+"multifamily_property_owner",
+"nonprofit_property_owner"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural",
+"multifamily_more_than_4_units",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"battery_storage_system",
+"solar_pv_system",
+"hvac_upgrade",
+"led_lighting_retrofit",
+"insulation_weatherization",
+"roof_replacement_resilience",
+"storm_resiliency_improvements",
+"water_conservation_systems"
+],
+"hardRequirements": [
+"Property must be in a currently participating Arkansas C-PACE jurisdiction.",
+"Eligible properties include commercial, industrial, agricultural, nonprofit, and multifamily properties with more than four units.",
+"Financing is repaid through a property tax assessment tied to the property.",
+"Project must be an eligible C-PACE energy, alternative energy, resiliency, or water conservation improvement."
+],
+"blockers": [
+"Do not match single-family residential projects.",
+"Do not treat this as a rebate or grant.",
+"Do not match properties outside current participating counties unless the program has officially expanded."
+],
+"programType": "PACE Financing",
+"administrator": "Arkansas Advanced Energy Foundation",
+"applicationUrl": null,
+"websiteUrl": "[https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program](https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/5408/arkansas-pace-program](https://programs.dsireusa.org/system/program/detail/5408/arkansas-pace-program)",
+"[https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program](https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program)"
+],
+"evidenceText": "AAEF states Arkansas C-PACE finances energy efficiency, alternative energy, resiliency, and water conservation, including HVAC, lighting, insulation, solar, battery storage, roofs, storm resiliency, and water systems.",
+"reasoningNotes": "Battery storage is supported, but the opportunity should be modeled as C-PACE financing for eligible commercial and larger multifamily property improvements."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4471",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Benton PUD"
+],
+"notes": "Limited to electrically heated homes in Benton PUD service territory."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"manufactured_home_owner",
+"homebuyer"
+],
+"eligibleSectors": [
+"residential",
+"manufactured_housing"
+],
+"eligibleRetrofitCategories": [
+"energy_star_certified_manufactured_home",
+"pre_1976_manufactured_home_replacement"
+],
+"hardRequirements": [
+"Manufactured home must be electrically heated.",
+"Home must be located in Benton PUD service territory.",
+"Application must be submitted within the current deadline after purchase or installation.",
+"ENERGY STAR or NEEM certification documentation may be required.",
+"Rebates are valid only while funding is available."
+],
+"blockers": [
+"Do not match standalone high-efficiency HVAC replacement.",
+"Do not match generic insulation, windows, ducts, or ventilation as separate retrofit categories under this record.",
+"Do not match site-built new construction under this manufactured-home opportunity."
+],
+"programType": "Rebate Program",
+"administrator": "Benton PUD",
+"applicationUrl": null,
+"websiteUrl": "[https://www.bentonpud.org/rebates-savings/rebates/new-construction-rebates](https://www.bentonpud.org/rebates-savings/rebates/new-construction-rebates)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/4471/benton-pud-energy-star-certified-manufactured-homes-rebate-program](https://programs.dsireusa.org/system/program/detail/4471/benton-pud-energy-star-certified-manufactured-homes-rebate-program)",
+"[https://www.bentonpud.org/Energy-Programs/Rebates/Construction](https://www.bentonpud.org/Energy-Programs/Rebates/Construction)",
+"[https://www.bentonpud.org/rebates-savings/rebates/new-construction-rebates](https://www.bentonpud.org/rebates-savings/rebates/new-construction-rebates)"
+],
+"evidenceText": "Benton PUD lists rebates for ENERGY STAR certified manufactured homes and pre-1976 manufactured home replacement, with electric-heating and service-territory requirements.",
+"reasoningNotes": "The HVAC match is a false positive. Although efficient manufactured homes include better ducts, insulation, and windows, the rebate is for the certified manufactured home or replacement unit."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22102",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VT"
+],
+"counties": [],
+"cities": [
+"Burlington"
+],
+"utilityTerritories": [
+"Burlington Electric Department"
+],
+"notes": "Limited to BED business customers with active electric accounts in Burlington, Vermont."
+},
+"eligibleApplicantTypes": [
+"small_business_customer",
+"medium_business_customer",
+"commercial_customer",
+"business_property_owner",
+"business_tenant_with_owner_permission"
+],
+"eligibleSectors": [
+"commercial",
+"small_business",
+"medium_business"
+],
+"eligibleRetrofitCategories": [
+"commercial_electrical_energy_efficiency_upgrades",
+"commercial_hvac_controls_upgrade",
+"commercial_hvac_replacement",
+"building_ventilation_upgrade",
+"ductwork_expansion",
+"commercial_refrigeration_equipment",
+"commercial_kitchen_equipment",
+"commercial_led_lighting_retrofit",
+"commercial_office_lighting",
+"engineering_design_services_for_efficiency"
+],
+"hardRequirements": [
+"Applicant must be a BED small or medium business customer with an active BED electric account.",
+"Loan amount must meet the published minimum and maximum per building.",
+"Customer must satisfy BED payment history requirements.",
+"Landlord permission, lien documentation, disclosures, scope-of-work approval, and final inspection may be required.",
+"Projects must be cost-effective electrical energy-efficiency upgrades or other currently listed eligible business improvements."
+],
+"blockers": [
+"No current official source supports battery storage under this commercial on-bill financing record.",
+"Do not match residential projects.",
+"Do not match solar, EV charging, or other BED programs unless modeled separately.",
+"Building facade or take-out window items should not drive energy-retrofit matching unless tied to eligible program scope."
+],
+"programType": "Loan Program",
+"administrator": "Burlington Electric Department",
+"applicationUrl": null,
+"websiteUrl": "[https://www.burlingtonelectric.com/on-bill-financing](https://www.burlingtonelectric.com/on-bill-financing)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/22102/burlington-electric-department-commercial-on-bill-financing-program](https://programs.dsireusa.org/system/program/detail/22102/burlington-electric-department-commercial-on-bill-financing-program)",
+"[https://www.burlingtonelectric.com/on-bill-financing](https://www.burlingtonelectric.com/on-bill-financing)",
+"[https://www.burlingtonelectric.com/rebates](https://www.burlingtonelectric.com/rebates)"
+],
+"evidenceText": "BED describes on-bill financing for Burlington businesses covering cost-effective electrical efficiency upgrades, including HVAC controls, ductwork, commercial refrigeration, cooking equipment, lighting, and HVAC equipment.",
+"reasoningNotes": "The battery-storage match is unsupported and should be removed. The program is commercial on-bill financing for specific business energy-efficiency improvements."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22591",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"ME"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Available only in Maine municipalities that have opted into Efficiency Maine C-PACE."
+},
+"eligibleApplicantTypes": [
+"commercial_property_owner",
+"multifamily_property_owner",
+"capital_provider"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily_5_plus_units"
+],
+"eligibleRetrofitCategories": [
+"battery_storage_system",
+"ev_charger_installation",
+"solar_pv_system",
+"solar_thermal_system",
+"geothermal_system",
+"high_efficiency_wood_heating_system",
+"heat_pump_hvac_retrofit",
+"energy_efficient_heating_system",
+"commercial_energy_efficiency_improvements",
+"weatherization_insulation"
+],
+"hardRequirements": [
+"Property must be commercial property in a participating Maine municipality.",
+"Residential-design properties generally need five or more rental units to qualify.",
+"Project must include an eligible energy savings improvement.",
+"Efficiency Maine approval is required before financing.",
+"Mortgage lender consent and C-PACE program underwriting requirements apply.",
+"Projects must satisfy technical review and cost-effectiveness requirements where applicable."
+],
+"blockers": [
+"Do not match single-family residential projects.",
+"Do not match government-owned buildings or public schools where program guidelines exclude them.",
+"Do not treat C-PACE as a rebate.",
+"Do not match projects in nonparticipating municipalities."
+],
+"programType": "PACE Financing",
+"administrator": "Efficiency Maine Trust",
+"applicationUrl": null,
+"websiteUrl": "[https://www.efficiencymaine.com/c-pace/](https://www.efficiencymaine.com/c-pace/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/22591/c-pace-efficiency-maine](https://programs.dsireusa.org/system/program/detail/22591/c-pace-efficiency-maine)",
+"[https://www.efficiencymaine.com/c-pace/](https://www.efficiencymaine.com/c-pace/)",
+"[https://www.efficiencymaine.com/docs/C-PACE_Program_Guidelines_12-20-2023.pdf](https://www.efficiencymaine.com/docs/C-PACE_Program_Guidelines_12-20-2023.pdf)"
+],
+"evidenceText": "Efficiency Maine C-PACE finances commercial energy efficiency and clean energy improvements through a property tax assessment; guidelines include storage, EVSE, solar, geothermal, wood heating, and efficient heating.",
+"reasoningNotes": "Battery storage is supported. The opportunity should be treated as C-PACE financing with municipality, property-type, technical review, and lender-consent constraints."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1455",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Pacific Gas and Electric",
+"Southern California Edison",
+"Southern California Gas",
+"San Diego Gas & Electric"
+],
+"notes": "Project must be in an eligible California investor-owned utility service territory and pay the Public Purpose Program surcharge."
+},
+"eligibleApplicantTypes": [
+"commercial_project_owner",
+"public_project_owner",
+"industrial_project_owner",
+"agricultural_project_owner",
+"high_rise_multifamily_project_owner",
+"design_team"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"industrial",
+"agricultural",
+"high_rise_multifamily_4_plus_stories",
+"new_construction",
+"major_alteration"
+],
+"eligibleRetrofitCategories": [
+"whole_building_energy_efficiency_design_assistance",
+"new_construction_decarbonization",
+"major_alteration_decarbonization",
+"heat_pump_hvac_retrofit",
+"mechanical_system_efficiency_design",
+"lighting_system_efficiency_design",
+"building_envelope_efficiency_design"
+],
+"hardRequirements": [
+"Project must be qualifying new construction or qualifying major alteration.",
+"Project must be in PG&E, SCE, SoCalGas, or SDG&E service territory.",
+"Customer must pay the Public Purpose Program surcharge.",
+"Project team must be committed to energy efficiency and decarbonization analysis.",
+"Measures may not receive duplicate incentives for the same equipment from another utility program.",
+"Program participation and incentives depend on CEDA eligibility review."
+],
+"blockers": [
+"Do not match standalone LED lighting retrofits.",
+"Do not match routine existing-building retrofit projects that are not qualifying major alterations.",
+"Do not match low-rise residential projects.",
+"Do not generalize design assistance into a rebate for installed lighting, HVAC, or envelope measures without qualifying CEDA scope."
+],
+"programType": "Technical Assistance and Incentive Program",
+"administrator": "Pacific Gas and Electric with California investor-owned utility partners and Willdan",
+"applicationUrl": "[https://ceda.expresseda.com](https://ceda.expresseda.com)",
+"websiteUrl": "[https://californiaeda.com/](https://californiaeda.com/)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/1455/california-energy-design-assistance-ceda](https://programs.dsireusa.org/system/program/detail/1455/california-energy-design-assistance-ceda)",
+"[https://energyassistance.willdan.com/CEDA](https://energyassistance.willdan.com/CEDA)",
+"[https://californiaeda.com/](https://californiaeda.com/)",
+"[https://californiaeda.com/eligibility/](https://californiaeda.com/eligibility/)"
+],
+"evidenceText": "CEDA supports eligible California new construction and major alteration projects with energy-design assistance and incentives for whole-building decarbonization, including mechanical, lighting, envelope, and heat-pump analysis.",
+"reasoningNotes": "The LED retrofit match is too broad and product-specific. CEDA is design assistance and possible incentives for qualifying new construction or major alterations."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5309",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Available only where CaliforniaFIRST or CSCDA Open PACE has been adopted by the local jurisdiction; not statewide by default."
+},
+"eligibleApplicantTypes": [
+"residential_property_owner",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"energy_efficiency_improvements",
+"renewable_energy_system",
+"water_conservation_improvements",
+"seismic_resilience_improvements",
+"safety_related_home_improvements"
+],
+"hardRequirements": [
+"Property must be in a participating CaliforniaFIRST or CSCDA Open PACE jurisdiction.",
+"Financing is repaid through a property tax assessment.",
+"Applicant and property must satisfy PACE administrator underwriting and consumer protection requirements.",
+"Improvements must be eligible under the current program and local-government authorization.",
+"Contractor or third-party project requirements may apply."
+],
+"blockers": [
+"Do not match battery storage unless current CaliforniaFIRST or administrator documentation specifically approves the storage project.",
+"Do not treat PACE as a rebate, grant, or free government program.",
+"Do not match properties in nonparticipating jurisdictions.",
+"Do not infer commercial eligibility from other CSCDA PACE offerings unless this record is split or verified for commercial use."
+],
+"programType": "PACE Financing",
+"administrator": "Renew Financial Group LLC and CSCDA CaliforniaFIRST",
+"applicationUrl": null,
+"websiteUrl": "[https://renewfinancial.com/californiafirst-pace-financing-california](https://renewfinancial.com/californiafirst-pace-financing-california)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/5309/californiafirst](https://programs.dsireusa.org/system/program/detail/5309/californiafirst)",
+"[https://renewfinancial.com/](https://renewfinancial.com/)",
+"[https://renewfinancial.com/californiafirst-pace-financing-california](https://renewfinancial.com/californiafirst-pace-financing-california)",
+"[https://renewmyhome.info/](https://renewmyhome.info/)",
+"[https://dfpi.ca.gov/consumers/housing/pace/](https://dfpi.ca.gov/consumers/housing/pace/)",
+"[https://dfpi.ca.gov/regulated-industries/property-assessed-clean-energy-pace-program-administrators/](https://dfpi.ca.gov/regulated-industries/property-assessed-clean-energy-pace-program-administrators/)",
+"[https://cscda.org/property-assessed-clean-energy-programs/](https://cscda.org/property-assessed-clean-energy-programs/)",
+"[https://www.treasurer.ca.gov/caeatfa/pace/participants](https://www.treasurer.ca.gov/caeatfa/pace/participants)"
+],
+"evidenceText": "California PACE sources describe property-tax-assessment financing for energy-efficiency, water-saving, renewable, environmentally beneficial, seismic, and safety-related improvements in participating jurisdictions.",
+"reasoningNotes": "Current official sources confirm CaliforniaFIRST or related PACE financing but did not verify standalone battery storage for this record, so the battery match should be blocked unless administrator-approved."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5744",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"CenterPoint Energy Houston Electric"
+],
+"notes": "Limited to CenterPoint Energy Houston Electric residential electric service area and participating retail or online partners."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"consumer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"energy_star_led_lamps",
+"residential_led_lighting_discount",
+"energy_star_room_air_conditioner",
+"energy_star_room_air_purifier",
+"pipe_insulation_product",
+"advanced_power_strip"
+],
+"hardRequirements": [
+"Product must be purchased through a participating partner or eligible online channel.",
+"LED bulbs must be ENERGY STAR certified to receive the lighting discount.",
+"Discount is applied at purchase rather than issued as a conventional post-installation rebate.",
+"Other products are point-of-sale product discounts and should not be generalized to broad equipment retrofits."
+],
+"blockers": [
+"Do not match commercial LED lighting retrofits.",
+"Do not match whole-building lighting replacement projects.",
+"Room air conditioner discounts are not central HVAC replacement.",
+"Pipe insulation product discounts are not broad plumbing or water-heating retrofits.",
+"Advanced power strips are plug-load products, not building electrical retrofits."
+],
+"programType": "Point-of-Sale Discount Program",
+"administrator": "CenterPoint Energy Houston Electric",
+"applicationUrl": "[https://centerpointenergytx.clearesult.com/](https://centerpointenergytx.clearesult.com/)",
+"websiteUrl": "[https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/LED-Lighting.aspx?au=res&sa=ho](https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/LED-Lighting.aspx?au=res&sa=ho)",
+"sourceUrlsChecked": [
+"[https://programs.dsireusa.org/system/program/detail/5744/centerpoint-energy-advanced-residential-lighting-program](https://programs.dsireusa.org/system/program/detail/5744/centerpoint-energy-advanced-residential-lighting-program)",
+"[https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/LED-Lighting.aspx?sa=ho&au=res](https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/LED-Lighting.aspx?sa=ho&au=res)",
+"[https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/advanced-lighting-program.aspx?au=res&sa=ho](https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/advanced-lighting-program.aspx?au=res&sa=ho)",
+"[https://centerpointenergytx.clearesult.com/](https://centerpointenergytx.clearesult.com/)"
+],
+"evidenceText": "CenterPoint says residential customers can receive instant discounts on ENERGY STAR LED bulbs through participating partners, with additional point-of-sale discounts for selected room AC, air purifier, pipe insulation, and power strip products.",
+"reasoningNotes": "The LED lighting match is valid only as a residential product discount for ENERGY STAR lamps, not a commercial or whole-building lighting retrofit."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:3684"
+}

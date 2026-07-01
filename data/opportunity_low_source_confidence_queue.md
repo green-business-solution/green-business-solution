@@ -1,16 +1,16 @@
 # Low Source-Confidence Opportunity Queue
 
-Generated: 2026-07-01T22:38:32.283Z
+Generated: 2026-07-01T22:58:06.409Z
 
 This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not represent deterministic `match_confidence`.
 
 ## Summary
 
-- Repair batches scanned: 48
-- Latest unique repaired opportunities: 635
-- Low source-confidence opportunities: 11
-- Availability status counts: active 3, source_inaccessible 7, unknown 1
-- Recommended next-step counts: deeper_gpt_pro_research_before_trusting_active_program 3, human_or_gpt_pro_availability_verification 1, human_or_gpt_pro_source_access_followup 7
+- Repair batches scanned: 58
+- Latest unique repaired opportunities: 785
+- Low source-confidence opportunities: 15
+- Availability status counts: active 4, source_inaccessible 10, unknown 1
+- Recommended next-step counts: deeper_gpt_pro_research_before_trusting_active_program 4, human_or_gpt_pro_availability_verification 1, human_or_gpt_pro_source_access_followup 10
 
 ## Queue
 
@@ -19,14 +19,18 @@ This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not 
 | 1 | Emerald PUD - Commercial and Industrial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2138 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29 | deeper_gpt_pro_research_before_trusting_active_program |
 | 2 | Lane Electric Cooperative - Commercial/Residential Weatherization & Energy Efficiency Program / SOURCE_DSIRE:dsire_program_id:2469 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34 | deeper_gpt_pro_research_before_trusting_active_program |
 | 3 | Duke Energy - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2297 | IN | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39 | deeper_gpt_pro_research_before_trusting_active_program |
-| 4 | Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1885 | CA | unknown | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1 | human_or_gpt_pro_availability_verification |
-| 5 | Gunnison County Electric - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:3372 | CO | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4 | human_or_gpt_pro_source_access_followup |
-| 6 | Tillamook County PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2185 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14 | human_or_gpt_pro_source_access_followup |
-| 7 | Emerald PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2132 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22 | human_or_gpt_pro_source_access_followup |
-| 8 | Mason County PUD 3 - Commercial and Industrial Energy Rebates / SOURCE_DSIRE:dsire_program_id:2199 | WA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30 | human_or_gpt_pro_source_access_followup |
-| 9 | Northern Lights Inc. - Energy Conservation Rebate Program / SOURCE_DSIRE:dsire_program_id:4198 | ID | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9 | human_or_gpt_pro_source_access_followup |
-| 10 | Duke Energy - Non-Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1553 | KY | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8 | human_or_gpt_pro_source_access_followup |
-| 11 | Farmers Electric Cooperative (Kalona) - Residential Energy Efficiency Grant Program / SOURCE_DSIRE:dsire_program_id:4535 | IA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45 | human_or_gpt_pro_source_access_followup |
+| 4 | Dixie Electric Cooperative - Residential Energy Efficiency Loan Program / SOURCE_DSIRE:dsire_program_id:1968 | AL | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | deeper_gpt_pro_research_before_trusting_active_program |
+| 5 | Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1885 | CA | unknown | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1 | human_or_gpt_pro_availability_verification |
+| 6 | Gunnison County Electric - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:3372 | CO | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4 | human_or_gpt_pro_source_access_followup |
+| 7 | Tillamook County PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2185 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14 | human_or_gpt_pro_source_access_followup |
+| 8 | Emerald PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2132 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22 | human_or_gpt_pro_source_access_followup |
+| 9 | Mason County PUD 3 - Commercial and Industrial Energy Rebates / SOURCE_DSIRE:dsire_program_id:2199 | WA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30 | human_or_gpt_pro_source_access_followup |
+| 10 | Northern Lights Inc. - Energy Conservation Rebate Program / SOURCE_DSIRE:dsire_program_id:4198 | ID | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9 | human_or_gpt_pro_source_access_followup |
+| 11 | Duke Energy - Non-Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1553 | KY | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8 | human_or_gpt_pro_source_access_followup |
+| 12 | Farmers Electric Cooperative (Kalona) - Residential Energy Efficiency Grant Program / SOURCE_DSIRE:dsire_program_id:4535 | IA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45 | human_or_gpt_pro_source_access_followup |
+| 13 | Xcel Energy - Residential Energy Efficiency Rebate Programs / SOURCE_DSIRE:dsire_program_id:4816 | ND | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49 | human_or_gpt_pro_source_access_followup |
+| 14 | Duke Energy Indiana Off-Peak Charging Credit / SOURCE_DSIRE:dsire_program_id:22551 | IN | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
+| 15 | Flathead Electric Cooperative - Commercial Incentive Programs / SOURCE_DSIRE:dsire_program_id:2180 | MT | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
 
 ## Verification Notes
 
@@ -56,6 +60,15 @@ This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not 
 - Evidence: Duke’s]( official business Smart $aver pages are current but blocked to the browser; readable Duke material identifies Indiana business rebates for lighting, HVAC, agriculture and custom measures.
 - Reasoning: Because current Duke detail pages were inaccessible, this repair is conservative: unsupported refrigeration and insulation matches were removed rather than inferred from DSIRE.
 - Sources checked: https://www.duke-energy.com/business/products/smartsaver, https://www.duke-energy.com/business/products/smartsaver/hvac-incentives, https://www.duke-energy.com/business/products/smartsaver/chiller, https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates?jur=IN01, https://illumination.duke-energy.com/articles/with-lower-energy-bills-this-clinic-can-help-more-people
+
+### Dixie Electric Cooperative - Residential Energy Efficiency Loan Program
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1968`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json`
+- Recommended next step: `deeper_gpt_pro_research_before_trusting_active_program`
+- Evidence: Official]( search snippets identify an active Co-op Energy Efficiency Loan Program and low-interest financing related to heat-pump upgrades, but the detail page returned access errors.
+- Reasoning: Retain heat-pump and high-efficiency HVAC only as financing categories. Confidence is low because official current terms were not readable beyond official snippets.
+- Sources checked: https://www.dixie.coop/energy-efficiency-program, https://www.dixie.coop/manufacturedhomeprogram, http://www.dixie.coop/content.cfm?id=2049&download_id=59#attached_content
 
 ### Modesto Irrigation District - Commercial Energy Efficiency Rebate Program
 
@@ -128,4 +141,31 @@ This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not 
 - Evidence: The current Farmers Electric Cooperative conservation-grants, rebates, and ways-to-save pages returned 502 Bad Gateway. Search snippets showed only page titles and a partial insulation reference, insufficient to verify current eligible measures.
 - Reasoning: Source inaccessible; cleared retrofit categories until official terms can be read. Retained only minimal geography and applicant context from the program name and official URL.
 - Sources checked: https://www.feckalona.net/energy-conservation-grants.html, http://www.feckalona.net/energy-conservation-grants.html, https://www.feckalona.net/energy-efficiency-rebates.html, https://www.feckalona.net/ways-to-save.html
+
+### Xcel Energy - Residential Energy Efficiency Rebate Programs
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:4816`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: The current Xcel North Dakota rebate page could not be read beyond dynamic loading; the digital application is active but does not show measure-level eligibility.
+- Reasoning: Marked source_inaccessible to prevent matching on outdated furnace/boiler assumptions. Current official details must be verified before restoring categories.
+- Sources checked: https://nd.my.xcelenergy.com/s/residential/heating-cooling/heating-upgrade-rebates, https://www.xcelenergy.com/digital_application, https://xcelenergy.com/staticfiles/xe/Marketing/Files/MN-Res-Heating-Rebate-Application.pdf
+
+### Duke Energy Indiana Off-Peak Charging Credit
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:22551`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: Accessible]( Duke release describes a two-year Indiana pilot launched October 1, 2022, capped at 500 residential Level 2 participants; current continuation was not readable.
+- Reasoning: Cleared retrofit categories because current official sources were not readable enough to verify ongoing availability after the original pilot period.
+- Sources checked: https://news.duke-energy.com/releases/duke-energy-indiana-plans-two-year-electric-transportation-pilot-programs, https://www.duke-energy.com/home/products/ev-complete/off-peak-credit
+
+### Flathead Electric Cooperative - Commercial Incentive Programs
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2180`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: Current]( official commercial rebate page could not be fetched; snippets identify commercial and industrial lighting, while older official snippets mention broader measures.
+- Reasoning: Cleared categories under source_inaccessible because current official program materials were not readable enough to verify measure eligibility.
+- Sources checked: https://www.flatheadelectric.com/commercial/business-energy-savings/, https://www.flatheadelectric.com/energy-solutions/energy-efficiency-rebate-programs/commercial-rebate-programs/, https://www.flatheadelectric.com/energy-solutions/energy-efficiency-rebate-programs/, https://www.flatheadelectric.com/co-op-announces-2022-energy-efficiency-savings-862574-paid-out-to-members-and-partners/
 

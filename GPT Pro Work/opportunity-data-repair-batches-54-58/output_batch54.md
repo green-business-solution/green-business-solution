@@ -1,0 +1,897 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4125",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Piedmont Natural Gas service territory"
+],
+"notes": "North Carolina residential customers in Piedmont Natural Gas service territory."
+},
+"eligibleApplicantTypes": [
+"residential_natural_gas_customers"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"high_efficiency_natural_gas_furnace",
+"natural_gas_tankless_water_heater"
+],
+"hardRequirements": [
+"Customer must receive natural gas service from Piedmont Natural Gas in North Carolina.",
+"Equipment must be qualifying new high-efficiency natural gas equipment meeting the listed efficiency tier.",
+"Furnace rebates require qualifying AFUE levels.",
+"Application must be submitted with required invoice and installation documentation within the program deadline, generally 90 days after installation."
+],
+"blockers": [
+"Do not match broad high_efficiency_hvac_replacement; only specified natural gas equipment is supported.",
+"Electric heat pumps, central air conditioners, insulation, windows, and weatherization are not supported by this opportunity.",
+"Commercial customers are not eligible for the full residential equipment set and are limited to tankless water heater rebates where offered.",
+"Official Piedmont pages and PDFs returned HTTP 403 in direct browser checks, so final measure details should be confirmed by current rebate documents."
+],
+"programType": "Rebate Program",
+"administrator": "Piedmont Natural Gas",
+"applicationUrl": "[https://gasadvantage-hpp.piedmontng.com/docs/NC_application_rebate.pdf](https://gasadvantage-hpp.piedmontng.com/docs/NC_application_rebate.pdf)",
+"websiteUrl": "[https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources](https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources)",
+"sourceUrlsChecked": [
+"[https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources](https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources)",
+"[https://gasadvantage-hpp.piedmontng.com/EnergyEfficiency/?utm_source=](https://gasadvantage-hpp.piedmontng.com/EnergyEfficiency/?utm_source=)",
+"[https://gasadvantage-hpp.piedmontng.com/docs/NC_application_rebate.pdf](https://gasadvantage-hpp.piedmontng.com/docs/NC_application_rebate.pdf)"
+],
+"evidenceText": "Piedmont sources indicate residential rebates for qualifying new energy-efficient gas equipment, including furnace AFUE tiers and tankless water heaters; commercial eligibility is limited where offered.",
+"reasoningNotes": "The furnace retrofit match is supported when narrowed to qualifying natural gas furnaces. The broad HVAC replacement category is a false positive because the opportunity does not cover all high-efficiency HVAC."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4199",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"SC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Piedmont Natural Gas service territory"
+],
+"notes": "South Carolina residential customers in Piedmont Natural Gas service territory."
+},
+"eligibleApplicantTypes": [
+"residential_natural_gas_customers"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"high_efficiency_natural_gas_furnace",
+"natural_gas_tankless_water_heater"
+],
+"hardRequirements": [
+"Customer must receive natural gas service from Piedmont Natural Gas in South Carolina.",
+"Equipment must be qualifying new high-efficiency natural gas equipment meeting the listed efficiency tier.",
+"South Carolina rebates are generally tied to replacement of existing natural gas equipment.",
+"Application must be submitted with required invoice and installation documentation within the program deadline, generally 90 days after installation."
+],
+"blockers": [
+"Do not match broad high_efficiency_hvac_replacement; only specified natural gas equipment is supported.",
+"Electric heat pumps, central air conditioners, insulation, windows, and weatherization are not supported by this opportunity.",
+"New gas conversion or non-gas HVAC measures should not match unless the current South Carolina application expressly includes them.",
+"Official Piedmont pages and PDFs returned HTTP 403 in direct browser checks, so final measure details should be confirmed by current rebate documents."
+],
+"programType": "Rebate Program",
+"administrator": "Piedmont Natural Gas",
+"applicationUrl": "[https://gasadvantage.piedmontng.com/docs/SC_application_rebate.pdf](https://gasadvantage.piedmontng.com/docs/SC_application_rebate.pdf)",
+"websiteUrl": "[https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources](https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources)",
+"sourceUrlsChecked": [
+"[https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources](https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources)",
+"[https://gasadvantage-hpp.piedmontng.com/EnergyEfficiency/?utm_source=](https://gasadvantage-hpp.piedmontng.com/EnergyEfficiency/?utm_source=)",
+"[https://gasadvantage.piedmontng.com/docs/SC_application_rebate.pdf](https://gasadvantage.piedmontng.com/docs/SC_application_rebate.pdf)"
+],
+"evidenceText": "Piedmont sources indicate South Carolina residential rebates for qualifying energy-efficient natural gas equipment, including furnace AFUE tiers and tankless water heaters.",
+"reasoningNotes": "The furnace retrofit match is supported when narrowed to qualifying natural gas furnaces. The broad HVAC replacement category is unsupported because the program is equipment-specific."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3106",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [
+"Prince George's County"
+],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Applies to qualifying residential property in Prince George's County."
+},
+"eligibleApplicantTypes": [
+"residential_homeowners",
+"residential_property_owners",
+"lessees_with_documented_solar_or_geothermal_system"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ground_source_geothermal_heat_pump",
+"rooftop_solar_pv",
+"solar_domestic_hot_water_system",
+"solar_space_heating_system"
+],
+"hardRequirements": [
+"Property must be residential and located in Prince George's County.",
+"Application must be filed with the County Office of Finance.",
+"Installation date must be within the 12 months preceding receipt of the application.",
+"Applicant must provide invoices, proof of payment, or qualifying lease documentation.",
+"Credit is limited by statutory caps and may be subject to annual funding limits or a waiting list."
+],
+"blockers": [
+"Do not match generic high_efficiency_hvac_replacement; conventional HVAC replacements are not eligible unless they are a qualifying geothermal system.",
+"Do not match nonresidential properties.",
+"Solar and geothermal are the eligible alternative-energy device categories; other efficiency retrofits are outside this tax credit."
+],
+"programType": "Property Tax Incentive",
+"administrator": "Prince George's County Office of Finance",
+"applicationUrl": "[https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv10244_alternative-energy-tax-credit-application-pdf.pdf](https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv10244_alternative-energy-tax-credit-application-pdf.pdf)",
+"websiteUrl": "[https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential](https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential)",
+"sourceUrlsChecked": [
+"[https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential](https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential)",
+"[https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv10244_alternative-energy-tax-credit-application-pdf.pdf](https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv10244_alternative-energy-tax-credit-application-pdf.pdf)",
+"[https://princegeorgescountymd.legistar.com/LegislationDetail.aspx?GUID=E1216236-19ED-434B-805F-E1D28694E291&ID=3968041](https://princegeorgescountymd.legistar.com/LegislationDetail.aspx?GUID=E1216236-19ED-434B-805F-E1D28694E291&ID=3968041)"
+],
+"evidenceText": "County sources identify an Alternative Energy residential tax credit for solar and geothermal devices; the application requires recent installation and invoices or lease documentation.",
+"reasoningNotes": "Ground-source geothermal is supported, but broad HVAC replacement is a false positive. Solar PV and solar thermal categories also belong to this opportunity."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:184",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Iowa property tax treatment administered through local assessors."
+},
+"eligibleApplicantTypes": [
+"property_owners"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"solar_thermal_system",
+"passive_solar_design",
+"small_wind_energy_system",
+"solar_or_wind_integrated_storage"
+],
+"hardRequirements": [
+"Property must be assessed as agricultural, residential, commercial, or industrial property in Iowa.",
+"The installed system must qualify as a solar energy system under Iowa Code treatment, including solar or wind conversion to thermal, mechanical, or electrical energy.",
+"Only the added market value from the qualifying system is disregarded.",
+"The exemption applies for five full assessment years under the renewable-energy property tax provision."
+],
+"blockers": [
+"Do not match standalone battery_storage_system; storage is only supported when integral to a qualifying solar or wind energy system.",
+"Geothermal heat pumps are handled by a separate Iowa geothermal heating and cooling residential property tax exemption, not this renewable energy systems exemption.",
+"Do not match nonrenewable HVAC, weatherization, or appliance upgrades."
+],
+"programType": "Property Tax Incentive",
+"administrator": "Iowa Department of Revenue and local assessors",
+"applicationUrl": null,
+"websiteUrl": "[https://revenue.iowa.gov/taxes/tax-guidance/tax-credits-deductions-exemption/tax-credits-and-exemptions](https://revenue.iowa.gov/taxes/tax-guidance/tax-credits-deductions-exemption/tax-credits-and-exemptions)",
+"sourceUrlsChecked": [
+"[https://revenue.iowa.gov/taxes/tax-guidance/tax-credits-deductions-exemption/tax-credits-and-exemptions](https://revenue.iowa.gov/taxes/tax-guidance/tax-credits-deductions-exemption/tax-credits-and-exemptions)",
+"[https://www.legis.iowa.gov/docs/code/441.21.pdf](https://www.legis.iowa.gov/docs/code/441.21.pdf)",
+"[https://www.law.cornell.edu/regulations/iowa/Iowa-Admin-Code-r-701-110-29](https://www.law.cornell.edu/regulations/iowa/Iowa-Admin-Code-r-701-110-29)"
+],
+"evidenceText": "Iowa law excludes added value from solar and wind energy systems for qualifying property; Iowa DOR lists geothermal as a separate residential exemption.",
+"reasoningNotes": "Battery storage and geothermal were overbroad matches. Keep only renewable energy system categories supported by the property tax provision, with storage limited to integrated solar or wind systems."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22783",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"ME"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Sites must be physically located in Maine; the current RFP prioritizes listed municipalities."
+},
+"eligibleApplicantTypes": [
+"multifamily_property_owners",
+"business_property_owners",
+"public_entities",
+"bidders_with_host_site_agreement"
+],
+"eligibleSectors": [
+"multifamily",
+"commercial",
+"public"
+],
+"eligibleRetrofitCategories": [
+"public_level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Current funding opportunity is for public Level 2 EV chargers, not DC fast chargers.",
+"Site must be in Maine and meet RFP location requirements.",
+"Eligible properties include multifamily properties with five or more units, business properties, and public properties.",
+"Applicant must be the site owner or have a host-site agreement allowing public charging for at least five years.",
+"Projects must install new networked Level 2 equipment with at least four ports per site and meet RFP technical requirements."
+],
+"blockers": [
+"Do not match dc_fast_charger_installation for the current opportunity; DC fast-charger phases shown by Efficiency Maine are awarded or completed.",
+"Private home chargers, Airbnbs or vacation properties, non-public multi-unit charging, PreK-12 schools, vehicle dealerships, replacements, and EVSE sellers or installers are ineligible under the current RFP.",
+"Fleet-only or non-public charging should not match this public charger grant."
+],
+"programType": "Grant Program",
+"administrator": "Efficiency Maine",
+"applicationUrl": "[https://www.efficiencymaine.com/rfp-em-008-2026/](https://www.efficiencymaine.com/rfp-em-008-2026/)",
+"websiteUrl": "[https://www.efficiencymaine.com/opportunities/](https://www.efficiencymaine.com/opportunities/)",
+"sourceUrlsChecked": [
+"[https://www.efficiencymaine.com/opportunities/](https://www.efficiencymaine.com/opportunities/)",
+"[https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/](https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/)",
+"[https://www.efficiencymaine.com/rfp-em-008-2026/](https://www.efficiencymaine.com/rfp-em-008-2026/)",
+"[https://www.efficiencymaine.com/docs/RFP-EM-008-2026-Public-L2-EV-Chargers-EM-008-2026.pdf](https://www.efficiencymaine.com/docs/RFP-EM-008-2026-Public-L2-EV-Chargers-EM-008-2026.pdf)"
+],
+"evidenceText": "Current Efficiency Maine opportunities list Public Level 2 EV Chargers, while DC fast-charger phases are awarded. The RFP funds public Level 2 sites in Maine.",
+"reasoningNotes": "The general EV charger category is valid only when narrowed to current public Level 2 charging. DCFC is a stale or separate award phase and should be blocked."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2842",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"PR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Applies in Puerto Rico under Commonwealth tax law and CRIM property tax administration."
+},
+"eligibleApplicantTypes": [
+"property_owners",
+"renewable_energy_equipment_distributors",
+"renewable_energy_equipment_manufacturers",
+"renewable_energy_businesses"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural",
+"public"
+],
+"eligibleRetrofitCategories": [
+"solar_energy_equipment",
+"rooftop_solar_pv",
+"renewable_energy_storage_equipment",
+"biomass_biogas_energy_system",
+"wind_energy_system",
+"geothermal_energy_system",
+"fuel_cell_system",
+"anaerobic_digestion_system"
+],
+"hardRequirements": [
+"Equipment must be renewable-energy material, equipment, or accessories covered by Puerto Rico law.",
+"Covered equipment includes collection, capture, accumulation, storage, generation, distribution, or application of renewable energy.",
+"Solar electric equipment must have a valid Certificate of Compliance from the DDEC Energy Public Policy Program.",
+"Qualifying solar electric equipment must meet applicable standards and warranty requirements.",
+"CRIM may require valid certification in the applicable portal before granting the property tax benefit."
+],
+"blockers": [
+"Do not match fossil-fuel generators or nonrenewable backup power systems.",
+"Battery storage should only match as renewable-energy storage equipment, not as generic resiliency storage unrelated to renewable energy.",
+"Equipment lacking required DDEC certification or warranty documentation should not match."
+],
+"programType": "Property Tax Incentive",
+"administrator": "Centro de Recaudacion de Ingresos Municipales and Puerto Rico Department of Economic Development and Commerce Energy Public Policy Program",
+"applicationUrl": null,
+"websiteUrl": "[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/107-2020.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/107-2020.pdf)",
+"sourceUrlsChecked": [
+"[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/107-2020.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/107-2020.pdf)",
+"[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/60-2019.pdf)"
+],
+"evidenceText": "Puerto Rico law exempts renewable-energy equipment for collection, storage, generation, distribution, and application; Act 60 includes biomass, biogas, solar, wind, geothermal, and fuel cells.",
+"reasoningNotes": "Biomass and renewable-energy storage are supported. Keep storage narrow to renewable-energy equipment rather than generic batteries."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22437",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Randolph Electric Membership Corporation service territory"
+],
+"notes": "Available through ElecTel financing associated with Randolph EMC members and eligible residential properties."
+},
+"eligibleApplicantTypes": [
+"residential_dwelling_property_owners",
+"single_family_homeowners",
+"duplex_owners",
+"owner_occupied_condominium_owners",
+"randolph_emc_members_or_electel_members"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"high_efficiency_electric_heat_pump",
+"high_efficiency_furnace_retrofit",
+"weather_stripping_air_sealing",
+"insulation_upgrade",
+"efficient_windows_and_doors",
+"electric_or_solar_water_heater",
+"solar_energy_system",
+"energy_star_related_improvements"
+],
+"hardRequirements": [
+"Applicant must qualify for ElecTel credit-union financing and any membership or service-territory requirements.",
+"Loans are primarily for residential dwelling property owners.",
+"Eligible dwellings include single-family homes, duplexes, and owner-occupied condominiums.",
+"Financing may cover up to 100 percent of purchase price, taxes, and installation, subject to credit approval and loan limits.",
+"Maximum loan amount is up to $30,000 under the listed ElecTel terms."
+],
+"blockers": [
+"Do not treat this as a rebate or grant; it is loan financing.",
+"Do not match nonresidential, renter-only, or unsecured appliance purchases outside the listed residential improvement scope.",
+"Measures are financed improvements, not guaranteed eligibility without credit approval."
+],
+"programType": "Loan Program",
+"administrator": "ElecTel Cooperative Federal Credit Union in partnership with Randolph Electric Membership Corporation",
+"applicationUrl": "[https://my.homecu.net/fi/ecfcu/loan-application.html](https://my.homecu.net/fi/ecfcu/loan-application.html)",
+"websiteUrl": "[https://electel.org/apply/energy-efficient-loans/](https://electel.org/apply/energy-efficient-loans/)",
+"sourceUrlsChecked": [
+"[https://www.randolphemc.com/energy-solutions/save-energy-money/electel-credit-unit-financing/](https://www.randolphemc.com/energy-solutions/save-energy-money/electel-credit-unit-financing/)",
+"[https://electel.org/apply/energy-efficient-loans/](https://electel.org/apply/energy-efficient-loans/)",
+"[https://my.homecu.net/fi/ecfcu/loan-application.html](https://my.homecu.net/fi/ecfcu/loan-application.html)"
+],
+"evidenceText": "ElecTel states energy-efficiency loans are primarily for residential dwelling owners and may finance heat pumps, weather stripping, water heaters, insulation, windows, doors, solar, and Energy Star items.",
+"reasoningNotes": "Both insulation and high-efficiency HVAC-related measures can match, but only as financed residential improvements under a loan program."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5396",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"SC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide South Carolina clean-energy manufacturing incentive for qualifying certified businesses, with no new eligibility after the statutory deadline."
+},
+"eligibleApplicantTypes": [
+"clean_energy_manufacturers",
+"business_corporations_with_existing_certification"
+],
+"eligibleSectors": [
+"industrial",
+"manufacturing"
+],
+"eligibleRetrofitCategories": [],
+"hardRequirements": [
+"Business had to qualify as a clean-energy manufacturing operation under South Carolina Code section 12-6-3588.",
+"Required county-tier capital investment thresholds ranged from $50 million to $200 million.",
+"Required job creation was one qualifying job per $1 million of capital investment.",
+"Qualifying jobs had to meet the statutory wage threshold.",
+"A business had to become eligible no later than the tax year ending December 31, 2020."
+],
+"blockers": [
+"No new building retrofit match should be created; this is an industry recruitment and manufacturing tax credit.",
+"Do not match battery_storage_system or ground_source_geothermal_heat_pump installations at customer buildings.",
+"Do not match general renewable energy deployment or energy-efficiency upgrades.",
+"The statutory eligibility deadline for new qualified businesses has passed."
+],
+"programType": "Industry Recruitment/Support",
+"administrator": "South Carolina Department of Revenue with South Carolina Department of Commerce certification",
+"applicationUrl": null,
+"websiteUrl": "[https://www.scstatehouse.gov/code/t12c006.php](https://www.scstatehouse.gov/code/t12c006.php)",
+"sourceUrlsChecked": [
+"[https://www.scstatehouse.gov/code/t12c006.php](https://www.scstatehouse.gov/code/t12c006.php)",
+"[https://www.sccommerce.com/why-sc/incentives-taxes](https://www.sccommerce.com/why-sc/incentives-taxes)"
+],
+"evidenceText": "South Carolina Code section 12-6-3588 covers clean-energy manufacturing investments and required eligibility by tax year ending December 31, 2020.",
+"reasoningNotes": "The matched retrofit categories are false positives. The program supports manufacturers of clean-energy systems or components, not installation of retrofits."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3144",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Portland General Electric",
+"Pacific Power",
+"NW Natural",
+"Cascade Natural Gas",
+"Avista"
+],
+"notes": "Applies to Oregon homes served by participating Energy Trust of Oregon utilities; retail point-of-purchase eligibility depends on current participating retailers."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customers",
+"single_family_homeowners",
+"manufactured_homeowners",
+"residential_renters_with_eligible_purchase"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"residential_energy_star_clothes_washer",
+"residential_energy_star_clothes_dryer"
+],
+"hardRequirements": [
+"Home must be in Oregon and served by a participating Energy Trust utility.",
+"Appliance must be a select ENERGY STAR certified clothes washer or clothes dryer eligible at the time of purchase.",
+"Incentive is generally point-of-purchase through participating retailers.",
+"Program is subject to Energy Trust funding, specifications, and retailer participation."
+],
+"blockers": [
+"Do not match broad high_efficiency_hvac_replacement; HVAC incentives are separate Energy Trust offerings.",
+"Do not match commercial kitchen equipment, commercial refrigeration, or multifamily business appliance incentives to this residential appliance record.",
+"Do not generalize clothes washer incentives into all water-efficiency or appliance retrofits.",
+"The current Energy Trust appliance page was not directly readable, so detailed current product lists should be confirmed with Energy Trust or a participating retailer."
+],
+"programType": "Rebate Program",
+"administrator": "Energy Trust of Oregon",
+"applicationUrl": null,
+"websiteUrl": null,
+"sourceUrlsChecked": [
+"[http://www.energytrust.org/incentive-groups/residential-appliances/](http://www.energytrust.org/incentive-groups/residential-appliances/)",
+"[https://www.firstcallheat.com/media/HES_PI0320I.pdf](https://www.firstcallheat.com/media/HES_PI0320I.pdf)",
+"[https://blog.energytrust.org/lather-rinse-save/](https://blog.energytrust.org/lather-rinse-save/)",
+"[https://insider.energytrust.org/home-retrofit-incentive-changes-coming-january-1-2026-2/](https://insider.energytrust.org/home-retrofit-incentive-changes-coming-january-1-2026-2/)"
+],
+"evidenceText": "A 2025 Energy Trust residential information sheet lists point-of-purchase incentives for select ENERGY STAR clothes washers and dryers at retail stores.",
+"reasoningNotes": "The laundry appliance match is supported only at residential product level. The HVAC category is a false positive and should be removed from this opportunity."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:118",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AZ"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Arizona individual income tax credit for qualifying devices installed at an Arizona residence."
+},
+"eligibleApplicantTypes": [
+"individual_arizona_residents",
+"residential_taxpayers",
+"residential_homeowners"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"solar_water_heating_system",
+"solar_pool_heating_system",
+"passive_solar_building_system",
+"solar_daylighting_system",
+"small_wind_energy_system",
+"wind_powered_pump",
+"solar_integrated_battery_storage",
+"solar_space_heating_cooling_system"
+],
+"hardRequirements": [
+"Taxpayer must be an eligible individual filing Arizona Form 310.",
+"Device must be installed in an Arizona residence.",
+"Credit is 25 percent of cost including installation, capped at $1,000 per residence.",
+"Total credits for the same residence may not exceed $1,000.",
+"Unused credit may be carried forward for up to five years.",
+"Leased systems and power purchase agreement systems are not eligible."
+],
+"blockers": [
+"Do not match led_lighting_retrofit; lighting is not an eligible category under this credit.",
+"Conventional HVAC, plumbing, windows, skylights, appliances, fans, paint, insulation, weather stripping, and vegetation are excluded.",
+"Individual components alone do not qualify unless part of a qualifying solar energy device.",
+"Storage should match only when part of an eligible solar PV device."
+],
+"programType": "Personal Tax Credit",
+"administrator": "Arizona Department of Revenue",
+"applicationUrl": "[https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_f.pdf](https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_f.pdf)",
+"websiteUrl": "[https://azdor.gov/forms/tax-credits-forms/credit-solar-energy-devices](https://azdor.gov/forms/tax-credits-forms/credit-solar-energy-devices)",
+"sourceUrlsChecked": [
+"[https://azdor.gov/forms/tax-credits-forms/credit-solar-energy-devices](https://azdor.gov/forms/tax-credits-forms/credit-solar-energy-devices)",
+"[https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_i.pdf](https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_i.pdf)",
+"[https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_f.pdf](https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_f.pdf)"
+],
+"evidenceText": "ADOR Form 310 instructions allow a residential solar energy device credit for solar PV with batteries, solar thermal, passive solar, daylighting, and wind; lighting is excluded.",
+"reasoningNotes": "Rooftop solar PV is valid. LED lighting is a false positive and should be blocked."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5440",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"RI"
+],
+"counties": [],
+"cities": [
+"Barrington",
+"Bristol",
+"Central Falls",
+"Charlestown",
+"Coventry",
+"Cranston",
+"Cumberland",
+"East Providence",
+"Exeter",
+"Lincoln",
+"Middletown",
+"Newport",
+"North Kingstown",
+"North Providence",
+"Pawtucket",
+"Providence",
+"Richmond",
+"Smithfield",
+"South Kingstown",
+"Warren",
+"Warwick",
+"West Warwick",
+"Westerly",
+"Woonsocket"
+],
+"utilityTerritories": [],
+"notes": "Only properties in participating Rhode Island municipalities are eligible."
+},
+"eligibleApplicantTypes": [
+"commercial_property_owners",
+"industrial_property_owners",
+"agricultural_property_owners",
+"nonprofit_property_owners",
+"multifamily_property_owners",
+"developers"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural",
+"nonprofit",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"commercial_energy_efficiency_measures",
+"renewable_energy_system",
+"water_conservation_measures",
+"ev_charger_installation",
+"environmental_health_and_safety_improvements"
+],
+"hardRequirements": [
+"Property must be nonresidential or multifamily with five or more units.",
+"Property must be located in a Rhode Island municipality that has opted into C-PACE.",
+"Project must be a permanent improvement on eligible real property.",
+"Property taxes and assessments must be current.",
+"Property owner must not be in bankruptcy or mortgage default.",
+"Mortgage holder consent and capital-provider financing requirements apply."
+],
+"blockers": [
+"Do not match one-to-four-unit residential properties.",
+"Do not treat C-PACE as a rebate; it is long-term property-assessed financing.",
+"Standalone battery storage was not specifically verified as an eligible measure in current RIIB sources and should not be matched without project-specific approval.",
+"Projects outside participating municipalities should not match."
+],
+"programType": "PACE Financing",
+"administrator": "Rhode Island Infrastructure Bank",
+"applicationUrl": "[https://www.riib.org/wp-content/uploads/2025/01/RI_C-PACE_Financing_Application_Form-1.pdf](https://www.riib.org/wp-content/uploads/2025/01/RI_C-PACE_Financing_Application_Form-1.pdf)",
+"websiteUrl": "[https://www.riib.org/solutions/programs/commercial-property-assessed-clean-energy/](https://www.riib.org/solutions/programs/commercial-property-assessed-clean-energy/)",
+"sourceUrlsChecked": [
+"[https://www.riib.org/solutions/programs/commercial-property-assessed-clean-energy/](https://www.riib.org/solutions/programs/commercial-property-assessed-clean-energy/)",
+"[https://www.riib.org/wp-content/uploads/2025/01/RI_C-PACE_Financing_Application_Form-1.pdf](https://www.riib.org/wp-content/uploads/2025/01/RI_C-PACE_Financing_Application_Form-1.pdf)",
+"[https://www.riib.org/wp-content/uploads/2023/06/RI_C-PACE_Program_Guide_June_28_2023.pdf](https://www.riib.org/wp-content/uploads/2023/06/RI_C-PACE_Program_Guide_June_28_2023.pdf)"
+],
+"evidenceText": "RIIB says C-PACE finances commercial and industrial upgrades, including energy efficiency, renewable energy, water conservation, and alternative fuel infrastructure such as EV charging.",
+"reasoningNotes": "EV charging is supported as alternative fuel infrastructure. Battery storage should be removed unless later official project guidance expressly approves it."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4851",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WI"
+],
+"counties": [],
+"cities": [
+"River Falls"
+],
+"utilityTerritories": [
+"River Falls Municipal Utilities electric service territory"
+],
+"notes": "RFMU incentives apply to qualifying projects in the City of River Falls and RFMU or Focus on Energy business service territory."
+},
+"eligibleApplicantTypes": [
+"business_customers",
+"commercial_customers",
+"industrial_customers",
+"agricultural_customers",
+"multifamily_property_owners",
+"school_customers"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural",
+"multifamily",
+"public",
+"education"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"commercial_hvac_efficiency",
+"motors_and_drives",
+"compressed_air_system_efficiency",
+"electric_chiller_upgrade",
+"commercial_food_service_equipment",
+"agricultural_process_equipment_efficiency",
+"commercial_refrigeration_controls_and_led_case_lighting",
+"building_energy_management_controls",
+"energy_efficiency_study",
+"custom_large_energy_efficiency_project"
+],
+"hardRequirements": [
+"Project must be for a qualifying RFMU or River Falls business customer.",
+"Many projects require Focus on Energy eligibility and preapproval before implementation.",
+"RFMU business incentive is a bonus match to Focus on Energy business incentives, subject to caps and funding.",
+"Large custom RFP projects must meet the stated annual kWh savings or peak-demand reduction threshold.",
+"Equipment must meet applicable Focus on Energy and RFMU technical requirements."
+],
+"blockers": [
+"Do not match residential home weatherization or residential appliances.",
+"RFMU EV charging and solar incentives are separate programs and should not be inferred from this business energy-efficiency rebate record.",
+"Do not match measures outside Focus on Energy or RFMU business program rules.",
+"Preapproval-dependent measures should not match as automatic rebates."
+],
+"programType": "Rebate and Custom Incentive Program",
+"administrator": "River Falls Municipal Utilities",
+"applicationUrl": "[https://www.rfcity.org/DocumentCenter/View/7127/RiverFalls_PowerfulChoices_Business-Incentive_Flyer_85x11_Final](https://www.rfcity.org/DocumentCenter/View/7127/RiverFalls_PowerfulChoices_Business-Incentive_Flyer_85x11_Final)",
+"websiteUrl": "[https://rfmu.org/929/RFMU-Efficiency-Programs---Businesses](https://rfmu.org/929/RFMU-Efficiency-Programs---Businesses)",
+"sourceUrlsChecked": [
+"[https://rfmu.org/922/Efficiency-Programs](https://rfmu.org/922/Efficiency-Programs)",
+"[https://rfmu.org/929/RFMU-Efficiency-Programs---Businesses](https://rfmu.org/929/RFMU-Efficiency-Programs---Businesses)",
+"[https://rfcity.org/930/Focus-on-Energy-Programs---Businesses](https://rfcity.org/930/Focus-on-Energy-Programs---Businesses)",
+"[https://focusonenergy.com/utility-partners/river-falls-municipal-utilities](https://focusonenergy.com/utility-partners/river-falls-municipal-utilities)",
+"[https://focusonenergy.com/business/rebates](https://focusonenergy.com/business/rebates)"
+],
+"evidenceText": "RFMU and Focus pages show business incentives for River Falls projects, with measures including lighting, HVAC, motors, compressed air, chillers, food service, refrigeration controls, and studies.",
+"reasoningNotes": "Both lighting and commercial HVAC efficiency matches are supported. Keep the record business-only and block residential or separate EV and solar programs."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22139",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Maryland data center incentive; Tier 1 areas and opportunity zones affect the investment threshold."
+},
+"eligibleApplicantTypes": [
+"qualified_data_center_owners",
+"qualified_data_center_operators",
+"colocation_data_centers",
+"data_center_contractors_with_exemption_certificate"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"data_center"
+],
+"eligibleRetrofitCategories": [
+"qualified_data_center_hvac_and_mechanical_systems",
+"qualified_data_center_energy_storage_or_energy_efficiency_technology",
+"qualified_data_center_battery_or_ups_equipment",
+"qualified_data_center_cogeneration_equipment",
+"qualified_data_center_electrical_power_management_equipment"
+],
+"hardRequirements": [
+"Data center must be certified by the Maryland Department of Commerce as a qualified data center.",
+"Qualified data center must be located in Maryland.",
+"Within three years, the business must create at least five qualified positions.",
+"Investment threshold is at least $2 million in qualified data center personal property in a Tier 1 area or opportunity zone, or $5 million elsewhere.",
+"Exemption certificate is required before qualifying purchases.",
+"Annual renewal, recordkeeping, and reporting requirements apply."
+],
+"blockers": [
+"Do not match general commercial HVAC replacement outside a certified qualified data center.",
+"Do not match general battery_storage_system outside qualified data center personal property.",
+"Purchases of electricity are not exempt.",
+"Tools, supplies, and installation equipment are not qualifying data center personal property.",
+"Failure to meet job or investment targets can trigger repayment."
+],
+"programType": "Sales Tax Incentive",
+"administrator": "Maryland Department of Commerce and Maryland Comptroller",
+"applicationUrl": "[https://commerce.maryland.gov/Documents/FinanceDocument/data-center-maryland-sales-and-use-tax-exemption-application.pdf](https://commerce.maryland.gov/Documents/FinanceDocument/data-center-maryland-sales-and-use-tax-exemption-application.pdf)",
+"websiteUrl": "[https://commerce.maryland.gov/fund/data-center-maryland-sales-and-use-tax-exemption-incentive-program](https://commerce.maryland.gov/fund/data-center-maryland-sales-and-use-tax-exemption-incentive-program)",
+"sourceUrlsChecked": [
+"[https://commerce.maryland.gov/fund/data-center-maryland-sales-and-use-tax-exemption-incentive-program](https://commerce.maryland.gov/fund/data-center-maryland-sales-and-use-tax-exemption-incentive-program)",
+"[https://commerce.maryland.gov/Documents/FinanceDocument/data-center-maryland-sales-and-use-tax-exemption-application.pdf](https://commerce.maryland.gov/Documents/FinanceDocument/data-center-maryland-sales-and-use-tax-exemption-application.pdf)",
+"[https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/tips/business/bustip28.pdf](https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/tips/business/bustip28.pdf)"
+],
+"evidenceText": "Maryland sources limit the exemption to certified data centers meeting job and investment targets; eligible property includes data-center HVAC, energy storage, batteries, cogeneration, and electrical equipment.",
+"reasoningNotes": "The storage and HVAC concepts are supported only in the narrow data-center personal property context. Do not match ordinary building retrofit opportunities."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22048",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide California partial sales and use tax exemption for qualified persons and qualified tangible personal property."
+},
+"eligibleApplicantTypes": [
+"qualified_manufacturers",
+"qualified_research_and_development_entities",
+"qualified_electric_power_generators",
+"qualified_electric_power_distributors",
+"construction_contractors_for_qualified_persons"
+],
+"eligibleSectors": [
+"industrial",
+"manufacturing",
+"research_and_development",
+"utility",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"qualified_electric_power_generation_equipment",
+"qualified_electric_power_storage_equipment",
+"qualified_electric_power_distribution_equipment",
+"qualified_combined_heat_and_power_cogeneration_equipment",
+"qualified_special_purpose_power_building_or_foundation"
+],
+"hardRequirements": [
+"Purchaser must be a qualified person under the California partial exemption statute.",
+"Property must be qualified tangible personal property.",
+"Property must be used primarily, meaning 50 percent or more, in a qualified activity such as electric power generation, production, storage, or distribution.",
+"Purchaser must provide the applicable CDTFA partial exemption certificate.",
+"Partial exemption applies only before July 1, 2030.",
+"Annual qualified-property purchases over $200 million and property removed from California or converted to nonqualified use within one year are not eligible."
+],
+"blockers": [
+"Do not match residential projects or ordinary commercial building retrofits.",
+"Do not treat this as a full sales tax exemption; local, city, county, or district taxes may still apply.",
+"Do not match generic backup batteries or CHP unless the buyer and property meet qualified electric-power-use requirements.",
+"Broad HVAC or building envelope measures are not supported unless they are integral qualified tangible personal property under CDTFA rules."
+],
+"programType": "Sales Tax Incentive",
+"administrator": "California Department of Tax and Fee Administration",
+"applicationUrl": "[https://cdtfa.ca.gov/formspubs/cdtfa230m.pdf](https://cdtfa.ca.gov/formspubs/cdtfa230m.pdf)",
+"websiteUrl": "[https://cdtfa.ca.gov/industry/manufacturing-and-research-and-development-equipment-exemption/](https://cdtfa.ca.gov/industry/manufacturing-and-research-and-development-equipment-exemption/)",
+"sourceUrlsChecked": [
+"[https://cdtfa.ca.gov/industry/manufacturing-and-research-and-development-equipment-exemption/](https://cdtfa.ca.gov/industry/manufacturing-and-research-and-development-equipment-exemption/)",
+"[https://cdtfa.ca.gov/lawguides/vol1/sutl/6377-1.html](https://cdtfa.ca.gov/lawguides/vol1/sutl/6377-1.html)",
+"[https://cdtfa.ca.gov/formspubs/pub541.pdf](https://cdtfa.ca.gov/formspubs/pub541.pdf)",
+"[https://cdtfa.ca.gov/formspubs/cdtfa230m.pdf](https://cdtfa.ca.gov/formspubs/cdtfa230m.pdf)"
+],
+"evidenceText": "CDTFA describes a partial sales and use tax exemption through June 30, 2030 for qualified property used 50 percent or more in electric power generation, storage, or distribution.",
+"reasoningNotes": "Battery storage and cogeneration can match only as qualified electric-power equipment for qualified persons, not as broad retrofit incentives."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3030",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"MO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Missouri Show Me Green Sales Tax Holiday; all local jurisdictions participate for the holiday, but the 2026 purchase window has passed as of July 1, 2026."
+},
+"eligibleApplicantTypes": [
+"retail_purchasers",
+"business_purchasers",
+"nonresident_purchasers",
+"contractors_purchasing_for_installed_appliances"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"energy_star_clothes_washer",
+"energy_star_clothes_dryer",
+"energy_star_water_heater",
+"energy_star_dishwasher",
+"energy_star_conventional_oven_range_or_stove",
+"energy_star_air_conditioner",
+"energy_star_furnace",
+"energy_star_refrigerator",
+"energy_star_freezer",
+"energy_star_heat_pump"
+],
+"hardRequirements": [
+"Purchase must occur during the Show Me Green Sales Tax Holiday from April 19 through April 25.",
+"Appliance must be a qualifying ENERGY STAR certified new appliance.",
+"Exemption applies only to the first $1,500 per qualifying appliance.",
+"Online purchases must be completed and paid during the holiday period.",
+"Contractor purchases for installed appliances can qualify only when the appliance is purchased during the holiday and tax savings are passed through as required."
+],
+"blockers": [
+"The 2026 holiday window closed before the researched date, so the opportunity is not currently accepting purchases.",
+"Do not match broad high_efficiency_hvac_replacement or commercial refrigeration retrofits; only listed ENERGY STAR appliances qualify.",
+"Used appliances, non-ENERGY STAR appliances, and nonlisted products do not qualify.",
+"Amounts over $1,500 per appliance are not exempt.",
+"Air filtration systems, dehumidifiers, humidifiers, ice makers, microwaves, trash compactors, wine coolers, and other listed exclusions should not match."
+],
+"programType": "Sales Tax Incentive",
+"administrator": "Missouri Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/](https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/)",
+"sourceUrlsChecked": [
+"[https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/](https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/)",
+"[https://dor.mo.gov/faq/taxation/business/show-me-green-tax-holiday.html](https://dor.mo.gov/faq/taxation/business/show-me-green-tax-holiday.html)",
+"[https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/consumers.html](https://dor.mo.gov/taxation/business/tax-types/sales-use/holidays/show-me-green/consumers.html)",
+"[https://dor.mo.gov/news/newsitem/uuid/e39a8f2d-dd94-4d48-b249-0c67914de5e2](https://dor.mo.gov/news/newsitem/uuid/e39a8f2d-dd94-4d48-b249-0c67914de5e2)"
+],
+"evidenceText": "Missouri DOR says the Show Me Green holiday runs April 19-25 and exempts qualifying ENERGY STAR new appliances up to $1,500 per appliance from sales tax.",
+"reasoningNotes": "HVAC and refrigeration should be narrowed to listed ENERGY STAR consumer appliances. Mark unavailable because the 2026 holiday had ended by the research date."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:4377"
+}
