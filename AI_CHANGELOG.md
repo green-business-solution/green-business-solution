@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 4
+
+- Imported the fourth GPT Pro opportunity-data repair batch for 10 checked opportunities, including Burlington Electric, Carbon Power, Hawaii Energy, Energize Delaware, EWEB, GCEA, JEA, Mass Save, and National Grid records.
+- Normalized broken markdown URL fragments from the GPT Pro response before import while preserving the structured repair decisions.
+- Applied opportunity-data repair batches 1-4 cumulatively to public fixtures so batch 4 repairs are attached to matched opportunity edges.
+
 ## 2026-06-30 - Codex (GPT-5) production admin allowlist repair
 
 - Updated the live `gbs-retrofi-production` CloudFormation stack so `GBS_ADMIN_EMAILS` now includes `rshen0210@gmail.com` alongside the existing admin allowlist.

@@ -1,0 +1,696 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-30",
+  "source": "gpt_pro",
+  "batchNotes": "GPT Pro output for the target slice beginning at SOURCE_DSIRE:dsire_program_id:4636. Codex normalized broken markdown URL fragments and evidence text formatting before import; structured repair decisions were preserved.",
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4636",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["VT"],
+        "counties": [],
+        "cities": ["Burlington"],
+        "utilityTerritories": ["Burlington Electric Department"],
+        "notes": "Applies to BED customers in Burlington, Vermont; many rebates are limited to existing residential buildings or specific BED account types."
+      },
+      "eligibleApplicantTypes": [
+        "BED residential electric customers",
+        "Homeowners",
+        "Residential building owners",
+        "Rental property owners",
+        "Multifamily property owners",
+        "BED small business customers for specified heat pump equipment"
+      ],
+      "eligibleSectors": ["Residential", "Multifamily residential", "Small business limited"],
+      "eligibleRetrofitCategories": [
+        "Heat pump HVAC",
+        "Mini-split heat pump",
+        "Central ducted heat pump",
+        "Air-to-water heat pump",
+        "Heat pump water heater",
+        "HRV/ERV ventilation",
+        "Bathroom exhaust fan controls",
+        "Induction cooking",
+        "ENERGY STAR clothes washer",
+        "Refrigerator/freezer",
+        "Window or room air conditioner",
+        "Level 2 EV charging",
+        "Smart thermostat limited"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Burlington Electric Department customer for the premises served.",
+        "Most equipment rebates are capped at 75 percent of installed cost and must be submitted within the stated post-purchase or post-installation window.",
+        "Heat pump and heat pump water heater equipment must meet BED and Efficiency Vermont qualified product or contractor requirements.",
+        "Induction cooking incentive is limited to qualifying new homes or replacement of natural gas or propane cooking equipment and is limited to one per account.",
+        "Residential EV charger incentive requires qualifying EV ownership or lease, specified equipment or permits, and enrollment in the residential EV rate where required."
+      ],
+      "blockers": [
+        "Matched term blower is not supported as a building retrofit category.",
+        "Matched term window maps only to window or room air conditioners, not window replacement or glazing.",
+        "Heat recovery is only supported through HRV/ERV ventilation; generic heat-recovery equipment was not retained.",
+        "Smart thermostats are referenced on BED home-cooling content but are not a prominent standalone line item on the main rebate form, so retained only as limited."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Burlington Electric Department",
+      "applicationUrl": "https://www.burlingtonelectric.com/rebate-form/",
+      "websiteUrl": "https://www.burlingtonelectric.com/rebate-form/",
+      "sourceUrlsChecked": [
+        "https://www.burlingtonelectric.com/rebate-form/",
+        "https://www.burlingtonelectric.com/rebates",
+        "https://www.burlingtonelectric.com/coolhome/",
+        "https://programs.dsireusa.org/system/program/detail/4636/burlington-electric-department-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "BED's current rebate form lists residential and related incentives including EV charger, mini-split heat pump, centrally ducted heat pump, air-to-water heat pump, window AC, bathroom fan, HRV/ERV, heat pump water heater, laundry, refrigerator/freezer and induction cooktop. BED home-cooling content also references smart thermostat rebates.",
+      "reasoningNotes": "The DSIRE residential record remains active but the current BED rebate form is broader than a simple residential efficiency list and includes measure-specific restrictions. False-positive building categories were removed where BED only supports a product such as window AC or HRV/ERV."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2290",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["WY"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Carbon Power & Light, Inc."],
+        "notes": "Applies to Carbon Power & Light member-owner or member-consumer service territory; current official pages checked did not define county boundaries."
+      },
+      "eligibleApplicantTypes": [
+        "Carbon Power & Light member-owners",
+        "Residential members",
+        "Commercial and industrial members for motors or EV charging where specified",
+        "Income-qualified households served through local weatherization agencies"
+      ],
+      "eligibleSectors": ["Residential", "Commercial limited", "Industrial limited", "Low-income residential"],
+      "eligibleRetrofitCategories": [
+        "Electric thermal storage",
+        "Thermal slab heating",
+        "Electric water heater",
+        "Heat pump water heater",
+        "Air-source heat pump ductless",
+        "Air-source heat pump ducted",
+        "Air-to-water heat pump",
+        "Ground-source heat pump",
+        "Desuperheater",
+        "Smart thermostat",
+        "Induction cooking",
+        "Clothes dryer",
+        "Refrigerator/freezer recycling",
+        "ENERGY STAR refrigerator/freezer",
+        "Whole-house fan",
+        "Evaporative cooler",
+        "Low-income weatherization",
+        "Electric motors",
+        "Level 2 EV charging",
+        "DC fast charging"
+      ],
+      "hardRequirements": [
+        "Credits are applied to the Carbon Power & Light member-owner account.",
+        "Applications generally must be submitted within 90 days of purchase or installation.",
+        "Heat pump incentives require listed efficiency criteria and may require the heat pump to provide at least half of the heated area or load under specified conditions.",
+        "Low-income weatherization is not a general rebate; it is matched through a local Weatherization Agency and federal or state income qualification.",
+        "EV charging incentives require installed eligible charging equipment, code compliance, and one rebate per installed charger."
+      ],
+      "blockers": [
+        "Original 2020 rebate URL is stale; the readable detailed official measure page found was the 2025 rebate page, while 2026 official site content only confirmed that rebates/credits continue.",
+        "Matched term blower is not retained as a building retrofit; supported blower references are outdoor power equipment rather than building efficiency.",
+        "Weatherization is limited to income-qualified Weatherization Agency work and should not match general market weatherization projects.",
+        "Refrigerator/freezer support is limited to ENERGY STAR equipment or recycling terms, not broad appliance replacement."
+      ],
+      "programType": "Bill Credit/Rebate Program",
+      "administrator": "Carbon Power & Light, Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.carbonpower.com/rebates-2025",
+      "sourceUrlsChecked": [
+        "https://www.carbonpower.com/rebates-2025",
+        "https://www.carbonpower.com/products",
+        "https://www.carbonpower.com/light-lines-2026",
+        "https://www.carbonpower.com/rebates-2020",
+        "https://programs.dsireusa.org/system/program/detail/2290/carbon-power-and-light-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Carbon Power official pages continue to direct members to energy-efficiency credits/rebates. The readable rebate detail page lists electric thermal storage, water heaters including HPWH, air-source and ground-source heat pumps, smart thermostats, induction ranges, refrigerator/freezer measures, low-income weatherization, motors and EV charging incentives.",
+      "reasoningNotes": "The program appears active but confidence is medium because the detailed measure schedule located is labeled 2025 and the original 2020 URL is stale. Categories were limited to official Carbon Power pages and measure-specific restrictions."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["HI"],
+        "counties": ["Honolulu County", "Hawaii County", "Maui County"],
+        "cities": [],
+        "utilityTerritories": [
+          "Hawaii Energy Public Benefits Fee service territory",
+          "Hawaiian Electric service territories excluding Kauai"
+        ],
+        "notes": "Hawaii Energy rebates are available in the counties of Honolulu, Hawaii and Maui; Kauai is served separately by KIUC and is not included."
+      },
+      "eligibleApplicantTypes": [
+        "Business customers",
+        "Commercial property owners",
+        "Commercial tenants with authority to install measures",
+        "Multifamily property owners",
+        "Industrial customers",
+        "Institutional customers"
+      ],
+      "eligibleSectors": ["Commercial", "Industrial", "Institutional", "Multifamily", "Hospitality", "Restaurant", "Retail", "Grocery", "Cold storage", "Office", "Warehouse"],
+      "eligibleRetrofitCategories": [
+        "Commercial HVAC heat pump",
+        "Variable refrigerant flow HVAC",
+        "Heat pump water heater",
+        "Solar water heating",
+        "Refrigeration",
+        "Anti-sweat heater controls",
+        "VFD",
+        "Lighting controls",
+        "Occupancy sensors",
+        "Smart building controls",
+        "Building envelope cool roof",
+        "Window film",
+        "Commercial kitchen demand ventilation",
+        "Energy storage grid services",
+        "Custom energy efficiency"
+      ],
+      "hardRequirements": [
+        "Commercial incentive application is effective for the 2025-2026 program year through June 30, 2026 or while funding lasts.",
+        "Applications must generally be submitted within six months of invoice or receipt date.",
+        "Preapproval is strongly recommended and is required for custom projects.",
+        "Measures must satisfy Hawaii Energy equipment, efficiency and installation requirements for the applicable rebate category.",
+        "Program territory excludes Kauai/KIUC customers."
+      ],
+      "blockers": [
+        "Matched term PV system is not supported by the current Hawaii Energy commercial rebate sources checked and was removed.",
+        "Matched term insulation is not a standard listed commercial rebate category; only building-envelope measures such as cool roof, window film and eligible custom envelope work were retained.",
+        "Matched term window is limited to window film or approved envelope measures, not window replacement.",
+        "LED refrigeration case lighting was shown as ending February 28, 2026 and was not retained as an active current category.",
+        "EV charging is a separate Hawaii Energy-administered program with separate funding status and was not merged into this commercial efficiency repair."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Hawaii Energy",
+      "applicationUrl": "https://hawaiienergy.com/wp-content/uploads/commercial-incentive-application.pdf",
+      "websiteUrl": "https://hawaiienergy.com/for-business/rebates",
+      "sourceUrlsChecked": [
+        "https://hawaiienergy.com/for-business/rebates",
+        "https://hawaiienergy.com/for-business/rebates-for-business/hvac/",
+        "https://hawaiienergy.com/for-business/rebates-for-business/water-heating/",
+        "https://hawaiienergy.com/for-business/rebates-for-business/refrigeration-2/",
+        "https://hawaiienergy.com/for-business/rebates-for-business/building-envelope/",
+        "https://hawaiienergy.com/for-business/rebates-for-business/lighting/",
+        "https://hawaiienergy.com/for-business/rebates-for-business/smart-devices/",
+        "https://hawaiienergy.com/wp-content/uploads/commercial-incentive-application.pdf",
+        "https://energy.hawaii.gov/rebates-and-incentives/",
+        "https://programs.dsireusa.org/system/program/detail/5355/commercial-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Hawaii Energy business rebate pages and the commercial incentive application list HVAC including AC/heat pump and VRF, water heating including HPWH and solar water heating, refrigeration, building envelope including cool roof and window film, lighting controls, smart building controls, kitchen ventilation, VFDs, custom measures and grid-services energy storage. The application is marked effective July 1, 2025 through June 30, 2026 or while funding lasts.",
+      "reasoningNotes": "The record is active as a Hawaii Energy commercial program. Unsupported renewable or generic building terms from the match set were removed unless current Hawaii Energy commercial sources supported the specific retrofit category."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5449",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["DE"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Statewide Delaware"],
+        "notes": "Statewide Delaware residential program administered by Energize Delaware/Delaware Sustainable Energy Utility; eligibility is based on property and program rules rather than a single electric utility territory."
+      },
+      "eligibleApplicantTypes": [
+        "Homeowners",
+        "Tenants with owner approval",
+        "Residential property owners",
+        "Landlords",
+        "Income-qualified households",
+        "Military and first responders where eligible",
+        "Downtown Development District owners or tenants where eligible"
+      ],
+      "eligibleSectors": ["Residential", "Low-income residential", "Rental residential", "Small multifamily"],
+      "eligibleRetrofitCategories": [
+        "Home energy assessment",
+        "Direct-install LEDs, aerators, showerheads and pipe insulation",
+        "Air sealing",
+        "Duct sealing",
+        "Attic insulation",
+        "Wall insulation",
+        "Crawlspace and floor insulation",
+        "Rim joist insulation",
+        "Crawlspace encapsulation",
+        "Heat pump HVAC",
+        "Mini-split heat pump",
+        "Central air conditioner",
+        "Furnace",
+        "Boiler",
+        "Condensing boiler",
+        "Heat pump water heater",
+        "Tankless water heater",
+        "Smart thermostat",
+        "HRV/ERV ventilation",
+        "Whole-home dehumidifier",
+        "Weatherization"
+      ],
+      "hardRequirements": [
+        "A Home Performance with ENERGY STAR assessment is mandatory before work is eligible.",
+        "Work must be completed through a Program-Participating Contractor or program advisor as applicable.",
+        "Contractor must submit rebate reservation and signed agreement before work starts.",
+        "Rebates are generally capped at 50 percent of installed cost up to the measure incentive level, with higher assisted caps where applicable.",
+        "Self-installed measures and work completed before the assessment or reservation are not eligible.",
+        "Multifamily buildings with more than four units under one roof must meet program height and age limits."
+      ],
+      "blockers": [
+        "Geothermal is explicitly excluded from HPwES incentives and redirected to DNREC's Green Energy Program.",
+        "Windows and doors are not eligible HPwES incentives even though they can affect home efficiency.",
+        "Lighting upgrades are not a rebate category except direct-install items during the assessment.",
+        "Smart thermostat incentives must be bundled with other eligible measures.",
+        "The old homeowner URL appears replaced by the current Energize Delaware get-started page."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energize Delaware",
+      "applicationUrl": "https://energizedelaware.org/residential/get-started-home-performance-with-energy-star/",
+      "websiteUrl": "https://energizedelaware.org/residential/get-started-home-performance-with-energy-star/",
+      "sourceUrlsChecked": [
+        "https://energizedelaware.org/residential/get-started-home-performance-with-energy-star/",
+        "https://www.energizedelaware.org/residential/home-performance-with-energy-star/homeowners/",
+        "https://energizedelaware.org/wp-content/uploads/2025/05/DESEU-HPwES-Available-Incentives-and-Rebates-Nov-2024.pdf",
+        "https://energizedelaware.org/help-center/help-center-residential-resources-support/",
+        "https://energizedelaware.org/wp-content/uploads/2026/01/HPwES-Request-for-Proposals-Final-1-16-26.pdf",
+        "https://programs.dsireusa.org/system/program/detail/5449/energize-delaware-home-performance-with-energy-star"
+      ],
+      "evidenceText": "Energize Delaware's current HPwES page says the home energy assessment is mandatory, includes direct-install measures, and requires a Program-Participating Contractor for eligible work. The current incentives PDF lists air sealing, duct sealing, multiple insulation measures, heat pumps, mini-splits, AC, furnace, boiler, HPWH, smart thermostats, ERV/HRV and dehumidifiers, with incentive caps and reservation requirements.",
+      "reasoningNotes": "The program is active and statewide for eligible Delaware residences. Geothermal, windows, doors and standalone lighting were removed because current HPwES sources do not support them as incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2593",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["OR"],
+        "counties": [],
+        "cities": ["Eugene"],
+        "utilityTerritories": [
+          "Eugene Water & Electric Board electric service territory",
+          "Eugene Water & Electric Board water service territory for water measures"
+        ],
+        "notes": "Electric measures require EWEB commercial or general-service electric service as applicable; water conservation measures require EWEB water service."
+      },
+      "eligibleApplicantTypes": [
+        "EWEB business electric customers",
+        "EWEB general service metered customers",
+        "Commercial property owners",
+        "Industrial customers",
+        "EWEB business water customers for water measures",
+        "Multifamily property owners for eligible EV charging",
+        "Developers for eligible new construction or custom projects"
+      ],
+      "eligibleSectors": ["Commercial", "Industrial", "Public", "Institutional", "Multifamily"],
+      "eligibleRetrofitCategories": [
+        "LED lighting",
+        "Heat pump HVAC",
+        "Ductless mini-split heat pump",
+        "Variable refrigerant flow heat pump",
+        "Heat recovery ventilation",
+        "Advanced rooftop unit controls",
+        "VFD",
+        "Connected thermostat",
+        "Kitchen ventilation demand control",
+        "Heat pump water heater",
+        "Commercial refrigeration",
+        "Anti-sweat heater controls",
+        "Refrigeration case lighting",
+        "Display case doors",
+        "Strip curtains",
+        "Building insulation",
+        "Windows",
+        "Level 2 multifamily/public EV charging",
+        "Water efficiency toilets",
+        "Water efficiency urinals",
+        "Smart irrigation controller",
+        "Custom energy efficiency",
+        "Low-interest energy project financing"
+      ],
+      "hardRequirements": [
+        "Commercial electric incentives are paid to the EWEB customer and generally require EWEB electric service for the affected facility.",
+        "Rebates over 2500 dollars commonly require preapproval before equipment or materials are purchased.",
+        "Lighting equipment must meet DLC, ENERGY STAR or EWEB-approved efficacy and warranty criteria.",
+        "Heat pump water heater incentives require qualifying equipment and EWEB general service metering; consumer HPWH rebates are retrofit-only.",
+        "Water conservation rebates require EWEB water service and specified WaterSense or performance criteria.",
+        "Public or multifamily EV charging requires preapproval and is limited to eligible Level 2 infrastructure terms."
+      ],
+      "blockers": [
+        "Matched DCFC was not retained; the EWEB business EV page checked supports Level 2 public or multifamily charging, not DC fast charging.",
+        "EV charging is a separate EWEB electric mobility incentive, not a standard commercial efficiency measure.",
+        "Solar electric is listed separately by EWEB and is not part of this commercial efficiency rebate repair.",
+        "Toilet and urinal rebates apply only to eligible EWEB water customers and qualifying fixture replacements."
+      ],
+      "programType": "Rebate and Loan Program",
+      "administrator": "Eugene Water & Electric Board",
+      "applicationUrl": "https://myaccount.eweb.org",
+      "websiteUrl": "https://www.eweb.org/business-rebates",
+      "sourceUrlsChecked": [
+        "https://www.eweb.org/business-rebates",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/lighting-upgrades",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/hvac-systems-rebates",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/refrigeration-rebates",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/windows-and-insulation",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/hpwh",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/water-conservation-rebates",
+        "https://www.eweb.org/rebates-and-savings/electric-mobility/ev-incentives-business",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/new-construction-and-custom-projects",
+        "https://programs.dsireusa.org/system/program/detail/2593/eweb-commercial-energy-efficiency-rebates-program"
+      ],
+      "evidenceText": "EWEB's business rebates page lists active lighting, HVAC, refrigeration, windows and insulation, heat pump water heaters, process and custom projects, business EV incentives, water conservation, new construction and multifamily offerings. Measure pages list DHP/mini-split, ASHP, VRF, HRV, RTU controls, VFDs, connected thermostats, kitchen ventilation, HPWH, refrigeration controls, insulation, windows and water fixture rebates.",
+      "reasoningNotes": "The commercial record is active, but some matched terms belong to EWEB water conservation or electric mobility offerings rather than the core electric efficiency rebate. Categories were retained only where a current EWEB page supported them."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "confidence": "low",
+      "availabilityStatus": "source_inaccessible",
+      "geography": {
+        "country": "US",
+        "states": ["CO"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Gunnison County Electric Association, Inc."],
+        "notes": "Official rebate pages were blocked with HTTP 403, so current detailed service territory and eligibility could not be verified from official content."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Do not infer eligibility or measures until the official GCEA rebate page or 2026 rebate form is accessible."
+      ],
+      "blockers": [
+        "Current official page https://www.gcea.coop/energy-efficiency/rebates/ returned 403 Forbidden.",
+        "Legacy official page http://www.gcea.coop/content/rebates was not usable as a current readable source.",
+        "Search result snippets indicated a 2026 Energy Efficiency BE EE Rebate Form and online forms, but the form itself was not accessible in the checked sources.",
+        "Matched terms such as electric forklift, ENERGY STAR certification, fixtures, freezer, geothermal, induction, LED lighting, refrigerator, variable speed drive and weatherization were not retained because official current details could not be read."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Gunnison County Electric Association, Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.gcea.coop/energy-efficiency/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.gcea.coop/energy-efficiency/rebates/",
+        "http://www.gcea.coop/content/rebates",
+        "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "The current GCEA rebates page could not be fetched because the site returned 403 Forbidden. Search snippets suggested a 2026 rebate form exists, but no official readable measure schedule was available from the checked URLs.",
+      "reasoningNotes": "Because the primary source is inaccessible, the safe repair is to mark the record source_inaccessible and remove all category matches rather than carrying forward DSIRE or snippet-derived measure mappings."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4608",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["FL"],
+        "counties": [],
+        "cities": ["Jacksonville"],
+        "utilityTerritories": ["JEA electric service territory", "JEA water service territory for water measures"],
+        "notes": "Applies to eligible JEA commercial electric and water customers in the Jacksonville/Northeast Florida JEA service area; eligibility is tied to JEA service rather than county alone."
+      },
+      "eligibleApplicantTypes": [
+        "JEA commercial electric customers",
+        "JEA commercial water customers",
+        "Small business customers on eligible rates",
+        "Commercial property owners",
+        "Business tenants with authority to install measures",
+        "Trade allies and contractors",
+        "Fleet or site hosts for electrification measures"
+      ],
+      "eligibleSectors": ["Commercial", "Industrial", "Small business", "Municipal", "Institutional"],
+      "eligibleRetrofitCategories": [
+        "Lighting",
+        "Lighting controls",
+        "HVAC air conditioning",
+        "Heat pump HVAC",
+        "VFD",
+        "Chillers",
+        "HVAC tune-up",
+        "Refrigeration",
+        "Water heating",
+        "Cool roof",
+        "Window film",
+        "Energy management systems",
+        "Custom energy efficiency",
+        "Water efficiency cooling towers",
+        "Water efficiency ice machines",
+        "Water efficiency restroom equipment",
+        "Water efficiency kitchen equipment",
+        "Smart irrigation controls",
+        "Level 2 EV charging",
+        "DC fast charging"
+      ],
+      "hardRequirements": [
+        "Most Business Rebate Program projects require preapproval before purchase or installation.",
+        "Commercial electric and water rebates are capped by annual program and customer limits stated by JEA.",
+        "Electric rebates generally require a registered trade ally except emergency HVAC replacements under stated terms.",
+        "Limited-time enhanced business rebate offer runs through August 31, 2026 according to JEA's current business rebate page.",
+        "EV Level 2 and DCFC support is under JEA's separate business Electrification Rebate Program and has separate requirements."
+      ],
+      "blockers": [
+        "Matched window maps to cool roof/window film only, not window replacement.",
+        "Matched heat pump water heater was not retained as a separate category because the current readable JEA business pages checked list water heaters generally but did not confirm HPWH as a current distinct business measure.",
+        "EV charging measures are not part of the core Business Rebate Program; they are a separate Electrification Rebate Program.",
+        "Residential-only JEA rebates should not be mapped to this commercial record."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "JEA",
+      "applicationUrl": "https://jeabusiness.customerapplication.com/",
+      "websiteUrl": "https://www.jea.com/business_resources/rebates_for_businesses/",
+      "sourceUrlsChecked": [
+        "https://www.jea.com/business_resources/rebates_for_businesses/",
+        "https://www.jea.com/business_resources/rebates_for_businesses/business_rebate_program/",
+        "https://www.jea.com/Business_Resources/Rebates_for_Businesses/Electric_Savings/",
+        "https://www.jea.com/business_resources/rebates_for_businesses/electrification_rebates_program/",
+        "https://www.jea.com/uploadedFiles/jea.com/Business_Resources/Commercial_Rebates/JEA_BRP_flyer_v2_12.25-SH.pdf",
+        "https://programs.dsireusa.org/system/program/detail/4608/jea-commercial-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "JEA's current business rebate pages list lighting, HVAC, refrigeration, water heaters, cool roof/window film, custom electric measures, and water-saving measures. JEA's business electrification page separately lists Level 2 and DC fast charging rebates, and the business rebate page states a limited-time enhanced offer through August 31, 2026.",
+      "reasoningNotes": "The commercial record is active. Commercial and residential JEA measures were separated, and EV charging was retained only with the separate-program qualifier."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4723",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["FL"],
+        "counties": [],
+        "cities": ["Jacksonville"],
+        "utilityTerritories": ["JEA electric service territory", "JEA water service territory for water measures"],
+        "notes": "Applies to eligible JEA residential electric or water customers in the JEA service area; measure eligibility depends on the customer's utility service."
+      },
+      "eligibleApplicantTypes": ["JEA residential electric customers", "JEA residential water customers", "Homeowners", "Residential account holders"],
+      "eligibleSectors": ["Residential"],
+      "eligibleRetrofitCategories": [
+        "Attic insulation",
+        "ENERGY STAR clothes washer",
+        "Heat pump water heater",
+        "Central air conditioner",
+        "Heat pump HVAC",
+        "Ductless mini-split heat pump",
+        "HVAC tune-up",
+        "Smart thermostat",
+        "Smart irrigation controller",
+        "Irrigation nozzles",
+        "Room air conditioner",
+        "Water-saving toilet",
+        "Low-flow showerhead",
+        "Air purifier",
+        "Dehumidifier"
+      ],
+      "hardRequirements": [
+        "Electric measures require JEA residential electric service; water measures require JEA residential water service.",
+        "Many measures are limited to one or two rebates per product type per premise over a seven-year period.",
+        "Applications generally must be submitted within 90 days of purchase or installation and by the stated 2026 program deadline.",
+        "HVAC, heat pump, ductless mini-split and HPWH equipment must meet ENERGY STAR, AHRI, SEER2, HSPF2 or other JEA criteria where applicable.",
+        "Attic insulation must be installed by a pre-qualified contractor and meet JEA R-value and existing-insulation criteria."
+      ],
+      "blockers": [
+        "Matched combined heat and power is not supported by current JEA residential rebate sources.",
+        "Matched dishwasher is not supported by current JEA residential rebate sources.",
+        "Matched solar water heating is not supported by current JEA residential rebate sources.",
+        "Matched toilet is limited to WaterSense toilet replacement for JEA residential water customers.",
+        "This is a residential program and should not be matched to commercial JEA business rebate measures."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "JEA",
+      "applicationUrl": "https://customerrebate-efficiencynavigator.azurewebsites.net",
+      "websiteUrl": "https://www.jea.com/ways_to_save/residential_rebates/",
+      "sourceUrlsChecked": [
+        "https://www.jea.com/ways_to_save/residential_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/attic_insulation_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/clothes_washers_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/heat_pump_water_heaters/",
+        "https://www.jea.com/residential_customers/residential_rebates/heating_and_cooling_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/irrigation_controller_and_nozzle_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/toilet_replacement_rebates/",
+        "https://programs.dsireusa.org/system/program/detail/4723/jea-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "JEA's residential rebates page lists attic insulation, clothes washer, HPWH, heating/cooling system, HVAC tune-up, smart thermostat, irrigation controller/nozzles, room AC, showerheads, toilet replacement, air purifier and dehumidifier. Measure pages give 2026 submission timing and customer-service requirements.",
+      "reasoningNotes": "The record is active and residential. Unsupported matched terms such as CHP, dishwasher and solar water heating were removed, and water measures were limited to JEA water customers."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4791",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["MA"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Berkshire Gas", "Cape Light Compact", "Eversource", "Liberty Utilities", "National Grid", "Unitil"],
+        "notes": "Applies in participating Mass Save Sponsor service territories; customers of nonparticipating municipal light plants are not automatically eligible unless served by a Mass Save Sponsor for the relevant service."
+      },
+      "eligibleApplicantTypes": [
+        "Commercial customers of Mass Save Sponsors",
+        "Industrial customers of Mass Save Sponsors",
+        "Building owners",
+        "Developers",
+        "Design teams",
+        "Tenant fit-out project sponsors",
+        "Multifamily high-rise developers or owners through applicable Mass Save pathway"
+      ],
+      "eligibleSectors": ["Commercial", "Industrial", "Institutional", "Municipal", "Multifamily high-rise", "New construction", "Major renovation"],
+      "eligibleRetrofitCategories": [
+        "New construction major renovation",
+        "Whole-building energy performance",
+        "Net zero/low EUI design",
+        "Heat pump HVAC",
+        "Air-source heat pump",
+        "Variable refrigerant flow heat pump",
+        "Ground-source heat pump",
+        "Building envelope",
+        "Lighting controls",
+        "Networked lighting controls",
+        "Unitary HVAC",
+        "High-efficiency chillers",
+        "Energy recovery",
+        "Demand control ventilation",
+        "Variable-flow kitchen hood",
+        "Domestic hot water heaters",
+        "Low-flow domestic hot water fixtures",
+        "VFD",
+        "Custom energy efficiency"
+      ],
+      "hardRequirements": [
+        "Project must be in a participating Mass Save Sponsor territory and engage with the program early enough for the applicable pathway.",
+        "As of January 1, 2025, Mass Save Sponsors discontinued incentives for fossil-fuel equipment and new construction buildings using fossil-fuel equipment.",
+        "Heat pump incentives require the equipment to serve as the primary heating source and meet pathway requirements.",
+        "Whole-building pathways have size and EUI-reduction or performance requirements; Path 3 covers high-performance building or discrete measures.",
+        "Total project incentives, including construction, post-occupancy and heat pump adders, are capped by current program limits."
+      ],
+      "blockers": [
+        "Administrator list was updated from legacy utility names to current Mass Save Sponsors; NSTAR and Western Massachusetts Electric are represented under Eversource.",
+        "Matched CHP and combined heat and power are not supported by the current new construction and major renovation sources checked.",
+        "Matched commercial dishwasher and dishwasher are not supported by the current program page checked.",
+        "Matched solar thermal is not supported by the current program page checked.",
+        "Matched weatherization and window are not standalone retrofit categories here; only building-envelope measures within the current program pathways were retained.",
+        "LED lighting as a fixture measure was not retained; current source support was for lighting controls and networked controls."
+      ],
+      "programType": "Rebate/Incentive Program",
+      "administrator": "Mass Save Sponsors",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.masssave.com/business/rebates-offers-services/new-construction-and-major-renovations",
+      "sourceUrlsChecked": [
+        "https://www.masssave.com/business/rebates-offers-services/new-construction-and-major-renovations",
+        "https://www.masssave.com/business/rebates-offers-services/new-construction-and-major-renovations/high-performance-buildings",
+        "https://programs.dsireusa.org/system/program/detail/4791/masssave-electric-commercial-new-construction-major-renovation-program"
+      ],
+      "evidenceText": "Mass Save's current New Construction and Major Renovations page lists participation pathways for Net Zero/Low EUI, Whole Building EUI Reduction and High Performance Buildings. Current support includes cold-climate heat pump incentives for ASHP, VRF and GSHP, and Path 3 custom measures such as building envelope, lighting controls, unitary HVAC, chillers, energy recovery, demand control ventilation, variable-flow kitchen hoods, DHW heaters, low-flow DHW fixtures and VFDs.",
+      "reasoningNotes": "The record remains active but the old administrator list and several imported match terms are stale. The program is for business new construction, major renovation and high-performance projects, not general commercial retrofit or residential measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3026",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["NY"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["National Grid Upstate New York electric service territory"],
+        "notes": "Applies to eligible Upstate New York National Grid non-residential electric customers on qualifying rate codes; several subprograms also require payment of the System Benefits Charge."
+      },
+      "eligibleApplicantTypes": [
+        "National Grid Upstate New York commercial electric customers",
+        "Industrial electric customers",
+        "Municipal customers",
+        "Institutional customers",
+        "Agricultural customers",
+        "Multifamily property owners through applicable subprograms",
+        "Large commercial and industrial customers for electrification"
+      ],
+      "eligibleSectors": ["Commercial", "Industrial", "Municipal", "Institutional", "Agriculture", "Multifamily", "Hospitality", "Retail", "Grocery", "Warehouse"],
+      "eligibleRetrofitCategories": [
+        "Heat pump HVAC",
+        "Commercial/industrial electrification",
+        "Heat pump water heater",
+        "Air-source heat pump",
+        "VRF heat pump",
+        "Large unitary heat pump",
+        "Ground-source heat pump",
+        "Air-to-water heat pump",
+        "HRV/ERV",
+        "DOAS",
+        "Waste heat recovery",
+        "Process heating electrification",
+        "Industrial heat pump",
+        "Heat recovery chiller",
+        "Heat pump chiller",
+        "Energy management systems",
+        "Advanced controls/retrocommissioning",
+        "Variable frequency drives",
+        "Compressed air",
+        "Hotel occupancy sensors",
+        "Vending misers",
+        "Refrigeration",
+        "Custom electric energy efficiency",
+        "Weatherization air sealing",
+        "Weatherization roof/wall insulation",
+        "Pipe insulation",
+        "Window replacement or inserts",
+        "Exterior door replacement",
+        "Duct sealing",
+        "Air curtains"
+      ],
+      "hardRequirements": [
+        "Customer must be a National Grid Upstate New York non-residential electric customer on a qualifying rate code.",
+        "Commercial electric weatherization requires a qualifying commercial electric rate code and typically a hard-wired electric heating system or heat pump serving at least 50 percent of calculated heating load.",
+        "C&I electrification projects require early engagement, pre-inspection, signed offer letter to reserve funding, installation review, final invoices and post-inspection.",
+        "C&I electrification contractors must be in the National Grid Clean Energy Trade Ally Network.",
+        "Custom electric incentives require technical analysis and are capped by installed project cost limits.",
+        "Lighting projects are subject to phase-out deadlines and should not be treated as newly available unless the customer already met the 2025 report/application timing."
+      ],
+      "blockers": [
+        "Boiler and condensing boiler matched terms are not retained for this electric non-residential record; any gas-side boiler incentives are separate from the electric program sources checked.",
+        "Demand response is listed by National Grid as a separate program and was not retained as an energy-efficiency retrofit category for this record.",
+        "Energy audit is not a standalone rebate category in the checked sources; technical analysis applies to custom or electrification projects.",
+        "New lighting fixture, lighting control and generic occupancy-sensor incentives appear phased out to new projects after the 2025 deadline; only already accepted projects have 2026 completion/payment deadlines.",
+        "Weatherization eligibility is restricted by electric heating, rate code, pre/post inspection and custom-tool requirements; it is not a general commercial envelope rebate for every National Grid business customer."
+      ],
+      "programType": "Rebate/Incentive Program",
+      "administrator": "National Grid",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nationalgridus.com/upstate-ny-business/energy-saving-programs/",
+      "sourceUrlsChecked": [
+        "https://www.nationalgridus.com/upstate-ny-business/energy-saving-programs/",
+        "https://www.nationalgridus.com/Upstate-NY-Business/Energy-Saving-Programs/Large-Business-Program",
+        "https://www.nationalgridus.com/media/pdfs/bus-ways-to-save/ee4798_uny_electric-incentive.pdf",
+        "https://www.nationalgridus.com/media/pdfs/bus-ways-to-save/national-grid-ci-electrification-program-application-2026.pdf",
+        "https://www.nationalgridus.com/media/pdfs/bus-ways-to-save/uny/uny-electric-wx-measures-flyer-2025.pdf",
+        "https://www.nationalgridus.com/media/pdfs/bus-ways-to-save/uny-wx-electric-sales-flyer.pdf",
+        "https://programs.dsireusa.org/system/program/detail/3026/national-grid-electric-non-residential-energy-efficiency-program-upstate-new-york"
+      ],
+      "evidenceText": "National Grid's Upstate NY business pages list active programs for heat pumps, weatherization, EV charging, demand response, C&I beneficial electrification, advanced controls, agriculture and financing. The 2026 C&I electrification application supports large C&I customers replacing fossil-fuel heating with heat pumps and other technologies, including ASHP, VRF, GSHP, air-to-water heat pumps, HPWH, ERV/HRV, heat recovery and process electrification. Commercial electric weatherization sources list air sealing, pipe insulation, windows, window inserts, roof/wall insulation, doors, air curtains and custom duct sealing/floor insulation. The electric incentive flyer lists EMS, compressed air, VFDs, refrigeration and custom incentives.",
+      "reasoningNotes": "The record is active but has multiple subprograms. Boiler, demand response, audit and current new lighting matches were separated or blocked to prevent false-positive matching to this electric energy-efficiency opportunity."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2176"
+}
