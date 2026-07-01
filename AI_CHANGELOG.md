@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) GPT Pro utility fixture prompt
+
+- Added a GPT Pro prompt for generating intake-compatible synthetic utility data for all 50 sample matching test cases so they can be migrated toward real-user preview flows.
+
 ## 2026-06-30 - Codex (GPT-5) fake user classification
 
 - Added an `isFakeUser` flag to public user records and user creation paths so seeded/demo clients can be separated from real users.
