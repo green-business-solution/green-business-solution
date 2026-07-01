@@ -6,6 +6,12 @@
 - Simplified the supporting content into compact "What you'll need" and "What you get back" panels so users can understand the RetroFi flow without comparing long lists.
 - Kept all existing routing and functionality unchanged while improving visual hierarchy, hover polish, and mobile readability.
 
+## 2026-07-01 - Codex (GPT-5) Rajvansh GitHub organization admin invite
+
+- Invited Rajvansh Gupta's GitHub account `SchrodingersCatLooks` as an admin/owner of the `green-business-solution` GitHub organization.
+- Verified Rajvansh already has production app admin access via `pmrajvansh@gmail.com` in the live `GBS_ADMIN_EMAILS` allowlist and `role: admin` in `gbs-users`.
+- Updated access documentation to record that the GitHub organization admin invitation is pending acceptance.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro repair packets 49-58
 
 - Created two disjoint GPT Pro opportunity-data repair work packets for batches 49-53 and 54-58.

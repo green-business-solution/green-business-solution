@@ -25,7 +25,7 @@
 ## Current collaborators
 
 - GitHub username: `SchrodingersCatLooks`
-- GitHub access: invited with write access
+- GitHub access: invited as organization admin/owner; invitation pending acceptance
 - AWS Identity Center user: Rajvansh Gupta, `pmrajvansh@gmail.com`
 - AWS Identity Center username: `rajvansh`
 - AWS Identity Center user ID: `614b3520-a0d1-702d-d1ec-c7003d30b3f9`

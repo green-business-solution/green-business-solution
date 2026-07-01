@@ -35,3 +35,11 @@ gh api repos/green-business-solution/green-business-solution/collaborators/Plane
 ```
 
 Invitations remain pending until each collaborator accepts them in GitHub.
+
+Rajvansh Gupta's GitHub account `SchrodingersCatLooks` was later invited as an organization admin/owner with:
+
+```sh
+gh api /orgs/green-business-solution/memberships/SchrodingersCatLooks \
+  -X PUT \
+  -f role=admin
+```
