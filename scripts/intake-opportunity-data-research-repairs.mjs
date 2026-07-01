@@ -9,7 +9,7 @@ import {
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultManifestPath = path.join(repoRoot, "data/opportunity_data_repair_batches.json");
-const defaultExpectedCount = 15;
+const defaultExpectedCount = null;
 
 export function parseGptRepairOutput(raw) {
   const trimmed = String(raw || "").replace(/^\uFEFF/, "").trim();

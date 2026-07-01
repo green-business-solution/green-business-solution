@@ -65,9 +65,7 @@ describe("intake-opportunity-data-research-repairs", () => {
         outputPath,
         "--manifest",
         manifestPath,
-        "--update-manifest",
-        "--expected-count",
-        "2"
+        "--update-manifest"
       ],
       { cwd: repoRoot, encoding: "utf8" }
     );

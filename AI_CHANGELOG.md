@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro repair packet 59-78
+
+- Updated the GPT Pro opportunity-data work-packet generator so prompt validation text uses the actual target count instead of hardcoding 15 repairs.
+- Updated opportunity-data repair intake to infer expected repair count from the prompt by default, while preserving explicit `--expected-count` overrides.
+- Created `GPT Pro Work/opportunity-data-repair-batches-59-78/` with 20 prompt files and 20 blank output files, covering 400 unrepaired low-confidence targets after batch 58.
+
 ## 2026-07-01 - Codex (GPT-5) interactive how it works timeline
 
 - Turned the `How it Works` timeline into an interactive draggable control so users can grab the character and move it along the process track.

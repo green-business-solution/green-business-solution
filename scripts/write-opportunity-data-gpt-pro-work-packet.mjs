@@ -78,6 +78,7 @@ function main() {
 
 function buildPrompt({ batchNumber, start, end, totalRepairBatchesApplied, targets, continuation }) {
   const continuationJson = JSON.stringify(continuation);
+  const targetCount = targets.length;
   return [
     "You are researching and repairing RetroFi opportunity-data matches.",
     "",
@@ -94,7 +95,7 @@ function buildPrompt({ batchNumber, start, end, totalRepairBatchesApplied, targe
     "- URL fields must not contain brackets, parentheses, escaped quote fragments, or copied markdown.",
     "- If a search/browser UI gives a markdown link, convert it to a plain raw URL string before putting it in JSON.",
     "- Keep each opportunityId exactly as supplied.",
-    "- Include exactly 15 repair objects, one for each supplied target, in the same order.",
+    `- Include exactly ${targetCount} repair objects, one for each supplied target, in the same order.`,
     "- Use empty arrays for unknown list fields. Use null only for applicationUrl or websiteUrl when no current URL is verified.",
     "- Keep evidenceText concise, plain text, and under 75 words. Do not include URLs in evidenceText.",
     "- Prefer unavailable for expired, closed, cancelled, fully subscribed, or no-longer-accepting programs.",
@@ -159,7 +160,7 @@ function buildPrompt({ batchNumber, start, end, totalRepairBatchesApplied, targe
     "",
     "Final validation before responding:",
     "- JSON.parse would succeed.",
-    "- repairs.length is 15.",
+    `- repairs.length is ${targetCount}.`,
     "- The repair opportunityIds exactly match the target opportunityIds and order.",
     "- No markdown links exist anywhere in the JSON.",
     "- sourceUrlsChecked, websiteUrl, and applicationUrl contain only raw URLs or null.",
