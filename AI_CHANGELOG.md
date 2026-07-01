@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 29-33
+
+- Validated the five GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-29-33/` and confirmed none were cut off.
+- Imported the outputs as normalized opportunity-data repair batches 29-33 and appended them to the ordered repair manifest.
+- Applied all 33 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro repair packet 34-38
 
 - Added support for excluding existing GPT Pro target packets when generating opportunity-data repair work packets.
