@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) production admin allowlist repair
+
+- Updated the live `gbs-retrofi-production` CloudFormation stack so `GBS_ADMIN_EMAILS` now includes `rshen0210@gmail.com` alongside the existing admin allowlist.
+- Verified the production stack finished `UPDATE_COMPLETE` and now resolves the correct admin email parameter at runtime.
+
 ## 2026-06-30 - Codex (GPT-5) Ryan admin user correction
 
 - Updated the production `gbs-users` record for `rshen0210@gmail.com` to `role: admin` and `isFakeUser: false`.
