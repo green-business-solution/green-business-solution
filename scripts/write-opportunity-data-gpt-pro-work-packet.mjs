@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildTargets } from "./write-opportunity-data-research-targets.mjs";
+import { readExpectedOpportunityIds } from "./validate-opportunity-data-research-repairs.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultSourcePath = path.join(repoRoot, "public/retrofit_opportunity_index.json");
@@ -18,7 +19,8 @@ function main() {
   const targetsWithContinuation = buildTargets(source, {
     maxTargets: targetLimit,
     confidenceThreshold: options.confidenceThreshold,
-    excludeRepaired: true
+    excludeRepaired: true,
+    excludeOpportunityIds: options.excludeOpportunityIds
   });
   const targets = targetsWithContinuation.slice(0, options.batchCount * options.targetsPerBatch);
   if (targets.length < options.batchCount * options.targetsPerBatch) {
@@ -58,7 +60,14 @@ function main() {
     written.push(promptPath, outputPath);
   }
 
-  writeTargetsArtifact(options.targetsPath, { source, sourcePath: options.sourcePath, targets, confidenceThreshold: options.confidenceThreshold });
+  writeTargetsArtifact(options.targetsPath, {
+    source,
+    sourcePath: options.sourcePath,
+    targets,
+    confidenceThreshold: options.confidenceThreshold,
+    excludeTargetsPaths: options.excludeTargetsPaths,
+    excludedOpportunityCount: options.excludeOpportunityIds.length
+  });
 
   console.log(`Wrote ${path.relative(repoRoot, packetDir)}`);
   console.log(`Prompt/output files: ${written.length}`);
@@ -163,7 +172,10 @@ function buildPrompt({ batchNumber, start, end, totalRepairBatchesApplied, targe
   ].join("\n");
 }
 
-function writeTargetsArtifact(filePath, { source, sourcePath, targets, confidenceThreshold }) {
+function writeTargetsArtifact(
+  filePath,
+  { source, sourcePath, targets, confidenceThreshold, excludeTargetsPaths, excludedOpportunityCount }
+) {
   const artifact = {
     schemaVersion: "opportunity_data_research_targets.v1",
     generatedAt: new Date().toISOString(),
@@ -173,6 +185,8 @@ function writeTargetsArtifact(filePath, { source, sourcePath, targets, confidenc
       confidenceThresholdExclusive: confidenceThreshold,
       availabilityStatuses: ["active", "rolling", null],
       excludeOpportunityDataRepaired: true,
+      excludeOpportunityTargetPaths: excludeTargetsPaths.map((filePath) => path.relative(repoRoot, filePath)),
+      excludedOpportunityCount,
       sort: [
         "lowest opportunity confidence ascending",
         "related retrofit count descending",
@@ -196,6 +210,8 @@ function parseArgs(args) {
     batchCount: defaultBatchCount,
     targetsPerBatch: defaultTargetsPerBatch,
     confidenceThreshold: defaultConfidenceThreshold,
+    excludeTargetsPaths: [],
+    excludeOpportunityIds: [],
     force: false
   };
 
@@ -217,6 +233,10 @@ function parseArgs(args) {
       options.targetsPerBatch = positiveInteger(requiredValue(args, ++index, arg), arg);
     } else if (arg === "--confidence-threshold") {
       options.confidenceThreshold = numberValue(requiredValue(args, ++index, arg), arg);
+    } else if (arg === "--exclude-targets") {
+      const excludeTargetsPath = path.resolve(requiredValue(args, ++index, arg));
+      options.excludeTargetsPaths.push(excludeTargetsPath);
+      options.excludeOpportunityIds.push(...readExpectedOpportunityIds(excludeTargetsPath));
     } else if (arg === "--force") {
       options.force = true;
     } else {

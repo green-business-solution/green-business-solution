@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro repair packet 34-38
+
+- Added support for excluding existing GPT Pro target packets when generating opportunity-data repair work packets.
+- Created `GPT Pro Work/opportunity-data-repair-batches-34-38/` with five prompt files and five blank output files, continuing after the 29-33 packet.
+- Refreshed the next-target artifact to the batch 34-38 target set.
+
 ## 2026-07-01 - Codex (GPT-5) user preview fake-user autoload
 
 - Updated `/user-preview` to fetch admin users automatically on page load instead of requiring a manual refresh.
