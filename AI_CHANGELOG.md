@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) opportunity repair validation guardrails
+
+- Added a reusable GPT Pro opportunity-data repair validator and CLI script for schema, duplicate ID, expected target, URL corruption, status, and polluted evidence checks.
+- Wired the opportunity-data repair importer to fail before patching public fixtures when a repair artifact has blocking validation errors.
+- Added regression tests for validator failures and importer fail-fast behavior on malformed GPT Pro repair output.
+
 ## 2026-07-01 - Codex (GPT-5) remaining opportunity data repair prompt
 
 - Added a stricter GPT Pro opportunity-data repair prompt for the 15 remaining unrepaired low-confidence targets from the local target artifact after repair batches 1-12.

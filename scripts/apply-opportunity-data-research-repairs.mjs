@@ -1,5 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+import {
+  formatOpportunityDataRepairValidationResult,
+  validateOpportunityDataRepairArtifacts
+} from "./validate-opportunity-data-research-repairs.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -14,6 +18,10 @@ const reportPath =
 const appliedAt = new Date().toISOString();
 
 const repairArtifacts = repairsPaths.map((filePath) => ({ filePath, artifact: readJson(filePath) }));
+const validationResult = validateOpportunityDataRepairArtifacts(repairArtifacts, { allowDuplicateIdsAcrossFiles: true });
+if (!validationResult.ok) {
+  throw new Error(`Opportunity data repair validation failed before import:\n${formatOpportunityDataRepairValidationResult(validationResult)}`);
+}
 const repairRows = repairArtifacts.flatMap(({ filePath, artifact }) =>
   (artifact.repairs || [])
     .filter((repair) => repair?.opportunityId)

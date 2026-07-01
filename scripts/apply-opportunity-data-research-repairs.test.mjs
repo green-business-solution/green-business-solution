@@ -73,6 +73,58 @@ describe("apply-opportunity-data-research-repairs", () => {
     });
     expect(await fs.readFile(reportPath, "utf8")).toContain("Duplicate opportunity repairs overwritten by later files: 1");
   });
+
+  it("rejects invalid repair files before patching public fixtures", async () => {
+    const dir = await makeTmpDir();
+    const retrofitIndexPath = path.join(dir, "retrofit_opportunity_index.json");
+    const testCasesPath = path.join(dir, "sample_matching_test_cases.json");
+    const reportPath = path.join(dir, "report.md");
+    const badRepairPath = path.join(dir, "bad.json");
+    const originalIndex = {
+      retrofits: [
+        {
+          retrofitId: "lighting",
+          opportunities: [
+            {
+              opportunityId: "SOURCE_TEST:program:1",
+              availabilityStatus: "active",
+              programType: "Original Program"
+            }
+          ]
+        }
+      ],
+      upcomingOpportunities: []
+    };
+
+    await fs.writeFile(retrofitIndexPath, `${JSON.stringify(originalIndex, null, 2)}\n`);
+    await fs.writeFile(testCasesPath, `${JSON.stringify({ testCases: [] }, null, 2)}\n`);
+    await fs.writeFile(
+      badRepairPath,
+      `${JSON.stringify(
+        repairArtifact("closed", "Bad Program", {
+          applicationUrl: "[Bad](https://example.com/apply)"
+        }),
+        null,
+        2
+      )}\n`
+    );
+
+    expect(() =>
+      execFileSync(process.execPath, [path.join(repoRoot, "scripts/apply-opportunity-data-research-repairs.mjs"), badRepairPath], {
+        cwd: repoRoot,
+        env: {
+          ...process.env,
+          RETROFIT_INDEX_PATH: retrofitIndexPath,
+          MATCHING_TEST_CASES_PATH: testCasesPath,
+          OPPORTUNITY_DATA_REPAIR_REPORT_PATH: reportPath
+        },
+        stdio: "pipe"
+      })
+    ).toThrow(/Opportunity data repair validation failed/);
+
+    expect(JSON.parse(await fs.readFile(retrofitIndexPath, "utf8"))).toEqual(originalIndex);
+    await expect(fs.readFile(reportPath, "utf8")).rejects.toThrow();
+  });
 });
 
 async function makeTmpDir() {
@@ -81,7 +133,7 @@ async function makeTmpDir() {
   return dir;
 }
 
-function repairArtifact(availabilityStatus, programType) {
+function repairArtifact(availabilityStatus, programType, repairOverrides = {}) {
   return {
     schemaVersion: "opportunity_data_research_repairs.v1",
     researchedAt: "2026-07-01",
@@ -96,7 +148,8 @@ function repairArtifact(availabilityStatus, programType) {
           states: ["PA"],
           counties: [],
           cities: [],
-          utilityTerritories: []
+          utilityTerritories: [],
+          notes: "Test service territory."
         },
         eligibleApplicantTypes: [],
         eligibleSectors: [],
@@ -109,7 +162,8 @@ function repairArtifact(availabilityStatus, programType) {
         websiteUrl: "https://example.com/rebate",
         sourceUrlsChecked: ["https://example.com/rebate"],
         evidenceText: "Official source status.",
-        reasoningNotes: "Regression fixture."
+        reasoningNotes: "Regression fixture.",
+        ...repairOverrides
       }
     ]
   };
