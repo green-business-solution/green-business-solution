@@ -1,0 +1,914 @@
+
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4739",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MN"
+],
+"counties": [],
+"cities": [
+"Anoka",
+"Arlington",
+"Brownton",
+"Buffalo",
+"Chaska",
+"East Grand Forks",
+"Elk River",
+"Le Sueur",
+"North St. Paul",
+"Olivia",
+"Shakopee",
+"Winthrop"
+],
+"utilityTerritories": [
+"Participating Minnesota Municipal Power Agency member municipal electric utilities offering We Save Business rebates"
+],
+"notes": "Local forms and eligible custom measures vary by participating municipal utility."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"non_residential_electric_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"municipal",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"exterior_site_lighting_retrofit",
+"lighting_controls_retrofit",
+"variable_frequency_drive_retrofit",
+"high_efficiency_hvac_replacement",
+"high_efficiency_refrigeration_equipment",
+"commercial_food_service_equipment",
+"compressed_air_system_efficiency",
+"custom_energy_efficiency_project"
+],
+"hardRequirements": [
+"Applicant must be a non-residential electric customer of a participating MMPA municipal utility.",
+"Customer must use the local utility's current form and follow its local deadline, inspection and documentation rules.",
+"Custom measures, including HVAC, refrigeration, food-service and compressed-air measures, require utility preapproval and verifiable energy savings.",
+"VFD rebates require a qualifying new drive that automatically controls fan or pump speed to match system changes."
+],
+"blockers": [
+"Residential or home-weatherization work is not eligible under this business program.",
+"Broad HVAC matching should be allowed only for listed or preapproved custom high-efficiency equipment, not ordinary replacement.",
+"Replacement variable frequency drives are not eligible where the form requires a new drive.",
+"A measure offered by one MMPA city should not be assumed available in every member utility without checking the local form."
+],
+"programType": "Rebate Program",
+"administrator": "Minnesota Municipal Power Agency and participating member municipal utilities",
+"applicationUrl": null,
+"websiteUrl": "[https://www.mmpa.org/conservation/overview/](https://www.mmpa.org/conservation/overview/)",
+"sourceUrlsChecked": [
+"[https://www.mmpa.org/conservation/overview/](https://www.mmpa.org/conservation/overview/)",
+"[https://www.ci.buffalo.mn.us/DocumentCenter/View/2521/We-Save-Business-Lighting-Retrofit-Rebate-Form](https://www.ci.buffalo.mn.us/DocumentCenter/View/2521/We-Save-Business-Lighting-Retrofit-Rebate-Form)",
+"[https://ci.buffalo.mn.us/DocumentCenter/View/2522/We-Save-Business-VFD-Rebate-Form](https://ci.buffalo.mn.us/DocumentCenter/View/2522/We-Save-Business-VFD-Rebate-Form)",
+"[https://northstpaul.org/DocumentCenter/View/7462/2026-We-Save-Business-Rebate-Information-Sheetpdf](https://northstpaul.org/DocumentCenter/View/7462/2026-We-Save-Business-Rebate-Information-Sheetpdf)",
+"[https://www.mmpa.org/communities/olivia/](https://www.mmpa.org/communities/olivia/)"
+],
+"evidenceText": "MMPA says We Save Business rebates cover LED lighting, variable speed drives and custom projects; local 2026 forms list lighting controls, exterior LEDs, VFDs and preapproved custom measures.",
+"reasoningNotes": "Targets came from the uploaded queue prompt . Kept lighting and VFD matches; HVAC, refrigeration, food-service and compressed-air are custom or utility-specific measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5807",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NH"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"New Hampshire Electric Cooperative service territory"
+],
+"notes": "Loan eligibility is tied to NHEC membership and an approved Home Energy Performance or qualifying energy-efficiency project."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"home_energy_performance_project_financing",
+"air_sealing_weatherization_financing",
+"insulation_upgrade_financing",
+"heat_pump_hvac_retrofit_financing",
+"heat_pump_water_heater_financing"
+],
+"hardRequirements": [
+"Applicant must be an NHEC residential member with a qualifying energy-efficiency project proposal.",
+"On-bill financing is for eligible project co-payments and requires good payment history; published loan terms include a project minimum and maximum.",
+"Third-party interest buy-down financing requires a participating lender and NHEC documentation.",
+"Estimates, invoices or a Home Energy Performance proposal must support the financed work."
+],
+"blockers": [
+"This is financing, not a rebate; rebate-style matching should be blocked.",
+"Battery storage is not supported by the current energy-efficiency loan sources checked.",
+"Stand-alone heat pump or heat pump water heater rebates should be treated as separate NHEC offers unless the work is included in the approved financed project."
+],
+"programType": "Loan Program",
+"administrator": "New Hampshire Electric Cooperative",
+"applicationUrl": "[https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/](https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/)",
+"websiteUrl": "[https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/](https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/)",
+"sourceUrlsChecked": [
+"[https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/](https://www.nhec.com/residential-energy-savings/energy-efficiency-loans/)",
+"[https://www.nhec.com/energy-savings/](https://www.nhec.com/energy-savings/)"
+],
+"evidenceText": "NHEC loan materials finance qualified Home Energy Performance co-payments; NHEC energy-savings pages tie audits and weatherization to air sealing, insulation, heat pumps and water-heating improvements.",
+"reasoningNotes": "Categories are financing categories, not rebate categories. Battery storage was removed because the current loan page does not support it."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3217",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Participating MMWEC municipal light plant territories using NextZero"
+],
+"notes": "Participating municipal light plants and available residential, commercial and battery measures vary by town."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"commercial_customer",
+"industrial_customer",
+"municipal_utility_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"energy_audit",
+"heat_pump_hvac_retrofit",
+"ground_source_geothermal_heat_pump",
+"heat_pump_water_heater",
+"battery_storage_system",
+"smart_thermostat_zoning_retrofit",
+"led_lighting_retrofit",
+"high_efficiency_hvac_replacement",
+"residential_energy_star_appliance",
+"energy_management_connected_device"
+],
+"hardRequirements": [
+"Customer must be served by a participating municipal light plant and use the correct town-specific NextZero page or application.",
+"Residential heat pumps must meet the town's efficiency thresholds and contractor requirements.",
+"Residential battery rebates apply only where the town offers the battery subprogram and the battery meets brand, capacity and enrollment rules.",
+"Commercial lighting and HVAC measures apply only under the commercial program menu, not residential appliance rebates."
+],
+"blockers": [
+"Do not assume every NextZero town offers every category; town-specific pages control eligibility.",
+"EV charging is a separate NextZero subprogram and should not be inferred from this energy-efficiency match unless explicitly selected.",
+"Residential appliance rebates do not support commercial refrigeration, commercial kitchen equipment or broad industrial measures.",
+"Energy audit is a non-physical service and should not be treated as an installed retrofit."
+],
+"programType": "Rebate Program",
+"administrator": "MMWEC in collaboration with participating municipal utilities",
+"applicationUrl": "[https://rebates.nextzero.org/](https://rebates.nextzero.org/)",
+"websiteUrl": "[https://nextzero.org/](https://nextzero.org/)",
+"sourceUrlsChecked": [
+"[https://nextzero.org/](https://nextzero.org/)",
+"[https://www.mmwec.org/how-we-are-green/energy-efficiency/](https://www.mmwec.org/how-we-are-green/energy-efficiency/)",
+"[https://nextzero.org/sterling/heat-pumps/](https://nextzero.org/sterling/heat-pumps/)",
+"[https://nextzero.org/sterling/battery-program/](https://nextzero.org/sterling/battery-program/)",
+"[https://nextzero.org/sterling/appliances/](https://nextzero.org/sterling/appliances/)",
+"[https://nextzero.org/russell/energy-audits/](https://nextzero.org/russell/energy-audits/)",
+"[https://rebates.nextzero.org/](https://rebates.nextzero.org/)"
+],
+"evidenceText": "NextZero describes a residential and commercial/industrial municipal utility program; current pages show audits, heat pumps, appliances/thermostats, residential battery rebates and commercial prescriptive lighting/HVAC.",
+"reasoningNotes": "Kept battery only as a distinct residential battery subprogram where offered; kept LED and broad HVAC only for commercial prescriptive pages or qualifying heat-pump/HVAC pages."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2673",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"NineStar Connect electric service territory through the PowerMoves cooperative program"
+],
+"notes": "PowerMoves incentives are offered through participating Wabash Valley Power Alliance electric cooperatives."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ground_source_geothermal_heat_pump",
+"air_source_heat_pump",
+"dual_fuel_heat_pump",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit"
+],
+"hardRequirements": [
+"Applicant must be a residential electric member of NineStar Connect or another participating cooperative for that offer.",
+"Equipment must meet PowerMoves residential eligibility rules and required efficiency documentation.",
+"Applications must be submitted through the current PowerMoves online or paper process.",
+"Thermostat rebates require a qualifying Wi-Fi thermostat under program rules."
+],
+"blockers": [
+"High-efficiency HVAC should not be matched broadly; the supported HVAC categories are qualifying air-source, dual-fuel or geothermal heat pumps.",
+"Commercial, industrial and agricultural PowerMoves incentives are separate from this residential record.",
+"Battery storage, solar and business loans are not part of this residential equipment rebate match."
+],
+"programType": "Rebate Program",
+"administrator": "NineStar Connect through PowerMoves",
+"applicationUrl": "[https://wvpa.my.site.com/](https://wvpa.my.site.com/)",
+"websiteUrl": "[https://www.powermoves.com/rebates/residential/](https://www.powermoves.com/rebates/residential/)",
+"sourceUrlsChecked": [
+"[https://www.powermoves.com/rebates/residential/](https://www.powermoves.com/rebates/residential/)",
+"[https://www.ninestarconnect.com/faq/does-ninestar-offer-a-heat-pump-water-heater-lease/](https://www.ninestarconnect.com/faq/does-ninestar-offer-a-heat-pump-water-heater-lease/)"
+],
+"evidenceText": "PowerMoves residential materials list rebates for air-source, dual-fuel and geothermal heat pumps, heat pump water heaters and Wi-Fi thermostats for local cooperative members.",
+"reasoningNotes": "Removed broad HVAC replacement in favor of specific heat-pump categories; no support was found for storage or nonresidential measures in this record."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5733",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Noble REMC electric service territory"
+],
+"notes": "Noble REMC also points business customers to separate prescriptive and custom PowerMoves business rebates."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ground_source_geothermal_heat_pump",
+"air_source_heat_pump",
+"dual_fuel_heat_pump",
+"cold_climate_air_source_heat_pump",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit"
+],
+"hardRequirements": [
+"Applicant must follow the current Noble REMC residential rebate application requirements.",
+"Purchase receipts are required for all rebate applications.",
+"AHRI certificates are required for geothermal, air-source heat pump and heat pump water heater rebates.",
+"Heat loss and heat gain calculations are required for geothermal and air-source heat pumps.",
+"Installations are subject to verification or inspection."
+],
+"blockers": [
+"Broad high-efficiency HVAC replacement should be blocked unless the system is a qualifying heat pump or geothermal heat pump.",
+"Commercial and industrial rebates are separate and should not be inferred from the residential rebate sheet.",
+"Rebates may end or change; the current sheet states the residential rebate program ends December 31, 2026."
+],
+"programType": "Rebate Program",
+"administrator": "Noble REMC",
+"applicationUrl": null,
+"websiteUrl": "[https://www.nobleremc.com/rebates](https://www.nobleremc.com/rebates)",
+"sourceUrlsChecked": [
+"[https://www.nobleremc.com/rebates](https://www.nobleremc.com/rebates)",
+"[https://www.nobleremc.com/sites/default/files/2026-01/2026-noble-remc-residential-rebates.pdf](https://www.nobleremc.com/sites/default/files/2026-01/2026-noble-remc-residential-rebates.pdf)",
+"[https://www.powermoves.com/rebates/residential/](https://www.powermoves.com/rebates/residential/)"
+],
+"evidenceText": "Noble's 2026 residential sheet lists geothermal, air-source, dual-fuel and cold-climate heat pumps, heat pump water heaters and Wi-Fi thermostats, with receipts and AHRI documentation required.",
+"reasoningNotes": "Kept thermostat and heat-pump categories; narrowed generic HVAC to qualifying heat-pump/geothermal equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4524",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NV"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"NV Energy electric service territory"
+],
+"notes": "Eligible educational institutions must be located in NV Energy's service territory."
+},
+"eligibleApplicantTypes": [
+"public_k_12_school",
+"charter_k_12_school",
+"higher_education_institution"
+],
+"eligibleSectors": [
+"education",
+"public_sector",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"exterior_site_lighting_retrofit",
+"lighting_controls_retrofit",
+"window_film_shading_retrofit",
+"energy_management_system",
+"retrocommissioning",
+"high_efficiency_hvac_replacement",
+"variable_frequency_drive_retrofit",
+"high_efficiency_refrigeration_equipment",
+"commercial_kitchen_equipment",
+"custom_energy_efficiency_project"
+],
+"hardRequirements": [
+"Eligible applicants are public and charter K-12 schools and higher education institutions in NV Energy territory.",
+"Projects must be selected from prescriptive measures or proposed as custom projects with verifiable energy savings.",
+"The process includes pre-application, pre-inspection, pre-approval, reservation of funds, final application and post-inspection.",
+"Funding is limited."
+],
+"blockers": [
+"Window replacement is not supported by the current program summary; only window film is listed.",
+"Residential, private commercial and non-school projects are not eligible under this school program.",
+"Energy advisor assistance is not itself an installed retrofit.",
+"Do not treat programmable thermostats as broad smart-building controls outside eligible school projects."
+],
+"programType": "Rebate Program",
+"administrator": "NV Energy",
+"applicationUrl": null,
+"websiteUrl": "[https://www.nvenergy.com/save-with-powershift/schools](https://www.nvenergy.com/save-with-powershift/schools)",
+"sourceUrlsChecked": [
+"[https://www.nvenergy.com/save-with-powershift/schools](https://www.nvenergy.com/save-with-powershift/schools)",
+"[https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-school/EnergySmartSchools_ProgramSummary.pdf](https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-school/EnergySmartSchools_ProgramSummary.pdf)"
+],
+"evidenceText": "NV Energy's 2025 summary says eligible schools and higher education can receive rebates for lighting, window film, refrigeration, kitchen equipment, HVAC/VFDs and EMS optimization.",
+"reasoningNotes": "Kept window film but removed window replacement. Added refrigeration, kitchen, VFD and custom because the official school summary lists them."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3639",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"OG&E Oklahoma electric service territory"
+],
+"notes": "The current business page is utility-account based and shows Oklahoma/Arkansas navigation; this DSIRE target is treated as Oklahoma unless an Arkansas account path is confirmed."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"small_business_customer",
+"school_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"education",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"high_efficiency_refrigeration_equipment",
+"commercial_kitchen_equipment",
+"high_efficiency_hvac_replacement",
+"hvac_tune_up",
+"building_controls_energy_management",
+"smart_thermostat_zoning_retrofit",
+"building_energy_assessment",
+"building_benchmarking"
+],
+"hardRequirements": [
+"Applicant must be an eligible OG&E business customer in the applicable service territory.",
+"Measures and discounts must follow the applicable C&I, Small Business, Midstream or education program path.",
+"Small Business installations and assessments are performed through program-approved channels.",
+"Midstream discounts require eligible products and participating distributors or retailers."
+],
+"blockers": [
+"Insulation upgrade is not supported by the current OG&E commercial page and should be removed for this record.",
+"Benchmarking is a support or analysis feature, not a physical retrofit or building benchmarking compliance mandate.",
+"Residential appliance, home weatherization and residential HVAC offers are separate and should not be inferred here."
+],
+"programType": "Rebate Program",
+"administrator": "OG&E",
+"applicationUrl": null,
+"websiteUrl": "[https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency](https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency)",
+"sourceUrlsChecked": [
+"[https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency](https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency)"
+],
+"evidenceText": "OG&E's business efficiency page lists lighting, refrigeration, HVAC and building controls, plus benchmarking, Advanced A/C Tune-Up, LED retrofits, smart thermostats and midstream kitchen products.",
+"reasoningNotes": "Removed insulation and narrowed benchmarking to a nonphysical support category; kept commercial refrigeration and kitchen products only for business/midstream offers."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2214",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WA"
+],
+"counties": [
+"Okanogan County"
+],
+"cities": [],
+"utilityTerritories": [
+"Okanogan County PUD electric service territory"
+],
+"notes": "Primary program pages returned 403 to the browser, but official indexed snippets and form titles confirm current residential incentive categories."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"ductless_heat_pump",
+"heat_pump_water_heater",
+"insulation_upgrade",
+"smart_thermostat_zoning_retrofit",
+"window_replacement"
+],
+"hardRequirements": [
+"Applicant must be an Okanogan County PUD residential customer.",
+"Customer should contact Energy Services and use the applicable project information or installation form before starting work.",
+"Smart thermostats and heat pump water heaters must be on the applicable qualified product list.",
+"Windows, insulation and heat pump work may require utility review, pre-inspection or approved contractors under the current forms."
+],
+"blockers": [
+"Broad high-efficiency HVAC replacement should be blocked unless the work is a qualifying heat pump or ductless heat pump project.",
+"Commercial programs are separate from the residential program.",
+"Because direct official pages were blocked, detailed eligibility should be confirmed with Okanogan PUD before automated high-confidence matching."
+],
+"programType": "Rebate Program",
+"administrator": "Okanogan County PUD Conservation Department",
+"applicationUrl": "[https://www.okanoganpud.org/customer-service/permits-forms/](https://www.okanoganpud.org/customer-service/permits-forms/)",
+"websiteUrl": "[https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/residential-programs/](https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/residential-programs/)",
+"sourceUrlsChecked": [
+"[https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/residential-programs/](https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/residential-programs/)",
+"[https://www.okanoganpud.org/customer-service/permits-forms/](https://www.okanoganpud.org/customer-service/permits-forms/)",
+"[https://www.okanoganpud.org/faqs/heat-pump-water-heaters-2/](https://www.okanoganpud.org/faqs/heat-pump-water-heaters-2/)",
+"[https://www.okanoganpud.org/faqs/windows-2/](https://www.okanoganpud.org/faqs/windows-2/)",
+"[https://www.okanoganpud.org/energy-services-incentives/energy-services/](https://www.okanoganpud.org/energy-services-incentives/energy-services/)"
+],
+"evidenceText": "Official Okanogan PUD snippets show residential smart thermostat, heat pump water heater, ductless heat pump, insulation and window project forms; direct page fetch returned 403.",
+"reasoningNotes": "Kept the categories confirmed by official snippets, but downgraded confidence because the browser could not read the full official forms or program page."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22431",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Oregon Trail Electric Cooperative service territory"
+],
+"notes": "Commercial rebates are for OTEC commercial member-owners and are administered through OTEC's Oregon rebate platform."
+},
+"eligibleApplicantTypes": [
+"commercial_member",
+"business_customer",
+"non_residential_customer"
+],
+"eligibleSectors": [
+"commercial",
+"agricultural",
+"institutional",
+"small_business"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"ductless_heat_pump",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit",
+"insulation_upgrade",
+"window_replacement",
+"led_lighting_retrofit",
+"energy_star_refrigerator_freezer",
+"commercial_ev_charging_station"
+],
+"hardRequirements": [
+"Applicant must be an OTEC commercial member-owner.",
+"Weatherization incentives require the building's primary heating source to be electric.",
+"Insulation rebates apply where qualifying assemblies currently have no insulation.",
+"Window replacement cannot change window size and must meet the listed U-factor requirements.",
+"Smart thermostats must be on the qualified product list and are not eligible for lodging, 24/7 operation or semi-conditioned spaces."
+],
+"blockers": [
+"Residential rebates are separate and should not be inferred from this commercial record.",
+"Broad HVAC replacement should be limited to qualifying heat pump or ductless heat pump measures.",
+"Window work that changes the size of the opening is not eligible.",
+"Commercial EV charging appears as a separate measure on the same commercial rebate page and should not be confused with HVAC or envelope measures."
+],
+"programType": "Rebate Program",
+"administrator": "Oregon Trail Electric Cooperative",
+"applicationUrl": "[https://oregon.my.salesforce-sites.com/](https://oregon.my.salesforce-sites.com/)",
+"websiteUrl": "[https://www.otec.coop/commercial-rebates](https://www.otec.coop/commercial-rebates)",
+"sourceUrlsChecked": [
+"[https://www.otec.coop/commercial-rebates](https://www.otec.coop/commercial-rebates)",
+"[https://www.otec.coop/commercial](https://www.otec.coop/commercial)"
+],
+"evidenceText": "OTEC's commercial rebate page lists heat pumps, heat pump water heaters, smart thermostats, insulation, windows, lighting, appliances and EV charging, with electric-heat and product-list limits.",
+"reasoningNotes": "Kept window replacement because the current commercial page lists windows; limited refrigerator/freezer to ENERGY STAR appliance context rather than broad refrigeration systems."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3325",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Pacific Power California service territory"
+],
+"notes": "California residential Wattsmart incentives apply only to Pacific Power residential customers in California."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"tenant",
+"landlord"
+],
+"eligibleSectors": [
+"residential",
+"multifamily",
+"manufactured_home"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"ductless_heat_pump",
+"heat_pump_conversion",
+"heat_pump_water_heater",
+"residential_refrigerator_freezer",
+"central_brushless_fan_motor",
+"room_air_conditioner",
+"room_air_cleaner",
+"smart_connected_power_strip",
+"residential_energy_star_appliance"
+],
+"hardRequirements": [
+"Applicant or installation site must be an eligible Pacific Power California residential account.",
+"Equipment must meet current Wattsmart/Pacific Power qualifying specifications and product-list rules.",
+"Some incentives are limited to specific housing types, equity segments, manufactured homes or multifamily configurations.",
+"Program measures and amounts follow current California tariff and filing updates."
+],
+"blockers": [
+"High-efficiency refrigeration equipment should be blocked; the supported category is residential refrigerator/freezer appliance incentives, not commercial refrigeration systems.",
+"LED lighting retrofit is not supported as a current standalone retrofit category for this record.",
+"Broad HVAC replacement should be limited to ductless heat pumps, heat pump conversions, room air conditioners or other listed residential HVAC measures.",
+"Oregon, Washington and Idaho Pacific Power offers are separate from this California record."
+],
+"programType": "Rebate Program",
+"administrator": "Pacific Power",
+"applicationUrl": "[https://wattsmartsavings.net/california-residential/](https://wattsmartsavings.net/california-residential/)",
+"websiteUrl": "[https://wattsmartsavings.net/california-residential/](https://wattsmartsavings.net/california-residential/)",
+"sourceUrlsChecked": [
+"[https://www.pacificpower.net/savings-energy-choices/home.html](https://www.pacificpower.net/savings-energy-choices/home.html)",
+"[https://wattsmartsavings.net/california-residential/](https://wattsmartsavings.net/california-residential/)",
+"[https://wattsmartsavings.net/california-residential/find-savings-manufactured-homes/](https://wattsmartsavings.net/california-residential/find-savings-manufactured-homes/)",
+"[https://www.pacificpower.net/content/dam/pcorp/documents/en/pacificpower/rates-regulation/california/filings/advice-797-e/Advice_797-E.pdf](https://www.pacificpower.net/content/dam/pcorp/documents/en/pacificpower/rates-regulation/california/filings/advice-797-e/Advice_797-E.pdf)"
+],
+"evidenceText": "Pacific Power's 2026 California filing lists residential incentives for ductless heat pumps, heat pump conversions, heat pump water heaters, refrigerators/freezers, room air conditioners and smart power strips.",
+"reasoningNotes": "Repaired false positives by replacing broad refrigeration and LED retrofit matches with product-specific residential appliance and HVAC categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3965",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Parke County REMC electric service territory"
+],
+"notes": "Parke County REMC also links C&I and agricultural incentives through PowerMoves; this repair covers the residential equipment rebates."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ground_source_geothermal_heat_pump",
+"air_source_heat_pump",
+"dual_fuel_heat_pump",
+"cold_climate_air_source_heat_pump",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit"
+],
+"hardRequirements": [
+"Applicant must be a Parke County REMC member and submit the rebate application within the stated installation window.",
+"PowerMoves heating and cooling rebates require AHRI certificates and heat loss/heat gain calculations.",
+"Air-source and dual-fuel heat pumps must meet current SEER2 and HSPF2 thresholds.",
+"Heat pump water heaters must meet the minimum UEF requirement.",
+"Wi-Fi thermostat rebates apply to qualifying replacement of a non-Wi-Fi thermostat."
+],
+"blockers": [
+"Broad high-efficiency HVAC replacement should be blocked unless the equipment is a qualifying heat pump or geothermal heat pump.",
+"Commercial, industrial and agricultural incentives are separate program paths and should not be inferred for residential applicants.",
+"Non-heat-pump HVAC equipment is not supported by the checked residential rebate page."
+],
+"programType": "Rebate Program",
+"administrator": "Parke County REMC",
+"applicationUrl": null,
+"websiteUrl": "[https://www.pcremc.com/rebates](https://www.pcremc.com/rebates)",
+"sourceUrlsChecked": [
+"[https://www.pcremc.com/rebates](https://www.pcremc.com/rebates)",
+"[https://www.powermoves.com/rebates/residential/](https://www.powermoves.com/rebates/residential/)"
+],
+"evidenceText": "Parke REMC lists rebates for air-source, dual-fuel, cold-climate and geothermal heat pumps, heat pump water heaters and Wi-Fi thermostats, with AHRI/load-calculation requirements.",
+"reasoningNotes": "Kept the heat-pump, geothermal, water-heater and thermostat matches; narrowed generic HVAC to qualifying heat-pump equipment only."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4328",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Tennessee clean-energy financing offered through Pathway Lending with state/TVA support."
+},
+"eligibleApplicantTypes": [
+"for_profit_business",
+"nonprofit_business",
+"commercial_customer",
+"industrial_customer",
+"local_government",
+"public_agency"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"nonprofit",
+"public_sector",
+"local_government"
+],
+"eligibleRetrofitCategories": [
+"energy_efficiency_project_financing",
+"led_lighting_retrofit_financing",
+"high_efficiency_hvac_replacement_financing",
+"building_envelope_retrofit_financing",
+"cool_roof_retrofit_financing",
+"compressed_air_system_efficiency_financing",
+"renewable_energy_installation_financing",
+"solar_energy_system_financing",
+"combined_heat_and_power_system_financing"
+],
+"hardRequirements": [
+"Project must be in Tennessee and satisfy Pathway/TDEC loan underwriting and eligible-project rules.",
+"Eligible borrowers include Tennessee C&I businesses, nonprofits and local government or public agency borrowers.",
+"Funding is loan financing, with published terms and project-size limits, not a grant or rebate.",
+"Project scope must document eligible energy efficiency or renewable energy improvements."
+],
+"blockers": [
+"Do not match this as a rebate; it is financing.",
+"Residential homeowners are not eligible under the checked current sources.",
+"Energy audits alone are not an installed retrofit category unless included as part of an approved financed project cost.",
+"Biomass should not be automatically matched; current sources checked support renewable installations broadly but do not specifically list biomass."
+],
+"programType": "Loan Program",
+"administrator": "Pathway Lending with Tennessee Department of Environment and Conservation and TVA support",
+"applicationUrl": "[https://pathwaylending.org/sustainability/](https://pathwaylending.org/sustainability/)",
+"websiteUrl": "[https://pathwaylending.org/sustainability/](https://pathwaylending.org/sustainability/)",
+"sourceUrlsChecked": [
+"[https://pathwaylending.org/sustainability/](https://pathwaylending.org/sustainability/)",
+"[https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/programs-projects/programs-and-projects/clean-energy-financing/energy-efficiency-and-renewable-energy-loan-program.html](https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/programs-projects/programs-and-projects/clean-energy-financing/energy-efficiency-and-renewable-energy-loan-program.html)"
+],
+"evidenceText": "TDEC and Pathway describe low-interest Tennessee loans for C&I, nonprofit and local-government energy efficiency and renewable projects, including lighting, HVAC, cool roofs, envelope, solar and co-generation.",
+"reasoningNotes": "Converted all retrofit categories to financing categories. Removed standalone audit and biomass matches because current official sources did not support them as specific retrofit measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2221",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MS"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Pearl River Valley Electric Power Association service territory"
+],
+"notes": "Comfort Advantage eligibility is tied to PRVEPA service and program home standards."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner",
+"builder"
+],
+"eligibleSectors": [
+"residential",
+"new_construction",
+"existing_home"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"ground_source_geothermal_heat_pump",
+"air_sealing_weatherization",
+"insulation_upgrade"
+],
+"hardRequirements": [
+"Home energy requirements must be served by PRVEPA through one meter.",
+"Comfort Advantage homes must meet specified insulation, infiltration control, window and electric water-heating standards.",
+"Incentives are tied to qualifying electric heat pumps or qualifying ground-source heat pumps.",
+"Existing-home incentive applies to installing a qualifying heat pump in a non-Comfort Advantage home under current rules."
+],
+"blockers": [
+"Air sealing and insulation are Comfort Advantage standards or requirements, not a broad standalone rebate.",
+"Broad high-efficiency HVAC replacement should be blocked unless the measure is a qualifying electric heat pump or ground-source heat pump.",
+"Commercial projects are not eligible under this residential Comfort Advantage record."
+],
+"programType": "Rebate Program",
+"administrator": "Pearl River Valley Electric Power Association",
+"applicationUrl": null,
+"websiteUrl": "[https://help.prvepa.com/article/29-comfort-advantage](https://help.prvepa.com/article/29-comfort-advantage)",
+"sourceUrlsChecked": [
+"[https://help.prvepa.com/article/29-comfort-advantage](https://help.prvepa.com/article/29-comfort-advantage)"
+],
+"evidenceText": "PRVEPA Comfort Advantage lists incentives for qualifying electric and ground-source heat pumps and sets required insulation, infiltration control, window and electric water-heating standards.",
+"reasoningNotes": "Kept heat-pump and geothermal matches. Insulation and air sealing are retained only as required home-performance standards, not separate prescriptive retrofit rebates."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3648",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"PA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Pennsylvania program administered through DCED/DEP and the Commonwealth Financing Authority."
+},
+"eligibleApplicantTypes": [
+"business",
+"economic_development_organization",
+"political_subdivision",
+"municipality",
+"county",
+"school_district"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"public_sector",
+"local_government",
+"education",
+"economic_development"
+],
+"eligibleRetrofitCategories": [
+"alternative_clean_energy_project_financing",
+"energy_efficiency_conservation_project_financing",
+"renewable_energy_generation_financing",
+"clean_energy_infrastructure_financing"
+],
+"hardRequirements": [
+"Project must be located in Pennsylvania and fit ACE alternative/clean energy or energy efficiency/conservation purposes.",
+"Eligible applicants include businesses, economic development organizations and political subdivisions.",
+"Funding is financial assistance through loans, grants or guarantees with program caps, fees and matching requirements.",
+"Application is subject to Commonwealth Financing Authority review and approval."
+],
+"blockers": [
+"Do not treat ACE as a prescriptive rebate for LED lighting, generic HVAC, geothermal heat pumps, biomass or CHP without project-specific approval.",
+"Current official page supports broad alternative/clean energy and energy efficiency/conservation project financing, not a confirmed specific equipment list.",
+"The current guideline/fact-sheet downloads could not be read in the browser, so do not infer unsupported technologies from DSIRE alone."
+],
+"programType": "Grant / Loan / Loan Guarantee Program",
+"administrator": "Pennsylvania Department of Community and Economic Development and Department of Environmental Protection through the Commonwealth Financing Authority",
+"applicationUrl": null,
+"websiteUrl": "[https://dced.pa.gov/programs/alternative-clean-energy-program-ace/](https://dced.pa.gov/programs/alternative-clean-energy-program-ace/)",
+"sourceUrlsChecked": [
+"[https://dced.pa.gov/programs/alternative-clean-energy-program-ace/](https://dced.pa.gov/programs/alternative-clean-energy-program-ace/)"
+],
+"evidenceText": "DCED's ACE page says it provides grants, loans and guarantees for alternative/clean energy and energy efficiency/conservation projects for businesses and political subdivisions.",
+"reasoningNotes": "Replaced specific biomass, CHP, geothermal, HVAC and LED matches with broader financing categories because the current readable official page did not confirm those product-specific measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3745",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Pepco Maryland electric service territory"
+],
+"notes": "Use the Maryland Home Energy Savings pages; Pepco District of Columbia and business offers are separate."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer",
+"homeowner",
+"tenant",
+"landlord"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit",
+"high_efficiency_hvac_replacement",
+"home_energy_assessment",
+"air_sealing_weatherization",
+"insulation_upgrade",
+"refrigerator_freezer_recycling",
+"residential_energy_star_appliance"
+],
+"hardRequirements": [
+"Applicant must have an active Pepco Maryland residential electric account.",
+"Appliance rebates require qualifying ENERGY STAR or program-listed products and submission through the rebate center.",
+"Appliance recycling requires an old working refrigerator or freezer and qualifying pickup rules.",
+"Home Performance and electrification rebates require an eligible home assessment and qualifying improvements; some offers are single-family only.",
+"HVAC and HPWH incentives require qualifying equipment and program documentation."
+],
+"blockers": [
+"High-efficiency refrigeration equipment should be blocked; current refrigerator/freezer support is residential appliance recycling or appliance rebates, not commercial refrigeration.",
+"Pepco business programs and District of Columbia programs are separate and should not be inferred here.",
+"Home Performance rebates should not be matched to condos or apartments where the current page limits that offer to single-family homes.",
+"Energy assessment is a service and should not be counted as a physical retrofit."
+],
+"programType": "Rebate Program",
+"administrator": "Pepco Maryland Home Energy Savings Program",
+"applicationUrl": "[https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program](https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program)",
+"websiteUrl": "[https://homeenergysavings.pepco.com/](https://homeenergysavings.pepco.com/)",
+"sourceUrlsChecked": [
+"[https://homeenergysavings.pepco.com/](https://homeenergysavings.pepco.com/)",
+"[https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program](https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program)",
+"[https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program/electric-heat-pump-water-heater](https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program/electric-heat-pump-water-heater)",
+"[https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program/smart-thermostats](https://homeenergysavings.pepco.com/md/residential/appliance-rebate-program/smart-thermostats)",
+"[https://homeenergysavings.pepco.com/md/residential/home-performance-with-energy-star-program](https://homeenergysavings.pepco.com/md/residential/home-performance-with-energy-star-program)"
+],
+"evidenceText": "Pepco Maryland pages list HPWH and smart thermostat rebates, appliance recycling for old refrigerators/freezers, HVAC/Home Performance programs and electrification/weatherization upgrades.",
+"reasoningNotes": "Repaired refrigerator/freezer matching to residential recycling/appliance context and kept HVAC only for qualifying residential HVAC, heat-pump or Home Performance measures."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:4831"
+}
