@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) fake user database cleanup
+
+- Deleted 17 extra `isFakeUser: true` records from the production `gbs-users` table that were not part of the 50 main sample matching test cases.
+- Guarded deletion with the 50 `sampleUserId` allowlist from `data/sample_user_profiles.json` and DynamoDB conditional deletes requiring `isFakeUser: true`.
+- Verified all 50 main test-case fake users and all 50 matching fake intake records remain present, with no unexpected fake users left after cleanup.
+
 ## 2026-07-01 - Codex (GPT-5) sample test-case utility data completion
 
 - Imported GPT Pro utility profile patches for sample matching test cases 21-50 and added the source patch artifacts to `data/`.
