@@ -14,7 +14,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
-import { buildClientRetrofitResults } from "./lib/retrofitCalculator/index.mjs";
+import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -113,21 +113,6 @@ let googleKeysCache = {
   expiresAt: 0,
   keys: []
 };
-const opportunityCacheTtlMs = Math.max(
-  60_000,
-  Number.parseInt(process.env.GBS_OPPORTUNITY_CACHE_TTL_MS || "300000", 10) || 300_000
-);
-let opportunitiesCache = {
-  loadedAt: 0,
-  items: [],
-  promise: null
-};
-const retrofitResultsCacheTtlMs = Math.max(
-  60_000,
-  Number.parseInt(process.env.GBS_RETROFIT_RESULTS_CACHE_TTL_MS || "300000", 10) || 300_000
-);
-const retrofitResultsCache = new Map();
-const retrofitResultsPromiseCache = new Map();
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -1033,67 +1018,6 @@ async function scanAll(TableName) {
   return items;
 }
 
-async function getCachedOpportunities() {
-  const now = Date.now();
-  if (opportunitiesCache.items.length > 0 && now - opportunitiesCache.loadedAt < opportunityCacheTtlMs) {
-    return opportunitiesCache.items;
-  }
-
-  if (!opportunitiesCache.promise) {
-    opportunitiesCache.promise = scanAll(opportunitiesTable)
-      .then((items) => {
-        opportunitiesCache = {
-          loadedAt: Date.now(),
-          items,
-          promise: null
-        };
-        return items;
-      })
-      .catch((error) => {
-        opportunitiesCache.promise = null;
-        throw error;
-      });
-  }
-
-  return opportunitiesCache.promise;
-}
-
-function retrofitResultsCacheKey(intake) {
-  if (!intake) {
-    return "empty-intake";
-  }
-
-  return [
-    intake.userId || "",
-    intake.submissionId || "",
-    intake.updatedAt || "",
-    intake.utilityExtractedValues?.length || 0,
-    intake.uploadedUtilityFiles?.length || 0
-  ].join(":");
-}
-
-function readCachedRetrofitResults(intake) {
-  const key = retrofitResultsCacheKey(intake);
-  const cached = retrofitResultsCache.get(key);
-  if (!cached) {
-    return null;
-  }
-
-  if (Date.now() - cached.createdAt > retrofitResultsCacheTtlMs) {
-    retrofitResultsCache.delete(key);
-    return null;
-  }
-
-  return cached.results;
-}
-
-function writeCachedRetrofitResults(intake, results) {
-  retrofitResultsCache.set(retrofitResultsCacheKey(intake), {
-    createdAt: Date.now(),
-    results
-  });
-}
-
 function encodeScanCursor(key) {
   if (!key) {
     return null;
@@ -1534,34 +1458,6 @@ async function getUserRecord(userId) {
   );
 
   return result.Item || null;
-}
-
-async function buildRetrofitResultsForIntake(intake) {
-  const cached = readCachedRetrofitResults(intake);
-  if (cached) {
-    return cached;
-  }
-
-  const cacheKey = retrofitResultsCacheKey(intake);
-  if (!retrofitResultsPromiseCache.has(cacheKey)) {
-    retrofitResultsPromiseCache.set(
-      cacheKey,
-      (async () => {
-        const opportunities = await getCachedOpportunities();
-        const results = buildClientRetrofitResults({
-          intake,
-          opportunities,
-          now: new Date().toISOString()
-        });
-        writeCachedRetrofitResults(intake, results);
-        return results;
-      })().finally(() => {
-        retrofitResultsPromiseCache.delete(cacheKey);
-      })
-    );
-  }
-
-  return retrofitResultsPromiseCache.get(cacheKey);
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -2975,21 +2871,25 @@ app.post("/api/auth/password/session", async (req, res) => {
   }
 });
 
-app.get("/api/portal/retrofit-results", async (req, res) => {
+app.get("/api/portal/retrofit-recommendations", async (req, res) => {
   try {
     const user = await requireAuthenticatedUserFromRequest(req);
     if (user.role !== "client") {
-      const error = new Error("Retrofit results are only available for client accounts.");
+      const error = new Error("Retrofit estimates are only available for client accounts.");
       error.status = 403;
       throw error;
     }
 
     const intake = await getIntake(user.userId);
-    res.json({
-      client: publicUser(user),
-      intake,
-      results: await buildRetrofitResultsForIntake(intake)
-    });
+    const opportunities = await scanAll(opportunitiesTable);
+    res.json(
+      buildPortalRetrofitRecommendations({
+        user: publicUser(user),
+        intake,
+        opportunities,
+        now: new Date()
+      })
+    );
   } catch (error) {
     handleError(res, error);
   }
@@ -3013,27 +2913,6 @@ app.get("/api/admin/tables/:tableName", async (req, res) => {
   }
 });
 
-app.get("/api/admin/client-retrofit-results/:userId", async (req, res) => {
-  try {
-    await requireAdminFromRequest(req);
-    const user = await getUserRecord(cleanText(req.params.userId));
-    if (!user || user.role !== "client") {
-      const error = new Error("Client account was not found.");
-      error.status = 404;
-      throw error;
-    }
-
-    const intake = await getIntake(user.userId);
-    res.json({
-      client: publicUser(user),
-      intake,
-      results: await buildRetrofitResultsForIntake(intake)
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-});
-
 app.get("/api/admin/client-portal-profile/:userId", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
@@ -3049,6 +2928,31 @@ app.get("/api/admin/client-portal-profile/:userId", async (req, res) => {
       user: publicUser(user),
       intake
     });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const user = await getUserRecord(cleanText(req.params.userId));
+    if (!user || user.role !== "client") {
+      const error = new Error("Client account was not found.");
+      error.status = 404;
+      throw error;
+    }
+
+    const intake = await getIntake(user.userId);
+    const opportunities = await scanAll(opportunitiesTable);
+    res.json(
+      buildPortalRetrofitRecommendations({
+        user: publicUser(user),
+        intake,
+        opportunities,
+        now: new Date()
+      })
+    );
   } catch (error) {
     handleError(res, error);
   }

@@ -9,12 +9,12 @@ import { evaluateOpportunityForUser } from "../server/matching/evaluateRules.mjs
 import { summarizeMatchResult } from "../server/matching/explainMatch.mjs";
 import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "../server/matching/opportunityLifecycle.mjs";
+import { buildRetrofitGroupsFromEligibleResults } from "../server/retrofitRecommendations.mjs";
 import {
   RETROFIT_TAXONOMY_VERSION,
   buildRetrofitOpportunityIndex,
   classifyRetrofitsForOpportunity
 } from "../server/matching/retrofitTaxonomy.mjs";
-import { buildAdminTestCaseSavingsPreview } from "../server/savings/adminTestCaseSavings.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
@@ -345,7 +345,13 @@ function buildUserReport(userProfile, results) {
   );
   const blockers = topCounts(results.flatMap((result) => result.blockers));
   const unresolved = topCounts(promising.flatMap((result) => result.unresolvedRequirements));
-  const retrofits = buildUserRetrofitGroups(promising, userProfile);
+  const retrofits = buildRetrofitGroupsFromEligibleResults({
+    results: promising,
+    normalizedProfile: userProfile.userMatchProfile,
+    calculationDate: generatedAt.slice(0, 10),
+    subjectId: userProfile.sampleUserId,
+    opportunityRules: opportunityIncentiveRules
+  });
 
   return {
     sampleUserId: userProfile.sampleUserId,
@@ -373,41 +379,6 @@ function assertNoDisallowedAdminStatuses(userProfile, grouped) {
       .map((row) => `${row.status}=${row.count}`)
       .join(", ")}. Run the data repair pipeline before publishing test cases.`
   );
-}
-
-function buildUserRetrofitGroups(results, userProfile) {
-  const groups = new Map();
-
-  for (const result of results) {
-    const summarized = summarizeMatchResult(result);
-    for (const retrofit of result.retrofitTypes || []) {
-      const current = groups.get(retrofit.retrofitTypeId) || {
-        retrofitTypeId: retrofit.retrofitTypeId,
-        displayName: retrofit.displayName,
-        parentCategory: retrofit.parentCategory,
-        isPhysicalRetrofit: retrofit.isPhysicalRetrofit,
-        opportunityCount: 0,
-        opportunities: []
-      };
-      current.opportunityCount += 1;
-      current.opportunities.push(summarized);
-      groups.set(retrofit.retrofitTypeId, current);
-    }
-  }
-
-  return [...groups.values()]
-    .map((group) => ({
-      ...group,
-      opportunities: group.opportunities.sort(compareResults),
-      savingsPreview: buildAdminTestCaseSavingsPreview({
-        retrofitGroup: group,
-        sampleUserId: userProfile.sampleUserId,
-        normalizedProfile: userProfile.userMatchProfile,
-        calculationDate: generatedAt.slice(0, 10),
-        opportunityIncentiveRules
-      })
-    }))
-    .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
 }
 
 function buildReport({ userReports, opportunities, outputPath }) {

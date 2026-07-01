@@ -172,105 +172,16 @@ type PortalPayload = {
   user: UserRecord;
   intake: IntakeRecord | null;
 };
-
-type RetrofitFieldDescriptor = {
-  fieldId: string;
-  label: string;
-};
-
-type RetrofitResultEstimate = {
-  annualSavingsLow: number | null;
-  annualSavingsTypical: number | null;
-  annualSavingsHigh: number | null;
-  estimatedProjectCostLow: number | null;
-  estimatedProjectCostTypical: number | null;
-  estimatedProjectCostHigh: number | null;
-  estimatedIncentiveValueLow: number | null;
-  estimatedIncentiveValueTypical: number | null;
-  estimatedIncentiveValueHigh: number | null;
-  estimatedNetCostLow: number | null;
-  estimatedNetCostTypical: number | null;
-  estimatedNetCostHigh: number | null;
-  paybackYearsLow: number | null;
-  paybackYearsTypical: number | null;
-  paybackYearsHigh: number | null;
-  roi15YearLow: number | null;
-  roi15YearTypical: number | null;
-  roi15YearHigh: number | null;
-};
-
-type RetrofitResultItem = {
-  opportunityId: string;
-  opportunityName: string;
-  retrofitTypeId: string | null;
-  retrofitDisplayName: string;
-  category: string;
-  savingsModelId: string | null;
-  savingsModelName?: string;
-  readinessStatus:
-    | "ready_for_estimate"
-    | "needs_bill_data"
-    | "needs_project_scope"
-    | "needs_quote"
-    | "needs_incentive_details"
-    | "needs_tax_context"
-    | "not_enough_data";
-  nextStepCta: string;
-  confidence: "low" | "medium" | "high";
-  missingInfoPrompts: string[];
-  matchedReasons: string[];
-  links: {
-    sourceUrl: string | null;
-    websiteUrl: string | null;
-    applicationUrl: string | null;
-  };
-  estimate: RetrofitResultEstimate;
-  fieldCoverage: {
-    requiredBillFields: RetrofitFieldDescriptor[];
-    availableFields: RetrofitFieldDescriptor[];
-    missingBillFields: RetrofitFieldDescriptor[];
-    missingNonBillInputs: RetrofitFieldDescriptor[];
-    missingIncentiveFields: RetrofitFieldDescriptor[];
-    missingCostFields: RetrofitFieldDescriptor[];
-  };
-  normalizedIncentive: {
-    incentive_value_method: string | null;
-    incentive_amount: number | null;
-    incentive_percent: number | null;
-    incentive_cap: number | null;
-    eligible_cost_basis: string | null;
-    application_deadline: string | null;
-    source_confidence: string | null;
-    source_formula: string | null;
-    missing_info_flags: string[];
-  } | null;
-  assumptionsUsed: string[];
-};
-
-type RetrofitResultsPayload = {
-  schemaVersion: string;
-  generatedAt: string;
-  intakeId: string | null;
-  summary: {
-    totalResults: number;
-    readyToEstimate: number;
-    needsMoreInformation: number;
-    notCurrentlyApplicable: number;
-  };
-  groups: {
-    readyToEstimate: RetrofitResultItem[];
-    needsMoreInformation: RetrofitResultItem[];
-    notCurrentlyApplicable: RetrofitResultItem[];
-  };
-};
-
-type PortalRetrofitResultsResponse = {
-  client: UserRecord;
-  intake: IntakeRecord | null;
-  results: RetrofitResultsPayload;
-};
-
 type AdminClientPortalProfilePayload = PortalPayload;
+
+type PortalRetrofitRecommendationsResponse = PortalPayload & {
+  generatedAt: string;
+  summary: {
+    matchedRetrofitCount: number;
+    matchedOpportunityCount: number;
+  };
+  retrofits: SampleRetrofitGroup[];
+};
 
 type PortalPreviewHint = {
   clientName: string;
@@ -605,6 +516,7 @@ type SampleRetrofitGroup = {
   displayName: string;
   parentCategory: string;
   isPhysicalRetrofit: boolean;
+  typicalComponents?: string[];
   opportunityCount: number;
   opportunities: SampleMatchResult[];
   savingsPreview?: SampleSavingsPreview;
@@ -1726,20 +1638,6 @@ function formatDate(value: string | null) {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(new Date(value));
-}
-
-function formatUsdAmount(value: number | null | undefined) {
-  if (value == null || !Number.isFinite(value)) return "Not calculated";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0
-  }).format(value);
-}
-
-function formatCompactNumber(value: number | null | undefined, suffix = "") {
-  if (value == null || !Number.isFinite(value)) return "Not calculated";
-  return `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(value)}${suffix}`;
 }
 
 function isPlainRecord(value: unknown): value is Record<string, unknown> {
@@ -4527,7 +4425,15 @@ function UserDashboard({
       user={payload.user}
     >
       {activeTab === "Retrofit estimates" ? (
-        <PortalRetrofitResultsPanel credential={credential} />
+        <CustomerRetrofitEstimatesPanel
+          credential={credential}
+          emptyMessage="We don't have any eligible retrofit matches for this profile yet. Add more site details or utility context, then check back."
+          endpoint="/api/portal/retrofit-recommendations"
+          eyebrow="Retrofit estimates"
+          intro="These recommendations are matched from your current profile, site details, and live opportunity data."
+          loadingMessage="Matching your profile to live retrofit opportunities..."
+          title="Recommended retrofit opportunities"
+        />
       ) : (
         <ProfilePanel intake={payload.intake} user={payload.user} />
       )}
@@ -4535,8 +4441,24 @@ function UserDashboard({
   );
 }
 
-function PortalRetrofitResultsPanel({ credential }: { credential: AuthCredential | null }) {
-  const [payload, setPayload] = useState<PortalRetrofitResultsResponse | null>(null);
+function CustomerRetrofitEstimatesPanel({
+  credential,
+  emptyMessage,
+  endpoint,
+  eyebrow,
+  intro,
+  loadingMessage,
+  title
+}: {
+  credential: AuthCredential | null;
+  emptyMessage: string;
+  endpoint: string;
+  eyebrow: string;
+  intro: string;
+  loadingMessage: string;
+  title: string;
+}) {
+  const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -4554,7 +4476,7 @@ function PortalRetrofitResultsPanel({ credential }: { credential: AuthCredential
     setIsLoading(true);
     setError(null);
 
-    apiGet<PortalRetrofitResultsResponse>("/api/portal/retrofit-results", {
+    apiGet<PortalRetrofitRecommendationsResponse>(endpoint, {
       headers: adminAuthHeaders(credential)
     })
       .then((response) => {
@@ -4572,77 +4494,182 @@ function PortalRetrofitResultsPanel({ credential }: { credential: AuthCredential
     return () => {
       isMounted = false;
     };
-  }, [credential]);
+  }, [credential, endpoint]);
 
-  const results = payload?.results;
+  const retrofits = payload?.retrofits || [];
 
   return (
     <section className="database-shell retrofit-results-shell">
       <div className="database-toolbar">
         <div>
-          <p className="eyebrow">Retrofit results</p>
-          <h1>Recommended retrofit opportunities</h1>
-          <p>We combine your intake answers, uploaded utility data, and matched programs into first-pass cost and savings estimates.</p>
+          <p className="eyebrow">{eyebrow}</p>
+          <h1>{title}</h1>
+          <p>{intro}</p>
         </div>
         <div className="database-stats">
-          <strong>{results?.summary.totalResults.toLocaleString() || 0}</strong>
-          <span>{isLoading ? "loading results" : "matched opportunities"}</span>
+          <strong>{payload?.summary.matchedRetrofitCount.toLocaleString() || 0}</strong>
+          <span>{isLoading ? "loading matches" : "matched retrofits"}</span>
         </div>
       </div>
 
       {error ? <p className="error-message">{error}</p> : null}
 
-      <div className="card-grid four admin-summary-card-grid retrofit-results-summary-grid">
+      <div className="card-grid three retrofit-results-summary-grid customer-retrofit-summary-grid">
         <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Ready to estimate</span>
-          <h3>{results?.summary.readyToEstimate.toLocaleString() || 0}</h3>
-          <p>These have enough information for a first-pass estimate.</p>
+          <span className="eyebrow">Matched retrofits</span>
+          <h3>{payload?.summary.matchedRetrofitCount.toLocaleString() || 0}</h3>
+          <p>Retrofit categories that currently align with this profile.</p>
         </article>
         <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Needs more information</span>
-          <h3>{results?.summary.needsMoreInformation.toLocaleString() || 0}</h3>
-          <p>These are matched, but still need bill, scope, quote, or incentive details.</p>
+          <span className="eyebrow">Matched programs</span>
+          <h3>{payload?.summary.matchedOpportunityCount.toLocaleString() || 0}</h3>
+          <p>Live opportunities currently connected to those retrofit categories.</p>
         </article>
         <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Not currently applicable</span>
-          <h3>{results?.summary.notCurrentlyApplicable.toLocaleString() || 0}</h3>
-          <p>These are blocked by eligibility or missing baseline data.</p>
-        </article>
-        <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Generated</span>
-          <h3>{results ? formatDate(results.generatedAt) : "Loading..."}</h3>
-          <p>Refresh the page after new utility uploads to recalculate these estimates.</p>
+          <span className="eyebrow">Updated</span>
+          <h3>{payload ? formatDate(payload.generatedAt) : "Loading..."}</h3>
+          <p>Recommendations refresh from current opportunity data each time this page loads.</p>
         </article>
       </div>
 
       {isLoading ? (
         <section className="database-detail-panel">
-          <p className="empty-state">Building retrofit estimates from your intake and utility data...</p>
+          <p className="empty-state">{loadingMessage}</p>
+        </section>
+      ) : retrofits.length === 0 ? (
+        <section className="database-detail-panel retrofit-empty-panel">
+          <p className="eyebrow">No live matches yet</p>
+          <h2>We’re still looking for a strong fit</h2>
+          <p>{emptyMessage}</p>
         </section>
       ) : (
-        <div className="retrofit-result-group-list">
-          <RetrofitResultGroup
-            description="Matched opportunities with enough information for a first-pass estimate."
-            emptyMessage="No opportunities are fully ready yet. Upload more bill data or project details to move items into this section."
-            results={results?.groups.readyToEstimate || []}
-            title="Ready to estimate"
-          />
-          <RetrofitResultGroup
-            description="Matched opportunities where the estimate is still rough because key data is missing."
-            emptyMessage="No partially-complete opportunities right now."
-            results={results?.groups.needsMoreInformation || []}
-            title="Needs more information"
-          />
-          <RetrofitResultGroup
-            description="Programs that are blocked by current eligibility or missing enough baseline data to estimate."
-            emptyMessage="No blocked opportunities right now."
-            results={results?.groups.notCurrentlyApplicable || []}
-            title="Not currently applicable"
-          />
+        <div className="customer-retrofit-grid">
+          {retrofits.map((retrofit) => (
+            <CustomerRetrofitCard key={retrofit.retrofitTypeId} retrofit={retrofit} />
+          ))}
         </div>
       )}
     </section>
   );
+}
+
+function CustomerRetrofitCard({ retrofit }: { retrofit: SampleRetrofitGroup }) {
+  const preview = retrofit.savingsPreview || null;
+  const matchedPrograms = retrofit.opportunities.slice(0, 3);
+  const extraProgramCount = Math.max(0, retrofit.opportunityCount - matchedPrograms.length);
+  const monthlySavings =
+    preview?.status === "calculated"
+      ? preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents ?? null
+      : null;
+  const annualSavings = preview?.status === "calculated" ? preview.annualSavingsCents : null;
+  const upfrontCostAfterSavings = preview?.status === "calculated" ? preview.upfrontCostAfterSavingsCents : null;
+  const possibleGrantMoney = preview?.status === "calculated" ? preview.possibleGrantMoneyCents ?? null : null;
+
+  return (
+    <article className="customer-retrofit-card">
+      <div className="customer-retrofit-card-header">
+        <div>
+          <p className="eyebrow">{customerRetrofitCategoryLabel(retrofit)}</p>
+          <h2>{retrofit.displayName}</h2>
+          <p>{customerRetrofitDescription(retrofit)}</p>
+        </div>
+        <div className="customer-retrofit-count-pill">
+          <strong>{retrofit.opportunityCount.toLocaleString()}</strong>
+          <span>{retrofit.opportunityCount === 1 ? "matched program" : "matched programs"}</span>
+        </div>
+      </div>
+
+      <div className="customer-retrofit-metrics">
+        <CustomerRetrofitMetric label="Estimated monthly impact" value={formatUsdAmount(monthlySavings)} />
+        <CustomerRetrofitMetric label="Estimated annual impact" value={formatUsdAmount(annualSavings)} />
+        <CustomerRetrofitMetric label="Estimated upfront after savings" value={formatUsdAmount(upfrontCostAfterSavings)} />
+        <CustomerRetrofitMetric label="Possible grant money" value={formatUsdAmount(possibleGrantMoney)} />
+      </div>
+
+      <div className="customer-retrofit-content">
+        <section>
+          <p className="eyebrow">Matched opportunities</p>
+          <div className="customer-retrofit-program-list">
+            {matchedPrograms.map((opportunity) => (
+              <article className="customer-retrofit-program-item" key={`${retrofit.retrofitTypeId}:${opportunity.opportunityId}`}>
+                <div>
+                  <h3>{opportunity.opportunityName}</h3>
+                  <p>{customerOpportunitySourceLabel(opportunity)}</p>
+                </div>
+                <div className="link-list match-link-list">
+                  {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Source</a> : null}
+                  {opportunity.websiteUrl ? <a href={opportunity.websiteUrl} rel="noreferrer" target="_blank">Website</a> : null}
+                  {opportunity.applicationUrl ? <a href={opportunity.applicationUrl} rel="noreferrer" target="_blank">Apply</a> : null}
+                </div>
+              </article>
+            ))}
+            {extraProgramCount > 0 ? (
+              <p className="muted-message">Plus {extraProgramCount.toLocaleString()} more matched program{extraProgramCount === 1 ? "" : "s"}.</p>
+            ) : null}
+          </div>
+        </section>
+
+        <section>
+          <p className="eyebrow">Next step</p>
+          <div className="customer-retrofit-next-step">
+            <strong>{customerRetrofitNextStep(retrofit)}</strong>
+            {preview?.status === "unsupported" && preview.unsupportedReason ? (
+              <p>{preview.unsupportedReason}</p>
+            ) : preview?.status === "blocked" ? (
+              <p>We found a likely match, but the current estimate still needs more inputs before it can be calculated.</p>
+            ) : preview?.status === "calculated" ? (
+              <p>Use these figures as a first-pass planning estimate before requesting bids or final incentive confirmation.</p>
+            ) : (
+              <p>Review the matched programs to confirm fit, timing, and application requirements.</p>
+            )}
+          </div>
+        </section>
+      </div>
+    </article>
+  );
+}
+
+function CustomerRetrofitMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="customer-retrofit-metric">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function customerRetrofitCategoryLabel(retrofit: SampleRetrofitGroup) {
+  return retrofit.isPhysicalRetrofit ? retrofit.parentCategory.replaceAll("_", " ") : "Planning and compliance";
+}
+
+function customerRetrofitDescription(retrofit: SampleRetrofitGroup) {
+  if (retrofit.typicalComponents && retrofit.typicalComponents.length > 0) {
+    return `Programs related to ${retrofit.typicalComponents.slice(0, 3).join(", ").toLowerCase()}.`;
+  }
+  if (!retrofit.isPhysicalRetrofit) {
+    return planningRetrofitExplanation(retrofit.retrofitTypeId);
+  }
+  return "Live programs currently matched to this retrofit category for the selected profile.";
+}
+
+function customerOpportunitySourceLabel(opportunity: SampleMatchResult) {
+  return [
+    opportunity.sourceSummary?.administrator,
+    opportunity.sourceSummary?.programType,
+    opportunity.sourceSummary?.sourceName
+  ]
+    .filter(Boolean)
+    .join(" • ") || "Live matched program";
+}
+
+function customerRetrofitNextStep(retrofit: SampleRetrofitGroup) {
+  const topOpportunity = retrofit.opportunities[0];
+  if (topOpportunity?.nextQuestion?.prompt) return topOpportunity.nextQuestion.prompt;
+  if (topOpportunity?.unresolvedRequirements?.[0]) return topOpportunity.unresolvedRequirements[0];
+  if (retrofit.savingsPreview?.status === "calculated") {
+    return "Review the estimate and confirm project scope before requesting bids.";
+  }
+  return "Review the matched program details and confirm your project fit.";
 }
 
 function AdminClientPortalPreviewPage({
@@ -4713,140 +4740,42 @@ function AdminClientPortalPreviewPage({
       title="Client portal preview"
       user={previewUser}
     >
-      <section className="database-shell retrofit-results-shell">
-        <div className="database-toolbar">
-          <div>
-            <p className="eyebrow">Admin-only portal preview</p>
-            <h1>{previewUser.fullName || "Client portal preview"}</h1>
-            <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
-          </div>
-          {activeTab === "Retrofit estimates" ? null : (
+      {activeTab === "Retrofit estimates" ? (
+        <CustomerRetrofitEstimatesPanel
+          credential={credential}
+          emptyMessage="This client does not have any eligible retrofit matches yet."
+          endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(userId)}`}
+          eyebrow="Admin-only portal preview"
+          intro={`This is the customer-facing retrofit view for user ID \`${userId}\`, powered by the same live matcher used elsewhere in the app.`}
+          loadingMessage="Loading live retrofit recommendations for this client..."
+          title={`${previewUser.fullName || "Client"}'s retrofit estimates`}
+        />
+      ) : (
+        <section className="database-shell retrofit-results-shell">
+          <div className="database-toolbar">
+            <div>
+              <p className="eyebrow">Admin-only portal preview</p>
+              <h1>{previewUser.fullName || "Client portal preview"}</h1>
+              <p>This is a temporary admin view of the client portal for user ID `{userId}`.</p>
+            </div>
             <div className="database-stats">
               <strong>{profilePayload?.intake ? "Loaded" : "..."}</strong>
               <span>profile</span>
             </div>
-          )}
-        </div>
+          </div>
 
-        {activeTab === "Retrofit estimates" ? null : profileError ? <p className="error-message">{profileError}</p> : null}
+          {profileError ? <p className="error-message">{profileError}</p> : null}
 
-        {activeTab === "Retrofit estimates" ? (
-          <div aria-label="Retrofit estimates preview" />
-        ) : isProfileLoading ? (
+          {isProfileLoading ? (
           <section className="database-detail-panel">
             <p className="empty-state">Loading the client portal preview...</p>
           </section>
-        ) : (
-          <ProfilePanel intake={profilePayload?.intake || null} user={previewUser} />
-        )}
-      </section>
-    </WorkspaceLayout>
-  );
-}
-
-function RetrofitResultGroup({
-  description,
-  emptyMessage,
-  results,
-  title
-}: {
-  description: string;
-  emptyMessage: string;
-  results: RetrofitResultItem[];
-  title: string;
-}) {
-  return (
-    <section className="database-detail-panel retrofit-result-group">
-      <div className="database-detail-header">
-        <div>
-          <p className="eyebrow">{title}</p>
-          <h2>{results.length.toLocaleString()} opportunity{results.length === 1 ? "" : "ies"}</h2>
-          <p>{description}</p>
-        </div>
-      </div>
-
-      {results.length === 0 ? (
-        <p className="empty-state">{emptyMessage}</p>
-      ) : (
-        <div className="parameter-set-list retrofit-result-card-list">
-          {results.map((result) => (
-            <RetrofitResultCard key={`${result.opportunityId}:${result.retrofitTypeId || "na"}`} result={result} />
-          ))}
-        </div>
+          ) : (
+            <ProfilePanel intake={profilePayload?.intake || null} user={previewUser} />
+          )}
+        </section>
       )}
-    </section>
-  );
-}
-
-function RetrofitResultCard({ result }: { result: RetrofitResultItem }) {
-  const readinessLabel = result.readinessStatus
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-
-  return (
-    <article className="parameter-set retrofit-result-card">
-      <div className="match-result-header retrofit-result-header">
-        <div>
-          <p className="eyebrow">{result.category.replaceAll("_", " ")}</p>
-          <h3>{result.retrofitDisplayName}</h3>
-          <p>{result.opportunityName}</p>
-        </div>
-        <div className="status-stack">
-          <mark className={`admin-status-pill ${slugify(result.readinessStatus)}`}>{readinessLabel}</mark>
-          <small>Confidence {result.confidence}</small>
-        </div>
-      </div>
-
-      <div className="database-summary-grid retrofit-result-grid">
-        <DetailItem label="Annual savings" value={formatUsdAmount(result.estimate.annualSavingsTypical)} />
-        <DetailItem label="Incentive value" value={formatUsdAmount(result.estimate.estimatedIncentiveValueTypical)} />
-        <DetailItem label="Net cost" value={formatUsdAmount(result.estimate.estimatedNetCostTypical)} />
-        <DetailItem label="Payback" value={formatCompactNumber(result.estimate.paybackYearsTypical, " years")} />
-        <DetailItem label="15-year ROI" value={formatCompactNumber(result.estimate.roi15YearTypical, "%")} />
-        <DetailItem label="Model" value={result.savingsModelName || result.savingsModelId || "Not mapped"} />
-      </div>
-
-      <div className="match-detail-grid retrofit-result-detail-grid">
-        <SampleTextList
-          emptyMessage="No match reasons listed."
-          title="Why this matched"
-          values={result.matchedReasons}
-        />
-        <SampleTextList
-          emptyMessage="No missing information right now."
-          title="Missing information"
-          values={result.missingInfoPrompts}
-        />
-        <SampleTextList
-          emptyMessage="No assumptions were captured."
-          title="Assumptions used"
-          values={result.assumptionsUsed}
-        />
-        <SampleTextList
-          emptyMessage="No next step listed."
-          title="Next step"
-          values={[result.nextStepCta]}
-        />
-      </div>
-
-      <div className="pill-row match-retrofit-list">
-        {result.fieldCoverage.missingBillFields.slice(0, 4).map((field) => (
-          <span key={`${result.opportunityId}:${field.fieldId}`}>Missing bill: {field.label}</span>
-        ))}
-        {result.fieldCoverage.missingNonBillInputs.slice(0, 4).map((field) => (
-          <span key={`${result.opportunityId}:nonbill:${field.fieldId}`}>Missing scope: {field.label}</span>
-        ))}
-      </div>
-
-      {result.links.sourceUrl || result.links.websiteUrl || result.links.applicationUrl ? (
-        <div className="link-list match-link-list">
-          {result.links.sourceUrl ? <a href={result.links.sourceUrl} rel="noreferrer" target="_blank">Source</a> : null}
-          {result.links.websiteUrl ? <a href={result.links.websiteUrl} rel="noreferrer" target="_blank">Program website</a> : null}
-          {result.links.applicationUrl ? <a href={result.links.applicationUrl} rel="noreferrer" target="_blank">Application</a> : null}
-        </div>
-      ) : null}
-    </article>
+    </WorkspaceLayout>
   );
 }
 
@@ -5051,7 +4980,6 @@ function AdminDashboard({
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : activeTab === CLIENT_INTAKE_SUMMARY_TAB ? (
         <ClientIntakeSummaryPanel
-          credential={credential}
           isLoading={isCurrentSectionLoading}
           onRefresh={() => void refreshDashboard()}
           rows={rows}
@@ -5971,6 +5899,10 @@ function formatCents(value: number | null | undefined) {
   }).format(amount);
 }
 
+function formatUsdAmount(value: number | null | undefined) {
+  return formatCents(value);
+}
+
 function formatTraceResult(value: number, unit: string) {
   if (unit.includes("cent")) return formatCents(value);
   return `${Number(value).toLocaleString()} ${unit}`;
@@ -6217,21 +6149,16 @@ function AdminUsersTable({
 }
 
 function ClientIntakeSummaryPanel({
-  credential,
   isLoading,
   onRefresh,
   rows
 }: {
-  credential: AuthCredential | null;
   isLoading: boolean;
   onRefresh: () => void;
   rows: AdminRow[];
 }) {
   const [activeUtilityTab, setActiveUtilityTab] = useState<AdminUtilitySummaryTabId>("electric");
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [debugPayload, setDebugPayload] = useState<PortalRetrofitResultsResponse | null>(null);
-  const [isDebugLoading, setIsDebugLoading] = useState(false);
-  const [debugError, setDebugError] = useState<string | null>(null);
   const activeUtilityTabConfig = adminUtilitySummaryTabs.find((tab) => tab.id === activeUtilityTab) || adminUtilitySummaryTabs[0];
   const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows, activeUtilityTab), [activeUtilityTab, rows]);
   const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
@@ -6263,38 +6190,6 @@ function ClientIntakeSummaryPanel({
       setSelectedUserId(null);
     }
   }, [selectedUserId, summaryRows]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (!selectedUserId || !credential) {
-      setDebugPayload(null);
-      return () => {
-        isMounted = false;
-      };
-    }
-
-    setIsDebugLoading(true);
-    setDebugError(null);
-    apiGet<PortalRetrofitResultsResponse>(`/api/admin/client-retrofit-results/${encodeURIComponent(selectedUserId)}`, {
-      headers: adminAuthHeaders(credential)
-    })
-      .then((response) => {
-        if (!isMounted) return;
-        setDebugPayload(response);
-      })
-      .catch((requestError) => {
-        if (!isMounted) return;
-        setDebugError(requestError instanceof Error ? requestError.message : "Could not load retrofit debug results.");
-      })
-      .finally(() => {
-        if (isMounted) setIsDebugLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [credential, selectedUserId]);
 
   return (
     <section className="admin-section">
@@ -6461,33 +6356,16 @@ function ClientIntakeSummaryPanel({
       <section className="database-detail-panel retrofit-result-group">
         <div className="database-detail-header">
           <div>
-            <p className="eyebrow">Admin debug</p>
-            <h2>{debugPayload?.client.fullName || "Retrofit calculation detail"}</h2>
-            <p>Read-only calculation output for the selected client intake record.</p>
+            <p className="eyebrow">Admin note</p>
+            <h2>{selectedSummaryRow?.clientName || "Retrofit estimates placeholder"}</h2>
+            <p>Estimate debug output is disabled while the new backend calculation engine is being connected.</p>
           </div>
         </div>
-
-        {debugError ? <p className="error-message">{debugError}</p> : null}
-        {isDebugLoading ? (
-          <p className="empty-state">Loading matched opportunities and calculator output...</p>
-        ) : debugPayload?.results ? (
-          <div className="retrofit-result-group-list">
-            <RetrofitResultGroup
-              description="Best first-pass calculations currently ready for this client."
-              emptyMessage="No ready estimates for this client yet."
-              results={debugPayload.results.groups.readyToEstimate.slice(0, 3)}
-              title="Ready"
-            />
-            <RetrofitResultGroup
-              description="Matched opportunities that still need more client or bill detail."
-              emptyMessage="No partially-complete opportunities for this client."
-              results={debugPayload.results.groups.needsMoreInformation.slice(0, 3)}
-              title="Needs more information"
-            />
-          </div>
-        ) : (
-          <p className="empty-state">Select a client to inspect matched opportunities and calculation readiness.</p>
-        )}
+        <p className="empty-state">
+          {selectedSummaryRow
+            ? "Open portal preview to confirm the profile and utility-upload context for this client. Savings, incentive, payback, and ROI outputs will return once the shared calculation engine is wired back in."
+            : "Select a client to inspect utility-upload readiness and open the profile preview."}
+        </p>
       </section>
     </section>
   );

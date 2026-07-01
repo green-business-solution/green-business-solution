@@ -18,6 +18,13 @@
 - Normalized broken markdown URL fragments from the GPT Pro response before import while preserving the structured repair decisions.
 - Applied opportunity-data repair batches 1-4 cumulatively to public fixtures so batch 4 repairs are attached to matched opportunity edges.
 
+## 2026-06-30 - Codex (GPT-5) customer retrofit estimates from live matcher
+
+- Resolved the outstanding `src/App.tsx` merge conflict around the portal preview and estimates tab.
+- Added shared live retrofit recommendation builders that reuse the same eligible-match grouping logic as the admin Test Cases flow, then exposed them through new client/admin portal recommendation endpoints.
+- Replaced the Retrofit Estimates placeholder in both the user portal and Portal Preview with a simpler customer card UI that shows matched retrofit categories, matched programs, next steps, and existing estimate previews without the admin/debug scaffolding.
+- Added targeted tests to verify the new portal recommendation payload stays aligned with the Test Cases-style grouped retrofit matches.
+
 ## 2026-06-30 - Codex (GPT-5) production admin allowlist repair
 
 - Updated the live `gbs-retrofi-production` CloudFormation stack so `GBS_ADMIN_EMAILS` now includes `rshen0210@gmail.com` alongside the existing admin allowlist.
