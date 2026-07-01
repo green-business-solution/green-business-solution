@@ -5,7 +5,10 @@ This document captures product, data-quality, and verification work that should 
 ## Opportunity Data Confidence
 
 - Continue GPT Pro-assisted opportunity-data repair until every user-visible opportunity has complete source-backed availability, utility, facility, applicant, geography, technology, requirements, blockers, and evidence data.
-- Treat `opportunityDataConfidence` as confidence that the required data is complete enough for deterministic matching. Once the missing/bad data is repaired, deterministic matching should be able to produce 100% confidence for repaired records.
+- Keep `match_confidence` separate from `source_confidence`. `match_confidence` is the deterministic matcher's confidence that the repaired, normalized data lets it reach a rules-backed outcome. For repaired opportunities, the goal is to push `match_confidence` to 100% by making every match-relevant field complete enough to resolve as math-backed `eligible`, `ineligible`, `needs_information`, or `no_match`.
+- Treat `source_confidence` as research/provenance confidence in the opportunity data itself. Low `source_confidence` means the cited source evidence is incomplete, ambiguous, blocked, stale, or needs human judgment. It does not mean deterministic matching failed.
+- TODO: Queue opportunities with low `source_confidence` for later deeper GPT Pro research or human/admin verification. Do not treat a 100% deterministic `match_confidence` as proof that the underlying source evidence is fully trusted.
+- Treat the historical GPT Pro repair `confidence` field as `source_confidence` unless and until it is explicitly migrated. It should not be mixed with deterministic `match_confidence`.
 - Compare GPT Pro repairs against Codex-imported or Codex-inferred data. When GPT Pro finds errors, Codex should record why the deterministic parser failed and write updated extraction strategies so future repair can be automated.
 - Preserve debugging detail about why data failed or why a record needed repair. This detail is mainly for admin/debugging and GPT Pro repair prompts, not for the first-pass user portal experience.
 

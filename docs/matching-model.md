@@ -6,6 +6,12 @@ The current goal is not to train a recommendation model. The data does not yet h
 application outcomes. The first production version should be rules-first, evidence-backed, and explicit
 about unknowns.
 
+## Confidence Terms
+
+- `match_confidence` is deterministic matching confidence. It should come from whether normalized opportunity data and normalized user data are complete enough for rules to resolve a match outcome. Repaired opportunities should be driven toward 100% `match_confidence`, meaning the matcher can return a math-backed outcome instead of an ambiguous parser failure.
+- `source_confidence` is source/research confidence. It describes whether the opportunity facts are backed by clear, current, trustworthy evidence. Low `source_confidence` should be escalated for deeper GPT Pro research or human/admin verification even if deterministic matching can produce a 100% `match_confidence` result.
+- Historical GPT Pro repair `confidence` values should be interpreted as `source_confidence`, not final deterministic match confidence.
+
 ## Pipeline
 
 1. Preserve the original opportunity record exactly as ingested.

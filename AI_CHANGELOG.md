@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) confidence terminology TODO
+
+- Clarified that `match_confidence` is deterministic rules confidence and should be pushed to 100% through opportunity-data repair.
+- Clarified that `source_confidence` is separate research/provenance confidence and may remain low even when deterministic matching can resolve an outcome.
+- Added a TODO to queue low-source-confidence opportunities for deeper GPT Pro research or human/admin verification.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro repair packets 39-48
 
 - Created two disjoint GPT Pro opportunity-data repair work packets for batches 39-43 and 44-48.
