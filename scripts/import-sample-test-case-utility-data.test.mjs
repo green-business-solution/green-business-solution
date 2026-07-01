@@ -50,6 +50,43 @@ describe("importSampleTestCaseUtilityData", () => {
 
     expect(() => importSampleTestCaseUtilityData(paths)).toThrow(/validation error/);
   });
+
+  it("normalizes numeric utility values that include unit suffixes", async () => {
+    const dir = await makeTmpDir();
+    const patch = validPatch();
+    const baseValue = patch.profiles[0].utilityExtractedValues[0];
+    patch.profiles[0].uploadedUtilityFiles.push({
+      fileId: "sample_bill_sample-one_waste_2026",
+      clientIntakeId: "intake_sample_sample-one",
+      siteId: "intake_sample_sample-one:primary_site",
+      originalFilename: "sample-one-waste-synthetic-utility-profile-2026.json",
+      fileType: "unknown",
+      utilityCategory: "waste",
+      utilityProvider: "Sample Waste",
+      s3Key: "synthetic/sample-test-cases/sample-one/waste-2026.json",
+      processingStatus: "processed",
+      uploadedAt: "2026-06-30T00:00:00.000Z",
+      processedAt: "2026-06-30T00:00:00.000Z",
+      errorMessage: null
+    });
+    patch.profiles[0].utilityExtractedValues.push({
+      ...baseValue,
+      extractedValueId: "sample_ev_sample-one_waste_bin_size",
+      fileId: "sample_bill_sample-one_waste_2026",
+      fieldDisplayName: "Bin size",
+      fieldId: "bin_size",
+      sourcePath: "gpt_pro.synthetic_utility_profile.waste",
+      unit: "yards or gallons",
+      value: "6 yards"
+    });
+    const paths = await writeFixtureFiles(dir, patch);
+
+    const result = importSampleTestCaseUtilityData(paths);
+
+    expect(result.importedProfileCount).toBe(1);
+    const sampleUsers = JSON.parse(await fs.readFile(paths.sampleUsersPath, "utf8"));
+    expect(sampleUsers[0].utilityExtractedValues.find((value) => value.fieldId === "bin_size").value).toBe(6);
+  });
 });
 
 async function makeTmpDir() {

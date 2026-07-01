@@ -33,6 +33,7 @@
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",
     "matching:test-case-utility-data": "node scripts/import-sample-test-case-utility-data.mjs",
+    "matching:promote-test-users": "node scripts/promote-sample-test-cases-to-fake-users.mjs",
     "matching:test-case-savings": "node scripts/patch-admin-test-case-savings.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"

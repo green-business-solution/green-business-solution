@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) sample test-case fake user promotion
+
+- Imported GPT Pro utility data for the first 10 sample matching test cases into `data/sample_user_profiles.json` and `public/sample_matching_test_cases.json`.
+- Updated the sample utility-data importer to normalize numeric utility fields that include unit suffixes, such as waste bin sizes in yards.
+- Added a reusable promotion script that upserts patched sample test cases into `gbs-users` and `gbs-client-intake` as fake client users for admin portal preview workflows.
+- Promoted the first 10 patched sample test cases into DynamoDB with `isFakeUser: true`.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 5 prompt
 
 - Added the next GPT Pro opportunity-data repair prompt covering target records from `SOURCE_DSIRE:dsire_program_id:2176` through `SOURCE_DSIRE:dsire_program_id:1615`.

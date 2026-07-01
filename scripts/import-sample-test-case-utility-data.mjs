@@ -523,8 +523,13 @@ function isNumericField(field) {
 
 function parseNumeric(value) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
-  const parsed = Number(String(value ?? "").replace(/[$,%\s,]+/g, ""));
-  return Number.isFinite(parsed) ? parsed : null;
+  const normalized = String(value ?? "").replace(/[$,%\s,]+/g, "");
+  const parsed = Number(normalized);
+  if (Number.isFinite(parsed)) return parsed;
+  const numericMatch = String(value ?? "").replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+  if (!numericMatch) return null;
+  const parsedFromUnitValue = Number(numericMatch[0]);
+  return Number.isFinite(parsedFromUnitValue) ? parsedFromUnitValue : null;
 }
 
 function latestNumericField(values, fieldId) {
