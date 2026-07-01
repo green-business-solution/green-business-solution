@@ -1,0 +1,1023 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5452",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [
+          "Eagle County"
+        ],
+        "cities": [
+          "Vail",
+          "Minturn",
+          "Avon",
+          "Eagle"
+        ],
+        "utilityTerritories": [],
+        "notes": "Core program serves Eagle County through Energy Smart Colorado and Walking Mountains. Some bonus measures are limited to specific local jurisdictions or districts, including Vail, Minturn, Avon, Edwards Metro District and Town of Eagle."
+      },
+      "eligibleApplicantTypes": [
+        "homeowner",
+        "renter_with_owner_approval",
+        "commercial_property_owner",
+        "business",
+        "multifamily_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "heat_pump_clothes_dryer",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "smart_thermostat_zoning_retrofit",
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "duct_sealing_and_insulation",
+        "ev_charger_installation",
+        "battery_storage_system",
+        "window_door_replacement",
+        "balanced_ventilation_erv_hrv",
+        "building_automation_system",
+        "energy_management_system",
+        "smart_electrical_panel",
+        "pumps_motors_replacement",
+        "commercial_refrigeration_and_cooking_efficiency",
+        "high_efficiency_hvac_replacement",
+        "water_heating_upgrade",
+        "induction_cooking_appliance"
+      ],
+      "hardRequirements": [
+        "Existing buildings only.",
+        "Project must be complete and equipment operational before rebate application.",
+        "Application must include invoice documentation and be submitted within the stated post-completion window.",
+        "Applicant must meet Energy Smart Colorado and local jurisdiction requirements where a local bonus is claimed."
+      ],
+      "blockers": [
+        "Do not match residential LED lighting; current LED support is commercial or multifamily only.",
+        "Duct sealing is jurisdiction-limited and should not match all Eagle County customers.",
+        "EV charging, window and door replacement, and some bonus measures are location-specific and should not match outside listed local jurisdictions.",
+        "Do not generalize residential induction appliances into commercial kitchen equipment.",
+        "High-efficiency HVAC should be limited to supported heat-pump and commercial or multifamily HVAC measures."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Walking Mountains Science Center",
+      "applicationUrl": "https://energysmartcolorado.formstack.com/forms/esc_hce_residential_rebate_application",
+      "websiteUrl": "https://www.walkingmountains.org/sustainability-hub/weatherization-energy-efficiency-and-safety-rebates/",
+      "sourceUrlsChecked": [
+        "https://www.walkingmountains.org/sustainability-hub/weatherization-energy-efficiency-and-safety-rebates/",
+        "https://energysmartcolorado.formstack.com/forms/esc_hce_residential_rebate_application",
+        "https://programs.dsireusa.org/system/program/detail/5452/eagle-county-energy-smart-colorado-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Walking]( Mountains lists active Eagle County rebates for heat pumps, air sealing, insulation, thermostats, commercial and multifamily LED, HVAC, water-heating and other measures; existing buildings must complete work before applying and submit recent invoices.",
+      "reasoningNotes": "The original heat pump, insulation, thermostat and LED matches are partly correct, but several supported categories are jurisdiction- or sector-specific. File prompt citation retained inside JSON only: ."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "East Central Energy"
+        ],
+        "notes": "Available to East Central Energy business electric members in the utility service territory."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "commercial_customer",
+        "industrial_customer",
+        "agricultural_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "high_efficiency_hvac_replacement",
+        "economizer_hvac_retrofit",
+        "high_efficiency_chiller",
+        "ptac_pthp_replacement",
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "variable_frequency_drive_retrofit",
+        "commercial_refrigeration_measures",
+        "commercial_foodservice_equipment",
+        "livestock_agricultural_efficiency",
+        "compressed_air_efficiency"
+      ],
+      "hardRequirements": [
+        "Applicant must be an East Central Energy business member.",
+        "Equipment must meet the requirements in the current measure-specific form.",
+        "Most rebates are capped at a percentage of project cost and may require invoices, specifications, and timely application.",
+        "Some commercial EV charging and custom or non-prescriptive measures require preapproval."
+      ],
+      "blockers": [
+        "Demand-controlled ventilation was not found in the current official 2026 HVAC form and should not match from old DSIRE text alone.",
+        "EV charging support is for qualifying commercial Level 2 chargers; do not infer DC fast charging or pay-for-use public charging eligibility unless separately approved.",
+        "VFD incentives are limited to qualifying new drive installations and measure-specific restrictions.",
+        "Do not infer residential appliances or home weatherization from this commercial program."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "East Central Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.eastcentralenergy.com/rebates-commercial",
+      "sourceUrlsChecked": [
+        "https://www.eastcentralenergy.com/rebates-commercial",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Commercial%20EV%20Charging-FILLABLE.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Commercial%20Lighting-FiLLABLE.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Commercial%20Refrigeration-Fillable.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Motors%20and%20Drives-FILLABLE.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20HVAC%20Rebate%20Program.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Commercial%20Food%20Service-FILLABLE.pdf"
+      ],
+      "evidenceText": "ECE’s]( 2026 commercial page and forms list business rebates for Level 2 EV charging, lighting and controls, HVAC heat pumps, ground-source heat pumps, ductless mini-splits, refrigeration, motors and drives, compressed air and food service.",
+      "reasoningNotes": "The current official sources support most commercial HVAC, EV, lighting, refrigeration and VFD matches, but not the legacy demand-controlled ventilation match."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3585",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Empire Electric Association"
+        ],
+        "notes": "Available to qualifying Empire Electric Association residential members in the cooperative service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner",
+        "renter_with_owner_approval"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "air_to_water_heat_pump",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "residential_refrigerator_freezer_recycling",
+        "residential_induction_cooking_appliance",
+        "heat_pump_clothes_dryer",
+        "whole_house_fan"
+      ],
+      "hardRequirements": [
+        "Applicant must be an Empire Electric Association residential member.",
+        "Equipment must satisfy the current residential product program requirements.",
+        "Level 2 EV charging must meet the program’s residential charging restrictions.",
+        "Applications must include required purchase and installation documentation."
+      ],
+      "blockers": [
+        "Refrigerator and freezer support is recycling only, not a rebate for new commercial refrigeration or broad refrigeration equipment.",
+        "Induction support is for residential cooking appliances, not commercial kitchen equipment.",
+        "EV charging support is Level 2 only and cannot be used for resale or fee-collection charging arrangements.",
+        "Broad high-efficiency HVAC should be narrowed to supported heat pump systems."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Empire Electric Association, Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "https://eea.coop/residential-energy-efficiency-program",
+      "sourceUrlsChecked": [
+        "https://eea.coop/residential-energy-efficiency-program",
+        "https://eea.coop/sites/default/files/2026_EEP_Residential_Products_Program%20_2026_03_18.pdf",
+        "https://programs.dsireusa.org/system/program/detail/3585/empire-electric-association-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "EEA’s]( 2026 residential products sheet lists Level 2 EV charging, smart thermostats, refrigerator and freezer recycling, induction ranges, heat pump water heaters, dryers, and heat pump rebates for air-source, air-to-water and ground-source systems.",
+      "reasoningNotes": "The original geothermal, heat pump, heat pump water heater and Level 2 EV matches are correct. Refrigeration and induction matches needed residential product-specific narrowing."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22723",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Applies to qualifying non-residential facilities located in Delaware."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "nonprofit",
+        "institution",
+        "local_government",
+        "state_agency",
+        "commercial_property_owner",
+        "industrial_facility"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "government",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "engineering_feasibility_study",
+        "led_lighting_retrofit",
+        "lighting_power_density_improvement",
+        "high_efficiency_hvac_replacement",
+        "hvac_controls_retrofit",
+        "service_water_heating_improvement",
+        "commercial_foodservice_equipment",
+        "custom_energy_efficiency_measures",
+        "combined_heat_and_power_system",
+        "retro_commissioning_study",
+        "insulation_weatherization",
+        "building_envelope_upgrade",
+        "compressed_air_efficiency",
+        "variable_frequency_drive_retrofit",
+        "energy_management_system",
+        "process_manufacturing_efficiency"
+      ],
+      "hardRequirements": [
+        "Facility must be non-residential and located in Delaware.",
+        "Project must use an eligible prescriptive, custom, assessment, or CHP pathway.",
+        "Code-minimum-only projects are not accepted.",
+        "Custom and CHP projects must meet program-specific technical and cost-effectiveness requirements."
+      ],
+      "blockers": [
+        "Residential buildings are not eligible under this opportunity.",
+        "Combined heat and power is not a solar or renewable-electric category and should not be grouped under solar.",
+        "Do not match measures that only meet code minimum without additional efficiency improvement.",
+        "DNREC’s Green Energy Program and revolving loan options are separate from this rebate opportunity."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Delaware Department of Natural Resources and Environmental Control, Division of Climate, Coastal and Energy",
+      "applicationUrl": "https://energyefficiency.smartsimple.com/",
+      "websiteUrl": "https://dnrec.delaware.gov/climate-coastal-energy/efficiency/energy-efficiency-investment-fund/",
+      "sourceUrlsChecked": [
+        "https://dnrec.delaware.gov/climate-coastal-energy/efficiency/energy-efficiency-investment-fund/",
+        "https://dnrec.delaware.gov/climate-coastal-energy/efficiency/energy-efficiency-investment-fund/guidelines/",
+        "https://energyefficiency.smartsimple.com/",
+        "https://programs.dsireusa.org/system/program/detail/22723/energy-efficiency-investment-fund"
+      ],
+      "evidenceText": "DNREC]( says EEIF supports Delaware non-residential facilities with assessment, prescriptive lighting, HVAC, water-heating, appliance, foodservice, custom efficiency and CHP rebate pathways; code-minimum-only projects are not accepted.",
+      "reasoningNotes": "The audit, feasibility, retro-commissioning, lighting, HVAC controls and CHP matches are supported, but CHP must be classified separately from renewable electric generation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3801",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Available statewide to eligible Tennessee public K-12 school districts and public school facilities."
+      },
+      "eligibleApplicantTypes": [
+        "public_school_district",
+        "public_k12_school"
+      ],
+      "eligibleSectors": [
+        "education",
+        "public_sector"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "high_efficiency_boiler_retrofit",
+        "high_efficiency_chiller",
+        "heat_recovery_system",
+        "building_automation_system",
+        "hvac_controls_retrofit",
+        "variable_frequency_drive_retrofit",
+        "pumps_motors_upgrade",
+        "retro_commissioning_study",
+        "engineering_design_costs"
+      ],
+      "hardRequirements": [
+        "Eligible project must be in an existing Tennessee K-12 public school facility.",
+        "New construction is excluded.",
+        "Funded or completed projects are ineligible.",
+        "Projects must meet EESI loan terms and applicable TVA EnergyRight or ASHRAE requirements.",
+        "Loan repayment is based on annual energy savings and must fit within the maximum payback term."
+      ],
+      "blockers": [
+        "This is loan financing, not a rebate program.",
+        "Do not match non-school, private commercial, residential or higher-education facilities.",
+        "Ground-source geothermal and insulation were not found as current official example measures and should not be matched without project-specific approval.",
+        "Projects already funded or completed before approval are blocked."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Energy Efficient Schools Initiative",
+      "applicationUrl": "https://eesi.tvaenergyrightsolutions.com/",
+      "websiteUrl": "https://eesi.tvaenergyrightsolutions.com/",
+      "sourceUrlsChecked": [
+        "https://eesi.tvaenergyrightsolutions.com/",
+        "https://www.tn.gov/eesi/apply-now.html",
+        "https://programs.dsireusa.org/system/program/detail/3801/energy-efficient-schools-initiative-loans"
+      ],
+      "evidenceText": "EESI]( loan portal limits projects to existing Tennessee K-12 school facilities and lists lighting, HVAC, energy management controls, pumps, motors, VFDs, retro-commissioning and related engineering or design costs.",
+      "reasoningNotes": "The original controls, lighting and retro-commissioning matches are supported as financing-backed school energy conservation measures. Geothermal and insulation were not preserved because current official examples did not verify them."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5494",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Entergy Arkansas"
+        ],
+        "notes": "Available to qualifying Entergy Arkansas small-business electric customers in the utility service territory."
+      },
+      "eligibleApplicantTypes": [
+        "small_business",
+        "commercial_customer"
+      ],
+      "eligibleSectors": [
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "high_efficiency_refrigeration_equipment",
+        "duct_sealing_and_insulation",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "window_film",
+        "smart_thermostat_zoning_retrofit",
+        "retro_commissioning_lite",
+        "commercial_kitchen_pre_rinse_spray_valve",
+        "low_flow_faucet_aerator",
+        "low_flow_showerhead"
+      ],
+      "hardRequirements": [
+        "Customer must be a current Entergy Arkansas small-business customer.",
+        "Peak demand must be below the program threshold.",
+        "Measures must follow the Small Business Program Manual and applicable measure matrix.",
+        "Some measures are limited by building type, electric water heating, savings caps or direct-install delivery."
+      ],
+      "blockers": [
+        "Duct sealing and ceiling insulation are limited to converted residences and should not match all small businesses.",
+        "Pre-rinse spray valves, faucet aerators and showerheads are product-specific direct installs, not broad plumbing retrofit categories.",
+        "Mission-based offerings exclude religious facilities.",
+        "Do not infer residential-only appliances or whole-home weatherization outside the small-business manual."
+      ],
+      "programType": "Small Business Incentive/Rebate Program",
+      "administrator": "Entergy Arkansas",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.entergyarkansas.com/energyefficiency/business/small-business",
+      "sourceUrlsChecked": [
+        "https://www.entergyarkansas.com/energyefficiency/business/small-business",
+        "https://www.entergyarkansas.com/wp-content/uploads/2025/06/Small_Business_Program_Manual.pdf",
+        "https://programs.dsireusa.org/system/program/detail/5494/entergy-arkansas-small-business-energy-efficiency-programs"
+      ],
+      "evidenceText": "Entergy]( Arkansas small-business program is for current small-business customers under 100 kW and lists lighting, controls, HVAC, refrigeration, converted-residence duct sealing and insulation, direct installs, Wi-Fi thermostats and RCx lite.",
+      "reasoningNotes": "The lighting, HVAC, refrigeration and controls matches are correct. Envelope and plumbing-like measures require strong narrowing because the official manual restricts them to specific building or direct-install cases."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2373",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Eversource New Hampshire electric service territory"
+        ],
+        "notes": "Implemented through NHSaves partner programs. Match only to Eversource New Hampshire customers unless other NHSaves utilities are modeled separately."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner",
+        "renter_with_owner_approval",
+        "income_eligible_household"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "central_air_conditioner_rebate",
+        "heat_pump_water_heater",
+        "high_efficiency_laundry_equipment",
+        "residential_refrigerator_rebate",
+        "refrigerator_freezer_recycling",
+        "smart_thermostat_zoning_retrofit",
+        "energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "room_air_conditioner",
+        "variable_speed_pool_pump",
+        "advanced_power_strip",
+        "air_conditioner_dehumidifier_recycling"
+      ],
+      "hardRequirements": [
+        "Applicant must be a residential electric customer of Eversource New Hampshire or another applicable NHSaves partner if modeled separately.",
+        "Equipment must be installed in the utility service territory and meet current NHSaves measure requirements.",
+        "Thermostat support for Eversource electric customers is tied to qualifying heat-pump equipment where applicable.",
+        "Appliance rebates are residential product rebates, not commercial equipment incentives."
+      ],
+      "blockers": [
+        "Battery storage was not verified in current NHSaves residential rebate sources and should not match this opportunity.",
+        "LED lighting was not verified as a current Eversource New Hampshire residential rebate category.",
+        "Residential refrigerators and freezers must not be generalized to commercial refrigeration equipment.",
+        "Do not match natural-gas-only measures to Eversource electric customers unless the gas utility eligibility is separately verified."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "NHSaves / Eversource New Hampshire",
+      "applicationUrl": null,
+      "websiteUrl": "https://nhsaves.com/rebates-services-appliances/",
+      "sourceUrlsChecked": [
+        "https://nhsaves.com/rebates-services-appliances/",
+        "https://nhsaves.com/residential/electric-heating-cooling-equipment/",
+        "https://nhsaves.com/residential/refrigerators/",
+        "https://www.eversource.com/content/nh/residential/save-money-energy/manage-energy-costs-usage/efficient-products",
+        "https://programs.dsireusa.org/system/program/detail/2373/eversource-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "NHSaves]( lists residential rebates delivered by Eversource and partners for heat pumps, central AC, heat pump water heaters, appliances, refrigerator and freezer recycling, thermostats with heat pumps, energy audits and weatherization.",
+      "reasoningNotes": "The direct Eversource page was not readable, but current NHSaves sources verify active residential offerings. Battery storage and broad LED lighting should be removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22719",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "GA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Georgia HEAR program for eligible Georgia households, subject to income and pathway requirements."
+      },
+      "eligibleApplicantTypes": [
+        "homeowner",
+        "renter",
+        "income_eligible_household",
+        "qualified_contractor"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "ventilation_upgrade",
+        "residential_electric_stove_cooktop_range_oven",
+        "heat_pump_clothes_dryer",
+        "electric_combination_clothes_washer_dryer",
+        "electrical_panel_upgrade",
+        "electrical_wiring_upgrade"
+      ],
+      "hardRequirements": [
+        "Household income must be at or below the program’s income eligibility threshold.",
+        "Rebate percentage depends on whether household income is below 80 percent AMI or between 80 and 150 percent AMI.",
+        "Most whole-home electrification measures must use the contractor pathway.",
+        "Proof of purchase, installation and income eligibility is required.",
+        "Replacing existing electric equipment with new electric equipment is generally prohibited except for stated exceptions."
+      ],
+      "blockers": [
+        "Households above 150 percent AMI are not eligible.",
+        "Commercial, industrial and process electrification measures are false positives for this residential HEAR program.",
+        "High-efficiency oven must be narrowed to residential electric stove, cooktop, range or oven, not commercial kitchen equipment.",
+        "Electric-to-electric replacements are blocked except for the listed dryer and water-heater exceptions."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Georgia Environmental Finance Authority",
+      "applicationUrl": null,
+      "websiteUrl": "https://energyrebates.georgia.gov/home-electrification-and-appliance-rebates",
+      "sourceUrlsChecked": [
+        "https://energyrebates.georgia.gov/home-electrification-and-appliance-rebates",
+        "https://programs.dsireusa.org/system/program/detail/22719/georgia-home-electrification-and-appliance-rebate-hear-program"
+      ],
+      "evidenceText": "Georgia]( HEAR lists income-based residential rebates for heat pumps, heat pump water heaters, electric cooking and dryer appliances, load centers, wiring, and insulation, air sealing and ventilation with contractor and DIY pathways.",
+      "reasoningNotes": "Original heat pump, heat pump water heater, insulation and air sealing matches are correct. Commercial kitchen and process electrification matches are false positives and were narrowed or removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2478",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [
+          "Grays Harbor County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Grays Harbor PUD"
+        ],
+        "notes": "Available to qualifying Grays Harbor PUD residential electric customers. Some pages identify single-family, manufactured-home and multifamily eligibility by measure."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner",
+        "renter_with_owner_approval",
+        "multifamily_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "window_replacement",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_laundry_equipment",
+        "air_sealing_weatherization"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Grays Harbor PUD residential customer or qualifying property served by the utility.",
+        "Measures must meet the current residential program requirements.",
+        "Some water-heating and appliance measures apply to existing homes and are not for new construction.",
+        "Required applications and documentation must be submitted for each measure."
+      ],
+      "blockers": [
+        "Duct sealing was not verified in current official indexed program pages and should not be retained without administrator confirmation.",
+        "Broad high-efficiency HVAC should be limited to verified heat-pump heating and cooling measures.",
+        "Laundry support is residential appliance-specific and not commercial laundry or water-efficiency retrofit generally.",
+        "Direct official page fetch returned forbidden, so measure amounts and detailed requirements should be confirmed before automated high-specificity matching."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Grays Harbor PUD",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ghpud.org/energy-efficiency/residential-programs/",
+      "sourceUrlsChecked": [
+        "https://www.ghpud.org/energy-efficiency/residential-programs/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/heating-cooling/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/residential-insulation-windows/",
+        "https://www.ghpud.org/energy-efficiency/energy-audits/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/water-heating/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/residential-rebate-application-for-heat-pump-water-heater/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/residential-rebate-application-for-appliance-rebate-programs/",
+        "https://programs.dsireusa.org/system/program/detail/2478/grays-harbor-pud-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Official]( GHPUD indexed pages identify residential heat pump water heater, heating and cooling, smart thermostat, insulation and windows, appliance, and free energy audit offerings; direct page fetch returned forbidden.",
+      "reasoningNotes": "Enough official indexed content exists to keep the program active, but confidence is medium because direct pages were inaccessible during review."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1653",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ID"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Intermountain Gas Company"
+        ],
+        "notes": "Available to Intermountain Gas residential rate-schedule customers and eligible builders in Idaho."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner",
+        "new_construction_builder"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "combination_boiler_space_water_heat",
+        "tankless_natural_gas_water_heater",
+        "smart_thermostat_zoning_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must be on an Intermountain Gas Idaho residential rate schedule or be an eligible builder.",
+        "Applicable space-heating rebates require the home to be heated exclusively with Intermountain Gas natural gas.",
+        "Applicable water-heating rebates require water heating with natural gas.",
+        "Equipment must be new, code-approved, and installed under the program’s contractor or self-install rules.",
+        "Applications must be submitted within the stated installation window."
+      ],
+      "blockers": [
+        "Insulation, duct leakage, duct sealing, air sealing and weatherization were not verified in current official residential rebate offerings.",
+        "Electric heat pumps are not eligible; homes with electric heat pumps must meet the program’s cooling-only restriction where applicable.",
+        "Broad high-efficiency HVAC should be narrowed to natural-gas furnace and boiler measures.",
+        "Do not match electric water heaters or renewable systems to this gas utility rebate."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Intermountain Gas Company",
+      "applicationUrl": "https://customer.intgas.com/login/",
+      "websiteUrl": "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/",
+      "sourceUrlsChecked": [
+        "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/",
+        "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/appliance-rebates/",
+        "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/residential-rebate-terms-and-conditions/",
+        "https://customer.intgas.com/login/",
+        "https://programs.dsireusa.org/system/program/detail/1653/intermountain-gas-company-igc-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Intermountain’s]( current residential rebate table lists 95 percent AFUE furnaces, tankless water heaters, 95 percent AFUE boilers and combination boilers; terms limit eligibility to Idaho IGC residential gas customers and builders.",
+      "reasoningNotes": "The furnace and boiler matches are correct. Envelope and duct measures appear to be stale or unsupported in current official sources and should be removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22084",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [
+          "La Plata County",
+          "Archuleta County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "La Plata Electric Association"
+        ],
+        "notes": "Available to qualifying LPEA members in the cooperative service territory. Commercial EV and custom measures have additional site and operating restrictions."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "business",
+        "multifamily_property_owner",
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "multifamily",
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "air_to_water_heat_pump",
+        "heat_pump_water_heater",
+        "custom_commercial_space_heating",
+        "custom_commercial_water_heating",
+        "level_2_ev_charger_installation",
+        "multifamily_level_2_ev_charger_installation",
+        "lighting_controls_retrofit",
+        "energy_audit",
+        "battery_storage_system",
+        "electric_thermal_storage_heating",
+        "heat_pump_clothes_dryer"
+      ],
+      "hardRequirements": [
+        "Applicant must be an LPEA member.",
+        "Rebate application must be submitted within the stated post-installation deadline unless preapproval is required.",
+        "Commercial custom space- and water-heating projects must apply before purchase or installation and are evaluated case by case.",
+        "Commercial EV charging applicants must contact LPEA before work begins and meet public or non-public charger requirements."
+      ],
+      "blockers": [
+        "Do not match broad commercial LED fixture replacement; current commercial lighting support is for LED controls.",
+        "Custom commercial space and water heating is case-by-case and should not automatically match every HVAC or water-heating replacement.",
+        "Non-public EV chargers must avoid peak operation and may be limited in fee collection or data sharing.",
+        "DC fast charging was not verified as a prescriptive rebate category."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "La Plata Electric Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://lpea.coop/rebates",
+      "sourceUrlsChecked": [
+        "https://lpea.coop/rebates",
+        "https://lpea.coop/heat-pump-water-heater-rebates",
+        "https://lpea.coop/heat-pump-rebatesmini-split-system-rebates",
+        "https://lpea.coop/public-or-commercial-ev-charging-station-rebates",
+        "https://lpea.coop/sites/default/files/2026_03/2026%20LPEA%20Rebates%20One%20Pager.pdf",
+        "https://programs.dsireusa.org/system/program/detail/22084/la-plata-electric-association-commercial-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "LPEA]( 2026 rebate pages list member rebates for heat pumps, heat pump water heaters, energy audits, battery storage, Level 2 commercial EV charging, multifamily EV charging and commercial LED controls.",
+      "reasoningNotes": "The heat pump, heat pump water heater and Level 2 EV matches are supported. Broad LED lighting and broad high-efficiency HVAC should be narrowed to current LPEA categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4754",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [
+          "Lansing"
+        ],
+        "utilityTerritories": [
+          "Lansing Board of Water & Light"
+        ],
+        "notes": "Available to qualifying commercial and industrial customers served by Lansing Board of Water & Light."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "business",
+        "institution"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "compressed_air_leak_detection_and_repair",
+        "compressed_air_system_energy_audit",
+        "compressed_air_efficiency",
+        "variable_frequency_drive_retrofit",
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "hvac_controls_retrofit",
+        "commercial_refrigeration_measures",
+        "commercial_foodservice_equipment",
+        "custom_energy_efficiency_measures"
+      ],
+      "hardRequirements": [
+        "Customer must have a qualifying BWL commercial or industrial electric account.",
+        "Applications must be submitted within the program’s deadline unless preapproval is required.",
+        "Compressed-air leak detection, audit and repair measures require preapproval and documented leak repair.",
+        "Custom, new construction and large incentive projects may require preapproval."
+      ],
+      "blockers": [
+        "Leak detection is compressed-air-specific, not a water-efficiency leak detection system.",
+        "Energy audit support is for compressed-air system audit with leak detection and repair, not a broad building energy audit rebate.",
+        "Replacement of existing operational lighting sensors is not eligible as a controls retrofit.",
+        "Do not infer residential measures from this commercial and industrial program."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Lansing Board of Water & Light",
+      "applicationUrl": "https://www.lbwl.com/customers/save-money-energy/receive-your-incentives",
+      "websiteUrl": "https://www.lbwl.com/customers/save-money-energy/commercial-industrial-incentives",
+      "sourceUrlsChecked": [
+        "https://www.lbwl.com/customers/save-money-energy/commercial-industrial-incentives",
+        "https://www.lbwl.com/customers/save-money-energy/receive-your-incentives",
+        "https://www.lbwl.com/customers/save-money-energy/small-business-incentives",
+        "https://www.lbwl.com/documents/compressed-air-application",
+        "https://www.lbwl.com/documents/lighting-application",
+        "https://www.lbwl.com/documents/non-lighting-application",
+        "https://programs.dsireusa.org/system/program/detail/4754/lansing-board-of-water-and-light-hometown-energy-savers-commercial-rebates"
+      ],
+      "evidenceText": "BWL’s]( C&I pages and 2026 applications cover compressed air, lighting and controls, HVAC, VFDs, refrigeration, food service, industrial and custom measures; leak detection is compressed-air-specific.",
+      "reasoningNotes": "Most original commercial and industrial matches are supported, but the water leak detection match is a false positive caused by compressed-air leak terminology."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2207",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [
+          "Lewis County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Lewis County PUD"
+        ],
+        "notes": "Available to qualifying commercial and industrial customers served by Public Utility District No. 1 of Lewis County."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "business"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "commercial_weatherization",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "led_lighting_retrofit",
+        "commercial_refrigeration_upgrades",
+        "compressed_air_efficiency",
+        "variable_frequency_drive_retrofit",
+        "controls_upgrade",
+        "strategic_energy_management"
+      ],
+      "hardRequirements": [
+        "Applicant must be a qualifying Lewis County PUD commercial or industrial customer.",
+        "Commercial heat pumps must be installed by a licensed contractor and meet equipment documentation requirements.",
+        "Commercial weatherization requires an energy audit before installation and an electrically heated building.",
+        "Industrial measures must follow the utility or BPA Energy Smart Industrial requirements."
+      ],
+      "blockers": [
+        "Energy audit is a prerequisite for commercial weatherization and should not be treated as a standalone rebate category unless separately verified.",
+        "Broad air conditioner or high-efficiency HVAC replacement was not verified beyond heat-pump measures.",
+        "No residential appliance or residential weatherization matches should be inferred from this C&I program.",
+        "Direct official page fetch returned forbidden, so amounts and detailed requirements need confirmation before precise automated matching."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Public Utility District No. 1 of Lewis County",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.lcpud.org/save-energy/commercial-industrial/",
+      "sourceUrlsChecked": [
+        "https://www.lcpud.org/save-energy/commercial-industrial/",
+        "https://www.lcpud.org/energy-efficiency/rebates/commercial-industrial/",
+        "https://www.lcpud.org/energy-efficiency/rebates/commercial-industrial/commercial-heat-pumps/",
+        "https://www.lcpud.org/energy-efficiency/rebates/commercial-industrial/commercial-weatherization/",
+        "https://www.lcpud.org/energy-efficiency/rebates/commercial-industrial/lighting/",
+        "https://www.lcpud.org/energy-efficiency/rebates/commercial-industrial/industrial-programs/",
+        "https://programs.dsireusa.org/system/program/detail/2207/lewis-county-pud-commercial-and-industrial-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Lewis]( County PUD official indexed pages identify commercial heat pumps, commercial weatherization, lighting, and industrial lighting, compressed-air, drives-controls, refrigeration and SEM programs, though direct page fetch returned forbidden.",
+      "reasoningNotes": "The program appears active from official indexed pages, but confidence is medium because direct pages were not readable during review."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5368",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Liberty Utilities Missouri natural gas service territory"
+        ],
+        "notes": "Applies to qualifying Missouri Liberty natural-gas customers; exact community depends on the applicable Liberty Missouri gas service area."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "small_business_customer",
+        "homeowner",
+        "owner_occupant"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "small_commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "combination_space_water_heating",
+        "natural_gas_tank_water_heater",
+        "natural_gas_tankless_water_heater",
+        "programmable_thermostat",
+        "home_energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "home_energy_saving_kit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Liberty Missouri gas customer on an eligible residential or small firm service rate for equipment rebates.",
+        "Equipment rebates apply to qualifying natural-gas space-heating or water-heating equipment.",
+        "Energize Liberty Homes is for Missouri homeowners with Liberty natural gas and requires an audit and building-shell savings tier.",
+        "Program terms, documentation and installation requirements must be satisfied."
+      ],
+      "blockers": [
+        "Battery storage is not supported by current Liberty Missouri gas rebate sources.",
+        "Renewable systems, kitchen appliance upgrades, geothermal, high-efficiency air conditioning, electric water heaters and electric heat pumps with electric backup are not eligible.",
+        "Energize Liberty Homes is a residential homeowner building-shell program and should not be matched to small-business weatherization.",
+        "Do not match electric-only HVAC or non-gas water heating."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Liberty Utilities Missouri",
+      "applicationUrl": "https://central.libertyutilities.com/uploads/EDG%20Rebate%20Updated%202025.03.21.pdf",
+      "websiteUrl": "https://missouri.libertyutilities.com/malden/residential/ways-to-save/natural-gas/index.html",
+      "sourceUrlsChecked": [
+        "https://missouri.libertyutilities.com/malden/residential/ways-to-save/natural-gas/index.html",
+        "https://missouri.libertyutilities.com/canton/residential/ways-to-save/natural-gas/high-efficiency-equipment-rebate.html",
+        "https://central.libertyutilities.com/all/residential/safety/natural-gas/energize-liberty-homes.html",
+        "https://central.libertyutilities.com/uploads/EDG%20Rebate%20Updated%202025.03.21.pdf",
+        "https://central.libertyutilities.com/uploads/terms%202024%282%29.pdf",
+        "https://programs.dsireusa.org/system/program/detail/5368/liberty-utilities-residential-and-small-business-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Liberty]( Missouri pages list gas furnace, boiler, water-heating and thermostat rebates for residential and small firm gas customers, plus Energize Liberty Homes audit and building-shell savings tiers.",
+      "reasoningNotes": "Natural-gas furnace, boiler, thermostat and weatherization matches are supported with sector limits. Battery storage and electric HVAC are false positives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2447",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [
+          "Linn County",
+          "Johnson County",
+          "Jones County",
+          "Cedar County",
+          "Iowa County",
+          "Benton County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Corridor Energy Cooperative"
+        ],
+        "notes": "Corridor Energy Cooperative, formerly Linn County REC, serves rural and suburban Linn and Johnson counties with line extensions into Jones, Cedar, Iowa and Benton counties."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "small_commercial_customer",
+        "member_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "small_commercial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "supplemental_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "level_2_ev_charger_installation",
+        "fleet_level_2_ev_charger_installation",
+        "residential_or_small_commercial_induction_cooktop_stove",
+        "heat_pump_clothes_dryer",
+        "balanced_ventilation_erv_hrv",
+        "smart_plug_load_control",
+        "water_heater_timer",
+        "pool_pump_timer",
+        "all_electric_new_construction_bonus"
+      ],
+      "hardRequirements": [
+        "Account must be served by Corridor Energy Cooperative and fit the residential or small-commercial demand threshold.",
+        "Applications must be submitted within the program’s stated purchase or installation window.",
+        "EV charging must be Level II at the required voltage and meet rate, ownership and replacement restrictions.",
+        "Heat pump water heater replacement and new-construction bonus measures must meet program-specific eligibility rules."
+      ],
+      "blockers": [
+        "Air conditioner rebates ended and should not match this opportunity.",
+        "Level 3 or DC fast charging is not supported by the current residential and small-commercial rebate page.",
+        "Induction cooking is a residential or small-commercial appliance rebate and not commercial kitchen equipment.",
+        "Accounts at or above the small-commercial demand threshold are excluded.",
+        "Replacement EV chargers are not eligible, and heat pump water heater replacements are limited by prior HPWH history."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Corridor Energy Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://corridorenergy.coop/rebates/residential-small-commercial-rebates/",
+      "sourceUrlsChecked": [
+        "https://corridorenergy.coop/rebates/residential-small-commercial-rebates/",
+        "https://www.linncountyrec.com/energy-solutions/rebates/residential-rebates",
+        "https://programs.dsireusa.org/system/program/detail/2447/linn-county-rural-electric-cooperative-residential-and-small-commercial-75kw-rebates"
+      ],
+      "evidenceText": "Corridor]( Energy’s 2026 page lists residential and small-commercial rebates for heat pumps, ground-source systems, heat pump water heaters, Level II EV charging, induction cooking, HP dryers, ventilation and smart controls.",
+      "reasoningNotes": "The heat pump, geothermal, HPWH, Level 2 EV and induction matches are supported, but induction and EV must be narrowed to the listed residential and small-commercial product rules."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:4248"
+}

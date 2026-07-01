@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 24-28
+
+- Imported five additional saved GPT Pro opportunity-data repair outputs from `Outputs/` as normalized batches 24-28.
+- Appended the batches to the ordered opportunity-data repair manifest and applied all 28 batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
+- Advanced the repaired opportunity-data corpus to 335 unique researched opportunities.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 19-23
 
 - Imported five saved GPT Pro opportunity-data repair outputs from `Outputs/` as normalized batches 19-23.

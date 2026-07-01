@@ -1,0 +1,966 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22122",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AL",
+          "GA",
+          "KY",
+          "MS",
+          "NC",
+          "TN",
+          "VA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA EnergyRight participating local power companies"
+        ],
+        "notes": "Limited to business and industry customers served by TVA through participating local power companies."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "business_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_hvac_replacement",
+        "led_lighting_retrofit",
+        "high_efficiency_refrigeration_equipment",
+        "thermal_ice_storage",
+        "variable_frequency_drive_retrofit",
+        "electric_forklift_material_handling",
+        "custom_energy_efficiency_measures"
+      ],
+      "hardRequirements": [
+        "Customer must be served by TVA through a participating local power company.",
+        "Pre-approval is required for many incentive types before purchase or installation.",
+        "Projects must meet TVA EnergyRight measure specifications and incentive minimums.",
+        "Some measures must use TVA Preferred Partners Network contractors.",
+        "Incentives are subject to funding availability and program caps."
+      ],
+      "blockers": [
+        "Residential projects are not eligible under this business and industry incentive program.",
+        "Solar, battery storage, EV charging, and demand response should not be inferred from this incentive page.",
+        "Thermal storage match should be limited to thermal ice storage systems, not general battery storage.",
+        "Projects outside TVA or nonparticipating local power company territory are ineligible."
+      ],
+      "programType": "Commercial And Industrial Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": null,
+      "websiteUrl": "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/"
+      ],
+      "evidenceText": "TVA EnergyRight lists business and industry incentives for HVAC systems, LED lights, refrigeration, thermal ice storage systems, variable speed drives, electric forklifts, and custom projects.",
+      "reasoningNotes": "The original categories were mostly supported, but thermal energy storage should be narrowed to thermal ice storage and electric forklifts/custom measures are explicitly listed. Battery storage and residential measures should be blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2106",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "United Power electric service territory"
+        ],
+        "notes": "Limited to United Power members with permanent residential electric service."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "electric_cooperative_member"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "electric_water_heater_conversion",
+        "ev_make_ready_electrical_upgrade",
+        "ev_panel_upgrade_for_level_2_charging",
+        "smart_thermostat_demand_response_enrollment"
+      ],
+      "hardRequirements": [
+        "Applicant must be a United Power member with permanent residential electric service.",
+        "Rebate requests generally must be submitted within 90 days of purchase or installation.",
+        "Heat pump and water heater equipment must meet stated efficiency and documentation requirements.",
+        "EV wiring and panel rebates require Level 2 charger-related installation by a licensed electrician.",
+        "Smart thermostat incentive is tied to Smart Rewards demand response enrollment, not a purchase rebate."
+      ],
+      "blockers": [
+        "United Power states it does not offer smart thermostat purchase rebates.",
+        "Level 2 charger hardware should not be matched unless the measure is the eligible wiring or panel upgrade.",
+        "New construction is excluded for several heat pump and water heater rebates.",
+        "Commercial applicants and commercial equipment are not eligible under this residential program.",
+        "Standard electric-to-standard electric water heater replacement is not supported."
+      ],
+      "programType": "Residential Rebate And Demand Response Incentive Program",
+      "administrator": "United Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.unitedpower.com/rebates",
+      "sourceUrlsChecked": [
+        "https://www.unitedpower.com/rebates",
+        "https://www.unitedpower.com/ev-rebates",
+        "https://www.unitedpower.com/heat-pumps",
+        "https://www.unitedpower.com/water-heaters",
+        "https://www.unitedpower.com/smart-rewards"
+      ],
+      "evidenceText": "United Power pages cover residential heat pumps, electric water heating, EV wiring and panel make-ready, and Smart Rewards thermostat enrollment; they say thermostat purchase rebates are not offered.",
+      "reasoningNotes": "The EV and thermostat matches needed narrowing. This is not a broad EV charger rebate or generic energy management system rebate; the thermostat item is a demand response enrollment incentive."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4474",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Washington Gas Virginia residential natural gas service territory"
+        ],
+        "notes": "Limited to eligible Washington Gas residential customers in Virginia."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "natural_gas_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "dual_fuel_heat_pump_with_gas_furnace",
+        "smart_thermostat_zoning_retrofit",
+        "window_replacement",
+        "storm_window_retrofit",
+        "cellular_window_treatment",
+        "high_efficiency_gas_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Washington Gas residential customer in Virginia.",
+        "Heating equipment must meet listed AFUE or dual-fuel heat pump requirements.",
+        "Dual-fuel heat pump rebate requires qualifying gas furnace conditions and replacement of central air conditioning with a qualifying heat pump system.",
+        "Smart thermostat rebate has minimum cost and quantity limits.",
+        "Window and window treatment rebates require qualifying product standards."
+      ],
+      "blockers": [
+        "Standalone electric heat pump replacement should not be matched unless it is the listed dual-fuel heat pump configuration.",
+        "Insulation is not supported by the current Virginia residential rebate pages.",
+        "Commercial measures are not eligible under this residential program.",
+        "General weatherization should not be inferred from the home conservation kit or window treatment offers."
+      ],
+      "programType": "Residential Natural Gas Efficiency Rebate Program",
+      "administrator": "Washington Gas",
+      "applicationUrl": null,
+      "websiteUrl": "https://wgsmartsavings.com/programs-rebates/home/va",
+      "sourceUrlsChecked": [
+        "https://wgsmartsavings.com/programs-rebates/home/va",
+        "https://wgsmartsavings.com/programs-rebates/va/home-heating",
+        "https://wgsmartsavings.com/programs-rebates/va/windows-and-window-treatments",
+        "https://wgsmartsavings.com/programs-rebates/va/smart-thermostats",
+        "https://wgsmartsavings.com/programs-rebates/va/water-heaters"
+      ],
+      "evidenceText": "Washington Gas Virginia pages list home heating, dual-fuel heat pump, water heater, smart thermostat, window, storm window, and cellular shade rebates for residential customers.",
+      "reasoningNotes": "The original heat pump match is only valid as a dual-fuel gas furnace and heat pump measure. The insulation match is not supported by current official Virginia pages."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22729",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Wisconsin program administered through Focus on Energy for eligible households."
+      },
+      "eligibleApplicantTypes": [
+        "low_income_household",
+        "moderate_income_household",
+        "single_family_homeowner",
+        "multifamily_resident",
+        "multifamily_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "mechanical_ventilation_upgrade",
+        "electrical_panel_upgrade",
+        "electrical_wiring_for_electrification",
+        "heat_pump_clothes_dryer",
+        "electric_cooking_appliance"
+      ],
+      "hardRequirements": [
+        "Household income must be less than 150 percent of area median income.",
+        "Maximum HEAR rebate is generally capped at 14000 dollars per household or address.",
+        "Rebate percentage depends on whether income is below 80 percent or between 80 and 150 percent of area median income.",
+        "Certain equipment must be installed by an IRA Registered Contractor.",
+        "A household cannot receive both HOMES and HEAR rebates for the same upgrade."
+      ],
+      "blockers": [
+        "Households above 150 percent of area median income are not eligible.",
+        "LED lighting is not an eligible HEAR category.",
+        "Commercial or industrial process electrification equipment is not part of this residential program.",
+        "Do not match nonresidential applicants or general commercial electrification projects."
+      ],
+      "programType": "Income-Qualified Residential Electrification Rebate Program",
+      "administrator": "Focus on Energy",
+      "applicationUrl": "https://focus-ira.clearesult.com/",
+      "websiteUrl": "https://focusonenergy.com/ira-hear",
+      "sourceUrlsChecked": [
+        "https://focusonenergy.com/ira-hear",
+        "https://focus-ira.clearesult.com/"
+      ],
+      "evidenceText": "Focus on Energy lists HEAR rebates for heat pumps, heat pump water heaters, insulation, air sealing, ventilation, electric panels, wiring, heat pump dryers, and electric cooking appliances.",
+      "reasoningNotes": "The current DSIRE-derived matches include false positives for LED lighting and process electrification. HEAR is residential and income-limited, not a commercial or industrial electrification program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy Colorado residential electric and natural gas service territory"
+        ],
+        "notes": "Limited to eligible Colorado residential Xcel Energy customers; individual measures may require electric or natural gas service."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "high_efficiency_central_air_conditioning"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Colorado residential Xcel Energy customer.",
+        "Measures must meet Xcel Energy equipment and documentation requirements.",
+        "Insulation and air sealing rebates require eligible residential project conditions.",
+        "Heat pump rebates require qualifying equipment and may vary by customer fuel and income status.",
+        "Rebates are subject to program funding and current measure rules."
+      ],
+      "blockers": [
+        "Commercial refrigeration is not eligible under this residential rebate program.",
+        "Do not infer commercial, industrial, or food-service equipment from the residential home rebates page.",
+        "Gas furnace and boiler rebates should not be matched unless confirmed in current Xcel rules for the specific program year.",
+        "Separate renewable energy, EV, or demand response offers should not be merged into this record."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://co.my.xcelenergy.com/s/residential/home-rebates",
+      "sourceUrlsChecked": [
+        "https://co.my.xcelenergy.com/s/residential/home-rebates",
+        "https://co.my.xcelenergy.com/s/residential/heating-cooling",
+        "https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps",
+        "https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing",
+        "https://co.my.xcelenergy.com/s/residential/heating-cooling/residential-cooling-rebates"
+      ],
+      "evidenceText": "Xcel Colorado residential pages identify home rebates for heat pumps, heat pump water heaters, insulation, air sealing, and cooling equipment for residential customers.",
+      "reasoningNotes": "The major correction is removal of commercial refrigeration. Xcel pages are partly dynamic, so confidence is medium, but current official pages support the residential envelope and heat pump categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2474",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Yellowstone Valley Electric Cooperative service territory"
+        ],
+        "notes": "Official pages were partly access-restricted, but official indexed pages identify current YVEC member rebates."
+      },
+      "eligibleApplicantTypes": [
+        "electric_cooperative_member",
+        "residential_customer",
+        "commercial_customer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "ground_source_geothermal_heat_pump",
+        "add_on_heat_pump",
+        "smart_thermostat_zoning_retrofit",
+        "energy_star_lighting_rebate",
+        "residential_energy_star_dishwasher",
+        "residential_clothes_washer",
+        "residential_refrigerator",
+        "electric_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be a YVEC member with qualifying service.",
+        "Rebate submissions generally must be made no later than 90 days after purchase.",
+        "Equipment must meet the specific YVEC rebate page or form requirements.",
+        "Smart thermostat rebate requires qualifying ENERGY STAR equipment connected to YVEC service.",
+        "Rebates are subject to current YVEC program limits and funding."
+      ],
+      "blockers": [
+        "Residential ENERGY STAR dishwasher and refrigerator rebates should not be generalized into commercial kitchen or commercial refrigeration retrofits.",
+        "Do not match broad commercial kitchen equipment from residential appliance terms.",
+        "Lighting should be treated as the specific YVEC Energy Star lighting rebate, not an inferred custom lighting program.",
+        "Projects outside YVEC service territory are ineligible."
+      ],
+      "programType": "Residential And Commercial Member Rebate Program",
+      "administrator": "Yellowstone Valley Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.yvec.com/member-services/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.yvec.com/member-services/rebates/",
+        "https://www.yvec.com/member-services/rebates/energy-star-rebate/",
+        "https://www.yvec.com/member-services/rebates/add-on-heat-pump-rebate/",
+        "https://www.yvec.com/smart-thermostat-rebate/",
+        "https://www.yvec.com/member-services/rebates/water-heater-rebate/"
+      ],
+      "evidenceText": "YVEC rebate pages identify geothermal or add-on heat pumps, smart thermostats, Energy Star lighting, Energy Star appliances, and electric water heaters for members.",
+      "reasoningNotes": "The current official site was not fully readable, but official indexed pages support the main categories. The commercial dishwasher and commercial refrigeration matches are false positives from residential appliance terms."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2925",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [
+          "Austin"
+        ],
+        "utilityTerritories": [
+          "Austin Energy commercial electric service territory"
+        ],
+        "notes": "Limited to Austin Energy commercial electric customers and qualifying new construction, additions, build-outs, finish-outs, and major remodels."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "business_owner",
+        "nonprofit",
+        "house_of_worship",
+        "contractor",
+        "design_professional",
+        "authorized_agent"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "nonprofit",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "new_construction_lighting",
+        "high_efficiency_commercial_hvac",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "heat_pump_water_heater",
+        "custom_energy_efficiency_technology",
+        "guest_room_occupancy_controls"
+      ],
+      "hardRequirements": [
+        "Project must be served by Austin Energy commercial electric service.",
+        "Application must be submitted before installation or before certificate of occupancy when required.",
+        "Measures must exceed code and produce qualifying peak demand or energy savings.",
+        "Code-required equipment and building envelope measures are not eligible.",
+        "Equipment must meet Austin Energy new construction rebate requirements and documentation rules."
+      ],
+      "blockers": [
+        "Battery storage is not supported by this new construction efficiency rebate.",
+        "Do not treat this as a general existing-building retrofit unless the project is an eligible major remodel or build-out.",
+        "Broad energy management systems should not be matched unless the measure is a supported guest room control, custom technology, or similar eligible efficiency measure.",
+        "Solar, EV charging, demand response, and storage programs are separate from this record."
+      ],
+      "programType": "Commercial New Construction Efficiency Rebate Program",
+      "administrator": "Austin Energy",
+      "applicationUrl": "https://rebates.austinenergy.com/",
+      "websiteUrl": "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/new-construction-rebates",
+      "sourceUrlsChecked": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial",
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/new-construction-rebates",
+        "https://rebates.austinenergy.com/"
+      ],
+      "evidenceText": "Austin Energy lists commercial new construction rebates for lighting, HVAC equipment, thermal energy storage, variable frequency drives, heat pump water heaters, guest room controls, and custom technologies.",
+      "reasoningNotes": "This is a new construction and major remodel program, not a generic retrofit program. Battery storage is a false positive; thermal storage is supported."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3277",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Barron Electric Cooperative service territory"
+        ],
+        "notes": "Limited to qualifying equipment purchased and installed on Barron Electric Cooperative lines."
+      },
+      "eligibleApplicantTypes": [
+        "electric_cooperative_member",
+        "commercial_customer",
+        "industrial_customer",
+        "agricultural_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "variable_frequency_drive_retrofit",
+        "agricultural_exhaust_fan",
+        "agricultural_circulation_fan",
+        "scroll_refrigeration_compressor",
+        "dairy_plate_cooler_or_precooler",
+        "dairy_refrigeration_heat_recovery",
+        "electric_forklift_battery_charger",
+        "low_energy_livestock_waterer",
+        "custom_energy_efficiency_equipment"
+      ],
+      "hardRequirements": [
+        "Equipment must be purchased and installed in 2026 on cooperative lines.",
+        "Rebate must not exceed equipment cost.",
+        "Rebate form and documentation must be submitted within three months of purchase.",
+        "Program is valid through the stated deadline or until funds are depleted.",
+        "Equipment must match the listed agricultural, commercial, or industrial rebate measures."
+      ],
+      "blockers": [
+        "Electric forklift battery charger is not a battery storage system.",
+        "Refrigeration eligibility should be limited to listed scroll compressors, dairy refrigeration heat recovery, and related listed measures.",
+        "Broad vending machine controls are not supported by the current form.",
+        "Waste heat recovery should be limited to dairy refrigeration heat recovery where applicable.",
+        "Residential appliances and home weatherization are not eligible."
+      ],
+      "programType": "Commercial, Industrial, And Agricultural Rebate Program",
+      "administrator": "Barron Electric Cooperative",
+      "applicationUrl": "https://www.barronelectric.com/sites/default/files/2026%20Ag%20-%20fillable_0.pdf",
+      "websiteUrl": "https://www.barronelectric.com/2026-energy-rebates",
+      "sourceUrlsChecked": [
+        "https://www.barronelectric.com/2026-energy-rebates",
+        "https://www.barronelectric.com/sites/default/files/2026%20Ag%20-%20fillable_0.pdf"
+      ],
+      "evidenceText": "Barron Electric’s 2026 form lists VFDs, agricultural fans, scroll refrigeration compressors, dairy plate coolers, dairy heat recovery, electric forklift battery chargers, livestock waterers, and custom incentives.",
+      "reasoningNotes": "The original battery storage match is a false positive. The forklift-related item is a battery charger rebate, and heat recovery should be limited to the dairy refrigeration measure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3618",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [
+          "Jacksonville Beach"
+        ],
+        "utilityTerritories": [
+          "Beaches Energy Services electric service territory"
+        ],
+        "notes": "Limited to Beaches Energy Services customers; residential rebate categories apply to residential accounts."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "electric_utility_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "high_efficiency_hvac_replacement",
+        "insulation_upgrade",
+        "heat_pump_water_heater",
+        "solar_water_heater",
+        "window_film_shading_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Beaches Energy Services customer.",
+        "Residential rebate forms and required documentation must be submitted within 90 days.",
+        "Equipment must meet the specific rebate form and efficiency requirements.",
+        "Rebate is limited by the program’s stated maximum amounts.",
+        "Window-related rebate applies to solar screen or window film, not full window replacement."
+      ],
+      "blockers": [
+        "Window replacement is not supported; current official materials list solar screen or window film.",
+        "Commercial lighting is a separate listed commercial rebate and should not be merged into this residential record.",
+        "Projects outside Beaches Energy Services territory are not eligible.",
+        "Do not infer broad envelope retrofits beyond listed insulation and window film or solar screen measures."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Beaches Energy Services",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.beachesenergy.com/energy-savings/energy-rebates",
+      "sourceUrlsChecked": [
+        "https://www.beachesenergy.com/energy-savings/energy-rebates",
+        "https://beachesenergy.com/about-us/resources/forms"
+      ],
+      "evidenceText": "Beaches Energy lists residential rebates for A/C heat pumps, insulation, heat pump water heaters, solar water heaters, and solar screen or window film.",
+      "reasoningNotes": "Most residential categories are supported. The window replacement match is a false positive because the official offer is for window film or solar screens."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3668",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OH"
+        ],
+        "counties": [
+          "Auglaize",
+          "Champaign",
+          "Clark",
+          "Clinton",
+          "Darke",
+          "Fayette",
+          "Greene",
+          "Highland",
+          "Logan",
+          "Madison",
+          "Miami",
+          "Montgomery",
+          "Pickaway",
+          "Preble",
+          "Shelby",
+          "Warren"
+        ],
+        "cities": [
+          "Dayton"
+        ],
+        "utilityTerritories": [
+          "CenterPoint Energy Ohio natural gas service territory"
+        ],
+        "notes": "Limited to eligible CenterPoint Energy Ohio residential natural gas customers."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "natural_gas_customer",
+        "income_qualified_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_gas_furnace_retrofit",
+        "high_efficiency_gas_boiler_retrofit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "smart_or_wifi_thermostat",
+        "high_efficiency_gas_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be a CenterPoint Energy Ohio residential natural gas customer.",
+        "Heating equipment must meet listed AFUE and input capacity requirements.",
+        "Weatherization must use program-approved contractors and is for existing homes.",
+        "Air sealing may be required before insulation rebates.",
+        "Thermostat and equipment applications are subject to timing, documentation, and quantity limits."
+      ],
+      "blockers": [
+        "Electric heat pumps are not eligible under this natural gas rebate program.",
+        "Weatherization rebates exclude new construction and certain dual-fuel gas furnace plus electric heat pump conditions.",
+        "Commercial equipment should not be matched to this residential gas program.",
+        "Do not infer broad HVAC replacement beyond listed high-efficiency natural gas furnace, boiler, and water heating equipment."
+      ],
+      "programType": "Residential Natural Gas Efficiency Rebate Program",
+      "administrator": "CenterPoint Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://midwest.centerpointenergy.com/savings/oh-home",
+      "sourceUrlsChecked": [
+        "https://midwest.centerpointenergy.com/savings/oh-home",
+        "https://www.centerpointenergy.com/en-us/Documents/Midwest/CNP_Customer_Booklet_Res-Comm_O_NG_digital.pdf",
+        "https://www.occ.ohio.gov/factsheet/centerpoint-energys-energy-efficiency-programs"
+      ],
+      "evidenceText": "CenterPoint Ohio materials identify residential natural gas furnace, boiler, water heater, thermostat, air sealing, and insulation rebates for eligible gas customers.",
+      "reasoningNotes": "The official current landing page is difficult to read, but official CenterPoint and Ohio consumer materials support the gas efficiency categories. Confidence is medium because some detailed materials were program-year dated."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3179",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [
+          "Chelan"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Chelan County PUD electric service territory"
+        ],
+        "notes": "Limited to Chelan PUD residential customers with qualifying electrically heated homes in Chelan County."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "duct_sealing",
+        "insulation_upgrade",
+        "window_replacement",
+        "storm_window_retrofit",
+        "exterior_entry_door_replacement",
+        "smart_or_line_voltage_thermostat",
+        "heat_pump_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Chelan PUD electric customer with a home in Chelan County.",
+        "Many measures require the home to have prior permanent electric heat.",
+        "Heat pump, insulation, duct sealing, window, and door rebates have current program-year dates and measure specifications.",
+        "Duct sealing requires eligible existing ducts and a licensed contractor.",
+        "Applications require required documentation and must meet submission deadlines."
+      ],
+      "blockers": [
+        "Standalone air sealing is not listed as a separate current rebate category.",
+        "Gas-heated homes generally do not qualify for the electric-heated-home weatherization rebates.",
+        "Commercial buildings are not eligible under this residential program.",
+        "Do not match broad zoning systems beyond listed smart or line-voltage thermostat rebates.",
+        "New construction is excluded for several listed weatherization measures."
+      ],
+      "programType": "Residential Weatherization And Efficiency Rebate Program",
+      "administrator": "Chelan County Public Utility District",
+      "applicationUrl": "https://www.chelanpud.org/conservationhome/residential/rebate-application",
+      "websiteUrl": "https://www.chelanpud.org/conservationhome/residential",
+      "sourceUrlsChecked": [
+        "https://www.chelanpud.org/conservationhome/residential",
+        "https://www.chelanpud.org/conservationhome/residential/heat-pump-rebates",
+        "https://www.chelanpud.org/conservationhome/residential/insulation-rebates",
+        "https://www.chelanpud.org/conservationhome/residential/site-built-home-duct-sealing",
+        "https://www.chelanpud.org/conservationhome/residential/window-rebates",
+        "https://www.chelanpud.org/conservationhome/residential/thermostats",
+        "https://www.chelanpud.org/conservationhome/residential/rebate-application"
+      ],
+      "evidenceText": "Chelan PUD residential rebates include heat pumps, thermostats, duct sealing, heat pump water heaters, windows, storm windows, exterior doors, and insulation for qualifying electric-heated homes.",
+      "reasoningNotes": "The original heat pump, duct, insulation, and thermostat matches are supported. Air sealing should be blocked as a standalone rebate because current official rebate pages do not list it separately."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5832",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "LA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Cleco electric service territory"
+        ],
+        "notes": "Limited to eligible Cleco commercial customers and qualifying equipment installed in Cleco service territory."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "restaurant",
+        "food_service_business",
+        "small_business",
+        "large_business"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "hospitality",
+        "healthcare",
+        "food_service"
+      ],
+      "eligibleRetrofitCategories": [
+        "efficient_ice_machine",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steam_cooker",
+        "high_efficiency_commercial_griddle",
+        "pre_rinse_spray_valve",
+        "commercial_kitchen_ecm_motor",
+        "high_efficiency_hvac_replacement",
+        "led_lighting_retrofit",
+        "custom_energy_efficiency_measures"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Cleco commercial customer.",
+        "Kitchen equipment must be installed in Cleco service territory and meet ENERGY STAR or listed program requirements.",
+        "Kitchen rebate documentation must generally be submitted within 60 days of purchase.",
+        "HVAC and lighting incentives depend on qualifying kWh savings and customer demand class.",
+        "Program funding is limited and rebates are first come, first served."
+      ],
+      "blockers": [
+        "Residential projects are not eligible under this commercial program.",
+        "Pre-rinse spray valve should not be generalized into a broad plumbing retrofit.",
+        "Kitchen equipment eligibility is limited to listed commercial food-service measures.",
+        "Custom projects must reduce energy use and be approved under Cleco’s custom program.",
+        "Projects outside Cleco service territory are ineligible."
+      ],
+      "programType": "Commercial Energy Efficiency Rebate Program",
+      "administrator": "Cleco Power Wise",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cleco.com/powerwise/commercial-programs",
+      "sourceUrlsChecked": [
+        "https://www.cleco.com/powerwise/commercial-programs",
+        "https://www.cleco.com/powerwise/commercial-programs/commercial-kitchen-rebates",
+        "https://www.cleco.com/powerwise/commercial-programs/hvac-change-outs",
+        "https://www.cleco.com/powerwise/commercial-programs/lighting-upgrades",
+        "https://www.cleco.com/powerwise/commercial-programs/custom-program"
+      ],
+      "evidenceText": "Cleco commercial pages list kitchen equipment rebates, HVAC change-out incentives, lighting upgrades, and custom commercial or industrial energy efficiency projects.",
+      "reasoningNotes": "The matched commercial kitchen, HVAC, and lighting categories are supported. Product-specific kitchen items should remain narrow and should not be generalized into broader plumbing or appliance categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3406",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Connexus Energy electric service territory"
+        ],
+        "notes": "Limited to Connexus Energy residential members and qualifying installations in Connexus territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "electric_cooperative_member"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "ev_make_ready_meter_socket_installation",
+        "air_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "smart_thermostat_demand_response_enrollment",
+        "dual_fuel_interruptible_space_heating_rate"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Connexus Energy residential member.",
+        "Level 2 EV charger rebate requires qualifying charger installation with an off-peak meter socket and EV rate enrollment.",
+        "Battery electric and plug-in hybrid vehicles are eligible for EV charger incentives; hybrid-only vehicles are not.",
+        "Heat pump and water heater equipment must meet listed efficiency and documentation requirements.",
+        "Wi-Fi thermostat incentive is tied to PowerNap air conditioning participation and current rebate timing limits."
+      ],
+      "blockers": [
+        "Smart thermostat should be treated as a demand response or PowerNap enrollment measure, not a generic zoning retrofit.",
+        "EV charger rebate should not be matched for whole-house time-of-day service without the required off-peak meter socket.",
+        "Hybrid-only vehicles are not eligible for EV charger incentives.",
+        "Commercial equipment and commercial applicants are not eligible under this residential program.",
+        "Solar, e-bike, and mower programs are separate Connexus offerings and should not be merged into this record."
+      ],
+      "programType": "Residential Rebate, Rate, And Demand Response Program",
+      "administrator": "Connexus Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs",
+      "sourceUrlsChecked": [
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/heating-and-cooling",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/heating-and-cooling/ductless-ashp-rebate",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/water-heating",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/electric-vehicles/electric-vehicle-charger-rebate",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/heating-and-cooling/wi-fi-powernap-air-conditioning"
+      ],
+      "evidenceText": "Connexus residential pages list EV charger rebates, air source and ductless heat pump rebates, ground source heat pump rebates, heat pump water heaters, and PowerNap thermostat incentives.",
+      "reasoningNotes": "The EV, heat pump, geothermal, and HPWH matches are supported. Thermostat and dual-fuel items should be treated as program participation or rate measures, not broad physical retrofits."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4299",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Consumers Energy Michigan business electric service territory"
+        ],
+        "notes": "Limited to eligible Consumers Energy business customers; individual measure eligibility may depend on electric or gas service and rate class."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "business_customer",
+        "industrial_customer",
+        "agricultural_customer",
+        "nonprofit"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "networked_lighting_controls",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_controls_retrofit",
+        "efficient_ice_machine",
+        "insulation_upgrade",
+        "building_envelope_air_sealing",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_commercial_hvac"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Consumers Energy business customer on eligible rates.",
+        "Some measures require pre-notification before work begins.",
+        "Final applications are generally required within 60 days of project completion for many rebate tracks.",
+        "Equipment must meet Consumers Energy business rebate specifications.",
+        "Rebates may offset only allowed portions of incremental project cost."
+      ],
+      "blockers": [
+        "Residential rebates and home weatherization should not be matched to this business program.",
+        "Gas-only measures should not be matched to an electric-only customer without verifying measure-specific service eligibility.",
+        "Renewable energy, EV, and demand response programs are separate from this business efficiency rebate record.",
+        "Do not infer broad geothermal eligibility beyond the listed business HVAC ground-loop heat pump measure."
+      ],
+      "programType": "Business Energy Efficiency Rebate Program",
+      "administrator": "Consumers Energy",
+      "applicationUrl": "https://consumers-energy.clearesult.com/",
+      "websiteUrl": "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts",
+      "sourceUrlsChecked": [
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts",
+        "https://consumers-energy.clearesult.com/",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/lighting-rebates",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/kitchen-refrigeration-laundry-rebates",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/hvac-business-rebates",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/envelope-and-insulation-rebates"
+      ],
+      "evidenceText": "Consumers Energy business pages list rebates for lighting and controls, refrigeration, kitchen and laundry equipment, HVAC, ground-loop heat pumps, and building envelope or insulation measures.",
+      "reasoningNotes": "The original lighting, refrigeration, geothermal, HVAC, and insulation matches are supported for business customers. The record should not be used for residential equipment."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2690",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "UT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Enbridge Gas Utah natural gas service territory"
+        ],
+        "notes": "Legacy Dominion Energy ThermWise builder rebates now appear under Enbridge Gas; this repair is limited to the Utah builder rebate record."
+      },
+      "eligibleApplicantTypes": [
+        "home_builder",
+        "owner_builder"
+      ],
+      "eligibleSectors": [
+        "residential_new_construction"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_gas_furnace_new_construction",
+        "high_efficiency_gas_boiler_new_construction",
+        "dual_fuel_heat_pump_new_construction",
+        "energy_recovery_ventilation_new_construction",
+        "continuous_exterior_rigid_insulation_new_construction",
+        "high_efficiency_windows_new_construction",
+        "smart_thermostat_new_construction",
+        "high_efficiency_gas_water_heater_new_construction"
+      ],
+      "hardRequirements": [
+        "Rebates are paid only to builders or owner-builders of qualifying new residential dwellings.",
+        "Dwelling must receive qualifying Enbridge Gas service on the applicable Utah service schedule.",
+        "Application and documentation must be submitted within six months of gas service turn-on.",
+        "Measures must be purchased and installed in the eligible program year and meet ThermWise efficiency requirements.",
+        "Same equipment cannot receive another ThermWise rebate."
+      ],
+      "blockers": [
+        "This is a builder new-construction rebate, not an existing-home retrofit rebate.",
+        "Standard homeowner retrofit applicants should not be matched unless they are owner-builders under the builder program.",
+        "Insulation match should be limited to the listed new-construction wall or continuous exterior rigid insulation measures.",
+        "Do not generalize the window measure into existing-home window replacement.",
+        "Non-gas or non-Enbridge service homes are ineligible."
+      ],
+      "programType": "Residential New Construction Builder Rebate Program",
+      "administrator": "Enbridge Gas ThermWise",
+      "applicationUrl": "https://www.enbridgegas.com/-/media/Extranet-Pages/utidwy/save-money/thermwise/builder-rebates/UTBuilderApp-SF.pdf?hash=8CB0CAFD6E9FAB2E306706BB084A3123&rev=0701dd92b34149d4bd79677db4dfc70e",
+      "websiteUrl": "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates",
+      "sourceUrlsChecked": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates",
+        "https://www.enbridgegas.com/-/media/Extranet-Pages/utidwy/save-money/thermwise/builder-rebates/UTBuilderApp-SF.pdf?hash=8CB0CAFD6E9FAB2E306706BB084A3123&rev=0701dd92b34149d4bd79677db4dfc70e",
+        "https://pscdocs.utah.gov/gas/25docs/2505722/342527EGUExhbt1.9LgsltvTrfRvsns10-31-2025.pdf"
+      ],
+      "evidenceText": "ThermWise builder materials list new single-family rebates for gas furnaces, boilers, dual-fuel systems, ERV, insulation, windows, smart thermostats, and gas water heating.",
+      "reasoningNotes": "The original categories are partly supported but must be constrained to new construction builder rebates. This should not match ordinary existing-home retrofit projects."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:3721"
+}
