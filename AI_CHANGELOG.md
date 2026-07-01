@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) admin retrofit recommendations preview redesign
+
+- Reworked the admin-launched client portal preview retrofit tab into the main post-intake `Retrofit Recommendations` preview UI, keeping the existing `/portal-preview?userId=...` route and live recommendation endpoint.
+- Added scenario comparison cards, ranking controls, editable industry-standard estimate boxes, opportunity selection, separate Operating Savings, retrofit detail questions, financing preview placeholder, next-best-action checklist, and subtle premium placeholders.
+- Added deterministic frontend tests for the live-shaped preview mapper and rendered page structure without introducing production writes or local mock data for real behavior.
+
 ## 2026-07-01 - Codex (GPT-5) next opportunity repair prompt
 
 - Regenerated the current 75-target opportunity-data research list after batch 13.

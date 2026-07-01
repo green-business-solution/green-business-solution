@@ -1984,6 +1984,542 @@ dd {
   margin: 0;
 }
 
+.retrofit-preview-page {
+  display: grid;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 28px 32px 64px;
+  width: 100%;
+}
+
+.retrofit-preview-page h1,
+.retrofit-preview-page h2,
+.retrofit-preview-page h3,
+.retrofit-preview-page h4,
+.retrofit-preview-page p {
+  margin: 0;
+}
+
+.retrofit-preview-page h1 {
+  color: #111c16;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 34px;
+}
+
+.retrofit-preview-page h2 {
+  color: #14211a;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 26px;
+}
+
+.retrofit-preview-page h3,
+.retrofit-preview-page h4 {
+  color: #14211a;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 24px;
+}
+
+.retrofit-preview-page p,
+.retrofit-preview-page li,
+.retrofit-preview-page label,
+.retrofit-preview-page input,
+.retrofit-preview-page select {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.retrofit-preview-header {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.retrofit-preview-header p {
+  color: #59665f;
+  max-width: 800px;
+}
+
+.retrofit-preview-title-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 8px;
+}
+
+.retrofit-preview-source-note,
+.preview-local-note {
+  color: #69776e;
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 8px;
+}
+
+.retrofit-preview-header-meta {
+  background: #ffffff;
+  border: 1px solid #dfe6e1;
+  border-radius: 16px;
+  display: grid;
+  gap: 2px;
+  min-width: 150px;
+  padding: 14px 16px;
+  text-align: right;
+}
+
+.retrofit-preview-header-meta strong {
+  color: #132019;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.retrofit-preview-header-meta span,
+.soft-badge,
+.retrofit-count-row span,
+.priority-badge,
+.included-label,
+.not-included-label {
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.soft-badge {
+  background: #f1f5f2;
+  border: 1px solid #dce5df;
+  border-radius: 999px;
+  color: #405149;
+  display: inline-flex;
+  min-height: 24px;
+  padding: 3px 9px;
+}
+
+.retrofit-refinement-panel,
+.retrofit-preview-card,
+.next-actions-panel,
+.premium-preview-panel {
+  background: #ffffff;
+  border: 1px solid #dfe6e1;
+  border-radius: 16px;
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+}
+
+.retrofit-refinement-panel {
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.retrofit-refinement-panel p,
+.next-actions-panel p,
+.premium-preview-panel p {
+  color: #5c6b63;
+}
+
+.retrofit-refinement-actions,
+.retrofit-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.retrofit-refinement-actions button,
+.retrofit-card-actions button,
+.editable-estimates-panel button,
+.modal-close-button {
+  min-height: 38px;
+}
+
+.scenario-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.scenario-card {
+  align-items: stretch;
+  background: #ffffff;
+  border: 1px solid #dfe6e1;
+  border-radius: 16px;
+  color: #15231b;
+  display: grid;
+  gap: 10px;
+  justify-content: stretch;
+  min-height: 160px;
+  padding: 16px;
+  text-align: left;
+}
+
+.scenario-card:hover,
+.scenario-card.is-selected {
+  background: #f7fbf8;
+  border-color: #a9cdb7;
+}
+
+.scenario-card > span {
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 21px;
+}
+
+.scenario-card p,
+.scenario-card small {
+  color: #5f6d65;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.scenario-metrics {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scenario-metrics div {
+  display: grid;
+  gap: 2px;
+}
+
+.scenario-metrics small,
+.preview-metric span {
+  color: #66746c;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.scenario-metrics strong {
+  color: #16231c;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ranking-control-bar {
+  align-items: end;
+  background: #ffffff;
+  border: 1px solid #dfe6e1;
+  border-radius: 16px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  padding: 14px;
+}
+
+.ranking-control-bar label,
+.detail-question,
+.editable-estimate-box {
+  display: grid;
+  gap: 5px;
+}
+
+.ranking-control-bar label span,
+.detail-question span,
+.editable-estimate-box span {
+  color: #526258;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.ranking-control-bar input,
+.ranking-control-bar select,
+.detail-question input,
+.detail-question select,
+.editable-estimate-box input {
+  background: #fbfdfb;
+  border: 1px solid #d8e2dc;
+  border-radius: 10px;
+  color: #17211b;
+  min-height: 40px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.ranking-control-bar p {
+  color: #68756e;
+  font-size: 12px;
+  grid-column: 1 / -1;
+  line-height: 18px;
+}
+
+.retrofit-preview-list {
+  display: grid;
+  gap: 16px;
+}
+
+.retrofit-preview-card {
+  padding: 20px;
+}
+
+.retrofit-card-top-row,
+.section-title-row {
+  align-items: start;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.retrofit-card-title-line {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rank-pill {
+  align-items: center;
+  background: #e7f1eb;
+  border: 1px solid #cfe1d6;
+  border-radius: 999px;
+  color: #176143;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 850;
+  height: 28px;
+  justify-content: center;
+  min-width: 42px;
+  padding: 0 10px;
+}
+
+.retrofit-card-top-row p,
+.section-title-row p,
+.editable-estimate-box small,
+.opportunity-preview-row p,
+.operating-savings-item p,
+.retrofit-detail-questions p {
+  color: #5f6e66;
+}
+
+.retrofit-badge-row,
+.retrofit-count-row,
+.opportunity-preview-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.retrofit-badge-row {
+  margin-top: 10px;
+}
+
+.why-recommended {
+  background: #f8faf8;
+  border: 1px solid #e3ebe5;
+  border-radius: 14px;
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+}
+
+.why-recommended ul {
+  color: #4d5c54;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.retrofit-metric-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.preview-metric {
+  background: #fbfdfb;
+  border: 1px solid #e0e8e3;
+  border-radius: 14px;
+  display: grid;
+  gap: 5px;
+  min-height: 78px;
+  padding: 12px 14px;
+}
+
+.preview-metric strong {
+  color: #102019;
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.retrofit-count-row span {
+  background: #f3f6f3;
+  border: 1px solid #e0e7e2;
+  border-radius: 999px;
+  color: #405149;
+  padding: 5px 9px;
+}
+
+.editable-estimates-panel,
+.retrofit-expanded-content,
+.opportunity-preview-list,
+.operating-savings-list,
+.detail-question-grid,
+.next-action-list {
+  display: grid;
+  gap: 12px;
+}
+
+.editable-estimate-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.editable-estimate-box,
+.opportunity-preview-row,
+.operating-savings-item,
+.next-action-item {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.editable-estimate-box button {
+  justify-self: start;
+}
+
+.opportunity-preview-row {
+  display: grid;
+  gap: 12px;
+}
+
+.opportunity-preview-main {
+  align-items: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.selection-toggle {
+  align-items: center;
+  color: #405149;
+  display: flex;
+  gap: 8px;
+  min-width: 112px;
+}
+
+.selection-toggle input {
+  height: 18px;
+  width: 18px;
+}
+
+.opportunity-preview-details,
+.operating-savings-item,
+.financing-field-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.opportunity-preview-details div,
+.operating-savings-item div,
+.financing-field-grid div {
+  display: grid;
+  gap: 3px;
+}
+
+.opportunity-preview-details span,
+.operating-savings-item span,
+.financing-field-grid span {
+  color: #647269;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.opportunity-preview-details strong,
+.operating-savings-item strong,
+.financing-field-grid strong {
+  color: #18251d;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.included-label {
+  background: #e4f3e9;
+  border-radius: 999px;
+  color: #176143;
+  padding: 5px 9px;
+}
+
+.not-included-label {
+  background: #f2f4ef;
+  border-radius: 999px;
+  color: #68756e;
+  padding: 5px 9px;
+}
+
+.opportunity-preview-footer {
+  align-items: center;
+}
+
+.opportunity-preview-footer small {
+  color: #6a776f;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.detail-question-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.next-action-item {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) 170px;
+}
+
+.priority-badge {
+  border-radius: 999px;
+  display: inline-flex;
+  margin-bottom: 6px;
+  padding: 4px 8px;
+}
+
+.priority-badge.high {
+  background: #e6f3ea;
+  color: #176143;
+}
+
+.priority-badge.medium {
+  background: #f4f0df;
+  color: #735d17;
+}
+
+.priority-badge.low {
+  background: #eef1f0;
+  color: #5b6962;
+}
+
+.premium-preview-panel {
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.retrofit-financing-backdrop {
+  align-items: stretch;
+  justify-content: end;
+}
+
+.retrofit-financing-drawer {
+  background: #ffffff;
+  border-left: 1px solid #dfe6e1;
+  display: grid;
+  gap: 16px;
+  max-width: 460px;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  width: min(460px, 100vw);
+}
+
 .retrofit-placeholder-panel {
   display: grid;
   gap: 24px;
@@ -2106,9 +2642,21 @@ dd {
   .test-case-layout,
   .match-detail-grid,
   .savings-equation-grid,
+  .scenario-grid,
+  .ranking-control-bar,
   .customer-retrofit-summary-grid,
   .customer-retrofit-metrics,
   .customer-retrofit-content,
+  .retrofit-preview-header,
+  .retrofit-refinement-panel,
+  .retrofit-card-top-row,
+  .section-title-row,
+  .retrofit-metric-grid,
+  .editable-estimate-grid,
+  .opportunity-preview-details,
+  .operating-savings-item,
+  .detail-question-grid,
+  .premium-preview-panel,
   .special-retrofit-grid,
   .opportunity-review-layout,
   .opportunity-summary-grid {
@@ -2138,6 +2686,36 @@ dd {
 
   .customer-retrofit-count-pill {
     justify-items: start;
+  }
+
+  .retrofit-preview-page {
+    padding: 24px;
+  }
+
+  .retrofit-preview-header-meta,
+  .retrofit-card-actions,
+  .retrofit-refinement-actions {
+    justify-content: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .retrofit-preview-page {
+    padding: 16px;
+  }
+
+  .scenario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .next-action-item,
+  .opportunity-preview-main {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-metric strong {
+    font-size: 19px;
   }
 }
 

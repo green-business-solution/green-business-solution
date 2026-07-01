@@ -1,0 +1,196 @@
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it } from "vitest";
+import {
+  RetrofitRecommendationsPreview,
+  buildUserRetrofitPreviewResult
+} from "./App";
+
+const liveShapedPayload = {
+  generatedAt: "2026-06-30T12:00:00.000Z",
+  summary: {
+    matchedRetrofitCount: 1,
+    matchedOpportunityCount: 1
+  },
+  user: {
+    userId: "user-1",
+    role: "client",
+    status: "active",
+    fullName: "Test Client",
+    email: "client@example.com",
+    companyName: "Test Business",
+    authProvider: "password",
+    googleLinked: false,
+    isFakeUser: false,
+    createdAt: "2026-06-01T00:00:00.000Z",
+    lastLoginAt: null
+  },
+  intake: {
+    userId: "user-1",
+    submissionId: "intake-1",
+    contact: {
+      fullName: "Test Client",
+      email: "client@example.com",
+      phone: null,
+      roleTitle: null,
+      contactPreference: null
+    },
+    business: {
+      companyName: "Test Business",
+      website: null,
+      industry: "Restaurant",
+      organizationType: "business",
+      organizationSize: "small",
+      headquarters: "San Francisco, CA"
+    },
+    site: {
+      address: "1 Market St",
+      electricUtilityProvider: "PG&E",
+      gasUtilityProvider: null,
+      ownershipStatus: "leased",
+      buildingType: "restaurant",
+      squareFootage: "5000"
+    },
+    sustainability: {
+      goals: "Reduce energy use",
+      currentChallenges: "High bills",
+      interestedImprovements: ["lighting"],
+      monthlyUtilitySpend: "2000",
+      timeline: "this_year",
+      notes: null
+    },
+    uploadedUtilityFiles: [],
+    utilityExtractedValues: [],
+    siteEnergyProfile: null,
+    createdAt: "2026-06-01T00:00:00.000Z",
+    updatedAt: "2026-06-01T00:00:00.000Z"
+  },
+  retrofits: [
+    {
+      retrofitTypeId: "led_lighting",
+      displayName: "LED Lighting Upgrade",
+      parentCategory: "energy_efficiency",
+      isPhysicalRetrofit: true,
+      typicalComponents: ["LED fixtures", "occupancy sensors"],
+      opportunityCount: 1,
+      savingsPreview: {
+        status: "calculated",
+        estimateKind: "api_result",
+        modelCoverage: "retrofit_only",
+        retrofitTypeId: "led_lighting",
+        retrofitDisplayName: "LED Lighting Upgrade",
+        opportunityCount: 1,
+        upfrontCostCents: 1200000,
+        upfrontSavingsCents: 300000,
+        possibleGrantMoneyCents: 300000,
+        upfrontCostAfterSavingsCents: 900000,
+        monthlySavingsCents: 50000,
+        annualSavingsCents: 600000,
+        netMonthlyRecurringSavingsCents: 50000,
+        netAnnualRecurringSavingsCents: 600000,
+        costBreakdown: [],
+        savingsBreakdown: [
+          {
+            id: "electricity",
+            kind: "recurring_savings",
+            category: "electricity_bill_savings",
+            label: "Electricity Bill Savings",
+            amountCents: 50000,
+            period: "monthly",
+            formula: "fixture count x usage reduction"
+          }
+        ],
+        selectedIncentiveScenario: {
+          opportunityIds: ["opp-1"]
+        },
+        calculationTrace: {
+          assumptions: [
+            {
+              label: "fixture count",
+              value: 100
+            }
+          ],
+          steps: []
+        },
+        assumptions: []
+      },
+      opportunities: [
+        {
+          opportunityId: "opp-1",
+          opportunityName: "Utility LED Rebate",
+          offerId: "offer-1",
+          sourceUrl: "https://example.com/source",
+          websiteUrl: null,
+          applicationUrl: "https://example.com/apply",
+          eligibilityStatus: "eligible",
+          rankScore: 92,
+          opportunityDataConfidence: 0.8,
+          userProfileCompleteness: 0.7,
+          matchedReasons: ["Business type and utility territory match."],
+          unresolvedRequirements: ["project quote"],
+          blockers: [],
+          sourceSummary: {
+            state: "CA",
+            sourceName: "Utility",
+            programType: "rebate",
+            administrator: "Example Utility"
+          }
+        }
+      ]
+    }
+  ]
+} as any;
+
+describe("retrofit recommendations preview", () => {
+  it("maps live-shaped API payload into preview sections without local mock production data", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+
+    expect(preview.dataSourceLabel).toBe("Live/API backend recommendation data");
+    expect(preview.scenarios.map((scenario) => scenario.name)).toEqual([
+      "Scenario A: Low upfront cost",
+      "Scenario B: Best payback",
+      "Scenario C: Highest total savings",
+      "Scenario D: Certification-focused"
+    ]);
+    expect(preview.retrofits[0].name).toBe("LED Lighting Upgrade");
+    expect(preview.retrofits[0].opportunities[0].name).toBe("Utility LED Rebate");
+    expect(preview.retrofits[0].operatingSavings[0].name).toBe("Electricity Bill Savings");
+    expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
+  });
+
+  it("renders the admin-nav user preview structure", () => {
+    const html = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview
+        emptyMessage="No retrofit recommendations yet."
+        error={null}
+        eyebrow="Admin-only portal preview"
+        intro="Review recommended retrofits, eligible opportunities, operating savings, and next steps based on the information provided."
+        isLoading={false}
+        loadingMessage="Loading live retrofit recommendations for this client..."
+        payload={liveShapedPayload}
+        title="Retrofit Recommendations"
+      />
+    );
+
+    expect(html).toContain("Retrofit Recommendations");
+    expect(html).toContain("Improve your estimates");
+    expect(html).toContain("Upload bills");
+    expect(html).toContain("Scenario A: Low upfront cost");
+    expect(html).toContain("Scenario B: Best payback");
+    expect(html).toContain("Scenario C: Highest total savings");
+    expect(html).toContain("Scenario D: Certification-focused");
+    expect(html).toContain("Sort by");
+    expect(html).toContain("Estimated upfront project cost");
+    expect(html).toContain("Upfront financial incentive");
+    expect(html).toContain("Recurring Operational Savings");
+    expect(html).toContain("Payback Period");
+    expect(html).toContain("Tax benefits");
+    expect(html).toContain("ROI");
+    expect(html).toContain("Why this is recommended");
+    expect(html).toContain("Opportunities");
+    expect(html).toContain("Operating Savings");
+    expect(html).toContain("Enter details");
+    expect(html).toContain("Explore financing");
+    expect(html).toContain("Next-best-action checklist");
+    expect(html).toContain("Source");
+  });
+});
