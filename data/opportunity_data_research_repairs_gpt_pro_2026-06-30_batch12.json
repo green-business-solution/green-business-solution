@@ -1,0 +1,461 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-30",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "User-provided GPT Pro output continued from SOURCE_DSIRE:dsire_program_id:5101 to SOURCE_DSIRE:dsire_program_id:1773.",
+    "Imported six new repairs and omitted four older duplicate repairs that are already covered by newer 2026-07-01 batch 7 repairs."
+  ],
+  "omittedDuplicateOpportunityIds": [
+    "SOURCE_DSIRE:dsire_program_id:4586",
+    "SOURCE_DSIRE:dsire_program_id:3415",
+    "SOURCE_DSIRE:dsire_program_id:1902",
+    "SOURCE_DSIRE:dsire_program_id:3464"
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5101",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ND"
+        ],
+        "counties": [],
+        "cities": [
+          "Cavalier",
+          "Hillsboro",
+          "Lakota",
+          "Northwood",
+          "Valley City"
+        ],
+        "utilityTerritories": [
+          "Cavalier Municipal Utilities",
+          "Hillsboro Municipal Utilities",
+          "Lakota Municipal Utilities",
+          "Northwood Municipal Utilities",
+          "Valley City Public Works"
+        ],
+        "notes": "Applies to business customers of the North Dakota municipal utilities participating in Bright Energy Solutions through Missouri River Energy Services."
+      },
+      "eligibleApplicantTypes": [
+        "business customers of participating municipal electric utilities",
+        "commercial electric customers",
+        "industrial electric customers",
+        "food-service businesses",
+        "grocery and refrigeration customers",
+        "manufacturing customers",
+        "public or institutional customers served by a participating utility",
+        "trade allies and contractors supporting eligible customer applications"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "municipal",
+        "institutional",
+        "food_service",
+        "grocery",
+        "cold_storage",
+        "manufacturing",
+        "hospitality",
+        "warehouse"
+      ],
+      "eligibleRetrofitCategories": [
+        "commercial_refrigeration",
+        "refrigeration_ec_motors",
+        "glass_door_reach_in_cases",
+        "efficient_ice_machines",
+        "refrigerated_case_lighting",
+        "refrigeration_occupancy_sensors",
+        "no_heat_or_low_heat_reach_in_doors",
+        "strip_curtains",
+        "commercial_food_service_equipment",
+        "commercial_dishwashers",
+        "commercial_fryers",
+        "commercial_griddles",
+        "commercial_induction_cooking",
+        "commercial_steamers",
+        "commercial_ovens",
+        "demand_controlled_kitchen_ventilation",
+        "air_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "geothermal_ground_source_heat_pump",
+        "variable_refrigerant_flow_heat_pump",
+        "central_air_conditioning",
+        "chillers",
+        "heat_pump_water_heater",
+        "energy_recovery_ventilation",
+        "guestroom_energy_management",
+        "window_wall_room_air_conditioner",
+        "compressed_air",
+        "compressed_air_controls",
+        "compressed_air_vfd_compressors",
+        "pumps_and_variable_frequency_drives",
+        "lighting_retrofit",
+        "new_construction_lighting",
+        "networked_lighting_controls",
+        "custom_energy_efficiency",
+        "custom_electrification",
+        "electric_forklift_or_tow_tractor",
+        "new_construction_design_review"
+      ],
+      "hardRequirements": [
+        "Applicant must be served by one of the participating North Dakota municipal electric utilities listed by Bright Energy Solutions.",
+        "Many business projects require preapproval before equipment is ordered, purchased or installed.",
+        "Measure eligibility and documentation requirements are governed by the current Bright Energy Solutions business forms and the local municipal utility.",
+        "Custom efficiency and custom electrification incentives require project-specific review and approval.",
+        "Incentives are subject to funding availability and may change without notice."
+      ],
+      "blockers": [
+        "Matched term window is supported only as window or wall room air-conditioning equipment, not window replacement or glazing.",
+        "Energy management is limited to guestroom energy management, lighting or HVAC controls, or approved custom projects.",
+        "Electric forklift incentives are business transportation or electrification measures and should not be mapped to building HVAC or appliance savings.",
+        "This is a business program and should not be matched to residential appliance or home-weatherization projects.",
+        "Refrigeration support is commercial refrigeration only, not residential refrigerator or freezer replacement."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Bright Energy Solutions / Missouri River Energy Services",
+      "applicationUrl": "https://www.brightenergysolutions.com/members",
+      "websiteUrl": "https://www.brightenergysolutions.com/resources/business",
+      "sourceUrlsChecked": [
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/resources/business",
+        "https://www.brightenergysolutions.com/members/valley-city-public-works",
+        "https://d23r6s4dwed217.cloudfront.net/general-uploads/BES_2026_Business_TriFold_Brochure.pdf",
+        "http://www.brightenergysolutions.com/find-a-rebate/",
+        "https://programs.dsireusa.org/system/program/detail/5101/business-energy-efficiency-rebates-offered-by-5-utilities"
+      ],
+      "evidenceText": "Bright Energy Solutions lists five North Dakota public power utility members and current business rebate categories covering commercial refrigeration, food service, heating and cooling, compressed air, pumps and VFDs, lighting, custom projects, electric forklifts and new construction design review. The 2026 business brochure states that rebates are offered through the customer's local municipal utility in partnership with Missouri River Energy Services and that some projects require preapproval.",
+      "reasoningNotes": "The opportunity is active but should be treated as a Bright Energy Solutions/MRES business rebate platform for specific participating North Dakota municipal utilities, not a statewide or residential program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3897",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Spire Missouri East natural gas service territory",
+          "Spire Missouri West natural gas service territory"
+        ],
+        "notes": "Eligibility is tied to Spire natural gas service in Missouri; Spire's rebate interface distinguishes Missouri East and Missouri West offer codes."
+      },
+      "eligibleApplicantTypes": [
+        "Spire residential natural gas customers",
+        "homeowners",
+        "residential account holders",
+        "residential customers using qualified installers",
+        "landlords or property owners for eligible residential premises"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "natural_gas_furnace",
+        "natural_gas_water_heater",
+        "tankless_natural_gas_water_heater",
+        "smart_thermostat_limited",
+        "insulation_limited",
+        "furnace_or_water_heater_financing_limited"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Spire residential natural gas customer in the applicable Missouri service area.",
+        "Eligible equipment must be qualifying natural gas equipment or an eligible measure under the selected Spire rebate offer.",
+        "Application documentation must include the correct Spire account and service address, receipt or invoice, model and installation information.",
+        "Unlicensed-contractor installations may not be processed under Spire's application guidance.",
+        "Missouri applications must use the appropriate Spire Missouri East or Missouri West offer path or code."
+      ],
+      "blockers": [
+        "Matched heat pump is not retained because current Spire residential rebate sources checked support natural gas appliances and related residential measures, not electric heat pump installation.",
+        "This is a gas utility residential program and should not be mapped to electric HVAC, EV charging, lighting, refrigeration, or commercial measures.",
+        "Gas water heater eligibility should not be generalized to heat pump water heaters.",
+        "Insulation and thermostat support are retained only as limited current Spire residential paths, not as broad whole-home retrofit grants."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Spire",
+      "applicationUrl": "https://www.spireenergy.com/rebates",
+      "websiteUrl": "https://www.spireenergy.com/rebates",
+      "sourceUrlsChecked": [
+        "https://www.spireenergy.com/rebates",
+        "https://www.spireenergy.com/water-heater-rebates",
+        "https://www.spireenergy.com/furnace-rebates",
+        "https://www.spireenergy.com/rebate-application-guide",
+        "https://programs.dsireusa.org/system/program/detail/3897/spire-residential-rebates"
+      ],
+      "evidenceText": "Spire's current rebate pages direct residential customers to rebates for qualifying natural gas appliances and related home measures. Current Spire pages include furnace, water heater, thermostat, insulation and financing paths, and the application guide identifies Missouri East and Missouri West offer handling and required invoice, model, account and installation documentation.",
+      "reasoningNotes": "The record is active but the imported heat-pump match is a false positive for this gas-utility residential rebate. Categories were narrowed to natural gas residential equipment and limited related measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22397",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "SWEPCO Texas residential electric service territory"
+        ],
+        "notes": "SWEPCO's program rules page also references Louisiana, but this DSIRE target is the Texas residential charging-station record."
+      },
+      "eligibleApplicantTypes": [
+        "SWEPCO residential electric customers",
+        "single-family homeowners",
+        "residential renters with authority to install qualifying equipment"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charging_level_2_residential",
+        "energy_star_ev_charging_station"
+      ],
+      "hardRequirements": [
+        "Applicant must be a SWEPCO residential customer in the applicable service territory.",
+        "Charging station must be an ENERGY STAR-certified Level 2 home EV charging station.",
+        "Program is limited to qualifying residential installations at single-family homes under SWEPCO rules.",
+        "SWEPCO rules limit the rebate count per service address.",
+        "Funding is limited and rebates are available while funds last."
+      ],
+      "blockers": [
+        "This is not a vehicle purchase rebate.",
+        "Do not match this record to DC fast charging, commercial charging, fleet charging or public charging stations.",
+        "No HVAC, appliance, lighting, envelope or water-efficiency retrofit categories are supported by this record.",
+        "Level 1 chargers and non-ENERGY STAR chargers were not retained."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "SWEPCO",
+      "applicationUrl": "https://www.swepco.com/clean-energy/electric-cars/charging-station.aspx",
+      "websiteUrl": "https://www.swepco.com/clean-energy/electric-cars/charging-station.aspx",
+      "sourceUrlsChecked": [
+        "https://www.swepco.com/clean-energy/electric-cars/charging-station.aspx",
+        "https://www.swepco.com/clean-energy/electric-cars/charging-station-rules.aspx",
+        "https://www.swepco.com/clean-energy/electric-cars/",
+        "https://programs.dsireusa.org/system/program/detail/22397/swepco-ev-residential-charging-station-rebate-program"
+      ],
+      "evidenceText": "SWEPCO's current Level 2 Home EV Charging Station Rebate Program page says residential customers who own or rent a single-family home may qualify for a rebate for installing an ENERGY STAR-certified Level 2 EV charging station. SWEPCO's program rules identify the rebate as a home Level 2 charging-station rebate with limits per service address and limited funding.",
+      "reasoningNotes": "The opportunity is active and should remain narrowly mapped to residential Level 2 EVSE installed for SWEPCO residential customers in Texas."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1801",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy Colorado Electric service territory",
+          "Southern Colorado electric service territory"
+        ],
+        "notes": "Applies to Black Hills Energy Colorado Electric customers in Southern Colorado; not a statewide Colorado solar program."
+      },
+      "eligibleApplicantTypes": [
+        "Black Hills Energy Colorado Electric residential customers",
+        "Black Hills Energy Colorado Electric business customers",
+        "income-qualified solar customers where eligible",
+        "disproportionately impacted community participants where eligible",
+        "solar developers or installers supporting eligible customer applications"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "low_income_residential_limited",
+        "transportation_not_applicable"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "distributed_generation_interconnection",
+        "solar_performance_based_incentive",
+        "net_metering_or_banked_energy",
+        "paired_battery_storage_limited"
+      ],
+      "hardRequirements": [
+        "Customer must take electric service from Black Hills Energy Colorado Electric at the installation site.",
+        "Customer account must be active and current under the program's eligibility terms.",
+        "Solar equipment must satisfy required technical standards such as UL 1741 and IEEE requirements stated by Black Hills Energy.",
+        "The proposed solar system may not be sized to supply more than 200 percent of the customer's reasonable expected annual electricity consumption at the site.",
+        "Paired storage incentives apply only under the applicable paired solar/storage terms and are subject to program caps.",
+        "Application and interconnection must follow Black Hills Energy's current solar program process and incentive category."
+      ],
+      "blockers": [
+        "Matched storage system is limited to paired storage under the solar program; standalone battery storage was not retained.",
+        "This is a solar PV/net-energy and performance-based incentive program, not a building energy-efficiency retrofit rebate.",
+        "Do not map this record to HVAC, lighting, appliances, EV charging, weatherization or commercial custom efficiency.",
+        "System-size and incentive treatment differ by project size and customer category; do not infer a single universal rebate amount for all PV systems."
+      ],
+      "programType": "Performance-Based Incentive / Solar Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": "https://distributedsolar.programprocessing.com/",
+      "websiteUrl": "https://www.blackhillsenergy.com/services/electric-services/solar-program/colorado-solar-program",
+      "sourceUrlsChecked": [
+        "https://www.blackhillsenergy.com/services/electric-services/solar-program/colorado-solar-program",
+        "https://www.blackhillsenergy.com/services/electric-services/solar-program",
+        "https://distributedsolar.programprocessing.com/",
+        "https://programs.dsireusa.org/system/program/detail/1801/black-hills-energy-solar-power-program"
+      ],
+      "evidenceText": "Black Hills Energy's Colorado Solar Program page says eligible customers must be Black Hills Energy Colorado Electric customers in Southern Colorado, with active accounts and qualifying solar equipment. The page states the proposed solar system may be sized to no more than 200 percent of expected annual kWh consumption and describes performance-based incentive categories, netting or banking of excess generation, and paired storage incentives under specified caps.",
+      "reasoningNotes": "The opportunity is active and should be matched to solar PV and limited paired storage only. Automated battery-storage economics should not be applied unless the storage is part of an eligible solar program installation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4237",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [
+          "Marion County"
+        ],
+        "cities": [
+          "Ocala"
+        ],
+        "utilityTerritories": [
+          "Ocala Electric Utility service territory"
+        ],
+        "notes": "Applies primarily to Ocala Electric Utility residential customers, with some listed measures available to commercial or small commercial customers where the current Ocala application specifies."
+      },
+      "eligibleApplicantTypes": [
+        "Ocala Electric Utility residential customers",
+        "homeowners",
+        "permanent residential customers",
+        "small commercial customers for eligible insulation or package terminal equipment where specified",
+        "large commercial customers for eligible lighting or insulation where specified",
+        "commercial electric customers for custom or lighting incentives where specified"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial_limited",
+        "small_commercial_limited",
+        "large_commercial_limited"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_refrigerator",
+        "energy_star_freezer",
+        "energy_star_clothes_washer",
+        "energy_star_dishwasher",
+        "central_air_conditioner",
+        "heat_pump_hvac",
+        "heat_pump_water_heater",
+        "attic_insulation",
+        "commercial_lighting_limited",
+        "package_terminal_air_conditioner_or_heat_pump",
+        "wifi_thermostat",
+        "solar_water_heating",
+        "hvac_tune_up",
+        "hvac_repair_coil_cleaning_leak_repair_duct_leak_repair",
+        "custom_energy_efficiency_limited"
+      ],
+      "hardRequirements": [
+        "Applicant must receive Ocala Electric Utility service for the premises associated with the rebate.",
+        "Residential appliance rebates require qualifying ENERGY STAR appliances and new, unused equipment.",
+        "Applications generally require a completed rebate form and paid receipt or invoice and must be submitted within the stated post-purchase window, including the 90-day window shown on current Ocala rebate materials.",
+        "Rebates are issued as credits on the customer's Municipal Services Statement where applicable.",
+        "Commercial lighting and custom incentives require current Ocala application terms and may require engineering documentation or demand/kW reduction calculations.",
+        "Some measures have different residential, small commercial and large commercial eligibility and caps."
+      ],
+      "blockers": [
+        "Current Ocala sources support both residential and limited commercial measures; do not treat every listed measure as available to every customer class.",
+        "Residential appliance rebates should not be mapped to commercial dishwasher, commercial laundry or commercial refrigeration projects.",
+        "Custom incentive and commercial lighting categories require project-specific documentation and should not be modeled as broad per-kWh whole-building rebates without current calculations.",
+        "The City of Ocala page requires JavaScript in a browser, but the current rebate application PDF was accessible and provided measure detail.",
+        "No EV charging, battery storage or solar PV categories are supported by this energy-efficiency rebate record."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Ocala Electric Utility",
+      "applicationUrl": "https://www.ocalafl.gov/home/showpublisheddocument/26388/638665758851870000",
+      "websiteUrl": "https://www.ocalafl.gov/government/electric-utility/rebates",
+      "sourceUrlsChecked": [
+        "https://www.ocalafl.org/government/city-departments-a-h/electric-utility/rebates",
+        "https://www.ocalafl.gov/government/electric-utility/rebates",
+        "https://www.ocalafl.gov/home/showpublisheddocument/26388/638665758851870000",
+        "https://programs.dsireusa.org/system/program/detail/4237/ocala-utility-services-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Ocala's current rebate page states that OEU offers rebates to residential customers for qualifying ENERGY STAR appliances and issues approved rebates as Municipal Services Statement credits. The current rebate application lists refrigerator, dishwasher, clothes washer, freezer, attic insulation, air conditioner and heat pump, heat pump water heater, package terminal AC or heat pump, commercial lighting, Wi-Fi thermostat, solar water heater, HVAC tune-up, HVAC repairs and custom incentives, with service, timing and documentation requirements.",
+      "reasoningNotes": "The opportunity is active. The repair preserves current Ocala residential measures and limited commercial categories while blocking unsupported broad commercial appliance and whole-building interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22660",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Statewide South Dakota designated alternative fuel corridors",
+          "Interstate corridors including I-90, I-29, I-229 and I-190"
+        ],
+        "notes": "South Dakota's NEVI plan focuses on DC fast charging along designated corridors and interstate locations; awards and site eligibility depend on SDDOT procurement or grant processes."
+      },
+      "eligibleApplicantTypes": [
+        "EV charging developers",
+        "charging site hosts",
+        "businesses hosting corridor fast chargers",
+        "local governments or public agencies where eligible under SDDOT solicitation terms",
+        "utilities or charging network operators where eligible",
+        "project teams able to meet NEVI and SDDOT requirements"
+      ],
+      "eligibleSectors": [
+        "transportation",
+        "commercial",
+        "public_sector",
+        "utility_limited",
+        "corridor_charging"
+      ],
+      "eligibleRetrofitCategories": [
+        "dc_fast_charging_nevi_corridor",
+        "public_ev_charging_infrastructure",
+        "ev_charging_networking_and_payment_systems",
+        "ev_charging_operations_and_maintenance",
+        "ev_charging_site_power_and_make_ready_limited"
+      ],
+      "hardRequirements": [
+        "Projects must follow South Dakota Department of Transportation NEVI plan requirements and any current SDDOT solicitation, contract or award terms.",
+        "NEVI-funded stations are focused on DC fast charging along designated alternative fuel corridors and interstate routes.",
+        "Corridor buildout requirements include station spacing and proximity requirements under NEVI guidance, including the within-50-miles and within-one-travel-mile concepts used in SDDOT planning materials.",
+        "Applicants must satisfy federal NEVI and FHWA requirements, including eligible costs, accessibility, uptime, data reporting, payment and network requirements where applicable.",
+        "Funding is project-specific and generally requires non-federal cost share and SDDOT approval before reimbursement or award."
+      ],
+      "blockers": [
+        "This is a formula-funded state corridor fast-charging grant program, not a residential or business customer rebate.",
+        "Do not map to Level 2 workplace chargers, home chargers, EV purchases, HVAC, lighting, envelope, appliance or building-efficiency projects.",
+        "No open, simple per-unit rebate application was verified in the current official sources checked; awards depend on SDDOT procurement or solicitation details.",
+        "Funding amounts and eligible costs require project site, charger configuration, corridor status and contract terms.",
+        "The older short URL https://dot.sd.gov/ev should be treated as a starting point; the current official EV Fast Charging Plan page and plan updates provide the program context."
+      ],
+      "programType": "Grant Program",
+      "administrator": "South Dakota Department of Transportation",
+      "applicationUrl": null,
+      "websiteUrl": "https://dot.sd.gov/projects-studies/planning/south-dakota-ev-fast-charging-plan/",
+      "sourceUrlsChecked": [
+        "https://dot.sd.gov/ev",
+        "https://dot.sd.gov/projects-studies/planning/south-dakota-ev-fast-charging-plan/",
+        "https://dot.sd.gov/media/kxbe0f2h/final-sddot-nevi-plan_letterhead-090425_fhwa-approved.pdf",
+        "https://afdc.energy.gov/laws/12744",
+        "https://programs.dsireusa.org/system/program/detail/22660/south-dakota-national-electric-vehicle-infrastructure-nevi-formula-grant-program"
+      ],
+      "evidenceText": "South Dakota DOT's EV Fast Charging Plan page describes a framework for a network of EV fast chargers and states that NEVI funds support DC fast chargers along designated corridors, with initial focus on interstate corridors such as I-90, I-29, I-229 and I-190. SDDOT planning materials describe federal NEVI corridor spacing and proximity concepts and the state's multi-year NEVI funding context.",
+      "reasoningNotes": "The opportunity is active as a state NEVI corridor fast-charging program, but confidence is medium because the current public materials checked describe planning and funding context rather than a single currently open application with reusable terms."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:1773"
+}

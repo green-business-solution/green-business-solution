@@ -176,7 +176,7 @@ function normalizeRepair(repair, repairsArtifact, repairsPath) {
 function publicAvailabilityStatus(status, fallback = "active") {
   if (status === "active") return "active";
   if (status === "rolling") return "rolling";
-  if (status === "unavailable") return "unavailable";
+  if (status === "unavailable" || status === "expired") return "unavailable";
   if (status === "upcoming") return "upcoming";
   if (status === "temporarily_closed" || status === "unknown" || status === "source_inaccessible") return "uncertain";
   return fallback || "uncertain";

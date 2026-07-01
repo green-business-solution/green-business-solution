@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 11-12
+
+- Imported batch 11 with ten newer 2026-07-01 repairs from Corn Belt Energy through Black Hills Energy Colorado electric, intentionally superseding older duplicate repairs.
+- Imported batch 12 with six new 2026-06-30 repairs from Bright Energy North Dakota through South Dakota NEVI, omitting older duplicate repairs for `SOURCE_DSIRE:dsire_program_id:4586`, `SOURCE_DSIRE:dsire_program_id:3415`, `SOURCE_DSIRE:dsire_program_id:1902`, and `SOURCE_DSIRE:dsire_program_id:3464` so batch 7 remains authoritative.
+- Applied opportunity-data repair batches 1-12 cumulatively to the public retrofit opportunity index and sample matching fixtures, with `SOURCE_DSIRE:dsire_program_id:1773` recorded as the next continuation point.
+- Updated the opportunity-data repair importer so GPT Pro `expired` statuses publish as unavailable instead of falling back to the previous public status.
+
 ## 2026-07-01 - Codex (GPT-5) fake user database cleanup
 
 - Deleted 17 extra `isFakeUser: true` records from the production `gbs-users` table that were not part of the 50 main sample matching test cases.
