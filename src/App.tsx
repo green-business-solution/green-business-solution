@@ -6057,7 +6057,7 @@ function AdminUserPreviewStandalonePage({
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const previewOptions = useMemo(() => buildUserPreviewOptions(rows), [rows]);
   const selectedOption =
@@ -6070,6 +6070,43 @@ function AdminUserPreviewStandalonePage({
     if (!selectedOption || selectedUserId === selectedOption.userId) return;
     setSelectedUserId(selectedOption.userId);
   }, [selectedOption, selectedUserId]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadPreviewUsers() {
+      if (!credential) {
+        setError("Sign in again to load user previews.");
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
+          headers: adminAuthHeaders(credential)
+        });
+        if (isActive) {
+          setRows(response.users);
+        }
+      } catch (requestError) {
+        if (isActive) {
+          setError(requestError instanceof Error ? requestError.message : "Could not load user previews.");
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    void loadPreviewUsers();
+
+    return () => {
+      isActive = false;
+    };
+  }, [credential]);
 
   useEffect(() => {
     if (!selectedOption || typeof window === "undefined") return;
@@ -6121,10 +6158,10 @@ function AdminUserPreviewStandalonePage({
         </div>
         <div className="user-preview-actions">
           <label>
-            <span>Preview client</span>
+            <span>Preview test case</span>
             <select disabled={previewOptions.length === 0} onChange={handleSelectionChange} value={selectedOption?.userId || ""}>
               {previewOptions.length === 0 ? (
-                <option value="">No clients available</option>
+                <option value="">{isLoading ? "Loading fake test users..." : "No fake test users available"}</option>
               ) : (
                 previewOptions.map((option) => (
                   <option key={option.userId} value={option.userId}>
@@ -6159,8 +6196,8 @@ function AdminUserPreviewStandalonePage({
       ) : (
         <section className="retrofit-preview-page">
           <article className="retrofit-preview-card">
-            <h2>No client users available</h2>
-            <p>Client users with intake data will appear in the dropdown after they are created.</p>
+            <h2>{isLoading ? "Loading fake test users..." : "No fake test users available"}</h2>
+            <p>The 50 promoted test-case users will appear in the dropdown after the admin user list loads.</p>
           </article>
         </section>
       )}
@@ -6171,7 +6208,7 @@ function AdminUserPreviewStandalonePage({
 
 function buildUserPreviewOptions(rows: AdminRow[]): UserPreviewOption[] {
   return rows
-    .filter((row) => row.user.role === "client")
+    .filter((row) => row.user.role === "client" && row.user.isFakeUser)
     .map((row) => ({
       userId: row.user.userId,
       clientName: row.user.fullName || row.intake?.contact.fullName || row.user.email,

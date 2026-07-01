@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) user preview fake-user autoload
+
+- Updated `/user-preview` to fetch admin users automatically on page load instead of requiring a manual refresh.
+- Scoped the preview dropdown to promoted fake client test-case users so the first available test case is selected by default.
+
 ## 2026-07-01 - Codex (GPT-5) standalone admin user preview page
 
 - Removed the `Client Intake Summary` admin page, utility-readiness summary helpers, and related styles.
