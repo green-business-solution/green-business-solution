@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 5 prompt
+
+- Added the next GPT Pro opportunity-data repair prompt covering target records from `SOURCE_DSIRE:dsire_program_id:2176` through `SOURCE_DSIRE:dsire_program_id:1615`.
+- Included raw-URL formatting instructions to avoid the broken markdown URL fragments seen in the prior GPT Pro batch.
+
 ## 2026-06-30 - Codex (GPT-5) GPT Pro opportunity data repair batch 4
 
 - Imported the fourth GPT Pro opportunity-data repair batch for 10 checked opportunities, including Burlington Electric, Carbon Power, Hawaii Energy, Energize Delaware, EWEB, GCEA, JEA, Mass Save, and National Grid records.
