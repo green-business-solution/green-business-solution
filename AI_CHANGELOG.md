@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) remaining opportunity data repair prompt
+
+- Added a stricter GPT Pro opportunity-data repair prompt for the 15 remaining unrepaired low-confidence targets from the local target artifact after repair batches 1-12.
+- Tightened prompt instructions to reduce malformed JSON, markdown URL fragments, duplicate target drift, and evidence-field corruption in GPT Pro responses.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 11-12
 
 - Imported batch 11 with ten newer 2026-07-01 repairs from Corn Belt Energy through Black Hills Energy Colorado electric, intentionally superseding older duplicate repairs.
