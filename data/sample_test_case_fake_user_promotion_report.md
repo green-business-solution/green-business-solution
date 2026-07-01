@@ -1,6 +1,6 @@
 # Sample Test Case Fake User Promotion Report
 
-Generated: 2026-07-01T00:46:22.244Z
+Generated: 2026-07-01T00:55:06.063Z
 Dry run: no
 Sample users: `data/sample_user_profiles.json`
 Public test cases: `public/sample_matching_test_cases.json`
@@ -17,14 +17,14 @@ Intake table: `gbs-client-intake`
 
 ## Results
 
-- california-endowment-hq -> account_92a31e90d96accdfaac3cb063c26d226 (california-endowment-hq@example.com): promoted
-- ikea-burbank -> account_e676e769adaee44534c1d7d0c8cdc975 (ikea-burbank@example.com): promoted
-- juniper-and-ivy-san-diego -> account_3aba8f06bf16e8751de1ae683a4dbc94 (juniper-and-ivy-san-diego@example.com): promoted
-- northgate-market-anaheim -> account_cc8532e1c71be749fd337eca830faa20 (northgate-market-anaheim@example.com): promoted
-- melissas-vernon-distribution -> account_20fda895be37441424bfdbae0575d6ca (melissas-vernon-distribution@example.com): promoted
-- fender-corona-plant -> account_cae07b923608dd1012f29999a87fde41 (fender-corona-plant@example.com): promoted
-- westin-pasadena -> account_6652678beaf96e0e815191474e11d37d (westin-pasadena@example.com): promoted
-- one-community-health-midtown -> account_5adbe645d3fcc58901fef0821ece3343 (one-community-health-midtown@example.com): promoted
-- santa-clara-university-campus -> account_84f7bf222fe9bd32c9a07448d5cdbe9b (santa-clara-university-campus@example.com): promoted
-- seghesio-healdsburg-winery -> account_840294e0a3c40fc24c492ffd7735bf3d (seghesio-healdsburg-winery@example.com): promoted
+- via-verde-bronx-renter-household -> account_73a631e7da935b0cbd0081be45091a2b (via-verde-bronx-renter-household@example.com): promoted
+- hoa-mai-gardens-seattle-household -> account_e5fd7a24a1feb5aaca409f37fe870404 (hoa-mai-gardens-seattle-household@example.com): promoted
+- tapiz-mariposa-denver-household -> account_dedf075c3d5667ad41fddaee1ebecf52 (tapiz-mariposa-denver-household@example.com): promoted
+- keauhou-lane-honolulu-renter -> account_1e813a121031c92c085bbce3e3a2da47 (keauhou-lane-honolulu-renter@example.com): promoted
+- the-rose-minneapolis-household -> account_bc95a23195739c1e672f58ff007e07b0 (the-rose-minneapolis-household@example.com): promoted
+- bens-chili-bowl-dc -> account_a463a0f7dd95fd2629841870e473c98b (bens-chili-bowl-dc@example.com): promoted
+- zingermans-deli-ann-arbor -> account_c7b7d8dc584e8ad9af5e73cf2fdd4bda (zingermans-deli-ann-arbor@example.com): promoted
+- big-dipper-missoula -> account_23e724482dc346eb30e38080ed23d969 (big-dipper-missoula@example.com): promoted
+- burlington-beer-company -> account_5eae2f532635f5f5963e6398aa6fbf69 (burlington-beer-company@example.com): promoted
+- bluebird-cafe-nashville -> account_2e28a71cc00cc750c965ec6a2e76c4c6 (bluebird-cafe-nashville@example.com): promoted
 

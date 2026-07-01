@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) sample test-case fake user batch 2
+
+- Imported GPT Pro utility data for sample matching test cases 11-20, from `via-verde-bronx-renter-household` through `bluebird-cafe-nashville`.
+- Promoted those 10 patched sample test cases into `gbs-users` and `gbs-client-intake` as fake client users with utility files and extracted values.
+- Updated the sample utility import and fake-user promotion reports for the second test-case utility batch.
+- Added a product TODO to surface payback period information on the test cases page.
+
 ## 2026-07-01 - Codex (GPT-5) sample test-case fake user promotion
 
 - Imported GPT Pro utility data for the first 10 sample matching test cases into `data/sample_user_profiles.json` and `public/sample_matching_test_cases.json`.

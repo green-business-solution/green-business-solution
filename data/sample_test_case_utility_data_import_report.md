@@ -1,7 +1,7 @@
 # Sample Test Case Utility Data Import Report
 
-Generated: 2026-07-01T00:42:58.692Z
-Patch: `../../Downloads/retrofi_patch_first10.json`
+Generated: 2026-07-01T00:54:44.195Z
+Patch: `../../Downloads/retrofi_patch_profiles_11_20.json`
 Sample users: `data/sample_user_profiles.json`
 Public test cases: `public/sample_matching_test_cases.json`
 Dry run: no
@@ -18,29 +18,29 @@ Dry run: no
 
 ## Imported Profiles
 
-- california-endowment-hq
-- fender-corona-plant
-- ikea-burbank
-- juniper-and-ivy-san-diego
-- melissas-vernon-distribution
-- northgate-market-anaheim
-- one-community-health-midtown
-- santa-clara-university-campus
-- seghesio-healdsburg-winery
-- westin-pasadena
+- bens-chili-bowl-dc
+- big-dipper-missoula
+- bluebird-cafe-nashville
+- burlington-beer-company
+- hoa-mai-gardens-seattle-household
+- keauhou-lane-honolulu-renter
+- tapiz-mariposa-denver-household
+- the-rose-minneapolis-household
+- via-verde-bronx-renter-household
+- zingermans-deli-ann-arbor
 
 ## Missing Profiles
 
-- via-verde-bronx-renter-household
-- hoa-mai-gardens-seattle-household
-- tapiz-mariposa-denver-household
-- keauhou-lane-honolulu-renter
-- the-rose-minneapolis-household
-- bens-chili-bowl-dc
-- zingermans-deli-ann-arbor
-- big-dipper-missoula
-- burlington-beer-company
-- bluebird-cafe-nashville
+- california-endowment-hq
+- ikea-burbank
+- juniper-and-ivy-san-diego
+- northgate-market-anaheim
+- melissas-vernon-distribution
+- fender-corona-plant
+- westin-pasadena
+- one-community-health-midtown
+- santa-clara-university-campus
+- seghesio-healdsburg-winery
 - la-montanita-nob-hill-albuquerque
 - food-bank-rockies-aurora-dc
 - eastern-market-detroit

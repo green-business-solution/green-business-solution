@@ -42,6 +42,10 @@ This document captures product, data-quality, and verification work that should 
 - Improve the portal around the main user priorities first: recommended retrofits, relevant opportunities, expected money, required next steps, and useful document/upload prompts.
 - Keep detailed repaired blockers, requirements, applicant rules, geography, utility territories, and evidence available for debugging/admin review, but do not make that the primary user-facing experience.
 
+## Test Cases Page
+
+- Add payback period information to the test cases page so each retrofit/test-case estimate can show the expected payback period alongside cost, savings, opportunity, and ROI details.
+
 ## Publish Gate And Automation
 
 - Add a backend publish gate so opportunities cannot become user-accessible until they are fully repaired and can resolve to deterministic user-facing outcomes.
