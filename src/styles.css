@@ -2106,8 +2106,97 @@ dd {
   gap: 16px;
 }
 
+.retrofit-tab-shell {
+  display: grid;
+  gap: 10px;
+  position: sticky;
+  top: 16px;
+  z-index: 5;
+}
+
+.retrofit-tab-bar {
+  display: grid;
+  gap: 12px;
+  grid-auto-columns: minmax(220px, 280px);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.retrofit-tab {
+  align-content: start;
+  background: #fbfdfb;
+  border: 1px solid #dce5df;
+  border-radius: 16px;
+  color: #17211b;
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  padding: 14px;
+  text-align: left;
+}
+
+.retrofit-tab.is-active {
+  background: #f6faf7;
+  border-color: #9ec9af;
+  box-shadow: 0 0 0 1px rgba(73, 128, 95, 0.12);
+}
+
+.retrofit-tab-top,
+.retrofit-tab-meta,
+.opportunity-preview-header,
+.opportunity-group-header,
+.preview-accordion-trigger {
+  align-items: start;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.retrofit-tab-top {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.retrofit-tab-top strong {
+  color: #102019;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.retrofit-tab-category,
+.retrofit-tab-metric,
+.retrofit-tab-meta span,
+.preview-accordion-trigger p {
+  color: #5f6e66;
+}
+
+.retrofit-tab-category {
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 18px;
+}
+
+.retrofit-tab-metric {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+.retrofit-tab-meta {
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
 .retrofit-preview-card {
   padding: 20px;
+}
+
+.retrofit-preview-card-active {
+  display: grid;
+  gap: 14px;
 }
 
 .retrofit-card-top-row,
@@ -2152,7 +2241,8 @@ dd {
 
 .retrofit-badge-row,
 .retrofit-count-row,
-.opportunity-preview-footer {
+.opportunity-preview-footer,
+.opportunity-preview-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -2212,11 +2302,63 @@ dd {
 .retrofit-scenario-panel,
 .selected-scenario-panel,
 .opportunity-preview-list,
+.opportunity-group-list,
 .operating-savings-list,
 .detail-question-grid,
-.next-action-list {
+.next-action-list,
+.financial-breakdown-list,
+.preview-accordion-body {
   display: grid;
   gap: 12px;
+}
+
+.preview-accordion-section {
+  background: #ffffff;
+  border: 1px solid #e1e8e3;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.preview-accordion-trigger {
+  background: transparent;
+  border: 0;
+  color: #132119;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.preview-accordion-trigger h3 {
+  margin: 0 0 4px;
+}
+
+.preview-accordion-trigger span {
+  color: #415249;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.financial-breakdown-item {
+  align-items: start;
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 14px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 12px 14px;
+}
+
+.financial-breakdown-item p {
+  color: #5f6e66;
+  margin: 4px 0 0;
+}
+
+.financial-breakdown-item span {
+  color: #102019;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
 }
 
 .editable-estimate-grid {
@@ -2252,12 +2394,45 @@ dd {
   gap: 12px;
 }
 
+.opportunity-group {
+  display: grid;
+  gap: 10px;
+}
+
+.opportunity-group-header h4 {
+  margin: 0;
+}
+
+.opportunity-group-header span {
+  background: #f1f5f2;
+  border: 1px solid #e0e7e2;
+  border-radius: 999px;
+  color: #4f6158;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+}
+
 .retrofit-scenario-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .retrofit-scenario-grid .scenario-card {
   min-height: 148px;
+}
+
+.scenario-opportunity-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scenario-chip {
+  background: #eef5f0;
+  border: 1px solid #dbe7df;
+  border-radius: 999px;
+  color: #496055;
+  padding: 3px 8px;
 }
 
 .selected-scenario-grid {
@@ -2273,12 +2448,26 @@ dd {
   grid-template-columns: auto minmax(0, 1fr);
 }
 
+.opportunity-preview-actions {
+  align-items: end;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+
 .selection-toggle {
   align-items: center;
   color: #405149;
   display: flex;
   gap: 8px;
   min-width: 112px;
+}
+
+.opportunity-preview-main {
+  align-items: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
 .selection-toggle input {
@@ -2395,6 +2584,34 @@ dd {
   padding: 24px;
   position: relative;
   width: min(460px, 100vw);
+}
+
+@media (max-width: 1100px) {
+  .retrofit-scenario-grid,
+  .editable-estimate-grid,
+  .opportunity-preview-details,
+  .operating-savings-item,
+  .financing-field-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .retrofit-metric-grid,
+  .selected-scenario-grid,
+  .detail-question-grid,
+  .editable-estimate-grid,
+  .opportunity-preview-details,
+  .operating-savings-item,
+  .financing-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .retrofit-card-top-row,
+  .section-title-row,
+  .next-action-item {
+    grid-template-columns: 1fr;
+  }
 }
 
 .retrofit-placeholder-panel {

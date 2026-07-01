@@ -1286,3 +1286,9 @@
 - Documented GPT Pro availability-repair lessons for future cron/manual review, including subtype triage for statutory, tax, PACE, bond, tariff, utility portal, grant, local-option, and stale DSIRE records.
 - Applied the next GPT Pro/manual public availability repair batches, reduced uncertain public opportunities to 50, regenerated public matching fixtures with savings previews, and added an availability review artifact writer for DynamoDB syncs.
 - Added repo-local Codex app setup under `.codex/` so the desktop app can open this project in Local mode with shared defaults for AWS profile/regions and a bootstrap script for dependency and session checks.
+
+# 2026-07-01
+
+- Reworked the existing Retrofit Recommendations preview into a horizontal retrofit-tab workflow with one active retrofit detail panel instead of a page-level scenario dashboard.
+- Moved scenario comparison into the active retrofit, added scoped accordion sections for financial breakdown, estimate inclusion, opportunities, operating savings, assumptions, details, and missing information, and kept opportunity/operating-savings separation.
+- Cleaned the customer-facing copy in the preview flow, added grouped expandable opportunity rows with direct source links, and updated the focused preview tests for the tabbed hierarchy.
