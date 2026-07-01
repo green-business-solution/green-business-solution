@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) next opportunity repair prompts after batch 18
+
+- Added five ready-to-run GPT Pro opportunity-data repair prompts for the current post-batch18 queue, covering batches 19-23 and the next 75 unrepaired low-confidence targets.
+- Split the queue into parallel 15-target prompt files with exact target-order validation markers and continuation IDs for deterministic intake.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 14-18
 
 - Imported Neer's pasted GPT Pro opportunity-data repair outputs as batches 14-18, covering 75 unique opportunities and appending them to the ordered repair manifest.
