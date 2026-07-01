@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) how it works tab redesign
+
+- Reworked the public `How it Works` page from a text-heavy timeline into a faster-scanning five-step journey with a visual progress rail and responsive step cards.
+- Simplified the supporting content into compact "What you'll need" and "What you get back" panels so users can understand the RetroFi flow without comparing long lists.
+- Kept all existing routing and functionality unchanged while improving visual hierarchy, hover polish, and mobile readability.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro repair packets 49-58
 
 - Created two disjoint GPT Pro opportunity-data repair work packets for batches 49-53 and 54-58.

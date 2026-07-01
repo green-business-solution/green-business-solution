@@ -2545,74 +2545,113 @@ function HowItWorksPage({
   publicAuth: PublicAuthState;
 }) {
   const steps = [
-    ["Complete the free scan", "Share your business address, utility provider, organization type, and basic facility information."],
-    ["Receive an opportunity preview", "See estimated value range, likely retrofit categories, and whether your facility appears to have meaningful opportunities."],
-    ["Upload utility bills", "Utility bills help RetroFi estimate savings, ROI, payback, and project priority."],
-    ["Unlock the Opportunity Report", "Get exact programs, eligibility analysis, savings estimates, financing options, required documents, and deadlines."],
-    ["Get implementation support", "For businesses ready to move forward, RetroFi can help organize documents, review quotes, and track next steps."]
+    {
+      title: "Sign in and get started",
+      copy: "Create your account in minutes, with no utility paperwork needed to begin.",
+      icon: <LockIcon />,
+      badge: "Easy first step"
+    },
+    {
+      title: "Tell us about the property",
+      copy: "Share a few basics so RetroFi can tailor the upgrade search to your home or building.",
+      icon: <BuildingOutlineIcon />,
+      badge: null
+    },
+    {
+      title: "Add utility bills or usage",
+      copy: "Upload recent bills or enter usage data to sharpen the savings analysis.",
+      icon: <StoreOutlineIcon />,
+      badge: null
+    },
+    {
+      title: "RetroFi runs the analysis",
+      copy: "We match incentives, estimate savings, and rank the strongest retrofit opportunities.",
+      icon: <LeafOutlineIcon />,
+      badge: null
+    },
+    {
+      title: "Review your results",
+      copy: "See personalized recommendations, expected value, and clear next steps in one place.",
+      icon: <EyeIcon />,
+      badge: "Most valuable step"
+    }
   ];
 
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
-        eyebrow="Process"
-        title="How RetroFi Works"
-        copy="From a quick business scan to a detailed retrofit roadmap, RetroFi helps you move from opportunity discovery to implementation."
+        eyebrow="How it works"
+        title="Five simple steps from sign-in to retrofit results"
+        copy="RetroFi keeps the process lightweight upfront, then turns your property and utility data into clear upgrade recommendations."
       />
-      <section className="timeline-section">
-        {steps.map(([title, copy], index) => (
-          <article className="timeline-step" key={title}>
-            <span>{index + 1}</span>
-            <div>
-              <h3>{title}</h3>
-              <p>{copy}</p>
+      <section className="how-it-works-journey">
+        <SectionHeading
+          eyebrow="5 simple steps"
+          title="A fast path to personalized retrofit guidance"
+          copy="You can skim the whole journey in under 30 seconds and start with the easiest step."
+        />
+        <div className="how-it-works-progress" aria-label="RetroFi process overview">
+          {steps.map((step, index) => (
+            <div className="how-it-works-progress-step" key={step.title}>
+              <span>{index + 1}</span>
+              <small>{step.title}</small>
             </div>
-          </article>
-        ))}
+          ))}
+        </div>
+        <div className="how-it-works-step-grid">
+          {steps.map((step, index) => (
+            <article
+              className={
+                index === 0
+                  ? "how-it-works-step-card is-first"
+                  : index === steps.length - 1
+                    ? "how-it-works-step-card is-final"
+                    : "how-it-works-step-card"
+              }
+              key={step.title}
+            >
+              <div className="how-it-works-step-card-top">
+                <span className="how-it-works-step-number">{index + 1}</span>
+                <span className="how-it-works-step-icon" aria-hidden="true">
+                  {step.icon}
+                </span>
+              </div>
+              <div className="how-it-works-step-copy">
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </div>
+              {step.badge ? <span className="how-it-works-step-badge">{step.badge}</span> : null}
+            </article>
+          ))}
+        </div>
       </section>
-      <section className="two-column-section">
-        <article className="feature-card list-card">
-          <h2>What you need to start</h2>
-          <ul>
-            {[
-              "Business address",
-              "Utility provider",
-              "Organization type",
-              "Business/building type",
-              "Approximate square footage",
-              "Recent utility bills for detailed analysis"
-            ].map((item) => (
-              <li key={item}>{item}</li>
+      <section className="how-it-works-support-grid">
+        <article className="feature-card how-it-works-detail-card">
+          <p className="eyebrow">What you’ll need</p>
+          <h2>Just a few basics to begin</h2>
+          <div className="how-it-works-chip-row" aria-label="Information needed to get started">
+            {["Account sign-in", "Property basics", "Utility provider", "Recent bills or usage"].map((item) => (
+              <span className="how-it-works-chip" key={item}>
+                {item}
+              </span>
             ))}
-          </ul>
-        </article>
-        <article className="comparison-card list-card">
-          <h2>Free scan vs full report</h2>
-          <div className="comparison-grid">
-            <div>
-              <h3>Free Scan</h3>
-              <ul>
-                <li>Estimated value range</li>
-                <li>General opportunity categories</li>
-                <li>Basic eligibility preview</li>
-              </ul>
-            </div>
-            <div>
-              <h3>Opportunity Report</h3>
-              <ul>
-                <li>Exact program details</li>
-                <li>ROI/payback estimates</li>
-                <li>Document checklist</li>
-                <li>Deadlines</li>
-                <li>Prioritized roadmap</li>
-              </ul>
-            </div>
           </div>
+          <p className="how-it-works-detail-note">You can start before you have every document ready.</p>
+        </article>
+        <article className="feature-card how-it-works-detail-card how-it-works-detail-card-highlight">
+          <p className="eyebrow">What you get back</p>
+          <h2>Results built for action</h2>
+          <ul className="how-it-works-results-list">
+            <li>Matched retrofit opportunities</li>
+            <li>Estimated savings and value</li>
+            <li>Clear next steps to move forward</li>
+          </ul>
         </article>
       </section>
       <section className="final-cta">
-        <h2>Move from discovery to a practical retrofit decision path.</h2>
+        <h2>Start light, then decide if the deeper analysis is worth it.</h2>
+        <p>RetroFi helps you get to personalized retrofit results without a long or intimidating setup.</p>
         <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
