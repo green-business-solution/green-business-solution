@@ -3324,7 +3324,7 @@ body {
 }
 
 .how-it-works-video-section,
-.how-it-works-support-grid {
+.how-it-works-process-grid {
   margin: 0 auto 80px;
   max-width: 1180px;
   width: calc(100% - clamp(32px, 7vw, 80px));
@@ -3344,7 +3344,6 @@ body {
 
 .how-it-works-video-copy h1,
 .how-it-works-scene-caption p,
-.how-it-works-results-list,
 .how-it-works-video-meta {
   margin: 0;
 }
@@ -3681,36 +3680,96 @@ body {
   padding: 0 12px;
 }
 
-.how-it-works-support-grid {
+.how-it-works-process-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.how-it-works-detail-card {
-  align-content: start;
+.how-it-works-step-card {
+  background: var(--retrofi-surface);
+  border: 1px solid var(--retrofi-border);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(16, 32, 24, 0.05);
+  display: grid;
   gap: 18px;
+  min-height: 100%;
+  padding: 22px 20px 20px;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease;
 }
 
-.how-it-works-detail-card h2 {
-  font-size: clamp(26px, 2.5vw, 34px);
+.how-it-works-step-card:hover {
+  border-color: rgba(22, 107, 76, 0.22);
+  box-shadow: 0 18px 36px rgba(16, 32, 24, 0.08);
+  transform: translateY(-3px);
 }
 
-.how-it-works-detail-card-highlight {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 247, 243, 0.98));
+.how-it-works-step-card.is-first {
+  background: linear-gradient(180deg, rgba(236, 246, 240, 0.95), rgba(255, 255, 255, 0.98));
 }
 
-.how-it-works-chip-row {
+.how-it-works-step-card.is-final {
+  border-color: rgba(22, 107, 76, 0.25);
+  box-shadow: 0 16px 36px rgba(16, 32, 24, 0.08);
+}
+
+.how-it-works-step-card-top {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.how-it-works-step-number {
+  align-items: center;
+  background: var(--retrofi-green);
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 850;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.how-it-works-step-icon {
+  align-items: center;
+  background: #eef5f0;
+  border: 1px solid #dce8df;
+  border-radius: 12px;
+  color: var(--retrofi-green);
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.how-it-works-step-icon svg {
+  height: 22px;
+  width: 22px;
+}
+
+.how-it-works-step-copy {
+  display: grid;
   gap: 10px;
 }
 
-.how-it-works-results-list {
+.how-it-works-step-copy h3,
+.how-it-works-step-copy p {
+  margin: 0;
+}
+
+.how-it-works-step-copy h3 {
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+.how-it-works-step-copy p {
   color: var(--retrofi-muted);
-  display: grid;
-  gap: 12px;
-  padding-left: 20px;
 }
 
 @keyframes how-it-works-scene-cycle {
@@ -5210,7 +5269,7 @@ body {
   }
 
   .how-it-works-video-section,
-  .how-it-works-support-grid {
+  .how-it-works-process-grid {
     grid-template-columns: 1fr;
   }
 

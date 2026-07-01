@@ -2655,28 +2655,31 @@ function HowItWorksPage({
           </div>
         </div>
       </section>
-      <section className="how-it-works-support-grid">
-        <article className="feature-card how-it-works-detail-card">
-          <p className="eyebrow">What you’ll need</p>
-          <h2>Just a few basics to begin</h2>
-          <div className="how-it-works-chip-row" aria-label="Information needed to get started">
-            {["Account sign-in", "Property basics", "Utility provider", "Recent bills or usage"].map((item) => (
-              <span className="how-it-works-chip" key={item}>
-                {item}
+      <section className="how-it-works-process-grid" aria-label="RetroFi five step process">
+        {steps.map((step, index) => (
+          <article
+            className={
+              index === 0
+                ? "how-it-works-step-card is-first"
+                : index === steps.length - 1
+                  ? "how-it-works-step-card is-final"
+                  : "how-it-works-step-card"
+            }
+            key={step.title}
+          >
+            <div className="how-it-works-step-card-top">
+              <span className="how-it-works-step-number">{index + 1}</span>
+              <span className="how-it-works-step-icon" aria-hidden="true">
+                {step.icon}
               </span>
-            ))}
-          </div>
-          <p className="how-it-works-detail-note">You can start before you have every document ready.</p>
-        </article>
-        <article className="feature-card how-it-works-detail-card how-it-works-detail-card-highlight">
-          <p className="eyebrow">What you get back</p>
-          <h2>Results built for action</h2>
-          <ul className="how-it-works-results-list">
-            <li>Matched retrofit opportunities</li>
-            <li>Estimated savings and value</li>
-            <li>Clear next steps to move forward</li>
-          </ul>
-        </article>
+            </div>
+            <div className="how-it-works-step-copy">
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </div>
+            {step.badge ? <span className="how-it-works-chip">{step.badge}</span> : null}
+          </article>
+        ))}
       </section>
       <section className="final-cta">
         <h2>Start light, then decide if the deeper analysis is worth it.</h2>

@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) how it works steps restored below video
+
+- Removed the `What you'll need / What you get back` two-card section beneath the animated How it Works video.
+- Restored the five simple process cards directly below the video with no extra heading so the walkthrough and the step-by-step summary now appear together.
+
 ## 2026-07-01 - Codex (GPT-5) how it works animated cartoon swap
 
 - Replaced the top `How it Works` hero plus step-section text block with a single animated cartoon-style walkthrough that loops through all five RetroFi steps inside a video-like player.
