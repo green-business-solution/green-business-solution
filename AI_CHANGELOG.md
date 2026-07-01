@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 6
+
+- Imported seven new GPT Pro opportunity-data repairs from the next repair output, covering Glendale Water and Power, Peoples Gas, New Ulm, Edmond Electric, Vermont Electric Cooperative, Eversource/NHSaves, and South Jersey Gas.
+- Omitted duplicate repairs for `SOURCE_DSIRE:dsire_program_id:2176`, `SOURCE_DSIRE:dsire_program_id:2549`, and `SOURCE_DSIRE:dsire_program_id:4130` so the newer batch 5 repairs remain authoritative.
+- Applied opportunity-data repair batches 1-6 cumulatively to the public retrofit opportunity index and sample matching fixtures, with `SOURCE_DSIRE:dsire_program_id:2639` retained as the continuation point.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 5
 
 - Imported the fifth GPT Pro opportunity-data repair batch for 10 checked opportunities, from New Hampshire Electric Co-op through Anaheim Public Utilities.

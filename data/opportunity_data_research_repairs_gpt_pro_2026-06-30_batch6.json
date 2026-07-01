@@ -1,0 +1,553 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-30",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "User-provided GPT Pro output continued from SOURCE_DSIRE:dsire_program_id:2176 to SOURCE_DSIRE:dsire_program_id:2639.",
+    "Duplicate repairs for SOURCE_DSIRE:dsire_program_id:2176, SOURCE_DSIRE:dsire_program_id:2549, and SOURCE_DSIRE:dsire_program_id:4130 were omitted because batch 5 already imported newer or stronger repairs for those opportunities."
+  ],
+  "omittedDuplicateOpportunityIds": [
+    "SOURCE_DSIRE:dsire_program_id:2176",
+    "SOURCE_DSIRE:dsire_program_id:2549",
+    "SOURCE_DSIRE:dsire_program_id:4130"
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1689",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [
+          "Los Angeles County"
+        ],
+        "cities": [
+          "Glendale"
+        ],
+        "utilityTerritories": [
+          "Glendale Water and Power electric service territory",
+          "Glendale Water and Power water service territory for water measures"
+        ],
+        "notes": "Applies to residential premises served by Glendale Water and Power; some water measures are processed through SoCalWaterSmart or require Glendale water service."
+      },
+      "eligibleApplicantTypes": [
+        "Glendale Water and Power residential customers",
+        "homeowners",
+        "residential tenants with required account or owner authorization",
+        "Glendale residential water customers for water measures"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_refrigerator",
+        "energy_star_freezer",
+        "energy_star_dishwasher",
+        "electric_heat_pump_clothes_dryer",
+        "heat_pump_water_heater",
+        "room_air_conditioner",
+        "ceiling_fan",
+        "whole_house_fan",
+        "solar_attic_fan",
+        "heat_pump_hvac",
+        "ductless_mini_split_heat_pump",
+        "electric_range",
+        "electric_range_oven_combo",
+        "electric_wall_oven",
+        "electric_leaf_blower",
+        "variable_speed_pool_pump",
+        "electric_panel_upgrade_paired_with_gas_to_electric_conversion",
+        "high_efficiency_clothes_washer",
+        "high_efficiency_toilet",
+        "weather_based_irrigation_controller",
+        "rotating_sprinkler_nozzles",
+        "rain_barrel_or_cistern"
+      ],
+      "hardRequirements": [
+        "Applicant must be a GWP customer and the rebated product must be installed in a residence served by Glendale Water and Power.",
+        "Applications generally must be submitted no more than 12 months from purchase date.",
+        "Only products listed on GWP's rebate page are eligible, and rebate amount cannot exceed purchase price.",
+        "Many appliances must be ENERGY STAR certified where specified.",
+        "Gas-to-electric appliance conversions such as heat pump water heaters or electric cooking equipment require permits and related GWP criteria.",
+        "Water measures may require Glendale water service and SoCalWaterSmart application requirements."
+      ],
+      "blockers": [
+        "Matched term blower is not a building fan or HVAC blower retrofit; the current official source supports electric leaf blowers only.",
+        "Matched oven is limited to electric wall oven or electric range/range-oven combo terms, not a broad commercial cooking measure.",
+        "This is a residential program; do not match to commercial HVAC, commercial kitchen or commercial refrigeration measures.",
+        "Water fixtures such as toilets are supported only as residential water-efficiency measures, not as commercial plumbing retrofits."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Glendale Water and Power",
+      "applicationUrl": "https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program",
+      "websiteUrl": "https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program",
+      "sourceUrlsChecked": [
+        "https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program",
+        "https://programs.dsireusa.org/system/program/detail/1689/glendale-water-and-power-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "GWP's current Home Energy and Water Saving Rebates page states updated rebate amounts effective 11/1/2025 and lists ENERGY STAR refrigerator, freezer and dishwasher, heat pump clothes dryer, heat pump water heater, room AC, heat pump and mini-split heat pump, electric cooking equipment, electric leaf blower, clothes washer, toilets and irrigation measures.",
+      "reasoningNotes": "The DSIRE record is active as a current residential GWP rebate page. Product-specific matches were retained, while broad commercial or generic building interpretations of appliance and blower keywords were removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3235",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [
+          "Chicago"
+        ],
+        "utilityTerritories": [
+          "Peoples Gas service territory"
+        ],
+        "notes": "Applies to eligible Peoples Gas commercial, industrial and public-sector natural-gas customers, principally in Chicago."
+      },
+      "eligibleApplicantTypes": [
+        "Peoples Gas commercial customers",
+        "industrial customers",
+        "public sector customers",
+        "small and midsize businesses",
+        "building owners",
+        "business tenants with authority to install measures",
+        "contractors or trade allies supporting eligible customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "public_sector",
+        "institutional",
+        "small_business",
+        "food_service",
+        "hospitality",
+        "multifamily_common_areas_limited"
+      ],
+      "eligibleRetrofitCategories": [
+        "commercial_furnace",
+        "commercial_boiler",
+        "boiler_repair_or_replacement",
+        "boiler_reset_controls",
+        "boiler_combustion_management",
+        "boiler_stack_economizers",
+        "burner_controls",
+        "steam_trap_repair_replacement",
+        "steam_pipe_insulation",
+        "process_pipe_and_tank_insulation",
+        "commercial_water_heating",
+        "commercial_kitchen_equipment",
+        "commercial_fryers",
+        "commercial_ovens",
+        "commercial_steamers",
+        "commercial_dishwashers",
+        "demand_controlled_kitchen_ventilation",
+        "hvac_optimization",
+        "rooftop_unit_tune_up",
+        "destratification_fans",
+        "heat_recovery",
+        "dock_seals",
+        "custom_natural_gas_efficiency",
+        "combined_heat_and_power_limited"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Peoples Gas customer for the affected facility.",
+        "Prescriptive projects require preapproval before equipment purchase and installation.",
+        "The 2026 prescriptive application applies to projects installed during the 2026 program year and requires final documentation by the stated deadline.",
+        "Projects must reduce natural gas energy use; fuel switching, power generation, renewable energy and operating-schedule changes are not eligible under the prescriptive application.",
+        "Equipment must be new and installed in a private facility served by Peoples Gas or the paired North Shore Gas program where applicable."
+      ],
+      "blockers": [
+        "Matched chiller is not retained as a standard measure because the current Peoples Gas source is a natural-gas efficiency program and did not support electric chillers.",
+        "Matched low flow and aerator terms were not retained; the current Peoples Gas C&I rebate sources checked did not support broad water fixture retrofits.",
+        "Smart or programmable thermostat terms are not retained as standalone commercial measures unless part of an eligible gas HVAC control path.",
+        "Combined heat and power is a custom or specialized gas-saving category and should not be matched to ordinary HVAC or generator projects without program review.",
+        "Do not map electric-only refrigeration, lighting, air-compressor or water-sewer projects to this gas program."
+      ],
+      "programType": "Rebate/Incentive Program",
+      "administrator": "Peoples Gas",
+      "applicationUrl": "https://www.northshoregasdelivery.com/savings/business/pdf/prescriptive.pdf",
+      "websiteUrl": "https://www.peoplesgasdelivery.com/savings/business/rebates-ci",
+      "sourceUrlsChecked": [
+        "https://www.peoplesgasdelivery.com/savings/business/rebates-ci",
+        "https://www.peoplesgasdelivery.com/savings/business/rebates",
+        "https://www.northshoregasdelivery.com/savings/business/pdf/prescriptive.pdf",
+        "https://programs.dsireusa.org/system/program/detail/3235/peoples-gas-commercial-and-industrial-prescriptive-rebate-program"
+      ],
+      "evidenceText": "Peoples Gas's business rebates page lists furnace and boiler repair or replacement, steam pipe insulation, steam trap repair or replacement, boiler and rooftop unit tuneups, boiler reset controls, demand-controlled ventilation kitchen hoods, commercial kitchen equipment and custom efficiency projects. The 2026 prescriptive application states preapproval is required and projects must reduce natural gas use.",
+      "reasoningNotes": "The program is active and natural-gas focused. Current official sources support many matched gas HVAC, steam, kitchen ventilation and commercial kitchen equipment categories; electric, water and unsupported broad terms were removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1943",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Brown County"
+        ],
+        "cities": [
+          "New Ulm"
+        ],
+        "utilityTerritories": [
+          "New Ulm Public Utilities"
+        ],
+        "notes": "Applies to customers of New Ulm Public Utilities; commercial and industrial offers are distinct from residential rebates on the same city website."
+      },
+      "eligibleApplicantTypes": [
+        "New Ulm Public Utilities residential customers",
+        "New Ulm Public Utilities commercial customers",
+        "industrial customers",
+        "business property owners",
+        "residential homeowners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "residential_energy_star_appliances",
+        "residential_refrigerator_freezer",
+        "residential_clothes_washer",
+        "residential_dishwasher",
+        "residential_lighting",
+        "ceiling_fan",
+        "central_air_conditioning_cooling_only",
+        "mini_split_cooling_only",
+        "smart_thermostat",
+        "gas_water_heater",
+        "furnace",
+        "boiler",
+        "furnace_or_boiler_check_and_clean",
+        "central_air_conditioner_check_and_clean",
+        "residential_energy_audit",
+        "commercial_high_efficiency_lighting",
+        "commercial_motors",
+        "commercial_variable_speed_drives",
+        "district_energy_steam",
+        "custom_commercial_energy_efficiency"
+      ],
+      "hardRequirements": [
+        "Applicant must be a New Ulm Public Utilities customer for the applicable residential, commercial or industrial program.",
+        "Residential and business rebates use separate official pages and forms.",
+        "Commercial and industrial custom rebates require contact with New Ulm Public Utilities.",
+        "Residential energy audits are limited to NUPU customers and available while funds last.",
+        "Measure-specific forms determine equipment standards and documentation requirements."
+      ],
+      "blockers": [
+        "Do not map residential ENERGY STAR appliances to commercial dishwasher, commercial laundry or commercial refrigeration retrofits.",
+        "Heat pump terms are not retained as a broad commercial category because the current official business page checked emphasizes lighting, motors, VSDs, district energy/steam and custom rebates.",
+        "Energy audit is a service and planning category, not a physical retrofit.",
+        "Residential central air and mini-split entries are cooling-oriented and should not be generalized to all heat-pump HVAC projects without a qualifying form."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "New Ulm Public Utilities",
+      "applicationUrl": "https://www.newulmmn.gov/206/Energy-Rebates",
+      "websiteUrl": "https://www.newulmmn.gov/206/Energy-Rebates",
+      "sourceUrlsChecked": [
+        "https://www.newulmmn.gov/206/Energy-Rebates",
+        "https://www.newulmmn.gov/391/Residential-Rebates",
+        "https://www.newulmmn.gov/499/CommercialIndustrial-Rebates",
+        "https://www.newulmmn.gov/581/Residential-Energy-Audits",
+        "https://programs.dsireusa.org/system/program/detail/1943/new-ulm-public-utilities-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "New Ulm's Energy Rebates page separates residential rebates from commercial and industrial rebates. Residential links include ENERGY STAR appliances, cooling, smart thermostat, furnace/boiler and audits. The commercial and industrial page lists high-efficiency lighting, commercial motors, VSDs, district energy/steam and custom rebate contact paths.",
+      "reasoningNotes": "The opportunity is active but spans residential and business program pages. Matching must distinguish residential appliance/HVAC offers from the narrower commercial and industrial categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2008",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OK"
+        ],
+        "counties": [
+          "Oklahoma County"
+        ],
+        "cities": [
+          "Edmond"
+        ],
+        "utilityTerritories": [
+          "Edmond Electric service territory"
+        ],
+        "notes": "Eligibility is tied to Edmond Electric service and City of Edmond utility customer classification."
+      },
+      "eligibleApplicantTypes": [
+        "Edmond Electric residential customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "multifamily customers where allowed by program rules",
+        "licensed contractors submitting required documentation"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "institutional",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_source_heat_pump",
+        "dual_fuel_heat_pump",
+        "ducted_mini_split_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_hvac",
+        "heat_pump_water_heater_limited",
+        "ceiling_insulation",
+        "home_energy_audit"
+      ],
+      "hardRequirements": [
+        "Applicant must be an Edmond Electric customer and the installation must be in the Edmond Electric service area.",
+        "Residential heat pump rebates require a free home energy audit before installation.",
+        "Heat pump equipment must meet Edmond Electric/AHRI minimum efficiency requirements and be installed by a licensed mechanical contractor.",
+        "Applications require forms, invoices and documentation submitted within 90 days of installation.",
+        "Rebates are not approved when replacement equipment increases kW at the same site.",
+        "Repeat rebates at the same location are limited unless the prior rebate is old enough or the project is for an addition or new area."
+      ],
+      "blockers": [
+        "Matched energy audit is a required service or planning step and should not be treated as a physical retrofit.",
+        "Do not map this record to motor, VFD, pump or compressed-air measures despite prior automated savings-model text.",
+        "Geothermal support is specifically ground-source heat pump equipment, not general geothermal power or district energy.",
+        "Ductless and mini-split categories are retained only as eligible heat pump configurations."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "City of Edmond Utility Office / Edmond Electric",
+      "applicationUrl": "https://www.edmondok.gov/1271/Rebates-Programs",
+      "websiteUrl": "https://www.edmondok.gov/1271/Rebates-Programs",
+      "sourceUrlsChecked": [
+        "https://www.edmondok.gov/1271/Rebates-Programs",
+        "https://www.edmondok.gov/1278/Heat-Pump-Rebates",
+        "https://programs.dsireusa.org/system/program/detail/2008/edmond-electric-energy-efficiency-rebate-programs"
+      ],
+      "evidenceText": "Edmond's current rebates page lists Heat Pump Rebate, Ceiling Insulation, Home Energy Audit and Water Heater rebate programs. The Heat Pump Rebates page states air-source dual fuel, ducted and non-ducted mini-split heat pumps and geothermal systems can qualify across residential, commercial, industrial, institutional and multifamily classifications, subject to audit, AHRI, contractor and 90-day submission rules.",
+      "reasoningNotes": "The current official source verifies active heat pump and related efficiency programs. The repair removes false motor/VFD interpretations and treats audits as a prerequisite or service."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22345",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Vermont Electric Cooperative service territory"
+        ],
+        "notes": "Applies to VEC members; income adders and public/workplace charging options have separate eligibility rules."
+      },
+      "eligibleApplicantTypes": [
+        "Vermont Electric Cooperative members",
+        "residential members purchasing or leasing eligible EVs",
+        "income-qualified VEC members for adders",
+        "business or public entity members only for separate charging station incentives"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation",
+        "commercial_limited",
+        "public_sector_limited"
+      ],
+      "eligibleRetrofitCategories": [
+        "battery_electric_vehicle_purchase_or_lease_bill_credit",
+        "plug_in_hybrid_vehicle_purchase_or_lease_bill_credit",
+        "income_qualified_ev_bill_credit_adder"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Vermont Electric Cooperative member.",
+        "Vehicle must be a qualifying new or used electric vehicle or plug-in hybrid that is purchased or leased under the program rules.",
+        "Incentive is delivered as a VEC bill credit rather than a cash rebate unless otherwise specified by the program.",
+        "Income-qualified adders require proof of eligibility under VEC's stated criteria."
+      ],
+      "blockers": [
+        "This DSIRE record is for EV purchase bill credits and should not be matched to building energy retrofits.",
+        "EV chargers, public charging stations, induction cooktops, heat pump pool heaters and electric forklifts appear as separate VEC Energy Transformation Program line items and were not merged into this EV purchase record.",
+        "This is a bill credit program, not a direct upfront vehicle rebate for arbitrary savings calculations.",
+        "Do not map this record to HVAC, appliances, weatherization or commercial facility retrofits."
+      ],
+      "programType": "Bill Credit Program",
+      "administrator": "Vermont Electric Cooperative",
+      "applicationUrl": "https://vermontelectric.coop/energy-transformation-programs",
+      "websiteUrl": "https://vermontelectric.coop/energy-transformation-programs",
+      "sourceUrlsChecked": [
+        "https://vermontelectric.coop/energy-transformation-programs",
+        "https://vermontelectric.coop/latest-news/heres-a-rundown-on-vecs-2026-energy-transformation-incentives-01-21-26",
+        "https://programs.dsireusa.org/system/program/detail/22345/vermont-electric-coop-electric-vehicle-purchase-bill-credit"
+      ],
+      "evidenceText": "VEC's Energy Transformation Programs page says it provides bill credits for members who buy fossil-fuel-displacing devices. The 2026 program rundown lists bill credits for all-electric vehicles and plug-in hybrids, with an income-qualified adder, and lists EV charger incentives separately.",
+      "reasoningNotes": "The opportunity is active but is not a building retrofit rebate. Only EV purchase or lease bill-credit categories were retained, with charging equipment blocked as a separate VEC line item."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4645",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Eversource New Hampshire service territory",
+          "NHSaves participating utility territories where applicable"
+        ],
+        "notes": "This repair treats the Eversource record as the New Hampshire NHSaves commercial new construction and high-performance buildings pathway for Eversource customers."
+      },
+      "eligibleApplicantTypes": [
+        "Eversource business customers",
+        "commercial building owners",
+        "industrial customers",
+        "municipal customers",
+        "institutional customers",
+        "developers",
+        "design teams",
+        "major renovation project sponsors"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "municipal",
+        "institutional",
+        "public_sector",
+        "new_construction",
+        "major_renovation"
+      ],
+      "eligibleRetrofitCategories": [
+        "commercial_new_construction",
+        "major_renovation",
+        "high_performance_building",
+        "net_zero_low_eui_building",
+        "whole_building_energy_performance",
+        "systems_pathway",
+        "prescriptive_high_efficiency_equipment",
+        "custom_energy_efficiency",
+        "commercial_lighting",
+        "lighting_controls",
+        "air_compressors",
+        "boilers",
+        "boiler_reset_controls",
+        "furnaces",
+        "hvac_chillers",
+        "commercial_kitchen_equipment",
+        "variable_frequency_drives",
+        "water_heaters",
+        "weatherization_insulation",
+        "programmable_thermostats_limited",
+        "ecm_motors"
+      ],
+      "hardRequirements": [
+        "Customer or project must be in the applicable Eversource/NHSaves service territory.",
+        "New construction and major renovation projects should engage with the utility partner early in planning.",
+        "Many commercial incentives require preapproval before equipment purchase and installation.",
+        "Whole-building pathways have size thresholds and performance requirements such as minimum square footage or EUI/performance criteria.",
+        "Prescriptive and custom measures are subject to current NHSaves program rates and utility review."
+      ],
+      "blockers": [
+        "The DSIRE website URL points to a generic Eversource equipment rebates page with dynamic service-area selection and is not a complete current program manual by itself.",
+        "Do not treat thermostat, boiler or boiler reset terms as standalone residential rebates; this record is commercial new construction, major renovation or eligible business equipment replacement.",
+        "Do not merge the separate NHSaves Energy Rewards RFP demand-reduction solicitation into this new construction record.",
+        "Residential Eversource or Mass Save measures are not eligible here."
+      ],
+      "programType": "Rebate/Incentive Program",
+      "administrator": "Eversource / NHSaves",
+      "applicationUrl": null,
+      "websiteUrl": "https://nhsaves.com/learn/service/new-construction-high-performance-buildings/",
+      "sourceUrlsChecked": [
+        "https://www.eversource.com/content/business/save-money-energy/equipment-rebates-discounts",
+        "https://nhsaves.com/learn/service/new-construction-high-performance-buildings/",
+        "https://nhsaves.com/instant-rebates-new-or-replacement-equipment/",
+        "https://programs.dsireusa.org/system/program/detail/4645/eversource-commercial-new-construction-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "NHSaves' New Construction High Performance Buildings page describes New Equipment and Construction support for new facilities, major renovations and replacement of failed end-of-life equipment. Current pathways include Net Zero and Low EUI, High Performance Building, Systems Pathway and prescriptive or custom equipment incentives. NHSaves commercial incentive pages list boilers, boiler reset controls, lighting and controls, HVAC and chillers, kitchen equipment, VFDs, water heaters and weatherization/insulation among eligible business measures.",
+      "reasoningNotes": "The record remains active but the current official replacement source is NHSaves rather than the stale generic Eversource page alone. Categories were limited to commercial/new-construction and business equipment pathways."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2615",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NJ"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "South Jersey Gas service territory"
+        ],
+        "notes": "Applies to eligible South Jersey Gas residential customers in the utility's New Jersey service territory."
+      },
+      "eligibleApplicantTypes": [
+        "South Jersey Gas residential customers",
+        "homeowners",
+        "residential account holders",
+        "income-qualified residential customers for weatherization or enhanced pathways",
+        "participating contractors submitting qualifying installations"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "low_income_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "gas_furnace",
+        "gas_boiler",
+        "gas_combination_boiler_water_heater",
+        "boiler_reset_controls",
+        "gas_storage_water_heater",
+        "tankless_gas_water_heater",
+        "indirect_fired_water_heater",
+        "central_air_conditioner_limited",
+        "smart_thermostat_limited",
+        "whole_home_energy_solutions",
+        "home_energy_assessment",
+        "free_home_weatherization_income_qualified",
+        "discounted_smart_thermostats",
+        "discounted_energy_saving_water_fixtures"
+      ],
+      "hardRequirements": [
+        "Applicant must have an active South Jersey Gas residential account.",
+        "Heating or water-heating rebates require qualifying natural-gas equipment and use of natural gas for the applicable end use as specified in program materials.",
+        "Applications and paid invoices must generally be submitted within 120 days of installation.",
+        "Current gas and electric rebate form covers installation dates from January 1, 2025 through June 30, 2027, subject to funding and program changes.",
+        "Newly constructed homes are not eligible for the listed existing-home HVAC and water-heating rebates.",
+        "Smart thermostats may need to be included with eligible HVAC equipment or purchased through the approved marketplace path."
+      ],
+      "blockers": [
+        "This is a residential gas program and should not be matched to commercial measures.",
+        "Air conditioner support is limited and should not be generalized to a standalone electric HVAC rebate without confirming the customer's electric utility and rebate form eligibility.",
+        "Weatherization and whole-home services are separate program pathways, including income-qualified free weatherization, and should not be treated as ordinary equipment rebates for every customer.",
+        "Audit or assessment terms are services and not physical retrofits by themselves.",
+        "Do not map this record to electric heat pumps, EV charging, refrigeration, lighting or commercial kitchen measures."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "South Jersey Gas",
+      "applicationUrl": "https://sjgsaveenergy.clearesult.com/sjg/hvac-water-heating-rebates/",
+      "websiteUrl": "https://www.southjerseygas.com/save-energy-money/energy-efficiency-programs",
+      "sourceUrlsChecked": [
+        "https://www.southjerseygas.com/save-energy-money/energy-efficiency-programs",
+        "https://www.southjerseygas.com/rebate-offers",
+        "https://sjgsaveenergy.clearesult.com/sjg/hvac-water-heating-rebates/",
+        "https://sjgsaveenergy.clearesult.com/sjg/sites/sjg/files/2025-07/SJG%20Gas%20and%20Electric%20Rebate%20Form.pdf",
+        "https://programs.dsireusa.org/system/program/detail/2615/south-jersey-gas-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "South Jersey Gas's energy-efficiency page lists residential HVAC and water-heating rebates, whole-home energy solutions, free home weatherization, and discounted smart thermostats and water fixtures. The HVAC and water-heating rebate page states eligible customers can receive rebates for high-efficiency heating and water-heating equipment, with applications and paid invoices due within 120 days. The current rebate form lists gas furnaces, boilers, reset controls, gas water heaters, tankless and indirect water heaters, smart thermostats and central AC tiers.",
+      "reasoningNotes": "The record is active and residential. The repair keeps gas heating and water-heating categories, limited thermostat/AC and separate weatherization pathways, while blocking commercial and unsupported electric retrofit matches."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2639"
+}
