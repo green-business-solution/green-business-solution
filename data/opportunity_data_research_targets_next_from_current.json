@@ -1,6 +1,6 @@
 {
   "schemaVersion": "opportunity_data_research_targets.v1",
-  "generatedAt": "2026-07-01T02:50:12.520Z",
+  "generatedAt": "2026-07-01T02:57:35.240Z",
   "sourcePath": "public/retrofit_opportunity_index.json",
   "selection": {
     "maxTargets": 75,

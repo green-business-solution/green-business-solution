@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) next opportunity repair prompt
+
+- Regenerated the current 75-target opportunity-data research list after batch 13.
+- Added a ready-to-send GPT Pro prompt for the first 15 targets in the next low-confidence repair batch, with `SOURCE_DSIRE:dsire_program_id:5512` as the continuation marker.
+
 ## 2026-07-01 - Codex (GPT-5) opportunity repair manifest and batch 13
 
 - Added an ordered opportunity-data repair batch manifest and `matching:opportunity-data-repairs:apply-all` command so cumulative repair imports no longer require a long manual file list.
