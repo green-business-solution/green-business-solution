@@ -35,6 +35,7 @@
     "matching:opportunity-data-repairs:validate": "node scripts/validate-opportunity-data-research-repairs.mjs",
     "matching:opportunity-data-work-packet": "node scripts/write-opportunity-data-gpt-pro-work-packet.mjs",
     "matching:opportunity-data-targets": "node scripts/write-opportunity-data-research-targets.mjs",
+    "matching:low-source-confidence-queue": "node scripts/write-low-source-confidence-opportunity-queue.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "matching:sample-opportunity-audit": "node scripts/audit-sample-matching-opportunity-data.mjs",
     "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) low source-confidence opportunity queue
+
+- Added a repeatable low-source-confidence queue generator for repaired opportunity-data records.
+- Generated JSON and Markdown artifacts listing the 11 latest low `source_confidence` opportunities after applying repair batches 1-48.
+- Prioritized active low-source-confidence opportunities ahead of source-inaccessible records for later GPT Pro or human verification.
+
 ## 2026-07-01 - Codex (GPT-5) how it works tab redesign
 
 - Reworked the public `How it Works` page from a text-heavy timeline into a faster-scanning five-step journey with a visual progress rail and responsive step cards.

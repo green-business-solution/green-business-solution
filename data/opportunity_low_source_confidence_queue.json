@@ -1,0 +1,1193 @@
+{
+  "schemaVersion": "opportunity_low_source_confidence_queue.v1",
+  "generatedAt": "2026-07-01T22:38:32.283Z",
+  "sourceConfidenceDefinition": "The historical GPT Pro repair confidence field is interpreted as source_confidence, not deterministic match_confidence.",
+  "selection": {
+    "manifestPath": "data/opportunity_data_repair_batches.json",
+    "retrofitIndexPath": "public/retrofit_opportunity_index.json",
+    "sourceConfidence": "low",
+    "duplicatePolicy": "later repair manifest entries overwrite earlier repairs for the same opportunityId",
+    "recommendedUse": "Queue these records for deeper GPT Pro research or human/admin verification before treating source evidence as fully trusted."
+  },
+  "summary": {
+    "repairBatchCount": 48,
+    "totalRepairRows": 651,
+    "uniqueRepairedOpportunityCount": 635,
+    "lowSourceConfidenceCount": 11,
+    "lowSourceConfidenceByAvailabilityStatus": {
+      "active": 3,
+      "source_inaccessible": 7,
+      "unknown": 1
+    },
+    "lowSourceConfidenceByRecommendedNextStep": {
+      "deeper_gpt_pro_research_before_trusting_active_program": 3,
+      "human_or_gpt_pro_availability_verification": 1,
+      "human_or_gpt_pro_source_access_followup": 7
+    }
+  },
+  "opportunities": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2138",
+      "opportunityName": "Emerald PUD - Commercial and Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2138/emerald-pud-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.epud.org/energy-efficiency/energy-incentive-programs/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "active",
+      "currentPublicAvailabilityStatus": "active",
+      "recommendedNextStep": "deeper_gpt_pro_research_before_trusting_active_program",
+      "latestRepairBatchNumber": 29,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate Program",
+      "administrator": "Emerald People's Utility District",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [
+          "Lane County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Emerald People's Utility District"
+        ],
+        "notes": "Applies to qualifying Emerald People's Utility District commercial and industrial customers in the utility district's Oregon service area."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "agricultural_customer",
+        "non_residential_electric_customer",
+        "business_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "window_replacement",
+        "insulation_upgrade",
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Applicant must be a qualifying Emerald People's Utility District non-residential customer.",
+        "Commercial and industrial incentive eligibility depends on current EPUD and Bonneville Power Administration measure requirements.",
+        "Some projects may require utility coordination, contractor involvement or preapproval before installation."
+      ],
+      "blockers": [
+        "Official commercial and industrial detail pages were partially inaccessible, so unsupported legacy DSIRE categories should not be preserved without current EPUD confirmation.",
+        "Do not match heat pumps, refrigeration or air compressors unless a current EPUD source verifies those measures for this program.",
+        "Do not infer residential insulation, home weatherization, residential appliances or residential HVAC from this commercial and industrial program.",
+        "Lighting incentives should follow BPA or EPUD calculator and measure rules."
+      ],
+      "relatedRetrofitCount": 6,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "efficient_air_compressor",
+          "displayName": "Efficient air compressor",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.epud.org/energy-efficiency/energy-incentive-programs/",
+        "https://www.epud.org/energy-efficiency/energy-incentive-programs/commercial-incentive-programs/",
+        "https://www.epud.org/energy-efficiency/energy-incentive-programs/industrial-incentive-programs/"
+      ],
+      "evidenceText": "EPUD's]( current energy incentive pages identify commercial and industrial incentive programs; official snippets support commercial shell measures and BPA-based industrial lighting incentives, but detailed pages were access-restricted.",
+      "reasoningNotes": "Because current official details were not fully readable, this repair keeps only conservative EPUD-supported commercial shell, lighting and custom categories. Legacy DSIRE matches for heat pumps, refrigeration and air compressors should be blocked until current measure sheets are verified."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2469",
+      "opportunityName": "Lane Electric Cooperative - Commercial/Residential Weatherization & Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2469/lane-electric-cooperative-commercial-residential-weatherization-and-energy-efficiency-program",
+      "websiteUrl": "https://www.laneelectric.com/energy-efficiency/energy-saving-programs/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "active",
+      "currentPublicAvailabilityStatus": "active",
+      "recommendedNextStep": "deeper_gpt_pro_research_before_trusting_active_program",
+      "latestRepairBatchNumber": 34,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Grant Program",
+      "administrator": "Lane Electric Cooperative",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Lane Electric Cooperative"
+        ],
+        "notes": "Limited to Lane Electric Cooperative members; weatherization eligibility is tied to qualifying electric heat and building type."
+      },
+      "eligibleApplicantTypes": [
+        "residential_member",
+        "commercial_member"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "ductless_heat_pump",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Lane Electric Cooperative member.",
+        "Weatherization measures require qualifying electric heat and program approval.",
+        "Heat pump and related incentives require preapproval before installation.",
+        "Project must meet Lane Electric and Bonneville Power Administration requirements."
+      ],
+      "blockers": [
+        "Do not match renewable energy incentives; Lane Electric indicates member renewable incentives ended January 1, 2023.",
+        "Do not broaden ductless heat pump support into all HVAC replacements.",
+        "Official Lane Electric pages returned access restrictions during review, so source confidence is low."
+      ],
+      "relatedRetrofitCount": 5,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.laneelectric.com/energy-efficiency/energy-saving-programs/",
+        "https://www.laneelectric.com/energy-efficiency/weatherization-programs/",
+        "https://www.laneelectric.com/energy-efficiency/heat-pump-program/",
+        "https://www.laneelectric.com/energy-efficiency/heat-pump-water-heaters/",
+        "https://www.laneelectric.com/energy-efficiency/renewable-energy/member-renewable-programs/"
+      ],
+      "evidenceText": "Official Lane Electric result text identifies current energy-saving, weatherization, heat pump, and heat pump water heater programs for members. The renewable-energy page states member renewable incentives ended in 2023.",
+      "reasoningNotes": "Use low confidence because current official pages were not fully readable. Keep only categories repeatedly verified by official Lane Electric page snippets and do not preserve solar."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2297",
+      "opportunityName": "Duke Energy - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "IN",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2297/duke-energy-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "active",
+      "currentPublicAvailabilityStatus": "active",
+      "recommendedNextStep": "deeper_gpt_pro_research_before_trusting_active_program",
+      "latestRepairBatchNumber": 39,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate",
+      "administrator": "Duke Energy Indiana",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Duke Energy Indiana electric service territory"
+        ],
+        "notes": "Limited to qualifying Duke Energy Indiana business, school, institution, or facility accounts."
+      },
+      "eligibleApplicantTypes": [
+        "business_customer",
+        "commercial_customer",
+        "industrial_customer",
+        "institutional_customer",
+        "school_customer",
+        "agricultural_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "education",
+        "agriculture"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "agricultural_equipment_efficiency",
+        "custom_energy_efficiency_measure"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Duke Energy Indiana business or institutional electric customer.",
+        "Equipment must be qualifying high-efficiency equipment under the current Smart $aver Business rules for Indiana.",
+        "Project must comply with Duke Energy application, verification and incentive caps in effect for the installation date.",
+        "Custom incentives require Duke Energy review and approval before relying on savings."
+      ],
+      "blockers": [
+        "Duke Energy Smart $aver detail pages returned 403 to the browser, so only categories supported by readable Duke snippets and official Duke program descriptions were retained.",
+        "Do not match residential Smart $aver home rebates to this business record.",
+        "Refrigeration and insulation were not retained without a readable current Duke Indiana measure list.",
+        "EV charging, solar, and financing offers are separate Duke programs."
+      ],
+      "relatedRetrofitCount": 4,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.duke-energy.com/business/products/smartsaver",
+        "https://www.duke-energy.com/business/products/smartsaver/hvac-incentives",
+        "https://www.duke-energy.com/business/products/smartsaver/chiller",
+        "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates?jur=IN01",
+        "https://illumination.duke-energy.com/articles/with-lower-energy-bills-this-clinic-can-help-more-people"
+      ],
+      "evidenceText": "Duke’s]( official business Smart $aver pages are current but blocked to the browser; readable Duke material identifies Indiana business rebates for lighting, HVAC, agriculture and custom measures.",
+      "reasoningNotes": "Because current Duke detail pages were inaccessible, this repair is conservative: unsupported refrigeration and insulation matches were removed rather than inferred from DSIRE."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1885",
+      "opportunityName": "Modesto Irrigation District - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1885/modesto-irrigation-district-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.mid.org/saving-energy-money/rebates/business-rebates/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "unknown",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_availability_verification",
+      "latestRepairBatchNumber": 1,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json",
+      "researchedAt": "2026-06-29",
+      "programType": "utility commercial, industrial, and agricultural energy efficiency rebate program",
+      "administrator": "Modesto Irrigation District",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [
+          "Stanislaus County"
+        ],
+        "cities": [
+          "Modesto"
+        ],
+        "utilityTerritories": [
+          "Modesto Irrigation District electric service territory"
+        ],
+        "notes": "Official MID business rebate page exists but direct access returned HTTP 403 in this research environment."
+      },
+      "eligibleApplicantTypes": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "business"
+      ],
+      "eligibleRetrofitCategories": [
+        "qualifying energy-efficient business equipment; specific measure list requires manual review"
+      ],
+      "hardRequirements": [
+        "Official indexed MID terms indicate qualifying products must be installed at a business location receiving electricity from MID.",
+        "Customer must be in good financial standing.",
+        "Specific eligibility, forms, measure categories, and current availability require manual review because the official page was inaccessible."
+      ],
+      "blockers": [
+        "Source inaccessible from this environment; do not rely on DSIRE categories without checking MID's current rebate forms or contacting MID.",
+        "Utility electric service and account standing must be verified."
+      ],
+      "relatedRetrofitCount": 15,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "air_filtration_system",
+          "displayName": "Air filtration system",
+          "parentCategory": "indoor_air_quality_ventilation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_ice_machine",
+          "displayName": "Efficient ice machine",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "variable_frequency_drive_retrofit",
+          "displayName": "Variable frequency drive retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_film_shading_retrofit",
+          "displayName": "Window film / shading retrofit",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.mid.org/saving-energy-money/rebates/business-rebates/"
+      ],
+      "evidenceText": "Official MID business rebate page was indexed as offering incentives for commercial, industrial, and agricultural customers, but the live page returned HTTP 403 during review.",
+      "reasoningNotes": "Manual review required before repairing retrofit category matches; current official source could not be fully accessed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "opportunityName": "Gunnison County Electric - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "CO",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.gcea.coop/energy-efficiency/rebates/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 4,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json",
+      "researchedAt": "2026-06-30",
+      "programType": "Rebate Program",
+      "administrator": "Gunnison County Electric Association, Inc.",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Gunnison County Electric Association, Inc."
+        ],
+        "notes": "Official rebate pages were blocked with HTTP 403, so current detailed service territory and eligibility could not be verified from official content."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Do not infer eligibility or measures until the official GCEA rebate page or 2026 rebate form is accessible."
+      ],
+      "blockers": [
+        "Current official page https://www.gcea.coop/energy-efficiency/rebates/ returned 403 Forbidden.",
+        "Legacy official page http://www.gcea.coop/content/rebates was not usable as a current readable source.",
+        "Search result snippets indicated a 2026 Energy Efficiency BE EE Rebate Form and online forms, but the form itself was not accessible in the checked sources.",
+        "Matched terms such as electric forklift, ENERGY STAR certification, fixtures, freezer, geothermal, induction, LED lighting, refrigerator, variable speed drive and weatherization were not retained because official current details could not be read."
+      ],
+      "relatedRetrofitCount": 12,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "electric_forklift_material_handling",
+          "displayName": "Electric forklift / material handling equipment",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_star_certification",
+          "displayName": "ENERGY STAR certification",
+          "parentCategory": "certifications_compliance",
+          "isPhysicalRetrofit": false
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "variable_frequency_drive_retrofit",
+          "displayName": "Variable frequency drive retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.gcea.coop/energy-efficiency/rebates/",
+        "http://www.gcea.coop/content/rebates",
+        "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "The current GCEA rebates page could not be fetched because the site returned 403 Forbidden. Search snippets suggested a 2026 rebate form exists, but no official readable measure schedule was available from the checked URLs.",
+      "reasoningNotes": "Because the primary source is inaccessible, the safe repair is to mark the record source_inaccessible and remove all category matches rather than carrying forward DSIRE or snippet-derived measure mappings."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2185",
+      "opportunityName": "Tillamook County PUD - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2185/tillamook-county-pud-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.tpud.org/ways-to-save/appliance-water-heater-rebates/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 14,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate Program",
+      "administrator": "Tillamook County PUD",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [
+          "Tillamook County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Tillamook County PUD"
+        ],
+        "notes": "Service territory is Tillamook County PUD; current official rebate pages could not be read because the site returned 403 Forbidden."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [],
+      "blockers": [
+        "Official Tillamook County PUD rebate pages returned 403 Forbidden, so current eligibility, measures, forms and amounts could not be verified.",
+        "Do not match EV charging, submetering, furnaces, smart thermostats, weatherization, heat pumps, or heat-pump water heaters until official pages are readable.",
+        "No current application URL was verified.",
+        "Residential status is inferred from program title and official page snippets only."
+      ],
+      "relatedRetrofitCount": 11,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "submetering_energy_monitoring",
+          "displayName": "Submetering / energy monitoring system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.tpud.org/ways-to-save/appliance-water-heater-rebates/",
+        "https://www.tpud.org/ways-to-save/residential-weatherization-program/",
+        "https://www.tpud.org/ways-to-save/heat-pump-programs/residential-heat-pump-program/",
+        "https://www.tpud.org/ways-to-save/green-programs/electric-vehicle/"
+      ],
+      "evidenceText": "TPUD appliance, weatherization and residential heat-pump pages appear in search results, but official pages returned 403 Forbidden when opened, preventing current verification.",
+      "reasoningNotes": "Because current official sources were inaccessible, unsupported categories were cleared instead of relying on older DSIRE text or snippets."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2132",
+      "opportunityName": "Emerald PUD - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "OR",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2132/emerald-pud-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.epud.org/conservation-energy-savings/residential-programs/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 22,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Residential Rebate Or Loan Support",
+      "administrator": "Emerald People's Utility District",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Emerald People's Utility District"
+        ],
+        "notes": "Official EPUD pages could not be read reliably; snippets indicate current EPUD heat-pump water-heater rebate or loan content but not full program eligibility."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_water_heater"
+      ],
+      "hardRequirements": [
+        "Customer must be in Emerald People's Utility District service territory.",
+        "Full eligibility, application, rebate amount, installation rules and funding status must be verified directly with EPUD because official pages were not accessible.",
+        "Any financing element must be treated as loan support, not a rebate, unless EPUD confirms a cash rebate applies."
+      ],
+      "blockers": [
+        "Do not match clothes washers, duct sealing, ductless or ducted heat pumps, insulation, weatherization or lighting from the stale DSIRE record until current EPUD official pages are accessible.",
+        "Do not infer all residential energy-efficiency categories from DSIRE where official pages are blocked.",
+        "Heat-pump water-heater eligibility is only partially verified from official search snippets and needs EPUD confirmation before payment."
+      ],
+      "relatedRetrofitCount": 8,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "duct_sealing_and_insulation",
+          "displayName": "Duct sealing and duct insulation",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.epud.org/conservation-energy-savings/residential-programs/",
+        "https://www.epud.org/energy-efficiency/energy-incentive-programs/residential-incentive-programs/",
+        "https://www.epud.org/res-hpwh-inc/",
+        "https://www.epud.org/news-releases/get-a-heat-pump-water-heater-for-144/"
+      ],
+      "evidenceText": "Official]( EPUD pages returned access errors; official snippets only verified current heat-pump water-heater rebate or loan content, not the wider residential measure list.",
+      "reasoningNotes": "Marked source_inaccessible because current official sources could not be read well enough to verify the full DSIRE-derived residential program. Unsupported categories were cleared except the specifically observed HPWH measure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2199",
+      "opportunityName": "Mason County PUD 3 - Commercial and Industrial Energy Rebates",
+      "sourceName": "DSIRE",
+      "state": "WA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2199/mason-county-pud-3-commercial-and-industrial-energy-rebates",
+      "websiteUrl": "https://www.pud3.org/ways-to-save/rebates-incentives/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 30,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate Program",
+      "administrator": "Mason County PUD 3",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [
+          "Mason"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Mason County PUD 3"
+        ],
+        "notes": "Official rebate and FAQ pages were identified for Mason County PUD 3 but could not be read well enough to verify current commercial and industrial measure eligibility."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [],
+      "blockers": [
+        "Official PUD 3 rebate and FAQ pages returned access errors in the browser.",
+        "Do not match residential appliance, insulation, thermostat, or heat-pump snippets to this commercial and industrial target without readable current official sources.",
+        "Outdoor lighting, heat pump water heater, insulation, thermostat, and commercial HVAC categories were not verified from an accessible current official source."
+      ],
+      "relatedRetrofitCount": 6,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "exterior_site_lighting_retrofit",
+          "displayName": "Exterior/site lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.pud3.org/ways-to-save/rebates-incentives/",
+        "https://www.pud3.org/faqs/heat-pump-incentives/",
+        "https://www.pud3.org/faqs/ductless-heat-pump-incentives/",
+        "https://www.pud3.org/faqs/appliance-incentives/",
+        "https://www.pud3.org/faqs/insulation-incentives/",
+        "https://programs.dsireusa.org/system/program/detail/2199/mason-county-pud-3-commercial-and-industrial-energy-rebates"
+      ],
+      "evidenceText": "PUD 3 official rebate and FAQ pages returned 403 access errors. Search snippets mention commercial heat-pump inquiries but do not expose current C&I eligibility or requirements.",
+      "reasoningNotes": "Because official sources were inaccessible, unsupported categories were cleared rather than inferred from snippets or DSIRE."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4198",
+      "opportunityName": "Northern Lights Inc. - Energy Conservation Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "ID",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4198/northern-lights-inc-energy-conservation-rebate-program",
+      "websiteUrl": "https://www.nli.coop/save/rebates/",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 9,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9.json",
+      "researchedAt": "2026-06-30",
+      "programType": "Rebate Program",
+      "administrator": "Northern Lights Inc.",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ID"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Northern Lights Inc. electric service territory"
+        ],
+        "notes": "Target record is Idaho, but current official rebate content was blocked, so detailed service-territory and measure eligibility could not be verified from a readable primary source."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Do not infer eligible applicants, sectors or measures until the current Northern Lights Inc. rebate page or current rebate forms are accessible."
+      ],
+      "blockers": [
+        "The current official rebate page https://www.nli.coop/save/rebates/ returned 403 Forbidden.",
+        "Official NLI measure pages checked for clothes washer and smart thermostat also returned 403 Forbidden.",
+        "Matched categories heat pump, mini split, ductless, geothermal, smart thermostat, thermostat, showerhead and clothes washer were not retained because current official measure details could not be read.",
+        "DSIRE was checked only as a starting clue and is not sufficient to preserve current retrofit-category mappings."
+      ],
+      "relatedRetrofitCount": 6,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.nli.coop/save/rebates/",
+        "https://www.nli.coop/rebate-clothes-washer/",
+        "https://www.nli.coop/smart-thermostat-rebate/",
+        "https://programs.dsireusa.org/system/program/detail/4198/northern-lights-inc-energy-conservation-rebate-program"
+      ],
+      "evidenceText": "The official Northern Lights Inc. rebate URLs checked were inaccessible with 403 Forbidden responses, so no current official measure table, application form or eligibility language could be verified.",
+      "reasoningNotes": "Marked source_inaccessible and cleared categories to avoid carrying forward DSIRE-only or search-snippet-derived matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1553",
+      "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "state": "KY",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1553/duke-energy-non-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 8,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json",
+      "researchedAt": "2026-06-30",
+      "programType": "Rebate Program",
+      "administrator": "Duke Energy",
+      "geography": {
+        "country": "US",
+        "states": [
+          "KY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Duke Energy Kentucky non-residential electric service territory"
+        ],
+        "notes": "The DSIRE record is for Kentucky non-residential customers, but current official measure details could not be verified from accessible Duke Energy pages."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Do not infer eligible measure categories or rebate eligibility until the current Duke Energy Smart $aver business rebate pages or applications are accessible.",
+        "Projects should not be matched to refrigeration or compressed-air measures based only on DSIRE or search-result snippets."
+      ],
+      "blockers": [
+        "The official Duke Energy Smart $aver business page https://www.duke-energy.com/business/products/smartsaver returned access errors or required dynamic content in the checked environment.",
+        "The official Smart $aver rebate-list and industrial-equipment pages were not readable enough to verify current Kentucky refrigeration or compressed-air incentives.",
+        "DSIRE was checked only as a starting clue and is not sufficient to retain current retrofit categories.",
+        "Imported matched terms refrigeration and air compressor were cleared because current official measure tables were source-inaccessible."
+      ],
+      "relatedRetrofitCount": 3,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "efficient_air_compressor",
+          "displayName": "Efficient air compressor",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.duke-energy.com/business/products/smartsaver",
+        "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
+        "https://www.duke-energy.com/business/products/smartsaver/industrial-equipment",
+        "https://programs.dsireusa.org/system/program/detail/1553/duke-energy-non-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Duke Energy search snippets indicate Smart $aver business rebates for qualifying high-efficiency equipment, but the official Duke pages checked were blocked, errored, or required JavaScript/dynamic rendering and did not expose current measure tables for refrigeration or compressed air.",
+      "reasoningNotes": "The safe repair is source_inaccessible with no eligible retrofit categories. This avoids preserving stale or DSIRE-only category matches for a current non-residential program whose official measure details could not be read."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4535",
+      "opportunityName": "Farmers Electric Cooperative (Kalona) - Residential Energy Efficiency Grant Program",
+      "sourceName": "DSIRE",
+      "state": "IA",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4535/farmers-electric-cooperative-kalona-residential-energy-efficiency-grant-program",
+      "websiteUrl": "https://www.feckalona.net/energy-conservation-grants.html",
+      "applicationUrl": null,
+      "source_confidence": "low",
+      "match_confidence": 0.68,
+      "availabilityStatus": "source_inaccessible",
+      "currentPublicAvailabilityStatus": "uncertain",
+      "recommendedNextStep": "human_or_gpt_pro_source_access_followup",
+      "latestRepairBatchNumber": 45,
+      "latestRepairBatchId": "opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45",
+      "latestRepairPath": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45.json",
+      "researchedAt": "2026-07-01",
+      "programType": "Rebate Or Grant Program",
+      "administrator": "Farmers Electric Cooperative",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Farmers Electric Cooperative (Kalona)"
+        ],
+        "notes": "Likely limited to Farmers Electric Cooperative members, but current official eligibility could not be verified because the official pages were inaccessible."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "member_customers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Current official program terms must be obtained from Farmers Electric Cooperative before matching retrofit categories."
+      ],
+      "blockers": [
+        "Official Farmers Electric Cooperative conservation grants, rebates, and ways-to-save pages returned 502 Bad Gateway during research.",
+        "DSIRE categories and search snippets were not sufficient final authority for current eligibility.",
+        "Do not match HVAC, insulation, LED lighting, lighting controls, thermostats, ceiling fans, or agricultural equipment until current official program terms are accessible."
+      ],
+      "relatedRetrofitCount": 3,
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.feckalona.net/energy-conservation-grants.html",
+        "http://www.feckalona.net/energy-conservation-grants.html",
+        "https://www.feckalona.net/energy-efficiency-rebates.html",
+        "https://www.feckalona.net/ways-to-save.html"
+      ],
+      "evidenceText": "The current Farmers Electric Cooperative conservation-grants, rebates, and ways-to-save pages returned 502 Bad Gateway. Search snippets showed only page titles and a partial insulation reference, insufficient to verify current eligible measures.",
+      "reasoningNotes": "Source inaccessible; cleared retrofit categories until official terms can be read. Retained only minimal geography and applicant context from the program name and official URL."
+    }
+  ]
+}
