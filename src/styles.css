@@ -1938,6 +1938,7 @@ dd {
 
 .retrofit-refinement-panel,
 .retrofit-preview-card,
+.scenario-summary-panel,
 .next-actions-panel,
 .premium-preview-panel {
   background: #ffffff;
@@ -1954,6 +1955,7 @@ dd {
 }
 
 .retrofit-refinement-panel p,
+.scenario-summary-panel p,
 .next-actions-panel p,
 .premium-preview-panel p {
   color: #5c6b63;
@@ -2036,6 +2038,10 @@ dd {
   color: #16231c;
   font-size: 13px;
   line-height: 18px;
+}
+
+.scenario-summary-panel {
+  gap: 16px;
 }
 
 .ranking-control-bar {
@@ -2128,6 +2134,7 @@ dd {
 .retrofit-card-top-row p,
 .section-title-row p,
 .editable-estimate-box small,
+.editable-estimate-meta span,
 .opportunity-preview-row p,
 .operating-savings-item p,
 .retrofit-detail-questions p {
@@ -2205,6 +2212,13 @@ dd {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.editable-estimate-meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .editable-estimate-box,

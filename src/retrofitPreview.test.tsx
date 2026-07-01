@@ -2,7 +2,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
   RetrofitRecommendationsPreview,
-  buildUserRetrofitPreviewResult
+  buildUserRetrofitPreviewResult,
+  confirmAllEstimateState,
+  confirmSingleEstimateState,
+  countScenarioSelectedOpportunities,
+  getOpportunityIncludedLabel
 } from "./App";
 
 const liveShapedPayload = {
@@ -152,9 +156,13 @@ describe("retrofit recommendations preview", () => {
       "Scenario D: Certification-focused"
     ]);
     expect(preview.retrofits[0].name).toBe("LED Lighting Upgrade");
+    expect(preview.retrofits[0].metrics.estimatedUpfrontProjectCost).toBe(1200000);
+    expect(preview.retrofits[0].metrics.upfrontFinancialIncentive).toBe(300000);
     expect(preview.retrofits[0].opportunities[0].name).toBe("Utility LED Rebate");
     expect(preview.retrofits[0].operatingSavings[0].name).toBe("Electricity Bill Savings");
     expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
+    expect(preview.estimateCompletenessPercent).toBeLessThan(100);
+    expect(preview.retrofits[0].confidenceLabel).toBe("Medium");
   });
 
   it("renders the admin-nav user preview structure", () => {
@@ -174,6 +182,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Retrofit Recommendations");
     expect(html).toContain("Improve your estimates");
     expect(html).toContain("Upload bills");
+    expect(html).toContain("Summary across selected retrofits");
     expect(html).toContain("Scenario A: Low upfront cost");
     expect(html).toContain("Scenario B: Best payback");
     expect(html).toContain("Scenario C: Highest total savings");
@@ -186,11 +195,38 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Tax benefits");
     expect(html).toContain("ROI");
     expect(html).toContain("Why this is recommended");
+    expect(html).toContain("Estimate assumptions");
+    expect(html).toContain("Confirm all estimates");
     expect(html).toContain("Opportunities");
     expect(html).toContain("Operating Savings");
     expect(html).toContain("Enter details");
+    expect(html).toContain("Missing information and next step");
     expect(html).toContain("Explore financing");
     expect(html).toContain("Next-best-action checklist");
     expect(html).toContain("Source");
+    expect(html).toContain("Not included in current estimate");
+    expect(html).not.toContain("Premium insight");
+  });
+
+  it("updates local confirmation state helpers", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const firstAssumption = preview.retrofits[0].editableAssumptions[0];
+    const single = confirmSingleEstimateState({}, firstAssumption.id);
+    expect(single[firstAssumption.id]).toBe(true);
+
+    const all = confirmAllEstimateState({}, preview.retrofits[0].editableAssumptions);
+    expect(Object.values(all).every(Boolean)).toBe(true);
+  });
+
+  it("scopes scenario selection counts and included labels to the retrofit state", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const scenario = preview.scenarios[0];
+    const opportunity = preview.retrofits[0].opportunities[0];
+
+    expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: true })).toBe(1);
+    expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: false })).toBe(0);
+    expect(getOpportunityIncludedLabel(opportunity, true)).toBe("Included in current estimate");
+    expect(getOpportunityIncludedLabel({ ...opportunity, includedInCurrentEstimate: true }, false)).toBe("Not included in current estimate");
+    expect(getOpportunityIncludedLabel({ ...opportunity, includedInCurrentEstimate: false }, false)).toBe("Not included yet — needs more information");
   });
 });

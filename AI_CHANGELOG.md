@@ -23,6 +23,12 @@
 - Changed the admin `User Preview` nav item to open a dedicated `/user-preview` page in a new tab, matching the Test Cases navigation pattern.
 - Added a client dropdown on `/user-preview` that loads live admin user data and renders the existing Retrofit Recommendations preview for the selected user.
 
+## 2026-07-01 - Codex (GPT-5) retrofit recommendations per-retrofit financial scoping
+
+- Reworked the existing Retrofit Recommendations preview/results UI so retrofit cards, not scenario cards, are the primary results surface on both the client route and admin preview route.
+- Scoped project cost, incentives, tax-benefit fallback, recurring operating savings, payback, ROI, missing information, estimate assumptions, opportunities, and operating-savings details to each individual retrofit card.
+- Demoted the four scenario cards into compact bundle summaries, tightened completeness/confidence display rules, removed the premium placeholder panel, and added focused preview-state tests for estimate confirmation and opportunity-selection behavior.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro work packet organization
 
 - Moved GPT Pro prompts and saved outputs under `GPT Pro Work/` so prompt/output handoff artifacts live in one workspace.
