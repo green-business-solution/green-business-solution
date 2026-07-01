@@ -3323,23 +3323,21 @@ body {
   margin: 0;
 }
 
-.how-it-works-timeline-section,
-.how-it-works-process-grid {
+.how-it-works-timeline-section {
   margin: 0 auto 80px;
   max-width: 1180px;
   width: calc(100% - clamp(32px, 7vw, 80px));
 }
 
 .how-it-works-timeline-section {
-  align-items: center;
   display: grid;
   gap: 28px;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
 .how-it-works-timeline-copy {
   display: grid;
   gap: 14px;
+  max-width: none;
 }
 
 .how-it-works-timeline-copy h1,
@@ -3349,8 +3347,12 @@ body {
 
 .how-it-works-timeline-copy h1 {
   color: var(--retrofi-text);
-  font-size: clamp(38px, 4vw, 58px);
+  font-size: clamp(42px, 5vw, 66px);
   line-height: 1.05;
+}
+
+.how-it-works-timeline-copy p {
+  max-width: 720px;
 }
 
 .how-it-works-timeline-shell {
@@ -3501,111 +3503,6 @@ body {
   color: var(--retrofi-text);
   font-size: 18px;
   line-height: 1.25;
-}
-
-.how-it-works-chip {
-  align-items: center;
-  background: rgba(22, 107, 76, 0.08);
-  border: 1px solid rgba(22, 107, 76, 0.14);
-  border-radius: 999px;
-  color: var(--retrofi-green-dark);
-  display: inline-flex;
-  font-size: 12px;
-  font-weight: 800;
-  min-height: 32px;
-  padding: 0 12px;
-}
-
-.how-it-works-process-grid {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-.how-it-works-step-card {
-  background: var(--retrofi-surface);
-  border: 1px solid var(--retrofi-border);
-  border-radius: 18px;
-  box-shadow: 0 12px 28px rgba(16, 32, 24, 0.05);
-  display: grid;
-  gap: 18px;
-  min-height: 100%;
-  padding: 22px 20px 20px;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease,
-    border-color 150ms ease,
-    background 150ms ease;
-}
-
-.how-it-works-step-card:hover {
-  border-color: rgba(22, 107, 76, 0.22);
-  box-shadow: 0 18px 36px rgba(16, 32, 24, 0.08);
-  transform: translateY(-3px);
-}
-
-.how-it-works-step-card.is-first {
-  background: linear-gradient(180deg, rgba(236, 246, 240, 0.95), rgba(255, 255, 255, 0.98));
-}
-
-.how-it-works-step-card.is-final {
-  border-color: rgba(22, 107, 76, 0.25);
-  box-shadow: 0 16px 36px rgba(16, 32, 24, 0.08);
-}
-
-.how-it-works-step-card-top {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-
-.how-it-works-step-number {
-  align-items: center;
-  background: var(--retrofi-green);
-  border-radius: 999px;
-  color: #ffffff;
-  display: inline-flex;
-  font-size: 14px;
-  font-weight: 850;
-  height: 36px;
-  justify-content: center;
-  width: 36px;
-}
-
-.how-it-works-step-icon {
-  align-items: center;
-  background: #eef5f0;
-  border: 1px solid #dce8df;
-  border-radius: 12px;
-  color: var(--retrofi-green);
-  display: inline-flex;
-  height: 42px;
-  justify-content: center;
-  width: 42px;
-}
-
-.how-it-works-step-icon svg {
-  height: 22px;
-  width: 22px;
-}
-
-.how-it-works-step-copy {
-  display: grid;
-  gap: 10px;
-}
-
-.how-it-works-step-copy h3,
-.how-it-works-step-copy p {
-  margin: 0;
-}
-
-.how-it-works-step-copy h3 {
-  font-size: 22px;
-  line-height: 1.12;
-}
-
-.how-it-works-step-copy p {
-  color: var(--retrofi-muted);
 }
 
 @keyframes timeline-character-bob {
@@ -5065,11 +4962,6 @@ body {
   .comparison-grid,
   .site-footer,
   .team-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .how-it-works-timeline-section,
-  .how-it-works-process-grid {
     grid-template-columns: 1fr;
   }
 

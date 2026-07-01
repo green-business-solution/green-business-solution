@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) how it works simplified top timeline
+
+- Removed the lower five-step card grid from the `How it Works` page so the timeline is now the only process explainer.
+- Shortened the intro copy and expanded it into a full-width top section above the cleaner timeline layout.
+
 ## 2026-07-01 - Codex (GPT-5) how it works timeline swap
 
 - Removed the animated video block from the `How it Works` page and replaced it with a cleaner process timeline above the five step cards.

@@ -2588,8 +2588,8 @@ function HowItWorksPage({
       <section className="how-it-works-timeline-section">
         <div className="how-it-works-timeline-copy">
           <p className="eyebrow">How it works</p>
-          <h1>Follow the RetroFi process from sign-in to results</h1>
-          <p>Track the journey in one glance, with a guide showing where the process starts and how it moves forward.</p>
+          <h1>Five quick steps to retrofit results</h1>
+          <p>Sign in, share a few basics, upload bills, and get matched recommendations.</p>
         </div>
         <div className="how-it-works-timeline-shell" aria-label="RetroFi step timeline">
           <div className="how-it-works-timeline-track" aria-hidden="true">
@@ -2639,32 +2639,6 @@ function HowItWorksPage({
             </div>
           </div>
         </div>
-      </section>
-      <section className="how-it-works-process-grid" aria-label="RetroFi five step process">
-        {steps.map((step, index) => (
-          <article
-            className={
-              index === 0
-                ? "how-it-works-step-card is-first"
-                : index === steps.length - 1
-                  ? "how-it-works-step-card is-final"
-                  : "how-it-works-step-card"
-            }
-            key={step.title}
-          >
-            <div className="how-it-works-step-card-top">
-              <span className="how-it-works-step-number">{index + 1}</span>
-              <span className="how-it-works-step-icon" aria-hidden="true">
-                {step.icon}
-              </span>
-            </div>
-            <div className="how-it-works-step-copy">
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </div>
-            {step.badge ? <span className="how-it-works-chip">{step.badge}</span> : null}
-          </article>
-        ))}
       </section>
       <section className="final-cta">
         <h2>Start light, then decide if the deeper analysis is worth it.</h2>
