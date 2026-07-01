@@ -1,0 +1,726 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": "GPT Pro output for the target slice beginning at SOURCE_DSIRE:dsire_program_id:2176. Codex normalized markdown URLs to raw URLs before import.",
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2176",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["NH"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "New Hampshire Electric Co-op electric service territory",
+          "NHSaves participating utility territory where NHEC customers are eligible"
+        ],
+        "notes": "Eligibility is limited to NHEC commercial, industrial, and municipal/nonresidential electric accounts and related NHSaves C&I offers."
+      },
+      "eligibleApplicantTypes": [
+        "commercial electric customers",
+        "industrial electric customers",
+        "municipal customers",
+        "public-sector customers",
+        "nonresidential utility customers",
+        "participating foodservice distributors or dealers for point-of-sale foodservice offers",
+        "EV charging site hosts served by NHEC"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "municipal",
+        "public sector",
+        "food service",
+        "grocery and refrigeration",
+        "laboratory and research",
+        "institutional",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "hvac_controls_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "efficient_ice_machine",
+        "ev_charger_installation",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer"
+      ],
+      "hardRequirements": [
+        "Customer or project must be in New Hampshire Electric Co-op service territory.",
+        "Commercial and industrial prescriptive and custom projects generally require eligibility review and, for many measures, pre-approval before purchase or installation.",
+        "Foodservice incentives apply only to qualifying equipment and participating distributor or dealer paths where required.",
+        "EV charging incentive is limited to qualifying Level 2 or larger charging stations installed for eligible NHEC customers and is capped by station and property limits.",
+        "Equipment must meet current NHSaves or NHEC technical requirements and documentation requirements."
+      ],
+      "blockers": [
+        "Do not generalize foodservice product rebates into all commercial kitchen equipment; only listed qualifying equipment such as dishwashers, fryers, ovens, steamers, ice machines, and refrigeration should match.",
+        "EV charging is a distinct NHEC transportation electrification incentive and should not be confused with core NHSaves C&I retrofit categories.",
+        "Refrigeration matches should be limited to supported refrigeration equipment or lab-grade freezer/refrigerator measures; do not infer all cold-storage construction.",
+        "Custom measures require utility review and cannot be matched solely from a generic technology keyword."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "New Hampshire Electric Co-op",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nhec.com/commercial-savings-programs/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2176/new-hampshire-electric-co-op-commercial-and-municipal-retrofit-energy-efficiency-programs",
+        "https://www.nhec.com/commercial-savings-programs/",
+        "https://nhsaves.com/businesses-towns/electric/",
+        "https://nhsaves.com/businesses-towns/electric/electric-hvac-equipment/",
+        "https://nhsaves.com/businesses-towns/commercial-food-service-equipment/",
+        "https://nhsaves.com/wp-content/uploads/2026/01/NHSaves-FDSV-Customer-Flyer-v251230.pdf",
+        "https://nhsaves.com/wp-content/uploads/2026/01/2026_HVACIncentive_NewEquipment-_1.20.26.pdf",
+        "https://www.nhec.com/commercial-savings-programs/electric-vehicle-charging-incentive-application/",
+        "https://www.nhec.com/wp-content/uploads/2026/03/2026-EV-CI-Changing-Instructions-Checklist-3-11-26kdc.pdf",
+        "https://www.nhec.com/wp-content/uploads/2026/03/2026-EV-CI-Charging-Station-Term-Conditions-3-11-26-kdc.pdf"
+      ],
+      "evidenceText": "Current NHEC commercial savings information lists C&I upgrades including HVAC, lighting and controls, motors, VFDs, water heating, refrigeration, food service equipment, and weatherization. NHSaves current business electric materials support heat pumps, ground-source heat pumps, controls, refrigeration, and qualifying commercial foodservice equipment. NHEC also has a current EV charging incentive for Level 2 or larger charging stations.",
+      "reasoningNotes": "The DSIRE match is mostly correct. The repair keeps the broad C&I retrofit categories only where current NHEC or NHSaves sources support them and notes EV charging and foodservice as product- or program-specific boundaries."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2549",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["MN"],
+        "counties": [],
+        "cities": ["New Prague"],
+        "utilityTerritories": ["New Prague Utilities Commission electric service territory"],
+        "notes": "Program is presented through SMMPA member utility information for New Prague Utilities Commission customers."
+      },
+      "eligibleApplicantTypes": [
+        "business electric customers",
+        "commercial electric customers",
+        "industrial electric customers",
+        "manufacturing customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "manufacturing",
+        "food service",
+        "hospitality",
+        "refrigeration and grocery"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "energy_management_system",
+        "high_efficiency_motor_replacement",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair"
+      ],
+      "hardRequirements": [
+        "Customer must be served by New Prague Utilities Commission.",
+        "Rebate applications and technical forms must be submitted through the current SMMPA/New Prague program materials.",
+        "Equipment must meet the measure-specific efficiency and documentation requirements in current forms.",
+        "Industrial and manufacturing measures such as motors and compressed air require applicable industrial/manufacturing rebate forms.",
+        "Some measures may require pre-approval or utility review before installation."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is unsupported by the current official New Prague/SMMPA page reviewed and should be removed.",
+        "Guestroom energy management should not be matched as broad whole-building automation; it is a hospitality-specific control measure unless custom review supports a broader project.",
+        "Detailed Google Drive rebate forms linked from the current SMMPA page were not reliably accessible in this environment, so exact specifications and submeasure limits could not be fully verified.",
+        "Refrigeration subcategories are supported by the presence of current refrigeration equipment forms and DSIRE clues, but exact submeasure details should be validated against the accessible form before quoting rebate amounts."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "New Prague Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/new-prague",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2549/new-prague-utilities-commission-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://smmpa.com/members/new-prague"
+      ],
+      "evidenceText": "The current SMMPA New Prague member page lists 2026 business rebate materials for lighting, HVAC, cooling tune-ups, electric chiller tune-ups, furnace fan motors, VSDs on HVAC fans and pumps, high-efficiency HVAC fans and clean-water pumps, air-source heat pumps, ground-source heat pumps, water-source heat pumps, refrigeration equipment, foodservice equipment, vending/snack controls, guestroom energy management, motors, compressed air leak correction, compressed air equipment, retrocommissioning, and custom rebates.",
+      "reasoningNotes": "Most matched categories are directionally correct for a municipal C&I rebate portfolio. Low-flow fixture retrofit is a false positive. Confidence is medium because several detailed current forms are linked through Google Drive and were not fully accessible for submeasure verification."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4130",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["IL"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Nicor Gas natural gas service territory"],
+        "notes": "Program applies to eligible active Nicor Gas commercial, industrial, public/private-sector, small business, and multifamily natural gas customers, with measure-specific tracks."
+      },
+      "eligibleApplicantTypes": [
+        "active commercial Nicor Gas customers",
+        "small business customers",
+        "public-sector customers",
+        "private-sector customers",
+        "industrial customers",
+        "multifamily property owners and managers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "public sector",
+        "private sector",
+        "small business",
+        "multifamily",
+        "food service",
+        "agriculture"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_hvac_replacement",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "boiler_controls_burner_retrofit",
+        "duct_sealing_and_insulation",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "high_efficiency_laundry_equipment",
+        "waste_heat_recovery",
+        "steam_trap_replacement",
+        "demand_controlled_ventilation"
+      ],
+      "hardRequirements": [
+        "Customer must be an active Nicor Gas customer in the applicable eligible customer class.",
+        "Qualifying equipment must be installed during the current program year and applications must be submitted by the program deadline or within the stated post-installation window.",
+        "Equipment must meet Nicor Gas technical specifications for the applicable business or multifamily rebate category.",
+        "Multifamily air sealing, attic insulation, duct sealing, and related weatherization measures are limited to the multifamily pathway and approved contractor requirements.",
+        "Steam trap, boiler, water heating, foodservice, and efficiency-improvement measures require applicable worksheets, invoices, and technical documentation."
+      ],
+      "blockers": [
+        "exterior_door_replacement is a false positive; current reviewed sources support door sweeps/weatherstripping and a garage-door hinge measure, not full exterior door replacement.",
+        "duct_sealing_and_insulation should be limited to multifamily duct sealing or supported duct/pipe-related measures, not all C&I duct projects.",
+        "insulation_upgrade is limited by measure type, such as pipe/tank insulation and multifamily attic insulation; do not match generic envelope insulation for all business customers.",
+        "high_efficiency_laundry_equipment should be limited to ozone laundry and dryer modulation controls where eligible, not broad commercial washer replacement.",
+        "waste_heat_recovery is supported as compressed-air heat recovery or specified efficiency-improvement equipment; do not generalize to all heat-recovery projects without utility confirmation."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Nicor Gas",
+      "applicationUrl": "https://apply.nicorgasrebates.com",
+      "websiteUrl": "https://www.nicorgas.com/ways-to-save/business-savings/rebates.html",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4130/nicor-gas-commercial-energy-efficiency-rebates",
+        "https://www.nicorgas.com/business/ways-to-save/rebates.html",
+        "https://www.nicorgas.com/ways-to-save/business-savings/rebates.html",
+        "https://www.nicorgas.com/ways-to-save/multi-family-savings/multi-family-rebates.html",
+        "https://apply.nicorgasrebates.com"
+      ],
+      "evidenceText": "Nicor Gas current business rebates cover space and water heating, steam traps, efficiency improvements, boiler tune-ups, commercial foodservice, and agriculture. Current pages and forms support boilers, boiler reset controls, thermostats, steam traps, pipe insulation, ozone laundry, dryer modulation controls, demand-controlled ventilation, demand-controlled kitchen ventilation, compressed-air heat recovery, and multifamily weatherization measures.",
+      "reasoningNotes": "The repair preserves gas-related HVAC, boiler, controls, steam, selected envelope/weatherization, and specific efficiency-improvement measures. Exterior door replacement and overly broad laundry, insulation, and heat-recovery interpretations are blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2415",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["WA"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Pacific Power electric service territory in Washington"],
+        "notes": "This target is the Washington wattsmart Business incentive program; do not apply Oregon, California, Idaho, Utah, or Wyoming program tables unless separately verified."
+      },
+      "eligibleApplicantTypes": [
+        "Pacific Power business customers",
+        "nonresidential electric customers",
+        "facility owners",
+        "small business customers",
+        "very small business customers",
+        "named-community eligible customers",
+        "vendors or contractors where an offer uses trade ally or midstream delivery"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural",
+        "municipal",
+        "public sector",
+        "food service",
+        "mixed-use or multifamily common areas on eligible nonresidential schedules"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "window_replacement",
+        "cool_roof_reflective_roof",
+        "window_film_shading_retrofit",
+        "energy_management_system",
+        "high_efficiency_laundry_equipment"
+      ],
+      "hardRequirements": [
+        "Project must be for a qualifying Pacific Power Washington business or nonresidential facility.",
+        "Measures must meet current 2026 wattsmart Business Washington incentive-list specifications.",
+        "Building envelope measures require a qualifying mechanically cooled building and must meet listed NFRC, U-factor, SHGC, SRI, insulation, or window-film requirements.",
+        "Heat pump, VRF, ground-source, water-source, and related HVAC measures must meet listed AHRI, CEE, ENERGY STAR, or program technical requirements.",
+        "Heat pump water heater incentives are limited to qualifying residential-type HPWHs used in a business setting and meeting NEEA Tier requirements.",
+        "Commercial clothes washer incentives require qualifying front-load equipment and electric water heating and/or electric clothes drying.",
+        "Energy management incentives are for eligible non-capital operational improvements or approved custom projects and require Pacific Power analysis and verification."
+      ],
+      "blockers": [
+        "Do not match residential wattsmart Homes incentives to this Washington business program.",
+        "high_efficiency_laundry_equipment should be limited to qualifying commercial front-load clothes washers with electric water heating and/or electric drying, not all laundry equipment.",
+        "energy_management_system is not a generic building automation rebate; current materials emphasize approved energy management or custom operational improvements.",
+        "Building envelope matches are limited to listed measures such as cool roofs, roof/attic insulation, wall insulation, qualifying windows, and window film for mechanically cooled buildings.",
+        "Custom incentives require review and should not be auto-matched from a keyword alone."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Pacific Power",
+      "applicationUrl": "https://wattsmartincentives.com",
+      "websiteUrl": "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington.html",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2415/pacific-power-wattsmart-business-program",
+        "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington.html",
+        "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington/wa-incentive-lists.html",
+        "https://www.pacificpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-washington/wa-incentive-lists/wa-appliances-equipment.html",
+        "https://www.pacificpower.net/content/dam/pcorp/documents/en/pacificpower/savings-energy-choices/wattsmart-business/washington/WA_wattsmartBusiness_Incentive_tables_information.pdf",
+        "https://www.pacificpower.net/content/dam/pcorp/documents/en/pacificpower/savings-energy-choices/wattsmart-business/washington/WA_wattsmart_Business_Building_Envelope_Application.pdf",
+        "https://www.pacificpower.net/content/dam/pcorp/documents/en/pacificpower/savings-energy-choices/wattsmart-business/washington/WA_wattsmart_Business_Appliance_Incentives.pdf",
+        "https://wattsmartincentives.com"
+      ],
+      "evidenceText": "Current Pacific Power Washington wattsmart Business materials list incentives for lighting and controls, HVAC, building envelope, appliances and other equipment, foodservice, compressed air, and custom measures. The 2026 tables include heat pumps, ground-source heat pumps, connected and programmable thermostats, cool roofs, insulation, windows, window film, heat pump water heaters, commercial clothes washers, and energy management incentives.",
+      "reasoningNotes": "The matched retrofit categories are correct for the Washington business program when limited to current measure-specific tables and requirements. The repair adds boundaries for building envelope, laundry, HPWH, and energy management."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4312",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CO"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["San Miguel Power Association electric service territory"],
+        "notes": "Rebates are limited to current SMPA members for equipment installed at member accounts in SMPA territory."
+      },
+      "eligibleApplicantTypes": [
+        "current SMPA residential members",
+        "current SMPA commercial members",
+        "public EV charger site hosts",
+        "private commercial EV charger site hosts"
+      ],
+      "eligibleSectors": ["residential", "commercial", "transportation electrification"],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "dc_fast_charger_installation",
+        "induction_cooking_equipment",
+        "energy_audit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current SMPA member.",
+        "Equipment must be installed at the member account in SMPA territory.",
+        "Applications require receipts, proof of purchase, make and model information, and any measure-specific documentation.",
+        "Applications must be submitted within the current stated purchase/delivery window and annual program deadline.",
+        "Rebates are subject to annual funding availability, inspection, per-category limits, and percentage-of-cost caps.",
+        "Heat pumps and ground-source heat pumps must meet current SMPA efficiency, ENERGY STAR, AHRI, equipment-size, and cost-cap requirements.",
+        "EV charger incentives apply only to new qualifying Level 2 or Level 3/DC fast charger equipment and require invoices, photos, and data-collection conditions for public or DC fast charging."
+      ],
+      "blockers": [
+        "high_efficiency_hvac_replacement should not match as a broad category; current support is heat pump-specific.",
+        "high_efficiency_refrigeration_equipment is a false positive for this record because the current refrigerator/freezer rebate is for disposal/recycling cost, not efficient replacement equipment.",
+        "efficient_fan_blower_replacement is unsupported by the current official rebate page reviewed; do not confuse it with separate VSD or HVAC measures.",
+        "Energy audit is an assessment rebate and should not be treated as installation of a physical retrofit.",
+        "EV charging measures have Level 2 and DC fast charger-specific rules and should not be inferred for unrelated transportation work."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "San Miguel Power Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.smpa.com/energy",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4312/san-miguel-power-association-energy-efficiency-rebate-program",
+        "https://www.ecoactionpartners.org/smparebates",
+        "https://www.smpa.com/energy"
+      ],
+      "evidenceText": "The current SMPA energy page lists residential and commercial rebates for air-source, air-to-water, and ground-source heat pumps; heat pump water heaters; smart thermostats; induction cooktops; Level 2 and Level 3/DC fast EV charging; and residential/commercial energy audits. It also lists refrigerator/freezer disposal reimbursement rather than efficient refrigeration replacement.",
+      "reasoningNotes": "The repair keeps heat pump, HPWH, thermostat, induction, EV charging, and audit matches. It removes broad HVAC, efficient refrigeration replacement, and fan/blower replacement because current official support is absent or product-specific in a different way."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CA"],
+        "counties": ["Santa Clara"],
+        "cities": ["Santa Clara"],
+        "utilityTerritories": ["Silicon Valley Power electric service territory"],
+        "notes": "Program is for Silicon Valley Power nonresidential customers in the City of Santa Clara electric service territory."
+      },
+      "eligibleApplicantTypes": [
+        "SVP nonresidential customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "nonprofit customers",
+        "data center and high-load customers where eligible",
+        "foodservice customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "nonprofit",
+        "food service",
+        "data center",
+        "multifamily common areas where eligible"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "high_efficiency_refrigeration_equipment",
+        "building_automation_system",
+        "high_efficiency_fryer",
+        "demand_controlled_kitchen_ventilation"
+      ],
+      "hardRequirements": [
+        "Project must be served by Silicon Valley Power.",
+        "Most business rebate projects require contact with an SVP Energy Engineer, submitted application materials, savings calculations, pre-installation inspection, and written pre-approval before installation.",
+        "Post-installation inspection and invoice/document upload are required before payment.",
+        "Lighting equipment must meet current LED, controls, DLC, ENERGY STAR, UL/ETL, warranty, or equivalent program requirements.",
+        "HVAC and heat pump measures must meet current SVP efficiency and application requirements.",
+        "Building optimization requires existing HVAC controlled by a building automation or energy management system; new BAS or major BAS expansion belongs under the controls program, not building optimization.",
+        "Custom customer-directed projects must reduce electric use in SVP territory and are subject to SVP review, savings verification, and program caps."
+      ],
+      "blockers": [
+        "walk_in_cooler_freezer_upgrade is not separately supported by the current official page reviewed; keep only qualifying commercial refrigerator/freezer equipment or custom projects with SVP approval.",
+        "anti_sweat_heater_controls is not supported by the current official source reviewed.",
+        "high_efficiency_oven and induction_cooking_equipment are not explicit current foodservice rebate categories on the reviewed SVP page; they may be possible only if accepted under custom or electrification review, not automatic matching.",
+        "Building automation optimization, controls-program projects, and customer-directed custom projects are separate paths with different preapproval requirements.",
+        "Fuel-switching and self-generation/cogeneration exclusions apply where stated in SVP electrification or customer-directed program materials."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": "https://siliconvalleypower2.my.site.com",
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1924/silicon-valley-power-commercial-energy-efficiency-rebate-program",
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+        "https://siliconvalleypower2.my.site.com"
+      ],
+      "evidenceText": "Silicon Valley Power's current business rebates page, updated June 30, 2026, lists lighting, HVAC, heat pump, heat pump water heater, building optimization, controls, customer-directed custom projects, and foodservice measures. Foodservice support visibly includes qualifying fryers, holding cabinets, commercial refrigerator/freezers, steam cookers, and demand-controlled kitchen ventilation. The process requires SVP engineer contact, pre-inspection, written pre-approval, installation, post-inspection, and documentation.",
+      "reasoningNotes": "The repair preserves lighting, HVAC, heat pump, HPWH, refrigeration equipment, BAS/controls, fryer, and DCKV matches. It blocks unsupported or non-explicit kitchen and refrigeration subcategories unless separately approved as custom projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1463",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CA"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Southern California Gas Company natural gas service territory"],
+        "notes": "Program applies to eligible SoCalGas nonresidential natural gas customers and qualifying gas equipment installed in the service territory."
+      },
+      "eligibleApplicantTypes": [
+        "SoCalGas nonresidential natural gas customers",
+        "commercial customers",
+        "industrial customers",
+        "agricultural customers",
+        "foodservice customers",
+        "authorized third-party applicants"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "food service",
+        "nonresidential multifamily common systems where eligible"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_boiler_retrofit",
+        "boiler_controls_burner_retrofit",
+        "solar_water_heating_system",
+        "insulation_upgrade",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer",
+        "waste_heat_recovery",
+        "steam_trap_replacement"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible SoCalGas business customer or authorized third party.",
+        "Equipment must be new qualifying energy-efficient natural gas equipment unless a listed measure states otherwise.",
+        "Fuel switching does not qualify.",
+        "Applications require applicable documentation such as W-9, receipts or proof of purchase, equipment specification sheets, and authorization forms where applicable.",
+        "Equipment must meet current SoCalGas rebate guide, California Title 20, California Title 24, and measure-specific efficiency requirements.",
+        "Most replacement measures must replace older equipment; commercial cooking equipment has measure-specific replacement rules.",
+        "Applications and installation must meet current program-year deadlines and funding availability."
+      ],
+      "blockers": [
+        "high_efficiency_hvac_replacement is too broad for this gas program; match only qualifying space-heating or boiler equipment.",
+        "hvac_controls_retrofit is too broad; current controls are gas modulating controllers, boiler-related controls, recirculation controls, or economizers where specified.",
+        "insulation_upgrade should be limited to pipe, fitting, and tank insulation or other listed gas-system insulation, not generic building envelope insulation.",
+        "waste_heat_recovery should be limited to steam boiler stack economizers or approved process heat-recovery measures, not compressed-air heat recovery.",
+        "Pre-rinse spray valves and laminar flow restrictors are product-specific water/gas-saving measures and should not be generalized into broad plumbing or low-flow fixture retrofits."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Southern California Gas Company",
+      "applicationUrl": "https://eecp.socalgas.com",
+      "websiteUrl": "https://www.socalgas.com/business/savings/equipment-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1463/socalgas-non-residential-energy-efficiency-rebate-programs",
+        "https://www.socalgas.com/for-your-business/energy-savings/rebates-and-incentives",
+        "https://www.socalgas.com/business/savings/equipment-rebates",
+        "https://eecp.socalgas.com"
+      ],
+      "evidenceText": "SoCalGas current business equipment rebate materials list eligible gas measures including commercial and process boilers, space-heating boilers, gas modulating controllers, steam boiler stack economizers, steam traps, pipe/fittings insulation, tank insulation, commercial foodservice equipment including dishwashers, fryers, ovens, steamers, and commercial solar thermal water heating. The page states rebates are for new eligible energy-efficient natural gas equipment and that fuel switching does not qualify.",
+      "reasoningNotes": "The repair keeps gas-specific boilers, controls, solar thermal water heating, listed insulation, foodservice, steam trap, and economizer/heat-recovery categories. Broad HVAC replacement and generic HVAC controls are false positives unless constrained to qualifying gas equipment."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["TX"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": ["Texas-New Mexico Power electric distribution service territory"],
+        "notes": "Program is for existing residential TNMP distribution customers, with Residential and Hard-to-Reach standard offer pathways and 2026 Solar+ subprogram constraints."
+      },
+      "eligibleApplicantTypes": [
+        "approved project sponsors",
+        "energy service companies",
+        "contractors",
+        "project aggregators",
+        "nonprofit organizations",
+        "national or local product providers",
+        "retailers installing eligible products",
+        "multifamily property owners with required approvals",
+        "existing residential TNMP customers as host customers",
+        "hard-to-reach income-eligible residential customers"
+      ],
+      "eligibleSectors": ["residential", "hard-to-reach residential", "low-income residential", "multifamily residential"],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "duct_sealing_and_insulation",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "rooftop_solar_pv",
+        "battery_storage_system",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "low_flow_fixture_retrofit"
+      ],
+      "hardRequirements": [
+        "Incentives are paid to approved project sponsors, not directly to individual homeowners in the ordinary rebate sense.",
+        "Project sponsors must enroll and submit projects through the TNMP P3 platform.",
+        "Host customer must be an existing residential TNMP distribution customer.",
+        "Hard-to-Reach eligibility requires income qualification under applicable PUCT/TNMP program rules.",
+        "Water-saving measures such as low-flow showerheads and faucet aerators are limited to homes with electric water heating.",
+        "LED replacements cannot replace existing LEDs, CFLs, or empty sockets.",
+        "Solar PV must be new, interconnected behind the customer meter, use eligible listed equipment, and meet TNMP Solar+ requirements.",
+        "Battery storage is only supported where paired with new qualifying solar under the Solar+ subprogram; standalone storage should not match.",
+        "EVSE is only supported under the Solar+ subprogram with qualifying solar, must be ENERGY STAR Level 2 equipment, and must use qualified subprogram installation companies."
+      ],
+      "blockers": [
+        "This is a standard offer program for approved sponsors; do not present it as a direct homeowner retail rebate unless the sponsor delivery path is clear.",
+        "rooftop_solar_pv, battery_storage_system, ev_charger_installation, and level_2_ev_charger_installation are 2026 Solar+ subprogram measures, not ordinary standalone Residential/Hard-to-Reach measures.",
+        "battery_storage_system is not eligible as standalone storage; it must be paired with new qualifying solar where current Solar+ rules allow.",
+        "EV charging is not standalone and must be qualifying ENERGY STAR Level 2 EVSE installed with qualifying solar; do not match DC fast charging.",
+        "low_flow_fixture_retrofit is limited to specified water-saving devices for electric-water-heating homes, not all water conservation.",
+        "Gas measures replacing non-electric equipment and general self-generation are ineligible except for the explicit Solar+ exception."
+      ],
+      "programType": "Standard Offer Program",
+      "administrator": "Frontier Energy for Texas-New Mexico Power Company",
+      "applicationUrl": "https://tnmp.p3.enertrek.com",
+      "websiteUrl": "https://tnmp.com/energy-efficiency/residential/existing-homes",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+        "https://tnmpefficiency.com/residential.php#existing-homes",
+        "https://tnmp.com/energy-efficiency/residential/existing-homes",
+        "https://tnmp.com/sites/default/files/inline-images/2026%20RESHTR%20Program%20Manual%20Updated-TNMPstorageupdate20260515.pdf",
+        "https://tnmp.p3.enertrek.com"
+      ],
+      "evidenceText": "TNMP's current Existing Homes page lists insulation, duct sealing, smart thermostats, A/C tune-ups, heat pump water heaters, water-saving measures for electric water heating, heating and cooling equipment, and custom projects. The 2026 TNMP Residential and Hard-to-Reach manual identifies Frontier Energy as implementer, sponsor enrollment through P3, eligible sponsor types, LEDs, HVAC, heat pumps, duct sealing, HPWHs, low-flow showerheads and aerators, and a 2026 Solar+ set-aside for solar, solar plus new storage, and ENERGY STAR Level 2 EVSE paired with solar.",
+      "reasoningNotes": "The DSIRE match is partially correct, but solar, storage, and EVSE require strict Solar+ boundaries. The program is sponsor-driven, so applicant and delivery matching must account for sponsor approval rather than direct consumer rebate access."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CT"],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Eversource electric service territory in Connecticut",
+          "United Illuminating electric service territory",
+          "Connecticut Natural Gas service territory where applicable",
+          "Southern Connecticut Gas service territory where applicable",
+          "Yankee Gas or Eversource Gas service territory where applicable",
+          "Participating EnergizeCT utility territories"
+        ],
+        "notes": "Electric heat pump, HPWH, envelope, and thermostat sources were current and accessible. Current public gas boiler/furnace/gas-water-heater sources were not reliably accessible; stale 2024 gas forms should not be used as final authority."
+      },
+      "eligibleApplicantTypes": [
+        "residential utility customers",
+        "homeowners",
+        "income-eligible residential customers",
+        "eligible renters with owner authorization where required",
+        "eligible 2-4 unit residential multifamily customers",
+        "participating contractors where required"
+      ],
+      "eligibleSectors": ["residential", "income-eligible residential", "small multifamily residential"],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "window_replacement"
+      ],
+      "hardRequirements": [
+        "Customer must be served by a participating Connecticut utility and meet the measure-specific customer eligibility rules.",
+        "Heat pump incentives require qualifying equipment, HPIN participating contractor installation where applicable, HPQPL/AHRI/ENERGY STAR or equivalent requirements, current installation dates, and postmark deadlines.",
+        "Heat pump optimization or fuel-conversion incentives require displacement of eligible existing heating fuels and integrated controls where existing fossil heating equipment remains.",
+        "Heat pump water heaters must be ENERGY STAR qualified, meet installation and quantity limits, and follow current rebate or instant-discount rules.",
+        "Insulation incentives require Home Energy Solutions participation and CTIIN-approved installer requirements where stated.",
+        "Triple-pane window incentives require ENERGY STAR replacement windows meeting listed U-factor or grid-adjusted U-factor requirements and eligible existing window conditions.",
+        "Income-eligible enhanced rebates require income verification or program pathway eligibility."
+      ],
+      "blockers": [
+        "high_efficiency_furnace_retrofit, high_efficiency_boiler_retrofit, and high_efficiency_gas_water_heater should not be matched from stale DSIRE or old forms because current official public gas pages were inaccessible or redirected to login and only stale gas documents were found.",
+        "high_efficiency_hvac_replacement is too broad; current accessible sources support heat pump-specific HVAC measures rather than all high-efficiency HVAC replacement.",
+        "led_lighting_retrofit is not supported for this residential rebate record by the current official sources reviewed.",
+        "window_replacement is limited to qualifying ENERGY STAR triple-pane replacement windows and should not match generic window replacement.",
+        "insulation_upgrade requires Home Energy Solutions and approved installer conditions; do not match standalone self-installed insulation.",
+        "Do not infer gas equipment availability from stale 2024 forms or third-party snippets."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Energize Connecticut / participating Connecticut utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energizect.com/rebates-and-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5738/electric-and-gas-residential-rebate-program",
+        "https://energizect.com/your-home/rebates-and-incentives",
+        "https://www.energizect.com/rebates-and-incentives",
+        "https://www.energizect.com/rebates-incentives/heating-cooling/heat-pumps/residential-energy-optimization",
+        "https://www.energizect.com/rebates-incentives/heating-cooling/heat-pumps/residential-air-source",
+        "https://www.energizect.com/rebates-incentives/residential-water-heater/heat-pump",
+        "https://www.energizect.com/media/12241/download?inline=",
+        "https://www.energizect.com/media/12236/download?inline=",
+        "https://www.energizect.com/media/18111/download?inline=",
+        "https://www.energizect.com/media/10256/download?inline=",
+        "https://www.energizect.com/media/15366/download?inline=",
+        "https://www.energizect.com/rebates-incentives/heating-cooling/natural-gas-furnace-residential"
+      ],
+      "evidenceText": "Current EnergizeCT sources support residential heat pump optimization, residential air-source heat pumps, ground-source heat pumps, ENERGY STAR Wi-Fi thermostats, ENERGY STAR heat pump water heaters, insulation through Home Energy Solutions, and ENERGY STAR triple-pane replacement windows. Current public gas furnace, boiler, and gas water heater pages were inaccessible or redirected, and only stale gas forms were found.",
+      "reasoningNotes": "The program is active, but gas HVAC and gas water-heating matches are blocked because current official public sources could not be accessed. The repair keeps only categories supported by current accessible EnergizeCT sources."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": ["CA"],
+        "counties": ["Orange"],
+        "cities": ["Anaheim"],
+        "utilityTerritories": [
+          "Anaheim Public Utilities electric service territory",
+          "Anaheim Public Utilities water service territory for water-specific measures"
+        ],
+        "notes": "Energy rebates are limited to Anaheim Public Utilities electric customers; water-efficiency measures may be administered through separate APU water or SoCal Water$mart pathways."
+      },
+      "eligibleApplicantTypes": [
+        "commercial customers",
+        "industrial customers",
+        "municipal customers",
+        "public-sector customers",
+        "small business customers",
+        "multifamily property owners",
+        "public EV charger site hosts"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "municipal",
+        "public sector",
+        "small business",
+        "multifamily",
+        "commercial refrigeration",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "high_efficiency_refrigeration_equipment",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "dc_fast_charger_installation",
+        "cooling_tower_controls_optimization",
+        "variable_frequency_drive_retrofit",
+        "energy_audit"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Anaheim Public Utilities customer for the applicable electric rebate, or in the applicable APU water service area for water-specific measures.",
+        "Air conditioner and heat pump incentives apply to qualifying high-efficiency replacements and are subject to savings calculations, caps, and funding availability.",
+        "Lighting incentives apply to eligible LED fixtures, retrofit kits, LED bulbs, and controls meeting UL/ETL/DLC/ENERGY STAR, warranty, and program requirements.",
+        "Customized energy incentives require APU review, savings calculations, and approval; examples include chillers, cooling towers, compressed air, air handler units, refrigeration systems, building envelope, process equipment, EMS, and VFDs.",
+        "Public EV charger rebates require Level 2 or higher chargers, eligible public or shared access, reservation or approval process, permit completion, invoices, W-9, and utility account documentation where required.",
+        "Energy assessments are provided through the Comprehensive Energy Assessment or small business direct-install pathways and are services rather than direct equipment rebates."
+      ],
+      "blockers": [
+        "cooling_tower_controls_optimization is eligible only where supported as a custom electric-savings project or through a separate water-efficiency pathway; do not auto-match all cooling tower water projects to the energy rebate.",
+        "high_efficiency_refrigeration_equipment is supported through custom incentives or small business refrigeration enhancements, not a broad prescriptive refrigeration rebate for all equipment.",
+        "energy_audit is a separate assessment service and should not be treated as installation of a physical retrofit.",
+        "Public EV charger page content contained inconsistent rebate amount and cap language; current reservation/agreement confirmation is needed before quoting amounts.",
+        "Customized measures require Anaheim Public Utilities review and funding availability; keyword matches alone are insufficient."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Anaheim Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.anaheim.net/5353/Business-Energy-Rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1615/anaheim-public-utilities-commercial-energy-efficiency-rebate-programs",
+        "http://www.anaheim.net/5353/Business-Energy-Rebates",
+        "https://www.anaheim.net/5353/Business-Energy-Rebates",
+        "https://www.anaheim.net/2543/Air-Conditioner-Incentive",
+        "https://www.anaheim.net/1533/Customized-Energy-Incentives",
+        "https://www.anaheim.net/3312/Public-EV-Charger-Rebate",
+        "https://www.anaheim.net/958/Heat-Pump-Incentives-Program",
+        "https://www.anaheim.net/961/Lighting-Incentives-Program",
+        "https://www.anaheim.net/2544/Motor-Incentive-Program",
+        "https://www.anaheim.net/940/Comprehensive-Energy-Assessment",
+        "https://www.anaheim.net/965/Small-Business-Energy-Water-Direct-Insta",
+        "https://www.anaheim.net/2500/Water-Rebates-Incentives"
+      ],
+      "evidenceText": "Anaheim Public Utilities' current Business Energy Rebates page lists air conditioner, customized energy, EV charger, multifamily, heat pump, lighting, and motor programs. Current pages support high-efficiency AC and heat pump replacements, LED lighting and lighting controls, custom measures such as cooling towers, refrigeration, EMS, and VFDs, motor and pump replacement, public Level 2 or higher EV charging, comprehensive energy assessments, and small-business direct-install measures including lighting, controls, refrigeration enhancements, HVAC tune-ups, thermostats, and water-efficient fixtures.",
+      "reasoningNotes": "The DSIRE match is largely correct, but several categories are not simple prescriptive equipment rebates. The repair keeps supported energy categories and flags EV charging, water/cooling tower, custom refrigeration, and audit/assessment boundaries."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2639"
+}

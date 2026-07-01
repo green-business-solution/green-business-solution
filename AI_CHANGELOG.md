@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batch 5
+
+- Imported the fifth GPT Pro opportunity-data repair batch for 10 checked opportunities, from New Hampshire Electric Co-op through Anaheim Public Utilities.
+- Applied opportunity-data repair batches 1-5 cumulatively to the public retrofit opportunity index and sample matching fixtures.
+- Recorded `SOURCE_DSIRE:dsire_program_id:2639` as the next GPT Pro opportunity-data repair continuation point.
+
 ## 2026-07-01 - Codex (GPT-5) sample test-case fake user batch 2
 
 - Imported GPT Pro utility data for sample matching test cases 11-20, from `via-verde-bronx-renter-household` through `bluebird-cafe-nashville`.
