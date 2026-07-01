@@ -1,0 +1,785 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "User-provided GPT Pro output continued from SOURCE_DSIRE:dsire_program_id:2545 to SOURCE_DSIRE:dsire_program_id:5136.",
+    "Includes newer detailed 2026-07-01 repairs for SOURCE_DSIRE:dsire_program_id:2253 and SOURCE_DSIRE:dsire_program_id:2516, intentionally overwriting older batch 1 versions."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2545",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Meeker"
+        ],
+        "cities": [
+          "Litchfield"
+        ],
+        "utilityTerritories": [
+          "Litchfield Public Utilities electric service territory",
+          "SMMPA/Bright Energy Solutions participating utility territory for Litchfield customers"
+        ],
+        "notes": "Eligibility is limited to Litchfield Public Utilities customers and the current local/SMMPA rebate process."
+      },
+      "eligibleApplicantTypes": [
+        "business electric customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "agricultural customers where a business measure applies",
+        "participating contractors or vendors where required"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural",
+        "food service",
+        "refrigeration and grocery",
+        "manufacturing",
+        "compressed air"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "energy_management_system",
+        "high_efficiency_motor_replacement",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair"
+      ],
+      "hardRequirements": [
+        "Customer must be served by Litchfield Public Utilities.",
+        "Projects must use current Litchfield, SMMPA, or Bright Energy Solutions business rebate materials.",
+        "Equipment must meet current measure-specific efficiency, sizing, installation, and documentation requirements.",
+        "Custom or larger projects may require utility review, savings estimates, and pre-approval before purchase or installation.",
+        "Invoices, product specifications, and account documentation are required before rebate payment."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is not supported by the current C&I sources reviewed and should be removed.",
+        "Do not infer residential Litchfield rebates from this commercial and industrial record.",
+        "Energy management should be limited to listed controls or approved custom projects, not generic building automation claims.",
+        "Refrigeration and compressed-air matches are product-specific and should not be generalized into all cold-storage construction or all industrial process work.",
+        "Detailed current technical forms were not fully exposed in accessible text, so exact amounts and submeasure limits should be confirmed before quoting incentive values."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Litchfield Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/litchfield",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2545/litchfield-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInLitchfield.com",
+        "https://smmpa.com/members/litchfield",
+        "https://www.brightenergysolutions.com/"
+      ],
+      "evidenceText": "Current Litchfield/SMMPA materials identify Litchfield Public Utilities as an SMMPA member with business rebate resources. SMMPA examples and Bright Energy Solutions municipal business rebate families support prescriptive and custom business measures including lighting, HVAC, refrigeration, motors, compressed air, and related efficiency projects; low-flow water fixtures were not verified for the C&I pathway.",
+      "reasoningNotes": "The record remains active through current SMMPA/Bright Energy municipal utility sources. Confidence is medium because the public member page confirms the program family and current forms but not every detailed submeasure in accessible text."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3348",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "McLeod"
+        ],
+        "cities": [
+          "Hutchinson"
+        ],
+        "utilityTerritories": [
+          "Hutchinson Utilities Commission electric service territory",
+          "Bright Energy Solutions participating utility territory for Hutchinson Utilities Commission customers"
+        ],
+        "notes": "Residential rebate eligibility is for Hutchinson Utilities Commission customers using Bright Energy Solutions residential rebate materials."
+      },
+      "eligibleApplicantTypes": [
+        "Hutchinson Utilities Commission residential electric customers",
+        "homeowners",
+        "renters with owner approval where required",
+        "residential property owners",
+        "residential EV charger customers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "high_efficiency_laundry_equipment",
+        "high_efficiency_residential_dishwasher"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Hutchinson Utilities Commission residential customer.",
+        "Applications must be submitted through the current Bright Energy Solutions or Hutchinson Utilities rebate process.",
+        "Equipment must meet applicable ENERGY STAR, AHRI, program, and measure-specific efficiency requirements.",
+        "EV charger rebates are limited to qualifying residential Level 2 chargers and any charging-program or documentation requirements.",
+        "Appliance rebates are residential product rebates and require qualifying equipment, invoices, and model documentation."
+      ],
+      "blockers": [
+        "high_efficiency_commercial_dishwasher is a false-positive taxonomy match for this residential record; only qualifying residential ENERGY STAR dishwasher or appliance measures should match.",
+        "low_flow_fixture_retrofit is not verified from the current official residential source reviewed and should not be inferred from generic fixture wording.",
+        "Do not match commercial kitchen, commercial refrigeration, or business equipment categories to this residential program.",
+        "EV charging is a residential Level 2 charger pathway and should not match DC fast charging or commercial/public charging.",
+        "Broad HVAC replacement should be limited to the listed residential cooling, furnace fan, heat pump, and geothermal equipment measures."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Hutchinson Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3348/hutchinson-utilities-commission-residential-energy-efficiency-program",
+        "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission",
+        "https://www.hutchinsonutilities.com/",
+        "https://www.hutchinsonutilities.com/category/latest-news/"
+      ],
+      "evidenceText": "The current Bright Energy Solutions Hutchinson page states that incentives are offered for energy-saving projects and products for residential customers and businesses. The current rebate family includes residential HVAC, heat pumps, geothermal heat pumps, heat pump water heaters, ENERGY STAR products, EV chargers, and lighting-related forms.",
+      "reasoningNotes": "The repair separates residential product rebates from commercial kitchen taxonomy and keeps EV charging only as a residential Level 2 charger pathway."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3206",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Puget Sound Energy electric service territory",
+          "Puget Sound Energy natural gas service territory where gas measures apply"
+        ],
+        "notes": "Program is for eligible multifamily buildings, property owners, managers, and some condo or townhome owners in PSE service territory. Incentive levels vary by property type, income/affordable status, and measure."
+      },
+      "eligibleApplicantTypes": [
+        "multifamily property owners",
+        "multifamily property managers",
+        "condominium owners where eligible",
+        "townhome owners where eligible",
+        "affordable housing providers",
+        "mixed-income multifamily properties",
+        "trade allies or contractors where required"
+      ],
+      "eligibleSectors": [
+        "multifamily residential",
+        "affordable multifamily housing",
+        "mixed-income multifamily housing",
+        "condominium and townhome properties where eligible",
+        "multifamily common areas",
+        "transportation electrification where separately eligible"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "window_replacement",
+        "low_flow_fixture_retrofit",
+        "high_efficiency_laundry_equipment",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Property must be in PSE service territory and meet multifamily program eligibility rules.",
+        "Measures must appear in the current multifamily rebate menu or be accepted by PSE as an eligible custom/common-area project.",
+        "Rebate amounts and requirements vary by standard, efficiency-boost, income-qualified, affordable, mixed, tribal, and property-specific pathways.",
+        "Smart thermostats must meet current equipment and heating-system requirements.",
+        "Lighting, HVAC, water heating, envelope, water-saving, and laundry measures must meet current rebate-menu specifications.",
+        "Multifamily EV charging is a separate PSE multifamily clean-energy or EV charging pathway and requires separate eligibility and approval."
+      ],
+      "blockers": [
+        "Do not use the stale DSIRE URL if it redirects or fails; the current official PSE page is the multifamily retrofit page under pse.com/en/rebates.",
+        "high_efficiency_hvac_replacement should be limited to listed HVAC and heat pump measures; do not match arbitrary HVAC replacement.",
+        "Fixture matches must distinguish lighting fixtures from low-flow water fixtures.",
+        "Window replacement is limited to current PSE qualifying window specifications and eligible existing windows.",
+        "EV charging is a separate multifamily charging offer and should not be treated as an ordinary efficiency retrofit or DC fast charging program."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Puget Sound Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pse.com/en/rebates/multifamily-retrofit",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3206/puget-sound-energy-multi-family-efficiency-retrofit-program",
+        "https://www.pse.com/en/rebates/multifamily-retrofit",
+        "https://www.pse.com/-/media/PDFs/REBATES/Multi-Family-Retrofit/7949_Multifamily_Retrofit_Rebate_Menu.pdf",
+        "https://www.pse.com/en/business-incentives/multifamily-programs"
+      ],
+      "evidenceText": "Current PSE multifamily retrofit materials offer rebates and grants for in-unit and common-area upgrades. The 2026 multifamily rebate menu includes smart thermostats, common-area lighting, and other listed efficiency measures, and PSE's multifamily programs page separately describes Level 2 EV charging support for multifamily tenants.",
+      "reasoningNotes": "The repair keeps multifamily retrofit categories supported by current PSE sources and explicitly separates the EV charging pathway from the core efficiency rebate menu."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1692",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Puget Sound Energy electric service territory",
+          "Puget Sound Energy natural gas service territory where gas measures apply"
+        ],
+        "notes": "Residential eligibility depends on PSE service type, heating fuel, measure, property type, and whether the customer qualifies for Efficiency Boost or other enhanced pathways."
+      },
+      "eligibleApplicantTypes": [
+        "PSE residential electric customers",
+        "PSE residential natural gas customers where gas measures apply",
+        "homeowners",
+        "renters with owner approval where required",
+        "manufactured-home customers where eligible",
+        "income-qualified residential customers",
+        "residential EV charger customers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "income-qualified residential",
+        "manufactured homes where eligible",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "window_replacement",
+        "high_efficiency_refrigeration_equipment",
+        "high_efficiency_laundry_equipment",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible PSE residential customer for the fuel and measure claimed.",
+        "Heating, heat pump, water-heating, insulation, window, appliance, and EV charger measures must meet current PSE equipment and installation requirements.",
+        "Some weatherization and HVAC measures require contractor participation, pre-existing condition requirements, or verification.",
+        "Window rebates are limited to qualifying replacement of eligible existing windows or patio doors with listed U-factor requirements.",
+        "EV charging is a separate PSE electric vehicle offer and should follow the current charger and rate/enrollment requirements.",
+        "Efficiency Boost or income-qualified amounts require separate eligibility verification."
+      ],
+      "blockers": [
+        "high_efficiency_commercial_dishwasher is not appropriate for this residential program; do not match commercial kitchen equipment.",
+        "Ground-source geothermal heat pump was not verified from the current PSE residential sources reviewed and should not be auto-matched unless a current measure page confirms it.",
+        "Refrigerator and freezer matches should be limited to residential ENERGY STAR appliance or recycling-type offers where current PSE sources support them.",
+        "EV charging should be limited to residential Level 2 charger offers and not public, commercial, or DC fast charging.",
+        "Do not generalize heating rebates into all HVAC replacements; use current PSE heating measure lists."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Puget Sound Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.pse.com/en/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1692/puget-sound-energy-residential-energy-efficiency-rebate-programs",
+        "https://www.pse.com/en/rebates",
+        "https://www.pse.com/en/rebates/heating",
+        "https://www.pse.com/en/rebates/windows-rebates",
+        "https://www.pse.com/en/rebates/electric-vehicles"
+      ],
+      "evidenceText": "Current PSE residential rebate pages list heating rebates for electric and gas customers, qualifying window and patio-door rebates, and residential rebate pathways. Current PSE materials also describe electric vehicle charging offers separately from the home efficiency rebate catalog.",
+      "reasoningNotes": "The repair preserves residential HVAC, heat pump, water-heating, envelope, appliance, and Level 2 EV charging categories only where current PSE sources support them and blocks commercial or unverified geothermal interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2540",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Cook"
+        ],
+        "cities": [
+          "Grand Marais"
+        ],
+        "utilityTerritories": [
+          "Grand Marais Public Utilities Commission electric service territory",
+          "SMMPA/Bright Energy Solutions participating utility territory for Grand Marais customers"
+        ],
+        "notes": "Eligibility is for Grand Marais PUC commercial and industrial electric customers using the current SMMPA or local SaveEnergyInGrandMarais rebate materials."
+      },
+      "eligibleApplicantTypes": [
+        "business electric customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "agricultural customers where applicable",
+        "participating contractors or vendors where required"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural",
+        "food service",
+        "refrigeration and grocery",
+        "manufacturing",
+        "compressed air"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "energy_management_system",
+        "high_efficiency_motor_replacement",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair"
+      ],
+      "hardRequirements": [
+        "Customer must be served by Grand Marais Public Utilities Commission.",
+        "Projects must use the current local or SMMPA business rebate process.",
+        "Equipment must meet measure-specific efficiency, installation, and documentation requirements.",
+        "Custom or larger projects may require pre-approval and savings review.",
+        "Invoices, product specifications, and utility-account documentation are required before payment."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is not supported by the current C&I source reviewed and should be removed.",
+        "Do not infer residential rebate categories from this commercial and industrial record.",
+        "Refrigeration, motors, and compressed-air measures are equipment-specific; do not match general industrial construction.",
+        "Energy management system matches should be limited to listed control measures or custom projects accepted by the utility.",
+        "Detailed linked forms were not fully accessible in this environment, so measure amounts and exact submeasure rules should be verified before quoting."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Grand Marais Public Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "http://www.SaveEnergyInGrandMarais.com",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2540/grand-marais-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInGrandMarais.com",
+        "https://www.brightenergysolutions.com/",
+        "https://smmpa.com/members"
+      ],
+      "evidenceText": "Current SaveEnergyInGrandMarais materials show local Grand Marais utility rebate resources and 2026 forms. The municipal Bright Energy/SMMPA business rebate family supports lighting, HVAC, refrigeration, motors, compressed air, and custom efficiency categories; low-flow water fixtures were not verified for the C&I pathway.",
+      "reasoningNotes": "The repair mirrors the current SMMPA municipal C&I rebate structure while blocking the low-flow false positive and limiting custom matches to utility-reviewed projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2546",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Kanabec"
+        ],
+        "cities": [
+          "Mora"
+        ],
+        "utilityTerritories": [
+          "Mora Municipal Utilities electric service territory",
+          "SMMPA/Bright Energy Solutions participating utility territory for Mora customers"
+        ],
+        "notes": "Eligibility is for Mora Municipal Utilities customers. The City of Mora page directs customers to current rebate and energy-efficiency programs for business and residential customers."
+      },
+      "eligibleApplicantTypes": [
+        "business electric customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "agricultural customers where applicable",
+        "participating contractors or vendors where required"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural",
+        "food service",
+        "refrigeration and grocery",
+        "manufacturing",
+        "compressed air"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "energy_management_system",
+        "high_efficiency_motor_replacement",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair"
+      ],
+      "hardRequirements": [
+        "Customer must be served by Mora Municipal Utilities.",
+        "Projects must use the current Mora, SMMPA, or Bright Energy Solutions rebate materials.",
+        "Equipment must meet current measure-specific requirements and documentation requirements.",
+        "Custom and larger projects may require utility review or pre-approval before installation.",
+        "Rebate requests require invoices, specifications, and customer account documentation."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is not verified for the current C&I pathway and should not be matched.",
+        "Do not infer residential Mora rebates from this commercial and industrial record.",
+        "Anti-sweat heater, floating-head pressure, and refrigeration control matches should be limited to qualifying refrigeration equipment or control measures.",
+        "Energy management is not a generic BAS rebate unless the current measure form or custom review supports the project.",
+        "Exact current submeasure specifications should be confirmed from the linked forms before quoting amounts."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Mora Municipal Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ci.mora.mn.us/electric-utility/pages/rebates-energy-efficiency",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2546/mora-municipal-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInMora.com",
+        "https://www.ci.mora.mn.us/electric-utility/pages/rebates-energy-efficiency",
+        "https://smmpa.com/members/mora",
+        "https://www.brightenergysolutions.com/"
+      ],
+      "evidenceText": "The current City of Mora utility page points customers to rebate and energy-efficiency programs for business and residential customers. SMMPA Mora materials show 2026 rebate resources and examples of qualifying HVAC projects, while the Bright Energy municipal program family supports business lighting, HVAC, refrigeration, motor, compressed-air, and custom efficiency categories.",
+      "reasoningNotes": "The repair keeps the supported municipal business rebate categories and blocks low-flow and overly broad energy-management interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4812",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy electric business service territory in Minnesota",
+          "Xcel Energy natural gas business service territory in Minnesota where gas measures apply"
+        ],
+        "notes": "Eligibility is measure- and fuel-specific. Electric measures require an eligible Xcel Energy business electric account; gas measures require eligible Xcel gas service."
+      },
+      "eligibleApplicantTypes": [
+        "Xcel Energy business electric customers",
+        "Xcel Energy business natural gas customers where gas measures apply",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "public-sector customers where eligible",
+        "contractors or trade partners with customer authorization"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "public sector",
+        "food service",
+        "grocery and refrigeration",
+        "exterior and site lighting",
+        "compressed air and process systems where eligible"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "exterior_site_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "high_efficiency_commercial_dishwasher",
+        "variable_frequency_drive_retrofit"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible Xcel Energy business customer in Minnesota.",
+        "Lighting rebates require the customer to be an Xcel Energy business electric customer and to install qualifying lighting or controls.",
+        "HVAC-R, refrigeration, foodservice, and VFD measures must meet current Xcel Energy equipment and program specifications.",
+        "Some projects may require pre-approval, study, custom review, or participation through Xcel's online rebate process.",
+        "Gas and electric equipment incentives must be matched to the customer's applicable Xcel service type."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is a false positive here; current matched fixture language is lighting/equipment fixture language, not water fixtures.",
+        "high_efficiency_commercial_dishwasher should be limited to listed commercial foodservice dishwasher measures, not residential or all kitchen equipment.",
+        "Street or site lighting should be matched only where the customer owns or controls eligible exterior lighting equipment and Xcel rules allow it.",
+        "Refrigeration controls and anti-sweat heater matches are limited to listed commercial refrigeration measures.",
+        "Do not match gas equipment to electric-only customers or electric-only measures to gas-only accounts."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4812/minnesota-xcel-energy-business-energy-efficiency-rebate-programs",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/business-lighting-efficiency",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/hvac-r",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/commercial-refrigeration",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/food-service"
+      ],
+      "evidenceText": "Current Xcel Energy business pages for Minnesota list lighting and equipment rebates, including business lighting, HVAC-R, commercial refrigeration, and foodservice equipment. Xcel's business pages state that qualifying equipment must be purchased and installed, and that some rebates require the customer to be an existing business electric and/or gas customer.",
+      "reasoningNotes": "The repair keeps business lighting, refrigeration, HVAC-R, foodservice dishwasher, and VFD categories and removes the water-fixture false positive caused by generic fixture wording."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Valley Electric Cooperative service territory"
+        ],
+        "notes": "Business rebate eligibility is for MVEC members and depends on the customer's electric service, measure type, and MVEC business program review."
+      },
+      "eligibleApplicantTypes": [
+        "Minnesota Valley Electric Cooperative business members",
+        "commercial electric customers",
+        "industrial electric customers",
+        "agricultural customers",
+        "institutional customers",
+        "business EV charging site hosts where eligible",
+        "contractors or vendors where required"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "institutional",
+        "food service",
+        "refrigeration and grocery",
+        "compressed air",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "efficient_ice_machine",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "variable_frequency_drive_retrofit",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "efficient_air_compressor"
+      ],
+      "hardRequirements": [
+        "Applicant must be an MVEC member or eligible business customer.",
+        "Business rebates are based on reduction in electric demand and energy usage from qualifying installations.",
+        "Custom energy grants and larger projects require MVEC review and supporting savings documentation.",
+        "Commercial EV charger measures, if used, must follow the separate MVEC commercial EV charger program rules.",
+        "Foodservice, refrigeration, HVAC, compressed-air, and VFD measures require current forms, invoices, and qualifying equipment documentation."
+      ],
+      "blockers": [
+        "EV charging is a separate business or commercial EV charger pathway and should not be merged into ordinary building-efficiency rebates.",
+        "Residential MVEC EV charger rebate rules should not be applied to this business record.",
+        "Foodservice categories must be limited to listed qualifying equipment; do not generalize to all commercial kitchen equipment.",
+        "demand_controlled_ventilation was not verified from the current accessible MVEC business source and should not be auto-matched unless a current form confirms it.",
+        "Custom grants require MVEC review and cannot be matched from a technology keyword alone."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Minnesota Valley Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mvec.net/savings/business-programs/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2253/minnesota-valley-electric-cooperative-commercial-and-industrial-energy-efficiency-rebate-program",
+        "https://www.mvec.net/savings/business-programs/",
+        "https://econdev.mvec.net/programs-rebates",
+        "https://www.mvec.net/savings/rebates/",
+        "https://afdc.energy.gov/laws/utilities/412"
+      ],
+      "evidenceText": "MVEC's current business programs page states that business rebates help customers lower energy costs through energy-efficient upgrades and that rebates are based on reductions in electric demand and usage from qualifying installations. MVEC economic-development materials identify business rebates, commercial EV charger support, and compressed-air resources.",
+      "reasoningNotes": "The repair keeps the broad MVEC business efficiency categories only where the current business page and related MVEC resources support a business rebate or custom-grant pathway. Confidence is medium because detailed individual equipment forms were not fully accessible."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Riverland Energy Cooperative electric service territory",
+          "Focus on Energy participating utility territory where applicable"
+        ],
+        "notes": "Riverland rebates are for cooperative members. Some business incentives may be coordinated with Focus on Energy or other statewide Wisconsin efficiency resources."
+      },
+      "eligibleApplicantTypes": [
+        "Riverland Energy Cooperative members",
+        "commercial members",
+        "industrial members",
+        "agricultural members",
+        "local government or institutional members where eligible",
+        "business EV charger customers where eligible"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "institutional",
+        "food service where eligible",
+        "refrigeration where eligible",
+        "transportation electrification"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "high_efficiency_refrigeration_equipment",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_oven",
+        "variable_frequency_drive_retrofit",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "energy_audit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Riverland Energy Cooperative member.",
+        "Rebates cannot exceed the purchase price of the product.",
+        "Rebate documentation must be submitted within the current post-installation window stated by Riverland.",
+        "Current Riverland materials state that 2026 rebates are in place through December 18, 2026 and are subject to limited funds.",
+        "Detailed forms control eligibility for commercial and agricultural efficiency, EV charger, HVAC, water-heating, and audit measures.",
+        "Focus on Energy measures require participation in the applicable Wisconsin utility and program pathway."
+      ],
+      "blockers": [
+        "high_efficiency_toilet_urinal and smart_irrigation_controller should not be matched unless a current Riverland or Focus on Energy business form explicitly supports those water-efficiency measures.",
+        "Cool roof and window-film categories were not verified from the current Riverland sources reviewed and should not be auto-matched.",
+        "Laundry and dishwasher matches should be limited to listed residential or commercial equipment forms, not broad water-efficiency categories.",
+        "Energy audit is an assessment pathway and should not be treated as a physical retrofit.",
+        "EV charging is a separate Riverland EV charger form and should be limited to qualifying chargers, not broad transportation projects."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Riverland Energy Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.riverlandenergy.com/rebates",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2516/riverland-energy-cooperative-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+        "https://www.riverlandenergy.com/rebates",
+        "https://www.riverlandenergy.com/energy-efficiency-resources",
+        "https://www.riverlandenergy.com/sites/default/files/2026-01/2026-incentive-form-ev-chargers_2.pdf",
+        "https://www.riverlandenergy.com/sites/default/files/2026-02/riverland-february-2026-outlet.pdf",
+        "https://focusonenergy.com/business/rebates"
+      ],
+      "evidenceText": "Riverland's current rebate page says the requestor must be a cooperative member, rebates are submitted within three months of purchase and installation, rebates are in place through December 18, 2026, and funds are limited. Current Riverland materials list HVAC, air-source and geothermal heat pump rebates, commercial and agricultural efficiency rebates, electric water heater rebates, energy audit rebates, and EV charger rebates.",
+      "reasoningNotes": "The repair keeps only categories supported by current Riverland or Wisconsin Focus on Energy business-efficiency pathways and blocks unverified water-efficiency and building-envelope false positives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2538",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Martin"
+        ],
+        "cities": [
+          "Fairmont"
+        ],
+        "utilityTerritories": [
+          "Fairmont Public Utilities electric service territory",
+          "SMMPA/Bright Energy Solutions participating utility territory for Fairmont customers"
+        ],
+        "notes": "Eligibility is limited to Fairmont Public Utilities commercial and industrial customers using current local or SMMPA business rebate materials."
+      },
+      "eligibleApplicantTypes": [
+        "business electric customers",
+        "commercial customers",
+        "industrial customers",
+        "institutional customers",
+        "agricultural customers where applicable",
+        "participating contractors or vendors where required"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural",
+        "food service",
+        "refrigeration and grocery",
+        "manufacturing",
+        "compressed air"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "energy_management_system",
+        "high_efficiency_motor_replacement",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair"
+      ],
+      "hardRequirements": [
+        "Customer must be served by Fairmont Public Utilities.",
+        "Projects must follow current Fairmont, SMMPA, or Bright Energy Solutions business rebate procedures.",
+        "Equipment must meet current measure-specific efficiency and documentation requirements.",
+        "Custom or large projects may require utility review, savings documentation, and pre-approval.",
+        "Applications require invoices, product specifications, and account information."
+      ],
+      "blockers": [
+        "low_flow_fixture_retrofit is not supported by the current C&I source reviewed and should be removed.",
+        "Do not infer residential appliance rebates from this commercial and industrial record.",
+        "Refrigeration controls, anti-sweat heater controls, and floating-head-pressure measures must be limited to listed refrigeration equipment or controls.",
+        "Energy management system matches require a listed measure or approved custom project; do not auto-match all BAS work.",
+        "Detailed current technical forms were not fully accessible, so exact submeasure specifications should be verified before quoting amounts."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Fairmont Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/fairmont",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2538/fairmont-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+        "http://www.SaveEnergyInFairmont.com",
+        "https://smmpa.com/members/fairmont",
+        "https://fairmont.org/public-utilities/",
+        "https://www.brightenergysolutions.com/"
+      ],
+      "evidenceText": "Current SMMPA Fairmont materials show residential and business rebate resources for 2026. Fairmont Public Utilities participates in SMMPA/Bright Energy Solutions-style rebates for qualifying commercial clients, supporting business equipment efficiency categories such as lighting, HVAC, refrigeration, motors, compressed air, and custom efficiency.",
+      "reasoningNotes": "The repair follows the same current SMMPA municipal C&I program structure as the other Minnesota municipal utility records and removes the unsupported low-flow fixture match."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:5136"
+}

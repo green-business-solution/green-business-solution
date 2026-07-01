@@ -1,0 +1,629 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-06-30",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "User-provided GPT Pro output continued from SOURCE_DSIRE:dsire_program_id:4198 to SOURCE_DSIRE:dsire_program_id:5101.",
+    "Duplicate repair for SOURCE_DSIRE:dsire_program_id:1939 was omitted because batch 7 already imported a newer 2026-07-01 repair for that opportunity."
+  ],
+  "omittedDuplicateOpportunityIds": [
+    "SOURCE_DSIRE:dsire_program_id:1939"
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4198",
+      "confidence": "low",
+      "availabilityStatus": "source_inaccessible",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ID"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Northern Lights Inc. electric service territory"
+        ],
+        "notes": "Target record is Idaho, but current official rebate content was blocked, so detailed service-territory and measure eligibility could not be verified from a readable primary source."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Do not infer eligible applicants, sectors or measures until the current Northern Lights Inc. rebate page or current rebate forms are accessible."
+      ],
+      "blockers": [
+        "The current official rebate page https://www.nli.coop/save/rebates/ returned 403 Forbidden.",
+        "Official NLI measure pages checked for clothes washer and smart thermostat also returned 403 Forbidden.",
+        "Matched categories heat pump, mini split, ductless, geothermal, smart thermostat, thermostat, showerhead and clothes washer were not retained because current official measure details could not be read.",
+        "DSIRE was checked only as a starting clue and is not sufficient to preserve current retrofit-category mappings."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Northern Lights Inc.",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.nli.coop/save/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.nli.coop/save/rebates/",
+        "https://www.nli.coop/rebate-clothes-washer/",
+        "https://www.nli.coop/smart-thermostat-rebate/",
+        "https://programs.dsireusa.org/system/program/detail/4198/northern-lights-inc-energy-conservation-rebate-program"
+      ],
+      "evidenceText": "The official Northern Lights Inc. rebate URLs checked were inaccessible with 403 Forbidden responses, so no current official measure table, application form or eligibility language could be verified.",
+      "reasoningNotes": "Marked source_inaccessible and cleared categories to avoid carrying forward DSIRE-only or search-snippet-derived matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5704",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AL",
+          "GA",
+          "KY",
+          "MS",
+          "NC",
+          "TN",
+          "VA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA-served participating local power company territories"
+        ],
+        "notes": "Target state is Kentucky, but TVA EnergyRight residential rebates are administered through participating local power companies across the TVA service area."
+      },
+      "eligibleApplicantTypes": [
+        "residential customers of participating TVA local power companies",
+        "homeowners",
+        "residential account holders",
+        "customers using TVA Quality Contractor Network contractors"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "central_air_conditioner",
+        "air_source_heat_pump",
+        "dual_fuel_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "geothermal_ground_source_heat_pump",
+        "duct_sealing",
+        "duct_repair",
+        "duct_insulation",
+        "hvac_tune_up",
+        "attic_insulation",
+        "wall_insulation",
+        "envelope_air_sealing",
+        "smart_thermostat_rewards_limited"
+      ],
+      "hardRequirements": [
+        "Applicant must be served by a participating TVA local power company for the home receiving the measure.",
+        "Many eligible HVAC, duct and insulation measures must be installed by a TVA EnergyRight Quality Contractor Network contractor.",
+        "Equipment must satisfy TVA EnergyRight efficiency and installation requirements for the applicable rebate category.",
+        "Rebate eligibility and redemption may require TVA EnergyRight application or claim workflow after installation.",
+        "Program offerings, financing availability and local participation may vary by local power company."
+      ],
+      "blockers": [
+        "The imported primary savings model mapping to motor, VFD, pump or compressed-air efficiency is a false positive; this is a residential home-efficiency program.",
+        "Do not map this record to commercial or industrial measures.",
+        "Smart thermostat support is limited to EnergyRight thermostat or rewards offerings and should not be treated as a broad standalone retrofit unless the current program path applies.",
+        "Water-heating measures were not retained because the current checked target sources for this repair supported HVAC, duct, insulation, air sealing and thermostat categories more clearly than a current residential HPWH line item."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/residential/rebates/",
+      "websiteUrl": "https://energyright.com/residential/rebates/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/rebates/heat-pump/",
+        "https://energyright.com/residential/rebates/duct-sealing-hvac-tune-up/",
+        "https://energyright.com/residential/rebates/home-insulation-air-sealing/",
+        "https://energyright.com/residential/rebates/smartthermostat/",
+        "https://programs.dsireusa.org/system/program/detail/5704/tva-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "TVA EnergyRight's residential rebate pages list eligible upgrades including geothermal heat pumps, mini splits, heat pumps, central air conditioning, duct sealing or HVAC tune-up, air sealing and insulation, and require EnergyRight contractor and measure-specific rules for many rebates.",
+      "reasoningNotes": "The record is active as a TVA residential rebate program. Categories were limited to residential EnergyRight measures and false commercial motor/VFD mappings were blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3577",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Lake Region Electric Cooperative service territory"
+        ],
+        "notes": "Applies to qualifying Lake Region Electric Cooperative commercial, industrial and agricultural customers."
+      },
+      "eligibleApplicantTypes": [
+        "Lake Region Electric Cooperative commercial customers",
+        "agricultural customers",
+        "industrial customers",
+        "dairy operations",
+        "business customers pursuing efficiency improvements",
+        "customers seeking audits or engineering/design assistance"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agriculture",
+        "dairy",
+        "food_and_beverage",
+        "cold_storage",
+        "manufacturing"
+      ],
+      "eligibleRetrofitCategories": [
+        "commercial_energy_efficiency_grant",
+        "custom_energy_efficiency",
+        "energy_audit",
+        "engineering_design_assistance",
+        "premium_efficiency_motors",
+        "adjustable_speed_drives",
+        "compressed_air_systems",
+        "commercial_refrigeration",
+        "vending_machine_controls",
+        "anti_sweat_door_heater_controls",
+        "commercial_hvac",
+        "dairy_well_water_precooler",
+        "dairy_waste_heat_recovery",
+        "commercial_led_lighting",
+        "new_lighting",
+        "retrofit_lighting"
+      ],
+      "hardRequirements": [
+        "Applicant must be a qualifying Lake Region Electric Cooperative commercial, industrial or agricultural customer.",
+        "Grant funding is project-specific and requires engagement with Lake Region Electric Cooperative energy management staff.",
+        "Eligible grant uses must be for electric energy-efficiency improvements, audits, or engineering and design assistance for new or existing facilities.",
+        "Current 2026 rebate forms and funding are subject to program availability and deadlines stated by LREC or its Energy Wise partner.",
+        "Measure-specific rebate forms and documentation are required for commercial LED lighting, custom energy rebates, dairy, motors and drives, commercial EV charging or other current offerings."
+      ],
+      "blockers": [
+        "This is not a residential rebate and should not be mapped to home HVAC, appliances or weatherization.",
+        "Grant amount and eligibility are project-specific; the record should not be converted into a deterministic per-unit rebate without a current form and project scope.",
+        "Vending-machine support is limited to controllers for beverage machines and door heaters on refrigerated cases, not general vending equipment replacement.",
+        "EV charging appears as a separate commercial EV charging rebate form on LREC's rebate page and was not merged into the agriculture/commercial energy-efficiency grant categories unless matched to that separate form."
+      ],
+      "programType": "Grant/Rebate Program",
+      "administrator": "Lake Region Electric Cooperative",
+      "applicationUrl": "https://www.lrec.coop/energy-services/rebates-loans-and-tax-credits/",
+      "websiteUrl": "https://www.lrec.coop/energy-services/ag-commercial-energy-grants/",
+      "sourceUrlsChecked": [
+        "https://www.lrec.coop/energy-services/ag-commercial-energy-grants/",
+        "https://www.lrec.coop/energy-services/rebates-loans-and-tax-credits/",
+        "http://www.lrec.coop/products-service/ag-commercial-energy-grants",
+        "https://programs.dsireusa.org/system/program/detail/3577/lake-region-electric-cooperative-agriculture-and-commercial-energy-efficiency-grant-program"
+      ],
+      "evidenceText": "Lake Region Electric Cooperative's Ag & Commercial Energy Grants page says grants are available to qualifying commercial customers for electric efficiency improvements, audits, and engineering/design assistance, and lists motors, adjustable-speed drives, compressed air, refrigeration, HVAC, beverage-machine controllers, refrigerated-case door-heater controls, dairy heat-recovery or pre-cooling measures, and lighting.",
+      "reasoningNotes": "The current official replacement page verifies the program as active and commercial/agricultural. Measures were retained only where LREC explicitly listed them."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22307",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [
+          "Orlando"
+        ],
+        "utilityTerritories": [
+          "Orlando Utilities Commission electric service territory"
+        ],
+        "notes": "Eligibility is tied to OUC electric service; OUC water-only customers are not eligible for the EV purchase or lease rebate."
+      },
+      "eligibleApplicantTypes": [
+        "OUC electric customers",
+        "residential electric customers",
+        "OUC account holders or authorized account users purchasing or leasing eligible passenger EVs"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_vehicle_purchase_or_lease_bill_credit",
+        "passenger_ev_purchase_or_lease"
+      ],
+      "hardRequirements": [
+        "Applicant must be an OUC electric customer for the rebate account.",
+        "Application must be submitted within six months of the eligible EV purchase or lease.",
+        "Proof of purchase or lease must show the OUC customer or authorized person on the account.",
+        "Eligible vehicles are passenger electric vehicles; scooters, skateboards and bicycles are not eligible.",
+        "Rebate is applied as a bill credit and is not available to OUC water-only customers."
+      ],
+      "blockers": [
+        "The old DSIRE-linked OUC electric-vehicle URL returned 404 and has been replaced by current OUC EV pages.",
+        "OUC states there is no separate rebate for an EV charger or charging station under this EV purchase or lease rebate.",
+        "This record should not be mapped to building energy-efficiency retrofits, commercial EV charging infrastructure, or fleet infrastructure projects.",
+        "Only passenger EV purchase or lease support was retained."
+      ],
+      "programType": "Bill Credit/Rebate Program",
+      "administrator": "Orlando Utilities Commission",
+      "applicationUrl": "https://www.ouc.com/solutions-programs/savings/rebates/electric-vehicle-purchase-lease/",
+      "websiteUrl": "https://www.ouc.com/solutions-programs/electric-vehicles/",
+      "sourceUrlsChecked": [
+        "https://www.ouc.com/residential/save-energy-water-money/electric-vehicles",
+        "https://www.ouc.com/solutions-programs/electric-vehicles/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/electric-vehicle-purchase-lease/",
+        "https://programs.dsireusa.org/system/program/detail/22307/orlando-utilities-commission-electric-vehicle-rebate-program"
+      ],
+      "evidenceText": "OUC's current EV Purchase or Lease Rebate page states customers can receive a rebate when they buy or lease an EV, requires submission within six months, limits eligibility to OUC electric customers and passenger vehicles, excludes water-only customers, and says there is no separate charger rebate.",
+      "reasoningNotes": "The active current OUC source supports only EV purchase or lease bill-credit matching. Charger, building retrofit and fleet-infrastructure interpretations were removed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5018",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [
+          "Larimer County"
+        ],
+        "cities": [
+          "Loveland"
+        ],
+        "utilityTerritories": [
+          "City of Loveland Utilities / Loveland Water and Power electric service territory"
+        ],
+        "notes": "Applies to City of Loveland Utilities residential electric customers; many rebates are delivered through Efficiency Works."
+      },
+      "eligibleApplicantTypes": [
+        "Loveland residential electric customers",
+        "homeowners",
+        "residential account holders",
+        "owners of eligible single-family homes, townhomes or small multifamily properties",
+        "customers using qualified Efficiency Works service providers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "small_multifamily_residential_limited"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac",
+        "heat_pump_water_heater",
+        "whole_home_mechanical_ventilation",
+        "windows",
+        "exterior_doors",
+        "insulation",
+        "air_sealing",
+        "smart_thermostat",
+        "outdoor_led_fixture",
+        "advanced_power_strip",
+        "electric_panel_upgrade_limited",
+        "load_sharing_device_limited",
+        "induction_cooking",
+        "electric_range_or_cooktop",
+        "energy_star_clothes_washer",
+        "heat_pump_clothes_dryer",
+        "radon_fan"
+      ],
+      "hardRequirements": [
+        "Applicant must be a City of Loveland Utilities residential electric customer for most electric incentives.",
+        "Eligible homes generally must be at least one year old and within the residential housing types specified by Efficiency Works.",
+        "Many HVAC, window, door, insulation and air-sealing measures require a qualified Efficiency Works service provider.",
+        "Envelope and window or door measures may require an assessment before the rebate-eligible work is performed.",
+        "Post-purchase rebate applications are subject to current Efficiency Works timing, documentation and funding rules.",
+        "Rebate cannot exceed eligible purchase or installed cost where program rules apply."
+      ],
+      "blockers": [
+        "The old Loveland SAVEENERGY URL is stale; the current official source is Loveland's residential rebates page and Efficiency Works pages.",
+        "No Loveland EV purchase or lease rebate was verified; Level 2 charging should only match if the current project qualifies for an electric panel upgrade or load-sharing-device incentive.",
+        "Residential water rebates were listed as currently unavailable or pending updates and were not retained as active water retrofit categories.",
+        "Refrigerator and freezer recycling should not be matched as a stable ongoing category because Loveland/Efficiency Works indicated recycled-appliance rebates are ending or no longer available after July 1, 2026.",
+        "This residential program should not be mapped to commercial HVAC, refrigeration, motors or food-service retrofits."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Loveland Water and Power / Efficiency Works",
+      "applicationUrl": "https://www.lovelandwaterandpower.org/resident/residential-rebates",
+      "websiteUrl": "https://www.lovelandwaterandpower.org/resident/residential-rebates",
+      "sourceUrlsChecked": [
+        "http://www.lovelandwaterandpower.org/SAVEENERGY",
+        "https://www.lovelandwaterandpower.org/resident/residential-rebates",
+        "https://efficiencyworks.org/for-your-home-rebates-and-incentives/",
+        "https://www.efficiencyworks.org/homes/rebates/hvac/",
+        "https://www.efficiencyworks.org/homes/rebates/windows-doors/",
+        "https://www.efficiencyworks.org/homes/rebates/insulation-air-sealing/",
+        "https://www.efficiencyworks.org/homes/rebates/electrical/",
+        "https://www.efficiencyworks.org/homes/rebates/appliances/",
+        "https://programs.dsireusa.org/system/program/detail/5018/loveland-water-and-power-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Loveland's current residential rebates page directs customers to Efficiency Works and lists active residential incentives for HVAC, heat pump water heaters, ventilation, windows and doors, insulation and air sealing, electrical products, appliances and electrification products. Efficiency Works rules require Loveland residential electric service, qualified service providers for many measures, and current documentation and timing requirements.",
+      "reasoningNotes": "The program is active, but several imported matches were narrowed. Refrigerator/freezer and EV categories were blocked or limited because current official pages do not support broad ongoing rebates for those interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22567",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Lane Electric Cooperative service territory"
+        ],
+        "notes": "Applies to Lane Electric Cooperative members; core energy-efficiency pages were partly inaccessible, while Lane-branded EV rebate content was readable."
+      },
+      "eligibleApplicantTypes": [
+        "Lane Electric Cooperative members",
+        "residential members installing eligible Level 2 EV charging equipment"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charging_level_2_residential"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Lane Electric Cooperative member.",
+        "Residential charger rebate applies to eligible Level 2 charging equipment shown through Lane Electric's EV rebate materials.",
+        "Application requires documentation such as installation photos and the current Lane Electric rebate form or submission process.",
+        "Eligibility and rebate availability are subject to current Lane Electric program funding and requirements."
+      ],
+      "blockers": [
+        "The core Lane Electric energy-efficiency pages for heat pumps, ductless heat pumps, heat pump water heaters and weatherization returned inaccessible or blocked responses in the checked environment.",
+        "Matched heat pump, mini split, ductless, heat pump water heater, insulation and weatherization categories were not retained because current official measure details could not be verified from readable official pages.",
+        "EV charging appears to be a separate transportation/charger rebate path and should not be merged into building energy-efficiency categories.",
+        "This residential program should not be mapped to commercial EVSE or commercial building retrofits."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Lane Electric Cooperative",
+      "applicationUrl": "https://laneelectric.chooseev.com/promos/",
+      "websiteUrl": "https://laneelectric.com/programs-services/energy-efficiency/",
+      "sourceUrlsChecked": [
+        "https://laneelectric.com/programs-services/energy-efficiency/",
+        "https://www.laneelectric.com/energy-efficiency/",
+        "https://www.laneelectric.com/energy-efficiency/energy-saving-programs/",
+        "https://www.laneelectric.com/energy-efficiency/heat-pump-program/",
+        "https://www.laneelectric.com/energy-efficiency/heat-pump-water-heaters/",
+        "https://laneelectric.chooseev.com/promos/",
+        "https://laneelectric.chooseev.com/recommendations/print/5406/?c=laneelectric",
+        "https://programs.dsireusa.org/system/program/detail/22567/lane-electric-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Lane-branded ChooseEV rebate materials identify a residential Level 2 charger rebate for Lane Electric members and require member and installation documentation. The core Lane Electric building-efficiency pages checked were inaccessible or blocked, so building-measure categories could not be verified.",
+      "reasoningNotes": "Kept only the officially readable Lane Electric EV charging category and blocked DSIRE/snippet-only home-efficiency matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22456",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "PECO electric service territory"
+        ],
+        "notes": "Applies to eligible PECO commercial and industrial electric customers in southeastern Pennsylvania; enhanced terms may depend on Environmental Justice Area or public-benefit qualification."
+      },
+      "eligibleApplicantTypes": [
+        "PECO commercial electric customers",
+        "PECO industrial electric customers",
+        "commercial property owners",
+        "business tenants with installation authority",
+        "local governments",
+        "public agencies",
+        "501(c)(3) nonprofits",
+        "public transit agencies",
+        "site hosts installing eligible public or workplace charging"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "public_sector",
+        "nonprofit",
+        "transportation",
+        "workplace_charging",
+        "public_charging"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charging_level_2_commercial",
+        "ev_charging_dc_fast_public_benefit",
+        "commercial_ev_make_ready",
+        "public_benefit_ev_charging",
+        "dcfc_demand_charge_discount_limited"
+      ],
+      "hardRequirements": [
+        "Applicant must be a PECO commercial or industrial electric customer on an eligible rate.",
+        "Level 2 and public-benefit EV charging incentives require pre-application or approval before construction or installation begins.",
+        "Participants must provide required EV charging data reporting for the term required by the program administrator.",
+        "Enhanced Level 2 rebates may require installation in Environmental Justice Areas or satisfaction of public-benefit criteria.",
+        "Public-benefit DCFC or Level 2 incentives are limited by eligible project-cost caps and annual customer caps.",
+        "Current program information identifies funding through May 31, 2029, subject to caps and program rules."
+      ],
+      "blockers": [
+        "The legacy PECO L3 page in the DSIRE record is stale or not sufficiently descriptive as a current primary source; current program information is through PECO EVsmart/ChooseEV and the program administrator page.",
+        "This is a commercial charging infrastructure program and should not be matched to residential EV purchase rebates.",
+        "PECO Smart Driver EV purchase notification rebates are a separate program and were not merged into this commercial charger record.",
+        "The DCFC demand charge discount is a separate rate discount and should not be treated as an upfront equipment rebate.",
+        "No building HVAC, lighting, envelope, water or refrigeration retrofit categories are supported by this record."
+      ],
+      "programType": "Rebate/Make-Ready Program",
+      "administrator": "PECO / Center for Sustainable Energy",
+      "applicationUrl": "https://peco.chooseev.com/promos/",
+      "websiteUrl": "https://energycenter.org/program/peco-evsmart-charging-rebate",
+      "sourceUrlsChecked": [
+        "https://www.peco.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehiclesL3.aspx",
+        "https://energycenter.org/program/peco-evsmart-charging-rebate",
+        "https://peco.chooseev.com/promos/",
+        "https://solutions.peco-energy.com/EVinfo",
+        "https://programs.dsireusa.org/system/program/detail/22456/peco-commercial-charger-rebate-program"
+      ],
+      "evidenceText": "PECO EVsmart Charging Rebate materials describe a commercial and industrial EV charging rebate in PECO service territory, with Level 2 commercial charging, enhanced Environmental Justice Area terms, public-benefit charging support, eligible Level 2 and DCFC cases, pre-application requirements, data reporting and funding through May 31, 2029.",
+      "reasoningNotes": "The opportunity is active, but the current official replacement sources show it is strictly commercial EV charging infrastructure and public-benefit charging, not a general EV or building-efficiency rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2041",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [
+          "Ozaukee County"
+        ],
+        "cities": [
+          "Cedarburg"
+        ],
+        "utilityTerritories": [
+          "Cedarburg Light & Water",
+          "Focus on Energy participating Wisconsin utility territories"
+        ],
+        "notes": "Cedarburg Light & Water is listed as a participating Focus on Energy utility; eligibility depends on Focus on Energy participating utility service and measure rules."
+      },
+      "eligibleApplicantTypes": [
+        "Cedarburg Light & Water residential customers",
+        "Focus on Energy participating utility residential customers",
+        "homeowners",
+        "residential account holders",
+        "residential customers using qualified trade allies where required"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential_limited"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_source_heat_pump",
+        "geothermal_ground_source_heat_pump",
+        "smart_thermostat",
+        "heat_pump_water_heater",
+        "insulation",
+        "air_sealing",
+        "diy_attic_insulation_air_sealing",
+        "home_energy_assessment",
+        "free_energy_saving_packs_limited",
+        "online_marketplace_led_lighting_limited",
+        "ecm_furnace_blower_motor_replacement",
+        "ecm_variable_speed_pumps"
+      ],
+      "hardRequirements": [
+        "Customer must be served by Cedarburg Light & Water or another Focus on Energy participating utility for applicable incentives.",
+        "Measures must meet Focus on Energy residential rebate and product eligibility rules.",
+        "Many HVAC, water-heating, insulation and air-sealing incentives require a qualified trade ally, eligible equipment and current application timing.",
+        "Current 2026 Focus materials require some applications within 60 days of installation and no later than the stated 2026 program deadline.",
+        "Instant discounts and marketplace offers require purchase through eligible participating channels."
+      ],
+      "blockers": [
+        "The imported motor, VFD, pump or compressed-air mapping is not valid for this residential Focus on Energy record; only residential ECM blower or variable-speed pump categories were retained where supported.",
+        "Duct sealing was not retained because the current Focus residential sources checked did not verify a standalone duct-sealing rebate for this record.",
+        "LED lighting support is limited to Focus marketplace or pack/product channels, not a broad residential lighting retrofit project.",
+        "This residential program should not be matched to commercial or industrial Focus on Energy measures.",
+        "Solar, new homes and business programs on the Focus website are separate paths and were not merged into this repair."
+      ],
+      "programType": "Rebate/Discount Program",
+      "administrator": "Focus on Energy / Cedarburg Light & Water Utility",
+      "applicationUrl": "https://focusonenergy.com/residential-rebates-and-discounts",
+      "websiteUrl": "https://focusonenergy.com/utility-partners/cedarburg-light-amp-water",
+      "sourceUrlsChecked": [
+        "https://focusonenergy.com/utility-partners/cedarburg-light-amp-water",
+        "https://focusonenergy.com/about/participating-utilities",
+        "https://focusonenergy.com/residential",
+        "https://focusonenergy.com/residential-rebates-and-discounts",
+        "https://focusonenergy.com/residential/heating-and-cooling",
+        "https://focusonenergy.com/residential/water-heating",
+        "https://focusonenergy.com/residential/insulation-and-air-sealing",
+        "https://www.cedarburglightandwater.org/energy-saving-programs",
+        "https://programs.dsireusa.org/system/program/detail/2041/cedarburg-light-and-water-utility-residential-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Focus on Energy's Cedarburg Light & Water partner page says Focus partners with the utility to deliver savings for residents and businesses. Current residential Focus pages list home assessments, heating and cooling incentives, smart thermostats, heat pump water heaters, insulation and air sealing, free energy-saving packs and marketplace products, with current 2026 application and timing rules for several measures.",
+      "reasoningNotes": "The opportunity remains active through Focus on Energy. Categories were narrowed to residential Focus measures and the false commercial motor/VFD interpretation was blocked."
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-design-assistance",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [
+          "Santa Clara County"
+        ],
+        "cities": [
+          "Santa Clara"
+        ],
+        "utilityTerritories": [
+          "Silicon Valley Power electric service territory"
+        ],
+        "notes": "Applies to commercial and industrial customers and projects served by Silicon Valley Power in Santa Clara."
+      },
+      "eligibleApplicantTypes": [
+        "Silicon Valley Power commercial customers",
+        "industrial customers",
+        "building owners",
+        "developers",
+        "design teams",
+        "customers planning major facility retrofits",
+        "customers planning new construction or facility expansion"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional_limited",
+        "new_construction",
+        "major_renovation"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_design_assistance",
+        "technical_assistance",
+        "new_construction_major_renovation",
+        "building_envelope_design",
+        "hvac_design_assistance",
+        "lighting_design_assistance",
+        "mechanical_electrical_systems_design",
+        "interior_lighting_new_construction",
+        "exterior_lighting_new_construction",
+        "chillers_new_construction",
+        "unitary_air_conditioner_new_construction",
+        "heat_pump_hvac_new_construction",
+        "design_team_incentive"
+      ],
+      "hardRequirements": [
+        "Project must be served by Silicon Valley Power in Santa Clara.",
+        "Energy Design Assistance is intended for commercial and industrial customers during major facility retrofits and new construction, preferably at or near the building-program development stage.",
+        "SVP reviews drawings and specifications and recommends energy-saving options for envelope, HVAC, lighting, mechanical and electrical systems.",
+        "Any associated equipment incentive or new-construction rebate requires the applicable SVP application, calculator, preapproval and equipment approval before purchase or installation.",
+        "New construction incentives apply to eligible nonresidential new buildings, additions and qualifying major renovations under current SVP rules."
+      ],
+      "blockers": [
+        "Matched term fixture should not be treated as an arbitrary lighting-fixture retrofit under this record; Energy Design Assistance is a design and technical-assistance pathway, with separate incentive rules for eligible new-construction or retrofit equipment.",
+        "Residential measures are not supported by this business program.",
+        "EV charging, data center incentives and customer-directed electrification rebates are separate SVP program sections and should not be merged into this Energy Design Assistance repair.",
+        "Do not calculate incentive value from this record without the project pathway, SVP preapproval and applicable calculator or application."
+      ],
+      "programType": "Technical Assistance / Rebate Support Program",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+      "sourceUrlsChecked": [
+        "https://www.siliconvalleypower.com/businesses/save-money",
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/85534/638894799956900000"
+      ],
+      "evidenceText": "Silicon Valley Power's business Save Money page describes Energy Design Assistance for commercial and industrial customers during major facility retrofits and new construction, including review of construction drawings and recommendations for building envelope, HVAC, lighting, mechanical and electrical systems. SVP's current new-construction rebate materials support eligible nonresidential new construction, additions and major renovations with preapproval for lighting, chillers, unitary AC and heat-pump equipment.",
+      "reasoningNotes": "The opportunity is active, but it is primarily a technical-assistance and design-support pathway, not a standalone fixture rebate. Eligible categories were limited to design assistance and associated SVP new-construction/major-renovation measure areas."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:5101"
+}
