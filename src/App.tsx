@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -2546,161 +2546,91 @@ function HowItWorksPage({
 }) {
   const steps = [
     {
-      title: "Sign in and get started",
-      copy: "Create your account in minutes, with no utility paperwork needed to begin.",
-      shortTitle: "Sign in",
-      icon: <LockIcon />,
-      badge: "Easy first step"
+      title: "Create your account",
+      copy: "Start quickly with a simple sign-in and no heavy setup.",
+      icon: <LockIcon />
     },
     {
-      title: "Tell us about the property",
-      copy: "Share a few basics so RetroFi can tailor the upgrade search to your home or building.",
-      shortTitle: "Property info",
-      icon: <BuildingOutlineIcon />,
-      badge: null
+      title: "Add home information",
+      copy: "Share the basics that shape the right retrofit recommendations.",
+      icon: <HomeOutlineIcon />
     },
     {
-      title: "Add utility bills or usage",
-      copy: "Upload recent bills or enter usage data to sharpen the savings analysis.",
-      shortTitle: "Bills or usage",
-      icon: <StoreOutlineIcon />,
-      badge: null
+      title: "Upload utility data",
+      copy: "Bills or usage history help RetroFi sharpen savings and incentive analysis.",
+      icon: <StoreOutlineIcon />
     },
     {
-      title: "RetroFi runs the analysis",
-      copy: "We match incentives, estimate savings, and rank the strongest retrofit opportunities.",
-      shortTitle: "Analysis",
-      icon: <LeafOutlineIcon />,
-      badge: null
+      title: "RetroFi analyzes opportunities",
+      copy: "We connect usage, incentives, and retrofit options into one clear model.",
+      icon: <LeafOutlineIcon />
     },
     {
-      title: "Review your results",
-      copy: "See personalized recommendations, expected value, and clear next steps in one place.",
-      shortTitle: "Results",
-      icon: <EyeIcon />,
-      badge: "Most valuable step"
+      title: "Receive your report",
+      copy: "Get a personalized retrofit report with savings, incentives, and next steps.",
+      icon: <EyeIcon />
     }
   ];
-  const maxStepIndex = Math.max(steps.length - 1, 1);
-  const [timelineProgress, setTimelineProgress] = useState(0);
-  const [isDraggingTimeline, setIsDraggingTimeline] = useState(false);
-  const timelineTrackRef = useRef<HTMLDivElement | null>(null);
-  const currentStepIndex = Math.round(timelineProgress * maxStepIndex);
-
-  function clampTimelineProgress(value: number) {
-    return Math.max(0, Math.min(1, value));
-  }
-
-  function updateTimelineProgressFromClientX(clientX: number) {
-    const track = timelineTrackRef.current;
-    if (!track) return;
-    const rect = track.getBoundingClientRect();
-    if (rect.width <= 0) return;
-    setTimelineProgress(clampTimelineProgress((clientX - rect.left) / rect.width));
-  }
-
-  useEffect(() => {
-    if (!isDraggingTimeline) return;
-
-    function handlePointerMove(event: PointerEvent) {
-      updateTimelineProgressFromClientX(event.clientX);
-    }
-
-    function handlePointerUp() {
-      setIsDraggingTimeline(false);
-    }
-
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp);
-
-    return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-    };
-  }, [isDraggingTimeline]);
+  const highlights = [
+    "Fast to start",
+    "Personalized recommendations",
+    "Clear next steps"
+  ];
 
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <section className="how-it-works-timeline-section">
-        <div className="how-it-works-timeline-copy">
-          <p className="eyebrow">How it works</p>
-          <h1>Five quick steps to retrofit results</h1>
-          <p>Drag through the process from sign-in to matched results.</p>
+      <PageHero
+        compact
+        eyebrow="How it works"
+        title="From utility data to a clear retrofit plan"
+        copy="RetroFi keeps the process simple: add the essentials, let the product do the research, and get an actionable report quickly."
+      />
+      <section className="how-it-works-overview">
+        <div className="how-it-works-overview-copy">
+          <SectionHeading
+            eyebrow="Why it feels simple"
+            title="The product does the heavy research for you"
+            copy="Instead of comparing programs, incentives, and savings estimates by hand, RetroFi turns home and utility data into one readable decision path."
+          />
+          <div className="public-highlight-strip" aria-label="How RetroFi helps">
+            {highlights.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
         </div>
-        <div className="how-it-works-timeline-shell" aria-label="RetroFi step timeline">
-          <div
-            aria-label="Interactive timeline for the RetroFi process"
-            aria-valuemax={steps.length}
-            aria-valuemin={1}
-            aria-valuenow={currentStepIndex + 1}
-            className={isDraggingTimeline ? "how-it-works-timeline-track is-dragging" : "how-it-works-timeline-track"}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowRight") {
-                event.preventDefault();
-                setTimelineProgress((value) => clampTimelineProgress(value + 1 / maxStepIndex));
-              } else if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                setTimelineProgress((value) => clampTimelineProgress(value - 1 / maxStepIndex));
-              } else if (event.key === "Home") {
-                event.preventDefault();
-                setTimelineProgress(0);
-              } else if (event.key === "End") {
-                event.preventDefault();
-                setTimelineProgress(1);
-              }
-            }}
-            onPointerDown={(event) => {
-              updateTimelineProgressFromClientX(event.clientX);
-              setIsDraggingTimeline(true);
-            }}
-            ref={timelineTrackRef}
-            role="slider"
-            tabIndex={0}
-          >
-            <div className="how-it-works-timeline-line" />
-            <div
-              className="how-it-works-timeline-progress"
-              style={{ width: `${timelineProgress * 100}%` }}
-            />
-            <div
-              className="how-it-works-timeline-character"
-              style={{ left: `calc(${timelineProgress * 100}% - 28px)` }}
-            >
-              <div className="timeline-character-head" />
-              <div className="timeline-character-body" />
-            </div>
-          </div>
-          <div className="how-it-works-timeline-steps">
-            {steps.map((step, index) => {
-              const stepProgress = index / maxStepIndex;
-              const isReached = timelineProgress >= stepProgress;
-              const isCurrent = currentStepIndex === index;
-              return (
-              <div
-                className={
-                  isCurrent
-                    ? "how-it-works-timeline-step is-current"
-                    : isReached
-                      ? "how-it-works-timeline-step is-complete"
-                      : "how-it-works-timeline-step"
-                }
-                key={step.title}
-                style={{ "--timeline-step-scale": isCurrent ? 1.12 : isReached ? 1.04 : 0.96 } as CSSProperties}
-              >
-                <div className="how-it-works-timeline-step-box">
-                  <span>{index + 1}</span>
-                  <strong>{step.shortTitle}</strong>
-                  <small>{step.copy}</small>
-                </div>
+        <article className="feature-card public-summary-card">
+          <p className="eyebrow">What you get</p>
+          <h2>Meaningful retrofit guidance, faster</h2>
+          <ul>
+            {[
+              "A focused list of relevant upgrades",
+              "Estimated savings, incentives, and payback context",
+              "A report built to be readable and actionable"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
+      <section className="how-it-works-steps-section">
+        <div className="how-it-works-steps-grid">
+          {steps.map((step, index) => (
+            <article className="feature-card how-it-works-step-panel" key={step.title}>
+              <div className="how-it-works-step-top">
+                <span className="how-it-works-step-marker">{index + 1}</span>
+                <span className="feature-icon" aria-hidden="true">
+                  {step.icon}
+                </span>
               </div>
-              );
-            })}
-          </div>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </article>
+          ))}
         </div>
       </section>
       <section className="final-cta">
-        <h2>Start light, then decide if the deeper analysis is worth it.</h2>
-        <p>RetroFi helps you get to personalized retrofit results without a long or intimidating setup.</p>
+        <h2>Get useful retrofit insight without doing the research manually.</h2>
+        <p>Start with a lightweight account and move to a clearer home upgrade decision faster.</p>
         <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
@@ -2715,10 +2645,54 @@ function PricingPage({
   publicAuth: PublicAuthState;
 }) {
   const cards = [
-    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Get Started"],
-    ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
-    ["Implementation Support", "Starting at $3,500", "Businesses ready to move forward", ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "Incentive tracking", "60-90 days of support"], "Contact Us"],
-    ["Multi-Site", "Custom", "Franchisees, regional operators, and multi-location businesses", ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations"], "Contact Us"]
+    {
+      name: "Starter",
+      price: "Free",
+      label: "Fast first look",
+      audience: "Homeowners getting started",
+      includes: [
+        "Quick account setup",
+        "Basic home profile intake",
+        "Initial retrofit direction",
+        "Faster than manual program research"
+      ],
+      ctaLabel: "Create account",
+      route: "scan" as Route,
+      disabled: false,
+      recommended: false
+    },
+    {
+      name: "Home Report",
+      price: "Coming soon",
+      label: "Personalized retrofit report",
+      audience: "Homeowners ready for clearer decisions",
+      includes: [
+        "Utility-aware recommendations",
+        "Incentive discovery",
+        "Estimated savings and payback context",
+        "Actionable next-step guidance"
+      ],
+      ctaLabel: "Join waitlist",
+      route: "about-contact" as Route,
+      disabled: false,
+      recommended: true
+    },
+    {
+      name: "Pro / Partner",
+      price: "Custom",
+      label: "For contractors and partners",
+      audience: "Pros supporting multiple homes or clients",
+      includes: [
+        "Higher-volume report workflows",
+        "Partner-oriented intake support",
+        "Shared reporting and coordination",
+        "Custom rollout planning"
+      ],
+      ctaLabel: "Contact us",
+      route: "about-contact" as Route,
+      disabled: false,
+      recommended: false
+    }
   ];
 
   return (
@@ -2726,38 +2700,51 @@ function PricingPage({
       <PageHero
         compact
         eyebrow="Pricing"
-        title="Simple project-based pricing"
-        copy="Start with a free scan, then upgrade only if there is enough potential value to justify a deeper analysis."
+        title="Simple pricing built around useful home insight"
+        copy="RetroFi pricing is designed to reflect time saved, clearer recommendations, and a faster path to confident retrofit decisions."
       />
-      <section className="pricing-note">
-        <span>No subscription and no success fee initially.</span>
+      <section className="pricing-note pricing-status-note">
+        <span>Pricing is being finalized. Early access is focused on clarity, speed, and actionable reports.</span>
       </section>
       <section className="pricing-grid">
-        {cards.map(([name, price, bestFor, includes, cta], index) => (
-          <article className={index === 1 ? "pricing-card recommended" : "pricing-card"} key={name as string}>
-            {index === 1 ? <span className="recommended-badge">Recommended</span> : null}
-            <h2>{name}</h2>
-            <strong>{price}</strong>
-            <p>Best for: {bestFor}</p>
+        {cards.map((card) => (
+          <article className={card.recommended ? "pricing-card recommended" : "pricing-card"} key={card.name}>
+            {card.recommended ? <span className="recommended-badge">Recommended</span> : null}
+            <p className="eyebrow">{card.label}</p>
+            <h2>{card.name}</h2>
+            <strong>{card.price}</strong>
+            <p>Best for: {card.audience}</p>
             <ul>
-              {(includes as string[]).map((item) => (
+              {card.includes.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
-              {cta}
+            <button disabled={card.disabled} onClick={() => navigate(card.route)} type="button">
+              {card.ctaLabel}
             </button>
+          </article>
+        ))}
+      </section>
+      <section className="card-grid three pricing-proof-grid">
+        {[
+          ["Fast home insights", "Start with the essentials and skip hours of scattered research.", "roadmap"],
+          ["Personalized recommendations", "RetroFi turns utility and home inputs into clearer upgrade priorities.", "savings"],
+          ["Actionable savings context", "Reports are meant to be understandable, not just technically detailed.", "incentives"]
+        ].map(([title, copy, icon]) => (
+          <article className="feature-card" key={title}>
+            <FeatureIcon icon={icon as "roadmap" | "savings" | "incentives"} />
+            <h3>{title}</h3>
+            <p>{copy}</p>
           </article>
         ))}
       </section>
       <section className="faq-grid faq-section">
         {[
-          ["Why is the scan free?", "The scan helps identify whether a deeper analysis is likely to be worth it."],
-          ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
-          ["Do I need utility bills?", "Not for the free scan. Utility bills are needed for detailed savings and ROI."],
-          ["Is this a subscription?", "V1 is not a subscription."],
-          ["Do you charge a success fee?", "No success fee initially."],
-          ["Can I use this for multiple sites?", "Yes. Multi-site pricing is custom based on portfolio size."]
+          ["Why start free?", "It lets homeowners see whether a deeper retrofit report looks worthwhile before committing."],
+          ["Will pricing change?", "Yes. Final pricing may evolve as RetroFi shapes the report experience and partner workflows."],
+          ["Do I need utility bills?", "Not to get started. Utility data improves the quality of savings and incentive recommendations."],
+          ["Is this a subscription?", "Not by default. The current direction is focused on simple, understandable package options."],
+          ["Can contractors use RetroFi?", "Yes. The partner tier is intended for pros who need a more scalable workflow."]
         ].map(([question, answer]) => (
           <article className="feature-card" key={question}>
             <h3>{question}</h3>
@@ -2781,13 +2768,36 @@ function AboutPage({
       <PageHero
         compact
         eyebrow="About RetroFi"
-        title="About RetroFi"
-        copy="RetroFi helps businesses turn fragmented incentive programs and facility data into clear, actionable retrofit decisions."
+        title="RetroFi helps homeowners make smarter retrofit decisions faster"
+        copy="We turn messy home and utility data into clear guidance so people can understand upgrades, incentives, and next steps without the usual research burden."
       />
       <AboutSubnav navigate={navigate} />
+      <section className="split-section about-story-section">
+        <div>
+          <p className="eyebrow">Mission</p>
+          <h2>Clear retrofit guidance should be easier to get.</h2>
+        </div>
+        <p className="about-story-copy">
+          RetroFi is built to reduce confusion around home upgrades. Instead of asking homeowners to piece together savings estimates,
+          incentives, and retrofit options across disconnected sources, the product brings those inputs into one clearer report.
+        </p>
+      </section>
+      <section className="card-grid three about-principles-grid">
+        {[
+          ["Simple to use", "A lightweight flow gets homeowners from account setup to useful insight quickly.", "roadmap"],
+          ["Designed for clarity", "Recommendations are meant to be readable, personalized, and easy to act on.", "savings"],
+          ["Built to save time", "RetroFi reduces research overhead by organizing complex utility and retrofit information.", "mission"]
+        ].map(([title, copy, icon]) => (
+          <article className="feature-card" key={title}>
+            <FeatureIcon icon={icon as "roadmap" | "savings" | "mission"} />
+            <h3>{title}</h3>
+            <p>{copy}</p>
+          </article>
+        ))}
+      </section>
       <section className="card-grid two about-hub-grid">
         <AboutHubCard
-          copy="Learn how we’re making sustainability upgrades financially practical for businesses."
+          copy="Learn why RetroFi is focused on making home upgrade decisions clearer and more practical."
           icon="mission"
           label="Mission"
           navigate={navigate}
@@ -2795,7 +2805,7 @@ function AboutPage({
           title="Why RetroFi exists"
         />
         <AboutHubCard
-          copy="See who is building RetroFi and the roles behind the product."
+          copy="Meet the people building the product, research workflows, and homeowner experience."
           icon="team"
           label="Team"
           navigate={navigate}
@@ -2803,21 +2813,26 @@ function AboutPage({
           title="Meet the team"
         />
         <AboutHubCard
-          copy="Understand how RetroFi uses business information and utility bills to prepare recommendations."
+          copy="Understand how home and utility data are used to prepare recommendations responsibly."
           icon="trust"
           label="Trust & Data"
           navigate={navigate}
           route="about-trust"
-          title="How we handle business data"
+          title="How we handle data"
         />
         <AboutHubCard
-          copy="Reach out before creating a scan or uploading business information."
+          copy="Talk to us if you want to understand the product before creating an account or uploading bills."
           icon="contact"
           label="Contact"
           navigate={navigate}
           route="about-contact"
-          title="Questions before starting?"
+          title="Questions before you start?"
         />
+      </section>
+      <section className="final-cta">
+        <h2>RetroFi is built to make home upgrade choices easier to understand.</h2>
+        <p>Start with a lightweight account and see how fast home and utility data can turn into clearer retrofit guidance.</p>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );

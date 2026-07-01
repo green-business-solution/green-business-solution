@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) public site page polish
+
+- Redesigned the public `How it Works`, `Pricing`, and `About` pages to use a calmer, more consistent SaaS-style layout with subtler green styling, cleaner hierarchy, and clearer calls to action.
+- Reframed the content around homeowners and fast retrofit clarity, including a concise five-step workflow, credible pricing tiers, and a mission-led About page focused on actionable retrofit guidance.
+- Removed the older experimental interactive timeline styling in favor of simpler responsive card layouts and shared public-page presentation styles without changing routing or backend behavior.
+
 ## 2026-07-01 - Codex (GPT-5) conservative grant estimation
 
 - Added a grant-estimation rules module that separates source confidence from estimate confidence, suppresses low-confidence or max-only competitive grant values, and supports deterministic capped percent, per-unit, fixed, study/audit, competitive EV, zero-value loan/tax/non-cash classifications, and reason codes.
