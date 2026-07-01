@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -2548,30 +2548,35 @@ function HowItWorksPage({
     {
       title: "Sign in and get started",
       copy: "Create your account in minutes, with no utility paperwork needed to begin.",
+      shortTitle: "Sign in",
       icon: <LockIcon />,
       badge: "Easy first step"
     },
     {
       title: "Tell us about the property",
       copy: "Share a few basics so RetroFi can tailor the upgrade search to your home or building.",
+      shortTitle: "Property info",
       icon: <BuildingOutlineIcon />,
       badge: null
     },
     {
       title: "Add utility bills or usage",
       copy: "Upload recent bills or enter usage data to sharpen the savings analysis.",
+      shortTitle: "Bills or usage",
       icon: <StoreOutlineIcon />,
       badge: null
     },
     {
       title: "RetroFi runs the analysis",
       copy: "We match incentives, estimate savings, and rank the strongest retrofit opportunities.",
+      shortTitle: "Analysis",
       icon: <LeafOutlineIcon />,
       badge: null
     },
     {
       title: "Review your results",
       copy: "See personalized recommendations, expected value, and clear next steps in one place.",
+      shortTitle: "Results",
       icon: <EyeIcon />,
       badge: "Most valuable step"
     }
@@ -2579,51 +2584,75 @@ function HowItWorksPage({
 
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="How it works"
-        title="Five simple steps from sign-in to retrofit results"
-        copy="RetroFi keeps the process lightweight upfront, then turns your property and utility data into clear upgrade recommendations."
-      />
-      <section className="how-it-works-journey">
-        <SectionHeading
-          eyebrow="5 simple steps"
-          title="A fast path to personalized retrofit guidance"
-          copy="You can skim the whole journey in under 30 seconds and start with the easiest step."
-        />
-        <div className="how-it-works-progress" aria-label="RetroFi process overview">
-          {steps.map((step, index) => (
-            <div className="how-it-works-progress-step" key={step.title}>
-              <span>{index + 1}</span>
-              <small>{step.title}</small>
-            </div>
-          ))}
+      <section className="how-it-works-video-section">
+        <div className="how-it-works-video-copy">
+          <p className="eyebrow">How it works</p>
+          <h1>Watch the full RetroFi process in one short cartoon</h1>
+          <p>From sign-in to personalized results, this quick loop shows exactly what happens in all five steps.</p>
         </div>
-        <div className="how-it-works-step-grid">
-          {steps.map((step, index) => (
-            <article
-              className={
-                index === 0
-                  ? "how-it-works-step-card is-first"
-                  : index === steps.length - 1
-                    ? "how-it-works-step-card is-final"
-                    : "how-it-works-step-card"
-              }
-              key={step.title}
-            >
-              <div className="how-it-works-step-card-top">
-                <span className="how-it-works-step-number">{index + 1}</span>
-                <span className="how-it-works-step-icon" aria-hidden="true">
-                  {step.icon}
-                </span>
-              </div>
-              <div className="how-it-works-step-copy">
-                <h3>{step.title}</h3>
-                <p>{step.copy}</p>
-              </div>
-              {step.badge ? <span className="how-it-works-step-badge">{step.badge}</span> : null}
-            </article>
-          ))}
+        <div className="how-it-works-video-shell">
+          <div className="how-it-works-video-chrome" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div
+            aria-label="Animated cartoon walkthrough showing sign in, home information, utility upload, analysis, and retrofit results."
+            className="how-it-works-video-stage"
+            role="img"
+          >
+            {steps.map((step, index) => (
+              <article
+                className="how-it-works-scene"
+                key={step.title}
+                style={{ "--scene-index": index } as CSSProperties}
+              >
+                <div className={`how-it-works-scene-art scene-${index + 1}`}>
+                  <div className="scene-backdrop" />
+                  <div className="scene-floor" />
+                  <div className="scene-screen">
+                    <div className="scene-screen-header">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div className="scene-screen-body">
+                      <div className="scene-screen-icon" aria-hidden="true">
+                        {step.icon}
+                      </div>
+                      <div className="scene-screen-lines">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="scene-avatar">
+                    <div className="scene-avatar-head" />
+                    <div className="scene-avatar-body" />
+                  </div>
+                  <div className="scene-accent accent-a" />
+                  <div className="scene-accent accent-b" />
+                </div>
+                <div className="how-it-works-scene-caption">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{step.shortTitle}</strong>
+                  <p>{step.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="how-it-works-video-controls" aria-hidden="true">
+            <div className="how-it-works-video-progress">
+              {steps.map((step, index) => (
+                <span key={step.title} style={{ "--scene-index": index } as CSSProperties} />
+              ))}
+            </div>
+            <div className="how-it-works-video-meta">
+              <span>20 second loop</span>
+              <span>5 steps</span>
+            </div>
+          </div>
         </div>
       </section>
       <section className="how-it-works-support-grid">

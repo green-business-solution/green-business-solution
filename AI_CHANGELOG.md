@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) how it works animated cartoon swap
+
+- Replaced the top `How it Works` hero plus step-section text block with a single animated cartoon-style walkthrough that loops through all five RetroFi steps inside a video-like player.
+- Kept the implementation frontend-only by building the short explainer with existing icons, CSS scene animation, and a lightweight scrubber/progress treatment instead of changing routing or backend behavior.
+
 ## 2026-07-01 - Codex (GPT-5) low source-confidence opportunity queue
 
 - Added a repeatable low-source-confidence queue generator for repaired opportunity-data records.
