@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -2544,6 +2544,7 @@ function HowItWorksPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const currentStepIndex = 0;
   const steps = [
     {
       title: "Sign in and get started",
@@ -2584,73 +2585,57 @@ function HowItWorksPage({
 
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <section className="how-it-works-video-section">
-        <div className="how-it-works-video-copy">
+      <section className="how-it-works-timeline-section">
+        <div className="how-it-works-timeline-copy">
           <p className="eyebrow">How it works</p>
-          <h1>Watch the full RetroFi process in one short cartoon</h1>
-          <p>From sign-in to personalized results, this quick loop shows exactly what happens in all five steps.</p>
+          <h1>Follow the RetroFi process from sign-in to results</h1>
+          <p>Track the journey in one glance, with a guide showing where the process starts and how it moves forward.</p>
         </div>
-        <div className="how-it-works-video-shell">
-          <div className="how-it-works-video-chrome" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+        <div className="how-it-works-timeline-shell" aria-label="RetroFi step timeline">
+          <div className="how-it-works-timeline-track" aria-hidden="true">
+            <div className="how-it-works-timeline-line" />
+            <div
+              className="how-it-works-timeline-progress"
+              style={{ width: `${(currentStepIndex / Math.max(steps.length - 1, 1)) * 100}%` }}
+            />
+            <div
+              className="how-it-works-timeline-character"
+              style={{ left: `calc(${(currentStepIndex / Math.max(steps.length - 1, 1)) * 100}% - 28px)` }}
+            >
+              <div className="timeline-character-head" />
+              <div className="timeline-character-body" />
+            </div>
           </div>
-          <div
-            aria-label="Animated cartoon walkthrough showing sign in, home information, utility upload, analysis, and retrofit results."
-            className="how-it-works-video-stage"
-            role="img"
-          >
+          <div className="how-it-works-timeline-steps">
             {steps.map((step, index) => (
-              <article
-                className="how-it-works-scene"
+              <div
+                className={
+                  index === currentStepIndex
+                    ? "how-it-works-timeline-step is-current"
+                    : index < currentStepIndex
+                      ? "how-it-works-timeline-step is-complete"
+                      : "how-it-works-timeline-step"
+                }
                 key={step.title}
-                style={{ "--scene-index": index } as CSSProperties}
               >
-                <div className={`how-it-works-scene-art scene-${index + 1}`}>
-                  <div className="scene-backdrop" />
-                  <div className="scene-floor" />
-                  <div className="scene-screen">
-                    <div className="scene-screen-header">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                    <div className="scene-screen-body">
-                      <div className="scene-screen-icon" aria-hidden="true">
-                        {step.icon}
-                      </div>
-                      <div className="scene-screen-lines">
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="scene-avatar">
-                    <div className="scene-avatar-head" />
-                    <div className="scene-avatar-body" />
-                  </div>
-                  <div className="scene-accent accent-a" />
-                  <div className="scene-accent accent-b" />
+                <div className="how-it-works-timeline-node">
+                  <span>{index + 1}</span>
                 </div>
-                <div className="how-it-works-scene-caption">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                <div className="how-it-works-timeline-step-copy">
                   <strong>{step.shortTitle}</strong>
-                  <p>{step.copy}</p>
+                  <small>{step.copy}</small>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
-          <div className="how-it-works-video-controls" aria-hidden="true">
-            <div className="how-it-works-video-progress">
-              {steps.map((step, index) => (
-                <span key={step.title} style={{ "--scene-index": index } as CSSProperties} />
-              ))}
+          <div className="how-it-works-timeline-meta">
+            <div className="how-it-works-timeline-meta-card">
+              <span>Current step</span>
+              <strong>{steps[currentStepIndex].title}</strong>
             </div>
-            <div className="how-it-works-video-meta">
-              <span>20 second loop</span>
-              <span>5 steps</span>
+            <div className="how-it-works-timeline-meta-card">
+              <span>Next up</span>
+              <strong>{steps[Math.min(currentStepIndex + 1, steps.length - 1)].title}</strong>
             </div>
           </div>
         </div>

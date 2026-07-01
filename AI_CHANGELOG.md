@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) how it works timeline swap
+
+- Removed the animated video block from the `How it Works` page and replaced it with a cleaner process timeline above the five step cards.
+- Added a small character marker above the current step on the timeline so the user can visually track where the journey starts before reading the step cards below.
+
 ## 2026-07-01 - Codex (GPT-5) how it works steps restored below video
 
 - Removed the `What you'll need / What you get back` two-card section beneath the animated How it Works video.
