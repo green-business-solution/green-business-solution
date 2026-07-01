@@ -13,6 +13,7 @@ export type Route =
   | "sign-in"
   | "portal"
   | "portal-preview"
+  | "user-preview"
   | "admin"
   | "testcases";
 
@@ -39,6 +40,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/sign-in") return "sign-in";
   if (pathname === "/portal") return "portal";
   if (pathname === "/portal-preview") return "portal-preview";
+  if (pathname === "/user-preview") return "user-preview";
   if (pathname === "/admin") return "admin";
   if (pathname === "/testcases") return "testcases";
   return "home";

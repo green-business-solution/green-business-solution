@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) standalone admin user preview page
+
+- Removed the `Client Intake Summary` admin page, utility-readiness summary helpers, and related styles.
+- Changed the admin `User Preview` nav item to open a dedicated `/user-preview` page in a new tab, matching the Test Cases navigation pattern.
+- Added a client dropdown on `/user-preview` that loads live admin user data and renders the existing Retrofit Recommendations preview for the selected user.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro work packet organization
 
 - Moved GPT Pro prompts and saved outputs under `GPT Pro Work/` so prompt/output handoff artifacts live in one workspace.

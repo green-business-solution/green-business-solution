@@ -227,24 +227,6 @@ type BillFieldDictionaryEntry = {
   unit?: string;
 };
 
-type ClientIntakeSummaryRow = {
-  clientName: string;
-  companyName: string;
-  completionPercent: number;
-  email: string;
-  fileCount: number;
-  filledFieldCount: number;
-  lastUpdated: string | null;
-  missingFieldCount: number;
-  missingFieldLabels: string[];
-  organizationType: string;
-  processingStatus: "No data" | "Uploaded" | "Processing" | "Needs review" | "Ready";
-  siteAddress: string;
-  totalExpectedFieldCount: number;
-  utilityProvider: string;
-  userId: string;
-};
-
 type DatabaseTableSnapshot = {
   name: string;
   recordCount: number;
@@ -3506,14 +3488,6 @@ const utilityCategoryUsageLabels: Partial<Record<UtilityCategory, string>> = {
   water_sewer: "Annual usage",
   waste: "Annual cost"
 };
-const adminUtilitySummaryTabs = [
-  { id: "electric", label: "Electricity Usage", billType: "electric" },
-  { id: "gas", label: "Gas Usage", billType: "gas" },
-  { id: "water_sewer", label: "Water Usage", billType: "water_sewer" },
-  { id: "waste", label: "Trash / Recycling Usage", billType: "waste" }
-] as const;
-type AdminUtilitySummaryTabId = (typeof adminUtilitySummaryTabs)[number]["id"];
-
 function formatProcessingStatus(status: UploadedUtilityFile["processingStatus"]) {
   return status
     .split("_")
@@ -5841,7 +5815,6 @@ function AdminClientPortalPreviewPage({
 const ADMIN_OPPORTUNITIES_TAB = "Opportunities";
 const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
-const CLIENT_INTAKE_SUMMARY_TAB = "Client Intake Summary";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-client-intake", "gbs-energy-data", "gbs-users"]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
@@ -5858,16 +5831,8 @@ const SPECIAL_PLANNING_RETROFIT_IDS = new Set([
 ]);
 const billFieldDictionaryEntries = billFieldDictionary as BillFieldDictionaryEntry[];
 const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) => [field.id, field]));
-const utilitySummaryFieldsByType = new Map(
-  adminUtilitySummaryTabs.map((tab) => [
-    tab.id,
-    billFieldDictionaryEntries.filter((field) => field.bill_type === tab.billType)
-  ])
-);
 
 function adminSectionKey(tab: string) {
-  if (tab === ADMIN_USER_PREVIEW_TAB) return "user-preview";
-  if (tab === CLIENT_INTAKE_SUMMARY_TAB) return "client-intake-summary";
   if (tab === ADMIN_OPPORTUNITIES_TAB) return "database:opportunities";
   if (tab === ADMIN_RETROFITS_TAB) return "database:retrofits";
   if (tab === ADMIN_TEST_CASES_TAB) return "test-cases";
@@ -5892,7 +5857,6 @@ function AdminDashboard({
   const navItems = [
     "Users",
     ADMIN_USER_PREVIEW_TAB,
-    CLIENT_INTAKE_SUMMARY_TAB,
     ADMIN_TEST_CASES_TAB,
     ...dataTables
       .filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME && !ADMIN_HIDDEN_DATA_TABLE_NAMES.has(table.name))
@@ -5903,9 +5867,7 @@ function AdminDashboard({
   const selectedDataTable =
     activeTab === ADMIN_OPPORTUNITIES_TAB ||
     activeTab === ADMIN_RETROFITS_TAB ||
-    activeTab === ADMIN_TEST_CASES_TAB ||
-    activeTab === ADMIN_USER_PREVIEW_TAB ||
-    activeTab === CLIENT_INTAKE_SUMMARY_TAB
+    activeTab === ADMIN_TEST_CASES_TAB
       ? null
       : dataTables.find((table) => table.name === activeTab) || null;
   const activeSectionKey = adminSectionKey(activeTab);
@@ -5960,7 +5922,7 @@ function AdminDashboard({
     setLoadingSectionKey(sectionKey);
 
     try {
-      if (tab === "Users" || tab === ADMIN_USER_PREVIEW_TAB || tab === CLIENT_INTAKE_SUMMARY_TAB) {
+      if (tab === "Users") {
         const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
           headers: adminAuthHeaders(credential)
         });
@@ -6007,8 +5969,6 @@ function AdminDashboard({
 
     if (
       activeTab !== "Users" &&
-      activeTab !== ADMIN_USER_PREVIEW_TAB &&
-      activeTab !== CLIENT_INTAKE_SUMMARY_TAB &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_OPPORTUNITIES_TAB &&
       activeTab !== ADMIN_RETROFITS_TAB &&
@@ -6023,6 +5983,10 @@ function AdminDashboard({
   }, [activeTab, credential, loadedSections]);
 
   function handleAdminNavItemChange(item: string) {
+    if (item === ADMIN_USER_PREVIEW_TAB) {
+      window.open(pathForRoute("user-preview"), "_blank", "noopener,noreferrer");
+      return;
+    }
     if (item === ADMIN_TEST_CASES_TAB) {
       window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
       return;
@@ -6042,14 +6006,6 @@ function AdminDashboard({
       {error ? <p className="error-message">{error}</p> : null}
       {activeTab === "Users" ? (
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
-      ) : activeTab === ADMIN_USER_PREVIEW_TAB ? (
-        <AdminUserPreviewPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
-      ) : activeTab === CLIENT_INTAKE_SUMMARY_TAB ? (
-        <ClientIntakeSummaryPanel
-          isLoading={isCurrentSectionLoading}
-          onRefresh={() => void refreshDashboard()}
-          rows={rows}
-        />
       ) : activeTab === ADMIN_TEST_CASES_TAB ? (
         <AdminTestCasesPanel />
       ) : activeTab === ADMIN_OPPORTUNITIES_TAB ? (
@@ -6075,6 +6031,155 @@ function AdminTestCasesStandalonePage() {
       <AdminTestCasesPanel />
     </main>
   );
+}
+
+type UserPreviewOption = {
+  userId: string;
+  clientName: string;
+  companyName: string | null;
+  email: string;
+  hasIntake: boolean;
+};
+
+function AdminUserPreviewStandalonePage({
+  credential,
+  initialRows,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  initialRows: AdminRow[];
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  const [rows, setRows] = useState(initialRows);
+  const [selectedUserId, setSelectedUserId] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return new URLSearchParams(window.location.search).get("userId") || "";
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const previewOptions = useMemo(() => buildUserPreviewOptions(rows), [rows]);
+  const selectedOption =
+    previewOptions.find((option) => option.userId === selectedUserId) ||
+    previewOptions.find((option) => option.hasIntake) ||
+    previewOptions[0] ||
+    null;
+
+  useEffect(() => {
+    if (!selectedOption || selectedUserId === selectedOption.userId) return;
+    setSelectedUserId(selectedOption.userId);
+  }, [selectedOption, selectedUserId]);
+
+  useEffect(() => {
+    if (!selectedOption || typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    params.set("userId", selectedOption.userId);
+    params.set("clientName", selectedOption.clientName);
+    params.set("email", selectedOption.email);
+    if (selectedOption.companyName) {
+      params.set("companyName", selectedOption.companyName);
+    } else {
+      params.delete("companyName");
+    }
+    window.history.replaceState({}, "", `${pathForRoute("user-preview")}?${params.toString()}`);
+  }, [selectedOption]);
+
+  async function refreshUsers() {
+    if (!credential) {
+      setError("Sign in again to refresh user previews.");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
+        headers: adminAuthHeaders(credential)
+      });
+      setRows(response.users);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not refresh user previews.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function handleSelectionChange(event: ChangeEvent<HTMLSelectElement>) {
+    setSelectedUserId(event.target.value);
+  }
+
+  return (
+    <main className="user-preview-standalone-page">
+      <header className="user-preview-toolbar">
+        <div className="brand-block">
+          <img alt="RetroFi" className="workspace-logo" src="/retrofi-logo.png" />
+          <div>
+            <p className="eyebrow">Admin workspace</p>
+            <h1>User Preview</h1>
+          </div>
+        </div>
+        <div className="user-preview-actions">
+          <label>
+            <span>Preview client</span>
+            <select disabled={previewOptions.length === 0} onChange={handleSelectionChange} value={selectedOption?.userId || ""}>
+              {previewOptions.length === 0 ? (
+                <option value="">No clients available</option>
+              ) : (
+                previewOptions.map((option) => (
+                  <option key={option.userId} value={option.userId}>
+                    {[option.clientName, option.companyName, option.email].filter(Boolean).join(" · ")}
+                  </option>
+                ))
+              )}
+            </select>
+          </label>
+          <button className="secondary-button" disabled={isLoading} onClick={() => void refreshUsers()} type="button">
+            {isLoading ? "Refreshing..." : "Refresh users"}
+          </button>
+          <button className="secondary-button" onClick={onSignOut} type="button">
+            Sign out
+          </button>
+        </div>
+      </header>
+
+      {error ? <p className="error-message">{error}</p> : null}
+
+      {selectedOption ? (
+        <CustomerRetrofitEstimatesPanel
+          credential={credential}
+          emptyMessage="This client does not have any eligible retrofit matches yet."
+          endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(selectedOption.userId)}`}
+          eyebrow="Admin user preview"
+          intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
+          key={selectedOption.userId}
+          loadingMessage="Loading live retrofit recommendations for this client..."
+          title="Retrofit Recommendations"
+        />
+      ) : (
+        <section className="retrofit-preview-page">
+          <article className="retrofit-preview-card">
+            <h2>No client users available</h2>
+            <p>Client users with intake data will appear in the dropdown after they are created.</p>
+          </article>
+        </section>
+      )}
+      <span className="sr-only">Signed in as {viewer.email}</span>
+    </main>
+  );
+}
+
+function buildUserPreviewOptions(rows: AdminRow[]): UserPreviewOption[] {
+  return rows
+    .filter((row) => row.user.role === "client")
+    .map((row) => ({
+      userId: row.user.userId,
+      clientName: row.user.fullName || row.intake?.contact.fullName || row.user.email,
+      companyName: row.user.companyName || row.intake?.business.companyName || null,
+      email: row.user.email,
+      hasIntake: Boolean(row.intake)
+    }))
+    .sort((left, right) => Number(right.hasIntake) - Number(left.hasIntake) || left.clientName.localeCompare(right.clientName));
 }
 
 function AdminTestCasesPanel() {
@@ -6988,111 +7093,6 @@ function sampleStatusLabel(status: string) {
     .join(" ");
 }
 
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function deriveClientIntakeProcessingStatus(
-  uploadedFiles: UploadedUtilityFile[],
-  filledFieldCount: number,
-  expectedFieldCount: number
-) {
-  if (uploadedFiles.length === 0) {
-    return "No data" as const;
-  }
-
-  if (
-    uploadedFiles.some((file) => file.processingStatus === "needs_review" || file.processingStatus === "failed")
-  ) {
-    return "Needs review" as const;
-  }
-
-  if (uploadedFiles.some((file) => file.processingStatus === "processing")) {
-    return "Processing" as const;
-  }
-
-  if (uploadedFiles.some((file) => file.processingStatus === "uploaded")) {
-    return "Uploaded" as const;
-  }
-
-  if (expectedFieldCount > 0 && filledFieldCount >= expectedFieldCount) {
-    return "Ready" as const;
-  }
-
-  return "Uploaded" as const;
-}
-
-function buildClientIntakeSummaryRows(rows: AdminRow[], utilityType: AdminUtilitySummaryTabId): ClientIntakeSummaryRow[] {
-  const expectedFields = utilitySummaryFieldsByType.get(utilityType) || [];
-  return rows
-    .filter(({ user, intake }) => user.role === "client" && intake)
-    .map(({ intake, user }) => {
-      const categoryFiles = (intake?.uploadedUtilityFiles || []).filter((file) => file.utilityCategory === utilityType);
-      const utilityFieldIds = new Set((intake?.utilityExtractedValues || [])
-        .map((value) => value.fieldId)
-        .filter((fieldId) => billFieldDictionaryById.get(fieldId)?.bill_type === utilityType));
-      const filledFieldCount = utilityFieldIds.size;
-      const totalExpectedFieldCount = expectedFields.length;
-      const missingFieldLabels = expectedFields
-        .filter((field) => !utilityFieldIds.has(field.id))
-        .map((field) => field.display_name);
-      const completionPercent =
-        totalExpectedFieldCount > 0 ? Math.round((filledFieldCount / totalExpectedFieldCount) * 100) : 0;
-      const latestUploadedAt = categoryFiles
-        .map((file) => file.processedAt || file.uploadedAt)
-        .filter(Boolean)
-        .sort((left, right) => String(right).localeCompare(String(left)))[0] || null;
-      const categorySummary = intake?.siteEnergyProfile?.utilitySummaries?.find((summary) => summary.utilityCategory === utilityType);
-      const fallbackUtilityProvider =
-        utilityType === "electric"
-          ? intake?.site?.electricUtilityProvider
-          : utilityType === "gas"
-            ? intake?.site?.gasUtilityProvider || null
-            : null;
-
-      return {
-        clientName: intake?.contact.fullName || user.fullName || "Unknown client",
-        companyName: intake?.business.companyName || user.companyName || "Not provided",
-        completionPercent,
-        email: intake?.contact.email || user.email,
-        fileCount: categoryFiles.length,
-        filledFieldCount,
-        lastUpdated: latestUploadedAt || intake?.updatedAt || user.createdAt,
-        missingFieldCount: totalExpectedFieldCount - filledFieldCount,
-        missingFieldLabels,
-        organizationType: intake?.business.organizationType || "Not provided",
-        processingStatus: deriveClientIntakeProcessingStatus(categoryFiles, filledFieldCount, totalExpectedFieldCount),
-        siteAddress: intake?.site?.address || "Not provided",
-        totalExpectedFieldCount,
-        utilityProvider:
-          categorySummary?.latestUtilityProvider ||
-          categoryFiles[0]?.utilityProvider ||
-          fallbackUtilityProvider ||
-          "Not provided",
-        userId: user.userId
-      };
-    })
-    .sort((left, right) => String(right.lastUpdated || "").localeCompare(String(left.lastUpdated || "")));
-}
-
-function summarizeClientIntakeSummaryRows(rows: ClientIntakeSummaryRow[]) {
-  const clientsWithUtilityData = rows.filter((row) => row.fileCount > 0).length;
-  const averageCompletionPercent =
-    rows.length > 0
-      ? Math.round(rows.reduce((sum, row) => sum + row.completionPercent, 0) / rows.length)
-      : 0;
-
-  return {
-    averageCompletionPercent,
-    clientsNeedingReview: rows.filter((row) => row.processingStatus === "Needs review").length,
-    clientsWithUtilityData,
-    totalClientRecords: rows.length
-  };
-}
-
 function AdminUsersPanel({
   isLoading,
   onRefresh,
@@ -7209,303 +7209,6 @@ function AdminUsersTable({
             <span role="cell">{formatDate(user.createdAt)}</span>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function ClientIntakeSummaryPanel({
-  isLoading,
-  onRefresh,
-  rows
-}: {
-  isLoading: boolean;
-  onRefresh: () => void;
-  rows: AdminRow[];
-}) {
-  const [activeUtilityTab, setActiveUtilityTab] = useState<AdminUtilitySummaryTabId>("electric");
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const activeUtilityTabConfig = adminUtilitySummaryTabs.find((tab) => tab.id === activeUtilityTab) || adminUtilitySummaryTabs[0];
-  const summaryRows = useMemo(() => buildClientIntakeSummaryRows(rows, activeUtilityTab), [activeUtilityTab, rows]);
-  const totals = useMemo(() => summarizeClientIntakeSummaryRows(summaryRows), [summaryRows]);
-  const selectedSummaryRow = summaryRows.find((row) => row.userId === selectedUserId) || null;
-  const handleSummaryRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>, userId: string) => {
-    if (event.key !== "Enter" && event.key !== " ") {
-      return;
-    }
-
-    event.preventDefault();
-    setSelectedUserId(userId);
-  };
-
-  useEffect(() => {
-    if (selectedUserId && !summaryRows.some((row) => row.userId === selectedUserId)) {
-      setSelectedUserId(null);
-    }
-  }, [selectedUserId, summaryRows]);
-
-  return (
-    <section className="admin-section">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Client intake recap</p>
-          <h2>Client Intake Summary</h2>
-        </div>
-        <div className="link-list">
-          <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
-            {isLoading ? "Refreshing..." : "Refresh"}
-          </button>
-        </div>
-      </div>
-
-      <div className="admin-utility-summary-tabs" role="tablist" aria-label="Utility type summary tabs">
-        {adminUtilitySummaryTabs.map((tab) => (
-          <button
-            aria-selected={tab.id === activeUtilityTab}
-            className={`admin-utility-summary-tab${tab.id === activeUtilityTab ? " is-active" : ""}`}
-            key={tab.id}
-            onClick={() => setActiveUtilityTab(tab.id)}
-            role="tab"
-            type="button"
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="card-grid four admin-summary-card-grid">
-        <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Total client records</span>
-          <h3>{totals.totalClientRecords.toLocaleString()}</h3>
-          <p>Active client intake records currently available in the admin workspace.</p>
-        </article>
-        <article className="feature-card admin-summary-card">
-          <span className="eyebrow">{activeUtilityTabConfig.label}</span>
-          <h3>{totals.clientsWithUtilityData.toLocaleString()}</h3>
-          <p>Client record(s) with at least one uploaded file for this utility type.</p>
-        </article>
-        <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Average completion</span>
-          <h3>{totals.averageCompletionPercent}%</h3>
-          <p>Expected fields come from bill-field dictionary entries tagged `{activeUtilityTabConfig.billType}`.</p>
-        </article>
-        <article className="feature-card admin-summary-card">
-          <span className="eyebrow">Needs review</span>
-          <h3>{totals.clientsNeedingReview.toLocaleString()}</h3>
-          <p>Client record(s) with failed or manual-review utility files for this utility type.</p>
-        </article>
-      </div>
-
-      <div className="admin-table admin-intake-summary-shell">
-        <div className="admin-intake-summary-scroll">
-          <table className="admin-intake-summary-table" aria-label="Client intake summary">
-            <colgroup>
-              <col className="admin-intake-summary-col-client" />
-              <col className="admin-intake-summary-col-type" />
-              <col className="admin-intake-summary-col-utility" />
-              <col className="admin-intake-summary-col-files" />
-              <col className="admin-intake-summary-col-filled" />
-              <col className="admin-intake-summary-col-missing" />
-              <col className="admin-intake-summary-col-completion" />
-              <col className="admin-intake-summary-col-status" />
-              <col className="admin-intake-summary-col-updated" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col">Client</th>
-                <th scope="col">Type</th>
-                <th scope="col">Utility</th>
-                <th scope="col">Files uploaded</th>
-                <th scope="col">Fields filled</th>
-                <th scope="col">Missing fields</th>
-                <th scope="col">Completion %</th>
-                <th scope="col">Status</th>
-                <th scope="col">Last updated</th>
-              </tr>
-            </thead>
-            <tbody>
-              {summaryRows.length === 0 ? (
-                <tr>
-                  <td className="admin-intake-summary-empty" colSpan={9}>
-                    <strong>{isLoading ? "Loading intake summaries..." : `No ${activeUtilityTabConfig.label.toLowerCase()} summaries available.`}</strong>
-                    <small>
-                      {isLoading
-                        ? "This tab is loading after sign-in."
-                        : "Refresh after new intake submissions or utility uploads arrive."}
-                    </small>
-                  </td>
-                </tr>
-              ) : summaryRows.map((row) => (
-                <tr
-                  aria-pressed={row.userId === selectedUserId}
-                  className={`admin-intake-summary-table-row${row.userId === selectedUserId ? " is-selected" : ""}`}
-                  key={row.userId}
-                  onClick={() => setSelectedUserId(row.userId)}
-                  onKeyDown={(event) => handleSummaryRowKeyDown(event, row.userId)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <td>
-                    <strong>{row.clientName}</strong>
-                    <small>{row.email}</small>
-                    <small>{row.companyName}</small>
-                  </td>
-                  <td>
-                    {row.organizationType}
-                    <small>{row.siteAddress}</small>
-                  </td>
-                  <td>
-                    {row.utilityProvider}
-                    <small>{row.siteAddress}</small>
-                  </td>
-                  <td>
-                    {row.fileCount.toLocaleString()}
-                    <small>{row.fileCount === 1 ? "1 file for this utility" : `${row.fileCount} files for this utility`}</small>
-                  </td>
-                  <td>
-                    {`${row.filledFieldCount}/${row.totalExpectedFieldCount}`}
-                    <small>{row.filledFieldCount > 0 ? "Detected from extracted values" : "No utility-specific extracted values yet"}</small>
-                  </td>
-                  <td>
-                    {row.missingFieldCount.toLocaleString()}
-                    <small>{row.missingFieldLabels.slice(0, 2).join(", ") || "None"}</small>
-                  </td>
-                  <td>
-                    <strong>{row.completionPercent}%</strong>
-                    <small>{activeUtilityTabConfig.label} fields detected</small>
-                  </td>
-                  <td>
-                    <mark className={`admin-status-pill ${slugify(row.processingStatus)}`}>{row.processingStatus}</mark>
-                  </td>
-                  <td>
-                    {formatDate(row.lastUpdated)}
-                    <small>Selects this client for the readiness note below</small>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {selectedSummaryRow ? (
-        <div className="admin-selection-popover" role="dialog" aria-label="Selected client actions">
-          <div className="admin-selection-popover-copy">
-            <p className="eyebrow">Client selected</p>
-            <h3>{selectedSummaryRow.clientName}</h3>
-            <p>{selectedSummaryRow.email}</p>
-          </div>
-          <div className="link-list">
-            <button className="secondary-button" onClick={() => setSelectedUserId(null)} type="button">
-              Clear selection
-            </button>
-          </div>
-        </div>
-      ) : null}
-
-      <section className="database-detail-panel retrofit-result-group">
-        <div className="database-detail-header">
-          <div>
-            <p className="eyebrow">Admin note</p>
-            <h2>{selectedSummaryRow?.clientName || "Retrofit estimates placeholder"}</h2>
-            <p>Estimate debug output is disabled while the new backend calculation engine is being connected.</p>
-          </div>
-        </div>
-        <p className="empty-state">
-          {selectedSummaryRow
-            ? "Use this summary to confirm profile and utility-upload readiness. Open user previews from the User Preview admin tab."
-            : "Select a client to inspect utility-upload readiness."}
-        </p>
-      </section>
-    </section>
-  );
-}
-
-function AdminUserPreviewPanel({
-  isLoading,
-  onRefresh,
-  rows
-}: {
-  isLoading: boolean;
-  onRefresh: () => void;
-  rows: AdminRow[];
-}) {
-  const previewRows = useMemo(
-    () =>
-      rows
-        .filter((row) => row.user.role === "client")
-        .map((row) => ({
-          userId: row.user.userId,
-          clientName: row.user.fullName || row.intake?.contact.fullName || row.user.email,
-          companyName: row.user.companyName || row.intake?.business.companyName || null,
-          email: row.user.email,
-          hasIntake: Boolean(row.intake),
-          uploadedFileCount: row.intake?.uploadedUtilityFiles.length || 0,
-          createdAt: row.user.createdAt
-        }))
-        .sort((a, b) => a.clientName.localeCompare(b.clientName)),
-    [rows]
-  );
-
-  function openPortalPreview(row: { userId: string; clientName: string; companyName: string | null; email: string }) {
-    const params = new URLSearchParams({
-      userId: row.userId,
-      clientName: row.clientName,
-      email: row.email
-    });
-    if (row.companyName) {
-      params.set("companyName", row.companyName);
-    }
-    window.open(`${pathForRoute("portal-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
-  }
-
-  return (
-    <section className="admin-section">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Admin shortcut</p>
-          <h2>User Preview</h2>
-          <p>Open the customer-facing post-intake preview page for a selected client.</p>
-        </div>
-        <div className="link-list">
-          <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
-            {isLoading ? "Refreshing..." : "Refresh"}
-          </button>
-        </div>
-      </div>
-
-      <div className="admin-table admin-user-preview-table">
-        <div className="admin-row admin-head">
-          <span>Client</span>
-          <span>Company</span>
-          <span>Intake</span>
-          <span>Utility files</span>
-          <span>Created</span>
-          <span>Preview</span>
-        </div>
-        {previewRows.length === 0 ? (
-          <p className="empty-state">
-            {isLoading ? "Loading clients..." : "No client users are available for portal preview yet."}
-          </p>
-        ) : (
-          previewRows.map((row) => (
-            <div className="admin-row" key={row.userId}>
-              <span>
-                {row.clientName}
-                <small>{row.email}</small>
-              </span>
-              <span>{row.companyName || "No company listed"}</span>
-              <span>{row.hasIntake ? "Intake available" : "No intake yet"}</span>
-              <span>{row.uploadedFileCount.toLocaleString()}</span>
-              <span>{formatDate(row.createdAt)}</span>
-              <span>
-                <button className="secondary-button" onClick={() => openPortalPreview(row)} type="button">
-                  Open user preview
-                </button>
-              </span>
-            </div>
-          ))
-        )}
       </div>
     </section>
   );
@@ -8510,7 +8213,13 @@ export function App() {
     setAuthPayload(payload);
     setAuthCredential(credential);
     setSignInMessage(null);
-    navigate(payload.dashboard === "admin" ? (route === "testcases" ? "testcases" : "admin") : "portal");
+    navigate(
+      payload.dashboard === "admin"
+        ? route === "testcases" || route === "user-preview"
+          ? route
+          : "admin"
+        : "portal"
+    );
   }
 
   function signOut() {
@@ -8598,6 +8307,28 @@ export function App() {
   if (effectiveRoute === "testcases") {
     if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
       return <AdminTestCasesStandalonePage />;
+    }
+
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "user-preview") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminUserPreviewStandalonePage
+          credential={authCredential}
+          initialRows={authPayload.adminDashboard.users}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
     }
 
     return (

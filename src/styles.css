@@ -853,6 +853,65 @@ textarea {
   padding: 24px;
 }
 
+.user-preview-standalone-page {
+  min-height: 100vh;
+}
+
+.user-preview-toolbar {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #dfe6e1;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 18px 32px;
+}
+
+.user-preview-toolbar h1,
+.user-preview-toolbar p {
+  margin: 0;
+}
+
+.user-preview-actions {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.user-preview-actions label {
+  display: grid;
+  gap: 5px;
+  min-width: min(440px, 70vw);
+}
+
+.user-preview-actions label span {
+  color: #526258;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.user-preview-actions select {
+  background: #fbfdfb;
+  border: 1px solid #d8e2dc;
+  border-radius: 10px;
+  color: #17211b;
+  min-height: 40px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.sr-only {
+  height: 1px;
+  left: -10000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+}
+
 .profile-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -901,15 +960,6 @@ dd {
   overflow: hidden;
 }
 
-.admin-intake-summary-shell {
-  overflow: hidden;
-}
-
-.admin-intake-summary-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
 .admin-row {
   display: grid;
   gap: 14px;
@@ -943,51 +993,8 @@ dd {
   margin-top: 4px;
 }
 
-.admin-user-preview-table .admin-row {
-  grid-template-columns:
-    minmax(170px, 1fr)
-    minmax(160px, 0.9fr)
-    minmax(120px, 0.7fr)
-    minmax(96px, 0.55fr)
-    minmax(130px, 0.7fr)
-    minmax(170px, auto);
-}
-
 .admin-summary-card-grid {
   align-items: stretch;
-}
-
-.admin-utility-summary-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.admin-utility-summary-tab {
-  appearance: none;
-  background: #f6f7f3;
-  border: 1px solid #d7e1d9;
-  border-radius: 999px;
-  color: #526058;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 700;
-  padding: 10px 16px;
-}
-
-.admin-utility-summary-tab.is-active {
-  background: #2f6c43;
-  border-color: #2f6c43;
-  color: #f7fbf8;
-}
-
-.admin-utility-summary-tab:hover {
-  border-color: #9fb4a4;
-}
-
-.admin-utility-summary-tab:focus-visible {
-  outline: 2px solid #2f6c43;
-  outline-offset: 2px;
 }
 
 .admin-summary-card {
@@ -998,186 +1005,6 @@ dd {
 
 .admin-summary-card h3 {
   font-size: 30px;
-}
-
-.admin-intake-summary-table {
-  border-collapse: collapse;
-  min-width: 1980px;
-  table-layout: fixed;
-  width: 1980px;
-}
-
-.admin-intake-summary-col-client {
-  width: 320px;
-}
-
-.admin-intake-summary-col-type {
-  width: 220px;
-}
-
-.admin-intake-summary-col-utility {
-  width: 260px;
-}
-
-.admin-intake-summary-col-files {
-  width: 160px;
-}
-
-.admin-intake-summary-col-filled {
-  width: 220px;
-}
-
-.admin-intake-summary-col-missing {
-  width: 260px;
-}
-
-.admin-intake-summary-col-completion {
-  width: 160px;
-}
-
-.admin-intake-summary-col-status {
-  width: 180px;
-}
-
-.admin-intake-summary-col-updated {
-  width: 180px;
-}
-
-.admin-intake-summary-table th,
-.admin-intake-summary-table td {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  padding: 18px 16px;
-  text-align: left;
-  vertical-align: top;
-}
-
-.admin-intake-summary-table thead th {
-  background: #edf2ee;
-  color: #526058;
-  font-size: 12px;
-  font-weight: 850;
-  text-transform: uppercase;
-}
-
-.admin-intake-summary-table tbody tr + tr td {
-  border-top: 1px solid #edf1ee;
-}
-
-.admin-intake-summary-table td small {
-  display: block;
-  margin-top: 4px;
-}
-
-.admin-intake-summary-table-row {
-  background: #ffffff;
-  cursor: pointer;
-}
-
-.admin-intake-summary-table-row:hover {
-  background: #f5faf6;
-}
-
-.admin-intake-summary-table-row.is-selected {
-  background: #ecf6ef;
-  box-shadow: inset 4px 0 0 #2f6c43;
-}
-
-.admin-intake-summary-table-row.is-selected:hover {
-  background: #e6f2ea;
-}
-
-.admin-intake-summary-table-row:focus-visible {
-  outline: 2px solid #2f6c43;
-  outline-offset: -2px;
-}
-
-.admin-intake-summary-empty {
-  padding: 24px 16px;
-}
-
-.admin-intake-summary-empty small {
-  display: block;
-  margin-top: 4px;
-}
-
-.admin-status-pill {
-  background: #edf5ef;
-  border-radius: 999px;
-  color: #28563a;
-  display: inline-flex;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 6px 10px;
-  text-transform: uppercase;
-}
-
-.admin-status-pill.no-data {
-  background: #f1f3f1;
-  color: #5f6e66;
-}
-
-.admin-status-pill.uploaded,
-.admin-status-pill.processing {
-  background: #e7f2ea;
-  color: #24573b;
-}
-
-.admin-status-pill.needs-review {
-  background: #fdf1dd;
-  color: #8a5a15;
-}
-
-.admin-status-pill.ready {
-  background: #dff4e5;
-  color: #1f6a39;
-}
-
-.admin-selection-popover {
-  align-items: end;
-  background: rgba(18, 31, 24, 0.94);
-  border: 1px solid rgba(228, 238, 232, 0.16);
-  border-radius: 18px;
-  bottom: 28px;
-  box-shadow: 0 22px 48px rgba(14, 35, 26, 0.28);
-  display: grid;
-  gap: 14px;
-  max-width: 360px;
-  padding: 18px;
-  position: fixed;
-  right: 28px;
-  z-index: 60;
-}
-
-.admin-selection-popover .eyebrow,
-.admin-selection-popover h3,
-.admin-selection-popover p {
-  color: #f5fbf7;
-  margin: 0;
-}
-
-.admin-selection-popover-copy {
-  display: grid;
-  gap: 4px;
-}
-
-.admin-selection-popover .eyebrow {
-  color: #bdd8c8;
-}
-
-.admin-selection-popover .link-list {
-  gap: 10px;
-}
-
-.admin-selection-popover .secondary-button {
-  background: #f3f8f4;
-  border-color: transparent;
-  color: #173f2c;
-}
-
-.admin-selection-popover .secondary-button:hover {
-  background: #e3efe7;
 }
 
 .data-grid {
@@ -2708,10 +2535,29 @@ dd {
     justify-content: start;
     text-align: left;
   }
+
+  .user-preview-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px 24px;
+  }
+
+  .user-preview-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .user-preview-actions label {
+    min-width: 100%;
+  }
 }
 
 @media (max-width: 640px) {
   .retrofit-preview-page {
+    padding: 16px;
+  }
+
+  .user-preview-toolbar {
     padding: 16px;
   }
 
