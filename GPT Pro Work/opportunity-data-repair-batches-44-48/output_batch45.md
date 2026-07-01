@@ -1,0 +1,1008 @@
+
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:data-center-program",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Santa Clara County"
+],
+"cities": [
+"Santa Clara"
+],
+"utilityTerritories": [
+"Silicon Valley Power"
+],
+"notes": "Eligible data center facility must be in Silicon Valley Power's electric service territory in the City of Santa Clara."
+},
+"eligibleApplicantTypes": [
+"business_customers",
+"commercial_customers",
+"industrial_customers",
+"data_center_operators",
+"corporations",
+"partnerships",
+"sole_proprietors",
+"nonprofits",
+"government_entities"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"data_center",
+"telecommunications",
+"government",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"data_center_cooling_efficiency",
+"data_center_fan_energy_reduction",
+"data_center_chiller_efficiency",
+"data_center_liquid_cooling",
+"data_center_heat_exchanger",
+"data_center_vfd_controls",
+"data_center_economizer_optimization"
+],
+"hardRequirements": [
+"Facility must be in Silicon Valley Power service territory.",
+"Facility or space must primarily house IT or telecommunications equipment.",
+"Retrofit projects must meet program load thresholds of more than 350 kW IT server load or more than 100 tons IT cooling load.",
+"Project must decrease electrical usage at the data center facility.",
+"Applicant must contact Silicon Valley Power for eligibility screening and submit signed application materials and savings calculations.",
+"Pre-installation inspection and written pre-approval are required before purchase or installation.",
+"Measurement and verification and post-installation inspection are required.",
+"Savings must persist for at least five years.",
+"Applicant cannot receive other Silicon Valley Power rebates for the same project."
+],
+"blockers": [
+"Self-generation, cogeneration, and fuel switching are not eligible under the Data Center Program.",
+"Low-flow fixture, plumbing, and water-efficiency measures are unsupported false-positive matches.",
+"Generic HVAC replacement outside data center cooling or fan-energy savings is not enough for matching.",
+"Projects installed, purchased, or completed before written pre-approval are ineligible.",
+"Virtualization, server consolidation, and easily removed equipment are ineligible.",
+"Measures eligible under other Silicon Valley Power programs should be matched to the separate applicable program."
+],
+"programType": "rebate_program",
+"administrator": "Silicon Valley Power",
+"applicationUrl": "[https://www.siliconvalleypower.com/home/showpublisheddocument/41504/638881794790570000](https://www.siliconvalleypower.com/home/showpublisheddocument/41504/638881794790570000)",
+"websiteUrl": "[https://www.siliconvalleypower.com/businesses/rebates](https://www.siliconvalleypower.com/businesses/rebates)",
+"sourceUrlsChecked": [
+"[https://www.siliconvalleypower.com/businesses/rebates](https://www.siliconvalleypower.com/businesses/rebates)",
+"[https://www.siliconvalleypower.com/home/showpublisheddocument/41504/638881794790570000](https://www.siliconvalleypower.com/home/showpublisheddocument/41504/638881794790570000)",
+"[https://www.siliconvalleypower.com/home/showpublisheddocument/84943/638935341760800000](https://www.siliconvalleypower.com/home/showpublisheddocument/84943/638935341760800000)",
+"[https://www.siliconvalleypower.com/home/showpublisheddocument/87487/638881819076400000](https://www.siliconvalleypower.com/home/showpublisheddocument/87487/638881819076400000)"
+],
+"evidenceText": "SVP lists a Data Center Program for facilities in its territory with IT server loads above 350 kW or cooling loads above 100 tons. Eligible retrofits must reduce electrical use; self-generation, cogeneration, fuel switching, and projects installed before preapproval are ineligible.",
+"reasoningNotes": "Preserved only data-center-specific electric efficiency categories. Removed combined heat and power and water fixture matches as explicit ineligible or unsupported categories. The checked application is a 2025-2026 form and may be superseded after July 1, but the official business rebates page still lists the program."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22229",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"PA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Project sites had to be in Pennsylvania and publicly accessible at eligible corridor, community, or destination locations."
+},
+"eligibleApplicantTypes": [
+"businesses",
+"incorporated_nonprofits",
+"state_government",
+"local_government",
+"tribal_government",
+"federal_agencies",
+"transportation_organizations",
+"air_quality_organizations",
+"metropolitan_planning_organizations",
+"rural_regional_transportation_planning_organizations"
+],
+"eligibleSectors": [
+"transportation",
+"public_infrastructure",
+"commercial",
+"government",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"dc_fast_charger_installation",
+"hydrogen_fueling_station",
+"level_2_ev_charger_installation_with_dc_fast_charging"
+],
+"hardRequirements": [
+"Application and grant agreement were required before starting work.",
+"Project had to be located in Pennsylvania.",
+"Station had to serve light-duty vehicles and provide public, unrestricted, 24-hour access.",
+"DC fast charging projects had to meet minimum connector, power, payment, signage, lighting, warranty, and reporting requirements.",
+"Level 2 charging equipment was eligible only when paired with an eligible DC fast charging project.",
+"Applicant had to provide required cost share and comply with program guidance."
+],
+"blockers": [
+"The official program guidelines set final application deadlines in 2021 and January 2022; no current application window was verified.",
+"Level 2-only charging projects are not eligible under this program.",
+"Stationary fuel cell systems are unsupported; the program covered hydrogen fueling infrastructure, not building fuel cell generation.",
+"Projects already started or completed before grant approval were ineligible.",
+"Private, non-public, or outside-Pennsylvania projects were ineligible."
+],
+"programType": "grant_program",
+"administrator": "Pennsylvania Department of Environmental Protection",
+"applicationUrl": null,
+"websiteUrl": "[https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates](https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates)",
+"sourceUrlsChecked": [
+"[https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward](https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward)",
+"[https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates](https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates)",
+"[https://files.dep.state.pa.us/Air/Volkswagen/DCFCH2ProgramGuidelines.pdf](https://files.dep.state.pa.us/Air/Volkswagen/DCFCH2ProgramGuidelines.pdf)",
+"[https://afdc.energy.gov/laws/laws_expired?jurisdiction=PA](https://afdc.energy.gov/laws/laws_expired?jurisdiction=PA)"
+],
+"evidenceText": "DEP’s program guidelines set application deadlines in 2021 and January 2022. The program funded publicly accessible light-duty DC fast charging, hydrogen fueling, and Level 2 only when paired with DCFC; it excluded Level 2-only, already started, outside-PA, and non-public projects.",
+"reasoningNotes": "Marked unavailable because the current official grant pages do not show an open solicitation and the official guidelines specify past application deadlines. Kept hydrogen fueling rather than stationary fuel cell systems."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22046",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"ME"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Eligible property and borrower principal residence must be in Maine."
+},
+"eligibleApplicantTypes": [
+"homeowners",
+"owner_occupants",
+"individual_property_owners",
+"income_eligible_households"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"duplex",
+"mobile_home",
+"condo"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"air_source_heat_pump_hvac_retrofit",
+"insulation_upgrade",
+"air_sealing_weatherization",
+"electrical_panel_service_upgrade_for_heat_pump"
+],
+"hardRequirements": [
+"Borrower must own or have an ownership interest in the Maine residence.",
+"Property must be the borrower's principal residence in Maine.",
+"Eligible properties are one-unit homes, two-unit duplexes, mobile homes, and condominiums.",
+"Heat pump, insulation, and air sealing work must meet Efficiency Maine eligibility rules.",
+"Electrical service or panel upgrades are eligible only when required as part of an eligible heat pump project.",
+"Work must generally be performed by a registered residential vendor, and loan proceeds are disbursed to the vendor.",
+"Ancillary health and safety improvements are limited and must be required for the qualifying energy upgrade."
+],
+"blockers": [
+"This is financing, not a rebate.",
+"Windows are explicitly not eligible.",
+"Dual-fuel heat pump and fossil-fuel combination systems are excluded.",
+"Commercial properties and multifamily properties above two units are not supported by this home loan.",
+"New homes and additions are excluded from insulation and air sealing loan eligibility.",
+"Standalone panel upgrades are not eligible unless required for an eligible heat pump project.",
+"Furnaces and boilers are not supported by the current home energy loan page."
+],
+"programType": "loan_program",
+"administrator": "Efficiency Maine Trust",
+"applicationUrl": "[https://greenbank.efficiencymaine.com/](https://greenbank.efficiencymaine.com/)",
+"websiteUrl": "[https://www.efficiencymaine.com/home-energy-loans/](https://www.efficiencymaine.com/home-energy-loans/)",
+"sourceUrlsChecked": [
+"[https://www.efficiencymaine.com/home-energy-loans/](https://www.efficiencymaine.com/home-energy-loans/)",
+"[https://www.efficiencymaine.com/at-home/energy-loans/](https://www.efficiencymaine.com/at-home/energy-loans/)",
+"[https://www.efficiencymaine.com/at-home/](https://www.efficiencymaine.com/at-home/)",
+"[https://greenbank.efficiencymaine.com/](https://greenbank.efficiencymaine.com/)"
+],
+"evidenceText": "Efficiency Maine’s loan page limits eligibility to Maine owner-occupied residential properties and qualifying heat pumps, insulation, air sealing, and required electrical service upgrades. Windows, new homes/additions, and dual-fuel heat pump/fossil fuel combinations are excluded.",
+"reasoningNotes": "Kept air sealing, insulation, and heat pump categories, but represented this as financing rather than a rebate. Added a narrow panel/service-upgrade category only when tied to an eligible heat pump."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22556",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"DE"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Eligible property must be a Delaware owner-occupied one-to-four-unit residence."
+},
+"eligibleApplicantTypes": [
+"delaware_homeowners",
+"owner_occupants",
+"residential_property_owners"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"two_to_four_unit_residential",
+"duplex",
+"condominium",
+"townhouse"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"duct_sealing_and_insulation",
+"insulation_upgrade",
+"air_source_heat_pump_hvac_retrofit",
+"ductless_mini_split_heat_pump",
+"central_air_conditioner_replacement",
+"high_efficiency_furnace_retrofit",
+"high_efficiency_boiler_retrofit",
+"heat_pump_water_heater",
+"tankless_water_heater",
+"smart_thermostat"
+],
+"hardRequirements": [
+"Applicant must be a Delaware resident and registered owner of an owner-occupied one-to-four-unit home.",
+"Home must complete a Home Performance with ENERGY STAR assessment.",
+"Project must use an Energize Delaware participating contractor.",
+"Project must receive or reserve an Energize Delaware rebate before financing is approved.",
+"Loan underwriting and project review are required.",
+"Loan site lists minimum credit score and debt-to-income requirements.",
+"Contractor estimate and required documentation must be submitted before project approval."
+],
+"blockers": [
+"This is a loan program, not a rebate program.",
+"Solar financing is a separate Residential Solar Loan program.",
+"Geothermal heat pumps are excluded from this Home Performance financing path and handled through separate DNREC programs.",
+"New construction and commercial properties are excluded.",
+"Self-installed work and work started before required approval are not eligible.",
+"Measures must be tied to the eligible Energize Delaware rebate and Home Performance process."
+],
+"programType": "loan_program",
+"administrator": "Energize Delaware",
+"applicationUrl": "[https://portal.energizedelawareloans.org/](https://portal.energizedelawareloans.org/)",
+"websiteUrl": "[https://energizedelawareloans.org/home-energy-efficiency-loan-program/](https://energizedelawareloans.org/home-energy-efficiency-loan-program/)",
+"sourceUrlsChecked": [
+"[https://energizedelaware.org/residential/residential-financing-loan-programs/](https://energizedelaware.org/residential/residential-financing-loan-programs/)",
+"[https://energizedelawareloans.org/home-energy-efficiency-loan-program/](https://energizedelawareloans.org/home-energy-efficiency-loan-program/)",
+"[https://energizedelaware.org/residential/get-started-home-performance-with-energy-star/](https://energizedelaware.org/residential/get-started-home-performance-with-energy-star/)",
+"[https://portal.energizedelawareloans.org/](https://portal.energizedelawareloans.org/)"
+],
+"evidenceText": "Current Energize Delaware loan pages require Delaware owner-occupied 1–4 unit homes, a Home Performance with ENERGY STAR assessment, participating contractor, rebate reservation, and underwriting. Eligible measures include air/duct sealing, insulation, HVAC, water heating, and smart thermostats.",
+"reasoningNotes": "Preserved boiler, furnace, and HVAC categories because current loan materials list them as qualifying improvements when combined with the Home Performance and rebate process."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22094",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NC"
+],
+"counties": [
+"Alexander County",
+"Cabarrus County",
+"Caldwell County",
+"Catawba County",
+"Davidson County",
+"Davie County",
+"Forsyth County",
+"Gaston County",
+"Guilford County",
+"Iredell County",
+"Lincoln County",
+"Mecklenburg County",
+"Montgomery County",
+"Randolph County",
+"Rockingham County",
+"Rowan County",
+"Stokes County",
+"Wilkes County",
+"Yadkin County"
+],
+"cities": [],
+"utilityTerritories": [
+"EnergyUnited"
+],
+"notes": "Eligible home must be an active EnergyUnited residential account in EnergyUnited's North Carolina electric service territory."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"member_customers",
+"homeowners"
+],
+"eligibleSectors": [
+"residential",
+"single_family"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"air_source_heat_pump_hvac_retrofit",
+"ground_source_geothermal_heat_pump"
+],
+"hardRequirements": [
+"Home must be served by an active EnergyUnited account.",
+"Eligible property must be a single-family, permanent, primary residence.",
+"Heat pump must meet the applicable SEER, SEER2, HSPF, HSPF2, or geothermal EER thresholds.",
+"System must be an AHRI-matched complete system.",
+"Minimum cooling capacity is 18,000 BTU.",
+"Required permits and inspections must be completed.",
+"Contractor must submit the electronic rebate form with invoice, AHRI certificate, and inspection documentation.",
+"Application must be submitted within the program deadline after installation.",
+"Rebate is limited to two units per dwelling."
+],
+"blockers": [
+"The older DSIRE website URL for general energy efficiency rebates returned 404 and should not be used for broad matching.",
+"Generic high-efficiency HVAC categories should be narrowed to qualifying heat pump systems.",
+"Furnaces, boilers, central air-only systems, appliances, weatherization, and commercial measures are unsupported under the checked heat pump guidelines.",
+"Homes outside EnergyUnited service territory or without an active account are ineligible."
+],
+"programType": "rebate_program",
+"administrator": "EnergyUnited Electric Membership Corporation",
+"applicationUrl": "[https://www.energyunited.com/heat-pump-rebate-form/](https://www.energyunited.com/heat-pump-rebate-form/)",
+"websiteUrl": "[https://www.energyunited.com/wp-content/uploads/2024/04/HVAC-Guidelines-Internet-April-2024.pdf](https://www.energyunited.com/wp-content/uploads/2024/04/HVAC-Guidelines-Internet-April-2024.pdf)",
+"sourceUrlsChecked": [
+"[https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/](https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/)",
+"[https://www.energyunited.com/wp-content/uploads/2024/04/HVAC-Guidelines-Internet-April-2024.pdf](https://www.energyunited.com/wp-content/uploads/2024/04/HVAC-Guidelines-Internet-April-2024.pdf)",
+"[https://www.energyunited.com/heat-pump-rebate-form/](https://www.energyunited.com/heat-pump-rebate-form/)",
+"[https://www.energyunited.com/member-guide/](https://www.energyunited.com/member-guide/)"
+],
+"evidenceText": "The current EnergyUnited heat pump guidelines cover qualifying air-source and geothermal heat pumps for active EnergyUnited single-family residential accounts. Applicants need an AHRI-matched complete system, permits/inspection, contractor electronic submission, and a primary permanent home.",
+"reasoningNotes": "Retained heat pump and geothermal heat pump matches. Removed generic HVAC matching and noted that the prior broad rebate page is no longer accessible."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22338",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MS"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Entergy Mississippi"
+],
+"notes": "Available to qualifying Entergy Mississippi customers in Entergy's Mississippi electric service territory; the eTech site is shared across Entergy operating companies."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"commercial_customers",
+"dealers",
+"fleet_customers"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"transportation",
+"fleet"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a qualifying Entergy customer with an Entergy account number.",
+"Level 2 charger must be ENERGY STAR certified.",
+"Application may be submitted by customer or dealer.",
+"Dated equipment invoice or proof of purchase must be within the program lookback period.",
+"EV charging projects require an installation invoice or a photo showing installed chargers.",
+"Residential customers are limited to two chargers for separate EVs or locations.",
+"DC fast charger incentive amount depends on charger power level."
+],
+"blockers": [
+"Hydrogen fueling and stationary fuel cell systems are not part of this eTech EV charging incentive.",
+"Replacement of older equivalent electric equipment does not qualify.",
+"Chargers outside Entergy Mississippi service or without a qualifying Entergy account are ineligible.",
+"Other eTech electrification measures are separate electric equipment categories and should not be generalized into EV charging.",
+"Entergy New Orleans-specific EV charging caps and bonus rules should not be applied to Mississippi customers."
+],
+"programType": "rebate_program",
+"administrator": "Entergy Mississippi",
+"applicationUrl": "[https://entergyetech.com/apply-online](https://entergyetech.com/apply-online)",
+"websiteUrl": "[https://entergyetech.com/electric-vehicles](https://entergyetech.com/electric-vehicles)",
+"sourceUrlsChecked": [
+"[https://entergyetech.com/electric-vehicles](https://entergyetech.com/electric-vehicles)",
+"[https://entergyetech.com/](https://entergyetech.com/)",
+"[https://entergyetech.com/apply-online](https://entergyetech.com/apply-online)"
+],
+"evidenceText": "The eTech EV page offers all Entergy customers incentives for ENERGY STAR Level 2 chargers and DC fast chargers. The application requires an Entergy account, recent invoice or proof of purchase, and EV charger installation documentation.",
+"reasoningNotes": "Kept Level 2 and DC fast charging. Removed fuel-cell implications because the page supports EV chargers, not fuel cell systems or hydrogen fueling."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22596",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"LA"
+],
+"counties": [],
+"cities": [
+"New Orleans"
+],
+"utilityTerritories": [
+"Entergy New Orleans"
+],
+"notes": "Available to qualifying Entergy New Orleans customers in the Entergy New Orleans electric service territory."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"commercial_customers",
+"multifamily_property_owners",
+"developers",
+"fleet_customers"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"multifamily",
+"transportation",
+"fleet",
+"new_construction_support"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation",
+"ev_charger_pre_wiring"
+],
+"hardRequirements": [
+"Applicant must be a qualifying Entergy New Orleans customer.",
+"Residential bonus requires enrollment in the Energy Smart bring-your-own-charger pathway.",
+"Commercial Level 2 incentives are limited to eligible public, fleet, or multifamily use cases and program port requirements.",
+"Commercial DC fast charging incentives depend on charger power and eligible use case.",
+"Project incentive caps apply.",
+"Application requires recent invoice or proof of purchase and EV charging installation documentation.",
+"Developer pre-wiring incentives apply to new electrical circuits supporting future EV charging."
+],
+"blockers": [
+"Hydrogen fueling and stationary fuel cell systems are not part of this eTech EV charging incentive.",
+"This record is limited to Entergy New Orleans territory and should not be matched to Entergy Mississippi or other Entergy operating companies.",
+"Level 2 charger installation labor is ineligible for single-family and multifamily developer pre-wiring incentives.",
+"Replacement of older equivalent electric equipment does not qualify.",
+"DC fast charger private-network projects have limited incentive treatment.",
+"Other eTech electrification measures are separate categories and should not be generalized into EV charging."
+],
+"programType": "rebate_program",
+"administrator": "Entergy New Orleans",
+"applicationUrl": "[https://entergyetech.com/apply-online](https://entergyetech.com/apply-online)",
+"websiteUrl": "[https://entergyetech.com/electric-vehicles](https://entergyetech.com/electric-vehicles)",
+"sourceUrlsChecked": [
+"[https://entergyetech.com/electric-vehicles](https://entergyetech.com/electric-vehicles)",
+"[https://entergyetech.com/](https://entergyetech.com/)",
+"[https://entergyetech.com/apply-online](https://entergyetech.com/apply-online)"
+],
+"evidenceText": "The eTech EV page has separate Entergy New Orleans residential, commercial, and developer EV charging incentives, including Level 2, DC fast charging, and pre-wiring. It imposes location, port, kW, project-cap, invoice, and documentation limits.",
+"reasoningNotes": "Kept Level 2 and DC fast charging and added EV pre-wiring because the official page lists developer incentives. Did not generalize into hydrogen or stationary fuel cell categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2653",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Entergy Texas"
+],
+"notes": "Specific facility account and meter must be served by Entergy Texas; the program targets select non-industrial commercial electric distribution customers under 69 kVa load."
+},
+"eligibleApplicantTypes": [
+"commercial_customers",
+"businesses",
+"schools",
+"municipalities",
+"commercial_property_owners",
+"commercial_tenants"
+],
+"eligibleSectors": [
+"commercial",
+"public_sector",
+"education",
+"municipal",
+"healthcare",
+"retail",
+"office",
+"hospitality"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"high_efficiency_hvac_replacement",
+"high_efficiency_refrigeration_equipment",
+"cool_roofing_or_roofing_efficiency",
+"custom_commercial_energy_efficiency"
+],
+"hardRequirements": [
+"Applicant must be a select non-industrial commercial electric distribution customer of Entergy Texas.",
+"Facility must be below the program load threshold and served by an Entergy Texas electric account and meter.",
+"Applicant must provide a letter of intent, Entergy Texas electric bill, and required vendor documentation.",
+"Retrofit projects require pre-inspection before equipment removal.",
+"Project application and measure documentation must be submitted through the program portal.",
+"Installation must be completed within the applicable program year and before program deadlines.",
+"Post-inspection and verified electric demand or energy savings are required.",
+"Incentives are subject to available program funds."
+],
+"blockers": [
+"Residential customers are not eligible for this commercial program.",
+"Industrial loads and accounts outside the eligible commercial distribution class are not supported.",
+"Program provides incentives and technical support but does not sell or install products.",
+"Equipment removed before pre-inspection can disqualify a retrofit project.",
+"Residential appliances, home weatherization, and residential HVAC should not match this record.",
+"Projects may be restricted from participation in other Entergy Texas energy efficiency programs for the same facility or project year."
+],
+"programType": "rebate_program",
+"administrator": "Entergy Texas, Inc.",
+"applicationUrl": "[https://applications.entergytxsolutions.com/](https://applications.entergytxsolutions.com/)",
+"websiteUrl": "[https://entergytexassolutions.com/eti/media/commercial-solutions-flyer-.pdf](https://entergytexassolutions.com/eti/media/commercial-solutions-flyer-.pdf)",
+"sourceUrlsChecked": [
+"[https://www.entergytxsolutions.com/customers/](https://www.entergytxsolutions.com/customers/)",
+"[https://entergytexassolutions.com/eti/media/commercial-solutions-flyer-.pdf](https://entergytexassolutions.com/eti/media/commercial-solutions-flyer-.pdf)",
+"[https://entergytexassolutions.com/eti/media/program-manual-.pdf](https://entergytexassolutions.com/eti/media/program-manual-.pdf)",
+"[https://applications.entergytxsolutions.com/](https://applications.entergytxsolutions.com/)",
+"[https://www.entergytexas.com/energyefficiency](https://www.entergytexas.com/energyefficiency)"
+],
+"evidenceText": "The 2026 Entergy Texas Commercial Solutions materials list lighting, HVAC, refrigeration, roofing, and custom/other incentives for select non-industrial commercial electric customers under 69 kVa. Projects require LOI enrollment, account verification, pre-inspection, application, post-inspection, and verified electric savings.",
+"reasoningNotes": "Preserved lighting, HVAC, and refrigeration. Added only program-supported roofing and custom commercial energy efficiency. Avoided residential or product categories not supported by the commercial manual."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2933",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Evergy Missouri Metro",
+"Evergy Missouri West",
+"Spire"
+],
+"notes": "Program is offered to qualifying Missouri residential customers served by Evergy, with Spire referenced as a participating utility partner."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"homeowners",
+"renters"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"direct_install_led_lighting_kit",
+"faucet_aerator_retrofit",
+"efficient_flow_showerhead",
+"water_heater_pipe_insulation",
+"smart_power_strip",
+"window_insulation_film_weatherstripping",
+"door_draft_stopper",
+"switch_plate_gasket"
+],
+"hardRequirements": [
+"Customer must be a Missouri residential customer served by Evergy under an eligible residential rate.",
+"Evergy account must be active and current.",
+"Customer must schedule and complete the in-home energy savings kit appointment.",
+"Installation professional must be allowed to assess and install eligible kit items.",
+"Renters must obtain landlord consent before installation.",
+"One kit is allowed per residence or account.",
+"Program funds are limited and available first-come, first-served."
+],
+"blockers": [
+"This is a no-cost kit and direct-install visit, not a rebate for full insulation upgrades.",
+"Window insulation film and weatherstripping should not be matched as window replacement.",
+"Faucet aerators and showerheads should not be generalized to broad plumbing retrofits.",
+"The program does not fund HVAC replacement, appliance replacement, whole-home weatherization, or commercial projects.",
+"Unsafe premises, lack of property rights, or lack of landlord consent may prevent installation."
+],
+"programType": "direct_install_program",
+"administrator": "Evergy",
+"applicationUrl": "[https://homeassess.evergy.com/](https://homeassess.evergy.com/)",
+"websiteUrl": "[https://www.evergy.com/ways-to-save/programs-link/energy-savings-kit](https://www.evergy.com/ways-to-save/programs-link/energy-savings-kit)",
+"sourceUrlsChecked": [
+"[https://www.evergy.com/ways-to-save/programs/energy-savings-kit](https://www.evergy.com/ways-to-save/programs/energy-savings-kit)",
+"[https://www.evergy.com/ways-to-save/programs-link/energy-savings-kit](https://www.evergy.com/ways-to-save/programs-link/energy-savings-kit)",
+"[https://www.evergy.com/-/media/documents/ways-to-save/programs/energy-savings-kit-terms-and-conditions-mo.pdf](https://www.evergy.com/-/media/documents/ways-to-save/programs/energy-savings-kit-terms-and-conditions-mo.pdf)",
+"[https://homeassess.evergy.com/](https://homeassess.evergy.com/)"
+],
+"evidenceText": "Evergy’s current kit page lists free direct-installed items such as LED nightlights, aerators, efficient-flow showerheads, pipe insulation, smart power strips, window insulation, weatherstripping, draft stoppers, and switch-plate gaskets for Missouri residential customers.",
+"reasoningNotes": "Removed broad insulation and window replacement. Preserved lighting only as a direct-install kit item and narrowed water measures to faucet aerators and efficient-flow showerheads."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22577",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"NH"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Eversource New Hampshire"
+],
+"notes": "Residential property had to be in New Hampshire and connected to the Eversource on-bill financing pathway."
+},
+"eligibleApplicantTypes": [
+"eversource_residential_customers",
+"homeowners",
+"residential_property_owners"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"two_to_four_unit_residential",
+"vacation_home"
+],
+"eligibleRetrofitCategories": [
+"air_source_heat_pump_hvac_retrofit",
+"ground_source_geothermal_heat_pump",
+"ductless_mini_split_heat_pump",
+"battery_storage_system"
+],
+"hardRequirements": [
+"Program funding must be available and applications must be open.",
+"Applicant must use a NEIF-approved contractor.",
+"Property must be an eligible one-to-four-unit primary residence or vacation home on a permanent foundation.",
+"Eligible heat pump, ductless, geothermal, or battery storage equipment must meet program specifications.",
+"Loan payments were intended to appear on the Eversource bill.",
+"Projects were subject to first-come funding availability."
+],
+"blockers": [
+"Eversource and NEIF both state the residential Clean Energy Fund is fully subscribed or not accepting applications.",
+"NEIF EnergyPlus standard financing is a separate product and not affiliated with the Eversource Clean Energy Fund.",
+"Generic high-efficiency HVAC should not match except for qualifying heat pump, ductless, or geothermal systems.",
+"Commercial clean energy financing is a separate Eversource page and not this residential loan.",
+"Solar is not supported by the checked residential loan page."
+],
+"programType": "loan_program",
+"administrator": "Eversource and National Energy Improvement Fund",
+"applicationUrl": null,
+"websiteUrl": "[https://www.eversource.com/residential/save-money-energy/clean-energy-options/new-hampshire-clean-energy-fund](https://www.eversource.com/residential/save-money-energy/clean-energy-options/new-hampshire-clean-energy-fund)",
+"sourceUrlsChecked": [
+"[https://www.eversource.com/residential/save-money-energy/clean-energy-options/new-hampshire-clean-energy-fund](https://www.eversource.com/residential/save-money-energy/clean-energy-options/new-hampshire-clean-energy-fund)",
+"[https://www.neifund.org/nh-residential-clean-energy/](https://www.neifund.org/nh-residential-clean-energy/)"
+],
+"evidenceText": "Eversource says the residential Clean Energy Fund is fully subscribed and NEIF is not receiving new applications. NEIF’s page also says the program is not accepting applications, while listing qualifying heat pumps, ductless systems, geothermal heat pumps, and battery storage.",
+"reasoningNotes": "Marked unavailable despite valid categories because current official sources say no new applications are accepted."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5886",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VA"
+],
+"counties": [
+"Fairfax County"
+],
+"cities": [
+"City of Fairfax"
+],
+"utilityTerritories": [],
+"notes": "CAP and VCAP apply to eligible properties in Fairfax County or the City of Fairfax through the Northern Virginia Soil and Water Conservation District."
+},
+"eligibleApplicantTypes": [
+"property_owners",
+"residential_property_owners",
+"homeowner_associations",
+"civic_associations",
+"places_of_worship"
+],
+"eligibleSectors": [
+"residential",
+"community_association",
+"nonprofit",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"stormwater_management_practice",
+"impervious_surface_removal",
+"conservation_landscaping",
+"rain_garden",
+"dry_well",
+"bioretention",
+"infiltration_trench",
+"constructed_wetland",
+"living_shoreline",
+"green_roof",
+"rainwater_harvesting",
+"permeable_pavement",
+"vegetated_stormwater_conveyance"
+],
+"hardRequirements": [
+"Property must be in Fairfax County or the City of Fairfax.",
+"Property must experience detrimental stormwater impacts such as erosion, excess runoff, poor drainage, or poor vegetation.",
+"Applicant must request a site visit and develop an eligible practice plan before approval.",
+"Practice must be approved by the district or program authority before installation.",
+"Installed practice must pass inspection before reimbursement.",
+"Property owner must maintain the installed practice for the required maintenance period.",
+"Reimbursement is limited by program caps and actual eligible costs."
+],
+"blockers": [
+"Insulation, window replacement, lighting, HVAC, and appliance energy upgrades are unsupported false-positive matches.",
+"Energy Conservation Assistance is a separate ECAP program and should not be conflated with CAP or VCAP stormwater practices.",
+"Work started before approval is not reimbursable.",
+"French drains, foundation drains, retaining walls, stream restorations, non-native landscaping, and similar excluded measures do not qualify.",
+"Projects required solely for regulatory compliance are not eligible voluntary conservation practices."
+],
+"programType": "cost_share_rebate_program",
+"administrator": "Northern Virginia Soil and Water Conservation District",
+"applicationUrl": "[https://www.fairfaxcounty.gov/soil-water-conservation/vcap](https://www.fairfaxcounty.gov/soil-water-conservation/vcap)",
+"websiteUrl": "[https://www.fairfaxcounty.gov/soil-water-conservation/conservation-assistance-programs](https://www.fairfaxcounty.gov/soil-water-conservation/conservation-assistance-programs)",
+"sourceUrlsChecked": [
+"[https://www.fairfaxcounty.gov/soil-water-conservation/conservation-assistance-programs](https://www.fairfaxcounty.gov/soil-water-conservation/conservation-assistance-programs)",
+"[https://www.fairfaxcounty.gov/soil-water-conservation/vcap](https://www.fairfaxcounty.gov/soil-water-conservation/vcap)",
+"[https://www.fairfaxcounty.gov/soil-water-conservation/cap-vcap-faq](https://www.fairfaxcounty.gov/soil-water-conservation/cap-vcap-faq)"
+],
+"evidenceText": "Fairfax CAP/VCAP is a stormwater cost-share program for Fairfax County or City of Fairfax properties. Eligible practices include rain gardens, conservation landscaping, impervious surface removal, dry wells, bioretention, green roofs, rainwater harvesting, and permeable pavement; energy upgrades are a separate ECAP program.",
+"reasoningNotes": "Replaced building-envelope and lighting false positives with stormwater practices. Added a blocker to keep ECAP energy conservation separate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4535",
+"confidence": "low",
+"availabilityStatus": "source_inaccessible",
+"geography": {
+"country": "US",
+"states": [
+"IA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Farmers Electric Cooperative (Kalona)"
+],
+"notes": "Likely limited to Farmers Electric Cooperative members, but current official eligibility could not be verified because the official pages were inaccessible."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"member_customers"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [],
+"hardRequirements": [
+"Current official program terms must be obtained from Farmers Electric Cooperative before matching retrofit categories."
+],
+"blockers": [
+"Official Farmers Electric Cooperative conservation grants, rebates, and ways-to-save pages returned 502 Bad Gateway during research.",
+"DSIRE categories and search snippets were not sufficient final authority for current eligibility.",
+"Do not match HVAC, insulation, LED lighting, lighting controls, thermostats, ceiling fans, or agricultural equipment until current official program terms are accessible."
+],
+"programType": "rebate_or_grant_program",
+"administrator": "Farmers Electric Cooperative",
+"applicationUrl": null,
+"websiteUrl": "[https://www.feckalona.net/energy-conservation-grants.html](https://www.feckalona.net/energy-conservation-grants.html)",
+"sourceUrlsChecked": [
+"[https://www.feckalona.net/energy-conservation-grants.html](https://www.feckalona.net/energy-conservation-grants.html)",
+"[http://www.feckalona.net/energy-conservation-grants.html](http://www.feckalona.net/energy-conservation-grants.html)",
+"[https://www.feckalona.net/energy-efficiency-rebates.html](https://www.feckalona.net/energy-efficiency-rebates.html)",
+"[https://www.feckalona.net/ways-to-save.html](https://www.feckalona.net/ways-to-save.html)"
+],
+"evidenceText": "The current Farmers Electric Cooperative conservation-grants, rebates, and ways-to-save pages returned 502 Bad Gateway. Search snippets showed only page titles and a partial insulation reference, insufficient to verify current eligible measures.",
+"reasoningNotes": "Source inaccessible; cleared retrofit categories until official terms can be read. Retained only minimal geography and applicant context from the program name and official URL."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3264",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"KY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Farmers RECC"
+],
+"notes": "Eligible property must be served by Farmers RECC in Kentucky."
+},
+"eligibleApplicantTypes": [
+"residential_members",
+"member_customers",
+"homeowners"
+],
+"eligibleSectors": [
+"residential",
+"manufactured_home"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"air_source_heat_pump_hvac_retrofit"
+],
+"hardRequirements": [
+"Applicant must be a Farmers RECC member.",
+"Home must be an electrically heated residential home.",
+"Existing home must generally be at least two years old unless qualifying as a new manufactured home.",
+"Existing heat source must be electric furnace, electric baseboard, electric thermal storage, or ceiling cable heat.",
+"Replacement system must be a qualifying high-efficiency heat pump meeting current SEER2 and HSPF2 or equivalent program thresholds.",
+"Applicant should contact Farmers RECC or submit required rebate documentation."
+],
+"blockers": [
+"High-efficiency furnace retrofits are not eligible; the program replaces electric resistance heat with a heat pump.",
+"Generic HVAC replacement should not match unless it is the qualifying heat pump retrofit.",
+"Gas, oil, or propane heat-source replacements are unsupported under the checked heat pump retrofit criteria.",
+"Insulation, water heaters, geothermal, and other Farmers RECC programs are separate and should not be included in this record.",
+"Commercial properties are not eligible for this residential heat pump retrofit program."
+],
+"programType": "rebate_program",
+"administrator": "Farmers RECC",
+"applicationUrl": null,
+"websiteUrl": "[https://www.farmersrecc.com/heat-pump-retrofit-program](https://www.farmersrecc.com/heat-pump-retrofit-program)",
+"sourceUrlsChecked": [
+"[https://www.farmersrecc.com/heat-pump-retrofit-program](https://www.farmersrecc.com/heat-pump-retrofit-program)",
+"[https://www.farmersrecc.com/energy-efficiency](https://www.farmersrecc.com/energy-efficiency)",
+"[https://togetherwesaveky.com/cooperatives/farmers-recc/](https://togetherwesaveky.com/cooperatives/farmers-recc/)"
+],
+"evidenceText": "Farmers RECC’s heat pump retrofit page limits the rebate to residential electrically heated homes replacing electric furnace, baseboard, electric thermal storage, or ceiling cable heat with a qualifying high-efficiency heat pump.",
+"reasoningNotes": "Removed furnace retrofit and generic HVAC matches. Kept only qualifying heat pump retrofit categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22509",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"GA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Georgia Power"
+],
+"notes": "Eligible customers must be served by Georgia Power in Georgia."
+},
+"eligibleApplicantTypes": [
+"income_qualified_residential_customers",
+"homeowners",
+"renters_with_landlord_consent"
+],
+"eligibleSectors": [
+"residential",
+"single_family",
+"manufactured_home"
+],
+"eligibleRetrofitCategories": [
+"attic_insulation_upgrade",
+"air_sealing_weatherization",
+"duct_sealing_and_insulation",
+"hvac_servicing_tune_up",
+"smart_thermostat",
+"water_saving_devices",
+"air_purifier",
+"smart_power_strip",
+"direct_install_led_lighting"
+],
+"hardRequirements": [
+"Applicant must be a Georgia Power residential customer.",
+"Household income must be at or below the program income threshold.",
+"Applicant must submit an application and be approved.",
+"An in-home assessment is required before measures are installed.",
+"Program contractor determines and installs eligible no-cost measures.",
+"Renters must provide written landlord consent.",
+"Health and safety issues such as roof leaks, mold, faulty wiring, or gas leaks may need correction before service.",
+"Total measure value is subject to program cap."
+],
+"blockers": [
+"Windows and doors are explicitly not replaced.",
+"HVAC replacement is not supported by the residential EASE page; HVAC is limited to servicing or tune-up where approved.",
+"LED lighting, if applicable, is a direct-install measure and should not be generalized to a broad lighting retrofit.",
+"Commercial projects should not match the residential EASE record.",
+"Self-installed work is not supported.",
+"Health and safety conditions or lack of landlord consent can prevent installation."
+],
+"programType": "no_cost_direct_install_program",
+"administrator": "Georgia Power Company",
+"applicationUrl": "[https://gpcresidentialease.customerapplication.com/](https://gpcresidentialease.customerapplication.com/)",
+"websiteUrl": "[https://www.georgiapower.com/residential/assistance/ease.html](https://www.georgiapower.com/residential/assistance/ease.html)",
+"sourceUrlsChecked": [
+"[https://www.georgiapower.com/residential/save-money-and-energy/products-programs/home-energy-efficiency-programs/ease.html#faq](https://www.georgiapower.com/residential/save-money-and-energy/products-programs/home-energy-efficiency-programs/ease.html#faq)",
+"[https://www.georgiapower.com/residential/assistance/ease.html](https://www.georgiapower.com/residential/assistance/ease.html)",
+"[https://www.georgiapower.com/residential/assistance/ease/ease-donor.html](https://www.georgiapower.com/residential/assistance/ease/ease-donor.html)",
+"[https://www.georgiapower.com/business/products-programs/efficiency-maintenance/ease-multifamily.html](https://www.georgiapower.com/business/products-programs/efficiency-maintenance/ease-multifamily.html)",
+"[https://gpcresidentialease.customerapplication.com/](https://gpcresidentialease.customerapplication.com/)"
+],
+"evidenceText": "Georgia Power EASE is a no-cost program for income-qualified Georgia Power residential customers. It requires application approval and an in-home assessment; approved measures include attic insulation, air sealing, duct sealing, and HVAC servicing, and the FAQ says windows and doors are not replaced.",
+"reasoningNotes": "Kept insulation and duct sealing. Narrowed lighting to direct-install and HVAC to servicing, not replacement. Added explicit window and door blockers."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4330",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Facility must be located in Tennessee and certified by TDEC as an eligible green energy production or storage facility."
+},
+"eligibleApplicantTypes": [
+"businesses",
+"facility_owners",
+"companies",
+"taxpayers",
+"contractors_for_certified_facilities",
+"individuals"
+],
+"eligibleSectors": [
+"industrial",
+"commercial",
+"electricity_generation",
+"energy_storage",
+"manufacturing",
+"utility_scale_energy"
+],
+"eligibleRetrofitCategories": [
+"green_energy_production_facility_equipment",
+"solar_electric_generation_equipment",
+"wind_electric_generation_equipment",
+"geothermal_electric_generation_equipment",
+"hydrogen_energy_generation_equipment",
+"nuclear_energy_production_facility_equipment",
+"clean_energy_storage_facility_equipment",
+"combined_heat_and_power_energy_production_facility"
+],
+"hardRequirements": [
+"Facility must be certified by the Tennessee Department of Environment and Conservation as a green energy production facility.",
+"Machinery and equipment must be used to produce or store electricity using eligible clean energy technology.",
+"Eligible technologies include geothermal, hydrogen, solar, wind, and nuclear energy production facilities.",
+"Energy storage qualifies only if it stores electricity produced entirely from eligible clean energy technologies.",
+"Applicant must submit the applicable TDEC certification application and supporting documentation.",
+"Department of Revenue supplemental forms and TDEC approval are required before tax exemption or refund treatment.",
+"Project must have a Tennessee project address."
+],
+"blockers": [
+"This is a tax credit, refund, or sales-tax exemption program, not a building retrofit rebate or loan.",
+"Ground-source geothermal heat pumps for building HVAC are not supported by this record unless part of a certified geothermal electricity production facility.",
+"Solar water heating is not supported; the program concerns machinery and equipment producing or storing electricity.",
+"Standalone building battery resilience systems are not eligible unless they store electricity produced entirely from qualifying clean energy technologies.",
+"Residential appliances, HVAC, weatherization, and water-heating retrofits are false-positive matches.",
+"Alternative motor fueling station and combined heat and power certifications use separate application boundaries and should not be generalized."
+],
+"programType": "tax_credit_or_sales_tax_exemption",
+"administrator": "Tennessee Department of Environment and Conservation and Tennessee Department of Revenue",
+"applicationUrl": "[https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_cn1386.pdf](https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_cn1386.pdf)",
+"websiteUrl": "[https://www.tn.gov/environment/sustainability/funding/green-energy.html](https://www.tn.gov/environment/sustainability/funding/green-energy.html)",
+"sourceUrlsChecked": [
+"[https://www.tn.gov/environment/sustainability/funding/green-energy.html](https://www.tn.gov/environment/sustainability/funding/green-energy.html)",
+"[https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_cn1386.pdf](https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_cn1386.pdf)",
+"[https://www.tn.gov/content/dam/tn/revenue/documents/forms/sales/f1325201.pdf](https://www.tn.gov/content/dam/tn/revenue/documents/forms/sales/f1325201.pdf)",
+"[https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_chp_cn-1582_application.pdf](https://www.tn.gov/content/dam/tn/environment/sustainable-practices/certifications/certified-green-energy-production-facilities/osp_gepf_chp_cn-1582_application.pdf)"
+],
+"evidenceText": "TDEC defines this as certification for facilities producing or storing electricity using geothermal, hydrogen, solar, wind, or nuclear clean energy technology. The benefit is a tax credit, refund, or sales-tax exemption for machinery and equipment, not a building retrofit rebate.",
+"reasoningNotes": "Removed building retrofit interpretations for geothermal heat pumps, solar water heating, and standalone batteries. Kept only electricity production or qualifying clean-energy storage facility equipment."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:3589"
+}

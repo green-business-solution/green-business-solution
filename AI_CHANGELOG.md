@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 39-48
+
+- Validated the ten GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-39-43/` and `GPT Pro Work/opportunity-data-repair-batches-44-48/` and confirmed none were cut off.
+- Imported the outputs as normalized opportunity-data repair batches 39-48 and appended them to the ordered repair manifest.
+- Applied all 48 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
+
 ## 2026-07-01 - Codex (GPT-5) confidence terminology TODO
 
 - Clarified that `match_confidence` is deterministic rules confidence and should be pushed to 100% through opportunity-data repair.

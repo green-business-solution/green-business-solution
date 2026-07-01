@@ -1,0 +1,975 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22542",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MS"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Entergy Mississippi"
+        ],
+        "notes": "Entergy Mississippi service territory; NEM-2 excludes the Downtown Jackson Network where applicable."
+      },
+      "eligibleApplicantTypes": [
+        "low_to_moderate_income_residential_customers",
+        "residential_landlords_of_qualifying_low_income_rental_units",
+        "residential_distributed_generation_interconnection_customers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "affordable_housing"
+      ],
+      "eligibleRetrofitCategories": [
+        "renewable_distributed_generation",
+        "solar_pv_system",
+        "small_wind_generation"
+      ],
+      "hardRequirements": [
+        "Customer must qualify under Entergy Mississippi NEM-2 and the LMI Energy Independence Incentive.",
+        "Residential distributed generation must be on premises, interconnection-approved, at least 4 kWDC and no more than 110% of prior-year annual usage.",
+        "Residential customer income or qualifying rental-unit status must meet the tariff LMI requirements.",
+        "A Company-approved energy efficiency audit and proof of installation are required.",
+        "Incentive is first-come, budget-limited and subject to tariff sunset or extension."
+      ],
+      "blockers": [
+        "Battery storage and demand-response battery incentives are separate and mutually exclusive with this LMI incentive.",
+        "Do not match automated demand response controls, battery storage, geothermal heat pumps, biomass or biogas systems to this LMI renewable DG incentive.",
+        "Downtown Jackson Network customers and facilities failing NEM interconnection requirements are excluded."
+      ],
+      "programType": "Renewable Distributed Generation Cash Incentive",
+      "administrator": "Entergy Mississippi",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.entergy-mississippi.com/your_home/tariffs/",
+      "sourceUrlsChecked": [
+        "https://www.entergy-mississippi.com/your_home/tariffs/",
+        "https://www.entergymississippi.com/wp-content/uploads/eml_nem.pdf"
+      ],
+      "evidenceText": "The NEM tariff provides a one-time $3,000 LMI Energy Independence incentive for qualifying residential distributed-generation customers installing eligible renewable generation, subject to audit, income, sizing, budget and service-area limits.",
+      "reasoningNotes": "Matched technologies were overbroad; the current tariff supports renewable distributed generation, while battery demand response is a separate mutually exclusive program. Prompt source file citation:"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1446",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Florida Power and Light"
+        ],
+        "notes": "Available to eligible FPL business customers in FPL electric service territory."
+      },
+      "eligibleApplicantTypes": [
+        "business_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "government_customers",
+        "education_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "education",
+        "manufacturing",
+        "retail",
+        "hospitality",
+        "restaurants"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "commercial_hvac_chiller_upgrade",
+        "hvac_variable_frequency_drive",
+        "led_lighting_retrofit",
+        "custom_energy_efficiency_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must be an FPL business customer.",
+        "Lighting rebates are for qualifying indoor LED fixtures in existing buildings and require program documentation.",
+        "Lighting measures must operate during specified weekday summer peak hours.",
+        "Custom incentives must reduce at least 25 kW of summer peak demand and satisfy cost-effectiveness and program screening.",
+        "Equipment must meet FPL measure specifications and installation requirements."
+      ],
+      "blockers": [
+        "Commercial refrigeration equipment is not supported except HVAC chillers; do not generalize HVAC chillers into food refrigeration.",
+        "Business Energy Manager, metering and energy monitoring are separate tools or services, not rebate measures under this opportunity.",
+        "Business On Call and demand-response programs are separate from these efficiency rebates.",
+        "Power generation, fuel switching, wheeling and evaluation technologies are not eligible custom measures."
+      ],
+      "programType": "Business Energy Efficiency Rebate",
+      "administrator": "Florida Power and Light",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.fpl.com/business/save/programs.html",
+      "sourceUrlsChecked": [
+        "https://www.fpl.com/business/save/programs.html",
+        "https://www.fpl.com/business/save/programs/heating-and-cooling.html",
+        "https://www.fpl.com/business/save/programs/lighting.html",
+        "https://www.fpl.com/business/save/programs/customized-incentives.html"
+      ],
+      "evidenceText": "FPL business efficiency pages list heating and cooling rebates, indoor LED lighting rebates and custom incentives; the custom program requires qualifying demand reduction and excludes generation, fuel switching and similar non-efficiency measures.",
+      "reasoningNotes": "Removed unsupported refrigeration and submetering matches; kept HVAC, lighting and qualifying custom efficiency measures."
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:food-service-equipment-rebate-program",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [
+          "Santa Clara County"
+        ],
+        "cities": [
+          "Santa Clara"
+        ],
+        "utilityTerritories": [
+          "Silicon Valley Power"
+        ],
+        "notes": "Business customer facility must be served by Silicon Valley Power in Santa Clara."
+      },
+      "eligibleApplicantTypes": [
+        "business_customers",
+        "commercial_food_service_customers",
+        "restaurants",
+        "grocery_food_service_facilities",
+        "institutional_food_service_facilities"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "institutional",
+        "public_sector",
+        "nonprofit",
+        "restaurants",
+        "grocery",
+        "hospitality"
+      ],
+      "eligibleRetrofitCategories": [
+        "demand_controlled_kitchen_ventilation",
+        "commercial_foodservice_refrigeration_equipment",
+        "commercial_ice_machine",
+        "commercial_refrigeration_controls",
+        "commercial_foodservice_electric_cooking_equipment",
+        "commercial_insulated_holding_cabinet",
+        "commercial_induction_cooktop",
+        "walk_in_cooler_freezer_ecm_motor",
+        "anti_sweat_heater_controls",
+        "refrigerated_case_door_retrofit"
+      ],
+      "hardRequirements": [
+        "Pre-approval is required before installation.",
+        "Equipment must be new, qualifying commercial food service equipment and installed at the SVP-served facility.",
+        "Measures must remain operational and saving energy for the required retention period.",
+        "Project completion, inspection, invoices and product qualification documentation are required.",
+        "Program year, rebate levels and budget must be verified on the latest SVP application because terms are subject to change after June 30, 2026."
+      ],
+      "blockers": [
+        "Battery storage is not part of the food service equipment rebate.",
+        "Low-flow plumbing fixtures or water conservation measures are not part of this food service equipment rebate.",
+        "Do not broaden commercial refrigerators/freezers into unrelated residential or non-food-service refrigeration.",
+        "Used, rebuilt, inventory-only, resale or installed-before-preapproval equipment is not eligible."
+      ],
+      "programType": "Commercial Food Service Equipment Rebate",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/53816/638222676983930000",
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+      "sourceUrlsChecked": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/53816/638222676983930000"
+      ],
+      "evidenceText": "SVP describes rebates for qualifying energy-efficient commercial food service cooking, hot and cold storage, refrigeration controls and demand-controlled kitchen ventilation, with pre-approval and program-term requirements.",
+      "reasoningNotes": "Kept food-service refrigeration and kitchen ventilation, but removed battery and water-fixture false positives. Confidence is medium because the checked application was the 2025-2026 form with post-June 30 terms subject to update."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22587",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Green Mountain Power"
+        ],
+        "notes": "Available to eligible GMP residential electric customers in Vermont; some incentives are income-qualified."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "income_qualified_residential_customers",
+        "homeowners",
+        "renters_with_owner_permission"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "whole_building_heat_pump_system",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "residential_induction_cooktop_range"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible GMP residential account holder.",
+        "Ductless heat pump enhanced incentive is income-qualified and must use the applicable Efficiency Vermont process.",
+        "Induction cooktop or range must be installed, not portable, and application timing limits apply.",
+        "Whole-building heat pump or geothermal systems must meet GMP and Efficiency Vermont requirements.",
+        "Heat pump water heater rebate is limited to qualifying equipment and program terms."
+      ],
+      "blockers": [
+        "Induction is a residential cooktop or range rebate, not commercial kitchen foodservice equipment.",
+        "Do not match broad high-efficiency HVAC unless the measure is an eligible heat pump or geothermal system.",
+        "Non-heat-pump fossil fuel HVAC replacement is not supported by this opportunity."
+      ],
+      "programType": "Residential Energy Efficiency Rebate",
+      "administrator": "Green Mountain Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://greenmountainpower.com/rebates-programs/home-and-yard/",
+      "sourceUrlsChecked": [
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump-water-heater/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/induction-cooktop-rebate/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/whole-building-heat-pump/"
+      ],
+      "evidenceText": "GMP residential rebate pages list heat pump water heaters, income-qualified ductless heat pumps, induction cooktops and whole-building heat pump or geothermal incentives for eligible residential customers.",
+      "reasoningNotes": "Narrowed induction to residential equipment and retained geothermal only where GMP specifically supports whole-building geothermal incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2426",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR",
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Portland General Electric",
+          "Pacific Power",
+          "NW Natural",
+          "Cascade Natural Gas",
+          "Avista"
+        ],
+        "notes": "Energy Trust serves customers of participating Oregon utilities and some Washington natural gas customers."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "homeowners",
+        "renters",
+        "landlords",
+        "multifamily_property_owners",
+        "trade_ally_contractors"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_windows",
+        "heat_pump_water_heater",
+        "gas_tankless_water_heater",
+        "high_efficiency_gas_furnace",
+        "gas_fireplace"
+      ],
+      "hardRequirements": [
+        "Customer must be served by a participating Energy Trust utility and meet measure-specific fuel and residence requirements.",
+        "Contractors submit applicable Home Retrofit forms and paid invoices.",
+        "2026 Home Retrofit incentive changes and measure discontinuations must be applied.",
+        "Smart thermostat incentives are limited to eligible gas forced-air furnace applications.",
+        "Heat pump, weatherization, window and water-heating measures must meet current specifications."
+      ],
+      "blockers": [
+        "Battery storage belongs to Energy Trust solar-plus-storage programs, not Home Energy Solutions for existing homes.",
+        "Electric-heating smart thermostat and heat pump advanced control incentives were discontinued under 2026 changes.",
+        "Do not infer commercial or industrial measures from this residential and multifamily program."
+      ],
+      "programType": "Residential Energy Efficiency Rebate",
+      "administrator": "Energy Trust of Oregon",
+      "applicationUrl": null,
+      "websiteUrl": "https://insider.energytrust.org/programs/home-retrofit/forms/",
+      "sourceUrlsChecked": [
+        "https://insider.energytrust.org/home-retrofit-incentive-changes-coming-january-1-2026-2/",
+        "https://insider.energytrust.org/programs/home-retrofit/forms/",
+        "https://insider.energytrust.org/existing-multifamily-incentive-changes-coming-january-1-2026/",
+        "https://insider.energytrust.org/energy-trust-announces-solar-incentives-for-2026-and-key-end-of-year-dates-for-2025/",
+        "https://insider.energytrust.org/eight-things-to-look-forward-to-in-oregons-solar-industry-in-2026/"
+      ],
+      "evidenceText": "Official Energy Trust Insider pages identify 2026 Home Retrofit incentives and forms for weatherization, windows, heating, cooling and water heating; solar and storage are handled in separate program communications.",
+      "reasoningNotes": "The public residential page was not fully accessible in browser, but current official Insider program pages were accessible and sufficient to repair the measure scope."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5739",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Eversource",
+          "United Illuminating",
+          "Connecticut Natural Gas",
+          "Southern Connecticut Gas"
+        ],
+        "notes": "Micro-loan is tied to Connecticut Home Energy Solutions and participating utility service; electric-customer eligibility is primary for on-bill repayment."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "owner_occupants",
+        "single_family_homeowners",
+        "two_to_four_family_homeowners",
+        "condo_owners",
+        "mobile_homeowners",
+        "vacation_homeowners"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "duct_sealing_and_insulation",
+        "ductless_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "tankless_gas_water_heater",
+        "gas_condensing_storage_water_heater",
+        "indirect_combination_water_heater",
+        "energy_efficient_window_replacement"
+      ],
+      "hardRequirements": [
+        "Borrower must participate in Home Energy Solutions and use recommendations from that process.",
+        "Work must not already be underway or completed.",
+        "All work must be performed by a Capital for Change participating contractor.",
+        "Loan approval, utility eligibility and on-bill repayment requirements apply.",
+        "Loan is limited to the micro-loan amount, term and eligible-measure list."
+      ],
+      "blockers": [
+        "This is 0% financing, not a rebate.",
+        "Ground-source geothermal heat pumps are not listed as Micro-Loan eligible improvements.",
+        "Do not match broad HVAC replacement beyond eligible ductless heat pumps and listed water-heating or envelope improvements.",
+        "Projects outside the Home Energy Solutions workflow or using nonparticipating contractors are ineligible."
+      ],
+      "programType": "Micro Loan",
+      "administrator": "Capital for Change",
+      "applicationUrl": "https://www.capitalforchangeapp.org/",
+      "websiteUrl": "https://www.capitalforchange.org/hes-micro-loan",
+      "sourceUrlsChecked": [
+        "https://www.capitalforchange.org/hes-micro-loan",
+        "https://www.energizect.com/financing/micro-loans",
+        "https://www.capitalforchangeapp.org/"
+      ],
+      "evidenceText": "Capital for Change and Energize CT describe a 0% Home Energy Solutions micro-loan for insulation, air and duct sealing, ductless heat pumps, hot water equipment and windows using participating contractors.",
+      "reasoningNotes": "Reframed the opportunity as financing and removed geothermal and broad HVAC matches unsupported by the current micro-loan eligible-measure list."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2320",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA",
+          "ID"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Inland Power & Light"
+        ],
+        "notes": "Inland Power member homes in the cooperative service territory; DSIRE target is indexed in Washington."
+      },
+      "eligibleApplicantTypes": [
+        "residential_members",
+        "homeowners",
+        "manufactured_home_owners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "manufactured_housing"
+      ],
+      "eligibleRetrofitCategories": [
+        "window_replacement",
+        "exterior_door_replacement",
+        "heat_pump_hvac_retrofit",
+        "ducted_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "smart_thermostat_zoning_retrofit",
+        "energy_star_appliance",
+        "energy_efficient_manufactured_home"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current Inland Power residential member.",
+        "Window, door and insulation measures generally require eligible electrically heated existing homes and documentation such as photos or invoices.",
+        "Ductless heat pumps must replace electric resistance heat and meet efficiency and contractor requirements.",
+        "Heat pump water heaters must replace qualifying electric storage water heaters and meet product requirements.",
+        "Rebate requests must be submitted within the specified post-installation window."
+      ],
+      "blockers": [
+        "Inland Power states it does not currently offer EV charger rebates.",
+        "Do not match natural gas or propane forced-air systems to ductless heat pump rebates where electric-resistance replacement is required.",
+        "Do not broaden this residential program to commercial or industrial HVAC, lighting, motors or refrigeration."
+      ],
+      "programType": "Residential Energy Efficiency Rebate",
+      "administrator": "Inland Power & Light Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.inlandpower.com/residential-incentives-rebates",
+      "sourceUrlsChecked": [
+        "https://www.inlandpower.com/residential-incentives-rebates",
+        "https://www.inlandpower.com/windows-doors",
+        "https://www.inlandpower.com/heat-pumps",
+        "https://www.inlandpower.com/hybrid-water-heaters",
+        "https://www.inlandpower.com/insulation",
+        "https://www.inlandpower.com/advanced-smart-thermo"
+      ],
+      "evidenceText": "Inland Power residential pages list rebates for windows and doors, heat pumps, hybrid water heaters, insulation, advanced smart thermostats, appliances and efficient manufactured homes, and state EV charger rebates are not currently offered.",
+      "reasoningNotes": "Kept door, heat pump and insulation matches and added supported residential measures; removed EV and narrowed HVAC to heat pump programs."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5236",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "GA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Jackson EMC"
+        ],
+        "notes": "Jackson EMC residential member homes in the cooperative's northeast Georgia service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_members",
+        "homeowners"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "heat_pump_hvac_retrofit",
+        "energy_audit",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "duct_sealing_and_replacement",
+        "smart_thermostat_zoning_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Jackson EMC residential member.",
+        "Heat pump rebate requires qualifying ENERGY STAR all-electric equipment meeting minimum efficiency requirements.",
+        "Dual-fuel heat pump systems are not eligible for the heat pump replacement rebate.",
+        "Home Energy Evaluation improvements must follow participating-contractor recommendations and verification.",
+        "EV charger match should be limited to qualifying residential Level 2 chargers."
+      ],
+      "blockers": [
+        "Do not duplicate Level 2 EV charging as both broad EV charger and Level 2 charger; use the product-specific Level 2 category.",
+        "Do not match commercial measures to this residential member program.",
+        "Broad high-efficiency HVAC replacement should be narrowed to the eligible electric heat pump rebate."
+      ],
+      "programType": "Residential Rebate And Home Energy Evaluation",
+      "administrator": "Jackson Electric Membership Corporation",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans",
+      "sourceUrlsChecked": [
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans",
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans/heat-pump-rebate",
+        "https://www.jacksonemc.com/assets/uploads/main/Home-Energy-Evaluation-2024.pdf",
+        "https://www.jacksonemc.com/assets/uploads/pdfs/rates/2026/Heat-Pump-Rebate-Application-2026_FINAL.pdf",
+        "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles"
+      ],
+      "evidenceText": "Jackson EMC lists residential heat pump rebates, home energy evaluation and improvement rebates, smart thermostat incentives and a residential Level 2 EV charger rebate for members.",
+      "reasoningNotes": "Kept Level 2 EV charging, heat pumps and home evaluation-related improvements; removed broad duplicate EV and HVAC interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22778",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Available statewide for qualifying Pennsylvania owner-occupied residential properties when using approved contractors and program funds."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "owner_occupants",
+        "one_to_four_unit_property_owners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "small_multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_efficiency_financing",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "high_efficiency_hvac_replacement",
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "central_air_conditioner",
+        "smart_thermostat_zoning_retrofit",
+        "ventilation_fan_upgrade",
+        "heat_pump_water_heater",
+        "high_efficiency_gas_storage_water_heater",
+        "solar_water_heater",
+        "tankless_gas_water_heater",
+        "window_replacement",
+        "exterior_door_replacement",
+        "skylight_replacement",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "storm_window_retrofit",
+        "ev_charger_installation",
+        "smart_home_energy_management_system"
+      ],
+      "hardRequirements": [
+        "Project must be for an eligible Pennsylvania owner-occupied primary or secondary residence with one to four units and permanent foundation.",
+        "Applicant must use a NEIF-approved contractor and satisfy credit and underwriting requirements.",
+        "Loan amount, term and interest rate are subject to KEEP program limits and available allocated funds.",
+        "Primary improvements must meet applicable ENERGY STAR or program-listed requirements.",
+        "Investment properties, trusts and non-approved contractors are not eligible."
+      ],
+      "blockers": [
+        "This is loan financing, not a rebate.",
+        "Do not match commercial properties or non-owner-occupied investment properties.",
+        "Unlisted upgrades, cosmetic work and measures not installed by approved contractors should not match.",
+        "Availability of reduced rates depends on remaining allocated funds."
+      ],
+      "programType": "Home Energy Efficiency Loan",
+      "administrator": "National Energy Improvement Fund under contract with Pennsylvania Energy Development Authority",
+      "applicationUrl": "https://borrower.neifund.org/",
+      "websiteUrl": "https://www.neifund.org/keepenergyloan/",
+      "sourceUrlsChecked": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/keep-home-energy-loan",
+        "https://www.neifund.org/keepenergyloan/",
+        "https://www.neifund.org/wp-content/uploads/2025/02/Keystone-KEEP-Home-Energy-Loan-Overview-022725.pdf",
+        "https://borrower.neifund.org/"
+      ],
+      "evidenceText": "Pennsylvania DEP and NEIF describe KEEP as below-market financing for owner-occupied Pennsylvania homes using approved contractors, covering HVAC, water heating, envelope, EV charging and smart energy measures.",
+      "reasoningNotes": "Retained EV charging and energy management because KEEP explicitly finances them; categorized the opportunity as financing rather than a rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2470",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Lane Electric Cooperative"
+        ],
+        "notes": "Lane Electric residential member homes in the cooperative service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_members",
+        "homeowners"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "recommended_weatherization_measures",
+        "energy_audit"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Lane Electric residential member.",
+        "Weatherization measures must be recommended through the cooperative's process or energy audit.",
+        "Loan or grant terms, project eligibility and available funding must be confirmed before installation.",
+        "Cash grants and 0% loans apply to weatherization measures, not all conservation measures."
+      ],
+      "blockers": [
+        "Heat pump rebates and loans are a separate Lane Electric program, not this weatherization program.",
+        "LED lighting is not supported as a weatherization measure for this opportunity.",
+        "Broad high-efficiency HVAC replacement should not match this weatherization loan and grant record.",
+        "Official pages returned access restrictions in browser, so full current measure specifications should be confirmed directly with Lane Electric."
+      ],
+      "programType": "Weatherization Loan And Grant",
+      "administrator": "Lane Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.laneelectric.com/energy-efficiency/weatherization-programs/",
+      "sourceUrlsChecked": [
+        "https://www.laneelectric.com/energy-efficiency/weatherization-programs/",
+        "https://www.laneelectric.com/energy-efficiency/energy-saving-programs/",
+        "https://www.laneelectric.com/energy-efficiency/heat-pump-program/",
+        "https://www.laneelectric.com/energy-efficiency/manufactured-homes/"
+      ],
+      "evidenceText": "Official Lane Electric snippets identify 0% loans and cash grants for recommended weatherization measures, with energy audits available; heat pump incentives appear on a separate program page.",
+      "reasoningNotes": "Confidence is medium because the official pages were access-restricted in the browser, but official indexed snippets were sufficient to distinguish weatherization from the separate heat pump program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5759",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [
+          "Lewis County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "Lewis County PUD"
+        ],
+        "notes": "Residential customers in Lewis County PUD service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "homeowners",
+        "manufactured_home_owners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "manufactured_housing"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "ducted_heat_pump",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "window_replacement",
+        "energy_star_appliance",
+        "energy_efficient_manufactured_home"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Lewis County PUD residential customer.",
+        "Energy audit is required before installation of weatherization measures for rebate eligibility.",
+        "PUD audits are provided at no charge but do not make every recommended measure eligible.",
+        "Heat pump rebates are tied to eligible electrically heated homes and contractor/program verification.",
+        "Residential loan terms, if used, are separate and capped by current PUD loan rules."
+      ],
+      "blockers": [
+        "Do not infer commercial, industrial, motors, VFDs or refrigeration measures from this residential program.",
+        "Energy audit is a free service and eligibility gate, not broad payment for all retrofit types.",
+        "Non-electric heating homes should not match heat pump rebates where current program terms require electric heat.",
+        "Official pages returned access restrictions in browser, so full current measure specifications should be confirmed directly with Lewis County PUD."
+      ],
+      "programType": "Residential Energy Efficiency Rebate",
+      "administrator": "Lewis County PUD",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.lcpud.org/energy-efficiency/rebates/residential/",
+      "sourceUrlsChecked": [
+        "https://www.lcpud.org/energy-efficiency/rebates/residential/",
+        "https://www.lcpud.org/energy-efficiency/energy-audit-request/",
+        "https://www.lcpud.org/energy-efficiency/rebates/residential/windows-insulation-weatherization/",
+        "https://www.lcpud.org/energy-efficiency/rebates/residential/heat-pumps/",
+        "https://www.lcpud.org/energy-efficiency/rebates/residential/heat-pump-water-heaters/",
+        "https://www.lcpud.org/energy-efficiency/energy-efficiency-loans/"
+      ],
+      "evidenceText": "Official Lewis County PUD snippets list residential rebates for heat pumps, heat pump water heaters, windows, insulation, appliances and manufactured homes, with audits required before weatherization work.",
+      "reasoningNotes": "Confidence is medium because official pages were access-restricted in the browser, but official indexed snippets supported the current residential measure boundaries."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4569",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [],
+        "cities": [
+          "Keokuk"
+        ],
+        "utilityTerritories": [
+          "Liberty Utilities Iowa natural gas"
+        ],
+        "notes": "Iowa Liberty natural gas customers served under eligible residential or small commercial rate schedules."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "small_commercial_customers",
+        "homeowners",
+        "builders"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "small_commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "wifi_learning_thermostat"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current or future Liberty Iowa natural gas customer on an eligible rate schedule.",
+        "Eligible work is for natural gas equipment upgrades in an existing home or business or qualifying new construction.",
+        "Furnace must meet the listed AFUE and capacity requirements.",
+        "Equipment must be installed by a qualified dealer; homeowner self-installation is not eligible.",
+        "Rebate form, recent Liberty bill and required documentation must be submitted; funds are limited."
+      ],
+      "blockers": [
+        "Weatherization and air sealing are not listed in the current rebate form.",
+        "Do not match broad HVAC beyond qualifying natural gas forced-air furnace rebates.",
+        "Water-heating rebates are mentioned generally on the page but were not verified in the current checked form, so do not match them unless a current form lists them."
+      ],
+      "programType": "Natural Gas Equipment Rebate",
+      "administrator": "Liberty Utilities",
+      "applicationUrl": "https://iowa.libertyutilities.com/uploads/IA%20Rebate%20Updated%202025.03.06.pdf",
+      "websiteUrl": "https://iowa.libertyutilities.com/keokuk/residential/smart-energy-use/natural-gas/high-efficiency-equipment-rebate.html",
+      "sourceUrlsChecked": [
+        "https://iowa.libertyutilities.com/keokuk/residential/smart-energy-use/natural-gas/high-efficiency-equipment-rebate.html",
+        "https://iowa.libertyutilities.com/uploads/IA%20Rebate%20Updated%202025.03.06.pdf"
+      ],
+      "evidenceText": "Liberty Iowa's current rebate form lists natural gas forced-air furnace rebates and Wi-Fi or learning thermostat rebates, with qualified dealer installation and eligible gas-customer rate requirements.",
+      "reasoningNotes": "Removed weatherization and narrowed HVAC to qualifying gas furnaces; thermostat kept as a Wi-Fi or learning thermostat measure."
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:lighting-rebate",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [
+          "Santa Clara County"
+        ],
+        "cities": [
+          "Santa Clara"
+        ],
+        "utilityTerritories": [
+          "Silicon Valley Power"
+        ],
+        "notes": "Business customer facilities served by Silicon Valley Power in the City of Santa Clara."
+      },
+      "eligibleApplicantTypes": [
+        "business_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "government_customers",
+        "nonprofit_customers",
+        "institutional_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "government",
+        "nonprofit",
+        "education",
+        "medical",
+        "retail",
+        "grocery",
+        "warehouse",
+        "manufacturing",
+        "restaurants",
+        "hospitality"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "exterior_site_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "networked_lighting_controls",
+        "delamping"
+      ],
+      "hardRequirements": [
+        "Pre-approval is required before installation.",
+        "Lighting equipment must be new and installed and operating at the SVP-served facility.",
+        "Eligible products are limited to qualified LED fixtures, retrofit kits, linear replacement lamps, LED tubes and qualified networked lighting controls.",
+        "Project must meet energy savings, technical, inspection, invoice and completion-deadline requirements.",
+        "Current post-June 30, 2026 application, budget and exterior bonus terms must be verified before matching."
+      ],
+      "blockers": [
+        "Low-flow fixture retrofit is a false positive; fixture refers to lighting fixtures, not plumbing fixtures.",
+        "Screw-in bulbs, fluorescent products, inventory, resale, used or rebuilt equipment are not eligible.",
+        "Exterior and networked lighting control bonuses have specific deadlines and should not be assumed if not renewed.",
+        "No installation before pre-approval."
+      ],
+      "programType": "Commercial Lighting Rebate",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/41518/638875751693230000",
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+      "sourceUrlsChecked": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/41518/638875751693230000",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/15851/638894798046770000",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/5082/638917985630870000"
+      ],
+      "evidenceText": "SVP's lighting materials describe rebates for new efficient lighting, exterior lighting and networked lighting controls, requiring pre-approval, qualified LED products, inspections and application deadlines.",
+      "reasoningNotes": "Kept lighting and controls categories; removed water-fixture false positive. Confidence is medium because the checked application year ended June 30, 2026 and current terms should be reconfirmed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3527",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Available only in California jurisdictions or special assessment districts that have authorized the applicable PACE program."
+      },
+      "eligibleApplicantTypes": [
+        "property_owners",
+        "homeowners",
+        "commercial_property_owners",
+        "multifamily_property_owners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "pace_financing",
+        "energy_efficiency_financing",
+        "renewable_energy_financing",
+        "water_efficiency_financing",
+        "commercial_pace_financing",
+        "solar_pv_financing",
+        "battery_storage_financing",
+        "building_envelope_financing",
+        "hvac_financing",
+        "lighting_financing",
+        "water_heating_efficiency_financing"
+      ],
+      "hardRequirements": [
+        "Property must be in a participating California jurisdiction or special assessment district.",
+        "Financing is repaid through a property tax assessment and creates a property lien.",
+        "PACE administrator and solicitor requirements, licensing, disclosures and ability-to-pay rules apply.",
+        "Eligible measure scope depends on the local PACE program and administrator.",
+        "Property owner should confirm sale, refinance, tax and foreclosure implications before proceeding."
+      ],
+      "blockers": [
+        "This is PACE financing, not a rebate.",
+        "Do not treat DSIRE technology terms as direct product rebates; measure eligibility is administrator and jurisdiction specific.",
+        "Cosmetic or nonqualifying add-ons such as cabinets, tile, countertops and conversions should not match.",
+        "Geothermal, HVAC or insulation product matches should be represented as financing only unless a specific PACE administrator list verifies the measure."
+      ],
+      "programType": "Pace Financing",
+      "administrator": "Local PACE program administrators regulated by the California Department of Financial Protection and Innovation",
+      "applicationUrl": null,
+      "websiteUrl": "https://dfpi.ca.gov/consumers/housing/pace/",
+      "sourceUrlsChecked": [
+        "https://dfpi.ca.gov/consumers/housing/pace/",
+        "https://dfpi.ca.gov/pace-program-administrators/pace/",
+        "https://ceda.caled.org/pace/"
+      ],
+      "evidenceText": "California PACE sources describe property-tax-assessment financing for energy, water and other qualifying improvements; C-PACE materials cite renewable energy, storage, envelope, HVAC, lighting and water measures.",
+      "reasoningNotes": "Converted product-specific matches into financing categories and retained battery only as C-PACE financing, not as a direct incentive."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22695",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "KY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Louisville Gas and Electric",
+          "Kentucky Utilities"
+        ],
+        "notes": "Available to eligible LG&E and KU residential customers and qualifying apartment building owners in Kentucky utility service territory."
+      },
+      "eligibleApplicantTypes": [
+        "income_qualified_residential_customers",
+        "homeowners",
+        "renters",
+        "apartment_building_owners",
+        "multifamily_property_managers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "low_income_residential",
+        "multifamily",
+        "affordable_housing"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "energy_efficiency_direct_install",
+        "led_lighting_retrofit",
+        "programmable_smart_thermostat",
+        "low_flow_water_devices",
+        "air_sealing_weatherization",
+        "duct_sealing_and_insulation",
+        "insulation_upgrade",
+        "appliance_tune_up_or_replacement"
+      ],
+      "hardRequirements": [
+        "Homeowners and renters must be LG&E or KU residential customers with at least one month of service.",
+        "Homeowner or renter address must not have received WeCare services within the last three years.",
+        "Customer must receive qualifying income-based assistance or self-attest to the applicable federal income threshold.",
+        "Renters must provide property owner consent before services are scheduled.",
+        "Apartment building owners need an LG&E or KU account for common areas, at least four units and at least 50% income-qualified tenants."
+      ],
+      "blockers": [
+        "Doors and windows are explicitly excluded.",
+        "This is no-cost weatherization, education and direct install, not a standard customer rebate.",
+        "Weatherization products such as insulation and duct sealing are installed only in some cases based on assessment.",
+        "Do not match commercial properties except the specific apartment-building-owner pathway.",
+        "Do not match broad HVAC replacement unless the current WeCare assessment specifically approves appliance tune-up or replacement."
+      ],
+      "programType": "Income Qualified Weatherization Direct Install",
+      "administrator": "Louisville Gas and Electric and Kentucky Utilities",
+      "applicationUrl": "https://lge-ku.com/sites/default/files/media/files/downloads/WeCare-Application-English.pdf",
+      "websiteUrl": "https://lge-ku.com/wecare",
+      "sourceUrlsChecked": [
+        "https://lge-ku.com/wecare",
+        "https://lge-ku.com/sites/default/files/media/files/downloads/WeCare-Application-English.pdf"
+      ],
+      "evidenceText": "LG&E and KU describe WeCare as no-cost education and weatherization for income-qualified customers, with audits, LEDs, thermostats, water devices and possible insulation or duct sealing; doors and windows are excluded.",
+      "reasoningNotes": "Kept weatherization, duct sealing, insulation and LED direct-install measures; added eligibility gates for renters and apartment building owners and blocked windows, doors and broad rebate-style matching."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2051"
+}
