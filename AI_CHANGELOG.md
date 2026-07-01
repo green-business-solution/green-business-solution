@@ -7,6 +7,12 @@
 - Updated the sample utility import and fake-user promotion reports for the second test-case utility batch.
 - Added a product TODO to surface payback period information on the test cases page.
 
+## 2026-07-01 - Codex (GPT-5) portal retrofit recommendation timeout fix
+
+- Identified the Portal Preview and client Retrofit Estimates HTTP 500s as Lambda timeouts at the 20-second production limit while recomputing live retrofit recommendations from a full opportunities table scan.
+- Added in-memory caching and in-flight request deduping for live portal retrofit recommendations so repeated portal loads reuse the same live matcher data instead of triggering duplicate full recomputations.
+- Restored the production hosting template's API Lambda headroom to 1024 MB and 60 seconds so the first uncached live recommendation build has enough time to complete safely.
+
 ## 2026-07-01 - Codex (GPT-5) sample test-case fake user promotion
 
 - Imported GPT Pro utility data for the first 10 sample matching test cases into `data/sample_user_profiles.json` and `public/sample_matching_test_cases.json`.

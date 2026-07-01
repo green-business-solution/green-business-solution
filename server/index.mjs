@@ -113,6 +113,21 @@ let googleKeysCache = {
   expiresAt: 0,
   keys: []
 };
+const opportunityCacheTtlMs = Math.max(
+  60_000,
+  Number.parseInt(process.env.GBS_OPPORTUNITY_CACHE_TTL_MS || "300000", 10) || 300_000
+);
+let opportunitiesCache = {
+  loadedAt: 0,
+  items: [],
+  promise: null
+};
+const retrofitRecommendationsCacheTtlMs = Math.max(
+  60_000,
+  Number.parseInt(process.env.GBS_RETROFIT_RECOMMENDATIONS_CACHE_TTL_MS || "300000", 10) || 300_000
+);
+const retrofitRecommendationsCache = new Map();
+const retrofitRecommendationsPromiseCache = new Map();
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -1018,6 +1033,65 @@ async function scanAll(TableName) {
   return items;
 }
 
+async function getCachedOpportunities() {
+  const now = Date.now();
+  if (opportunitiesCache.items.length > 0 && now - opportunitiesCache.loadedAt < opportunityCacheTtlMs) {
+    return opportunitiesCache.items;
+  }
+
+  if (!opportunitiesCache.promise) {
+    opportunitiesCache.promise = scanAll(opportunitiesTable)
+      .then((items) => {
+        opportunitiesCache = {
+          loadedAt: Date.now(),
+          items,
+          promise: null
+        };
+        retrofitRecommendationsCache.clear();
+        retrofitRecommendationsPromiseCache.clear();
+        return items;
+      })
+      .catch((error) => {
+        opportunitiesCache.promise = null;
+        throw error;
+      });
+  }
+
+  return opportunitiesCache.promise;
+}
+
+function retrofitRecommendationsCacheKey(user, intake) {
+  return [
+    user?.userId || "unknown",
+    intake?.submissionId || "",
+    intake?.updatedAt || "",
+    intake?.utilityExtractedValues?.length || 0,
+    intake?.uploadedUtilityFiles?.length || 0
+  ].join(":");
+}
+
+function readCachedRetrofitRecommendations(user, intake) {
+  const key = retrofitRecommendationsCacheKey(user, intake);
+  const cached = retrofitRecommendationsCache.get(key);
+  if (!cached) {
+    return null;
+  }
+
+  if (Date.now() - cached.createdAt > retrofitRecommendationsCacheTtlMs) {
+    retrofitRecommendationsCache.delete(key);
+    return null;
+  }
+
+  return cached.payload;
+}
+
+function writeCachedRetrofitRecommendations(user, intake, payload) {
+  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake), {
+    createdAt: Date.now(),
+    payload
+  });
+}
+
 function encodeScanCursor(key) {
   if (!key) {
     return null;
@@ -1458,6 +1532,35 @@ async function getUserRecord(userId) {
   );
 
   return result.Item || null;
+}
+
+async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date() }) {
+  const cached = readCachedRetrofitRecommendations(user, intake);
+  if (cached) {
+    return cached;
+  }
+
+  const cacheKey = retrofitRecommendationsCacheKey(user, intake);
+  if (!retrofitRecommendationsPromiseCache.has(cacheKey)) {
+    retrofitRecommendationsPromiseCache.set(
+      cacheKey,
+      (async () => {
+        const opportunities = await getCachedOpportunities();
+        const payload = buildPortalRetrofitRecommendations({
+          user: publicUser(user),
+          intake,
+          opportunities,
+          now
+        });
+        writeCachedRetrofitRecommendations(user, intake, payload);
+        return payload;
+      })().finally(() => {
+        retrofitRecommendationsPromiseCache.delete(cacheKey);
+      })
+    );
+  }
+
+  return retrofitRecommendationsPromiseCache.get(cacheKey);
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -2881,15 +2984,7 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
     }
 
     const intake = await getIntake(user.userId);
-    const opportunities = await scanAll(opportunitiesTable);
-    res.json(
-      buildPortalRetrofitRecommendations({
-        user: publicUser(user),
-        intake,
-        opportunities,
-        now: new Date()
-      })
-    );
+    res.json(await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date() }));
   } catch (error) {
     handleError(res, error);
   }
@@ -2944,15 +3039,7 @@ app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) =
     }
 
     const intake = await getIntake(user.userId);
-    const opportunities = await scanAll(opportunitiesTable);
-    res.json(
-      buildPortalRetrofitRecommendations({
-        user: publicUser(user),
-        intake,
-        opportunities,
-        now: new Date()
-      })
-    );
+    res.json(await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date() }));
   } catch (error) {
     handleError(res, error);
   }
