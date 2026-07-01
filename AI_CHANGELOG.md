@@ -1,14 +1,20 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro work packet organization
+
+- Moved GPT Pro prompts and saved outputs under `GPT Pro Work/` so prompt/output handoff artifacts live in one workspace.
+- Added a reusable opportunity-data GPT Pro work-packet generator that creates five prompt files and five blank output files per repair packet.
+- Generated the next opportunity-data repair packet for batches 29-33 and refreshed the next 75-target artifact from the current batch-28 public index.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 24-28
 
-- Imported five additional saved GPT Pro opportunity-data repair outputs from `Outputs/` as normalized batches 24-28.
+- Imported five additional saved GPT Pro opportunity-data repair outputs from `GPT Pro Work/Outputs/` as normalized batches 24-28.
 - Appended the batches to the ordered opportunity-data repair manifest and applied all 28 batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
 - Advanced the repaired opportunity-data corpus to 335 unique researched opportunities.
 
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 19-23
 
-- Imported five saved GPT Pro opportunity-data repair outputs from `Outputs/` as normalized batches 19-23.
+- Imported five saved GPT Pro opportunity-data repair outputs from `GPT Pro Work/Outputs/` as normalized batches 19-23.
 - Appended the batches to the ordered opportunity-data repair manifest and applied all 23 batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
 - Preserved the remaining prepared GPT Pro prompt set for batches 24-28 as the next waiting repair outputs.
 

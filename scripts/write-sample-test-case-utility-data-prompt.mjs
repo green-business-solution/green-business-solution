@@ -4,9 +4,14 @@ import { fileURLToPath } from "node:url";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const repoRoot = path.resolve(path.dirname(scriptPath), "..");
-const defaultPromptPath = path.join(repoRoot, "prompts", "gpt_pro_comprehensive_test_case_utility_data_prompt.md");
+const defaultPromptPath = path.join(repoRoot, "GPT Pro Work", "prompts", "gpt_pro_comprehensive_test_case_utility_data_prompt.md");
 const defaultSampleUsersPath = path.join(repoRoot, "data", "sample_user_profiles.json");
-const defaultOutputPath = path.join(repoRoot, "prompts", "gpt_pro_comprehensive_test_case_utility_data_prompt_with_profiles.md");
+const defaultOutputPath = path.join(
+  repoRoot,
+  "GPT Pro Work",
+  "prompts",
+  "gpt_pro_comprehensive_test_case_utility_data_prompt_with_profiles.md"
+);
 
 export function parseArgs(argv) {
   const options = {
@@ -78,8 +83,8 @@ function printHelp() {
   console.log(`Usage: node scripts/write-sample-test-case-utility-data-prompt.mjs [options]
 
 Options:
-  --output prompts/gpt_pro_comprehensive_test_case_utility_data_prompt_with_profiles.md
-  --prompt prompts/gpt_pro_comprehensive_test_case_utility_data_prompt.md
+  --output "GPT Pro Work/prompts/gpt_pro_comprehensive_test_case_utility_data_prompt_with_profiles.md"
+  --prompt "GPT Pro Work/prompts/gpt_pro_comprehensive_test_case_utility_data_prompt.md"
   --sample-users data/sample_user_profiles.json
 `);
 }

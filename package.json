@@ -33,6 +33,7 @@
     "matching:opportunity-data-repairs:apply-all": "node scripts/apply-all-opportunity-data-research-repairs.mjs",
     "matching:opportunity-data-repairs:intake": "node scripts/intake-opportunity-data-research-repairs.mjs",
     "matching:opportunity-data-repairs:validate": "node scripts/validate-opportunity-data-research-repairs.mjs",
+    "matching:opportunity-data-work-packet": "node scripts/write-opportunity-data-gpt-pro-work-packet.mjs",
     "matching:opportunity-data-targets": "node scripts/write-opportunity-data-research-targets.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "matching:sample-opportunity-audit": "node scripts/audit-sample-matching-opportunity-data.mjs",
