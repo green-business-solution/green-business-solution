@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) sample test-case utility data completion
+
+- Imported GPT Pro utility profile patches for sample matching test cases 21-50 and added the source patch artifacts to `data/`.
+- Corrected one malformed synthetic `bin_size` value for `kauai-coffee-kalaheo` by converting the descriptive text into a numeric 40-yard estimate while preserving the original description in source evidence.
+- Added a merged all-50 patch artifact and re-ran the utility importer so all 50 sample users and public test cases now report imported synthetic utility data with no missing profiles.
+- Promoted all 50 patched sample test cases into `gbs-users` and `gbs-client-intake` as fake client users.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 9-10
 
 - Categorized the latest pasted GPT Pro outputs as two already-imported repeats and two actionable repair batches.
