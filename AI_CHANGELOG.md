@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) opportunity repair manifest and batch 13
+
+- Added an ordered opportunity-data repair batch manifest and `matching:opportunity-data-repairs:apply-all` command so cumulative repair imports no longer require a long manual file list.
+- Added a current-fixture target generator with `matching:opportunity-data-targets` and regenerated the next 75 unrepaired low-confidence opportunity-data targets after the first cleanup set.
+- Normalized and imported the GPT Pro batch for the 15 remaining local low-confidence targets as batch 13, stripping malformed markdown URL fragments before validation and import.
+- Applied repair batches 1-13 cumulatively to the public retrofit opportunity index and sample matching fixtures.
+
 ## 2026-07-01 - Codex (GPT-5) opportunity repair validation guardrails
 
 - Added a reusable GPT Pro opportunity-data repair validator and CLI script for schema, duplicate ID, expected target, URL corruption, status, and polluted evidence checks.

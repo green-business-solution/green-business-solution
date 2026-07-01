@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "opportunity_data_repair_batches.v1",
+  "updatedAt": "2026-07-01",
+  "description": "Ordered manifest of GPT Pro opportunity-data repair batches. Later files intentionally overwrite earlier duplicate opportunity repairs.",
+  "batches": [
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13.json"
+    }
+  ]
+}
