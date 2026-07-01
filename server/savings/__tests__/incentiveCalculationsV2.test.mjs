@@ -125,7 +125,7 @@ describe("incentive calculation v2", () => {
     );
   });
 
-  it("maps legacy possible grant money into expected grant amount instead of upfront savings", () => {
+  it("suppresses legacy possible grant money without probability evidence", () => {
     const { v1Award, v2Result } = compareLegacyToV2(
       legacyRule({
         incentiveType: "possible_grant",
@@ -135,7 +135,9 @@ describe("incentive calculation v2", () => {
 
     expect(v1Award.upfrontSavingsEntry.kind).toBe("possible_grant");
     expect(v2Result.totals.expectedOneTimeSavingsCents).toBe(0);
-    expect(v2Result.totals.expectedGrantAmountCents).toBe(v1Award.amountCents);
+    expect(v1Award.amountCents).toBe(0);
+    expect(v2Result.totals.expectedGrantAmountCents).toBe(0);
+    expect(v2Result.effectResults[0].grantEstimate.computedEstimate.estimateStatus).toBe("suppressed");
   });
 
   it("calculates a measure catalog with customer filter and annual household limit", () => {

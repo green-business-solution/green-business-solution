@@ -1,4 +1,5 @@
 import { applyCaps, percentOfCents, roundCents } from "./formulas.mjs";
+import { buildGrantEstimateFromLegacyRule, isGrantLikeRule } from "./grantEstimates.mjs";
 import { answerValue, hasAnswer } from "./labor.mjs";
 import { resolveIncentiveBasis } from "./incentives.mjs";
 
@@ -214,7 +215,17 @@ function calculateEffect({ pkg, effect, ctx, priorAwards }) {
   }
 
   const basisCents = resolveV2Basis(effect, ctx, priorAwards);
-  const amountCents = applyV2Caps(rawAmountCents, [...(effect.caps || []), ...(pkg.global_caps || [])], basisCents);
+  let amountCents = applyV2Caps(rawAmountCents, [...(effect.caps || []), ...(pkg.global_caps || [])], basisCents);
+  const legacyRule = effect.migration_legacy_rule;
+  const grantEstimate = isGrantLikeRule(legacyRule)
+    ? buildGrantEstimateFromLegacyRule(legacyRule, { ...ctx, legacyIncentiveBasisCents: basisCents })
+    : null;
+
+  if (grantEstimate) {
+    const includedGrantAmount = grantEstimate.computedEstimate.includedInUserFacingTotal;
+    amountCents = includedGrantAmount ? Number(grantEstimate.computedEstimate.estimatedAmountCents || 0) : 0;
+    if (!includedGrantAmount) rawAmountCents = 0;
+  }
   const annualizedAmountCents = annualizeAmount(amountCents, effect.timing);
 
   return {
@@ -225,6 +236,7 @@ function calculateEffect({ pkg, effect, ctx, priorAwards }) {
     annualizedAmountCents,
     basisCents,
     missingInputs,
+    grantEstimate,
     trace
   };
 }

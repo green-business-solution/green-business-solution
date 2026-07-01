@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) conservative grant estimation
+
+- Added a grant-estimation rules module that separates source confidence from estimate confidence, suppresses low-confidence or max-only competitive grant values, and supports deterministic capped percent, per-unit, fixed, study/audit, competitive EV, zero-value loan/tax/non-cash classifications, and reason codes.
+- Wired grant estimates into legacy and v2 savings incentive calculations so unsupported "possible grant" and ambiguous "up to" grant rules no longer contribute to savings or scenario selection totals.
+- Added targeted savings tests for deterministic grants, competitive expected value, max-only suppression, low-source suppression, non-grant classifications, missing inputs, legacy runtime gating, and updated possible-grant stacking expectations.
+
 ## 2026-07-01 - Codex (GPT-5) GPT Pro repair packet 59-78
 
 - Updated the GPT Pro opportunity-data work-packet generator so prompt validation text uses the actual target count instead of hardcoding 15 repairs.

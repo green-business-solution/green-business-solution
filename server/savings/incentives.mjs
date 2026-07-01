@@ -1,4 +1,5 @@
 import { applyCaps, percentOfCents, roundCents } from "./formulas.mjs";
+import { buildGrantEstimateFromLegacyRule, isGrantLikeRule } from "./grantEstimates.mjs";
 import { answerValue, hasAnswer } from "./labor.mjs";
 
 function sum(entries) {
@@ -179,8 +180,18 @@ function calculateRawIncentiveAmount(rule, basisCents, ctx) {
 
 export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
   const basisCents = resolveIncentiveBasis(rule, ctx, priorAwards);
-  const rawAmountCents = calculateRawIncentiveAmount(rule, basisCents, ctx);
-  const amountCents = applyCaps(rawAmountCents, rule.cap || {}, basisCents);
+  let rawAmountCents = calculateRawIncentiveAmount(rule, basisCents, ctx);
+  let amountCents = applyCaps(rawAmountCents, rule.cap || {}, basisCents);
+  const grantEstimate = isGrantLikeRule(rule)
+    ? buildGrantEstimateFromLegacyRule(rule, { ...ctx, legacyIncentiveBasisCents: basisCents })
+    : null;
+
+  if (grantEstimate) {
+    const includedGrantAmount = grantEstimate.computedEstimate.includedInUserFacingTotal;
+    amountCents = includedGrantAmount ? Number(grantEstimate.computedEstimate.estimatedAmountCents || 0) : 0;
+    if (!includedGrantAmount) rawAmountCents = 0;
+  }
+
   const category = incentiveCategory(rule);
   const timing = rule.timing || "upfront";
   const id = `award_${rule.id}`;
@@ -194,7 +205,8 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
     category,
     amountCents,
     rawAmountCents,
-    basisCents
+    basisCents,
+    grantEstimate
   };
 
   if (timing === "upfront") {
@@ -210,7 +222,8 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
       sourceId: rule.id,
       opportunityId: rule.opportunityId,
       incentiveRuleId: rule.id,
-      formula: rule.formula || null
+      formula: rule.formula || null,
+      grantEstimate
     };
   } else {
     const isRecurringExpense =

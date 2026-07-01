@@ -131,7 +131,7 @@ describe("incentive stacking", () => {
     expect(selectBestScenario(scenarios).incentiveRuleIds).toEqual([]);
   });
 
-  it("selects possible grant scenarios as a tiebreaker without counting them as upfront savings", () => {
+  it("suppresses possible grant scenarios without probability evidence", () => {
     const possibleGrantRule = {
       id: "oir_possible_grant_v1",
       opportunityId: "opp_possible_grant",
@@ -145,13 +145,16 @@ describe("incentive stacking", () => {
 
     const scenarios = scenarioCtx([possibleGrantRule]);
     const selected = selectBestScenario(scenarios);
+    const possibleGrantScenario = scenarios.find((scenario) => scenario.opportunityIds.includes("opp_possible_grant"));
 
-    expect(selected.opportunityIds).toEqual(["opp_possible_grant"]);
+    expect(selected.opportunityIds).toEqual([]);
     expect(selected.totalUpfrontSavingsCents).toBe(0);
-    expect(selected.possibleGrantMoneyCents).toBe(128340);
-    expect(selected.upfrontSavingsEntries[0]).toMatchObject({
+    expect(selected.possibleGrantMoneyCents).toBe(0);
+    expect(possibleGrantScenario.possibleGrantMoneyCents).toBe(0);
+    expect(possibleGrantScenario.upfrontSavingsEntries[0]).toMatchObject({
       kind: "possible_grant",
-      amountCents: 128340
+      amountCents: 0
     });
+    expect(possibleGrantScenario.upfrontSavingsEntries[0].grantEstimate.computedEstimate.estimateStatus).toBe("suppressed");
   });
 });
