@@ -1,0 +1,1065 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1811",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "Mansfield"
+        ],
+        "utilityTerritories": [
+          "Mansfield Municipal Electric Department"
+        ],
+        "notes": "Residential account and service location must be in Mansfield, Massachusetts."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "energy_audit",
+        "ev_charger_installation",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "energy_star_residential_refrigerator",
+        "energy_star_clothes_washer",
+        "energy_star_clothes_dryer",
+        "energy_star_window_air_conditioner",
+        "energy_star_dehumidifier"
+      ],
+      "hardRequirements": [
+        "Eligible equipment must be installed at the Mansfield Municipal Electric Department account location.",
+        "2026 rebate forms require qualifying purchases or installations during 2026 and postmark by January 31, 2027.",
+        "Weatherization measures must be recommended by an ENE Home Energy Assessment and meet the required savings-to-investment ratio.",
+        "EV charger rebate requires licensed electrician installation and Connected Homes enrollment."
+      ],
+      "blockers": [
+        "Window and door replacement are excluded from the weatherization rebate.",
+        "Refrigeration match must be limited to residential ENERGY STAR refrigerators, not commercial refrigeration equipment.",
+        "Window air conditioners are not window replacement.",
+        "Generic high-efficiency HVAC or gas HVAC does not qualify; HVAC rebates are air-source or ground-source heat pumps only."
+      ],
+      "programType": "Residential Rebate Program",
+      "administrator": "Mansfield Municipal Electric Department",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mansfieldelectric.com/rebates-savings",
+      "sourceUrlsChecked": [
+        "https://www.mansfieldelectric.com/rebates-savings",
+        "https://www.mansfieldelectric.com/rebates-savings/files/2026-energy-star-heat-pump-rebate-form",
+        "https://www.mansfieldelectric.com/rebates-savings/files/2026-weatherization-rebate-form",
+        "https://www.mansfieldelectric.com/rebates-savings/files/2026-electric-vehicle-charger-rebate-form",
+        "https://www.mansfieldelectric.com/rebates-savings/files/2026-energy-star-appliance-rebate-form"
+      ],
+      "evidenceText": "2026 MMED forms cover residential heat pumps, weatherization, EV chargers, and ENERGY STAR appliances. Weatherization excludes doors and windows; EV chargers require Connected Homes enrollment.",
+      "reasoningNotes": "Kept only measures directly listed in current MMED forms. Energy audit is included as a required assessment pathway for weatherization, not as a broad standalone retrofit."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4730",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "MidAmerican Energy Company"
+        ],
+        "notes": "Nonresidential facilities must be in MidAmerican Energy's Illinois electric or natural gas service territory, and MidAmerican must deliver energy to the rebated equipment."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "nonresidential_customer",
+        "small_business_customer",
+        "agricultural_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "nonprofit",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_assessment",
+        "led_lighting_retrofit",
+        "exterior_site_lighting_retrofit",
+        "refrigeration_case_lighting_retrofit",
+        "lighting_controls",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "high_efficiency_boiler_retrofit",
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_hvac_replacement",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_oven",
+        "high_efficiency_fryer",
+        "high_efficiency_steamer",
+        "high_efficiency_griddle",
+        "hot_food_holding_cabinet",
+        "efficient_ice_machine",
+        "high_efficiency_refrigeration_equipment",
+        "pre_rinse_spray_valve",
+        "agricultural_fan_efficiency",
+        "grain_bin_fan_controls",
+        "compressed_air_efficiency"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible MidAmerican Energy Illinois commercial or industrial customer.",
+        "MidAmerican Energy must deliver the energy type used by the rebated equipment.",
+        "Qualifying equipment must be purchased, installed, and operating during the current program year.",
+        "Custom, direct, retro-commissioning, and strategic energy management projects may require preapproval.",
+        "Rebates and instant discounts are subject to annual budget and program limits."
+      ],
+      "blockers": [
+        "Residential appliances and home weatherization are not eligible under this Illinois business program.",
+        "Small Business Express assessment is not a general standalone residential energy audit rebate.",
+        "Commercial new construction and custom projects have separate pathways and may require preapproval.",
+        "Lighting must meet program wattage reduction and operating-hour requirements; existing LED-to-new LED replacements are generally excluded.",
+        "Instant discounts must be obtained through participating providers and are subject to available funds."
+      ],
+      "programType": "Business Rebate And Instant Discount Program",
+      "administrator": "MidAmerican Energy Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.midamericanenergy.com/business-discounts-and-rebates",
+      "sourceUrlsChecked": [
+        "https://www.midamericanenergy.com/business-discounts-and-rebates",
+        "https://www.midamericanenergy.com/il-bus-qualifications-conditions",
+        "https://www.midamericanenergy.com/business-programs-and-savings",
+        "https://www.midamericanenergy.com/small-business-express"
+      ],
+      "evidenceText": "MidAmerican's current Illinois business materials list instant discounts and rebates for nonresidential HVAC, lighting, food service, refrigeration, agriculture, compressed air, and assessments.",
+      "reasoningNotes": "Kept commercial and industrial measures only. Product-specific food-service and refrigeration items were not generalized into residential appliance categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4787",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Energy Resources natural gas service territory"
+        ],
+        "notes": "Qualifying affordable-housing dwellings must be served by Minnesota Energy Resources natural gas service in Minnesota."
+      },
+      "eligibleApplicantTypes": [
+        "affordable_housing_developer",
+        "nonprofit_organization",
+        "property_manager",
+        "public_housing_authority",
+        "habitat_for_humanity_affiliate",
+        "rental_property_owner",
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "affordable_housing",
+        "low_income",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "high_efficiency_gas_water_heater",
+        "integrated_space_and_water_heating",
+        "smart_thermostat_zoning_retrofit",
+        "energy_recovery_ventilation_retrofit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "duct_sealing",
+        "window_replacement",
+        "drain_water_heat_recovery",
+        "heating_system_tuneup"
+      ],
+      "hardRequirements": [
+        "Applicant must document qualifying low-income or affordable-housing occupancy.",
+        "Project must be served by Minnesota Energy Resources natural gas service.",
+        "Applications must be submitted within the program deadline after installation.",
+        "Some measures are restricted to existing homes or retrofit applications and do not qualify for new construction.",
+        "Home Energy Excellence developments are excluded from certain space-heating, window, and water-heating rebates."
+      ],
+      "blockers": [
+        "Industrial waste_heat_recovery is a false positive; the supported measure is residential drain-water heat recovery.",
+        "Electric heat pumps and heat pump water heaters are not part of this gas affordable-housing rebate.",
+        "Several measures are marked retrofit or existing-homes only and do not qualify for new construction.",
+        "Home Energy Excellence developments cannot use this program for space heating, windows, or water heating.",
+        "Applicant must document low-income or affordable-housing occupancy and Minnesota Energy Resources gas service."
+      ],
+      "programType": "Affordable Housing Natural Gas Rebate Program",
+      "administrator": "Minnesota Energy Resources",
+      "applicationUrl": "https://www.minnesotaenergyresources.com/partners/builders/pdf/affordable-housing-rebates.pdf",
+      "websiteUrl": "https://www.minnesotaenergyresources.com/partners/builders/affordable-housing-rebates",
+      "sourceUrlsChecked": [
+        "https://www.minnesotaenergyresources.com/partners/builders/affordable-housing-rebates",
+        "https://www.minnesotaenergyresources.com/partners/builders/pdf/affordable-housing-rebates.pdf",
+        "https://www.minnesotaenergyresources.com/savings/rebates",
+        "https://www.minnesotaenergyresources.com/partners/builders/construction-rebates"
+      ],
+      "evidenceText": "MER's 2026 affordable-housing rebate materials list gas heating, gas water heating, HRV or ERV, drain-water heat recovery, thermostats, duct sealing, insulation, air sealing, and windows.",
+      "reasoningNotes": "The source is a gas affordable-housing program. Electric heat-pump and industrial heat-recovery matches were removed or blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22130",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Power"
+        ],
+        "notes": "Eligible projects must be for Minnesota Power business electric customers in the utility service territory."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "agricultural_customer",
+        "multifamily_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "heat_pump_hvac_retrofit",
+        "cold_climate_air_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "hvac_tuneup",
+        "ecm_circulator_pump",
+        "efficient_ice_machine",
+        "high_efficiency_refrigeration_equipment",
+        "energy_star_residential_refrigerator_freezer",
+        "energy_star_clothes_washer",
+        "heat_pump_clothes_dryer",
+        "energy_star_dehumidifier",
+        "energy_star_room_air_cleaner",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer",
+        "high_efficiency_griddle",
+        "hot_food_holding_cabinet",
+        "energy_analysis",
+        "custom_electric_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Minnesota Power business customer.",
+        "Rebate applications and invoices must be submitted within the program's stated submission window.",
+        "Rebates are contingent on verification and available funding.",
+        "Some appliance and food-service measures require electric water heating at the facility."
+      ],
+      "blockers": [
+        "Laundry rebates are product-specific clothes washer and heat pump dryer, not a broad water-efficiency retrofit category.",
+        "Commercial clothes washer and dishwasher measures may require the facility to have an electric water heater.",
+        "Gas furnace and boiler retrofits are not supported by this electric business rebate page.",
+        "EVs, forklifts, e-buses, and other electrification projects are handled through separate contact or project pathways, not ordinary HVAC or food-service rebates.",
+        "Custom and new-construction incentives require Minnesota Power review, verification, and available funding."
+      ],
+      "programType": "Business Energy Efficiency Rebate Program",
+      "administrator": "Minnesota Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mnpower.com/ProgramsRebates/BusinessIncentives",
+      "sourceUrlsChecked": [
+        "https://www.mnpower.com/ProgramsRebates/BusinessIncentives",
+        "https://www.mnpower.com/ProgramsRebates/Business"
+      ],
+      "evidenceText": "Minnesota Power's current business page lists 2026 rebates for commercial, industrial, multifamily, and agricultural customers including lighting, heat pumps, appliances, foodservice, refrigeration, and custom energy analysis.",
+      "reasoningNotes": "Residential-only appliances were kept only where Minnesota Power lists residential-sized products within the business program. Fuel-switching and EV-related items were limited to stated pathways."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2251",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Minnesota Valley Electric Cooperative"
+        ],
+        "notes": "Eligible applicant must be an MVEC residential member-owner in the cooperative's electric service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_member_owner",
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "central_air_conditioner_replacement",
+        "furnace_ecm_motor_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "energy_star_clothes_washer",
+        "energy_star_residential_dishwasher",
+        "energy_star_residential_refrigerator_freezer",
+        "electric_water_heater",
+        "electric_resistance_zone_heater",
+        "hvac_tuneup"
+      ],
+      "hardRequirements": [
+        "Applicant must be an MVEC residential member-owner.",
+        "Rebates apply to new equipment only.",
+        "Most applications must be submitted within 90 days, with some heat-pump measures allowing a longer submission window.",
+        "Many HVAC and water-heating measures require MVEC Energy Wise, off-peak, or control enrollment.",
+        "EV charger rebate requires EV-24 enrollment."
+      ],
+      "blockers": [
+        "Commercial dishwasher is a false positive; only residential ENERGY STAR dishwasher and appliance rebates are supported.",
+        "High-efficiency refrigeration equipment must be limited to residential refrigerator or freezer appliances, not commercial refrigeration.",
+        "ECM rebate is for furnace fan motors or pumps, not refrigeration EC motors.",
+        "Heat pumps and central air generally require MVEC Energy Wise or off-peak enrollment and qualifying installation.",
+        "Rebates are for MVEC residential member-owners and new equipment only."
+      ],
+      "programType": "Residential Rebate Program",
+      "administrator": "Minnesota Valley Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mvec.net/savings/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.mvec.net/savings/rebates/"
+      ],
+      "evidenceText": "MVEC's current residential rebate page covers ENERGY STAR appliances, heat pumps, water heaters, EV chargers, central air, furnace ECMs, HVAC tuneups, Wi-Fi thermostats, and electric heaters for residential member-owners.",
+      "reasoningNotes": "Kept residential appliance and residential electric equipment categories only. Commercial kitchen and commercial refrigeration matches were blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4261",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MS"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Mississippi Power"
+        ],
+        "notes": "Eligibility is limited to Mississippi Power service territory; customer class requirements vary by residential, business, commercial, industrial, and transportation measure."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "commercial_customer",
+        "industrial_customer",
+        "government_customer",
+        "institutional_customer",
+        "nonprofit_customer",
+        "dealer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "government",
+        "institutional",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_forklift_material_handling",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "electric_vehicle_purchase",
+        "heat_pump_hvac_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "insulation_upgrade",
+        "air_sealing_weatherization",
+        "duct_sealing",
+        "energy_star_window_air_conditioner",
+        "pool_pump",
+        "heat_pump_washer_dryer_combo",
+        "led_lighting_retrofit",
+        "lighting_controls",
+        "high_efficiency_refrigeration_equipment",
+        "commercial_kitchen_equipment",
+        "energy_management_system",
+        "high_efficiency_motors_pumps_fans_compressors"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Mississippi Power customer or qualifying dealer for dealer-specific transportation rebates.",
+        "Residential and commercial forms require application within the stated post-installation window.",
+        "Commercial custom and large commercial or industrial measures may require preapproval.",
+        "Business transportation measures require qualifying EV, charger, truck plug, or forklift documentation.",
+        "Residential HPWH, HVAC, insulation, and smart thermostat rebates require product and customer eligibility documentation."
+      ],
+      "blockers": [
+        "Window replacement is a false positive for the residential form; current residential support is ENERGY STAR window air conditioners, not replacement windows.",
+        "EV purchase rebates are vehicle incentives and should not be treated as building retrofits.",
+        "Commercial C&I, forklift, truck plug, and custom measures require the applicable business or transportation pathway and may require preapproval.",
+        "Residential insulation is limited to qualifying single-family applications.",
+        "Rebates require Mississippi Power service and installation or application windows."
+      ],
+      "programType": "Residential And Commercial Rebate Program",
+      "administrator": "Mississippi Power",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mississippipower.com/residential/ways-to-save/rebates---incentives.html",
+      "sourceUrlsChecked": [
+        "https://www.mississippipower.com/residential/ways-to-save/rebates---incentives.html",
+        "https://www.mississippipower.com/business/ways-to-save.html",
+        "https://www.mississippipower.com/business/ways-to-save/large-commercial-and-industrial-program.html",
+        "https://www.mississippipower.com/residential/products-and-services/electric-vehicles.html",
+        "https://www.mississippipower.com/business/products---services/electric-transportation.html",
+        "https://www.mississippipower.com/content/dam/mississippi-power/residential/ways-to-save/rebates/02-18_MKT_RESIDENTIAL%20EV%20rebate%20form.pdf",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/residential/ev-rebates/3-23_MKT_Commercial%20EV%20rebate%20form.pdf",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/business/commercial-ee-program/small-biz/MPC-Commercial-HVAC-Replacement-Rebate-Form.pdf",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/business/commercial-ee-program/small-biz/MPC-Commercial-Smart-Thermostat-Rebate-Form.pdf",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/business/commercial-ee-program/small-biz/2024-Ceiling-insulation-Rebate.pdf"
+      ],
+      "evidenceText": "Current Mississippi Power materials support residential HVAC, smart thermostat, HPWH, duct and air sealing, insulation, EV and charger, window AC, pool pump, and commercial HVAC, lighting, refrigeration, kitchen, custom, EV, and forklift incentives.",
+      "reasoningNotes": "Kept both residential and commercial categories because current official materials place them under Mississippi Power's residential and business rebate pathways. Window replacement was blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3337",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [
+          "Monmouth"
+        ],
+        "utilityTerritories": [
+          "Monmouth Power & Light"
+        ],
+        "notes": "Eligible customer must receive Monmouth Power & Light service; electricity must be and remain the primary heat source for qualifying homes."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "smart_thermostat_zoning_retrofit",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "insulation_upgrade",
+        "window_replacement",
+        "exterior_door_replacement",
+        "energy_star_clothes_washer",
+        "energy_star_clothes_dryer"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Monmouth Power & Light customer.",
+        "Application must be submitted before installation.",
+        "Electricity must be and remain the home's primary heat source.",
+        "Receipts or invoices are required after installation.",
+        "Pre- and post-inspections may be required for many measures."
+      ],
+      "blockers": [
+        "Furnace retrofit is not supported; HVAC rebates are for eligible electric-to-heat-pump conversions.",
+        "Broad air sealing or weatherization should be limited to supported insulation, window, and exterior-door measures.",
+        "Laundry support is residential ENERGY STAR washer and electric dryer, not commercial laundry or water-efficiency equipment.",
+        "Application must be submitted before installation, and electricity must remain the primary heat source."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Monmouth Power & Light",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ci.monmouth.or.us/pview.aspx?catid=552&id=55053",
+      "sourceUrlsChecked": [
+        "https://www.ci.monmouth.or.us/pview.aspx?id=4776",
+        "https://www.ci.monmouth.or.us/pview.aspx?catid=552&id=55053"
+      ],
+      "evidenceText": "Monmouth's current residential program lists rebates for Level 2 EV chargers, heat pump water heaters, smart thermostats, ductless and ducted heat pumps, insulation, windows, exterior doors, and ENERGY STAR washer and dryer.",
+      "reasoningNotes": "Retained window replacement because Monmouth explicitly lists window rebates. Furnace and broad weatherization matches were narrowed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3025",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "RI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Rhode Island Energy"
+        ],
+        "notes": "Eligible customer must be a Rhode Island residential electric customer; enhanced heat-pump incentives may require qualifying electric-resistance heating and EnergyWise verification."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer",
+        "income_eligible_residential_customer",
+        "landlord",
+        "renter",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "low_income"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "energy_star_residential_refrigerator",
+        "energy_star_room_air_conditioner",
+        "energy_star_clothes_dryer",
+        "energy_star_room_air_cleaner",
+        "residential_led_lighting_direct_install"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Rhode Island Energy residential electric customer for electric-program measures.",
+        "Heat-pump equipment must meet current Rhode Island Energy qualified-product requirements.",
+        "Enhanced heat-pump incentives may require EnergyWise assessment and completion of recommended weatherization.",
+        "Appliance and electronics rebates are limited to qualifying residential products."
+      ],
+      "blockers": [
+        "Target legacy URL is obsolete or returns a 404; use current Rhode Island Energy pages and rebate portal.",
+        "Gas boilers, gas furnaces, and gas water heaters are not part of this electric residential opportunity; route to separate gas or clean-heat programs.",
+        "Commercial refrigeration equipment is a false positive; appliance rebates are residential products such as refrigerators and room air conditioners.",
+        "LED lighting, if available, is a Home Energy Assessment or direct-install measure, not a broad lighting retrofit rebate.",
+        "Freezer rebates were not verified in the current checked sources."
+      ],
+      "programType": "Residential Electric Energy Efficiency Rebate Program",
+      "administrator": "Rhode Island Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.rienergy.com/site/ways-to-save/rebates-and-savings-programs",
+      "sourceUrlsChecked": [
+        "https://www.rienergy.com/RI-Home/Energy-Saving-Programs/rebate-programs",
+        "https://www.rienergy.com/site/ways-to-save/rebates-and-savings-programs",
+        "https://frontdoor.portal.poweredbyefi.org/initiative/rienergy/program/rirhvc",
+        "https://frontdoor.portal.poweredbyefi.org/initiative/rienergy",
+        "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/heating-and-cooling/ri_electric_heating-cooling_form.ashx",
+        "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/gas-water-heating/HPWH_2026_3-11-2026.pdf",
+        "https://energy.ri.gov/heating-cooling/clean-heating-cooling-incentives",
+        "https://rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/appliance-and-electronics-incentives/Residential_Aircleaner_rebateform_rie5553.ashx",
+        "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/appliance-and-electronics-incentives/electricdryer_rebateform_rie6935.ashx"
+      ],
+      "evidenceText": "Rhode Island Energy's current materials verify residential electric heat-pump, mini-split, heat-pump water-heater, smart-thermostat, appliance, and Home Energy Assessment weatherization support. The old target URL is now a 404.",
+      "reasoningNotes": "Legacy National Grid naming was repaired to Rhode Island Energy. Gas heating matches were blocked because the target is the electric residential incentive program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2548",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "New Prague"
+        ],
+        "utilityTerritories": [
+          "New Prague Utilities Commission"
+        ],
+        "notes": "Eligible customer must receive electric service from New Prague Utilities Commission; SMMPA administers or hosts current member rebate forms."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_residential_appliances",
+        "energy_star_residential_dishwasher",
+        "energy_star_residential_refrigerator_freezer",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "hvac_tuneup",
+        "ecm_circulator_pump",
+        "furnace_fan_motor_ecm_retrofit",
+        "pool_pump",
+        "duct_sealing",
+        "air_sealing_weatherization",
+        "battery_powered_outdoor_equipment",
+        "electric_bicycle"
+      ],
+      "hardRequirements": [
+        "Applicant must be a New Prague Utilities Commission residential electric customer.",
+        "Customer must use the applicable current SMMPA or utility rebate form.",
+        "Eligibility is measure-specific and may depend on ENERGY STAR, qualified-product, or installation documentation."
+      ],
+      "blockers": [
+        "Commercial dishwasher, commercial refrigeration, food-service equipment, motors, and lighting are business rebate categories, not this residential opportunity.",
+        "Residential dishwasher, refrigerator, and freezer matches must be limited to ENERGY STAR residential products.",
+        "Furnaces are not rebated as furnace replacements; current forms support furnace fan motor or ECM measures.",
+        "LED lighting is not shown as a 2026 residential rebate form; it appears under business lighting or general resources.",
+        "Google Drive PDFs were linked from SMMPA but not text-readable in the browser; categories are limited to visible official form titles."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "New Prague Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/new-prague",
+      "sourceUrlsChecked": [
+        "https://www.saveenergyinnewprague.com/",
+        "https://smmpa.com/members/new-prague",
+        "https://drive.google.com/file/d/1FIjjf8pjK3KR7BePl1V5l25zgiT_vEC2/view?usp=drive_link",
+        "https://drive.google.com/file/d/1J5kf_b7Uu4gipphiXTsxLRPXBsAASDCA/view?usp=drive_link",
+        "https://drive.google.com/file/d/1zvC_i0Pl_gmylAU8HOf2NiBrNwIM4ldG/view?usp=drive_link",
+        "https://drive.google.com/file/d/1gLV4tt0iHYFBAfmQOifcqDWk3cDhYMUS/view?usp=drive_link",
+        "https://drive.google.com/file/d/1sy55OUSK2FgQ9Vyt2p3RsqYFXAhKO8Lc/view?usp=drive_link"
+      ],
+      "evidenceText": "SMMPA's New Prague member page lists 2026 residential rebate forms for ENERGY STAR products, EV chargers, cooling equipment, cooling tune-ups, ECM circulator pumps, furnace fan motors, pool pumps, and aerosol sealing.",
+      "reasoningNotes": "Kept residential categories visible from current SMMPA form titles. Business lighting, refrigeration, food service, and motor categories were blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4572",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [
+          "Norwich"
+        ],
+        "utilityTerritories": [
+          "Norwich Public Utilities natural gas service territory"
+        ],
+        "notes": "Gas equipment must be installed in NPU territory and served by Norwich Public Utilities natural gas service."
+      },
+      "eligibleApplicantTypes": [
+        "residential_natural_gas_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "high_efficiency_gas_water_heater",
+        "natural_gas_conversion"
+      ],
+      "hardRequirements": [
+        "Verified 2026 natural-gas form covered purchases from January 1, 2026 through June 30, 2026.",
+        "Rebate requests for the verified 2026 gas form were due July 15, 2026.",
+        "Applicant must be an NPU natural gas service customer and equipment must be installed in NPU service territory.",
+        "Final City of Norwich Building Department letter of compliance and equipment specifications are required.",
+        "Preapproval is required if rebate total exceeds $6,000."
+      ],
+      "blockers": [
+        "Air-source heat pumps, ground-source heat pumps, integrated controls, and HPWH are in NPU CHIPP or electric water-heater programs, not this gas opportunity.",
+        "EV and EVSE rebates are a separate NPU electric-customer program.",
+        "Insulation, windows, and Home Energy Savings items are separate programs, not the 2026 natural gas equipment rebate.",
+        "Verified purchase period ended June 30, 2026; do not match new projects unless NPU publishes a new form."
+      ],
+      "programType": "Natural Gas Heating Equipment Rebate Program",
+      "administrator": "Norwich Public Utilities",
+      "applicationUrl": "https://norwichpublicutilities.com/DocumentCenter/View/657/2026-Natural-Gas-Heating-Equipment-Rebate-Form",
+      "websiteUrl": "https://norwichpublicutilities.com/216/Efficiency-Programs-Rebates",
+      "sourceUrlsChecked": [
+        "https://norwichpublicutilities.com/216/Efficiency-Programs-Rebates",
+        "https://norwichpublicutilities.com/DocumentCenter/View/657/2026-Natural-Gas-Heating-Equipment-Rebate-Form",
+        "https://norwichpublicutilities.com/309/Efficiency-Programs-Rebates",
+        "https://norwichpublicutilities.com/DocumentCenter/View/666/SPRING-2026-CHIPP-Welcome-Letter",
+        "https://norwichpublicutilities.com/DocumentCenter/View/653/2026-Electric-Water-Heater-Rebate-Form"
+      ],
+      "evidenceText": "NPU's 2026 natural-gas form covers qualifying furnaces, boilers, and gas water-heating equipment for NPU gas customers, with purchases only through June 30, 2026.",
+      "reasoningNotes": "Marked unavailable for new matching because the verified purchase period ended before the research date. Heat pumps, HPWH, EVSE, insulation, and windows are separate programs."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1780",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [
+          "Orlando",
+          "St. Cloud"
+        ],
+        "utilityTerritories": [
+          "Orlando Utilities Commission electric service territory",
+          "Orlando Utilities Commission water service territory"
+        ],
+        "notes": "Service-territory eligibility depends on electric or water rebate type; standard residential energy rebates apply to qualifying residential dwellings and OUC account holders."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "property_owner",
+        "ouc_account_holder",
+        "multifamily_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "solar_water_heating_system",
+        "insulation_upgrade",
+        "duct_sealing",
+        "window_replacement",
+        "window_film_shading_retrofit",
+        "electric_vehicle_purchase",
+        "battery_storage_system"
+      ],
+      "hardRequirements": [
+        "Applicant must be a qualifying OUC customer in the relevant electric or water service territory.",
+        "Residential energy rebates generally require qualifying single-family, condominium, or townhome classification unless using a multifamily pathway.",
+        "Documentation such as invoice or proof of purchase must be submitted by the required deadline.",
+        "Heat pump water heater rebate is available to OUC electric customers and excludes electric tankless, on-demand, gas, and water-only customers.",
+        "Solar thermal water heater must be FSEC or SRCC certified and cannot be for pool heating."
+      ],
+      "blockers": [
+        "EV charger installation is not verified on the current OUC residential rebate list; current EV item is purchase or lease rebate.",
+        "Air sealing is not separately verified; duct repair or replacement is the supported leakage measure.",
+        "HPWH rebate excludes water-only customers, electric tankless or on-demand water heaters, and gas water heaters.",
+        "Solar thermal water heater rebate excludes pool heating and requires FSEC or SRCC certification.",
+        "Water rebates and the multifamily efficiency program have separate water-service, property-assessment, and multifamily batch requirements."
+      ],
+      "programType": "Residential Energy And Water Rebate Program",
+      "administrator": "Orlando Utilities Commission",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.ouc.com/solutions-programs/savings/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.ouc.com/solutions-programs/savings/rebates/",
+        "https://www.ouc.com/getgreen/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/heat-pump-water-heater/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/multifamily-efficiency-program/"
+      ],
+      "evidenceText": "OUC's current rebate pages support heat pump A/C, heat pump water heaters, solar thermal water heaters, ceiling insulation, duct repair, ENERGY STAR windows, window film or solar screens, battery storage, EV purchase or lease, and assessments.",
+      "reasoningNotes": "Kept OUC-listed residential energy measures. EV charger and broad air-sealing matches were blocked because current pages verify EV purchase and duct repair, not those broader categories."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1531",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Otter Tail Power Company"
+        ],
+        "notes": "Minnesota commercial forms were checked for this target; Otter Tail also operates in North Dakota and South Dakota with state-specific forms."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "agricultural_customer",
+        "public_entity",
+        "institutional_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "institutional",
+        "government"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_hvac_retrofit",
+        "air_to_water_heat_pump",
+        "heat_pump_water_heater",
+        "electric_heating_equipment",
+        "thermal_storage_heating_cooling",
+        "smart_thermostat_zoning_retrofit",
+        "led_lighting_retrofit",
+        "new_construction_lighting",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_case_lighting_retrofit",
+        "commercial_kitchen_equipment",
+        "compressed_air_efficiency",
+        "adjustable_speed_drive",
+        "high_efficiency_motors",
+        "ecm_motor_retrofit",
+        "electric_forklift_material_handling",
+        "electric_commercial_equipment",
+        "facility_energy_assessment",
+        "retrocommissioning",
+        "custom_efficiency_project",
+        "integrated_building_design",
+        "publicly_owned_solar_pv"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Otter Tail Power business electric customer.",
+        "State-specific forms and deadlines apply.",
+        "EV charging station rebate requires Level 2 charging and off-peak service.",
+        "Water-heating and thermal-storage measures may require qualifying controlled or off-peak service.",
+        "Custom grants, integrated design, retro-commissioning, and other project-based measures require Otter Tail review."
+      ],
+      "blockers": [
+        "Boilers and furnaces should not match unless as electric heating equipment or a validated custom project; no generic gas boiler or furnace rebate was verified.",
+        "EV charging requires a Level 2 charger on an off-peak rate under the EV charging station program.",
+        "Water-heater rebates are tied to qualifying equipment and often off-peak or controlled service; do not generalize to all water heaters.",
+        "Publicly owned solar is a separate POP Solar incentive, not a generic commercial solar rebate.",
+        "Refrigeration requires licensed contractor installation and is capped by purchase cost or annual electric bill."
+      ],
+      "programType": "Commercial And Industrial Energy Efficiency Rebate Program",
+      "administrator": "Otter Tail Power Company",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.otpco.com/rebates-and-efficiency-programs/business/programs/",
+      "sourceUrlsChecked": [
+        "https://www.otpco.com/rebates-and-efficiency-programs/business/programs/",
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/rebates-commercial/",
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/refrigeration/",
+        "https://www.otpco.com/media/fspbkton/mn-customer-rebate-application-form-3053_2026-fillable.pdf"
+      ],
+      "evidenceText": "Otter Tail's current commercial forms list rebates for lighting, heat pumps, EV charging, refrigeration, food service, compressed air, motors, drives, ECMs, electric commercial equipment, assessments, custom grants, thermal storage, and water heating.",
+      "reasoningNotes": "Kept broad C&I electric-efficiency categories supported by current Otter Tail business pages. Gas boiler and furnace matches were blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "Princeton"
+        ],
+        "utilityTerritories": [
+          "Princeton Public Utilities"
+        ],
+        "notes": "Eligible customer must receive electric service from Princeton Public Utilities; SMMPA hosts current member rebate forms."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_residential_appliances",
+        "energy_star_residential_dishwasher",
+        "energy_star_residential_refrigerator_freezer",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "hvac_tuneup",
+        "ecm_circulator_pump",
+        "furnace_fan_motor_ecm_retrofit",
+        "pool_pump",
+        "duct_sealing",
+        "air_sealing_weatherization",
+        "battery_powered_outdoor_equipment",
+        "electric_bicycle"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Princeton Public Utilities residential electric customer.",
+        "Customer must use the applicable current SMMPA or utility rebate form.",
+        "Eligibility is measure-specific and may depend on ENERGY STAR, qualified-product, or installation documentation."
+      ],
+      "blockers": [
+        "Commercial dishwasher and commercial refrigeration are false positives; the residential page only exposes ENERGY STAR product forms for household products.",
+        "Furnace references should be limited to furnace fan motor or ECM rebates, not high-efficiency furnace replacement.",
+        "Residential LED lighting is not shown as a 2026 residential rebate form; lighting forms are listed under business rebates.",
+        "Ground-source or geothermal heat pump is not verified on the visible 2026 residential form titles and should not be matched unless the current cooling form confirms it.",
+        "SMMPA Drive PDFs were linked but not text-readable in the browser; category repair is limited to visible official form titles."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Princeton PUC",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/princeton",
+      "sourceUrlsChecked": [
+        "https://smmpa.com/members/princeton"
+      ],
+      "evidenceText": "SMMPA's Princeton page lists 2026 residential forms for ENERGY STAR products and EV chargers plus cooling equipment, tune-ups, ECM circulator pumps, furnace fan motors, pool pumps, aerosol sealing, e-bikes, and battery outdoor equipment.",
+      "reasoningNotes": "Kept residential categories visible from the current SMMPA page. Business lighting, refrigeration, food service, and motor forms were not treated as residential eligibility."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2582",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "Redwood Falls"
+        ],
+        "utilityTerritories": [
+          "Redwood Falls Public Utilities"
+        ],
+        "notes": "Eligible customer must receive electric service from Redwood Falls Public Utilities; SMMPA hosts current member rebate forms."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_residential_appliances",
+        "energy_star_residential_dishwasher",
+        "energy_star_residential_refrigerator_freezer",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "hvac_tuneup",
+        "ecm_circulator_pump",
+        "furnace_fan_motor_ecm_retrofit",
+        "pool_pump",
+        "duct_sealing",
+        "air_sealing_weatherization",
+        "battery_powered_outdoor_equipment",
+        "electric_bicycle"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Redwood Falls Public Utilities residential electric customer.",
+        "Customer must use the applicable current SMMPA or utility rebate form.",
+        "Eligibility is measure-specific and may depend on ENERGY STAR, qualified-product, or installation documentation."
+      ],
+      "blockers": [
+        "Commercial dishwasher, commercial refrigeration, chillers, and LED lighting examples on the page relate to business or school rebates, not residential matching.",
+        "Furnace category is limited to furnace fan motor or ECM, not furnace replacement.",
+        "Ground-source or geothermal heat pump is not verified on the visible 2026 residential form titles and should not be matched unless the current cooling form confirms it.",
+        "Residential LED lighting is not shown as a 2026 residential rebate form.",
+        "SMMPA Drive PDFs were linked but not text-readable in the browser; category repair is limited to visible official form titles."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Redwood Falls Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/redwood-falls",
+      "sourceUrlsChecked": [
+        "https://smmpa.com/members/redwood-falls",
+        "https://ci.redwood-falls.mn.us/public-utilities/energy-star-rebates/"
+      ],
+      "evidenceText": "SMMPA's Redwood Falls page lists 2026 residential forms for ENERGY STAR products, EV chargers, cooling equipment, tune-ups, ECM circulator pumps, furnace fan motors, pool pumps, aerosol sealing, e-bikes, and battery outdoor equipment.",
+      "reasoningNotes": "Kept residential categories visible from the current SMMPA page. Business and school project examples were not generalized to the residential program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2586",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "Saint Peter"
+        ],
+        "utilityTerritories": [
+          "Saint Peter Municipal Utilities"
+        ],
+        "notes": "Eligible customer must receive electric service from Saint Peter Municipal Utilities; SMMPA hosts current member rebate forms."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_star_residential_appliances",
+        "energy_star_residential_dishwasher",
+        "energy_star_residential_refrigerator_freezer",
+        "heat_pump_water_heater",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "hvac_tuneup",
+        "ecm_circulator_pump",
+        "furnace_fan_motor_ecm_retrofit",
+        "pool_pump",
+        "duct_sealing",
+        "air_sealing_weatherization",
+        "battery_powered_outdoor_equipment",
+        "electric_bicycle"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Saint Peter Municipal Utilities residential electric customer.",
+        "Customer must use the applicable current SMMPA or utility rebate form.",
+        "Eligibility is measure-specific and may depend on ENERGY STAR, qualified-product, or installation documentation."
+      ],
+      "blockers": [
+        "Commercial dishwasher, food-service equipment, refrigeration, motors, and business lighting are separate business rebate forms, not this residential opportunity.",
+        "Furnace references should be limited to furnace fan motor or ECM rebates, not high-efficiency furnace replacement.",
+        "Ground-source or geothermal heat pump is not verified on visible 2026 residential form titles and should not be matched unless current cooling form confirms it.",
+        "Residential LED lighting is not shown in the SMMPA 2026 residential form list; city rebate references may be separate or retail offers.",
+        "SMMPA Drive PDFs were linked but not text-readable in the browser; category repair is limited to visible official form titles."
+      ],
+      "programType": "Residential Energy Efficiency Rebate Program",
+      "administrator": "Saint Peter Municipal Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/saint-peter",
+      "sourceUrlsChecked": [
+        "https://smmpa.com/members/saint-peter",
+        "https://www.saintpetermn.gov/216/Saint-Peter-Utility-Customer-Rebates"
+      ],
+      "evidenceText": "SMMPA's Saint Peter page lists 2026 residential forms for ENERGY STAR products, EV chargers, cooling equipment, tune-ups, ECM circulator pumps, furnace fan motors, pool pumps, aerosol sealing, e-bikes, and battery outdoor equipment.",
+      "reasoningNotes": "Kept residential categories visible from the current SMMPA page. Business form categories and broad LED lighting were blocked for this residential opportunity."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:3256"
+}

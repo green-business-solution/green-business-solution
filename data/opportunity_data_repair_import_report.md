@@ -1,85 +1,137 @@
 # Opportunity Data Repair Import Report
 
-Generated: 2026-07-01T02:50:00.348Z
-Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13
-Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13.json
-Repairs supplied: 126
-Unique repairs supplied: 110
+Generated: 2026-07-01T03:42:31.304Z
+Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch15, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch16, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch17, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch18
+Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch15.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch16.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch17.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch18.json
+Repairs supplied: 201
+Unique repairs supplied: 185
 Duplicate opportunity repairs overwritten by later files: 16
-Retrofit index edges patched: 1166
-Retrofit index unique opportunities patched: 110
-Test case opportunity edges patched: 70
-Test case top result edges patched: 8
+Retrofit index edges patched: 1903
+Retrofit index unique opportunities patched: 185
+Test case opportunity edges patched: 363
+Test case top result edges patched: 39
 
 ## Patched Opportunities
 
 - SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608
+- SOURCE_DSIRE:dsire_program_id:1128
+- SOURCE_DSIRE:dsire_program_id:1392
 - SOURCE_DSIRE:dsire_program_id:1463
+- SOURCE_DSIRE:dsire_program_id:1531
 - SOURCE_DSIRE:dsire_program_id:1543
 - SOURCE_DSIRE:dsire_program_id:1553
+- SOURCE_DSIRE:dsire_program_id:1570
 - SOURCE_DSIRE:dsire_program_id:1580
 - SOURCE_DSIRE:dsire_program_id:1613
 - SOURCE_DSIRE:dsire_program_id:1615
 - SOURCE_DSIRE:dsire_program_id:1689
 - SOURCE_DSIRE:dsire_program_id:1692
+- SOURCE_DSIRE:dsire_program_id:1718
+- SOURCE_DSIRE:dsire_program_id:1780
 - SOURCE_DSIRE:dsire_program_id:1801
 - SOURCE_DSIRE:dsire_program_id:1810
+- SOURCE_DSIRE:dsire_program_id:1811
 - SOURCE_DSIRE:dsire_program_id:1885
 - SOURCE_DSIRE:dsire_program_id:1889
 - SOURCE_DSIRE:dsire_program_id:1902
 - SOURCE_DSIRE:dsire_program_id:1924
+- SOURCE_DSIRE:dsire_program_id:1925
+- SOURCE_DSIRE:dsire_program_id:1929
 - SOURCE_DSIRE:dsire_program_id:1939
 - SOURCE_DSIRE:dsire_program_id:1940
 - SOURCE_DSIRE:dsire_program_id:1941
 - SOURCE_DSIRE:dsire_program_id:1942
 - SOURCE_DSIRE:dsire_program_id:1943
 - SOURCE_DSIRE:dsire_program_id:1946
+- SOURCE_DSIRE:dsire_program_id:1949
 - SOURCE_DSIRE:dsire_program_id:2008
+- SOURCE_DSIRE:dsire_program_id:2011
 - SOURCE_DSIRE:dsire_program_id:2015
 - SOURCE_DSIRE:dsire_program_id:2036
 - SOURCE_DSIRE:dsire_program_id:2041
 - SOURCE_DSIRE:dsire_program_id:2176
+- SOURCE_DSIRE:dsire_program_id:2178
 - SOURCE_DSIRE:dsire_program_id:2183
+- SOURCE_DSIRE:dsire_program_id:2185
+- SOURCE_DSIRE:dsire_program_id:2195
+- SOURCE_DSIRE:dsire_program_id:2202
 - SOURCE_DSIRE:dsire_program_id:22050
+- SOURCE_DSIRE:dsire_program_id:22130
+- SOURCE_DSIRE:dsire_program_id:22138
 - SOURCE_DSIRE:dsire_program_id:22307
 - SOURCE_DSIRE:dsire_program_id:22345
+- SOURCE_DSIRE:dsire_program_id:2237
 - SOURCE_DSIRE:dsire_program_id:22377
 - SOURCE_DSIRE:dsire_program_id:22397
 - SOURCE_DSIRE:dsire_program_id:22456
+- SOURCE_DSIRE:dsire_program_id:2251
 - SOURCE_DSIRE:dsire_program_id:2253
 - SOURCE_DSIRE:dsire_program_id:22567
+- SOURCE_DSIRE:dsire_program_id:2259
 - SOURCE_DSIRE:dsire_program_id:22660
 - SOURCE_DSIRE:dsire_program_id:2288
 - SOURCE_DSIRE:dsire_program_id:2290
+- SOURCE_DSIRE:dsire_program_id:2354
 - SOURCE_DSIRE:dsire_program_id:2410
 - SOURCE_DSIRE:dsire_program_id:2415
 - SOURCE_DSIRE:dsire_program_id:2453
+- SOURCE_DSIRE:dsire_program_id:2475
 - SOURCE_DSIRE:dsire_program_id:2516
+- SOURCE_DSIRE:dsire_program_id:2532
+- SOURCE_DSIRE:dsire_program_id:2534
 - SOURCE_DSIRE:dsire_program_id:2538
+- SOURCE_DSIRE:dsire_program_id:2539
 - SOURCE_DSIRE:dsire_program_id:2540
+- SOURCE_DSIRE:dsire_program_id:2543
+- SOURCE_DSIRE:dsire_program_id:2544
 - SOURCE_DSIRE:dsire_program_id:2545
 - SOURCE_DSIRE:dsire_program_id:2546
+- SOURCE_DSIRE:dsire_program_id:2548
 - SOURCE_DSIRE:dsire_program_id:2549
 - SOURCE_DSIRE:dsire_program_id:2553
 - SOURCE_DSIRE:dsire_program_id:2554
+- SOURCE_DSIRE:dsire_program_id:2555
+- SOURCE_DSIRE:dsire_program_id:2582
+- SOURCE_DSIRE:dsire_program_id:2586
+- SOURCE_DSIRE:dsire_program_id:2588
+- SOURCE_DSIRE:dsire_program_id:2592
 - SOURCE_DSIRE:dsire_program_id:2593
 - SOURCE_DSIRE:dsire_program_id:2615
 - SOURCE_DSIRE:dsire_program_id:2620
 - SOURCE_DSIRE:dsire_program_id:2639
 - SOURCE_DSIRE:dsire_program_id:2650
 - SOURCE_DSIRE:dsire_program_id:2689
+- SOURCE_DSIRE:dsire_program_id:2896
+- SOURCE_DSIRE:dsire_program_id:3025
 - SOURCE_DSIRE:dsire_program_id:3026
+- SOURCE_DSIRE:dsire_program_id:3134
+- SOURCE_DSIRE:dsire_program_id:3135
 - SOURCE_DSIRE:dsire_program_id:3146
 - SOURCE_DSIRE:dsire_program_id:3154
 - SOURCE_DSIRE:dsire_program_id:3157
+- SOURCE_DSIRE:dsire_program_id:3169
+- SOURCE_DSIRE:dsire_program_id:3176
 - SOURCE_DSIRE:dsire_program_id:3206
 - SOURCE_DSIRE:dsire_program_id:3235
+- SOURCE_DSIRE:dsire_program_id:3256
+- SOURCE_DSIRE:dsire_program_id:3308
+- SOURCE_DSIRE:dsire_program_id:3337
 - SOURCE_DSIRE:dsire_program_id:3348
 - SOURCE_DSIRE:dsire_program_id:3372
+- SOURCE_DSIRE:dsire_program_id:3391
+- SOURCE_DSIRE:dsire_program_id:3405
 - SOURCE_DSIRE:dsire_program_id:3415
 - SOURCE_DSIRE:dsire_program_id:3464
+- SOURCE_DSIRE:dsire_program_id:3476
+- SOURCE_DSIRE:dsire_program_id:3571
+- SOURCE_DSIRE:dsire_program_id:3575
 - SOURCE_DSIRE:dsire_program_id:3577
+- SOURCE_DSIRE:dsire_program_id:3578
+- SOURCE_DSIRE:dsire_program_id:3594
+- SOURCE_DSIRE:dsire_program_id:3642
+- SOURCE_DSIRE:dsire_program_id:3654
 - SOURCE_DSIRE:dsire_program_id:3659
+- SOURCE_DSIRE:dsire_program_id:3672
 - SOURCE_DSIRE:dsire_program_id:3689
 - SOURCE_DSIRE:dsire_program_id:3754
 - SOURCE_DSIRE:dsire_program_id:3897
@@ -87,39 +139,62 @@ Test case top result edges patched: 8
 - SOURCE_DSIRE:dsire_program_id:4052
 - SOURCE_DSIRE:dsire_program_id:4128
 - SOURCE_DSIRE:dsire_program_id:4130
+- SOURCE_DSIRE:dsire_program_id:4142
 - SOURCE_DSIRE:dsire_program_id:4198
+- SOURCE_DSIRE:dsire_program_id:4222
 - SOURCE_DSIRE:dsire_program_id:4237
 - SOURCE_DSIRE:dsire_program_id:4244
+- SOURCE_DSIRE:dsire_program_id:4261
+- SOURCE_DSIRE:dsire_program_id:4279
 - SOURCE_DSIRE:dsire_program_id:4281
 - SOURCE_DSIRE:dsire_program_id:4312
 - SOURCE_DSIRE:dsire_program_id:4365
+- SOURCE_DSIRE:dsire_program_id:4572
+- SOURCE_DSIRE:dsire_program_id:4581
 - SOURCE_DSIRE:dsire_program_id:4586
 - SOURCE_DSIRE:dsire_program_id:4608
+- SOURCE_DSIRE:dsire_program_id:4630
 - SOURCE_DSIRE:dsire_program_id:4636
 - SOURCE_DSIRE:dsire_program_id:4637
+- SOURCE_DSIRE:dsire_program_id:4639
 - SOURCE_DSIRE:dsire_program_id:4645
 - SOURCE_DSIRE:dsire_program_id:4653
 - SOURCE_DSIRE:dsire_program_id:4698
+- SOURCE_DSIRE:dsire_program_id:4713
 - SOURCE_DSIRE:dsire_program_id:4723
+- SOURCE_DSIRE:dsire_program_id:4730
+- SOURCE_DSIRE:dsire_program_id:4755
 - SOURCE_DSIRE:dsire_program_id:4785
+- SOURCE_DSIRE:dsire_program_id:4787
 - SOURCE_DSIRE:dsire_program_id:4791
 - SOURCE_DSIRE:dsire_program_id:4810
 - SOURCE_DSIRE:dsire_program_id:4812
 - SOURCE_DSIRE:dsire_program_id:4815
+- SOURCE_DSIRE:dsire_program_id:4822
+- SOURCE_DSIRE:dsire_program_id:4854
 - SOURCE_DSIRE:dsire_program_id:4952
 - SOURCE_DSIRE:dsire_program_id:5018
+- SOURCE_DSIRE:dsire_program_id:5100
 - SOURCE_DSIRE:dsire_program_id:5101
+- SOURCE_DSIRE:dsire_program_id:5135
 - SOURCE_DSIRE:dsire_program_id:5136
 - SOURCE_DSIRE:dsire_program_id:5141
 - SOURCE_DSIRE:dsire_program_id:5144
 - SOURCE_DSIRE:dsire_program_id:5156
 - SOURCE_DSIRE:dsire_program_id:5183
+- SOURCE_DSIRE:dsire_program_id:5241
+- SOURCE_DSIRE:dsire_program_id:5307
 - SOURCE_DSIRE:dsire_program_id:5349
 - SOURCE_DSIRE:dsire_program_id:5355
 - SOURCE_DSIRE:dsire_program_id:5449
+- SOURCE_DSIRE:dsire_program_id:5512
+- SOURCE_DSIRE:dsire_program_id:5513
 - SOURCE_DSIRE:dsire_program_id:5704
+- SOURCE_DSIRE:dsire_program_id:5713
 - SOURCE_DSIRE:dsire_program_id:5738
 - SOURCE_DSIRE:dsire_program_id:5796
+- SOURCE_DSIRE:dsire_program_id:5822
+- SOURCE_DSIRE:dsire_program_id:658
 - SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:agricultural-and-pumping-interruptible-ap-i-program
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_22121
 - SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-design-assistance

@@ -1,30 +1,29 @@
-# Sample Matching Post-Batch13 Audit
+# Sample Matching Current Opportunity-Data Audit
 
-Generated: 2026-07-01T03:16:47.016Z
+Generated: 2026-07-01T03:43:26.805Z
 Sample cases: 50
 Top-result rows inspected: 525
-Flagged rows: 355
+Flagged rows: 351
 Flagged rank-1 rows: 47
 
 ## Workstream Split
 
-- Opportunity data issues: 271
+- Opportunity data issues: 242
 - Matching/ranking issues: 208
-- Pending GPT target top-result rows: 31
-- Unrepaired low-confidence top-result rows: 240
+- Pending GPT target top-result rows: 10
+- Unrepaired low-confidence top-result rows: 232
 - Non-physical top-result rows: 23
 - Local scope/state-only risk rows: 11
 - Financing/tax high-rank rows: 105
 
 ## Interpretation
 
-- The parallel GPT Pro batches should directly reduce the pending-target and unrepaired low-confidence counts.
+- Completed GPT Pro opportunity-data batches should reduce pending-target and unrepaired low-confidence counts as they are applied.
 - Repeated federal tax, loan, certification, permit, or local programs at rank 1 are ranking/category-boundary work, not just source-data cleanup.
 - Local city or county programs matched only by state should get stronger geography handling after the data cleanup pass.
 
 ## Top Opportunity-Data Targets Appearing In Current Top Results
 
-- Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658): 26 appearances, 12 rank-1, target #61; pending_gpt_repair_target=26, financing_or_tax_program_high_rank=25
 - USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313): 11 appearances, 11 rank-1, not in next target list; financing_or_tax_program_high_rank=11, planning_or_certification_high_rank=11, unrepaired_low_confidence_opportunity_data=11
 - City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790): 10 appearances, 8 rank-1, not in next target list; non_physical_top_result=10, planning_or_certification_high_rank=10, unrepaired_low_confidence_opportunity_data=10
 - USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511): 46 appearances, 6 rank-1, not in next target list; unrepaired_low_confidence_opportunity_data=46, financing_or_tax_program_high_rank=36
@@ -44,10 +43,11 @@ Flagged rank-1 rows: 47
 - Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712): 4 appearances, 0 rank-1, not in next target list; unrepaired_low_confidence_opportunity_data=4
 - Azusa Light & Water - EV Charger Rebate (SOURCE_DSIRE:dsire_program_id:22278): 2 appearances, 0 rank-1, not in next target list; unrepaired_low_confidence_opportunity_data=2
 - City of Memphis - PILOT Program (SOURCE_DSIRE:dsire_program_id:22676): 2 appearances, 0 rank-1, not in next target list; non_physical_top_result=2, unrepaired_low_confidence_opportunity_data=2
+- Electric Cargo Handling Grant Program (SOURCE_DSIRE:dsire_program_id:22228): 2 appearances, 0 rank-1, not in next target list; unrepaired_low_confidence_opportunity_data=2
 
 ## Top Matching/Ranking Candidates
 
-- Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658): 26 appearances, 12 rank-1, target #61; pending_gpt_repair_target=26, financing_or_tax_program_high_rank=25
+- Business Energy Investment Tax Credit (ITC) (SOURCE_DSIRE:dsire_program_id:658): 25 appearances, 12 rank-1, not in next target list; financing_or_tax_program_high_rank=25
 - USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313): 11 appearances, 11 rank-1, not in next target list; financing_or_tax_program_high_rank=11, planning_or_certification_high_rank=11, unrepaired_low_confidence_opportunity_data=11
 - City of San Diego - Sustainable Building Expedited Permit Program (SOURCE_DSIRE:dsire_program_id:4790): 10 appearances, 8 rank-1, not in next target list; non_physical_top_result=10, planning_or_certification_high_rank=10, unrepaired_low_confidence_opportunity_data=10
 - USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511): 46 appearances, 6 rank-1, not in next target list; unrepaired_low_confidence_opportunity_data=46, financing_or_tax_program_high_rank=36
@@ -70,23 +70,23 @@ Flagged rank-1 rows: 47
 
 ## Highest-Issue Sample Cases
 
-- california-endowment-hq: 11 flagged top results (9 data, 5 ranking)
-- melissas-vernon-distribution: 11 flagged top results (9 data, 5 ranking)
-- northgate-market-anaheim: 11 flagged top results (9 data, 5 ranking)
-- one-community-health-midtown: 11 flagged top results (8 data, 6 ranking)
-- westin-pasadena: 11 flagged top results (9 data, 5 ranking)
-- ikea-burbank: 10 flagged top results (8 data, 5 ranking)
-- portland-food-coop-maine: 10 flagged top results (10 data, 3 ranking)
+- california-endowment-hq: 11 flagged top results (8 data, 5 ranking)
+- melissas-vernon-distribution: 11 flagged top results (8 data, 5 ranking)
+- northgate-market-anaheim: 11 flagged top results (8 data, 5 ranking)
+- one-community-health-midtown: 11 flagged top results (7 data, 6 ranking)
+- westin-pasadena: 11 flagged top results (8 data, 5 ranking)
+- ikea-burbank: 10 flagged top results (7 data, 5 ranking)
+- portland-food-coop-maine: 10 flagged top results (9 data, 3 ranking)
 - bmw-spartanburg-plant: 9 flagged top results (7 data, 5 ranking)
 - fender-corona-plant: 9 flagged top results (8 data, 3 ranking)
 - gm-factory-zero-detroit: 9 flagged top results (5 data, 6 ranking)
-- juniper-and-ivy-san-diego: 9 flagged top results (6 data, 4 ranking)
-- qts-richmond-data-center: 9 flagged top results (4 data, 6 ranking)
+- qts-richmond-data-center: 9 flagged top results (3 data, 6 ranking)
 - santa-clara-university-campus: 9 flagged top results (7 data, 6 ranking)
 - seghesio-healdsburg-winery: 9 flagged top results (8 data, 5 ranking)
-- the-rose-minneapolis-household: 9 flagged top results (6 data, 3 ranking)
-- eastern-market-detroit: 8 flagged top results (5 data, 7 ranking)
-- food-bank-rockies-aurora-dc: 8 flagged top results (6 data, 3 ranking)
+- eastern-market-detroit: 8 flagged top results (4 data, 7 ranking)
+- food-bank-rockies-aurora-dc: 8 flagged top results (5 data, 3 ranking)
+- juniper-and-ivy-san-diego: 8 flagged top results (5 data, 4 ranking)
 - uaf-akasofu-building: 8 flagged top results (6 data, 5 ranking)
-- zingermans-deli-ann-arbor: 8 flagged top results (4 data, 6 ranking)
+- zingermans-deli-ann-arbor: 8 flagged top results (3 data, 6 ranking)
 - boeing-everett-factory: 7 flagged top results (6 data, 4 ranking)
+- hersheys-chocolate-world-hershey: 7 flagged top results (5 data, 5 ranking)

@@ -126,7 +126,7 @@ export function buildSampleMatchingOpportunityAuditReport(audit) {
     row.workstreams.some((item) => item.value === "matching_ranking")
   );
   const lines = [
-    "# Sample Matching Post-Batch13 Audit",
+    "# Sample Matching Current Opportunity-Data Audit",
     "",
     `Generated: ${audit.summary.generatedAt}`,
     `Sample cases: ${audit.summary.sampleCaseCount}`,
@@ -146,7 +146,7 @@ export function buildSampleMatchingOpportunityAuditReport(audit) {
     "",
     "## Interpretation",
     "",
-    "- The parallel GPT Pro batches should directly reduce the pending-target and unrepaired low-confidence counts.",
+    "- Completed GPT Pro opportunity-data batches should reduce pending-target and unrepaired low-confidence counts as they are applied.",
     "- Repeated federal tax, loan, certification, permit, or local programs at rank 1 are ranking/category-boundary work, not just source-data cleanup.",
     "- Local city or county programs matched only by state should get stronger geography handling after the data cleanup pass.",
     "",
