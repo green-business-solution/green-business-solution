@@ -31,6 +31,8 @@
     "matching:status-bucket-repairs": "node scripts/apply-status-bucket-cleanup-repairs.mjs",
     "matching:opportunity-data-repairs": "node scripts/apply-opportunity-data-research-repairs.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
+    "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",
+    "matching:test-case-utility-data": "node scripts/import-sample-test-case-utility-data.mjs",
     "matching:test-case-savings": "node scripts/patch-admin-test-case-savings.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"

@@ -5,6 +5,12 @@
 - Updated the live `gbs-retrofi-production` CloudFormation stack so `GBS_ADMIN_EMAILS` now includes `rshen0210@gmail.com` alongside the existing admin allowlist.
 - Verified the production stack finished `UPDATE_COMPLETE` and now resolves the correct admin email parameter at runtime.
 
+## 2026-06-30 - Codex (GPT-5) sample utility data importer
+
+- Added a sample test-case utility-data importer that validates GPT Pro utility patches, rebuilds intake-compatible site energy profiles, patches sample profiles and public test cases, and writes an import report.
+- Added a prompt generator that embeds the current sample user profiles into the GPT Pro utility-data prompt so GPT Pro has the required profile input in one copy-paste file.
+- Added focused tests for utility patch imports, unknown bill-field validation, and annual/monthly reconciliation failures.
+
 ## 2026-06-30 - Codex (GPT-5) Ryan admin user correction
 
 - Updated the production `gbs-users` record for `rshen0210@gmail.com` to `role: admin` and `isFakeUser: false`.
