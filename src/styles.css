@@ -884,6 +884,16 @@ dd {
   gap: 18px;
 }
 
+.admin-subsection {
+  display: grid;
+  gap: 10px;
+}
+
+.compact-heading h3 {
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
 .admin-table {
   background: #ffffff;
   border: 1px solid #dce3dd;

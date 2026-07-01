@@ -274,7 +274,8 @@ export function generateFakeIntakePayload({ customerType, index, random, runId }
     currentChallenges: "",
     monthlyUtilitySpend: "",
     timeline: "",
-    notes: `RetroFi fake seed ${runId} for ${customerType}`
+    notes: `RetroFi fake seed ${runId} for ${customerType}`,
+    isFakeUser: true
   };
 }
 
@@ -305,7 +306,8 @@ export function validateGeneratedIntakePayload(payload) {
     "currentChallenges",
     "monthlyUtilitySpend",
     "timeline",
-    "notes"
+    "notes",
+    "isFakeUser"
   ];
 
   for (const key of requiredKeys) {
@@ -322,6 +324,7 @@ export function validateGeneratedIntakePayload(payload) {
   if (!payload.organizationType?.trim()) errors.push("Organization type is required.");
   if (!/^\d[\d,\s.]*$/.test(payload.squareFootage || "")) errors.push("Square footage must be numeric.");
   if (!Array.isArray(payload.interestedImprovements)) errors.push("Interested improvements must be an array.");
+  if (payload.isFakeUser !== true) errors.push("Fake seed payloads must set isFakeUser to true.");
 
   const flow = intakeFlowForOrganizationType(payload.organizationType);
   if ((flow === "business" || flow === "organization") && !payload.companyName?.trim()) {

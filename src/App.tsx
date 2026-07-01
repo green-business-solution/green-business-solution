@@ -38,6 +38,7 @@ type UserRecord = {
   authProvider: string;
   googleLinked: boolean;
   googlePicture?: string | null;
+  isFakeUser: boolean;
   createdAt: string;
   lastLoginAt: string | null;
 };
@@ -6103,19 +6104,61 @@ function AdminUsersPanel({
   onRefresh: () => void;
   rows: AdminRow[];
 }) {
+  const realRows = rows.filter(({ user }) => !user.isFakeUser);
+  const fakeRows = rows.filter(({ user }) => user.isFakeUser);
+
   return (
     <section className="admin-section">
       <div className="section-heading">
         <div>
           <p className="eyebrow">Google-authenticated users</p>
-          <h2>Client intake records</h2>
+          <h2>Users</h2>
         </div>
         <button className="secondary-button" disabled={isLoading} onClick={onRefresh} type="button">
           {isLoading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
 
-      <div className="admin-table" role="table" aria-label="Client intake records">
+      <AdminUsersTable
+        emptyMessage={isLoading ? "Loading real users..." : "No real users loaded."}
+        emptyNote={isLoading ? "This tab is loading after sign-in." : "Admins and future verified real users will appear here."}
+        isLoading={isLoading}
+        rows={realRows}
+        title="Real users"
+      />
+      <AdminUsersTable
+        emptyMessage={isLoading ? "Loading fake users..." : "No fake users loaded."}
+        emptyNote={isLoading ? "This tab is loading after sign-in." : "Seeded/demo users will appear here."}
+        isLoading={isLoading}
+        rows={fakeRows}
+        title="Fake users"
+      />
+    </section>
+  );
+}
+
+function AdminUsersTable({
+  emptyMessage,
+  emptyNote,
+  isLoading,
+  rows,
+  title
+}: {
+  emptyMessage: string;
+  emptyNote: string;
+  isLoading: boolean;
+  rows: AdminRow[];
+  title: string;
+}) {
+  return (
+    <section className="admin-subsection">
+      <div className="section-heading compact-heading">
+        <div>
+          <p className="eyebrow">{title}</p>
+          <h3>{rows.length.toLocaleString()} record{rows.length === 1 ? "" : "s"}</h3>
+        </div>
+      </div>
+      <div className="admin-table" role="table" aria-label={title}>
         <div className="admin-row admin-head" role="row">
           <span role="columnheader">Name</span>
           <span role="columnheader">Company</span>
@@ -6127,8 +6170,8 @@ function AdminUsersPanel({
         {rows.length === 0 ? (
           <div className="admin-row admin-empty-row" role="row">
             <span role="cell">
-              <strong>{isLoading ? "Loading client records..." : "No client records loaded."}</strong>
-              <small>{isLoading ? "This tab is loading after sign-in." : "Use Refresh to load the latest records."}</small>
+              <strong>{emptyMessage}</strong>
+              <small>{emptyNote}</small>
             </span>
           </div>
         ) : rows.map(({ user, intake }) => (

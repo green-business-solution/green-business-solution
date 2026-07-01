@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) fake user classification
+
+- Added an `isFakeUser` flag to public user records and user creation paths so seeded/demo clients can be separated from real users.
+- Marked fake Green Button seed payloads with `isFakeUser: true`.
+- Split the admin Users tab into separate real-user and fake-user tables.
+
 ## 2026-06-30 - Codex (GPT-5) admin raw table cleanup
 
 - Hid the raw `gbs-users` and `gbs-client-intake` table tabs from the admin sidebar while keeping the curated `Users` and `Client Intake Summary` views.

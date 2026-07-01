@@ -684,6 +684,14 @@ function validateIntake(input) {
   return errors;
 }
 
+function isFakeUserRecord(user) {
+  if (typeof user?.isFakeUser === "boolean") {
+    return user.isFakeUser;
+  }
+
+  return user?.role !== "admin";
+}
+
 function publicUser(user) {
   if (!user) return null;
 
@@ -698,6 +706,7 @@ function publicUser(user) {
     googleLinked: Boolean(user.googleLinked),
     googlePicture: user.googlePicture || null,
     passwordLinked: Boolean(user.passwordLinked),
+    isFakeUser: isFakeUserRecord(user),
     createdAt: user.createdAt,
     lastLoginAt: user.lastLoginAt || null
   };
@@ -1264,18 +1273,20 @@ async function createPasswordAccount(input) {
 
   if (existing) {
     const role = isAdminEmail(existing.email) || isAdminEmail(username) ? "admin" : existing.role || "client";
+    const isFakeUser = role === "admin" ? false : isFakeUserRecord(existing);
     const result = await db.send(
       new UpdateCommand({
         TableName: usersTable,
         Key: { userId: existing.userId },
         UpdateExpression:
-          "SET #role = :role, authProvider = :authProvider, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
+          "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
         ExpressionAttributeNames: {
           "#role": "role"
         },
         ExpressionAttributeValues: {
           ":role": role,
           ":authProvider": authProviderForPasswordUser(existing),
+          ":isFakeUser": isFakeUser,
           ":passwordLinked": true,
           ":passwordUsername": username,
           ":passwordHash": passwordFields.passwordHash,
@@ -1288,7 +1299,7 @@ async function createPasswordAccount(input) {
       })
     );
 
-    return issuePasswordSession(result.Attributes || { ...existing, ...passwordFields, role });
+    return issuePasswordSession(result.Attributes || { ...existing, ...passwordFields, role, isFakeUser });
   }
 
   const role = isAdminEmail(username) ? "admin" : "client";
@@ -1301,6 +1312,7 @@ async function createPasswordAccount(input) {
     companyName: null,
     authProvider: "password",
     googleLinked: false,
+    isFakeUser: false,
     passwordUsername: username,
     passwordLinkedAt: now,
     ...passwordFields,
@@ -1353,6 +1365,7 @@ async function createAdminUserFromGoogle(googleUser) {
     googleEmail: googleUser.email,
     googleName: googleUser.name,
     googlePicture: googleUser.picture,
+    isFakeUser: false,
     linkedAt: now,
     createdAt: now,
     updatedAt: now,
@@ -1380,18 +1393,20 @@ async function linkGoogleUser(user, googleUser) {
   const now = new Date().toISOString();
   const role = isAdminEmail(googleUser.email) ? "admin" : "client";
   const authProvider = user.passwordLinked ? "google,password" : "google";
+  const isFakeUser = role === "admin" ? false : isFakeUserRecord(user);
   const result = await db.send(
     new UpdateCommand({
       TableName: usersTable,
       Key: { userId: user.userId },
       UpdateExpression:
-        "SET #role = :role, authProvider = :authProvider, googleLinked = :googleLinked, googleSubject = :googleSubject, googleEmail = :googleEmail, googleName = :googleName, googlePicture = :googlePicture, linkedAt = if_not_exists(linkedAt, :now), lastLoginAt = :now, updatedAt = :now",
+        "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, googleLinked = :googleLinked, googleSubject = :googleSubject, googleEmail = :googleEmail, googleName = :googleName, googlePicture = :googlePicture, linkedAt = if_not_exists(linkedAt, :now), lastLoginAt = :now, updatedAt = :now",
       ExpressionAttributeNames: {
         "#role": "role"
       },
       ExpressionAttributeValues: {
         ":role": role,
         ":authProvider": authProvider,
+        ":isFakeUser": isFakeUser,
         ":googleLinked": true,
         ":googleSubject": googleUser.sub,
         ":googleEmail": googleUser.email,
@@ -1407,6 +1422,7 @@ async function linkGoogleUser(user, googleUser) {
     ...user,
     role,
     authProvider,
+    isFakeUser,
     googleLinked: true,
     googleSubject: googleUser.sub,
     googleEmail: googleUser.email,
@@ -2226,6 +2242,7 @@ async function createClientUser(input) {
   const existing = requireSingleEmailAccount(users, email);
   const now = new Date().toISOString();
   const uploadSession = createEnergyDataUploadSession(now);
+  const isFakeUser = input?.isFakeUser === true;
 
   if (existing) {
     if (existing.role !== "client") {
@@ -2243,6 +2260,7 @@ async function createClientUser(input) {
       fullName: intake.contact.fullName || intake.business.companyName,
       email,
       companyName: intake.business.companyName,
+      isFakeUser,
       updatedAt: now
     };
 
@@ -2256,7 +2274,7 @@ async function createClientUser(input) {
                 Key: { userId: existing.userId },
                 ConditionExpression: "attribute_exists(userId) AND #status = :active AND #role = :client",
                 UpdateExpression:
-                  "SET fullName = :fullName, email = :email, companyName = :companyName, updatedAt = :now",
+                  "SET fullName = :fullName, email = :email, companyName = :companyName, isFakeUser = :isFakeUser, updatedAt = :now",
                 ExpressionAttributeNames: {
                   "#role": "role",
                   "#status": "status"
@@ -2267,6 +2285,7 @@ async function createClientUser(input) {
                   ":fullName": user.fullName,
                   ":email": email,
                   ":companyName": user.companyName,
+                  ":isFakeUser": isFakeUser,
                   ":now": now
                 }
               }
@@ -2312,6 +2331,7 @@ async function createClientUser(input) {
     companyName: intake.business.companyName,
     authProvider: "google",
     googleLinked: false,
+    isFakeUser,
     createdAt: now,
     updatedAt: now
   };
