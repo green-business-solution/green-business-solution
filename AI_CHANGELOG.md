@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-06-30 - Codex (GPT-5) Ryan admin user correction
+
+- Updated the production `gbs-users` record for `rshen0210@gmail.com` to `role: admin` and `isFakeUser: false`.
+
 ## 2026-06-30 - Codex (GPT-5) GPT Pro utility fixture prompt
 
 - Added a GPT Pro prompt for generating intake-compatible synthetic utility data for all 50 sample matching test cases so they can be migrated toward real-user preview flows.
