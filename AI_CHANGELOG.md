@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) interactive how it works timeline
+
+- Turned the `How it Works` timeline into an interactive draggable control so users can grab the character and move it along the process track.
+- Reworked the 1-5 step markers into rounded step boxes that grow as the draggable progress passes over them, with the active step highlighted most strongly.
+
 ## 2026-07-01 - Codex (GPT-5) how it works simplified top timeline
 
 - Removed the lower five-step card grid from the `How it Works` page so the timeline is now the only process explainer.

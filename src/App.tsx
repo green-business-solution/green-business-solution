@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { CSSProperties, ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -2544,7 +2544,6 @@ function HowItWorksPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const currentStepIndex = 0;
   const steps = [
     {
       title: "Sign in and get started",
@@ -2582,6 +2581,43 @@ function HowItWorksPage({
       badge: "Most valuable step"
     }
   ];
+  const maxStepIndex = Math.max(steps.length - 1, 1);
+  const [timelineProgress, setTimelineProgress] = useState(0);
+  const [isDraggingTimeline, setIsDraggingTimeline] = useState(false);
+  const timelineTrackRef = useRef<HTMLDivElement | null>(null);
+  const currentStepIndex = Math.round(timelineProgress * maxStepIndex);
+
+  function clampTimelineProgress(value: number) {
+    return Math.max(0, Math.min(1, value));
+  }
+
+  function updateTimelineProgressFromClientX(clientX: number) {
+    const track = timelineTrackRef.current;
+    if (!track) return;
+    const rect = track.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    setTimelineProgress(clampTimelineProgress((clientX - rect.left) / rect.width));
+  }
+
+  useEffect(() => {
+    if (!isDraggingTimeline) return;
+
+    function handlePointerMove(event: PointerEvent) {
+      updateTimelineProgressFromClientX(event.clientX);
+    }
+
+    function handlePointerUp() {
+      setIsDraggingTimeline(false);
+    }
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [isDraggingTimeline]);
 
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth}>
@@ -2589,54 +2625,76 @@ function HowItWorksPage({
         <div className="how-it-works-timeline-copy">
           <p className="eyebrow">How it works</p>
           <h1>Five quick steps to retrofit results</h1>
-          <p>Sign in, share a few basics, upload bills, and get matched recommendations.</p>
+          <p>Drag through the process from sign-in to matched results.</p>
         </div>
         <div className="how-it-works-timeline-shell" aria-label="RetroFi step timeline">
-          <div className="how-it-works-timeline-track" aria-hidden="true">
+          <div
+            aria-label="Interactive timeline for the RetroFi process"
+            aria-valuemax={steps.length}
+            aria-valuemin={1}
+            aria-valuenow={currentStepIndex + 1}
+            className={isDraggingTimeline ? "how-it-works-timeline-track is-dragging" : "how-it-works-timeline-track"}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                setTimelineProgress((value) => clampTimelineProgress(value + 1 / maxStepIndex));
+              } else if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                setTimelineProgress((value) => clampTimelineProgress(value - 1 / maxStepIndex));
+              } else if (event.key === "Home") {
+                event.preventDefault();
+                setTimelineProgress(0);
+              } else if (event.key === "End") {
+                event.preventDefault();
+                setTimelineProgress(1);
+              }
+            }}
+            onPointerDown={(event) => {
+              updateTimelineProgressFromClientX(event.clientX);
+              setIsDraggingTimeline(true);
+            }}
+            ref={timelineTrackRef}
+            role="slider"
+            tabIndex={0}
+          >
             <div className="how-it-works-timeline-line" />
             <div
               className="how-it-works-timeline-progress"
-              style={{ width: `${(currentStepIndex / Math.max(steps.length - 1, 1)) * 100}%` }}
+              style={{ width: `${timelineProgress * 100}%` }}
             />
             <div
               className="how-it-works-timeline-character"
-              style={{ left: `calc(${(currentStepIndex / Math.max(steps.length - 1, 1)) * 100}% - 28px)` }}
+              style={{ left: `calc(${timelineProgress * 100}% - 28px)` }}
             >
               <div className="timeline-character-head" />
               <div className="timeline-character-body" />
             </div>
           </div>
           <div className="how-it-works-timeline-steps">
-            {steps.map((step, index) => (
+            {steps.map((step, index) => {
+              const stepProgress = index / maxStepIndex;
+              const isReached = timelineProgress >= stepProgress;
+              const isCurrent = currentStepIndex === index;
+              return (
               <div
                 className={
-                  index === currentStepIndex
+                  isCurrent
                     ? "how-it-works-timeline-step is-current"
-                    : index < currentStepIndex
+                    : isReached
                       ? "how-it-works-timeline-step is-complete"
                       : "how-it-works-timeline-step"
                 }
                 key={step.title}
+                style={{ "--timeline-step-scale": isCurrent ? 1.12 : isReached ? 1.04 : 0.96 } as CSSProperties}
               >
-                <div className="how-it-works-timeline-node">
+                <div className="how-it-works-timeline-step-box">
                   <span>{index + 1}</span>
-                </div>
-                <div className="how-it-works-timeline-step-copy">
                   <strong>{step.shortTitle}</strong>
                   <small>{step.copy}</small>
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="how-it-works-timeline-meta">
-            <div className="how-it-works-timeline-meta-card">
-              <span>Current step</span>
-              <strong>{steps[currentStepIndex].title}</strong>
-            </div>
-            <div className="how-it-works-timeline-meta-card">
-              <span>Next up</span>
-              <strong>{steps[Math.min(currentStepIndex + 1, steps.length - 1)].title}</strong>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
