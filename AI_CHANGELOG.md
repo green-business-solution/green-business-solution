@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) pricing rollback and team page update
+
+- Restored the public Pricing page to the earlier project-based RetroFi pricing structure, including the original tier copy and FAQ set.
+- Added Ryan Shen to the public Team page with a role description focused on frontend iteration, production deployment, and workflow improvements.
+
 ## 2026-07-01 - Codex (GPT-5) public site page polish
 
 - Redesigned the public `How it Works`, `Pricing`, and `About` pages to use a calmer, more consistent SaaS-style layout with subtler green styling, cleaner hierarchy, and clearer calls to action.

@@ -2645,54 +2645,10 @@ function PricingPage({
   publicAuth: PublicAuthState;
 }) {
   const cards = [
-    {
-      name: "Starter",
-      price: "Free",
-      label: "Fast first look",
-      audience: "Homeowners getting started",
-      includes: [
-        "Quick account setup",
-        "Basic home profile intake",
-        "Initial retrofit direction",
-        "Faster than manual program research"
-      ],
-      ctaLabel: "Create account",
-      route: "scan" as Route,
-      disabled: false,
-      recommended: false
-    },
-    {
-      name: "Home Report",
-      price: "Coming soon",
-      label: "Personalized retrofit report",
-      audience: "Homeowners ready for clearer decisions",
-      includes: [
-        "Utility-aware recommendations",
-        "Incentive discovery",
-        "Estimated savings and payback context",
-        "Actionable next-step guidance"
-      ],
-      ctaLabel: "Join waitlist",
-      route: "about-contact" as Route,
-      disabled: false,
-      recommended: true
-    },
-    {
-      name: "Pro / Partner",
-      price: "Custom",
-      label: "For contractors and partners",
-      audience: "Pros supporting multiple homes or clients",
-      includes: [
-        "Higher-volume report workflows",
-        "Partner-oriented intake support",
-        "Shared reporting and coordination",
-        "Custom rollout planning"
-      ],
-      ctaLabel: "Contact us",
-      route: "about-contact" as Route,
-      disabled: false,
-      recommended: false
-    }
+    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Get Started"],
+    ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
+    ["Implementation Support", "Starting at $3,500", "Businesses ready to move forward", ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "Incentive tracking", "60-90 days of support"], "Contact Us"],
+    ["Multi-Site", "Custom", "Franchisees, regional operators, and multi-location businesses", ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations"], "Contact Us"]
   ];
 
   return (
@@ -2700,51 +2656,38 @@ function PricingPage({
       <PageHero
         compact
         eyebrow="Pricing"
-        title="Simple pricing built around useful home insight"
-        copy="RetroFi pricing is designed to reflect time saved, clearer recommendations, and a faster path to confident retrofit decisions."
+        title="Simple project-based pricing"
+        copy="Start with a free scan, then upgrade only if there is enough potential value to justify a deeper analysis."
       />
-      <section className="pricing-note pricing-status-note">
-        <span>Pricing is being finalized. Early access is focused on clarity, speed, and actionable reports.</span>
+      <section className="pricing-note">
+        <span>No subscription and no success fee initially.</span>
       </section>
       <section className="pricing-grid">
-        {cards.map((card) => (
-          <article className={card.recommended ? "pricing-card recommended" : "pricing-card"} key={card.name}>
-            {card.recommended ? <span className="recommended-badge">Recommended</span> : null}
-            <p className="eyebrow">{card.label}</p>
-            <h2>{card.name}</h2>
-            <strong>{card.price}</strong>
-            <p>Best for: {card.audience}</p>
+        {cards.map(([name, price, bestFor, includes, cta], index) => (
+          <article className={index === 1 ? "pricing-card recommended" : "pricing-card"} key={name as string}>
+            {index === 1 ? <span className="recommended-badge">Recommended</span> : null}
+            <h2>{name}</h2>
+            <strong>{price}</strong>
+            <p>Best for: {bestFor}</p>
             <ul>
-              {card.includes.map((item) => (
+              {(includes as string[]).map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <button disabled={card.disabled} onClick={() => navigate(card.route)} type="button">
-              {card.ctaLabel}
+            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
+              {cta}
             </button>
-          </article>
-        ))}
-      </section>
-      <section className="card-grid three pricing-proof-grid">
-        {[
-          ["Fast home insights", "Start with the essentials and skip hours of scattered research.", "roadmap"],
-          ["Personalized recommendations", "RetroFi turns utility and home inputs into clearer upgrade priorities.", "savings"],
-          ["Actionable savings context", "Reports are meant to be understandable, not just technically detailed.", "incentives"]
-        ].map(([title, copy, icon]) => (
-          <article className="feature-card" key={title}>
-            <FeatureIcon icon={icon as "roadmap" | "savings" | "incentives"} />
-            <h3>{title}</h3>
-            <p>{copy}</p>
           </article>
         ))}
       </section>
       <section className="faq-grid faq-section">
         {[
-          ["Why start free?", "It lets homeowners see whether a deeper retrofit report looks worthwhile before committing."],
-          ["Will pricing change?", "Yes. Final pricing may evolve as RetroFi shapes the report experience and partner workflows."],
-          ["Do I need utility bills?", "Not to get started. Utility data improves the quality of savings and incentive recommendations."],
-          ["Is this a subscription?", "Not by default. The current direction is focused on simple, understandable package options."],
-          ["Can contractors use RetroFi?", "Yes. The partner tier is intended for pros who need a more scalable workflow."]
+          ["Why is the scan free?", "The scan helps identify whether a deeper analysis is likely to be worth it."],
+          ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
+          ["Do I need utility bills?", "Not for the free scan. Utility bills are needed for detailed savings and ROI."],
+          ["Is this a subscription?", "V1 is not a subscription."],
+          ["Do you charge a success fee?", "No success fee initially."],
+          ["Can I use this for multiple sites?", "Yes. Multi-site pricing is custom based on portfolio size."]
         ].map(([question, answer]) => (
           <article className="feature-card" key={question}>
             <h3>{question}</h3>
@@ -2920,6 +2863,11 @@ function TeamPage({
             "Rajvansh Gupta",
             "Founder",
             "Leads product, data systems, and retrofit opportunity research."
+          ],
+          [
+            "Ryan Shen",
+            "Product & Engineering",
+            "Drives frontend iteration, production deployment, and admin and customer workflow improvements across RetroFi."
           ]
         ].map(([name, role, copy]) => (
           <article className="team-card" key={name}>
