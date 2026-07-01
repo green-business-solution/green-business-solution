@@ -56,6 +56,21 @@
     },
     {
       "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch18.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch19.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch20.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch21.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22.json"
+    },
+    {
+      "path": "data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch23.json"
     }
   ]
 }

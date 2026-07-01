@@ -1,0 +1,1081 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2318",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Central Electric Cooperative service territory"
+        ],
+        "notes": "Limited to Central Electric Cooperative residential members/customers; several offers require electrically heated homes."
+      },
+      "eligibleApplicantTypes": [
+        "residential electric cooperative member",
+        "residential customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "home_energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "window_replacement",
+        "duct_sealing_and_insulation",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_laundry_equipment"
+      ],
+      "hardRequirements": [
+        "Applicant must be an active Central Electric Cooperative residential member/customer.",
+        "Weatherization, window, and audit offers are for qualifying electrically heated homes.",
+        "Heat pump, duct sealing, ductless heat pump, water-heating, appliance, and thermostat projects must meet measure-specific equipment and documentation requirements.",
+        "ENERGY STAR clothes-washer rebate is limited to qualifying front-load washers in homes with electric water heating.",
+        "Smart thermostat eligibility excludes homes heated with gas or heat pumps."
+      ],
+      "blockers": [
+        "Do not match broad high-efficiency HVAC replacement unless the project is a qualifying heat pump or ductless heat pump.",
+        "Do not match commercial appliances, commercial refrigeration, commercial kitchen equipment, or industrial equipment.",
+        "Do not match top-load clothes washers.",
+        "Official pages were partly access-restricted in browser; verify current forms and funding before making a firm offer."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Central Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cec.coop/energy-programs/residential-efficiency/",
+      "sourceUrlsChecked": [
+        "https://www.cec.coop/energy-programs/residential-efficiency/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/weatherization-windows/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/home-energy-audit/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/heat-pumps-duct-sealing/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/ductless-heat-pumps/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/heat-pump-water-heaters/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/smart-thermostat/",
+        "https://www.cec.coop/energy-programs/residential-efficiency/energy-star-appliances/"
+      ],
+      "evidenceText": "CEC residential efficiency pages list home energy audits, weatherization and windows, heat pumps with duct sealing, ductless heat pumps, heat pump water heaters, smart thermostats, and front-load ENERGY STAR clothes washers with electric water heating.",
+      "reasoningNotes": "Matched only residential CEC measures with official support. Removed broad HVAC, commercial, and top-load washer interpretations. Targets supplied in uploaded prompt."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3629",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Central Lincoln People's Utility District service territory"
+        ],
+        "notes": "Limited to Central Lincoln PUD residential customers; many rebates depend on specific residential electric-heating conditions."
+      },
+      "eligibleApplicantTypes": [
+        "residential public utility district customer",
+        "residential electric customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "window_replacement",
+        "exterior_door_replacement",
+        "insulation_upgrade",
+        "high_efficiency_laundry_equipment",
+        "heat_pump_water_heater",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "smart_thermostat_zoning_retrofit",
+        "certified_new_manufactured_home"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Central Lincoln PUD residential customer.",
+        "Projects must meet the specific rebate page and form requirements for the measure.",
+        "Insulation upgrades are limited to qualifying electrically heated homes and depend on pre-existing insulation levels.",
+        "Ductless heat pump and some HVAC projects require pre-approval before installation.",
+        "Rebates may be account credits or instant rebates depending on the measure and approved vendor."
+      ],
+      "blockers": [
+        "Do not match broad air sealing unless the current form specifically supports it.",
+        "Do not match LED lighting, commercial ductless systems, commercial refrigeration, or commercial kitchen equipment from this residential record.",
+        "EV charging is a separate Central Lincoln rebate path and should not be included in this residential efficiency record.",
+        "Official pages were partly access-restricted in browser; verify current forms and funding before making a firm offer."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Central Lincoln People's Utility District",
+      "applicationUrl": null,
+      "websiteUrl": "https://clpud.org/energy-efficiency/residential-rebates/",
+      "sourceUrlsChecked": [
+        "https://clpud.org/energy-efficiency/residential-rebates/",
+        "https://clpud.org/energy-efficiency/residential-rebates/replacement-windows-doors/",
+        "https://clpud.org/energy-efficiency/residential-rebates/insulation/",
+        "https://clpud.org/energy-efficiency/residential-rebates/exterior-doors/",
+        "https://clpud.org/energy-efficiency/residential-rebates/heat-pump-water-heaters/",
+        "https://clpud.org/energy-efficiency/residential-rebates/air-source-heat-pumps-electric-furnace/",
+        "https://clpud.org/energy-efficiency/residential-rebates/air-source-heat-pump-upgrades-replacements/",
+        "https://clpud.org/energy-efficiency/residential-rebates/ductless-heat-pumps/",
+        "https://clpud.org/energy-efficiency/residential-rebates/smart-thermostats/",
+        "https://clpud.org/energy-efficiency/ev-charging-station-rebate/"
+      ],
+      "evidenceText": "Central Lincoln residential rebate pages list windows, doors, insulation, clothes washers and dryers, heat pump water heaters, air-source heat pumps, ductless heat pumps, smart thermostats, and certified new manufactured homes.",
+      "reasoningNotes": "Kept only residential measures on Central Lincoln residential pages. Removed LED and EV matching because those are separate or unsupported for this record."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1806",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "Chicopee"
+        ],
+        "utilityTerritories": [
+          "Chicopee Electric Light Department service territory"
+        ],
+        "notes": "Limited to CEL residential customers in Chicopee service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential municipal utility customer",
+        "residential electric customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "duct_sealing_and_insulation",
+        "qualified_energy_star_heating_system",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "room_air_conditioner",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_laundry_equipment",
+        "heat_pump_clothes_dryer",
+        "residential_refrigerator",
+        "induction_range",
+        "pool_heat_pump",
+        "variable_speed_pool_pump",
+        "air_purifier",
+        "dehumidifier",
+        "rechargeable_yard_equipment"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Chicopee Electric Light Department customer.",
+        "Home efficiency work requires a NextZero or program audit before contractor work begins.",
+        "Self-installed home-efficiency projects are not eligible for the home efficiency incentive.",
+        "Post-installation inspection is required for home-efficiency projects.",
+        "Appliance and equipment rebates require ENERGY STAR or other qualifying product criteria and cannot be combined with other offers where prohibited."
+      ],
+      "blockers": [
+        "Battery storage is not a purchase or installation rebate in this opportunity; connected battery participation belongs to a separate demand-response program.",
+        "EV chargers are handled through the separate Connected Homes demand-response enrollment, not this appliance or home-efficiency rebate.",
+        "Induction is a residential range rebate, not commercial kitchen equipment.",
+        "Refrigerator is a residential appliance rebate, not commercial refrigeration equipment.",
+        "Energy audit is a service/prerequisite and should not be treated as a physical retrofit."
+      ],
+      "programType": "Municipal Utility Rebate Program",
+      "administrator": "Chicopee Electric Light Department",
+      "applicationUrl": "https://rebates.nextzero.org/",
+      "websiteUrl": "https://www.celd.com/energy-star-appliance-rates",
+      "sourceUrlsChecked": [
+        "https://www.celd.com/energy-star-appliance-rates",
+        "https://www.celd.com/home-efficiency-incentive-program",
+        "https://www.celd.com/residential-engery-conservation",
+        "https://www.celd.com/connected-homes"
+      ],
+      "evidenceText": "CEL lists ENERGY STAR appliance rebates for clothes washers, dryers, heat pump water heaters, room air conditioners, refrigerators, Wi-Fi thermostats, and induction ranges, plus home-efficiency incentives for air sealing, insulation, duct sealing, and heating systems.",
+      "reasoningNotes": "Separated the residential appliance and home-efficiency rebates from Connected Homes demand response. Narrowed induction and refrigeration to residential products."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3029",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [
+          "Tallahassee"
+        ],
+        "utilityTerritories": [
+          "City of Tallahassee Utilities electric service territory"
+        ],
+        "notes": "Equipment must serve a permanent residence receiving City of Tallahassee permanent residential electric service."
+      },
+      "eligibleApplicantTypes": [
+        "residential municipal utility customer",
+        "residential electric customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "water_source_heat_pump",
+        "heat_pump_water_heater",
+        "residential_dishwasher",
+        "residential_freezer",
+        "residential_refrigerator",
+        "high_efficiency_laundry_equipment",
+        "variable_speed_pool_pump"
+      ],
+      "hardRequirements": [
+        "Applicant must be a City of Tallahassee residential electric customer.",
+        "Equipment must be installed at a permanent residence receiving City permanent residential electric service.",
+        "Appliance rebates require ENERGY STAR-certified products and City application procedures.",
+        "HVAC rebates require listed efficiency ratings, permit and inspection compliance, contractor invoice, and AHRI documentation where applicable.",
+        "Heat pump water heater rebate is not available when replacing natural gas water heating."
+      ],
+      "blockers": [
+        "Do not match commercial dishwasher or commercial kitchen equipment; dishwasher is a residential ENERGY STAR appliance rebate.",
+        "Do not match commercial refrigeration; refrigerator and freezer rebates are residential appliances.",
+        "Natural gas appliance rebates are separate from the electric residential energy-efficiency rebate path.",
+        "Solar water heater rebates, grants, loans, and energy audits are separate City products.",
+        "No LED lighting retrofit support was verified on the official residential rebate pages checked."
+      ],
+      "programType": "Municipal Utility Rebate Program",
+      "administrator": "City of Tallahassee Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.talgov.com/you/you-products-home-index",
+      "sourceUrlsChecked": [
+        "https://www.talgov.com/you/you-products-home-index",
+        "https://www.talgov.com/you/you-products-home-hvac-rebates.aspx",
+        "https://www.talgov.com/you/you-products-home-es-rebates",
+        "https://www.talgov.com/you/you-products-home-es-rebates-terms",
+        "https://www.talgov.com/you/you-products-home-solar-water-rebates.aspx",
+        "https://www.talgov.com/you/naturalgas-rebates",
+        "https://www.talgov.com/you/you-products-home-energy-audit",
+        "https://www.talgov.com/Uploads/Public/Documents/you/es_hvac_exist.pdf"
+      ],
+      "evidenceText": "Tallahassee residential pages list electric HVAC rebates for heat pumps, water-source heat pumps, and heat pump water heaters, plus ENERGY STAR appliance rebates for dishwashers, freezers, refrigerators, clothes washers, and pool pumps.",
+      "reasoningNotes": "Narrowed appliance matches to residential appliance categories and treated solar water heating, natural gas appliances, loans, grants, and audits as separate City products."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2734",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Clay Electric Cooperative service territory"
+        ],
+        "notes": "Limited to active Clay Electric accounts; some measures apply to residences or facilities receiving Clay Electric service."
+      },
+      "eligibleApplicantTypes": [
+        "electric cooperative member",
+        "residential customer",
+        "commercial customer",
+        "facility owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "heat_recovery_unit_water_heating",
+        "solar_water_heating_system",
+        "ceiling_insulation_upgrade",
+        "attic_spray_foam_insulation",
+        "window_film_shading_retrofit",
+        "solar_shade_screen_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must have an active Clay Electric account for the service location.",
+        "Rebate applications require detailed receipt or invoice, equipment documentation, and submission within the required post-installation period.",
+        "Heat pump and heat pump water heater rebates require qualifying efficiency documentation such as AHRI information where applicable.",
+        "Solar water heaters require certified contractor installation and qualifying Florida Solar Energy Center specifications.",
+        "Insulation, window film, and solar shade screen offers are limited to existing qualifying conditions and may require photographs and inspections."
+      ],
+      "blockers": [
+        "Do not match window replacement; the official offer supports window film and solar shade screens on existing windows only.",
+        "Do not match broad industrial waste heat recovery; the heat recovery measure is a water-heating heat recovery unit.",
+        "Do not match generic HVAC replacement beyond qualifying heat pumps.",
+        "Loans, energy surveys, generators, high-reflectance roofing, and solar pool heating are separate or non-rebate items on the same page."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Clay Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.clayelectric.com/energy-rebates-loans",
+      "sourceUrlsChecked": [
+        "https://www.clayelectric.com/energy-rebates-loans"
+      ],
+      "evidenceText": "Clay Electric lists rebates for ceiling insulation, attic spray foam, high-efficiency heat pumps, electric hybrid heat pump water heaters, solar water heaters, heat recovery units, window film, and solar shade screens.",
+      "reasoningNotes": "Corrected window and heat-recovery false positives by narrowing them to film/shade screens and water-heating heat recovery units."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4429",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [
+          "Coldwater"
+        ],
+        "utilityTerritories": [
+          "Coldwater Board of Public Utilities electric service territory"
+        ],
+        "notes": "Limited to CBPU commercial and industrial electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "commercial electric customer",
+        "industrial electric customer",
+        "business customer",
+        "municipal utility customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "hvac_controls_retrofit",
+        "building_energy_management_system",
+        "variable_frequency_drive_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "packaged_terminal_heat_pump",
+        "heat_pump_water_heater",
+        "chiller_maintenance",
+        "high_efficiency_refrigeration_equipment",
+        "commercial_kitchen_equipment",
+        "commercial_dishwasher",
+        "low_flow_pre_rinse_sprayer",
+        "compressed_air_efficiency",
+        "compressed_air_leak_repair",
+        "electric_forklift_material_handling",
+        "level_2_ev_charger_installation",
+        "level_3_ev_charger_installation",
+        "electric_lawn_equipment"
+      ],
+      "hardRequirements": [
+        "Applicant must be a CBPU commercial or industrial electric customer.",
+        "Equipment must be installed and operational by the program deadline and documentation submitted by the stated deadline.",
+        "Pre-approval is required for custom projects and may be required before purchase or installation.",
+        "Lighting and non-lighting measures must meet minimum annual operating-hour requirements.",
+        "Incentives are capped by project cost, meter, and annual program limits; inspections and documentation are required."
+      ],
+      "blockers": [
+        "Do not match broad energy audits; only specified compressed-air evaluation and leak-repair measures were verified.",
+        "Low-flow pre-rinse spray valve is product-specific and requires electric water heating; it is not a broad plumbing or water-conservation retrofit.",
+        "Do not infer residential rebates from this commercial and industrial application.",
+        "Peak shaving, demand limiting, and operating schedule changes are not eligible."
+      ],
+      "programType": "Commercial Industrial Utility Rebate Program",
+      "administrator": "Coldwater Board of Public Utilities",
+      "applicationUrl": "https://www.coldwater.org/DocumentCenter/View/4344/2026-Business--Industrial-Energy-Efficiency-Rebate-Application",
+      "websiteUrl": "https://www.coldwater.org/232/Energy-Efficiency-Rebates",
+      "sourceUrlsChecked": [
+        "https://www.coldwater.org/232/Energy-Efficiency-Rebates",
+        "https://www.coldwater.org/DocumentCenter/View/4344/2026-Business--Industrial-Energy-Efficiency-Rebate-Application"
+      ],
+      "evidenceText": "CBPU's 2026 business and industrial application covers lighting, controls, VFDs, compressed air, HVAC, heat pumps, heat pump water heaters, refrigeration, commercial kitchen equipment, EV chargers, and forklifts.",
+      "reasoningNotes": "Retained C&I equipment categories with application support and removed the broad audit/plumbing interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22565",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Columbia Rural Electric Association service territory"
+        ],
+        "notes": "Installation address must be in Columbia REA service territory; current rebate form dates and funding should be verified."
+      },
+      "eligibleApplicantTypes": [
+        "residential electric cooperative member",
+        "residential customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "duct_sealing_and_insulation",
+        "smart_thermostat_zoning_retrofit",
+        "insulation_upgrade",
+        "exterior_door_replacement",
+        "window_replacement",
+        "heat_pump_water_heater",
+        "high_efficiency_laundry_equipment",
+        "neem_certified_manufactured_home"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Columbia REA member/customer at a service location in the utility territory.",
+        "Measure-specific applications, invoices, product specifications, and qualified product lists apply.",
+        "Heating and cooling projects require licensed or approved contractor installation and documentation submitted within the required period.",
+        "Ductless heat pump rebates have restrictions on existing heating type, existing ducted systems, and replacement of non-electric fuels.",
+        "Current form dates and remaining funding must be verified before final eligibility determination."
+      ],
+      "blockers": [
+        "EV charger rebates are listed as a separate application and should not be included in this residential efficiency record.",
+        "Agriculture and commercial rebates, including VFDs, commercial lighting, and commercial ductless heat pumps, are separate.",
+        "Do not match broad air sealing unless the current weatherization form supports it; the current page lists insulation, doors, and windows.",
+        "Ductless heat pump support is specific and should not be generalized to all mini-split projects."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Columbia Rural Electric Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+      "sourceUrlsChecked": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Residential-Heating-and-Cooling-HVAC-04212025.pdf",
+        "https://www.columbiarea.coop/wp-content/uploads/Ductless-Heat-Pump-Project-Information-Form_updated.pdf",
+        "https://www.columbiarea.coop/news-releases/conservation-corner-march-2023/"
+      ],
+      "evidenceText": "Columbia REA's residential rebate page lists heating and cooling, duct sealing, smart thermostat, weatherization for insulation, doors and windows, heat pump water heaters, ENERGY STAR laundry, and NEEM homes.",
+      "reasoningNotes": "The current page supports residential categories, but one linked heating form had a prior validity window; current forms and funding should be checked before automated matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3231",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Columbia Rural Electric Association service territory"
+        ],
+        "notes": "Installation address must be in Columbia REA service territory; current rebate form dates and funding should be verified."
+      },
+      "eligibleApplicantTypes": [
+        "residential electric cooperative member",
+        "residential customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "ductless_mini_split_heat_pump",
+        "duct_sealing_and_insulation",
+        "smart_thermostat_zoning_retrofit",
+        "insulation_upgrade",
+        "exterior_door_replacement",
+        "window_replacement",
+        "heat_pump_water_heater",
+        "high_efficiency_laundry_equipment",
+        "neem_certified_manufactured_home"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Columbia REA member/customer at a service location in the utility territory.",
+        "Measure-specific applications, invoices, product specifications, and qualified product lists apply.",
+        "Heating and cooling projects require licensed or approved contractor installation and documentation submitted within the required period.",
+        "Ductless heat pump rebates have restrictions on existing heating type, existing ducted systems, and replacement of non-electric fuels.",
+        "Current form dates and remaining funding must be verified before final eligibility determination."
+      ],
+      "blockers": [
+        "EV charger rebates are listed as a separate application and should not be included in this residential efficiency record.",
+        "Agriculture and commercial rebates, including VFDs, commercial lighting, and commercial ductless heat pumps, are separate.",
+        "Do not match broad air sealing unless the current weatherization form supports it; the current page lists insulation, doors, and windows.",
+        "Ductless heat pump support is specific and should not be generalized to all mini-split projects."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Columbia Rural Electric Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+      "sourceUrlsChecked": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Residential-Heating-and-Cooling-HVAC-04212025.pdf",
+        "https://www.columbiarea.coop/wp-content/uploads/Ductless-Heat-Pump-Project-Information-Form_updated.pdf",
+        "https://www.columbiarea.coop/news-releases/conservation-corner-march-2023/"
+      ],
+      "evidenceText": "Columbia REA's residential rebate page lists heating and cooling, duct sealing, smart thermostat, weatherization for insulation, doors and windows, heat pump water heaters, ENERGY STAR laundry, and NEEM homes.",
+      "reasoningNotes": "This appears to be an older DSIRE duplicate of the Columbia REA residential rebate offer now served from the current energy-efficiency rebate page."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1808",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "Concord"
+        ],
+        "utilityTerritories": [
+          "Concord Municipal Light Plant service territory"
+        ],
+        "notes": "Limited to CMLP business, commercial, and qualifying multi-unit dwelling customers."
+      },
+      "eligibleApplicantTypes": [
+        "commercial municipal utility customer",
+        "business customer",
+        "multi-unit dwelling property owner",
+        "fleet customer",
+        "institutional customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "multifamily",
+        "institutional",
+        "municipal"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "heat_pump_hvac_retrofit",
+        "air_source_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "level_2_ev_charger_installation",
+        "commercial_ev_charging_station",
+        "energy_assessment_service"
+      ],
+      "hardRequirements": [
+        "Applicant must be a CMLP business or qualifying commercial customer.",
+        "Lighting projects must meet HELP program eligibility and demand-reduction rules.",
+        "Heat pump projects are subject to per-ton incentives, technical specifications, and three-year customer caps.",
+        "Commercial EV charging station rebates require pre-approval and an award letter before installation.",
+        "Heat pump water heater rebates have commercial annual quantity limits and qualifying equipment requirements."
+      ],
+      "blockers": [
+        "Residential home heat pump and residential EV charger incentives are separate from this business record.",
+        "Solar panel incentives are a separate renewable energy offering and should not be matched unless that program is selected.",
+        "Water-saving and Public Works rebates are separate programs.",
+        "EV charging is a distinct CMLP commercial station rebate, not a generic energy-efficiency measure.",
+        "Do not match broad water heating beyond heat pump water heaters."
+      ],
+      "programType": "Municipal Utility Business Rebate Program",
+      "administrator": "Concord Municipal Light Plant",
+      "applicationUrl": null,
+      "websiteUrl": "https://concordma.gov/1989/Rebates-for-your-Business",
+      "sourceUrlsChecked": [
+        "https://concordma.gov/1989/Rebates-for-your-Business",
+        "https://concordma.gov/2003/Commercial-Lighting-Rebates---HELP",
+        "https://concordma.gov/3372/Heat-Pump-Rebates-for-Your-Business",
+        "https://concordma.gov/2024/Heat-Pump-Water-Heaters",
+        "https://concordma.gov/3201/Commercial-EV-Charging-Station-Rebate",
+        "https://concordma.gov/3400/Electric-Vehicles-and-Charging-for-Comme",
+        "https://concordma.gov/1753/Your-Business"
+      ],
+      "evidenceText": "CMLP business pages list HELP lighting upgrades with controls, commercial heat pump rebates, heat pump water heater rebates, and commercial Level 2 EV charging station rebates requiring pre-approval.",
+      "reasoningNotes": "Kept EV charging because it is an official business rebate path on the same CMLP business rebate area, but marked it as a distinct station rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2448",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Connexus Energy service territory"
+        ],
+        "notes": "Limited to Connexus Energy commercial, business, and eligible agricultural members."
+      },
+      "eligibleApplicantTypes": [
+        "commercial electric member",
+        "business customer",
+        "industrial customer",
+        "agricultural customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "variable_frequency_drive_retrofit",
+        "premium_efficiency_motor",
+        "high_efficiency_hvac_replacement",
+        "central_air_conditioner_replacement",
+        "chiller_upgrade",
+        "hvac_economizer",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "water_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "packaged_terminal_heat_pump",
+        "commercial_kitchen_equipment",
+        "induction_cooking_equipment",
+        "electric_forklift_material_handling",
+        "compressed_air_efficiency",
+        "commercial_new_construction_energy_study",
+        "custom_energy_efficiency_project",
+        "energy_management_system",
+        "high_efficiency_refrigeration_equipment",
+        "level_2_ev_charger_installation",
+        "agricultural_vfd",
+        "irrigation_pump_vfd",
+        "ventilation_fan_upgrade",
+        "engine_block_heater_timer"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Connexus Energy business or eligible member.",
+        "Applications and supporting documents must be submitted by the stated program deadline.",
+        "Pre-approval is required for prescriptive rebates above the threshold and for all custom incentives.",
+        "Invoices, specification sheets, and W-9 documentation are required as applicable.",
+        "Rebates are capped by equipment cost, member annual limit, funding availability, and program cost-effectiveness rules."
+      ],
+      "blockers": [
+        "Do not match low-flow fixture retrofit; the verified fixture references are lighting fixtures, not water fixtures.",
+        "EV charger support is for qualifying Level 2 workplace or public chargers, not vehicle purchase.",
+        "Custom incentives require pre-approval and cost-effectiveness or payback review.",
+        "Whole-building study is planning or new construction support and should not be treated as a physical retrofit unless installed measures are separately eligible."
+      ],
+      "programType": "Commercial Utility Rebate Program",
+      "administrator": "Connexus Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.connexusenergy.com/business/save-money-and-energy/programs-and-rebates",
+      "sourceUrlsChecked": [
+        "https://www.connexusenergy.com/business/save-money-and-energy/programs-and-rebates",
+        "https://www.connexusenergy.com/download_file/view/38611c9e-ee81-4309-abf4-b1185a6a31d4/412",
+        "https://www.connexusenergy.com/download_file/view/1de1032f-e866-4038-a9dc-1717edf0868d/445",
+        "https://www.connexusenergy.com/download_file/view/3a2223f2-42b6-4942-bbce-f68e9ed251ad/412"
+      ],
+      "evidenceText": "Connexus business pages list LED lighting, VFDs, HVAC, heat pumps, commercial kitchen equipment, forklifts, compressed air, custom incentives, refrigeration, agricultural rebates, and Level 2 EV chargers.",
+      "reasoningNotes": "Removed the water-fixture false positive and retained only business, commercial, agricultural, and custom measures supported by Connexus sources."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3291",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Consolidated Cooperative electric service territory"
+        ],
+        "notes": "Limited to Consolidated Cooperative residential electric members/customers."
+      },
+      "eligibleApplicantTypes": [
+        "residential electric cooperative member",
+        "residential customer",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_storage_water_heater_with_load_control",
+        "heat_pump_water_heater",
+        "heat_pump_hvac_retrofit",
+        "dual_fuel_heat_pump_system",
+        "ductless_mini_split_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "residential_refrigerator",
+        "residential_freezer",
+        "level_2_ev_charger_installation",
+        "central_air_conditioner_replacement",
+        "smart_thermostat_zoning_retrofit"
+      ],
+      "hardRequirements": [
+        "Applicant must have a Consolidated Cooperative residential electric account.",
+        "Receipts or proof of purchase must be submitted within the specified period.",
+        "Many measures require inspection before rebate approval.",
+        "Remote-control switch and five-year agreement requirements apply to listed water heater and dual-fuel heat pump measures.",
+        "ENERGY STAR, size, efficiency, new-unused, UL or ETL, Wi-Fi, and other product requirements apply by measure."
+      ],
+      "blockers": [
+        "Residential refrigerator and freezer rebates are appliance rebates, not commercial refrigeration equipment.",
+        "EV charger support is for Level 2 chargers only; do not match DC fast charging or vehicle rebates.",
+        "Ductless mini-split equipment must provide heating and cooling, not cooling-only service.",
+        "On-demand and solar water heaters are excluded from the heat pump water heater rebate.",
+        "Commercial equipment and large commercial air conditioning units are outside this residential record."
+      ],
+      "programType": "Utility Rebate Program",
+      "administrator": "Consolidated Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.consolidated.coop/electric/residential/rebates/",
+      "sourceUrlsChecked": [
+        "https://www.consolidated.coop/electric/residential/rebates/"
+      ],
+      "evidenceText": "Consolidated lists residential rebates for heat pump water heaters, dual-fuel heat pumps, ductless mini-splits, geothermal, refrigerators, freezers, Level 2 EV chargers, central air conditioners, and smart thermostats.",
+      "reasoningNotes": "Narrowed refrigeration and EV charger matches to residential appliances and Level 2 chargers. Kept geothermal and ductless because the official residential page lists them."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4387",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DE"
+        ],
+        "counties": [],
+        "cities": [
+          "Clayton",
+          "Middletown",
+          "Smyrna",
+          "Newark",
+          "New Castle",
+          "Seaford",
+          "Milford",
+          "Dover",
+          "Lewes"
+        ],
+        "utilityTerritories": [
+          "DEMEC member municipal electric utilities contributing to the Municipal Green Energy Fund"
+        ],
+        "notes": "Eligibility is municipality-specific; current DEMEC page shows municipal green energy grants and City of Newark application materials."
+      },
+      "eligibleApplicantTypes": [
+        "residential municipal electric customer",
+        "commercial municipal electric customer",
+        "nonprofit customer",
+        "municipal entity",
+        "participating contractor"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "nonprofit",
+        "municipal"
+      ],
+      "eligibleRetrofitCategories": [
+        "photovoltaic_system",
+        "rooftop_solar_pv",
+        "ground_mount_solar_pv",
+        "solar_water_heating_system",
+        "solar_water_heating_radiant_heat",
+        "small_wind_turbine",
+        "ground_source_geothermal_heat_pump",
+        "fuel_cell_system"
+      ],
+      "hardRequirements": [
+        "Applicant or municipality must contribute to the Municipal Green Energy Fund and be current with municipal electric accounts.",
+        "Equipment must be customer-owned and installed and maintained in the participating municipal electric service territory.",
+        "Grant reservation application is required before installation.",
+        "Qualified contractors, permits, design documents, invoices, and final documentation are required as applicable.",
+        "PV, wind, and fuel-cell systems require interconnection; fuel cells must use renewable fuel; geothermal systems must meet listed EER and COP requirements.",
+        "Funding is limited, first-come, municipality-specific, and may be waitlisted."
+      ],
+      "blockers": [
+        "Corporate Renewable Energy Block participation is a REC or SREC purchase program, not a physical retrofit incentive.",
+        "Do not match submetering or energy monitoring; no official support was found.",
+        "Do not match window film or shading retrofit; the official technologies are renewable and geothermal measures.",
+        "Do not match generic high-efficiency HVAC replacement except qualified geothermal heat pumps.",
+        "Municipal application availability must be checked for the specific DEMEC member utility."
+      ],
+      "programType": "Municipal Renewable Energy Grant Program",
+      "administrator": "Delaware Municipal Electric Corporation",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.demecinc.net/member-energy-grants/",
+      "sourceUrlsChecked": [
+        "https://www.demecinc.net/member-energy-grants/",
+        "https://www.demecinc.net/wp-content/uploads/2025/11/DEMEC-Green-Energy-Regs-06202023-CURRENT.pdf"
+      ],
+      "evidenceText": "DEMEC municipal green energy materials identify photovoltaic systems, solar water heating, small wind, fuel cells, and geothermal heat pumps for participating municipal electric customers and municipal utilities.",
+      "reasoningNotes": "Corrected false positives for metering and shading. Kept only renewable generation, solar thermal, geothermal, and renewable-fueled fuel-cell technologies."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4547",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "DTE Energy electric service territory"
+        ],
+        "notes": "This electric record should be limited to business electric-account measures; gas measures are separate."
+      },
+      "eligibleApplicantTypes": [
+        "commercial electric customer",
+        "industrial electric customer",
+        "small business customer",
+        "medium business customer",
+        "institutional customer",
+        "nonprofit customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_controls_retrofit",
+        "commercial_refrigerator_freezer",
+        "refrigerated_case_lighting",
+        "reach_in_refrigerated_display_case_door_retrofit",
+        "central_air_conditioner_replacement",
+        "heat_pump_hvac_retrofit",
+        "packaged_terminal_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "hvac_controls_retrofit",
+        "building_energy_management_system",
+        "variable_frequency_drive_retrofit",
+        "commercial_window_upgrade",
+        "window_film_shading_retrofit",
+        "high_efficiency_laundry_equipment",
+        "electric_tankless_water_heater",
+        "vending_machine_controller",
+        "high_efficiency_hand_dryer",
+        "commercial_foodservice_equipment",
+        "new_construction_leed_certification_incentive"
+      ],
+      "hardRequirements": [
+        "Applicant must have a DTE business electric account in the service territory.",
+        "Measures must meet the applicable DTE business equipment or instant-discount requirements.",
+        "Reservations are required for listed measures and final documentation is due within the program deadline.",
+        "Itemized invoices, specifications, W-9, and inspections may be required.",
+        "Measures generally must remain installed for five years or for the useful life of the product.",
+        "Rebates are subject to available funding and cannot duplicate instant discounts where already applied."
+      ],
+      "blockers": [
+        "Gas boilers, gas furnaces, gas water heating, and gas insulation measures belong to the DTE gas record unless electric eligibility is documented.",
+        "LEED support is limited to the new construction or major renovation pathway, not an ordinary retrofit rebate.",
+        "Clothes washer support is a commercial measure tied to qualifying electric water heating, not residential laundry.",
+        "Financing options such as Michigan Saves or PACE are separate from this rebate program.",
+        "Retail instant-discount products should not also be matched as application rebates for the same purchase."
+      ],
+      "programType": "Commercial Industrial Utility Rebate And Instant Discount Program",
+      "administrator": "DTE Energy",
+      "applicationUrl": "https://www.dteenergy.com/content/dam/dteenergy/deg/website/business/energy-efficiency/pdf/BusinessProgramRebateApplication.pdf",
+      "websiteUrl": "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business.html",
+      "sourceUrlsChecked": [
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business.html",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business/equipment-upgrade.html",
+        "https://www.dteenergy.com/content/dam/dteenergy/deg/website/business/energy-efficiency/pdf/BusinessProgramRebateApplication.pdf",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/Instant-Discount-Programs.html",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/Instant-Discount-Programs/Lighting-Instant-Discounts.html",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/Instant-Discount-Programs/hvac-instant-discounts.html",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business/New-Construction-and-Major-Renovations.html"
+      ],
+      "evidenceText": "DTE business electric materials cover lighting, lighting controls, refrigeration, air conditioning, heat pumps, HVAC controls, VFDs, windows, window film, electric water heating, hand dryers, and food-service measures.",
+      "reasoningNotes": "Separated electric business measures from gas business measures and narrowed LEED to new construction or major renovation support."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3593",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "DTE Energy electric service territory"
+        ],
+        "notes": "Residential electric record; some DTE residential offers require natural gas service or dual fuel eligibility and should be matched measure by measure."
+      },
+      "eligibleApplicantTypes": [
+        "residential electric customer",
+        "residential natural gas customer for gas-specific offers",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "central_air_conditioner_replacement",
+        "air_conditioner_tune_up",
+        "room_air_conditioner",
+        "heat_pump_hvac_retrofit",
+        "cold_climate_air_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "insulation_upgrade",
+        "window_replacement",
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_laundry_equipment",
+        "heat_pump_clothes_dryer",
+        "variable_speed_pool_pump",
+        "appliance_recycling",
+        "led_lighting_retail_instant_discount"
+      ],
+      "hardRequirements": [
+        "Applicant must be a DTE residential customer with the required electric or gas service for the specific measure.",
+        "Many offers require a single-family home with individually metered service and a home more than twenty-four months old.",
+        "Applications must be submitted within the stated post-purchase or post-installation period and by the program deadline.",
+        "ENERGY STAR or qualified equipment requirements apply for appliances, thermostats, room air conditioners, pool pumps, and related measures.",
+        "Heat pump and HVAC measures have specific equipment, replacement, tune-up, and documentation requirements."
+      ],
+      "blockers": [
+        "Refrigerator and freezer references are primarily appliance recycling offers, not new high-efficiency refrigeration equipment purchases.",
+        "Do not match commercial refrigeration, commercial kitchen equipment, motors, VFDs, or industrial measures.",
+        "Room air conditioner is product-specific and should not be generalized to window replacement.",
+        "Gas furnace and gas water-heater rebates are gas-service measures and should not be matched under the electric record unless service eligibility is present.",
+        "Ductless mini-splits are not eligible for the air-source heat pump tune-up rebate."
+      ],
+      "programType": "Residential Utility Rebate And Instant Discount Program",
+      "administrator": "DTE Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/air-conditioners.html",
+      "sourceUrlsChecked": [
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/air-conditioners.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/room-air-conditioners.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/insulation-and-windows.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/water-heaters.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/washers-dryers.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/wi-fi-enabled-thermostats.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/pool-pumps.html",
+        "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/recycle-appliances.html"
+      ],
+      "evidenceText": "DTE residential pages cover central and room air conditioners, heat pumps, heat pump water heaters, insulation and windows, Wi-Fi thermostats, washers and dryers, variable-speed pool pumps, appliance recycling, and lighting discounts.",
+      "reasoningNotes": "Narrowed refrigerator/freezer matching to appliance recycling rather than commercial refrigeration and kept only residential DTE measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4546",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "DTE Energy natural gas service territory"
+        ],
+        "notes": "This gas record should be limited to business natural-gas-account measures; electric measures are separate."
+      },
+      "eligibleApplicantTypes": [
+        "commercial natural gas customer",
+        "industrial natural gas customer",
+        "small business customer",
+        "medium business customer",
+        "institutional customer",
+        "agricultural customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "smart_thermostat_zoning_retrofit",
+        "high_efficiency_furnace_retrofit",
+        "infrared_heater",
+        "high_efficiency_boiler_retrofit",
+        "hvac_controls_retrofit",
+        "building_energy_management_system",
+        "hvac_occupancy_sensor",
+        "optimum_start_stop_controls",
+        "make_up_air_unit",
+        "energy_recovery_ventilation",
+        "boiler_tune_up",
+        "furnace_rtu_tune_up",
+        "domestic_hot_water_heater_tune_up",
+        "process_boiler_tune_up",
+        "process_burner_tune_up",
+        "high_efficiency_gas_water_heater",
+        "tankless_gas_water_heater",
+        "indirect_domestic_hot_water_system",
+        "high_efficiency_pool_heater",
+        "compressed_air_heat_recovery",
+        "ozone_laundry",
+        "demand_control_kitchen_ventilation",
+        "commercial_refrigeration_door_retrofit",
+        "commercial_refrigeration_night_covers",
+        "insulation_upgrade",
+        "pool_cover",
+        "high_efficiency_laundry_equipment",
+        "greenhouse_heat_curtain",
+        "greenhouse_infrared_film"
+      ],
+      "hardRequirements": [
+        "Applicant must have a DTE business natural gas account in the service territory.",
+        "Equipment must meet DTE gas measure specifications, efficiency criteria, and documentation requirements.",
+        "Reservations are required for listed measures and final documentation is due within the program deadline.",
+        "Invoices, specifications, W-9, and inspections may be required.",
+        "Measures generally must remain installed for five years or for the useful life of the product.",
+        "Rebates are subject to available funding and cannot duplicate another utility rebate for the same project."
+      ],
+      "blockers": [
+        "Do not match LED lighting; lighting belongs to DTE electric business measures, not this gas record.",
+        "Do not match broad refrigeration equipment; only refrigeration door and night-cover measures supported by gas miscellaneous savings were verified.",
+        "LEED and new construction incentives belong to a separate DTE business path, not the gas equipment application.",
+        "Laundry support is limited to specified commercial clothes washer or ozone laundry measures tied to gas water heating savings.",
+        "Do not infer residential home weatherization from this commercial and industrial gas record."
+      ],
+      "programType": "Commercial Industrial Utility Gas Rebate Program",
+      "administrator": "DTE Energy",
+      "applicationUrl": "https://www.dteenergy.com/content/dam/dteenergy/deg/website/business/energy-efficiency/pdf/BusinessProgramRebateApplication.pdf",
+      "websiteUrl": "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business.html",
+      "sourceUrlsChecked": [
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business.html",
+        "https://www.dteenergy.com/us/en/business/energy-efficiency/getting-started/rebate-programs/Energy-Efficiency-Programs-for-Business/equipment-upgrade.html",
+        "https://www.dteenergy.com/content/dam/dteenergy/deg/website/business/energy-efficiency/pdf/BusinessProgramRebateApplication.pdf"
+      ],
+      "evidenceText": "DTE business gas materials cover gas HVAC, furnaces, boilers, controls, tune-ups, domestic hot water, pool heaters, heat recovery, ozone laundry, kitchen ventilation, insulation, pool covers, and greenhouse measures.",
+      "reasoningNotes": "Separated the gas business measures from DTE electric lighting and refrigeration measures and narrowed refrigeration to door and night-cover gas-savings measures."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2296"
+}

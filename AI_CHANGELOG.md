@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) GPT Pro opportunity data repair batches 19-23
+
+- Imported five saved GPT Pro opportunity-data repair outputs from `Outputs/` as normalized batches 19-23.
+- Appended the batches to the ordered opportunity-data repair manifest and applied all 23 batches cumulatively to the public retrofit opportunity index and sample matching fixtures.
+- Preserved the remaining prepared GPT Pro prompt set for batches 24-28 as the next waiting repair outputs.
+
 ## 2026-07-01 - Codex (GPT-5) second next opportunity repair prompt set
 
 - Added five additional GPT Pro opportunity-data repair prompts for the next unrepaired low-confidence queue positions 76-150, excluding the already in-flight prompt batches 19-23.

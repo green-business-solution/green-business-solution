@@ -1,0 +1,1171 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-01",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22123",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MS"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in the Mississippi portion of the Tennessee Valley; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Input target set cited here: . Repaired repeated DSIRE state records as one TVA regional program with state-specific geography and identical category filtering."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22127",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "GA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in the Georgia portion of the Tennessee Valley; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Same current TVA regional program as the companion TVA records; state changes only the TVA-served geography."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22126",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in Tennessee; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Same current TVA regional program as the companion TVA records; state changes only the TVA-served geography."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22128",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in the North Carolina portion of the Tennessee Valley; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Same current TVA regional program as the companion TVA records; state changes only the TVA-served geography."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22124",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "KY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in the Kentucky portion of the Tennessee Valley; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Same current TVA regional program as the companion TVA records; state changes only the TVA-served geography."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22125",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "TVA local power company customers",
+          "TVA direct-served customers"
+        ],
+        "notes": "Limited to TVA-served business customers in the Virginia portion of the Tennessee Valley; local power company participation and funding apply."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "tva_direct_served_customers",
+        "local_power_company_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "federal",
+        "agricultural",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "electric_forklift_material_handling",
+        "thermal_energy_storage",
+        "variable_frequency_drive_retrofit",
+        "retro_commissioning_study",
+        "efficient_compressed_air_system",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a TVA local power company business customer or TVA direct-served customer with a qualifying electric-saving project.",
+        "Standard projects must be installed or submitted through a TVA Preferred Partners Network member unless TVA rules allow otherwise.",
+        "Preapproval is required before removing, purchasing or installing equipment when the measure requires preapproval; formal Application Approval Notice controls eligibility.",
+        "Equipment must meet measure-specific minimum efficiency and documentation requirements.",
+        "Minimum incentive amounts apply: $150 standard application and $1500 custom application.",
+        "Incentives are capped at 70% of material cost and $3000000 per organization per TVA fiscal year."
+      ],
+      "blockers": [
+        "No official TVA business and industry incentive source checked supports broad low-flow plumbing fixture retrofits under this rebate; do not match low_flow_fixture_retrofit.",
+        "Residential EnergyRight rebates, Smart Energy Starter Kits, demand response, renewable or solar programs and financing are separate programs and should not match this opportunity.",
+        "Projects are subject to TVA and local power company approval, available funding and compliance with applicable laws.",
+        "VSD prescriptive incentives are for qualifying existing HVAC applications; other VSD uses may need custom review."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "TVA EnergyRight",
+      "applicationUrl": "https://energyright.com/business-industry/incentives/getting-started/",
+      "websiteUrl": "https://energyright.com/business-industry/incentives/",
+      "sourceUrlsChecked": [
+        "https://energyright.com/business-industry/incentives/",
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/incentives/hvac/",
+        "https://energyright.com/business-industry/incentives/refrigeration/",
+        "https://energyright.com/business-industry/incentives/led-lights/",
+        "https://energyright.com/business-industry/incentives/electric-forklifts/",
+        "https://energyright.com/business-industry/incentives/thermal-storage/",
+        "https://energyright.com/business-industry/incentives/commissioning/",
+        "https://energyright.com/business-industry/incentives/vsd/",
+        "https://energyright.com/business-industry/incentives/compressed-air-incentive/"
+      ],
+      "evidenceText": "Official TVA pages list active business incentives for HVAC, VSDs, refrigeration, LED lighting, electric forklifts, thermal ice storage, commissioning, compressed air and custom projects. Eligibility is tied to TVA local power company or direct-served commercial and industrial customers.",
+      "reasoningNotes": "Same current TVA regional program as the companion TVA records; state changes only the TVA-served geography."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1373",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NH"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Unitil New Hampshire electric service territory",
+          "NHSaves participating utility territory"
+        ],
+        "notes": "Limited to Unitil New Hampshire residential electric or dual gas and electric customers for electric measures; gas measures require Unitil gas service and should not be inferred from this electric record."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customers",
+        "dual_fuel_residential_customers",
+        "homeowners",
+        "renters",
+        "income_eligible_households"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "room_air_conditioner",
+        "residential_clothes_washer",
+        "residential_clothes_dryer",
+        "residential_refrigerator",
+        "residential_refrigerator_freezer_recycling",
+        "dehumidifier",
+        "room_air_purifier",
+        "variable_speed_pool_pump"
+      ],
+      "hardRequirements": [
+        "Must be in Unitil New Hampshire service and meet NHSaves or Unitil residential program eligibility for the specific measure.",
+        "Appliance and equipment rebates generally require ENERGY STAR or program-qualified products where specified.",
+        "Home Energy Performance begins with Home Heating Index or whole-house assessment and qualified auditor recommendations.",
+        "Weatherization, heat pump and appliance incentives depend on current program rules, service type and available funding."
+      ],
+      "blockers": [
+        "Residential refrigerator and freezer incentives are appliance rebates or recycling, not commercial refrigeration equipment.",
+        "No current Unitil New Hampshire electric source checked supports matching commercial lighting, commercial refrigeration, motors or industrial measures.",
+        "Natural gas heating, water-heating and thermostat rebates require eligible natural gas service and are not supported by this electric-only opportunity.",
+        "Home Energy Performance weatherization requires audit or qualification and auditor-recommended measures; income-qualified no-cost weatherization is a distinct eligibility path."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Unitil Energy Systems",
+      "applicationUrl": null,
+      "websiteUrl": "https://unitil.com/ways-to-save/rebates-incentives",
+      "sourceUrlsChecked": [
+        "https://unitil.com/ways-to-save/rebates-incentives",
+        "https://unitil.com/rebates/energy-starr-appliances-and-electronics-nh",
+        "https://unitil.com/rebates/home-energy-performance-nh",
+        "https://nhsaves.com/rebates-services-appliances/"
+      ],
+      "evidenceText": "Unitil’s New Hampshire pages direct residential electric customers to NHSaves appliance rebates and Home Energy Performance. Current sources list ENERGY STAR appliances, HPWH, heat pumps, recycling, pool pumps and whole-house audit/weatherization; gas heating and thermostats require gas service.",
+      "reasoningNotes": "Narrowed broad refrigeration and laundry matches to residential appliances; removed unsupported smart thermostat from the electric-only Unitil record except where tied to gas service outside this opportunity."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2590",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "Waseca"
+        ],
+        "utilityTerritories": [
+          "Waseca Utilities electric service territory",
+          "SMMPA member utility territory"
+        ],
+        "notes": "Must be an electric customer of Waseca Utilities or another SMMPA member utility at the installation address."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customers",
+        "homeowners",
+        "renters",
+        "multifamily_common_area_customers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "residential_refrigerator",
+        "residential_freezer",
+        "residential_dishwasher",
+        "residential_clothes_washer",
+        "heat_pump_clothes_dryer",
+        "heat_pump_water_heater",
+        "smart_thermostat_zoning_retrofit",
+        "dehumidifier",
+        "room_air_conditioner",
+        "central_air_conditioner",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "efficient_furnace_fan_motor",
+        "ecm_circulator_pump",
+        "induction_cooking_equipment",
+        "room_air_purifier",
+        "duct_sealing_and_insulation",
+        "variable_speed_pool_pump",
+        "level_2_ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Must be an electric customer of a SMMPA member utility or Waseca Utilities.",
+        "Submit the current rebate form with required receipt, invoice and qualifying product information.",
+        "Product must meet ENERGY STAR, DLC, AHRI or program-specific requirements where specified.",
+        "Rebates are credited to the customer electric account and are limited by program funds and measure caps."
+      ],
+      "blockers": [
+        "The dishwasher, refrigerator, freezer and laundry incentives are residential appliance measures, not commercial kitchen or commercial refrigeration retrofits.",
+        "EV charging, e-bikes, battery outdoor equipment and EV rate enrollment appear on the same rebate summary, but only qualifying installed Level 2 chargers should match building charging infrastructure.",
+        "Tankless water heaters are not eligible under the ENERGY STAR product heat pump water heater form.",
+        "HVAC, duct sealing, ground-source heat pump and pool pump measures require their individual forms and minimum efficiency requirements."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Waseca Utilities",
+      "applicationUrl": "https://www.ci.waseca.mn.us/1435/Electric-Utility-Rebates",
+      "websiteUrl": "https://www.ci.waseca.mn.us/1435/Electric-Utility-Rebates",
+      "sourceUrlsChecked": [
+        "https://www.ci.waseca.mn.us/1435/Electric-Utility-Rebates",
+        "https://www.ci.waseca.mn.us/DocumentCenter/View/1143/2026-Rebate-Summary---Residential-and-Commercialpdf",
+        "https://www.ci.waseca.mn.us/DocumentCenter/View/1144/2026-Energy-Star-Products-fillablepdf",
+        "https://smmpa.com/members/waseca"
+      ],
+      "evidenceText": "Waseca’s 2026 rebate summary lists residential LED, appliance, HPWH, thermostat, HVAC heat pump, furnace fan, ECM circulator, induction, air purifier, duct sealing, pool pump VFD and EV charger incentives. Participants must be electric customers of an SMMPA member utility.",
+      "reasoningNotes": "Converted commercial dishwasher and refrigeration matches into residential appliance categories where supported by current Waseca and SMMPA documents."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1589",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy Minnesota electric service territory",
+          "Xcel Energy Minnesota natural gas service territory"
+        ],
+        "notes": "Measure eligibility depends on whether the customer receives Xcel electric, gas or both at the Minnesota business premise."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "business_gas_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "multifamily_business_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "networked_lighting_controls",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "boiler_controls_burner_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "high_efficiency_furnace_retrofit",
+        "commercial_water_heater",
+        "pipe_insulation",
+        "steam_trap_repair_replacement",
+        "energy_recovery_ventilation",
+        "hvls_destratification_fans",
+        "variable_frequency_drive_retrofit",
+        "high_efficiency_refrigeration_equipment",
+        "refrigeration_controls_retrofit",
+        "refrigeration_ec_motor_retrofit",
+        "anti_sweat_heater_controls",
+        "walk_in_cooler_freezer_upgrade",
+        "efficient_motors",
+        "ecm_pump_fan_retrofit",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Qualifying equipment must be installed in Xcel Energy Minnesota business electric and/or natural gas service territory.",
+        "Submit completed application, itemized invoices and required specifications or photos within current program timeframes.",
+        "Rebate cannot exceed applicable project-cost caps and program rules.",
+        "Lighting retrofits require pre-installation pictures and completed lighting calculator.",
+        "Custom efficiency projects require approval before equipment is ordered, purchased or installed."
+      ],
+      "blockers": [
+        "Do not treat the word insulation as general building-envelope insulation; current business HVAC-R sources support pipe insulation only.",
+        "Refrigeration measures are for commercial refrigeration equipment, controls, motors and cases, not residential refrigerators or freezers.",
+        "VFDs on compressors and many non-prescriptive process applications require custom review or are not eligible under the prescriptive VFD schedule.",
+        "Measure must use the correct Xcel fuel or service type; gas-only measures cannot match electric-only premises."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates",
+      "sourceUrlsChecked": [
+        "https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/business-lighting-efficiency",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/hvac-r",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Business%20Programs%20%26%20Rebates/Equipment%20Rebates/17-9181%20%2804-24%29%20MN-HVAC-R_app%20January%201%2C%202024%2C%20or%20later%201%20042224.pdf",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Business%20Programs%20%26%20Rebates/Equipment%20Rebates/mn-hvacr-pipe-insulation.pdf"
+      ],
+      "evidenceText": "Xcel’s Minnesota business HVAC-R and lighting sources apply to business electric or gas customers and support commercial lighting, HVAC, heat pumps, VFDs, motors, pipe insulation, refrigeration controls/equipment and custom efficiency. General building insulation is not supported.",
+      "reasoningNotes": "Retained refrigeration, VFD, HVAC and lighting categories; narrowed insulation to pipe insulation rather than envelope insulation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3357",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [
+          "Alameda"
+        ],
+        "utilityTerritories": [
+          "Alameda Municipal Power electric service territory"
+        ],
+        "notes": "Must have an active Alameda Municipal Power residential electric account at the service address."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customers",
+        "homeowners",
+        "income_qualified_residential_customers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_water_heater",
+        "heat_pump_hvac_retrofit",
+        "heat_pump_clothes_dryer",
+        "induction_cooking_equipment",
+        "smart_thermostat_zoning_retrofit",
+        "level_2_ev_charger_installation",
+        "electric_panel_upgrade",
+        "home_energy_management_device",
+        "income_qualified_solar_pv"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current Alameda Municipal Power account holder and install at an AMP residential service address.",
+        "Gas-to-electric replacement is required for heat pump water heater, heat pump HVAC and gas dryer replacement categories where specified.",
+        "Required documentation includes receipts or invoices, pre/post photos, manufacturer/model/serial information and final City of Alameda permits where required.",
+        "Heat pump HVAC requires SEER at least 16 and HSPF at least 9.2, D1-H rate enrollment and proof of gas decommissioning.",
+        "Rebates are subject to measure-specific timing, account limits and income-qualified rules."
+      ],
+      "blockers": [
+        "Current AMP residential sources do not support a generic LED lighting rebate; do not match led_lighting_retrofit.",
+        "Heat pump HVAC must be gas-to-all-electric, requires gas furnace decommissioning, D1-H rate and no gas backup; do not match AC-only or hybrid gas backup replacements.",
+        "Solar should match only AMP income-qualified solar, not a general rooftop PV rebate.",
+        "Used EVs and e-bikes are transportation rebates; only installed Level 2 EV chargers should match building charging infrastructure.",
+        "Induction excludes portable units and dual-fuel appliances; heat pump water heater and HVAC require current program documentation and permits."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Alameda Municipal Power",
+      "applicationUrl": "https://www.alamedamp.com/407/Rebates-and-Incentives",
+      "websiteUrl": "https://www.alamedamp.com/407/Rebates-and-Incentives",
+      "sourceUrlsChecked": [
+        "https://www.alamedamp.com/407/Rebates-and-Incentives",
+        "https://www.alamedamp.com/DocumentCenter/View/1179",
+        "https://www.alamedamp.com/480/Electrify-My-Home",
+        "https://www.alamedamp.com/217/Businesses"
+      ],
+      "evidenceText": "AMP’s current residential rebate materials list HPWH, heat pump HVAC, heat pump dryer, induction cooking, smart thermostat, Level 2 EV charger, panel upgrade, energy management device and income-qualified solar. Several measures require gas-to-electric replacement and permits.",
+      "reasoningNotes": "Removed unsupported LED lighting and narrowed solar to the income-qualified solar offering shown in current AMP residential materials."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22702",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [
+          "Ashland"
+        ],
+        "utilityTerritories": [
+          "Ashland Electric Utility service territory"
+        ],
+        "notes": "Commercial Ashland Electric Utility customers; some programs also allow industrial, government, lodging or multifamily parameters by measure."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_electric_customers",
+        "industrial_electric_customers",
+        "government_electric_customers",
+        "business_electric_customers",
+        "registered_transient_occupancy_tax_contributors"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "hospitality",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "heat_pump_hvac_retrofit",
+        "heat_pump_water_heater",
+        "packaged_terminal_heat_pump",
+        "variable_refrigerant_flow_hvac",
+        "level_2_ev_charger_installation",
+        "induction_cooking_equipment",
+        "rooftop_solar_pv",
+        "high_efficiency_refrigeration_equipment",
+        "commercial_building_shell_upgrade"
+      ],
+      "hardRequirements": [
+        "Must have an active commercial Ashland Electric Utility account except commercial/workplace charging can also use transient occupancy tax contributor eligibility.",
+        "Heating/cooling, refrigeration, building shell and lighting require free pre- and post-installation inspection by city staff.",
+        "Equipment must meet appliance standards, replacement, storage/disposal and documentation requirements.",
+        "EV chargers must be new Level 2 units; electrical upgrades must be by licensed electrician and code-compliant with required permits and invoices.",
+        "Solar PV must be interconnected and net-metered, pass electric inspections, meet minimum 2500 W and TSRF requirements, and submit required forms and permits."
+      ],
+      "blockers": [
+        "The fluorescent-to-LED replacement incentive had an August 31 2025 completion deadline and should be treated as unavailable for new LED retrofit matches.",
+        "Refrigeration and building shell categories are listed by the city but require staff contact and pre/post inspection; do not infer specific equipment without staff or program confirmation.",
+        "EV charging and solar PV are distinct sections on the same city commercial incentives page; do not generalize them to non-energy-efficiency rebates.",
+        "Induction incentives apply only to permanent non-dual-fuel cooktops or ranges, not portable induction equipment."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Ashland Electric Utility",
+      "applicationUrl": "https://ashlandoregon.gov/FormCenter/Electric-Department-8/Climate-and-Energy-Incentive-Programs-On-81",
+      "websiteUrl": "https://ashlandoregon.gov/590/Commercial-Incentives",
+      "sourceUrlsChecked": [
+        "https://ashlandoregon.gov/590/Commercial-Incentives",
+        "https://ashlandoregon.gov/FormCenter/Electric-Department-8/Climate-and-Energy-Incentive-Programs-On-81"
+      ],
+      "evidenceText": "Ashland’s commercial page lists current incentives for ductless and air-source heat pumps, VRF, HPWH, PTHP, solar PV, workplace Level 2 charging and induction cooktops/ranges. Refrigeration/building shell require staff contact, and fluorescent-to-LED had an August 2025 deadline.",
+      "reasoningNotes": "Kept the program active but removed active LED matching because the official LED completion deadline has passed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2014",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [
+          "Austin"
+        ],
+        "utilityTerritories": [
+          "Austin Energy electric service territory"
+        ],
+        "notes": "Small Business Bundle applies to qualifying Austin Energy small business, nonprofit and house-of-worship customers; standard commercial rebates apply more broadly."
+      },
+      "eligibleApplicantTypes": [
+        "small_business_electric_customers",
+        "nonprofit_electric_customers",
+        "houses_of_worship",
+        "commercial_electric_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "nonprofit",
+        "religious",
+        "hospitality",
+        "food_service",
+        "small_business"
+      ],
+      "eligibleRetrofitCategories": [
+        "hvac_tune_up",
+        "led_lighting_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "heat_pump_water_heater",
+        "roof_ceiling_insulation",
+        "window_treatments_replacement",
+        "commercial_kitchen_equipment",
+        "high_efficiency_hvac_replacement",
+        "chiller_replacement",
+        "cooling_tower_upgrade",
+        "energy_recovery_ventilation",
+        "guestroom_energy_management",
+        "reflective_roof_coating",
+        "ec_motor_retrofit",
+        "variable_frequency_drive_retrofit",
+        "thermal_energy_storage",
+        "uninterruptible_power_supply_efficiency",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Small business must be Texas-owned or franchised, have five or fewer locations, spend less than $60000 per year on electricity and use eligible Austin Energy Rate 1 or Rate 2.",
+        "Nonprofits must provide tax-exempt documentation when required and meet spending or rate conditions; some government buildings, schools, tax-exempt real estate trusts and housing co-ops are excluded from the bonus.",
+        "Participants must complete an on-site assessment and use an Austin Energy participating contractor for the Bundle.",
+        "Submit rebate applications before installation; completed work is not accepted.",
+        "Installed equipment must comply with manufacturer instructions, Austin Energy rules and applicable code or permit requirements."
+      ],
+      "blockers": [
+        "Air sealing, duct sealing and duct insulation are not supported by the current Small Business Bundle or commercial summary sources checked; do not match them unless another Austin Energy offering is selected.",
+        "Roof/ceiling insulation is supported, but not broad residential-style envelope weatherization.",
+        "Financing, demand response, EV charging and solar are separate Austin Energy commercial offerings and not part of this Small Business Bundle repair unless selected separately.",
+        "Small Business Bundle normally requires an on-site assessment and three energy-saving solutions; customers completing fewer may fall back to standard commercial rebates."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Austin Energy",
+      "applicationUrl": "https://rebates.austinenergy.com/OnlineApp/",
+      "websiteUrl": "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/sb-bundle",
+      "sourceUrlsChecked": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/sb-bundle",
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial",
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/appliances-equipment/custom-tech",
+        "https://austinenergy.com/-/media/Project/Websites/AustinEnergy/Energy-Efficiency/Rebates/PDFs/COM-SmallBizBundleSummary.pdf?hash=0962CD19FDD5067B1E7A0C36484E1C12&rev=406d8c1862744cc3bf3b628c6e84ef32&sc_lang=en",
+        "https://austinenergy.com/-/media/Project/Websites/AustinEnergy/Energy-Efficiency/Rebates/PDFs/Commercial-Rebate-Summary.pdf?hash=DAFD7A94996969832329470CD188BED1&rev=6a1e786c02d74711980cb81ec29e2e98&sc_lang=en",
+        "https://rebates.austinenergy.com/OnlineApp/"
+      ],
+      "evidenceText": "Austin Energy’s current Small Business Bundle requires qualified small businesses or nonprofits to complete an assessment and select three upgrades, typically HVAC tune-up, LED lighting and smart thermostats. Current summaries also support HPWH, roof/ceiling insulation, windows, commercial kitchen, HVAC, motors, VFD and custom measures.",
+      "reasoningNotes": "Removed residential-style air sealing and duct sealing matches; retained only current small business and commercial rebate categories supported by Austin Energy materials."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4886",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Maryland homeowner loan; not utility-territory specific."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "owner_occupied_residential_customers",
+        "credit_qualified_borrowers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_efficiency_financing",
+        "air_sealing_weatherization",
+        "insulation_upgrade",
+        "high_efficiency_hvac_replacement",
+        "ground_source_geothermal_heat_pump",
+        "high_efficiency_water_heater",
+        "residential_energy_star_appliances",
+        "window_replacement",
+        "door_replacement",
+        "lighting_controls_retrofit",
+        "led_lighting_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "ceiling_fan_upgrade",
+        "ventilation_fan_upgrade",
+        "rooftop_solar_pv",
+        "health_safety_remediation_linked_to_energy_improvements",
+        "certified_energy_audit_recommended_measure"
+      ],
+      "hardRequirements": [
+        "Borrower must be a Maryland homeowner with credit score 640 or greater and debt-to-income ratio not exceeding 50%.",
+        "Loan amount must be at least $5000 and no more than $30000, with current APR and term conditions.",
+        "Project cannot be purchased, installed or completed before BeSMART funding is approved.",
+        "Applicant must submit income documentation, project scope, contractor estimates and ENERGY STAR or other equipment specifications before loan documents are finalized.",
+        "Solar photovoltaic financing is capped at a one-to-one match with energy efficiency measure costs.",
+        "Health and safety costs must be necessary for energy improvements and are limited to 25% under program rules."
+      ],
+      "blockers": [
+        "This is financing, not a rebate; do not match as direct cash rebate or instant incentive.",
+        "BeSMART FAQ says utility rebates may be available separately; do not merge utility rebate programs into this loan record.",
+        "Solar PV is capped by or paired with energy efficiency spending and should not match as standalone full solar financing.",
+        "Kitchen or bath remodeling and non-energy roof replacement are not eligible unless they are qualifying energy efficiency or health/safety work under program rules.",
+        "Lighting is supported as lighting and controls, not specifically commercial lighting controls."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Maryland Department of Housing and Community Development",
+      "applicationUrl": "https://dhcd.maryland.gov/Energy-Home-Repair/Pages/Homeowner-Loans/BeSMART-Loan-Application.aspx",
+      "websiteUrl": "https://dhcd.maryland.gov/Energy-Home-Repair/pages/homeowner-loans/besmart.aspx",
+      "sourceUrlsChecked": [
+        "https://dhcd.maryland.gov/Energy-Home-Repair/pages/homeowner-loans/besmart.aspx",
+        "https://dhcd.maryland.gov/Energy-Home-Repair/Pages/Homeowner-Loans/BeSMART-Loan-Application.aspx",
+        "https://dhcd.maryland.gov/Energy-Home-Repair/Documents/BeSMART-Energy-Loan/FAQ.pdf"
+      ],
+      "evidenceText": "Maryland DHCD’s BeSMART page describes an active unsecured homeowner energy-efficiency loan up to $30000 with credit and DTI requirements. Eligible measures include envelope, ENERGY STAR HVAC, water heating, appliances, windows, doors, lighting controls, thermostats, fans, geothermal, capped solar PV and related health/safety work.",
+      "reasoningNotes": "Classified as financing and kept only measures currently listed by DHCD; solar PV is not a standalone unlimited solar loan under this record."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3283",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Black Hills Energy Iowa natural gas service territory"
+        ],
+        "notes": "Residential natural gas customers; heating, thermostat and insulation measures require Black Hills Energy to provide the main heat source fuel."
+      },
+      "eligibleApplicantTypes": [
+        "residential_natural_gas_customers",
+        "homeowners",
+        "renters",
+        "liheap_customers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "high_efficiency_furnace_retrofit",
+        "high_efficiency_boiler_retrofit",
+        "boiler_controls_burner_retrofit",
+        "combination_boiler_water_heater",
+        "high_efficiency_natural_gas_water_heater",
+        "tankless_natural_gas_water_heater",
+        "water_heater_temperature_setback",
+        "drain_water_heat_recovery",
+        "smart_thermostat_zoning_retrofit",
+        "furnace_maintenance",
+        "boiler_maintenance",
+        "insulation_upgrade",
+        "duct_insulation",
+        "boiler_pipe_insulation",
+        "domestic_hot_water_pipe_insulation",
+        "water_heater_wrap",
+        "low_flow_faucet_aerator",
+        "low_flow_showerhead",
+        "thermostatic_restrictor_shower_valve",
+        "gas_fireplace_upgrade",
+        "energy_assessment",
+        "air_sealing_weatherization"
+      ],
+      "hardRequirements": [
+        "Applicant must be a current Iowa residential natural gas customer of Black Hills Energy.",
+        "Equipment must be new, installed in heated living space and purchased or installed during the 2026 program year.",
+        "Applications must include a final itemized invoice or receipt and be received within 45 days of dealer invoice or by January 15 2027.",
+        "Heating equipment must meet listed AFUE, UEF, AHRI or ENERGY STAR requirements and be served by Black Hills as the main heat source fuel.",
+        "Rebates are first-come, first-served, subject to budget, and cannot exceed customer cost."
+      ],
+      "blockers": [
+        "This Iowa residential record is for natural gas customers; do not match electric heat pumps, electric heat pump water heaters, air conditioners, appliances or EV charging.",
+        "Low-flow measures must be narrowed to faucet aerators, low-flow showerheads and thermostatic restrictor shower valves, not broad plumbing retrofits.",
+        "Insulation, heating and thermostat rebates are unavailable if Black Hills Energy does not provide the home’s main heat source fuel or if the home has electric heat.",
+        "Measures installed in garages or shops are not eligible."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Black Hills Energy",
+      "applicationUrl": "https://iagresiprescriptive.customerapplication.com/",
+      "websiteUrl": "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/iowa-residential-programs",
+      "sourceUrlsChecked": [
+        "https://www.blackhillsenergy.com/efficiency-and-savings/residential-rebates/iowa-residential-programs",
+        "https://www.blackhillsenergy.com/sites/blackhillsenergy.com/files/IAG-EE-2026-Residential-Rebate-App.pdf",
+        "https://iagresiprescriptive.customerapplication.com/"
+      ],
+      "evidenceText": "Black Hills Energy’s 2026 Iowa residential gas application lists natural gas water heating, furnaces, boilers, boiler reset, gas fireplaces, smart thermostats, maintenance, insulation, pipe insulation, water-heater wrap, faucet aerators, showerheads and restrictor valves. Heating, thermostat and insulation require Black Hills as main heat fuel.",
+      "reasoningNotes": "Kept gas HVAC, insulation and low-flow measures but narrowed all low-flow and water-heating matches to the specific natural-gas residential rebate items."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2533",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [
+          "Blooming Prairie"
+        ],
+        "utilityTerritories": [
+          "Blooming Prairie Public Utilities electric service territory",
+          "SMMPA member utility territory"
+        ],
+        "notes": "Must be a business electric customer of Blooming Prairie Public Utilities or another SMMPA member utility."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customers",
+        "commercial_customers",
+        "industrial_customers",
+        "municipal_customers",
+        "institutional_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "municipal",
+        "agricultural",
+        "hospitality",
+        "food_service"
+      ],
+      "eligibleRetrofitCategories": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "ground_source_geothermal_heat_pump",
+        "water_source_heat_pump",
+        "chiller_tune_up",
+        "hvac_tune_up",
+        "efficient_furnace_fan_motor",
+        "high_efficiency_hvac_fan",
+        "clean_water_pump",
+        "variable_frequency_drive_retrofit",
+        "efficient_motors",
+        "refrigeration_ec_motor_retrofit",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "walk_in_cooler_freezer_upgrade",
+        "high_efficiency_refrigeration_equipment",
+        "efficient_air_compressor",
+        "compressed_air_leak_repair",
+        "compressed_air_controls_equipment",
+        "retro_commissioning_study",
+        "guestroom_energy_management",
+        "vending_machine_controls",
+        "commercial_kitchen_equipment",
+        "pre_rinse_spray_valve",
+        "aerosol_duct_sealing",
+        "variable_speed_pool_pump",
+        "custom_energy_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Must be a business electric customer of Blooming Prairie Public Utilities or another SMMPA member utility and meet the specific rebate form requirements.",
+        "Use current 2026 forms for each measure and submit required invoices, equipment specifications and documentation.",
+        "VSD prescriptive rebates are for qualifying HVAC fans and pumps; other or larger applications may require custom review.",
+        "Refrigeration, food service, compressed air and custom measures require their specific forms and program materials.",
+        "Rebates are limited by program funds, caps and project cost."
+      ],
+      "blockers": [
+        "Low-flow support is limited to commercial food-service low-flow spray valves; do not match broad plumbing or restroom low-flow fixture retrofits.",
+        "Guestroom Energy Management is a lodging room occupancy-control measure and should not be generalized to whole-building energy management systems unless a custom project is approved.",
+        "Battery-powered outdoor equipment and e-bikes may appear on SMMPA rebate summaries but are not building retrofit categories.",
+        "Gas food service rebates on the shared SMMPA summary are limited to Austin Utilities and Owatonna Public Utilities gas customers; do not apply gas-only foodservice measures to Blooming Prairie electric customers.",
+        "Google Drive form PDFs linked from the official page loaded only as Drive placeholder pages in the browser, so detailed measure amounts were cross-checked against a current SMMPA member rebate summary."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Blooming Prairie Public Utilities",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/members/blooming-prairie",
+      "sourceUrlsChecked": [
+        "https://smmpa.com/members/blooming-prairie",
+        "https://drive.google.com/file/d/1lDPa2ARlECJe4Fg4-eTExUHOY6PPOYEJ/view?usp=drive_link",
+        "https://drive.google.com/file/d/1LwlisryqpHV3xAIQn-fj7OUlaQs58_ya/view?usp=drive_link",
+        "https://drive.google.com/file/d/1HCRgSq6RBEIJmt3UnweI-FNGH-WsPKcm/view?usp=drive_link",
+        "https://drive.google.com/file/d/1hozlnD1jKg_Jvv7zSaxusgxsjif4_yip/view?usp=drive_link",
+        "https://www.ci.waseca.mn.us/DocumentCenter/View/1143/2026-Rebate-Summary---Residential-and-Commercialpdf"
+      ],
+      "evidenceText": "The official SMMPA Blooming Prairie page lists 2026 business forms for lighting, HVAC, refrigeration, food service, vending controls, guestroom energy management, aerosol sealing, motors, compressed air and custom rebates. A shared SMMPA summary confirms business electric-customer eligibility.",
+      "reasoningNotes": "Kept program active with medium confidence because the official SMMPA page lists current forms, but several linked Google Drive PDFs were not directly text-readable in the browser."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2318"
+}
