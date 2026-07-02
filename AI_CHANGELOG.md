@@ -6,6 +6,11 @@
 - Added source-text hygiene and stricter requirement-extraction gates so source-only DSIRE/general pages return `needs_review` with zero fake fields, documents, deadlines, or steps unless a reliable application path or explicit application section is present.
 - Updated the admin application-sources page to show ranked candidates, inspected pages, extraction diagnostics, and a clear “Requirements not extracted” state when no reliable application path exists.
 
+## 2026-07-02 - Codex (GPT-5) application path profile type build fix
+
+- Added the missing frontend `ApplicationPathProfile` and application-link candidate type fields needed by the existing application path helper functions so the rebased `main` branch can build cleanly.
+- Kept the fix type-only and did not change application-source behavior or persistence.
+
 ## 2026-07-02 - Codex (GPT-5) user-preview clean picker first view
 
 - Changed the admin-nav `/user-preview` Retrofit Recommendations flow so no retrofit is active on first load and the user first sees a clean retrofit picker instead of the full workspace.
