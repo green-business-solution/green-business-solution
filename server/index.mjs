@@ -3175,7 +3175,7 @@ app.post("/api/admin/application-paths/discover", async (req, res) => {
     const startedAt = Date.now();
     const profile = await findOpportunityApplicationPath({ sourceProfile });
     console.log(
-      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} pathStatus=${profile.pathStatus} methodStatus=${profile.methodStatus} durationMs=${Date.now() - startedAt}`
+      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} discoveryStatus=${profile.discoveryStatus || profile.pathStatus} applicationMethod=${profile.applicationMethod || profile.confirmedApplicationMethod} methodStatus=${profile.methodStatus} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({

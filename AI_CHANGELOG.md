@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application path one-hop discovery
+
+- Updated `ApplicationPathFinder` to follow one official program website link from DSIRE-style source pages and inspect that one page for real application URLs, PDF forms, email paths, contractor instructions, or tax/accountant filing language.
+- Added `programWebsiteUrl`, `pdfUrl`, `contactEmail`, `applicationMethod`, `discoveryStatus`, `confidence`, and richer evidence fields while preserving the existing read-only per-row discovery flow and legacy path fields.
+- Updated the admin application-source audit path result to separate program source, program website, application URL, PDF URL, contact email, method, status, confidence, and evidence, including program-website-only/source-only summary counts.
+
 ## 2026-07-02 - Codex (GPT-5) deterministic match-confidence fixture repair
 
 - Updated opportunity-data repair application so repaired visible public fixture edges use deterministic `confidence: 1` for match confidence while preserving source confidence separately as `dataRepairConfidence`.

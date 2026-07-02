@@ -28,6 +28,30 @@ function mockHtmlFetch(html, { contentType = "text/html; charset=utf-8", status 
   });
 }
 
+function mockFetchByUrl(responses) {
+  return async (url) => {
+    const response = responses[String(url)];
+    if (response instanceof Error) throw response;
+    if (!response) throw new Error(`No mocked response for ${url}`);
+
+    const config = typeof response === "string" ? { html: response } : response;
+    const status = config.status || 200;
+    const contentType = config.contentType || "text/html; charset=utf-8";
+    return {
+      ok: status >= 200 && status < 300,
+      status,
+      headers: {
+        get(name) {
+          return name.toLowerCase() === "content-type" ? contentType : "";
+        }
+      },
+      async text() {
+        return config.html || "";
+      }
+    };
+  };
+}
+
 function fixedOptions(fetchFn) {
   return {
     fetchFn,
@@ -50,6 +74,9 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.discoveredApplicationUrl).toBe("https://example.com/apply");
+    expect(result.applicationMethod).toBe("online_portal");
+    expect(result.discoveryStatus).toBe("application_path_found");
+    expect(result.confidence).toBe("High");
     expect(result.confirmedApplicationMethod).toBe("online_portal");
     expect(result.methodStatus).toBe("confirmed");
     expect(result.pathStatus).toBe("application_path_found");
@@ -68,6 +95,8 @@ describe("findOpportunityApplicationPath", () => {
 
     expect(result.discoveredApplicationUrl).toBe("https://example.com/forms/rebate-application.pdf");
     expect(result.discoveredPdfUrl).toBe("https://example.com/forms/rebate-application.pdf");
+    expect(result.pdfUrl).toBe("https://example.com/forms/rebate-application.pdf");
+    expect(result.applicationMethod).toBe("pdf");
     expect(result.confirmedApplicationMethod).toBe("pdf");
     expect(result.methodStatus).toBe("confirmed");
     expect(result.pathStatus).toBe("application_path_found");
@@ -88,6 +117,8 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.discoveredContactEmail).toBe("rebates@example.com");
+    expect(result.contactEmail).toBe("rebates@example.com");
+    expect(result.applicationMethod).toBe("email");
     expect(result.confirmedApplicationMethod).toBe("email");
     expect(result.methodStatus).toBe("confirmed");
     expect(["application_path_found", "contact_only"]).toContain(result.pathStatus);
@@ -108,6 +139,7 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.discoveredApplicationUrl).toBe("https://example.com/contractor-portal");
+    expect(result.applicationMethod).toBe("contractor_submitted");
     expect(result.confirmedApplicationMethod).toBe("contractor_submitted");
     expect(result.methodStatus).toBe("confirmed");
     expect(result.pathStatus).toBe("application_path_found");
@@ -132,6 +164,7 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.confirmedApplicationMethod).toBe("tax_accountant_filing");
+    expect(result.applicationMethod).toBe("tax_accountant_filing");
     expect(result.methodStatus).toBe("confirmed");
     expect(result.pathStatus).toBe("program_source_only");
     expect(result.evidence[0].label).toBe("Tax/accountant filing language found");
@@ -155,10 +188,146 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.discoveredApplicationUrl).toBe("https://utility.example.com/rebate-portal");
+    expect(result.applicationMethod).toBe("utility_portal");
     expect(result.confirmedApplicationMethod).toBe("utility_portal");
     expect(result.methodStatus).toBe("confirmed");
     expect(result.pathStatus).toBe("application_path_found");
     expect(result.evidence[0].label).toBe("Utility portal/application link found");
+  });
+
+  it("follows a DSIRE official program website one hop to find an Apply Now link", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/123/example-program";
+    const programWebsiteUrl = "https://program.example.com/business";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_apply",
+          programSourceUrl: sourceUrl,
+          sourceType: "webpage",
+          applicationMethod: "unknown"
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><head><title>DSIRE - Example Program</title></head>
+            <body>
+              <a href="${programWebsiteUrl}">Program Website</a>
+              <p>This DSIRE page summarizes the program.</p>
+            </body></html>
+          `,
+          [programWebsiteUrl]: `
+            <html><body>
+              <p>Business rebate customers can start online.</p>
+              <a href="/apply">Apply Now</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.discoveredApplicationUrl).toBe("https://program.example.com/apply");
+    expect(result.applicationMethod).toBe("online_portal");
+    expect(result.discoveryStatus).toBe("application_path_found");
+    expect(result.evidence.some((item) => item.sourcePage === "program website" && /Apply Now/i.test(item.textSnippet || ""))).toBe(true);
+  });
+
+  it("follows an official program website one hop to find a PDF application", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/456/pdf-program";
+    const programWebsiteUrl = "https://utility.example.com/rebates";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_pdf",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><body>
+              <a href="${programWebsiteUrl}">Official Program Website</a>
+            </body></html>
+          `,
+          [programWebsiteUrl]: `
+            <html><body>
+              <a href="/forms/rebate-application.pdf">Download application PDF</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.pdfUrl).toBe("https://utility.example.com/forms/rebate-application.pdf");
+    expect(result.discoveredPdfUrl).toBe("https://utility.example.com/forms/rebate-application.pdf");
+    expect(result.discoveredApplicationUrl).toBe("https://utility.example.com/forms/rebate-application.pdf");
+    expect(result.applicationMethod).toBe("pdf");
+    expect(result.discoveryStatus).toBe("application_path_found");
+  });
+
+  it("follows an official program website one hop to find an email application contact", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/789/email-program";
+    const programWebsiteUrl = "https://rebates.example.com/program";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_email",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><body><a href="${programWebsiteUrl}">Program Website</a></body></html>
+          `,
+          [programWebsiteUrl]: `
+            <html><body>
+              <p>Email completed application forms to the rebate administrator.</p>
+              <a href="mailto:applications@rebates.example.com">Submit application by email</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.contactEmail).toBe("applications@rebates.example.com");
+    expect(result.discoveredContactEmail).toBe("applications@rebates.example.com");
+    expect(result.applicationMethod).toBe("email");
+    expect(result.methodStatus).toBe("confirmed");
+  });
+
+  it("follows an official program website one hop and preserves contractor-submitted instructions", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/321/contractor-program";
+    const programWebsiteUrl = "https://utility.example.com/contractor-rebates";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_contractor",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><body><a href="${programWebsiteUrl}">Program Website</a></body></html>
+          `,
+          [programWebsiteUrl]: `
+            <html><body>
+              <p>Applications must be submitted by a participating contractor.</p>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.applicationMethod).toBe("contractor_submitted");
+    expect(result.methodStatus).toBe("confirmed");
+    expect(result.evidence.some((item) => /contractor/i.test(item.textSnippet || ""))).toBe(true);
   });
 
   it("finds an official program website on a DSIRE aggregator page without treating it as an application URL", async () => {
@@ -190,10 +359,47 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.discoveredPdfUrl).toBeUndefined();
     expect(result.confirmedApplicationMethod).toBe("unknown");
+    expect(result.applicationMethod).toBe("program_website_only");
+    expect(result.discoveryStatus).toBe("program_website_only");
     expect(result.methodStatus).toBe("unknown");
     expect(result.pathStatus).toBe("program_source_only");
     expect(result.evidence.some((item) => item.label === "Official program website link found")).toBe(true);
     expect(result.notes.join(" ")).toMatch(/program website found, application url not found/i);
+  });
+
+  it("returns program_website_only when the one-hop program website has only a general overview", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/654/overview-program";
+    const programWebsiteUrl = "https://utility.example.com/business-rebate-overview";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_overview",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><body><a href="${programWebsiteUrl}">Program Website</a></body></html>
+          `,
+          [programWebsiteUrl]: `
+            <html><body>
+              <h1>Business rebate overview</h1>
+              <p>This page describes eligible equipment and incentive amounts.</p>
+              <a href="/eligibility">Eligibility details</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.pdfUrl).toBeUndefined();
+    expect(result.contactEmail).toBeUndefined();
+    expect(result.applicationMethod).toBe("program_website_only");
+    expect(result.discoveryStatus).toBe("program_website_only");
+    expect(result.evidence.some((item) => /no direct application path/i.test(item.textSnippet || ""))).toBe(true);
   });
 
   it("returns program_source_only for readable pages with no application path", async () => {
@@ -210,9 +416,35 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.discoveredPdfUrl).toBeUndefined();
     expect(result.confirmedApplicationMethod).toBe("unknown");
+    expect(result.applicationMethod).toBe("source_only");
+    expect(result.discoveryStatus).toBe("source_only");
     expect(result.methodStatus).toBe("unknown");
     expect(result.pathStatus).toBe("program_source_only");
     expect(result.notes.join(" ")).toMatch(/no direct application path/i);
+  });
+
+  it("does not classify a general rebate program URL as an application URL without application evidence", async () => {
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_general_rebate_url",
+          programSourceUrl: "https://utility.example.com/business-rebate-program"
+        })
+      },
+      fixedOptions(
+        mockHtmlFetch(`
+          <html><body>
+            <h1>Business rebate program</h1>
+            <p>Read about rebate levels, eligibility, and program terms.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.programSourceUrl).toBe("https://utility.example.com/business-rebate-program");
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.applicationMethod).toBe("source_only");
+    expect(result.discoveryStatus).toBe("source_only");
   });
 
   it("returns source_unreadable for fetch failures", async () => {
@@ -224,6 +456,8 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.confirmedApplicationMethod).toBe("online_portal");
+    expect(result.applicationMethod).toBe("unreadable");
+    expect(result.discoveryStatus).toBe("unreadable");
     expect(result.methodStatus).toBe("inferred");
     expect(result.pathStatus).toBe("source_unreadable");
     expect(result.error).toMatch(/network failed/i);

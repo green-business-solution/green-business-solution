@@ -1,4 +1,4 @@
-const APPLICATION_METHODS = new Set([
+const CONCRETE_APPLICATION_METHODS = new Set([
   "online_portal",
   "pdf",
   "email",
@@ -7,16 +7,40 @@ const APPLICATION_METHODS = new Set([
   "tax_accountant_filing",
   "unknown"
 ]);
+const APPLICATION_METHODS = new Set([
+  ...CONCRETE_APPLICATION_METHODS,
+  "program_website_only",
+  "source_only",
+  "unreadable",
+  "needs_review"
+]);
 
 const METHOD_STATUSES = new Set(["confirmed", "inferred", "unknown"]);
 const PATH_STATUSES = new Set([
   "application_path_found",
+  "program_website_only",
+  "source_only",
   "program_source_only",
   "contact_only",
   "needs_review",
+  "unreadable",
   "source_unreadable",
   "not_attempted"
 ]);
+const DISCOVERY_STATUSES = new Set([
+  "application_path_found",
+  "program_website_only",
+  "source_only",
+  "contact_only",
+  "needs_review",
+  "unreadable",
+  "not_attempted"
+]);
+const SOURCE_PAGE_LABELS = {
+  metadata: "opportunity metadata",
+  program_source: "program source",
+  program_website: "program website"
+};
 
 const DEFAULT_TIMEOUT_MS = 10_000;
 const DEFAULT_MAX_RESPONSE_BYTES = 500_000;
@@ -24,11 +48,15 @@ const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 const PDF_URL_PATTERN = /\.pdf(?:$|[?#])/i;
 const PDF_APPLICATION_URL_PATTERN = /(application|app|form|rebate|claim|incentive|reservation|pre-approval|preapproval)/i;
 const PDF_LINK_TEXT_PATTERN =
-  /\b(application form|rebate form|application pdf|program application|download application|application packet)\b/i;
+  /\b(pdf|application form|rebate form|program form|application pdf|program application|download application|download form|application packet|reservation form)\b/i;
 const APPLY_LINK_TEXT_PATTERN =
-  /\b(apply|apply now|apply online|application|submit|portal|rebate application|incentive application|enroll|get started|request rebate|reservation|pre-approval|preapproval)\b/i;
+  /\b(apply|apply now|apply online|application|application form|application portal|submit application|online application|rebate application|incentive application|program application|enroll|enrollment|get started|request rebate|reservation|reserve rebate|pre-approval|preapproval|claim|download form|form|email us to apply|contact to apply)\b/i;
 const APPLY_LINK_URL_PATTERN =
-  /(apply|application|submit|portal|enroll|get-started|request-rebate|reservation|pre-approval|preapproval|customerapplication|formstack|salesforce-sites|my\.site\.com)/i;
+  /(apply|application|submit|enroll|enrollment|get-started|request-rebate|reservation|pre-approval|preapproval|claim|download-form|application-portal|rebate-portal|contractor-portal|customer-portal|online-application|customerapplication|formstack|salesforce-sites|my\.site\.com)/i;
+const PORTAL_LINK_TEXT_PATTERN =
+  /\b(application portal|apply portal|rebate portal|incentive portal|contractor portal|customer portal|enrollment portal|online portal)\b/i;
+const NON_APPLICATION_LINK_TEXT_PATTERN =
+  /\b(program website|program web site|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details|overview|eligibility|guidelines|faq)\b/i;
 const PROGRAM_WEBSITE_LINK_TEXT_PATTERN =
   /\b(program website|program web site|program url|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details)\b/i;
 const AGGREGATOR_PATTERN =
@@ -40,7 +68,7 @@ const TAX_PATTERN =
 const UTILITY_PATTERN =
   /\b(utility|utilities|public utility district|pud|electric cooperative|electric company|gas and electric|rebate portal|customer portal|utility portal)\b/i;
 const EMAIL_APPLICATION_PATTERN =
-  /\b(email|send|submit).{0,100}\b(application|form|rebate|request|documents?)\b|\b(application|form|rebate|request|documents?).{0,100}\b(email|send|submit)\b/i;
+  /\b(email|send|submit|contact).{0,120}\b(application|form|rebate|request|documents?|to apply)\b|\b(application|form|rebate|request|documents?|to apply).{0,120}\b(email|send|submit|contact)\b/i;
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -140,17 +168,20 @@ function resolveUrl(href, baseUrl) {
 function extractAnchors(html, baseUrl) {
   const anchors = [];
   const anchorPattern = /<a\b([^>]*?)>([\s\S]*?)<\/a>/gi;
+  const sourceHtml = cleanText(html);
   let match;
 
-  while ((match = anchorPattern.exec(cleanText(html)))) {
+  while ((match = anchorPattern.exec(sourceHtml))) {
     const attrs = match[1] || "";
     const hrefMatch = attrs.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
     if (!hrefMatch) continue;
     const href = hrefMatch[1] || hrefMatch[2] || hrefMatch[3] || "";
     const url = resolveUrl(href, baseUrl);
     const text = normalizeWhitespace(stripHtml(match[2] || ""));
+    const nearbyHtml = sourceHtml.slice(Math.max(0, match.index - 240), Math.min(sourceHtml.length, anchorPattern.lastIndex + 240));
+    const nearbyText = safeSnippet(nearbyHtml, 360);
     if (url || text) {
-      anchors.push({ url, text, href: decodeHtmlEntities(href) });
+      anchors.push({ url, text, href: decodeHtmlEntities(href), nearbyText });
     }
   }
 
@@ -269,7 +300,7 @@ function sourceProfileFromInput(input) {
 
 function inferredMethodFromSource(sourceProfile) {
   const method = cleanText(sourceProfile?.applicationMethod);
-  return APPLICATION_METHODS.has(method) ? method : "unknown";
+  return CONCRETE_APPLICATION_METHODS.has(method) ? method : "unknown";
 }
 
 function isUtilityContext(sourceProfile, opportunity, pageText, sourceUrl) {
@@ -292,6 +323,18 @@ function isSameHostname(a, b) {
   const hostA = hostnameForUrl(a);
   const hostB = hostnameForUrl(b);
   return Boolean(hostA && hostB && hostA === hostB);
+}
+
+function isSameUrl(a, b) {
+  try {
+    const urlA = new URL(a);
+    const urlB = new URL(b);
+    urlA.hash = "";
+    urlB.hash = "";
+    return urlA.href === urlB.href;
+  } catch {
+    return false;
+  }
 }
 
 function isAggregatorContext(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle) {
@@ -323,6 +366,109 @@ function findProgramWebsiteLink(anchors, sourceUrl, isAggregator) {
   return candidates[0] || null;
 }
 
+function sourcePageLabel(sourcePage) {
+  return SOURCE_PAGE_LABELS[sourcePage] || "source page";
+}
+
+function evidenceFromAnchor({ label, anchor, sourcePage, sourceUrl, reason }) {
+  return {
+    label,
+    textSnippet: safeSnippet(anchor?.text || anchor?.nearbyText || anchor?.url || anchor?.href),
+    url: anchor?.url,
+    sourcePage: sourcePageLabel(sourcePage),
+    sourceUrl,
+    linkText: cleanOptional(anchor?.text),
+    href: cleanOptional(anchor?.href),
+    nearbyText: cleanOptional(anchor?.nearbyText),
+    reason
+  };
+}
+
+function evidenceFromSnippet({ label, textSnippet, sourcePage, sourceUrl, reason }) {
+  return {
+    label,
+    textSnippet: safeSnippet(textSnippet),
+    sourcePage: sourcePageLabel(sourcePage),
+    sourceUrl,
+    reason
+  };
+}
+
+function applicationLinkScore(anchor) {
+  if (!isHttpUrl(anchor?.url) || isPdfUrl(anchor?.url)) return 0;
+
+  const text = cleanText(anchor.text);
+  const url = cleanText(anchor.url);
+  let score = 0;
+
+  if (APPLY_LINK_TEXT_PATTERN.test(text)) score += 6;
+  if (PORTAL_LINK_TEXT_PATTERN.test(text)) score += 6;
+  if (APPLY_LINK_URL_PATTERN.test(url)) score += 4;
+
+  if (NON_APPLICATION_LINK_TEXT_PATTERN.test(text) && !APPLY_LINK_TEXT_PATTERN.test(text) && !PORTAL_LINK_TEXT_PATTERN.test(text)) {
+    score -= 8;
+  }
+
+  return score;
+}
+
+function findBestApplyLink(anchors) {
+  return anchors
+    .map((anchor) => ({ anchor, score: applicationLinkScore(anchor) }))
+    .filter((candidate) => candidate.score > 0)
+    .sort((a, b) => b.score - a.score)[0]?.anchor || null;
+}
+
+function legacyPathStatusForDiscovery(discoveryStatus) {
+  if (discoveryStatus === "application_path_found") return "application_path_found";
+  if (discoveryStatus === "contact_only") return "contact_only";
+  if (discoveryStatus === "program_website_only" || discoveryStatus === "source_only") return "program_source_only";
+  if (discoveryStatus === "unreadable") return "source_unreadable";
+  if (discoveryStatus === "not_attempted") return "not_attempted";
+  return "needs_review";
+}
+
+function setOutcome(profile, { applicationMethod, confirmedApplicationMethod, methodStatus, discoveryStatus, confidence }) {
+  profile.applicationMethod = applicationMethod || profile.applicationMethod || confirmedApplicationMethod || "unknown";
+  profile.confirmedApplicationMethod = confirmedApplicationMethod || (CONCRETE_APPLICATION_METHODS.has(profile.applicationMethod) ? profile.applicationMethod : "unknown");
+  profile.methodStatus = methodStatus || profile.methodStatus || "unknown";
+  profile.discoveryStatus = discoveryStatus || profile.discoveryStatus || "needs_review";
+  profile.pathStatus = legacyPathStatusForDiscovery(profile.discoveryStatus);
+  profile.confidence = confidence || profile.confidence || "Low";
+}
+
+function hasConcreteDiscoveredPath(profile) {
+  return Boolean(
+    profile.discoveredApplicationUrl ||
+      profile.discoveredPdfUrl ||
+      profile.pdfUrl ||
+      (profile.discoveredContactEmail && profile.applicationMethod === "email")
+  );
+}
+
+function shouldFollowProgramWebsite(profile, sourceUrl, options) {
+  return (
+    options.followProgramWebsite !== false &&
+    isHttpUrl(profile.programWebsiteUrl) &&
+    !isSameUrl(profile.programWebsiteUrl, sourceUrl) &&
+    !hasConcreteDiscoveredPath(profile)
+  );
+}
+
+function addNoDirectPathEvidence(profile, sourcePage, sourceUrl) {
+  const label = "No direct application path found";
+  if (profile.evidence.some((item) => item.label === label && item.sourceUrl === sourceUrl)) return;
+  profile.evidence.push({
+    label,
+    textSnippet: profile.programWebsiteUrl
+      ? "Official program website found, but no direct application path/PDF/email was identified."
+      : "Source page was readable, but no direct application path/PDF/email was identified.",
+    sourcePage: sourcePageLabel(sourcePage),
+    sourceUrl,
+    reason: "No apply, application, PDF form, email application, contractor portal, or tax filing path was identified on the inspected page."
+  });
+}
+
 function buildBaseProfile(input) {
   const sourceProfile = sourceProfileFromInput(input);
   const opportunity = input?.opportunity || {};
@@ -334,6 +480,11 @@ function buildBaseProfile(input) {
     discoveredApplicationUrl: undefined,
     discoveredPdfUrl: undefined,
     discoveredContactEmail: undefined,
+    pdfUrl: undefined,
+    contactEmail: undefined,
+    applicationMethod: "unknown",
+    discoveryStatus: "not_attempted",
+    confidence: "Needs review",
     confirmedApplicationMethod: "unknown",
     methodStatus: "unknown",
     pathStatus: "not_attempted",
@@ -346,9 +497,20 @@ function buildBaseProfile(input) {
 }
 
 function finalizeProfile(profile) {
+  profile.pdfUrl = cleanOptional(profile.pdfUrl || profile.discoveredPdfUrl);
+  profile.contactEmail = cleanOptional(profile.contactEmail || profile.discoveredContactEmail);
+  profile.discoveredPdfUrl = cleanOptional(profile.discoveredPdfUrl || profile.pdfUrl);
+  profile.discoveredContactEmail = cleanOptional(profile.discoveredContactEmail || profile.contactEmail);
+  profile.applicationMethod = cleanText(profile.applicationMethod || profile.confirmedApplicationMethod || "unknown");
+  profile.discoveryStatus = cleanText(profile.discoveryStatus || profile.pathStatus || "needs_review");
+  profile.confidence = cleanText(profile.confidence || "Low");
+
+  if (!APPLICATION_METHODS.has(profile.applicationMethod)) profile.applicationMethod = "unknown";
   if (!APPLICATION_METHODS.has(profile.confirmedApplicationMethod)) profile.confirmedApplicationMethod = "unknown";
   if (!METHOD_STATUSES.has(profile.methodStatus)) profile.methodStatus = "unknown";
   if (!PATH_STATUSES.has(profile.pathStatus)) profile.pathStatus = "needs_review";
+  if (!DISCOVERY_STATUSES.has(profile.discoveryStatus)) profile.discoveryStatus = "needs_review";
+  if (!["High", "Medium", "Low", "Needs review"].includes(profile.confidence)) profile.confidence = "Low";
   profile.evidence = profile.evidence.filter((item) => item?.label);
   profile.notes = uniqueValues(profile.notes.map(cleanText)).filter(Boolean);
   return profile;
@@ -359,20 +521,29 @@ function applyExistingApplicationUrl(profile, sourceProfile, opportunity) {
   if (!applicationUrl) return false;
 
   profile.discoveredApplicationUrl = applicationUrl;
-  profile.confirmedApplicationMethod = isPdfUrl(applicationUrl)
+  const applicationMethod = isPdfUrl(applicationUrl)
     ? "pdf"
     : sourceProfile?.sourceType === "utility_portal" || sourceProfile?.applicationMethod === "utility_portal"
       ? "utility_portal"
       : "online_portal";
-  profile.methodStatus = "confirmed";
-  profile.pathStatus = "application_path_found";
   if (isPdfUrl(applicationUrl)) {
     profile.discoveredPdfUrl = applicationUrl;
+    profile.pdfUrl = applicationUrl;
   }
+  setOutcome(profile, {
+    applicationMethod,
+    confirmedApplicationMethod: applicationMethod,
+    methodStatus: "confirmed",
+    discoveryStatus: "application_path_found",
+    confidence: "High"
+  });
   profile.evidence.push({
     label: isPdfUrl(applicationUrl) ? "Existing PDF application URL" : "Existing application URL",
     textSnippet: "A direct application URL was already present in opportunity metadata.",
-    url: applicationUrl
+    url: applicationUrl,
+    sourcePage: sourcePageLabel("metadata"),
+    sourceUrl: applicationUrl,
+    reason: "Opportunity metadata already contained a direct application URL."
   });
   profile.notes.push("Existing direct application URL was treated as a confirmed path without fetching additional pages.");
   return true;
@@ -383,7 +554,7 @@ function mailtoEmail(anchor) {
   return extractEmail(anchor.href.replace(/^mailto:/i, ""));
 }
 
-function findEmailEvidence(anchors, pageText) {
+function findEmailEvidence(anchors, pageText, sourcePage, sourceUrl) {
   const mailto = anchors.find((anchor) => mailtoEmail(anchor));
   if (mailto) {
     return {
@@ -391,7 +562,13 @@ function findEmailEvidence(anchors, pageText) {
       evidence: {
         label: "Email application/contact link found",
         textSnippet: safeSnippet(mailto.text || mailto.href),
-        url: mailto.href
+        url: mailto.href,
+        sourcePage: sourcePageLabel(sourcePage),
+        sourceUrl,
+        linkText: cleanOptional(mailto.text),
+        href: cleanOptional(mailto.href),
+        nearbyText: cleanOptional(mailto.nearbyText),
+        reason: "A mailto link was present on the inspected page."
       }
     };
   }
@@ -402,137 +579,208 @@ function findEmailEvidence(anchors, pageText) {
     email: visibleEmail,
     evidence: {
       label: "Visible email found",
-      textSnippet: snippetForPattern(pageText, EMAIL_PATTERN) || visibleEmail
+      textSnippet: snippetForPattern(pageText, EMAIL_PATTERN) || visibleEmail,
+      sourcePage: sourcePageLabel(sourcePage),
+      sourceUrl,
+      reason: "A visible email address was present on the inspected page."
     }
   };
 }
 
-function findApplicationPathInPage({ profile, sourceProfile, opportunity, sourceUrl, html }) {
+function findApplicationPathInPage({ profile, sourceProfile, opportunity, sourceUrl, html, sourcePage = "program_source", allowProgramWebsiteDiscovery = true }) {
   const sourceTitle = extractTitle(html);
   const pageText = normalizeWhitespace(stripHtml(html));
   const anchors = extractAnchors(html, sourceUrl);
   const utilityContext = isUtilityContext(sourceProfile, opportunity, pageText, sourceUrl);
   const isAggregator = isAggregatorContext(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle);
-  const programWebsiteLink = findProgramWebsiteLink(anchors, sourceUrl, isAggregator);
+  const programWebsiteLink = allowProgramWebsiteDiscovery ? findProgramWebsiteLink(anchors, sourceUrl, isAggregator) : null;
   const pdfLink = anchors.find((anchor) => isHttpUrl(anchor.url) && isApplicationPdfLink(anchor));
-  const applyLink = anchors.find(
-    (anchor) =>
-      isHttpUrl(anchor.url) &&
-      (APPLY_LINK_TEXT_PATTERN.test(anchor.text) || (APPLY_LINK_URL_PATTERN.test(anchor.url) && !PROGRAM_WEBSITE_LINK_TEXT_PATTERN.test(anchor.text)))
-  );
+  const applyLink = findBestApplyLink(anchors);
   const contractorSnippet = snippetForPattern(pageText, CONTRACTOR_PATTERN);
   const taxSnippet = snippetForPattern(pageText, TAX_PATTERN);
-  const emailResult = findEmailEvidence(anchors, pageText);
+  const emailResult = findEmailEvidence(anchors, pageText, sourcePage, sourceUrl);
   const hasEmailApplicationLanguage = EMAIL_APPLICATION_PATTERN.test(pageText);
 
-  profile.sourceTitle = sourceTitle;
+  if (sourcePage === "program_source") {
+    profile.sourceTitle = sourceTitle;
+  }
 
   if (programWebsiteLink) {
     profile.programWebsiteUrl = programWebsiteLink.url;
-    profile.evidence.push({
+    profile.evidence.push(evidenceFromAnchor({
       label: isAggregator ? "Official program website link found" : "Program website link found",
-      textSnippet: safeSnippet(programWebsiteLink.text || programWebsiteLink.url),
-      url: programWebsiteLink.url
-    });
+      anchor: programWebsiteLink,
+      sourcePage,
+      sourceUrl,
+      reason: isAggregator
+        ? "Aggregator page linked to an official program/provider website."
+        : "Source page linked to a program/provider website."
+    }));
     profile.notes.push("Program website was found separately from the source page.");
   }
 
   if (pdfLink) {
     profile.discoveredPdfUrl = pdfLink.url;
     profile.discoveredApplicationUrl = pdfLink.url;
-    profile.confirmedApplicationMethod = "pdf";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = "application_path_found";
-    profile.evidence.push({
-      label: "PDF application link found",
-      textSnippet: safeSnippet(pdfLink.text || pdfLink.url),
-      url: pdfLink.url
+    profile.pdfUrl = pdfLink.url;
+    setOutcome(profile, {
+      applicationMethod: "pdf",
+      confirmedApplicationMethod: "pdf",
+      methodStatus: "confirmed",
+      discoveryStatus: "application_path_found",
+      confidence: "High"
     });
-    profile.notes.push("A PDF application/form link was found on the source page.");
+    profile.evidence.push(evidenceFromAnchor({
+      label: "PDF application link found",
+      anchor: pdfLink,
+      sourcePage,
+      sourceUrl,
+      reason: "Link points to a PDF and its text or URL indicates an application/form path."
+    }));
+    profile.notes.push(`A PDF application/form link was found on the ${sourcePageLabel(sourcePage)}.`);
     return;
   }
 
   if (contractorSnippet) {
-    profile.confirmedApplicationMethod = "contractor_submitted";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = applyLink ? "application_path_found" : "program_source_only";
-    profile.evidence.push({
-      label: "Contractor-submitted language found",
-      textSnippet: safeSnippet(contractorSnippet)
+    setOutcome(profile, {
+      applicationMethod: "contractor_submitted",
+      confirmedApplicationMethod: "contractor_submitted",
+      methodStatus: "confirmed",
+      discoveryStatus: applyLink ? "application_path_found" : profile.programWebsiteUrl ? "program_website_only" : "source_only",
+      confidence: "High"
     });
+    profile.evidence.push(evidenceFromSnippet({
+      label: "Contractor-submitted language found",
+      textSnippet: contractorSnippet,
+      sourcePage,
+      sourceUrl,
+      reason: "The inspected page says a contractor, installer, or trade ally must participate or submit."
+    }));
     if (applyLink) {
       profile.discoveredApplicationUrl = applyLink.url;
-      profile.evidence.push({
+      profile.evidence.push(evidenceFromAnchor({
         label: "Contractor application/portal link found",
-        textSnippet: safeSnippet(applyLink.text || applyLink.url),
-        url: applyLink.url
-      });
+        anchor: applyLink,
+        sourcePage,
+        sourceUrl,
+        reason: "Contractor language appeared with an application/portal link."
+      }));
     }
-    profile.notes.push("Source page indicates the application path depends on a contractor, installer, or trade ally.");
+    profile.notes.push(`${sourcePageLabel(sourcePage)} indicates the application path depends on a contractor, installer, or trade ally.`);
     return;
   }
 
   if (taxSnippet && !applyLink) {
-    profile.confirmedApplicationMethod = "tax_accountant_filing";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = "program_source_only";
-    profile.evidence.push({
-      label: "Tax/accountant filing language found",
-      textSnippet: safeSnippet(taxSnippet)
+    setOutcome(profile, {
+      applicationMethod: "tax_accountant_filing",
+      confirmedApplicationMethod: "tax_accountant_filing",
+      methodStatus: "confirmed",
+      discoveryStatus: profile.programWebsiteUrl ? "program_website_only" : "source_only",
+      confidence: "High"
     });
+    profile.evidence.push(evidenceFromSnippet({
+      label: "Tax/accountant filing language found",
+      textSnippet: taxSnippet,
+      sourcePage,
+      sourceUrl,
+      reason: "The inspected page points to tax/accountant filing rather than a normal application portal."
+    }));
     profile.notes.push("Normal application URL may not exist because source language points to tax/accountant filing.");
     return;
   }
 
   if (applyLink) {
     profile.discoveredApplicationUrl = applyLink.url;
-    profile.confirmedApplicationMethod = utilityContext ? "utility_portal" : "online_portal";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = "application_path_found";
-    profile.evidence.push({
-      label: utilityContext ? "Utility portal/application link found" : "Apply link found",
-      textSnippet: safeSnippet(applyLink.text || applyLink.url),
-      url: applyLink.url
+    const applicationMethod = utilityContext ? "utility_portal" : "online_portal";
+    setOutcome(profile, {
+      applicationMethod,
+      confirmedApplicationMethod: applicationMethod,
+      methodStatus: "confirmed",
+      discoveryStatus: "application_path_found",
+      confidence: "High"
     });
-    profile.notes.push(utilityContext ? "A utility-managed application or portal link was found on the source page." : "A direct apply/application link was found on the source page.");
+    profile.evidence.push(evidenceFromAnchor({
+      label: utilityContext ? "Utility portal/application link found" : "Apply link found",
+      anchor: applyLink,
+      sourcePage,
+      sourceUrl,
+      reason: utilityContext
+        ? "Utility context plus link text/URL indicates an application, enrollment, rebate, or portal path."
+        : "Link text/URL indicates an application, enrollment, rebate, reservation, claim, or submission path."
+    }));
+    profile.notes.push(utilityContext ? `A utility-managed application or portal link was found on the ${sourcePageLabel(sourcePage)}.` : `A direct apply/application link was found on the ${sourcePageLabel(sourcePage)}.`);
     return;
   }
 
   if (emailResult && hasEmailApplicationLanguage) {
     profile.discoveredContactEmail = emailResult.email;
-    profile.confirmedApplicationMethod = "email";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = EMAIL_APPLICATION_PATTERN.test(emailResult.evidence.textSnippet || "") ? "application_path_found" : "contact_only";
+    profile.contactEmail = emailResult.email;
+    setOutcome(profile, {
+      applicationMethod: "email",
+      confirmedApplicationMethod: "email",
+      methodStatus: "confirmed",
+      discoveryStatus: EMAIL_APPLICATION_PATTERN.test(emailResult.evidence.textSnippet || "") ? "application_path_found" : "contact_only",
+      confidence: "High"
+    });
     profile.evidence.push(emailResult.evidence);
-    profile.notes.push("Source page indicates application or rebate follow-up can happen by email.");
+    profile.notes.push(`${sourcePageLabel(sourcePage)} indicates application or rebate follow-up can happen by email.`);
     return;
   }
 
   if (taxSnippet) {
-    profile.confirmedApplicationMethod = "tax_accountant_filing";
-    profile.methodStatus = "confirmed";
-    profile.pathStatus = "program_source_only";
-    profile.evidence.push({
-      label: "Tax/accountant filing language found",
-      textSnippet: safeSnippet(taxSnippet)
+    setOutcome(profile, {
+      applicationMethod: "tax_accountant_filing",
+      confirmedApplicationMethod: "tax_accountant_filing",
+      methodStatus: "confirmed",
+      discoveryStatus: profile.programWebsiteUrl ? "program_website_only" : "source_only",
+      confidence: "High"
     });
+    profile.evidence.push(evidenceFromSnippet({
+      label: "Tax/accountant filing language found",
+      textSnippet: taxSnippet,
+      sourcePage,
+      sourceUrl,
+      reason: "The inspected page points to tax/accountant filing rather than a normal application portal."
+    }));
     profile.notes.push("Normal application URL may not exist because source language points to tax/accountant filing.");
     return;
   }
 
   const inferredMethod = inferredMethodFromSource(sourceProfile);
-  profile.confirmedApplicationMethod = inferredMethod;
-  profile.methodStatus = inferredMethod === "unknown" ? "unknown" : "inferred";
-  profile.pathStatus = "program_source_only";
+  if (
+    profile.methodStatus === "confirmed" &&
+    CONCRETE_APPLICATION_METHODS.has(profile.confirmedApplicationMethod) &&
+    profile.confirmedApplicationMethod !== "unknown"
+  ) {
+    if (emailResult && !profile.discoveredContactEmail) {
+      profile.discoveredContactEmail = emailResult.email;
+      profile.contactEmail = emailResult.email;
+      profile.evidence.push(emailResult.evidence);
+      profile.notes.push("A contact email was found, but email-based application instructions were not confirmed.");
+    }
+    profile.notes.push(`${sourcePageLabel(sourcePage)} was readable, but no better direct application path was found.`);
+    return;
+  }
+
+  const applicationMethod = profile.programWebsiteUrl ? "program_website_only" : "source_only";
+  const discoveryStatus = profile.programWebsiteUrl ? "program_website_only" : "source_only";
+  setOutcome(profile, {
+    applicationMethod,
+    confirmedApplicationMethod: inferredMethod,
+    methodStatus: inferredMethod === "unknown" ? "unknown" : "inferred",
+    discoveryStatus,
+    confidence: profile.programWebsiteUrl ? "Medium" : "Low"
+  });
   if (emailResult) {
     profile.discoveredContactEmail = emailResult.email;
-    profile.pathStatus = "contact_only";
+    profile.contactEmail = emailResult.email;
     profile.evidence.push(emailResult.evidence);
+    profile.notes.push("A contact email was found, but email-based application instructions were not confirmed.");
   }
   profile.notes.push(
     profile.programWebsiteUrl
       ? "Program website found, application URL not found."
-      : "Source page was readable, but no direct application path was found."
+      : `${sourcePageLabel(sourcePage)} was readable, but no direct application path was found.`
   );
 }
 
@@ -557,12 +805,23 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
     const existingEmail = extractEmail(sourceProfile?.contactEmail || opportunity?.contactEmail || opportunity?.email);
     if (existingEmail) {
       profile.discoveredContactEmail = existingEmail;
-      profile.confirmedApplicationMethod = "email";
-      profile.methodStatus = "inferred";
-      profile.pathStatus = "contact_only";
+      profile.contactEmail = existingEmail;
+      setOutcome(profile, {
+        applicationMethod: "email",
+        confirmedApplicationMethod: "email",
+        methodStatus: "inferred",
+        discoveryStatus: "contact_only",
+        confidence: "Medium"
+      });
       profile.notes.push("No source URL was available to inspect; existing contact email was preserved as inferred contact path.");
     } else {
-      profile.pathStatus = "not_attempted";
+      setOutcome(profile, {
+        applicationMethod: "needs_review",
+        confirmedApplicationMethod: "unknown",
+        methodStatus: "unknown",
+        discoveryStatus: "not_attempted",
+        confidence: "Needs review"
+      });
       profile.notes.push("No program source URL or application URL was available for path discovery.");
     }
     return finalizeProfile(profile);
@@ -581,13 +840,21 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
     if (fetched.isPdf) {
       profile.discoveredPdfUrl = sourceUrl;
       profile.discoveredApplicationUrl = sourceUrl;
-      profile.confirmedApplicationMethod = "pdf";
-      profile.methodStatus = "confirmed";
-      profile.pathStatus = "application_path_found";
+      profile.pdfUrl = sourceUrl;
+      setOutcome(profile, {
+        applicationMethod: "pdf",
+        confirmedApplicationMethod: "pdf",
+        methodStatus: "confirmed",
+        discoveryStatus: "application_path_found",
+        confidence: "High"
+      });
       profile.evidence.push({
         label: "PDF source URL found",
         textSnippet: "The fetched source is a PDF document.",
-        url: sourceUrl
+        url: sourceUrl,
+        sourcePage: sourcePageLabel("program_source"),
+        sourceUrl,
+        reason: "The provided source URL fetched as a PDF."
       });
       profile.notes.push("Fetched source URL appears to be a PDF application or program document.");
       return finalizeProfile(profile);
@@ -598,14 +865,89 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
       sourceProfile,
       opportunity,
       sourceUrl,
-      html: fetched.text
+      html: fetched.text,
+      sourcePage: "program_source",
+      allowProgramWebsiteDiscovery: true
     });
+
+    if (shouldFollowProgramWebsite(profile, sourceUrl, options)) {
+      const programWebsiteUrl = profile.programWebsiteUrl;
+      try {
+        const programWebsiteFetched = await fetchSourceText(programWebsiteUrl, {
+          fetchFn: options.fetchFn,
+          timeoutMs,
+          maxResponseBytes
+        });
+        profile.programWebsiteFetchedAt = now().toISOString();
+
+        if (programWebsiteFetched.isPdf) {
+          profile.discoveredPdfUrl = programWebsiteUrl;
+          profile.discoveredApplicationUrl = programWebsiteUrl;
+          profile.pdfUrl = programWebsiteUrl;
+          setOutcome(profile, {
+            applicationMethod: "pdf",
+            confirmedApplicationMethod: "pdf",
+            methodStatus: "confirmed",
+            discoveryStatus: "application_path_found",
+            confidence: "High"
+          });
+          profile.evidence.push({
+            label: "PDF program website found",
+            textSnippet: "The official program website URL fetched as a PDF document.",
+            url: programWebsiteUrl,
+            sourcePage: sourcePageLabel("program_website"),
+            sourceUrl: programWebsiteUrl,
+            reason: "The one-hop official program website response was a PDF."
+          });
+          profile.notes.push("Official program website fetched as a PDF application or program document.");
+        } else {
+          findApplicationPathInPage({
+            profile,
+            sourceProfile,
+            opportunity,
+            sourceUrl: programWebsiteUrl,
+            html: programWebsiteFetched.text,
+            sourcePage: "program_website",
+            allowProgramWebsiteDiscovery: false
+          });
+        }
+      } catch (programWebsiteError) {
+        profile.error = safeErrorMessage(programWebsiteError);
+        setOutcome(profile, {
+          applicationMethod: "needs_review",
+          confirmedApplicationMethod: profile.confirmedApplicationMethod,
+          methodStatus: profile.methodStatus,
+          discoveryStatus: "needs_review",
+          confidence: "Needs review"
+        });
+        profile.evidence.push({
+          label: "Program website unreadable",
+          textSnippet: "Official program website was found, but it could not be fetched/read during one-hop discovery.",
+          url: programWebsiteUrl,
+          sourcePage: sourcePageLabel("program_website"),
+          sourceUrl: programWebsiteUrl,
+          reason: profile.error
+        });
+        profile.notes.push("Program website was found, but one-hop application path discovery could not read it.");
+      }
+    }
+
+    if (!hasConcreteDiscoveredPath(profile) && profile.programWebsiteUrl) {
+      addNoDirectPathEvidence(profile, "program_website", profile.programWebsiteUrl);
+    } else if (!hasConcreteDiscoveredPath(profile) && profile.discoveryStatus === "source_only") {
+      addNoDirectPathEvidence(profile, "program_source", sourceUrl);
+    }
+
     return finalizeProfile(profile);
   } catch (error) {
     const inferredMethod = inferredMethodFromSource(sourceProfile);
-    profile.confirmedApplicationMethod = inferredMethod;
-    profile.methodStatus = inferredMethod === "unknown" ? "unknown" : "inferred";
-    profile.pathStatus = "source_unreadable";
+    setOutcome(profile, {
+      applicationMethod: "unreadable",
+      confirmedApplicationMethod: inferredMethod,
+      methodStatus: inferredMethod === "unknown" ? "unknown" : "inferred",
+      discoveryStatus: "unreadable",
+      confidence: "Needs review"
+    });
     profile.error = safeErrorMessage(error);
     profile.notes.push("Source page could not be fetched or read for application path discovery.");
     return finalizeProfile(profile);
