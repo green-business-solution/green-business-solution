@@ -9,11 +9,19 @@ import { classifyRetrofitsForOpportunity, RETROFIT_TYPES_BY_ID } from "./matchin
 import { buildAdminTestCaseSavingsPreview } from "./savings/adminTestCaseSavings.mjs";
 
 const incentiveRulesPath = path.resolve(import.meta.dirname, "..", "data", "opportunity_incentive_rules.json");
+const incentiveCalculationPackagesPath = path.resolve(
+  import.meta.dirname,
+  "..",
+  "data",
+  "opportunity_incentive_calculation_packages_v2.json"
+);
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
+const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 
 export function buildRetrofitGroupsFromEligibleResults({
   calculationDate,
   normalizedProfile,
+  opportunityPackages = opportunityIncentiveCalculationPackages,
   opportunityRules = opportunityIncentiveRules,
   results,
   subjectId
@@ -46,7 +54,8 @@ export function buildRetrofitGroupsFromEligibleResults({
         sampleUserId: subjectId,
         normalizedProfile,
         calculationDate,
-        opportunityIncentiveRules: opportunityRules
+        opportunityIncentiveRules: opportunityRules,
+        opportunityIncentiveCalculationPackages: opportunityPackages
       }),
       typicalComponents: RETROFIT_TYPES_BY_ID[group.retrofitTypeId]?.typicalComponents || []
     }))
@@ -119,4 +128,10 @@ function readOpportunityIncentiveRules(filePath) {
     .filter((rule) => rule?.opportunityId)
     .filter((rule) => rule.active !== false)
     .filter((rule) => rule.confidence !== "low");
+}
+
+function readOpportunityIncentiveCalculationPackages(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.packages || []).filter((pkg) => pkg?.opportunity_id);
 }

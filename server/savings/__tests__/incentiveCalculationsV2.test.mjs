@@ -168,7 +168,30 @@ describe("incentive calculation v2", () => {
     );
 
     expect(result.totals.expectedOneTimeSavingsCents).toBe(0);
-    expect(result.missingInputs).toEqual([{ inputKey: "selected_measures", effectId: "effect_air_purifier_rebate" }]);
+    expect(result.missingInputs).toEqual([
+      { inputKey: "selected_measures", effectId: "effect_air_purifier_rebate", label: "Selected appliance measures" }
+    ]);
+  });
+
+  it("does not calculate fixed amounts when blocking v2 project inputs are missing", () => {
+    const pkg = fixedAmountWithBlockingInputsPackage();
+    const missing = calculateV2IncentivePackage(pkg, baseCtx({ answers: { charger_is_smart: undefined } }));
+    const complete = calculateV2IncentivePackage(
+      pkg,
+      baseCtx({ answers: { charger_is_smart: { value: true } } })
+    );
+
+    expect(missing.totals.expectedOneTimeSavingsCents).toBe(0);
+    expect(missing.missingInputs).toEqual([{ inputKey: "charger_is_smart", effectId: "effect_smart_charger_rebate", label: "Smart charger" }]);
+    expect(complete.totals.expectedOneTimeSavingsCents).toBe(25000);
+  });
+
+  it("calculates expected-value grants only when probability and conditional award are present", () => {
+    const pkg = expectedValueGrantPackage();
+    const result = calculateV2IncentivePackage(pkg, baseCtx());
+
+    expect(result.totals.expectedGrantAmountCents).toBe(3000000);
+    expect(result.effectResults[0].amountCents).toBe(3000000);
   });
 });
 
@@ -273,5 +296,101 @@ function consumersEnergyAirPurifierPackage() {
       extraction: 0.94,
       reason_codes: ["published_measure_catalog", "exact_published_amount"]
     }
+  };
+}
+
+function fixedAmountWithBlockingInputsPackage() {
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_smart_charger",
+    program_name: "Smart Charger Rebate",
+    calculation_status: "calculable",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["residential"],
+    retrofit_types: ["level_2_ev_charger_installation"],
+    geography: { country: "US", states: ["GA"], counties: [], cities: [], utility_territory_required: true },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [
+      {
+        effect_id: "effect_smart_charger_rebate",
+        label: "Smart charger rebate",
+        effect_type: "one_time_savings",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "one_time" },
+        calculation: { method: "fixed_amount", amount: { value: 250, currency: "USD" } },
+        limits: [],
+        caps: [],
+        required_inputs: [
+          {
+            input_key: "charger_is_smart",
+            label: "Smart charger",
+            value_type: "boolean",
+            required_for: ["effect_smart_charger_rebate"],
+            source_precedence: ["quote"],
+            missing_severity: "blocks_calculation"
+          }
+        ],
+        evidence_refs: ["ev_smart"],
+        confidence: { overall: 0.9, calculation: 0.9, reason_codes: ["fixed_amount"] }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: [
+      {
+        input_key: "charger_is_smart",
+        label: "Smart charger",
+        value_type: "boolean",
+        required_for: ["effect_smart_charger_rebate"],
+        source_precedence: ["quote"],
+        missing_severity: "blocks_calculation"
+      }
+    ],
+    assumptions: [],
+    source_evidence: [{ evidence_id: "ev_smart", source_type: "web_page", quote: "$250 smart charger rebate", evidence_confidence: 0.95 }],
+    confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["fixed_amount"] }
+  };
+}
+
+function expectedValueGrantPackage() {
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_competitive_grant",
+    program_name: "Competitive Grant",
+    calculation_status: "calculable",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["led_lighting_retrofit"],
+    geography: { country: "US", states: ["CA"], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [
+      {
+        effect_id: "effect_expected_grant",
+        label: "Expected grant value",
+        effect_type: "grant_expected_value",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "one_time" },
+        calculation: {
+          method: "expected_value",
+          conditional_award_cents: 30000000,
+          probability_discount: 0.1
+        },
+        limits: [],
+        caps: [],
+        required_inputs: [],
+        evidence_refs: ["ev_expected_grant"],
+        confidence: { overall: 0.72, calculation: 0.72, reason_codes: ["historical_success_rate"] }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: [],
+    assumptions: [],
+    source_evidence: [{ evidence_id: "ev_expected_grant", source_type: "web_page", quote: "30 awards from 300 applications", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["expected_value"] }
   };
 }

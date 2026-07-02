@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) v2 grant and incentive estimate bridge
+
+- Wired repaired v2 incentive calculation packages into the retrofit savings preview path while preserving conservative legacy-safe rules where they already exist to avoid double counting.
+- Added v2 runtime gating so source-repaired packages only create user-facing estimate rules when required project inputs are present, confidence is sufficient, and the repaired effect is explicitly included in totals.
+- Surfaced v2 package summaries and missing incentive inputs to the frontend opportunity preview so grants, rebates, tax effects, custom quotes, and suppressed values can explain why they are included or pending.
+
 ## 2026-07-02 - Codex (GPT-5) incentive formula repair runtime apply
 
 - Added an apply script for GPT Pro formula/rate-table repairs that generates conservative legacy runtime incentive rules, a richer v2 calculation-package artifact, and an apply report from the consolidated 984-opportunity repair artifact.

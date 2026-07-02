@@ -202,11 +202,13 @@ export function calculateV2IncentivePackage(pkg, ctx = {}, priorAwards = []) {
 
 function calculateEffect({ pkg, effect, ctx, priorAwards }) {
   const calculation = effect.calculation;
-  const missingInputs = [];
+  const missingInputs = missingRequiredInputsForEffect(effect, ctx);
   const trace = [];
   let rawAmountCents = 0;
 
-  if (calculation.method === "measure_catalog") {
+  if (missingInputs.length > 0) {
+    trace.push(`Missing required inputs for ${effect.effect_id}: ${missingInputs.map((input) => input.inputKey).join(", ")}.`);
+  } else if (calculation.method === "measure_catalog") {
     const result = calculateMeasureCatalogEffect({ pkg, effect, ctx });
     rawAmountCents = result.amountCents;
     missingInputs.push(...result.missingInputs);
@@ -290,9 +292,41 @@ function calculateCalculationSpec({ effect, calculation, ctx, priorAwards }) {
       const basisCents = resolveV2Basis(effect, ctx, priorAwards);
       return { amountCents: percentOfCents(basisCents, calculation.percent || 0), missingInputs, trace };
     }
+    case "expected_value": {
+      if (!Number.isFinite(calculation.probability_discount)) return missingResult("award_probability", effect);
+      if (!Number.isFinite(calculation.conditional_award_cents)) return missingResult("conditional_award_amount", effect);
+      return {
+        amountCents: roundCents(Number(calculation.conditional_award_cents) * Number(calculation.probability_discount)),
+        missingInputs,
+        trace
+      };
+    }
     default:
       return { amountCents: 0, missingInputs, trace: [`Unsupported v2 calculation method: ${calculation.method}`] };
   }
+}
+
+function missingRequiredInputsForEffect(effect, ctx) {
+  return normalizeRequiredInputs(effect.required_inputs)
+    .filter((input) => input.missing_severity !== "optional")
+    .filter((input) => !hasRuntimeInput(ctx, input.input_key))
+    .map((input) => ({ inputKey: input.input_key, effectId: effect.effect_id, label: input.label || input.input_key }));
+}
+
+function normalizeRequiredInputs(inputs = []) {
+  return inputs
+    .map((input) => (typeof input === "string" ? { input_key: input, label: input } : input))
+    .filter((input) => input?.input_key);
+}
+
+function hasRuntimeInput(ctx, inputKey) {
+  if (!inputKey) return true;
+  if (hasAnswer(ctx.answers, inputKey)) return true;
+  if (inputKey === "annual_kwh_delta_abs") return Number.isFinite(annualKwhDeltaAbs(ctx));
+  if (inputKey === "project_cost_cents" || inputKey === "gross_project_cost_cents" || inputKey === "upfront_cost_cents") {
+    return Number.isFinite(ctx.upfrontCostCents);
+  }
+  return false;
 }
 
 function applyEffectQuantityLimits(quantity, effect) {

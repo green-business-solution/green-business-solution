@@ -1,4 +1,5 @@
 import { calculateRetrofitSavingsEstimate } from "./engine.mjs";
+import { selectV2PackagesForRetrofitGroup } from "./v2RuntimeIncentives.mjs";
 
 export const ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION = "admin-test-case-savings-v2";
 
@@ -384,7 +385,8 @@ export function buildAdminTestCaseSavingsPreview({
   sampleUserId,
   normalizedProfile,
   calculationDate,
-  opportunityIncentiveRules = []
+  opportunityIncentiveRules = [],
+  opportunityIncentiveCalculationPackages = []
 }) {
   const template = retrofitTemplates[retrofitGroup?.retrofitTypeId];
   if (!template) {
@@ -397,6 +399,7 @@ export function buildAdminTestCaseSavingsPreview({
   const state = normalizedProfile?.site?.geo?.stateCode || normalizedProfile?.site?.addressStructured?.stateCode || "CA";
   const countyFips = normalizedProfile?.site?.geo?.countyFips || "00000";
   const selectedIncentiveRules = selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiveRules);
+  const selectedIncentivePackages = selectV2PackagesForRetrofitGroup(retrofitGroup, opportunityIncentiveCalculationPackages);
   const fixture = buildFixture({
     template,
     retrofitGroup,
@@ -404,13 +407,14 @@ export function buildAdminTestCaseSavingsPreview({
     state,
     countyFips,
     calculationDate,
-    opportunityIncentiveRules: selectedIncentiveRules
+    opportunityIncentiveRules: selectedIncentiveRules,
+    opportunityIncentiveCalculationPackages: selectedIncentivePackages
   });
   const estimate = calculateRetrofitSavingsEstimate(fixture);
   const incentiveAssumption =
-    selectedIncentiveRules.length > 0
-      ? "Opportunity savings use source-backed incentive rules extracted from reviewed opportunities where a matched rule exists."
-      : "No source-backed OpportunityIncentiveRule matched this retrofit preview, so opportunity savings are shown as $0.";
+    selectedIncentiveRules.length > 0 || selectedIncentivePackages.length > 0
+      ? "Opportunity savings use source-backed incentive rules and reviewed v2 calculation packages when a matched rule is complete enough to include."
+      : "No source-backed OpportunityIncentiveRule or v2 calculation package matched this retrofit preview, so opportunity savings are shown as $0.";
 
   return {
     schemaVersion: ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION,
@@ -440,6 +444,15 @@ export function buildAdminTestCaseSavingsPreview({
     costBreakdown: estimate.costBreakdown,
     savingsBreakdown: estimate.savingsBreakdown,
     billLineDeltas: estimate.billLineDeltas,
+    incentiveCalculationPackageSummaries: estimate.incentiveCalculationPackageSummaries || [],
+    incentiveCalculationPackageCounts: estimate.incentiveCalculationPackageCounts || {
+      matchedPackageCount: 0,
+      runtimeRuleCount: 0,
+      includedPackageCount: 0,
+      missingInputPackageCount: 0,
+      legacyPreferredPackageCount: 0,
+      suppressedPackageCount: 0
+    },
     selectedIncentiveScenario: estimate.selectedIncentiveScenario,
     alternativeScenarios: estimate.alternativeScenarios,
     calculationTrace: estimate.calculationTrace,
@@ -453,9 +466,23 @@ export function buildAdminTestCaseSavingsPreview({
   };
 }
 
-function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips, calculationDate, opportunityIncentiveRules = [] }) {
+function buildFixture({
+  template,
+  retrofitGroup,
+  sampleUserId,
+  state,
+  countyFips,
+  calculationDate,
+  opportunityIncentiveRules = [],
+  opportunityIncentiveCalculationPackages = []
+}) {
   const retrofitTypeId = template.retrofitTypeId || `rt_${template.engineSlug}`;
-  const selectedOpportunityIds = opportunityIncentiveRules.map((rule) => rule.opportunityId);
+  const selectedOpportunityIds = [
+    ...new Set([
+      ...opportunityIncentiveRules.map((rule) => rule.opportunityId),
+      ...opportunityIncentiveCalculationPackages.map((pkg) => pkg.opportunity_id)
+    ])
+  ];
   return {
     projectId: `admin_test_${sampleUserId}`,
     businessId: `admin_test_${sampleUserId}`,
@@ -479,6 +506,7 @@ function buildFixture({ template, retrofitGroup, sampleUserId, state, countyFips
     laborCostRules: template.laborRequired === false ? [] : [buildLaborRule({ template, retrofitTypeId, state, countyFips })],
     geographicTaxRules: [buildTaxRule({ template, state, countyFips })],
     opportunityIncentiveRules,
+    opportunityIncentiveCalculationPackages,
     stackingRules: []
   };
 }
@@ -494,12 +522,7 @@ function selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiv
     rulesByOpportunityId.set(rule.opportunityId, current);
   }
 
-  for (const opportunity of retrofitGroup.opportunities) {
-    const rules = rulesByOpportunityId.get(opportunity.opportunityId);
-    if (rules?.length) return rules;
-  }
-
-  return [];
+  return retrofitGroup.opportunities.flatMap((opportunity) => rulesByOpportunityId.get(opportunity.opportunityId) || []);
 }
 
 function buildLaborRule({ template, retrofitTypeId, state, countyFips }) {

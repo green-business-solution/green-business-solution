@@ -638,6 +638,23 @@ type SampleCalculationTraceStep = {
   };
 };
 
+type IncentiveCalculationPackageSummary = {
+  opportunityId: string;
+  programName?: string;
+  calculationStatus?: string;
+  runtimeInclusionStatus?: string;
+  includedInRuntimeTotals?: boolean;
+  missingInputs?: Array<{ inputKey: string; effectId?: string | null; label?: string }>;
+  requiredInputs?: string[];
+  totals?: {
+    expectedOneTimeSavingsCents?: number;
+    expectedGrantAmountCents?: number;
+    expectedRecurringSavingsAnnualCents?: number;
+    expectedRecurringExpensesAnnualCents?: number;
+    annualNetRecurringBenefitCents?: number;
+  };
+};
+
 type SampleSavingsPreview = {
   schemaVersion?: string;
   status: "calculated" | "blocked" | "unsupported";
@@ -670,6 +687,15 @@ type SampleSavingsPreview = {
     period: string;
     savingsCents?: number;
   }>;
+  incentiveCalculationPackageSummaries?: IncentiveCalculationPackageSummary[];
+  incentiveCalculationPackageCounts?: {
+    matchedPackageCount?: number;
+    runtimeRuleCount?: number;
+    includedPackageCount?: number;
+    missingInputPackageCount?: number;
+    legacyPreferredPackageCount?: number;
+    suppressedPackageCount?: number;
+  };
   selectedIncentiveScenario?: {
     id?: string;
     name?: string;
@@ -5347,20 +5373,27 @@ function buildOpportunityPreview(
 ): RetrofitOpportunityPreview {
   const includedOpportunityIds = new Set(preview?.selectedIncentiveScenario?.opportunityIds || []);
   const isIncluded = includedOpportunityIds.has(opportunity.opportunityId);
+  const incentivePackage = preview?.incentiveCalculationPackageSummaries?.find(
+    (summary) => summary.opportunityId === opportunity.opportunityId
+  );
   const programType = normalizeOpportunityType(opportunity.sourceSummary?.programType);
   const needsUtilityConfirmation = opportunityNeedsUtilityTerritoryConfirmation(opportunity, payload);
   const sourceMissing = !(opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl);
-  const needsMoreInfo = opportunity.unresolvedRequirements.length > 0 || needsUtilityConfirmation || sourceMissing;
+  const packageMissingInputs = incentivePackageMissingInputs(incentivePackage);
+  const packageNeedsMoreInfo = incentivePackage?.runtimeInclusionStatus === "missing_inputs";
+  const needsMoreInfo = opportunity.unresolvedRequirements.length > 0 || packageNeedsMoreInfo || needsUtilityConfirmation || sourceMissing;
   const eligibilityStatus = needsUtilityConfirmation || sourceMissing
     ? "needs review"
     : opportunityEligibilityStatus(opportunity.eligibilityStatus);
   const requiredInfo = [
     ...(needsUtilityConfirmation ? ["utility territory confirmation"] : []),
+    ...packageMissingInputs,
     ...(opportunity.unresolvedRequirements.length
       ? opportunity.unresolvedRequirements.slice(0, 4)
       : ["bills", "retrofit-specific information", "quote", "tax/entity information"])
   ];
   const includedState = includedStateFromOpportunity(isIncluded, needsMoreInfo);
+  const packageEstimatedValue = incentivePackageEstimatedValue(incentivePackage);
   return {
     id: sampleOpportunityKey(opportunity),
     retrofitId: preview?.retrofitTypeId || "",
@@ -5381,17 +5414,19 @@ function buildOpportunityPreview(
     environmentalImpactContribution: environmentalImpactLabel(programType),
     certificationBoost: certificationBoostLabel(programType),
     sourceUrl: opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl || null,
-    estimatedValue: includedState === "Included in current estimate" ? preview?.upfrontSavingsCents ?? null : null,
-    valueRule: opportunity.matchedReasons[0] || undefined,
+    estimatedValue: includedState === "Included in current estimate" ? packageEstimatedValue ?? preview?.upfrontSavingsCents ?? null : null,
+    valueRule: incentivePackageValueRule(incentivePackage) || opportunity.matchedReasons[0] || undefined,
     includedState,
     selected: isIncluded,
     whySelected: isIncluded
       ? includedState === "Included in current estimate"
-        ? `Selected because it reduces upfront cost${preview?.upfrontSavingsCents ? ` by an estimated ${formatCents(preview.upfrontSavingsCents)}` : ""}.`
+        ? `Selected because it reduces upfront cost${packageEstimatedValue || preview?.upfrontSavingsCents ? ` by an estimated ${formatCents(packageEstimatedValue ?? preview?.upfrontSavingsCents ?? 0)}` : ""}.`
         : needsUtilityConfirmation
           ? "Needs utility territory confirmation before this can be included."
           : sourceMissing
             ? "Needs source review before this can be included."
+            : packageNeedsMoreInfo
+              ? `Not included yet — needs ${packageMissingInputs.slice(0, 2).join(" and ")}.`
             : `Not included yet — needs ${opportunity.unresolvedRequirements.slice(0, 2).join(" and ")}.`
       : undefined,
     whyNotSelected: !isIncluded
@@ -5399,11 +5434,43 @@ function buildOpportunityPreview(
         ? "Needs review because utility territory is unclear."
         : sourceMissing
           ? "Needs source review before selection."
+        : packageNeedsMoreInfo
+          ? `Not selected because ${packageMissingInputs.slice(0, 2).join(" and ")} is needed to estimate value.`
         : opportunity.unresolvedRequirements.length
           ? `Not selected because ${opportunity.unresolvedRequirements.slice(0, 2).join(" and ")} is missing.`
         : "Not selected for this scenario."
       : undefined
   };
+}
+
+function incentivePackageMissingInputs(summary?: IncentiveCalculationPackageSummary) {
+  if (!summary || summary.runtimeInclusionStatus !== "missing_inputs") return [];
+  const labels = (summary.missingInputs || [])
+    .map((input) => input.label || input.inputKey)
+    .filter(Boolean)
+    .map((value) => value.replace(/_/g, " "));
+  return labels.length ? labels.slice(0, 4) : ["project quote"];
+}
+
+function incentivePackageEstimatedValue(summary?: IncentiveCalculationPackageSummary) {
+  if (!summary?.includedInRuntimeTotals) return null;
+  const totals = summary.totals || {};
+  return (
+    totals.expectedOneTimeSavingsCents ||
+    totals.expectedGrantAmountCents ||
+    totals.expectedRecurringSavingsAnnualCents ||
+    null
+  );
+}
+
+function incentivePackageValueRule(summary?: IncentiveCalculationPackageSummary) {
+  if (!summary) return null;
+  if (summary.includedInRuntimeTotals) return "Source-backed v2 incentive calculation included in estimate.";
+  if (summary.runtimeInclusionStatus === "missing_inputs") return "Source-backed value exists, but project inputs are needed before estimating.";
+  if (summary.runtimeInclusionStatus === "legacy_rule_preferred") return "Legacy-safe extracted rule is used for this opportunity while v2 data is retained for review.";
+  if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Amount depends on a custom quote or program review.";
+  if (summary.runtimeInclusionStatus === "not_user_facing_default") return "Not included in totals by default under conservative estimate rules.";
+  return null;
 }
 
 function includedOpportunityIdsForRetrofit(retrofit: SampleRetrofitGroup) {

@@ -28,6 +28,9 @@ const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir
 const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
 const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
 const incentiveRulesPath = process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(dataDir, "opportunity_incentive_rules.json");
+const incentiveCalculationPackagesPath =
+  process.env.OPPORTUNITY_INCENTIVE_CALCULATION_PACKAGES_PATH ||
+  path.join(dataDir, "opportunity_incentive_calculation_packages_v2.json");
 const defaultOpportunityDataRepairsPath = path.join(
   dataDir,
   "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json"
@@ -58,6 +61,7 @@ const sampleUsers =
 const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
 const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
+const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(existingOpportunityDataRepairsPaths);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
 const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
@@ -134,6 +138,9 @@ const output = {
   opportunityDataRepairCount: opportunityDataRepairsByOpportunityId.size,
   opportunityIncentiveRulesPath: opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
+  opportunityIncentiveCalculationPackagesPath:
+    opportunityIncentiveCalculationPackages.length > 0 ? incentiveCalculationPackagesPath : null,
+  opportunityIncentiveCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
   sampleUsers: userProfiles,
   fullResultsOmitted: !writeFullOutput,
   results: writeFullOutput ? allResults : []
@@ -153,6 +160,7 @@ const adminTestCases = {
   sampleUserCount: existingAdminTestCases?.sampleUserCount || output.sampleUserCount,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
+  incentiveFormulaRateTableCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
   testCases: adminTestCaseRows
 };
 
@@ -193,6 +201,7 @@ console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunity
 console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
 console.log(`Opportunity data repairs loaded: ${opportunityDataRepairsByOpportunityId.size}`);
 console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
+console.log(`Opportunity incentive calculation packages loaded: ${opportunityIncentiveCalculationPackages.length}`);
 
 function readReviewMap(filePath, reviewFieldName) {
   if (!fs.existsSync(filePath)) return new Map();
@@ -216,6 +225,12 @@ function readOpportunityIncentiveRules(filePath) {
     .filter((rule) => rule?.opportunityId)
     .filter((rule) => rule.active !== false)
     .filter((rule) => rule.confidence !== "low");
+}
+
+function readOpportunityIncentiveCalculationPackages(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = readJson(filePath);
+  return (source.packages || []).filter((pkg) => pkg?.opportunity_id);
 }
 
 function readOpportunityDataRepairs(filePaths) {
@@ -350,7 +365,8 @@ function buildUserReport(userProfile, results) {
     normalizedProfile: userProfile.userMatchProfile,
     calculationDate: generatedAt.slice(0, 10),
     subjectId: userProfile.sampleUserId,
-    opportunityRules: opportunityIncentiveRules
+    opportunityRules: opportunityIncentiveRules,
+    opportunityPackages: opportunityIncentiveCalculationPackages
   });
 
   return {

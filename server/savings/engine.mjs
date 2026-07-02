@@ -14,6 +14,7 @@ import { annualEnergySavingsCents, annualKwhReduction, roundCents } from "./form
 import { answerValue, hasAnswer, resolveLaborCost } from "./labor.mjs";
 import { buildIncentiveScenarios, selectBestScenario } from "./stacking.mjs";
 import { calculateSalesTaxFromRule, resolveSalesTaxRule } from "./tax.mjs";
+import { buildV2RuntimeIncentiveBridge } from "./v2RuntimeIncentives.mjs";
 
 function normalizeArray(value, singular) {
   if (Array.isArray(value)) return value;
@@ -337,13 +338,28 @@ function finalizeCalculatedEstimate({
   billLineDeltas,
   traceSteps,
   opportunityIncentiveRules = [],
+  opportunityIncentiveCalculationPackages = [],
   selectedOpportunityIds = [],
   stackingRules = []
 }) {
   const upfrontCostCents = aggregateUpfrontCost(costBreakdown);
   const selectedRequestedOpportunityIds = retrofitInstance.selectedOpportunityIds || selectedOpportunityIds || [];
+  const incentiveCtx = {
+    answers,
+    billLines,
+    billLineDeltas,
+    baseCostLedgerEntries: costBreakdown,
+    baseRecurringSavingsEntries,
+    upfrontCostCents
+  };
+  const v2Bridge = buildV2RuntimeIncentiveBridge({
+    packages: opportunityIncentiveCalculationPackages,
+    existingLegacyRules: opportunityIncentiveRules,
+    ctx: incentiveCtx
+  });
+  const combinedIncentiveRules = [...opportunityIncentiveRules, ...v2Bridge.runtimeRules];
   const scenarios = buildIncentiveScenarios({
-    incentiveRules: opportunityIncentiveRules,
+    incentiveRules: combinedIncentiveRules,
     selectedOpportunityIds: selectedRequestedOpportunityIds,
     baseCostLedgerEntries: costBreakdown,
     baseRecurringSavingsEntries,
@@ -420,6 +436,8 @@ function finalizeCalculatedEstimate({
     costBreakdown: finalCostBreakdown,
     savingsBreakdown: finalRecurringSavingsEntries,
     billLineDeltas,
+    incentiveCalculationPackageSummaries: v2Bridge.packageSummaries,
+    incentiveCalculationPackageCounts: v2Bridge.counts,
     selectedIncentiveScenario: selectedScenario,
     alternativeScenarios: scenarios.filter((scenario) => scenario.id !== selectedScenario.id),
     requiredInputsUsed: Object.entries(answers).map(([answerKey, answer]) => ({
@@ -1123,6 +1141,7 @@ function calculateModeledRetrofitSavingsEstimate({
     billLineDeltas: result.billLineDeltas,
     traceSteps,
     opportunityIncentiveRules: fixture.opportunityIncentiveRules || [],
+    opportunityIncentiveCalculationPackages: fixture.opportunityIncentiveCalculationPackages || [],
     selectedOpportunityIds: retrofitInstance.selectedOpportunityIds || fixture.selectedOpportunityIds || [],
     stackingRules: fixture.stackingRules || []
   });
@@ -1350,9 +1369,24 @@ export function calculateRetrofitSavingsEstimate(fixture) {
 
   const upfrontCostCents = aggregateUpfrontCost(costBreakdown);
   const opportunityIncentiveRules = fixture.opportunityIncentiveRules || [];
+  const opportunityIncentiveCalculationPackages = fixture.opportunityIncentiveCalculationPackages || [];
   const selectedRequestedOpportunityIds = retrofitInstance.selectedOpportunityIds || fixture.selectedOpportunityIds || [];
+  const incentiveCtx = {
+    answers,
+    billLines,
+    billLineDeltas,
+    baseCostLedgerEntries: costBreakdown,
+    baseRecurringSavingsEntries,
+    upfrontCostCents
+  };
+  const v2Bridge = buildV2RuntimeIncentiveBridge({
+    packages: opportunityIncentiveCalculationPackages,
+    existingLegacyRules: opportunityIncentiveRules,
+    ctx: incentiveCtx
+  });
+  const combinedIncentiveRules = [...opportunityIncentiveRules, ...v2Bridge.runtimeRules];
   const scenarios = buildIncentiveScenarios({
-    incentiveRules: opportunityIncentiveRules,
+    incentiveRules: combinedIncentiveRules,
     selectedOpportunityIds: selectedRequestedOpportunityIds,
     baseCostLedgerEntries: costBreakdown,
     baseRecurringSavingsEntries,
@@ -1429,6 +1463,8 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     costBreakdown: finalCostBreakdown,
     savingsBreakdown: finalRecurringSavingsEntries,
     billLineDeltas,
+    incentiveCalculationPackageSummaries: v2Bridge.packageSummaries,
+    incentiveCalculationPackageCounts: v2Bridge.counts,
     selectedIncentiveScenario: selectedScenario,
     alternativeScenarios: scenarios.filter((scenario) => scenario.id !== selectedScenario.id),
     requiredInputsUsed: Object.entries(answers).map(([answerKey, answer]) => ({
