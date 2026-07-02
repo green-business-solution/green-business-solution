@@ -526,7 +526,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".selected-scenario-rows");
     expect(css).toContain(".compact-detail-row");
     const pickerCardRule = css.match(/(?:^|\n)\.retrofit-picker-card\s*{([^}]*)}/)?.[1] || "";
-    expect(pickerCardRule).toContain("min-height: 196px;");
+    expect(pickerCardRule).toContain("min-height: 186px;");
     expect(pickerCardRule).not.toContain("\n  height: 118px;");
 
     const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";

@@ -5,6 +5,7 @@
 - Replaced the broken before-click upload banner text fallback with a local cloud-upload SVG and restored real Savings, Cost, and Payback metric SVG icons on retrofit cards.
 - Tightened the clean retrofit picker spacing, card height, icon sizing, and 3/2/1 responsive grid breakpoints so the first six retrofit cards fit better across desktop, tablet, and mobile widths.
 - Swapped raw “Programs related to...” picker descriptions for curated customer-facing retrofit descriptions while preserving the full selected-retrofit workspace and live/API data path after click.
+- Trimmed the before-click picker vertical spacing further so the `Show more retrofits` control stays visible in a non-fullscreen desktop window.
 
 ## 2026-07-02 - Codex (GPT-5) application link discovery quality gate
 
