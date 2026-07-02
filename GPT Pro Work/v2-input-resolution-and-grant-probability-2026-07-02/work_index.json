@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "retrofi_gpt_pro_work_index.v1",
+  "createdAt": "2026-07-02",
+  "sourcePackageFile": "data/opportunity_incentive_calculation_packages_v2.json",
+  "packageCount": 984,
+  "uniqueInputKeyCount": 4232,
+  "roughCategoryOccurrenceCounts": {
+    "retrofit_scope_or_equipment_spec": 5480,
+    "project_cost_or_financing": 1276,
+    "eligibility_timing_or_profile": 2026,
+    "other_or_needs_review": 1485,
+    "utility_bill_or_rate_data": 320,
+    "award_probability": 42
+  },
+  "inputPromptTargets": {
+    "scopeQuantityEquipmentKeys": 240,
+    "quantityAliasKeysHighlighted": 80,
+    "supportKeysByCategory": {
+      "project_cost_or_financing": 160,
+      "eligibility_timing_or_profile": 160,
+      "utility_bill_or_rate_data": 160,
+      "award_probability": 21,
+      "other_or_needs_review": 120
+    }
+  },
+  "grantLikeTargetCount": 54,
+  "filePairs": [
+    {
+      "promptFile": "prompt_001_input_resolution_scope_quantity_equipment.md",
+      "outputFile": "output_001_input_resolution_scope_quantity_equipment.md"
+    },
+    {
+      "promptFile": "prompt_002_input_resolution_cost_timing_bills_profile.md",
+      "outputFile": "output_002_input_resolution_cost_timing_bills_profile.md"
+    },
+    {
+      "promptFile": "prompt_003_grant_probability_targets_001_014.md",
+      "outputFile": "output_003_grant_probability_targets_001_014.md"
+    },
+    {
+      "promptFile": "prompt_004_grant_probability_targets_015_028.md",
+      "outputFile": "output_004_grant_probability_targets_015_028.md"
+    },
+    {
+      "promptFile": "prompt_005_grant_probability_targets_029_042.md",
+      "outputFile": "output_005_grant_probability_targets_029_042.md"
+    },
+    {
+      "promptFile": "prompt_006_grant_probability_targets_043_054.md",
+      "outputFile": "output_006_grant_probability_targets_043_054.md"
+    }
+  ]
+}
