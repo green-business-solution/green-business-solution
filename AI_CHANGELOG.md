@@ -52,6 +52,12 @@
 - Added `programWebsiteUrl`, `pdfUrl`, `contactEmail`, `applicationMethod`, `discoveryStatus`, `confidence`, and richer evidence fields while preserving the existing read-only per-row discovery flow and legacy path fields.
 - Updated the admin application-source audit path result to separate program source, program website, application URL, PDF URL, contact email, method, status, confidence, and evidence, including program-website-only/source-only summary counts.
 
+## 2026-07-02 - Codex (GPT-5) incentive formula repair intake 26-50
+
+- Validated the remaining 25 GPT Pro incentive formula/rate-table outputs and confirmed all 484 new repairs match their target batch counts, order, schema, and opportunity IDs with no duplicate targets.
+- Imported batches 26-50 into a clean normalized research artifact and report, removing GPT Pro markdown/URL formatting contamination from evidence text, formulas, edge reasons, and source URL arrays.
+- Regenerated a consolidated batches 1-50 artifact covering all 984 formula/rate-table repair targets with zero validation warnings for the upcoming estimator/import implementation.
+
 ## 2026-07-02 - Codex (GPT-5) deterministic match-confidence fixture repair
 
 - Updated opportunity-data repair application so repaired visible public fixture edges use deterministic `confidence: 1` for match confidence while preserving source confidence separately as `dataRepairConfidence`.
