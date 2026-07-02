@@ -1,10 +1,19 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) final source-confidence repair follow-up
+
+- Normalized and imported GPT Pro's final low-source-confidence follow-up as opportunity data repair batch 97, cleaning markdown-formatted URLs before validation.
+- Marked the final unrepaired Dixie Electric and Farmers Electric source-inaccessible failures as unavailable for product-visible archive/exclusion, while preserving their source-access evidence.
+- Promoted the MID business rebate, Chicago Green Permit, and Energy Trust Custom Renewable records to medium source confidence where official evidence supported active broad program status, and suppressed unsupported physical retrofit edges until proper measure/special-workflow modeling exists.
+- Reapplied all opportunity data repair batches, refreshed public matching fixtures, and regenerated both remaining repair queues to zero.
+
 ## 2026-07-02 - Codex (GPT-5) opportunity retention policy TODOs
 
 - Clarified product TODOs so source-inaccessible opportunities that fail targeted GPT Pro repair should be archived or excluded instead of treated as indefinite manual blockers.
 - Added guidance to retain non-monetary special-workflow opportunities and expand the retrofit/workflow taxonomy for currently unsupported but source-backed opportunity paths, including future no-retrofit-needed/action-only opportunities.
 - Clarified that tax credits should be modeled as first-class tax incentive effects rather than routed through grant estimation or ignored.
+- Updated the low-source-confidence queue behavior so terminal unavailable or expired records do not remain in the follow-up queue.
+- Added the MID Business Rebates, Chicago Green Permit, and Energy Trust Custom Renewable records to the special-edge suppression list so active but measure-unsupported or special-workflow opportunities do not remain attached to physical retrofit cards.
 
 ## 2026-07-02 - Codex (GPT-5) GPT Pro opportunity data repair batches 79-96
 

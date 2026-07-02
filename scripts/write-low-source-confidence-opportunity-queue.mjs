@@ -14,7 +14,7 @@ const retrofitIndex = readJson(options.retrofitIndexPath);
 const opportunityContextById = buildOpportunityContext(retrofitIndex);
 const repairLoad = loadLatestRepairs(manifest, options.manifestPath);
 const queue = repairLoad.latestRepairs
-  .filter((row) => row.sourceConfidence === "low")
+  .filter((row) => row.sourceConfidence === "low" && isLowSourceConfidenceFollowUpCandidate(row))
   .map((row) => buildQueueRow(row, opportunityContextById.get(row.opportunityId)))
   .sort(compareQueueRows);
 
@@ -27,8 +27,10 @@ const artifact = {
     manifestPath: path.relative(repoRoot, options.manifestPath),
     retrofitIndexPath: path.relative(repoRoot, options.retrofitIndexPath),
     sourceConfidence: "low",
+    excludedAvailabilityStatuses: ["unavailable", "expired"],
     duplicatePolicy: "later repair manifest entries overwrite earlier repairs for the same opportunityId",
-    recommendedUse: "Queue these records for deeper GPT Pro research or human/admin verification before treating source evidence as fully trusted."
+    recommendedUse:
+      "Queue low-source-confidence records for deeper GPT Pro research or human/admin verification only while they remain potentially product-visible. Terminal unavailable or expired records are excluded from this follow-up queue."
   },
   summary: {
     repairBatchCount: manifest.batches.length,
@@ -99,6 +101,10 @@ function loadLatestRepairs(manifest, manifestPath) {
   });
 
   return { totalRepairRows, latestRepairs: [...latestById.values()] };
+}
+
+function isLowSourceConfidenceFollowUpCandidate(repair) {
+  return !["unavailable", "expired"].includes(repair.availabilityStatus);
 }
 
 function buildOpportunityContext(index) {
@@ -276,7 +282,9 @@ function countBy(rows, keyFn) {
 }
 
 function formatCounts(counts) {
-  return Object.entries(counts)
+  const entries = Object.entries(counts);
+  if (entries.length === 0) return "none";
+  return entries
     .map(([key, count]) => `${key} ${count}`)
     .join(", ");
 }

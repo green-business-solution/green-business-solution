@@ -1,0 +1,270 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-02",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Final low-source-confidence follow-up.",
+    "Normalized markdown URLs before validation.",
+    "Final source-inaccessible GPT Pro repair failures are marked unavailable for product-visible archive/exclusion."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1968",
+      "confidence": "low",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Dixie Electric Cooperative"
+        ],
+        "notes": "Dixie Electric Cooperative member service territory in Alabama."
+      },
+      "eligibleApplicantTypes": [
+        "cooperative_member",
+        "residential_utility_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Applicant must be a Dixie Electric Cooperative member.",
+        "Program is structured as low-interest financing or loan assistance, not a cash rebate or grant."
+      ],
+      "blockers": [
+        "Official Dixie Electric program pages returned 403, so current loan terms, application form, credit requirements, and measure-level eligibility could not be independently read.",
+        "Heat-pump and manufactured-home upgrade support is suggested by official snippets, but detailed current eligibility was not accessible.",
+        "Final GPT Pro follow-up could not repair official source access, so this opportunity should be archived or excluded from product-visible estimates unless a new accessible official source appears."
+      ],
+      "programType": "loan_financing",
+      "administrator": "Dixie Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.dixie.coop/energy-efficiency-program",
+      "sourceUrlsChecked": [
+        "https://www.dixie.coop/energy-efficiency-program",
+        "https://www.dixie.coop/manufacturedhomeprogram",
+        "https://www.dixie.coop/fee-schedule",
+        "https://programs.dsireusa.org/system/program/detail/1968/dixie-electric-cooperative-residential-energy-efficiency-loan-program"
+      ],
+      "evidenceText": "Official Dixie snippets identify a Co-op Energy Efficiency Loan Program for home efficiency and comfort plus manufactured-home heat-upgrade content, but official pages returned 403 and current terms remain inaccessible.",
+      "reasoningNotes": "Source confidence remains low because official evidence is limited to accessible search-result text and blocked official pages. This is financing, so no cash-rebate retrofit categories are asserted. Treat as product-unavailable after final GPT Pro source-access failure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1885",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Modesto Irrigation District"
+        ],
+        "notes": "Applies to business electric customers in the Modesto Irrigation District service territory."
+      },
+      "eligibleApplicantTypes": [
+        "business_utility_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Installed qualifying products must be at a business location receiving electricity from MID.",
+        "Customer must be in good financial standing with MID.",
+        "Program funds and terms are subject to MID rebate terms and current application requirements."
+      ],
+      "blockers": [
+        "MID live rebate pages returned 403, and a direct current application PDF URL could not be opened.",
+        "Exact 2026 measure list and measure-level eligibility remain unreadable, so retrofit categories are cleared."
+      ],
+      "programType": "rebate",
+      "administrator": "Modesto Irrigation District",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.mid.org/saving-energy-money/rebates/business-rebates/",
+      "sourceUrlsChecked": [
+        "https://www.mid.org/saving-energy-money/rebates/business-rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/rebate-terms-conditions/",
+        "https://www.mid.org/saving-energy-money/rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/residential-rebates/",
+        "https://www.mid.org/saving-energy-money/rates/commercial-service/",
+        "https://www.modestogov.com/Archive.aspx?ADID=5313",
+        "https://programs.dsireusa.org/system/program/detail/1885/modesto-irrigation-district-commercial-energy-efficiency-rebate-program"
+      ],
+      "evidenceText": "Official MID search results show a Business Rebates page and 2026 application PDF; terms state rebates apply to qualifying products installed at MID-served business locations by customers in good financial standing.",
+      "reasoningNotes": "Medium confidence is appropriate because current official MID snippets verify program availability and broad business-customer scope, but current forms and measure sheets were inaccessible."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2466",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [
+          "Chicago"
+        ],
+        "utilityTerritories": [],
+        "notes": "City of Chicago building-permit jurisdiction."
+      },
+      "eligibleApplicantTypes": [
+        "building_permit_applicant",
+        "property_owner",
+        "developer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Project must be certified by the City of Chicago Department of Buildings as qualifying for the Chicago Green Permit Program.",
+        "Permit must be for new construction or for alterations, additions, renovations, or repairs to an existing building.",
+        "Green or LEED-related submittal documentation may be required for admission to the program."
+      ],
+      "blockers": [
+        "The current City green-permit program page and older checklist PDF were inaccessible or blocked.",
+        "Current green-criteria details and application workflow could not be fully verified from readable official pages."
+      ],
+      "programType": "permit_fee_waiver_and_expedited_review",
+      "administrator": "City of Chicago Department of Buildings",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html",
+      "sourceUrlsChecked": [
+        "https://codelibrary.amlegal.com/codes/chicago/c7209359-81de-4059-a679f6a211f04dea/chicagobuilding_il/0-0-0-323385",
+        "https://data.cityofchicago.org/Administration-Finance/Green-Permit-time-to-issue/fc7a-j6xt",
+        "https://data.cityofchicago.org/Administration-Finance/Performance-Metrics-Buildings-Time-To-Issue-Green-/z2qz-687z",
+        "https://311.chicago.gov/s/article/Green-permit-program-LEED-submittal-requirements?language=en_US",
+        "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html",
+        "https://www.chicago.gov/dam/city/depts/bldgs/general/DelService/ChecklistForPermit101_29_08.pdf",
+        "https://www.chicago.gov/city/en/depts/bldgs/provdrs/e_plan.html"
+      ],
+      "evidenceText": "Current Chicago code provides a Green Permit Program fee waiver when DOB certifies a permit project, covering construction, alterations, additions, renovations, or repairs up to $25,000.",
+      "reasoningNotes": "This is a permitting and fee-waiver opportunity, not an equipment rebate. Confidence is medium because official code verifies the incentive, but current program criteria and intake details remain incomplete."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4535",
+      "confidence": "low",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IA"
+        ],
+        "counties": [],
+        "cities": [
+          "Kalona"
+        ],
+        "utilityTerritories": [
+          "Farmers Electric Cooperative (Kalona)"
+        ],
+        "notes": "Farmers Electric Cooperative member territory around Kalona, Iowa."
+      },
+      "eligibleApplicantTypes": [
+        "cooperative_member",
+        "residential_utility_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Applicant must be a Farmers Electric Cooperative member.",
+        "Official snippets indicate one grant per year for permanently installed energy conservation measures on a 50% cost-share basis.",
+        "Application-form snippets indicate invoice documentation is required before payment."
+      ],
+      "blockers": [
+        "Official Farmers Electric pages and rebate/grant PDF returned 502, so current application terms could not be read.",
+        "The rebate page snippet mentions ground-source heat pump rebates separately, but the grant measure list could not be verified.",
+        "Final GPT Pro follow-up could not repair official source access, so this opportunity should be archived or excluded from product-visible estimates unless a new accessible official source appears."
+      ],
+      "programType": "grant",
+      "administrator": "Farmers Electric Cooperative (Kalona)",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.feckalona.net/energy-conservation-grants.html",
+      "sourceUrlsChecked": [
+        "https://www.feckalona.net/energy-conservation-grants.html",
+        "https://www.feckalona.net/energy-efficiency-rebates.html",
+        "https://www.feckalona.net/ways-to-save.html",
+        "https://www.feckalona.net/",
+        "https://www.feckalona.net/uploads/7/2/1/4/72147385/rebateform14.pdf",
+        "https://programs.dsireusa.org/system/program/detail/4535/farmers-electric-cooperative-kalona-residential-energy-efficiency-grant-program"
+      ],
+      "evidenceText": "Official FEC snippets show Conservation Grants, $100 grants, one-time-per-year member grants, 50% cost share, and invoice documentation, but official pages and the PDF returned 502.",
+      "reasoningNotes": "Source confidence remains low because official documents are inaccessible and exact current eligible measures cannot be verified. Retrofit categories are cleared. Treat as product-unavailable after final GPT Pro source-access failure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:709",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Portland General Electric",
+          "Pacific Power"
+        ],
+        "notes": "Energy Trust renewable-electric incentives are tied to Oregon PGE and Pacific Power delivery or offset in official OPUC materials."
+      },
+      "eligibleApplicantTypes": [
+        "utility_customer",
+        "project_owner",
+        "developer",
+        "public_entity",
+        "nonprofit",
+        "tribe"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "public",
+        "nonprofit",
+        "tribal"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Project must be a renewable electricity generation project, not a building heat-pump retrofit.",
+        "Current official evidence supports solar and storage portfolio activity and custom hydro or biopower, with older official scope also listing geothermal electric and limited municipal community-scale wind.",
+        "Generation must deliver power to or offset Portland General Electric or Pacific Power load in Oregon."
+      ],
+      "blockers": [
+        "The current Energy Trust renewable-energy page and forms could not be accessed because energytrust.org search access was blocked by robots.txt.",
+        "Current application forms, incentive calculations, and deadline or rolling terms were not directly readable.",
+        "No current official evidence supports geothermal heat pumps under this custom renewable generation opportunity."
+      ],
+      "programType": "renewable_generation_incentive_and_project_development_assistance",
+      "administrator": "Energy Trust of Oregon",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energytrust.org/renewable-energy/",
+      "sourceUrlsChecked": [
+        "https://www.energytrust.org/renewable-energy/",
+        "https://edocs.puc.state.or.us/efdocs/HAU/eto1hau340588027.pdf",
+        "https://edocs.puc.state.or.us/efdocs/HAA/haa339117027.pdf",
+        "https://edocs.puc.state.or.us/efdocs/HAC/um2005hac161320.pdf",
+        "https://programs.dsireusa.org/system/program/detail/709/custom-renewable-energy-projects",
+        "https://www.sdao.com/renewable-energy-funding-opportunities-announcement"
+      ],
+      "evidenceText": "2025 OPUC/Energy Trust materials show an active 2026-2030 renewables acquisition plan; older official OPUC responses describe renewable electric projects delivering power to PGE/Pacific Power.",
+      "reasoningNotes": "Medium confidence is assigned because accessible official OPUC evidence verifies active renewable generation support and broad technologies, but the current Energy Trust application page was inaccessible. Categories remain empty because this is not a retrofit rebate and geothermal heat pumps are unsupported."
+    }
+  ],
+  "continueFromOpportunityId": null
+}
