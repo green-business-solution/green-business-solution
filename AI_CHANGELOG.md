@@ -1344,3 +1344,4 @@
 - Cleaned the customer-facing copy in the preview flow, added grouped expandable opportunity rows with direct source links, and updated the focused preview tests for the tabbed hierarchy.
 - Collapsed the admin test-profile controls, added an active-retrofit mini sub-navigation, compact section summaries, and an application-prep drawer so the preview reads as a guided workspace instead of a long data dump.
 - Fixed preview layout regressions where selected-scenario detail labels collided with long values, retrofit tabs were too tall, and negative recurring impacts could be labeled as annual savings.
+- Added the one-retrofit-at-a-time current plan flow to the preview, including local add-to-plan state, recalculation-not-available messaging, guarded tab switching for unconfirmed selections, and a sticky active-retrofit action bar.

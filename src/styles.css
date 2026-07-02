@@ -2125,6 +2125,39 @@ dd {
   gap: 16px;
 }
 
+.current-plan-panel {
+  background: #ffffff;
+  border: 1px solid #dce5df;
+  border-radius: 18px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+  padding: 18px 20px;
+}
+
+.current-plan-panel h2,
+.current-plan-panel p {
+  margin: 0;
+}
+
+.current-plan-guidance {
+  color: #5f6e66;
+  margin-top: 8px !important;
+}
+
+.current-plan-stats {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.current-plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+
 .retrofit-tab-shell {
   background: #f7faf7;
   display: grid;
@@ -2413,6 +2446,31 @@ dd {
   padding: 12px 14px;
 }
 
+.missing-info-list {
+  display: grid;
+  gap: 10px;
+}
+
+.missing-info-item {
+  align-items: center;
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 14px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 12px 14px;
+}
+
+.missing-info-item h4,
+.missing-info-item p {
+  margin: 0;
+}
+
+.missing-info-item small {
+  color: #647269;
+}
+
 .financial-breakdown-item p {
   color: #5f6e66;
   margin: 4px 0 0;
@@ -2525,6 +2583,34 @@ dd {
   font-size: 14px;
   line-height: 19px;
   overflow-wrap: anywhere;
+}
+
+.retrofit-action-bar {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dce5df;
+  border-radius: 16px;
+  bottom: 16px;
+  box-shadow: 0 14px 40px rgba(26, 44, 34, 0.12);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 14px 16px;
+  position: sticky;
+  z-index: 6;
+}
+
+.retrofit-action-bar p,
+.retrofit-action-bar small {
+  color: #5f6e66;
+  margin: 2px 0 0;
+}
+
+.retrofit-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .opportunity-preview-main {
@@ -2678,6 +2764,25 @@ dd {
   width: min(460px, 100vw);
 }
 
+.unconfirmed-retrofit-modal {
+  align-self: center;
+  background: #ffffff;
+  border: 1px solid #dfe6e1;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(23, 33, 27, 0.16);
+  display: grid;
+  gap: 12px;
+  margin: auto;
+  max-width: 520px;
+  padding: 22px;
+  width: min(520px, calc(100vw - 32px));
+}
+
+.unconfirmed-retrofit-modal h2,
+.unconfirmed-retrofit-modal p {
+  margin: 0;
+}
+
 @media (max-width: 1100px) {
   .retrofit-scenario-grid,
   .editable-estimate-grid,
@@ -2701,7 +2806,14 @@ dd {
 
   .retrofit-card-top-row,
   .section-title-row,
-  .next-action-item {
+  .next-action-item,
+  .current-plan-panel,
+  .retrofit-action-bar,
+  .missing-info-item {
+    grid-template-columns: 1fr;
+  }
+
+  .current-plan-stats {
     grid-template-columns: 1fr;
   }
 }

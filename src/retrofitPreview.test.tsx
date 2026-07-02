@@ -212,6 +212,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Top recommendation");
     expect(html).toContain("Improve your estimates");
     expect(html).toContain("Upload bills");
+    expect(html).toContain("Current retrofit plan");
+    expect(html).toContain("Choose one retrofit at a time");
+    expect(html).toContain("Add this retrofit to plan");
     expect(html).toContain("Retrofit tabs");
     expect(html).not.toContain("Summary across selected retrofits");
     expect(html).toContain("Scenario A: Low upfront cost");
@@ -242,7 +245,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Next-best-action checklist");
     expect(html).toContain("Open program source");
     expect(html).toContain("Included in current estimate");
-    expect(html).toContain("Selected and included in estimate");
+    expect(html).toContain("Selected but not included yet");
     expect(html).toContain("View details");
     expect(html).not.toContain("Premium insight");
     expect(html).not.toContain("Preview-only until a safe persistence API is available");
@@ -270,7 +273,8 @@ describe("retrofit recommendations preview", () => {
 
     expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: true })).toBe(1);
     expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: false })).toBe(0);
-    expect(getOpportunityIncludedLabel(opportunity, true)).toBe("Included in current estimate");
+    expect(getOpportunityIncludedLabel(opportunity, true)).toBe("Not included yet — needs more information");
+    expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Included in current estimate" }, true)).toBe("Included in current estimate");
     expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included in current estimate" }, false)).toBe("Not included in current estimate");
     expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included yet — needs more information" }, false)).toBe("Not included yet — needs more information");
   });
