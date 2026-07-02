@@ -1,6 +1,5 @@
 # AI Changelog
 
-<<<<<<< HEAD
 ## 2026-07-02 - Codex (GPT-5) Geocodio quota guard
 
 - Added a DynamoDB-backed daily quota guard for Geocodio fallback lookups so the API stops calling Geocodio after 2,500 fallback reservations in a UTC day.
@@ -17,6 +16,11 @@
 - Tightened the Retrofit sidebar sub-tabs so `Profile info` and `Dashboard` fit cleanly underneath the group.
 - Indented the secondary items slightly to make the sub-tab hierarchy clearer.
 - Added a TODO at the sidebar retrofit icon helper to replace the temporary icons with a better set later.
+
+## 2026-07-02 - Codex (GPT-5) sidebar primary-row sizing tweak
+
+- Matched `Profile info` and `Dashboard` to the same size and boldness as the retrofit nav items.
+- Tightened the vertical rhythm so the gap before `Profile info` matches the gap between the secondary rows.
 
 ## 2026-07-02 - Codex (GPT-5) user preview collapsed retrofit nav
 
