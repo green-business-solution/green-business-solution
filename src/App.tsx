@@ -6366,20 +6366,28 @@ function RetrofitPickerView({
         </label>
         <div className="picker-view-toggle" aria-label="View mode">
           <button
+            aria-label="Grid view"
             aria-pressed={pickerViewMode === "grid"}
             className={`picker-view-button${pickerViewMode === "grid" ? " is-active" : ""}`}
             onClick={() => onSetViewMode("grid")}
             type="button"
           >
-            Grid
+            <span className="picker-view-button-icons" aria-hidden="true">
+              {pickerViewMode === "grid" ? <SegmentCheckIcon /> : null}
+              <ViewGridIcon />
+            </span>
           </button>
           <button
+            aria-label="Panel view"
             aria-pressed={pickerViewMode === "panel"}
             className={`picker-view-button${pickerViewMode === "panel" ? " is-active" : ""}`}
             onClick={() => onSetViewMode("panel")}
             type="button"
           >
-            Panel
+            <span className="picker-view-button-icons" aria-hidden="true">
+              {pickerViewMode === "panel" ? <SegmentCheckIcon /> : null}
+              <ViewPanelIcon />
+            </span>
           </button>
         </div>
       </section>
@@ -6502,6 +6510,35 @@ function UploadCloudIcon() {
         strokeWidth="3"
       />
       <path d="m24 17.8-7.2 7.2M24 17.8l7.2 7.2M24 17.8v24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+    </svg>
+  );
+}
+
+function SegmentCheckIcon() {
+  return (
+    <svg className="picker-view-check-icon" fill="none" viewBox="0 0 24 24">
+      <path d="M5 12.4 9.2 16.5 19 6.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
+    </svg>
+  );
+}
+
+function ViewGridIcon() {
+  return (
+    <svg className="picker-view-icon" fill="none" viewBox="0 0 24 24">
+      <rect height="5" rx="1.2" stroke="currentColor" strokeWidth="2" width="5" x="4" y="4" />
+      <rect height="5" rx="1.2" stroke="currentColor" strokeWidth="2" width="5" x="15" y="4" />
+      <rect height="5" rx="1.2" stroke="currentColor" strokeWidth="2" width="5" x="4" y="15" />
+      <rect height="5" rx="1.2" stroke="currentColor" strokeWidth="2" width="5" x="15" y="15" />
+    </svg>
+  );
+}
+
+function ViewPanelIcon() {
+  return (
+    <svg className="picker-view-icon" fill="none" viewBox="0 0 24 24">
+      <path d="M5 6.5h14" stroke="currentColor" strokeLinecap="round" strokeWidth="2.2" />
+      <path d="M5 12h14" stroke="currentColor" strokeLinecap="round" strokeWidth="2.2" />
+      <path d="M5 17.5h14" stroke="currentColor" strokeLinecap="round" strokeWidth="2.2" />
     </svg>
   );
 }

@@ -260,8 +260,12 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("<option value=\"payback\">Payback</option>");
     expect(html).toContain("<option value=\"upfront_cost\">Cost</option>");
     expect(html).toContain("Search retrofits");
-    expect(html).toContain("Grid");
-    expect(html).toContain("Panel");
+    expect(html).toContain("aria-label=\"Grid view\"");
+    expect(html).toContain("aria-label=\"Panel view\"");
+    expect(html).toContain("picker-view-icon");
+    expect(html).toContain("picker-view-check-icon");
+    expect(html).not.toContain(">Grid<");
+    expect(html).not.toContain(">Panel<");
     expect(html).toContain("LED Lighting");
     expect(html).not.toContain("LED Lighting Upgrade");
     expect(html).toContain("Replace existing lights with high-efficiency LEDs.");
@@ -501,6 +505,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
     expect(css).toContain(".retrofit-preview-page .retrofit-picker-card:hover");
     expect(css).toContain(".retrofit-preview-page .picker-view-button:hover");
+    expect(css).toContain(".picker-view-button-icons");
+    expect(css).toContain(".picker-view-check-icon");
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");
     expect(css).toContain(".user-preview-toolbar.is-customer-preview");

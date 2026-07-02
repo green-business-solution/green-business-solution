@@ -2553,9 +2553,9 @@ dd {
 .picker-view-toggle {
   background: #ffffff;
   border: 1px solid var(--rf-border);
-  border-radius: 10px;
+  border-radius: 999px;
   display: inline-grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(2, minmax(68px, auto));
   overflow: hidden;
 }
 
@@ -2565,7 +2565,8 @@ dd {
   border-right: 1px solid var(--rf-border);
   color: var(--rf-text);
   min-height: 40px;
-  padding: 0 20px;
+  min-width: 68px;
+  padding: 0 16px;
 }
 
 .picker-view-toggle button:last-child {
@@ -2576,6 +2577,29 @@ dd {
 .picker-view-toggle button[aria-pressed="true"] {
   background: var(--rf-green-soft);
   color: var(--rf-green);
+}
+
+.picker-view-button-icons {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.picker-view-icon,
+.picker-view-check-icon {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.picker-view-icon {
+  height: 22px;
+  width: 22px;
+}
+
+.picker-view-check-icon {
+  height: 23px;
+  width: 23px;
 }
 
 .retrofit-picker-grid {

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit picker view toggle icons
+
+- Replaced the before-click retrofit picker Grid/Panel text toggle with accessible icon-only segmented buttons using local SVG grid, panel, and active-check icons.
+- Restyled the toggle as a rounded pill with RetroFi soft-green active state and readable hover behavior.
+- Updated focused retrofit preview tests to cover the icon-only view controls.
+
 ## 2026-07-02 - Codex (GPT-5) tax and form input GPT Pro prompts
 
 - Added a new GPT Pro work folder for tax-credit package repair, structured question-catalog/form assembly repair, and synthetic test-case profile defaults.
