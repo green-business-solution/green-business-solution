@@ -131,6 +131,11 @@
 - Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
 - Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
 
+## 2026-07-02 - Codex (GPT-5) how it works cloud-only hero background
+
+- Generated a new cloud-only hero background for `How It Works` so the top section can share the same overcast atmosphere as the stage-one scene without repeating the building.
+- Updated the hero background treatment to use that new asset with a lighter dark overlay for readable copy and a cleaner transition into the image below.
+
 ## 2026-07-02 - Codex (GPT-5) how it works shared cloudy backdrop
 
 - Replaced the top `How It Works` hero background with the same stage-one cloudy scene used below so the header reads like a direct extension of the journey image.

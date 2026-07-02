@@ -5803,11 +5803,11 @@ body {
 
 .how-it-works-page .page-hero {
   background:
-    linear-gradient(180deg, rgba(22, 32, 27, 0.08) 0%, rgba(22, 32, 27, 0.56) 68%, rgba(22, 32, 27, 0.96) 100%),
-    linear-gradient(90deg, rgba(7, 14, 10, 0.72) 0%, rgba(7, 14, 10, 0.4) 34%, rgba(7, 14, 10, 0.18) 62%, rgba(7, 14, 10, 0.28) 100%),
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08), transparent 24%),
-    url("/how-it-works/transformation-stage-01.jpg");
-  background-position: center top, center top, 18% 18%, center 14%;
+    linear-gradient(180deg, rgba(22, 32, 27, 0.1) 0%, rgba(22, 32, 27, 0.48) 72%, rgba(22, 32, 27, 0.94) 100%),
+    linear-gradient(90deg, rgba(7, 14, 10, 0.66) 0%, rgba(7, 14, 10, 0.36) 34%, rgba(7, 14, 10, 0.16) 62%, rgba(7, 14, 10, 0.24) 100%),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.07), transparent 24%),
+    url("/how-it-works/hero-clouds-gray.png");
+  background-position: center top, center top, 18% 18%, center center;
   background-repeat: no-repeat;
   background-size: cover, cover, auto, cover;
   border: 0;
