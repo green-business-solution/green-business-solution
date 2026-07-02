@@ -4904,17 +4904,17 @@ export function buildUserRetrofitPreviewResult(
   payload: PortalRetrofitRecommendationsResponse | null
 ): UserRetrofitPreviewResult {
   const estimateBasis = estimateBasisFromPayload(payload);
-  const missingInputs = estimateMissingInputs(payload);
   const retrofits = (payload?.retrofits || []).map((retrofit, index) =>
-    buildRetrofitPreviewCard(retrofit, index, estimateBasis)
+    buildRetrofitPreviewCard(retrofit, index, estimateBasis, payload)
   );
+  const missingInputs = estimateMissingInputs(payload, retrofits[0]);
 
   return {
     profileId: payload?.user?.userId,
     intakeId: payload?.intake?.submissionId,
     customerName: payload?.user?.fullName ?? payload?.intake?.contact?.fullName ?? undefined,
     estimateBasis,
-    estimateCompletenessPercent: estimateCompletenessFromPayload(payload, retrofits),
+    estimateCompletenessPercent: estimateCompletenessFromPayload(payload, retrofits, missingInputs),
     missingInputs,
     topRecommendation: retrofits[0]
       ? {
@@ -4936,7 +4936,8 @@ export function buildUserRetrofitPreviewResult(
 function buildRetrofitPreviewCard(
   retrofit: SampleRetrofitGroup,
   index: number,
-  estimateBasis: EstimateBasisValue
+  estimateBasis: EstimateBasisValue,
+  payload: PortalRetrofitRecommendationsResponse | null
 ): RetrofitPreviewCard {
   const preview = retrofit.savingsPreview || null;
   const isCalculated = preview?.status === "calculated";
@@ -4965,9 +4966,9 @@ function buildRetrofitPreviewCard(
     effectiveCostAfterOneTimeBenefits != null && effectiveCostAfterOneTimeBenefits > 0 && annualRecurringSavings != null
       ? `${Math.round((annualRecurringSavings / effectiveCostAfterOneTimeBenefits) * 100)}%`
       : null;
+  const missingInfo = missingInfoForRetrofit(retrofit, preview, payload);
   const confidencePercent = retrofitConfidencePercent(retrofit);
-  const confidenceLabel = confidenceLabelFromRetrofit(retrofit, confidencePercent);
-  const missingInfo = missingInfoForRetrofit(retrofit, preview);
+  const confidenceLabel = confidenceLabelFromRetrofit(retrofit, confidencePercent, missingInfo, payload);
   const scenarioMetrics = {
     estimatedUpfrontProjectCost: estimatedUpfrontCost,
     upfrontFinancialIncentive,
@@ -5009,8 +5010,8 @@ function buildRetrofitPreviewCard(
     },
     editableAssumptions: buildEditableAssumptions(retrofit),
     scenarios: buildRetrofitScenarios(retrofit, scenarioMetrics, missingInfo),
-    opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview)),
-    operatingSavings: buildOperatingSavingsPreview(retrofit),
+    opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview, payload)),
+    operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
     detailQuestions: detailQuestionsForRetrofit(retrofit)
   };
 }
