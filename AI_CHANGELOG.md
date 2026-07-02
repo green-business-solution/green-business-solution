@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user preview app shell
+
+- Added a modern RetroFi left sidebar shell to the `/user-preview` retrofit picker, with generated retrofit navigation, active state, collapse behavior, and mobile drawer support.
+- Added a compact customer-style top bar with help/profile controls while preserving the existing admin preview controls outside the customer shell.
+- Restored the Grid/Panel segmented control to icon-plus-label buttons matching the new reference style and covered the shell/toggle behavior in focused preview tests.
+
 ## 2026-07-02 - Codex (GPT-5) scroll-driven cloud property reveal
 
 - Integrated the How It Works intro into the existing sticky transformation canvas so the stage-one property scene is present beneath the clouds from the start.

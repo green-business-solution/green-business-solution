@@ -6265,6 +6265,8 @@ export function RetrofitRecommendationsPreview({
   const [lastAddedRetrofitId, setLastAddedRetrofitId] = useState<string | null>(null);
   const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
@@ -6459,120 +6461,259 @@ export function RetrofitRecommendationsPreview({
     setPendingTabRetrofitId(null);
   }
 
+  function handleSidebarRetrofitSelect(retrofitId: string) {
+    handleRetrofitTabClick(retrofitId);
+    setMobileSidebarOpen(false);
+  }
+
   return (
-    <section className="retrofit-preview-page" data-testid="retrofit-recommendations-preview">
-      {error ? <p className="error-message">{error}</p> : null}
-
-      <RetrofitPickerView
+    <div
+      className={`user-preview-shell${sidebarCollapsed ? " is-sidebar-collapsed" : ""}${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}`}
+      data-testid="retrofit-recommendations-preview"
+    >
+      <UserPreviewSidebar
         activeRetrofitId={activeRetrofit?.id || ""}
-        displayedRetrofits={displayedRetrofits}
-        emptyMessage={emptyMessage}
-        isLoading={isLoading}
-        loadingMessage={loadingMessage}
-        hideBillData={shouldMaskBillDerivedMetrics}
-        onCloseDetails={() => setActiveRetrofitId("")}
-        onSearchChange={(value) => {
-          setSearchQuery(value);
-          setPickerVisibleCount(6);
-        }}
-        onSelectRetrofit={handleRetrofitTabClick}
-        onSetViewMode={setPickerViewMode}
-        onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
-        onShowLess={() => setPickerVisibleCount(6)}
-        onSortChange={(value) => {
-          setSortBy(value);
-          setPickerVisibleCount(6);
-        }}
-        onUploadBills={handleUploadBills}
-        pickerViewMode={pickerViewMode}
-        pickerVisibleCount={pickerVisibleCount}
-        searchQuery={searchQuery}
-        sortBy={sortBy}
+        collapsed={sidebarCollapsed}
+        mobileOpen={mobileSidebarOpen}
+        onCloseMobile={() => setMobileSidebarOpen(false)}
+        onSelectRetrofit={handleSidebarRetrofitSelect}
+        onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
+        retrofits={displayedRetrofits}
       />
+      <main className="user-preview-main">
+        <UserPreviewTopBar onOpenMobileSidebar={() => setMobileSidebarOpen(true)} payload={payload} preview={preview} />
+        <section className="retrofit-preview-page">
+          {error ? <p className="error-message">{error}</p> : null}
 
-      {activeRetrofit ? (
-        <>
-          <div className="retrofit-preview-list retrofit-selected-workspace">
-            <div className="selected-workspace-header">
-              <div>
-                <span className="soft-badge">Selected retrofit</span>
-                <h2>{activeRetrofit.name}</h2>
-              </div>
-              <button className="secondary-button" onClick={() => setActiveRetrofitId("")} type="button">
-                Back to all retrofits
-              </button>
-            </div>
-            <RetrofitPreviewCardView
-              confirmedAssumptionIds={confirmedAssumptionIds}
-              detailAnswers={detailAnswers}
-              key={activeRetrofit.id}
-              onConfirmAll={() => confirmAll(activeRetrofit)}
-              onConfirmAssumption={toggleAssumption}
-              onDetailAnswerChange={(questionId, value) => {
-                setDetailAnswers((current) => ({ ...current, [questionId]: value }));
-                markRetrofitDirty(activeRetrofit.id);
-              }}
-              onAddToPlan={() => addRetrofitToPlan(activeRetrofit)}
-              onExploreFinancing={() => setFinancingRetrofit(activeRetrofit)}
-              onReviewNextRetrofit={() => {
-                const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit.id);
-                if (next) handleRetrofitTabClick(next.id);
-              }}
-              onSelectScenario={(scenarioId) => selectScenario(activeRetrofit, scenarioId)}
-              onToggleOpportunity={toggleOpportunity}
-              planState={addedRetrofitPlans[activeRetrofit.id] ? "Added to plan" : dirtyRetrofitIds[activeRetrofit.id] ? "Draft selection" : "Not selected"}
-              retrofit={activeRetrofit}
-              selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
-              selectedOpportunityIds={selectedOpportunityIds}
-              hideBillData={shouldMaskBillDerivedMetrics}
-            />
-          </div>
+          <RetrofitPickerView
+            activeRetrofitId={activeRetrofit?.id || ""}
+            displayedRetrofits={displayedRetrofits}
+            emptyMessage={emptyMessage}
+            isLoading={isLoading}
+            loadingMessage={loadingMessage}
+            hideBillData={shouldMaskBillDerivedMetrics}
+            onCloseDetails={() => setActiveRetrofitId("")}
+            onSearchChange={(value) => {
+              setSearchQuery(value);
+              setPickerVisibleCount(6);
+            }}
+            onSelectRetrofit={handleRetrofitTabClick}
+            onSetViewMode={setPickerViewMode}
+            onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
+            onShowLess={() => setPickerVisibleCount(6)}
+            onSortChange={(value) => {
+              setSortBy(value);
+              setPickerVisibleCount(6);
+            }}
+            onUploadBills={handleUploadBills}
+            pickerViewMode={pickerViewMode}
+            pickerVisibleCount={pickerVisibleCount}
+            searchQuery={searchQuery}
+            sortBy={sortBy}
+          />
 
-          <section className="next-actions-panel">
-            <div>
-              <h2>Next-best-action checklist</h2>
-              <p>Preview of what to apply for first, documents needed, contacts, upgrades to price out, and deadline checks.</p>
-            </div>
-            <div className="next-action-list">
-              {preview.nextActions.map((action) => (
-                <article className="next-action-item" key={action.id}>
+          {activeRetrofit ? (
+            <>
+              <div className="retrofit-preview-list retrofit-selected-workspace">
+                <div className="selected-workspace-header">
                   <div>
-                    <span className={`priority-badge ${action.priority.toLowerCase()}`}>{action.priority}</span>
-                    <h3>{action.text}</h3>
-                    <p>
-                      {action.relatedRetrofitName ? `Related retrofit: ${action.relatedRetrofitName}` : "Related retrofit: General"}
-                      {action.relatedOpportunityName ? ` · Related opportunity: ${action.relatedOpportunityName}` : ""}
-                    </p>
+                    <span className="soft-badge">Selected retrofit</span>
+                    <h2>{activeRetrofit.name}</h2>
                   </div>
-                  <select
-                    aria-label={`Status for ${action.text}`}
-                    onChange={(event) => setNextActionStatuses((current) => ({ ...current, [action.id]: event.target.value as NextBestAction["status"] }))}
-                    value={nextActionStatuses[action.id] || action.status}
-                  >
-                    <option>Not started</option>
-                    <option>In progress</option>
-                    <option>Done</option>
-                  </select>
-                </article>
+                  <button className="secondary-button" onClick={() => setActiveRetrofitId("")} type="button">
+                    Back to all retrofits
+                  </button>
+                </div>
+                <RetrofitPreviewCardView
+                  confirmedAssumptionIds={confirmedAssumptionIds}
+                  detailAnswers={detailAnswers}
+                  key={activeRetrofit.id}
+                  onConfirmAll={() => confirmAll(activeRetrofit)}
+                  onConfirmAssumption={toggleAssumption}
+                  onDetailAnswerChange={(questionId, value) => {
+                    setDetailAnswers((current) => ({ ...current, [questionId]: value }));
+                    markRetrofitDirty(activeRetrofit.id);
+                  }}
+                  onAddToPlan={() => addRetrofitToPlan(activeRetrofit)}
+                  onExploreFinancing={() => setFinancingRetrofit(activeRetrofit)}
+                  onReviewNextRetrofit={() => {
+                    const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit.id);
+                    if (next) handleRetrofitTabClick(next.id);
+                  }}
+                  onSelectScenario={(scenarioId) => selectScenario(activeRetrofit, scenarioId)}
+                  onToggleOpportunity={toggleOpportunity}
+                  planState={addedRetrofitPlans[activeRetrofit.id] ? "Added to plan" : dirtyRetrofitIds[activeRetrofit.id] ? "Draft selection" : "Not selected"}
+                  retrofit={activeRetrofit}
+                  selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
+                  selectedOpportunityIds={selectedOpportunityIds}
+                  hideBillData={shouldMaskBillDerivedMetrics}
+                />
+              </div>
+
+              <section className="next-actions-panel">
+                <div>
+                  <h2>Next-best-action checklist</h2>
+                  <p>Preview of what to apply for first, documents needed, contacts, upgrades to price out, and deadline checks.</p>
+                </div>
+                <div className="next-action-list">
+                  {preview.nextActions.map((action) => (
+                    <article className="next-action-item" key={action.id}>
+                      <div>
+                        <span className={`priority-badge ${action.priority.toLowerCase()}`}>{action.priority}</span>
+                        <h3>{action.text}</h3>
+                        <p>
+                          {action.relatedRetrofitName ? `Related retrofit: ${action.relatedRetrofitName}` : "Related retrofit: General"}
+                          {action.relatedOpportunityName ? ` · Related opportunity: ${action.relatedOpportunityName}` : ""}
+                        </p>
+                      </div>
+                      <select
+                        aria-label={`Status for ${action.text}`}
+                        onChange={(event) => setNextActionStatuses((current) => ({ ...current, [action.id]: event.target.value as NextBestAction["status"] }))}
+                        value={nextActionStatuses[action.id] || action.status}
+                      >
+                        <option>Not started</option>
+                        <option>In progress</option>
+                        <option>Done</option>
+                      </select>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+          {financingRetrofit ? (
+            <FinancingPreviewDrawer retrofit={financingRetrofit} onClose={() => setFinancingRetrofit(null)} />
+          ) : null}
+
+          {pendingTabRetrofitId && activeRetrofit ? (
+            <UnconfirmedRetrofitModal
+              onAddToPlan={() => addRetrofitToPlan(activeRetrofit, pendingTabRetrofitId)}
+              onContinueEditing={() => setPendingTabRetrofitId(null)}
+              onDiscard={discardActiveDraftAndSwitch}
+              retrofitName={activeRetrofit.name}
+            />
+          ) : null}
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function UserPreviewTopBar({
+  onOpenMobileSidebar,
+  payload,
+  preview
+}: {
+  onOpenMobileSidebar: () => void;
+  payload: PortalRetrofitRecommendationsResponse | null;
+  preview: UserRetrofitPreviewResult;
+}) {
+  const customerName = preview.customerName || payload?.user?.fullName || payload?.intake?.contact.fullName || "Sample User";
+  const customerContext = payload?.intake?.business.companyName || payload?.user?.companyName || payload?.intake?.business.headquarters || "Retrofit preview";
+  const initials = initialsForName(customerName);
+  return (
+    <header className="user-preview-topbar" aria-label="Customer preview bar">
+      <button className="user-preview-mobile-menu-button" onClick={onOpenMobileSidebar} type="button">
+        <ViewPanelIcon />
+        <span className="sr-only">Open retrofit navigation</span>
+      </button>
+      <div className="user-preview-topbar-spacer" />
+      <button className="user-preview-help-button" type="button" aria-label="Help">
+        ?
+      </button>
+      <div className="user-preview-profile-summary">
+        <strong>{customerName}</strong>
+        <span>{customerContext}</span>
+      </div>
+      <div className="user-preview-avatar" aria-hidden="true">
+        {initials}
+      </div>
+      <button className="user-preview-profile-menu-button" type="button" aria-label="Open profile menu">
+        <ChevronDownIcon />
+      </button>
+    </header>
+  );
+}
+
+function initialsForName(name: string) {
+  const parts = name
+    .replace(/@.*/, "")
+    .split(/\s+|[._-]+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "U";
+}
+
+function UserPreviewSidebar({
+  activeRetrofitId,
+  collapsed,
+  mobileOpen,
+  onCloseMobile,
+  onSelectRetrofit,
+  onToggleCollapsed,
+  retrofits
+}: {
+  activeRetrofitId: string;
+  collapsed: boolean;
+  mobileOpen: boolean;
+  onCloseMobile: () => void;
+  onSelectRetrofit: (retrofitId: string) => void;
+  onToggleCollapsed: () => void;
+  retrofits: RetrofitPreviewCard[];
+}) {
+  const [retrofitsOpen, setRetrofitsOpen] = useState(true);
+  const activeNavRetrofitId = activeRetrofitId || retrofits[0]?.id || "";
+  return (
+    <>
+      {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
+      <aside className={`user-preview-sidebar${collapsed ? " is-collapsed" : ""}${mobileOpen ? " is-mobile-open" : ""}`} aria-label="RetroFi navigation">
+        <div className="user-preview-sidebar-brand">
+          <RetroFiBrandIcon />
+          <strong className="sidebar-wordmark">RetroFi</strong>
+        </div>
+        <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
+          <button
+            aria-expanded={retrofitsOpen}
+            className="sidebar-section-trigger"
+            onClick={() => setRetrofitsOpen((current) => !current)}
+            type="button"
+          >
+            <HomeOutlineIcon />
+            <span className="sidebar-label">Retrofits</span>
+            <ChevronDownIcon />
+          </button>
+          {retrofitsOpen ? (
+            <div className="sidebar-retrofit-list">
+              {retrofits.map((retrofit) => (
+                <button
+                  className={`sidebar-retrofit-item${activeNavRetrofitId === retrofit.id ? " is-active" : ""}`}
+                  key={retrofit.id}
+                  onClick={() => onSelectRetrofit(retrofit.id)}
+                  type="button"
+                >
+                  <SidebarRetrofitIcon retrofit={retrofit} />
+                  <span className="sidebar-label">{retrofit.name}</span>
+                </button>
               ))}
             </div>
-          </section>
-        </>
-      ) : null}
-
-      {financingRetrofit ? (
-        <FinancingPreviewDrawer retrofit={financingRetrofit} onClose={() => setFinancingRetrofit(null)} />
-      ) : null}
-
-      {pendingTabRetrofitId && activeRetrofit ? (
-        <UnconfirmedRetrofitModal
-          onAddToPlan={() => addRetrofitToPlan(activeRetrofit, pendingTabRetrofitId)}
-          onContinueEditing={() => setPendingTabRetrofitId(null)}
-          onDiscard={discardActiveDraftAndSwitch}
-          retrofitName={activeRetrofit.name}
-        />
-      ) : null}
-    </section>
+          ) : null}
+        </nav>
+        <nav className="user-preview-sidebar-secondary" aria-label="Profile navigation">
+          <button className="sidebar-secondary-item" type="button">
+            <ProfileInfoIcon />
+            <span className="sidebar-label">Profile info</span>
+          </button>
+          <button className="sidebar-secondary-item" type="button">
+            <DashboardIcon />
+            <span className="sidebar-label">Dashboard</span>
+          </button>
+        </nav>
+        <button className="user-preview-sidebar-collapse" onClick={onToggleCollapsed} type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
+          <DoubleChevronIcon />
+        </button>
+      </aside>
+    </>
   );
 }
 
@@ -6666,10 +6807,8 @@ function RetrofitPickerView({
             onClick={() => onSetViewMode("grid")}
             type="button"
           >
-            <span className="picker-view-button-icons" aria-hidden="true">
-              {pickerViewMode === "grid" ? <SegmentCheckIcon /> : null}
-              <ViewGridIcon />
-            </span>
+            <ViewGridIcon />
+            <span>Grid</span>
           </button>
           <button
             aria-label="Panel view"
@@ -6678,10 +6817,8 @@ function RetrofitPickerView({
             onClick={() => onSetViewMode("panel")}
             type="button"
           >
-            <span className="picker-view-button-icons" aria-hidden="true">
-              {pickerViewMode === "panel" ? <SegmentCheckIcon /> : null}
-              <ViewPanelIcon />
-            </span>
+            <ViewPanelIcon />
+            <span>Panel</span>
           </button>
         </div>
       </section>
@@ -6808,10 +6945,53 @@ function UploadCloudIcon() {
   );
 }
 
-function SegmentCheckIcon() {
+function RetroFiBrandIcon() {
   return (
-    <svg className="picker-view-check-icon" fill="none" viewBox="0 0 24 24">
-      <path d="M5 12.4 9.2 16.5 19 6.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
+    <svg className="retrofi-brand-icon" fill="none" viewBox="0 0 24 24">
+      <path
+        d="M5.2 12.2c0-3.6 2.8-6.8 7.6-8.5 3.8 1.4 6 4 6 7.2 0 4.4-3.8 7.9-8.5 7.9H7.6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path d="M12.8 3.7v16.6M12.8 11.5l-5.1 5.1M12.8 12.8l4.1-4.1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg className="chevron-down-icon" fill="none" viewBox="0 0 20 20">
+      <path d="m5.8 7.6 4.2 4.2 4.2-4.2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function DoubleChevronIcon() {
+  return (
+    <svg className="double-chevron-icon" fill="none" viewBox="0 0 20 20">
+      <path d="m12 5-5 5 5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+      <path d="m16 5-5 5 5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function ProfileInfoIcon() {
+  return (
+    <svg className="sidebar-line-icon" fill="none" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.9" />
+      <path d="M5.8 20c.8-3.4 3-5.2 6.2-5.2s5.4 1.8 6.2 5.2" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
+    </svg>
+  );
+}
+
+function DashboardIcon() {
+  return (
+    <svg className="sidebar-line-icon" fill="none" viewBox="0 0 24 24">
+      <path d="M4.5 19.5h15" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
+      <path d="M6.5 17V9.5M12 17V5M17.5 17v-4.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
+      <path d="m6.5 9.5 3.2 3.1 3.8-5.1 4 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9" />
     </svg>
   );
 }
@@ -6886,8 +7066,26 @@ function MetricImpactIcon() {
 }
 
 function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
+  const Icon = iconForRetrofit(retrofit);
+  return (
+    <div className="retrofit-picker-icon" aria-hidden="true">
+      <Icon />
+    </div>
+  );
+}
+
+function SidebarRetrofitIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
+  const Icon = iconForRetrofit(retrofit);
+  return (
+    <span className="sidebar-retrofit-icon" aria-hidden="true">
+      <Icon />
+    </span>
+  );
+}
+
+function iconForRetrofit(retrofit: RetrofitPreviewCard) {
   const category = `${retrofit.category || ""} ${retrofit.name}`.toLowerCase();
-  const Icon =
+  return (
     category.includes("insulation") || category.includes("envelope")
       ? HomeOutlineIcon
       : category.includes("solar")
@@ -6900,11 +7098,7 @@ function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
               ? FactoryOutlineIcon
               : category.includes("lighting") || category.includes("led")
                 ? LeafOutlineIcon
-                : BuildingOutlineIcon;
-  return (
-    <div className="retrofit-picker-icon" aria-hidden="true">
-      <Icon />
-    </div>
+                : BuildingOutlineIcon
   );
 }
 
