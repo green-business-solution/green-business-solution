@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application source timeout fix
+
+- Reworked `GET /api/admin/application-sources` into a bounded, metadata-only paged read with default `limit=100`, explicit timing logs, and safe JSON failures instead of an unbounded full-table scan that could 504 in production.
+- Kept `ApplicationSourceResolver` classification read-only and based on existing opportunity metadata only, with no live external URL validation in the endpoint path.
+- Updated the admin application-sources page to handle loading, empty, error, and incremental load-more states against the paged response.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview consistency polish
 
 - Tightened the Retrofit Recommendations preview labels so the included-estimate truth table visibly uses “Included in current estimate” even when all selected opportunities are pending validation.

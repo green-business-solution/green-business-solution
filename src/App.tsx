@@ -399,6 +399,10 @@ type OpportunityApplicationSource = {
 type AdminApplicationSourcesResponse = {
   generatedAt: string;
   total: number;
+  limit?: number;
+  nextCursor?: string | null;
+  note?: string | null;
+  error?: string;
   sources: OpportunityApplicationSource[];
 };
 
@@ -7680,6 +7684,11 @@ function AdminDashboard({
       return;
     }
 
+    if (tab === ADMIN_APPLICATION_SOURCES_TAB) {
+      markSectionLoaded(sectionKey);
+      return;
+    }
+
     if (!credential) {
       setError("Sign in again to refresh the admin dashboard.");
       return;
@@ -9328,31 +9337,57 @@ function AdminDataPanel({
 function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredential | null }) {
   const [payload, setPayload] = useState<AdminApplicationSourcesResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [sourceTypeFilter, setSourceTypeFilter] = useState("");
   const [methodFilter, setMethodFilter] = useState("");
+  const batchLimit = 100;
 
-  async function loadSources() {
+  async function loadSources(options?: { cursor?: string | null; append?: boolean }) {
     if (!credential) {
       setError("Sign in again to load application sources.");
       setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
+    const append = Boolean(options?.append);
+    if (append) {
+      setIsLoadingMore(true);
+    } else {
+      setIsLoading(true);
+    }
     setError(null);
 
     try {
-      const response = await apiGet<AdminApplicationSourcesResponse>("/api/admin/application-sources", {
+      const params = new URLSearchParams({ limit: String(batchLimit) });
+      if (options?.cursor) {
+        params.set("cursor", options.cursor);
+      }
+      const response = await apiGet<AdminApplicationSourcesResponse>(`/api/admin/application-sources?${params.toString()}`, {
         headers: adminAuthHeaders(credential)
       });
-      setPayload(response);
+      setPayload((current) => {
+        if (!append || !current) {
+          return response;
+        }
+
+        const mergedSources = [...current.sources, ...response.sources.filter((row) => !current.sources.some((existing) => existing.opportunityId === row.opportunityId))];
+        return {
+          ...response,
+          total: mergedSources.length,
+          sources: mergedSources
+        };
+      });
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not load application sources.");
     } finally {
-      setIsLoading(false);
+      if (append) {
+        setIsLoadingMore(false);
+      } else {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -9396,7 +9431,7 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
           <p className="eyebrow">Application source audit</p>
           <h2>{payload?.total ?? rows.length} opportunity source profiles</h2>
         </div>
-        <button className="secondary-button" disabled={isLoading} onClick={() => void loadSources()} type="button">
+        <button className="secondary-button" disabled={isLoading || isLoadingMore} onClick={() => void loadSources()} type="button">
           {isLoading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
@@ -9421,11 +9456,21 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
         <span>{payload?.generatedAt ? `Generated ${formatProgramDate(payload.generatedAt)}` : "Source resolver audit"}</span>
       </div>
 
+      {payload?.note ? <p className="muted-message">{payload.note}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
 
       <section className="application-source-table-shell">
         {isLoading && rows.length === 0 ? (
           <p className="empty-state">Loading application source audit...</p>
+        ) : error && rows.length === 0 ? (
+          <div className="empty-state">
+            <p>Could not load the application source audit.</p>
+            <button className="secondary-button" onClick={() => void loadSources()} type="button">
+              Retry
+            </button>
+          </div>
+        ) : rows.length === 0 ? (
+          <p className="empty-state">{payload?.note || "No application source rows are available yet."}</p>
         ) : filteredRows.length === 0 ? (
           <p className="empty-state">No application source rows match the current filters.</p>
         ) : (
@@ -9495,6 +9540,20 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
           </div>
         )}
       </section>
+
+      {payload?.nextCursor ? (
+        <div className="review-count-row">
+          <span>Additional opportunity source rows are available.</span>
+          <button
+            className="secondary-button"
+            disabled={isLoading || isLoadingMore}
+            onClick={() => void loadSources({ cursor: payload.nextCursor || null, append: true })}
+            type="button"
+          >
+            {isLoadingMore ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -94,6 +94,10 @@ const databaseBatchScanLimit = Math.min(
   250,
   Math.max(25, Number.parseInt(process.env.GBS_DATABASE_BATCH_SCAN_LIMIT || "100", 10) || 100)
 );
+const applicationSourceBatchLimit = Math.min(
+  200,
+  Math.max(25, Number.parseInt(process.env.GBS_APPLICATION_SOURCE_BATCH_LIMIT || "100", 10) || 100)
+);
 const googleOAuthStateCookie = "gbs_google_oauth_state";
 const oauthRedirectResultStorageKey = "gbs-oauth-redirect-result";
 const oauthRedirectErrorStorageKey = "gbs-oauth-redirect-error";
@@ -2175,16 +2179,63 @@ async function buildAdminUserRows() {
   }));
 }
 
-async function buildAdminApplicationSources() {
-  const opportunities = await scanAll(opportunitiesTable);
-  return opportunities
-    .filter((opportunity) => isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity))
+async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
+  const startedAt = Date.now();
+  const pageLimit = Math.min(Math.max(limit, 25), 200);
+  const opportunities = [];
+  let ExclusiveStartKey = cursor;
+  let scannedCount = 0;
+  let scanCalls = 0;
+
+  do {
+    const result = await db.send(
+      new ScanCommand({
+        TableName: opportunitiesTable,
+        ExclusiveStartKey,
+        Limit: pageLimit
+      })
+    );
+    const items = result.Items || [];
+    scannedCount += items.length;
+    scanCalls += 1;
+
+    for (const opportunity of items) {
+      if (isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity)) {
+        opportunities.push(opportunity);
+        if (opportunities.length >= limit) {
+          break;
+        }
+      }
+    }
+
+    ExclusiveStartKey = result.LastEvaluatedKey;
+  } while (ExclusiveStartKey && opportunities.length < limit);
+
+  return {
+    opportunities,
+    scannedCount,
+    scanCalls,
+    nextCursor: encodeScanCursor(ExclusiveStartKey),
+    loadDurationMs: Date.now() - startedAt
+  };
+}
+
+async function buildAdminApplicationSourcesBatch({ cursor, limit }) {
+  const loaded = await loadAdminApplicationSourceOpportunityBatch({ cursor, limit });
+  const resolveStartedAt = Date.now();
+  const sources = loaded.opportunities
     .sort((a, b) =>
       String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
         String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
       )
     )
     .map((opportunity) => resolveOpportunityApplicationSource(opportunity));
+
+  return {
+    ...loaded,
+    sources,
+    resolveDurationMs: Date.now() - resolveStartedAt
+  };
 }
 
 async function buildAdminTableSnapshot(tableName) {
@@ -3061,11 +3112,49 @@ app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) =
 app.get("/api/admin/application-sources", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
-    const sources = await buildAdminApplicationSources();
+    const limit = parsePositiveInteger(req.query.limit, applicationSourceBatchLimit, 200);
+    const cursor = decodeScanCursor(req.query.cursor);
+    const requestStartedAt = Date.now();
+
+    console.log(
+      `[admin/application-sources] start limit=${limit} cursor=${cursor ? "provided" : "none"}`
+    );
+
+    let batch;
+    try {
+      batch = await buildAdminApplicationSourcesBatch({ cursor, limit });
+    } catch (error) {
+      console.error("[admin/application-sources] failed to load application sources", error);
+      res.status(500).json({
+        error: "Could not load application sources.",
+        generatedAt: new Date().toISOString(),
+        total: 0,
+        limit,
+        nextCursor: null,
+        note: "Opportunity loading failed while building the application source audit.",
+        sources: []
+      });
+      return;
+    }
+
+    console.log(
+      `[admin/application-sources] loaded opportunities=${batch.opportunities.length} scanned=${batch.scannedCount} scanCalls=${batch.scanCalls} loadMs=${batch.loadDurationMs} resolveMs=${batch.resolveDurationMs} totalMs=${Date.now() - requestStartedAt}`
+    );
+
+    const note =
+      batch.sources.length === 0
+        ? "No visible opportunities were found for the application source audit."
+        : batch.nextCursor
+          ? `Showing ${batch.sources.length} application source profiles. Load more to continue auditing additional opportunities.`
+          : null;
+
     res.json({
       generatedAt: new Date().toISOString(),
-      total: sources.length,
-      sources
+      total: batch.sources.length,
+      limit,
+      nextCursor: batch.nextCursor,
+      note,
+      sources: batch.sources
     });
   } catch (error) {
     handleError(res, error);
