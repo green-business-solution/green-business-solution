@@ -71,14 +71,28 @@ mkdir -p "${LAMBDA_PACKAGE_DIR}"
 cp package.json package-lock.json "${LAMBDA_PACKAGE_DIR}/"
 cp -R server "${LAMBDA_PACKAGE_DIR}/server"
 mkdir -p "${LAMBDA_PACKAGE_DIR}/data"
-cp data/bill_field_dictionary.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/savings_models.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/opportunity_savings_mapping.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/opportunity_incentive_rules.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/opportunity_incentive_calculation_packages_v2.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/calculation_requirements.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/project_cost_benchmarks.json "${LAMBDA_PACKAGE_DIR}/data/"
-cp data/savings_calculation_methods.json "${LAMBDA_PACKAGE_DIR}/data/"
+
+copy_data_file() {
+  local file_path="$1"
+  local required="${2:-required}"
+  if [ -f "${file_path}" ]; then
+    cp "${file_path}" "${LAMBDA_PACKAGE_DIR}/data/"
+  elif [ "${required}" = "required" ]; then
+    echo "Required deploy data file is missing: ${file_path}" >&2
+    exit 1
+  else
+    echo "Skipping optional deploy data file not present: ${file_path}"
+  fi
+}
+
+copy_data_file data/bill_field_dictionary.json
+copy_data_file data/savings_models.json
+copy_data_file data/opportunity_savings_mapping.json
+copy_data_file data/opportunity_incentive_rules.json
+copy_data_file data/opportunity_incentive_calculation_packages_v2.json
+copy_data_file data/calculation_requirements.json optional
+copy_data_file data/project_cost_benchmarks.json optional
+copy_data_file data/savings_calculation_methods.json optional
 
 (
   cd "${LAMBDA_PACKAGE_DIR}"
