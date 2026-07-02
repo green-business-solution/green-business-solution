@@ -6,6 +6,12 @@
 - Added a compact customer-style top bar with help/profile controls while preserving the existing admin preview controls outside the customer shell.
 - Restored the Grid/Panel segmented control to icon-plus-label buttons matching the new reference style and covered the shell/toggle behavior in focused preview tests.
 
+## 2026-07-02 - Codex (GPT-5) radial cloud reveal
+
+- Replaced the How It Works two-piece clipped cloud wipe with multiple independent soft cloud objects using the existing gray cloud artwork.
+- Added scroll-driven radial cloud drift with varied movement, opacity, scale, and blur so the underlying seven-step property transformation is revealed organically.
+- Preserved the existing property progression, one-active-step text behavior, full-bleed sticky layout, and reduced-motion handling without adding dependencies.
+
 ## 2026-07-02 - Codex (GPT-5) scroll-driven cloud property reveal
 
 - Integrated the How It Works intro into the existing sticky transformation canvas so the stage-one property scene is present beneath the clouds from the start.

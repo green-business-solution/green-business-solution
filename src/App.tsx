@@ -2914,6 +2914,143 @@ function HowItWorksPage({
       image: "/how-it-works/transformation-stage-07-retrofi.jpg"
     }
   ];
+  const cloudLayers = [
+    {
+      className: "journey-cloud-object journey-cloud-object-ambient",
+      left: "-14vw",
+      top: "-13vh",
+      width: "128vw",
+      height: "78vh",
+      exitX: 0,
+      exitY: -32,
+      speed: 0.82,
+      opacity: 0.78,
+      baseScale: 1,
+      exitScale: 1.08,
+      blur: 1.6,
+      exitBlur: 4
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-back",
+      left: "9vw",
+      top: "-8vh",
+      width: "82vw",
+      height: "48vh",
+      exitX: 0,
+      exitY: -34,
+      speed: 0.92,
+      opacity: 0.72,
+      baseScale: 1,
+      exitScale: 1.04,
+      blur: 1.1,
+      exitBlur: 3
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-mid",
+      left: "-10vw",
+      top: "13vh",
+      width: "72vw",
+      height: "58vh",
+      exitX: -42,
+      exitY: -16,
+      speed: 1.06,
+      opacity: 0.88,
+      baseScale: 1.02,
+      exitScale: 1.12,
+      blur: 0.4,
+      exitBlur: 2.8
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-mid",
+      left: "42vw",
+      top: "10vh",
+      width: "74vw",
+      height: "60vh",
+      exitX: 43,
+      exitY: -14,
+      speed: 1.02,
+      opacity: 0.9,
+      baseScale: 1.02,
+      exitScale: 1.1,
+      blur: 0.3,
+      exitBlur: 2.5
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-front",
+      left: "-18vw",
+      top: "52vh",
+      width: "68vw",
+      height: "47vh",
+      exitX: -34,
+      exitY: 28,
+      speed: 1.18,
+      opacity: 0.94,
+      baseScale: 1.04,
+      exitScale: 1.16,
+      blur: 0,
+      exitBlur: 2.2
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-front",
+      left: "50vw",
+      top: "51vh",
+      width: "70vw",
+      height: "48vh",
+      exitX: 34,
+      exitY: 30,
+      speed: 1.2,
+      opacity: 0.94,
+      baseScale: 1.04,
+      exitScale: 1.16,
+      blur: 0,
+      exitBlur: 2.2
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-front",
+      left: "15vw",
+      top: "37vh",
+      width: "72vw",
+      height: "44vh",
+      exitX: 0,
+      exitY: 26,
+      speed: 1.1,
+      opacity: 0.82,
+      baseScale: 1.02,
+      exitScale: 1.12,
+      blur: 0.2,
+      exitBlur: 2.8
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-edge",
+      left: "-28vw",
+      top: "2vh",
+      width: "48vw",
+      height: "88vh",
+      exitX: -42,
+      exitY: 2,
+      speed: 0.98,
+      opacity: 0.72,
+      baseScale: 1,
+      exitScale: 1.08,
+      blur: 0.9,
+      exitBlur: 3
+    },
+    {
+      className: "journey-cloud-object journey-cloud-object-edge",
+      left: "80vw",
+      top: "4vh",
+      width: "48vw",
+      height: "86vh",
+      exitX: 42,
+      exitY: 0,
+      speed: 1,
+      opacity: 0.72,
+      baseScale: 1,
+      exitScale: 1.08,
+      blur: 0.9,
+      exitBlur: 3
+    }
+  ];
 
   const revealScrollUnits = 1.2;
   const journeyScrollUnits = stages.length - 1;
@@ -2927,12 +3064,17 @@ function HowItWorksPage({
   const activeStageIndex = Math.min(stages.length - 1, Math.max(0, Math.round(journeyProgress)));
   const activeStage = stages[activeStageIndex];
   const easedRevealProgress = revealProgress * revealProgress * (3 - 2 * revealProgress);
-  const cloudOpacity = prefersReducedMotion
-    ? revealProgress < 1
-      ? 1
-      : 0
-    : 1 - easedRevealProgress;
   const cloudTravelProgress = prefersReducedMotion ? 0 : easedRevealProgress;
+  const cloudHazeOpacity = prefersReducedMotion
+    ? revealProgress < 1
+      ? 0.32
+      : 0
+    : Math.max(0, 0.32 * (1 - easedRevealProgress));
+  const cloudSkyOpacity = prefersReducedMotion
+    ? revealProgress < 1
+      ? 0.78
+      : 0
+    : Math.max(0, 0.78 * (1 - easedRevealProgress));
   const showIntro = prefersReducedMotion ? revealProgress < 1 : revealProgress < 0.7;
   const introOpacity = prefersReducedMotion ? 1 : Math.max(0, 1 - revealProgress / 0.55);
   const visualProgress = (() => {
@@ -3030,27 +3172,42 @@ function HowItWorksPage({
             ))}
           </div>
           <div className="journey-vignette" aria-hidden="true" />
-          <div className="journey-cloud-reveal" aria-hidden="true" style={{ opacity: cloudOpacity }}>
-            <img
-              alt=""
-              className="journey-cloud-layer journey-cloud-layer-upper"
-              decoding="async"
-              fetchPriority="high"
-              src="/how-it-works/hero-clouds-gray.png"
+          <div className="journey-cloud-reveal" aria-hidden="true">
+            <div
+              className="journey-cloud-sky"
               style={{
-                transform: `translate3d(${-4 * cloudTravelProgress}vw, ${-16 * cloudTravelProgress}vh, 0) scale(${1 + 0.04 * cloudTravelProgress})`
+                opacity: cloudSkyOpacity,
+                transform: `translate3d(${4 * cloudTravelProgress}vw, ${-5 * cloudTravelProgress}vh, 0) scale(${1 + 0.03 * cloudTravelProgress})`
               }}
             />
-            <img
-              alt=""
-              className="journey-cloud-layer journey-cloud-layer-lower"
-              decoding="async"
-              fetchPriority="high"
-              src="/how-it-works/hero-clouds-gray.png"
-              style={{
-                transform: `translate3d(${4 * cloudTravelProgress}vw, ${16 * cloudTravelProgress}vh, 0) scale(${1 + 0.04 * cloudTravelProgress})`
-              }}
-            />
+            <div className="journey-cloud-haze" style={{ opacity: cloudHazeOpacity }} />
+            {cloudLayers.map((cloud, index) => {
+              const cloudProgress = prefersReducedMotion ? 0 : Math.min(1, cloudTravelProgress * cloud.speed);
+              const opacityProgress = Math.min(1, Math.max(0, (cloudProgress - 0.08) / 0.92));
+              const layerOpacity = prefersReducedMotion
+                ? revealProgress < 1
+                  ? cloud.opacity * 0.38
+                  : 0
+                : Math.max(0, cloud.opacity * 0.38 * (1 - opacityProgress * opacityProgress));
+              const scale = cloud.baseScale + (cloud.exitScale - cloud.baseScale) * cloudProgress;
+              const blur = cloud.blur + 8 + cloud.exitBlur * cloudProgress;
+
+              return (
+                <div
+                  className={cloud.className}
+                  key={`journey-cloud-${index}`}
+                  style={{
+                    filter: `blur(${blur}px)`,
+                    height: cloud.height,
+                    left: cloud.left,
+                    opacity: layerOpacity,
+                    top: cloud.top,
+                    transform: `translate3d(${cloud.exitX * cloudProgress}vw, ${cloud.exitY * cloudProgress}vh, 0) scale(${scale})`,
+                    width: cloud.width
+                  }}
+                />
+              );
+            })}
           </div>
           {showIntro ? (
             <header
