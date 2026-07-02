@@ -1,0 +1,1133 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-02",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22375",
+"confidence": "high",
+"availabilityStatus": "temporarily_closed",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Portland General Electric"
+],
+"notes": "Limited to Portland General Electric nonresidential electric service territory; underserved-community location rules affect enhanced rebate levels."
+},
+"eligibleApplicantTypes": [
+"nonresidential_pge_customers",
+"commercial_property_owners",
+"multifamily_property_owners",
+"workplaces",
+"fleet_operators"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily",
+"fleet",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_ev_charger_installation",
+"ev_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a qualifying PGE nonresidential customer or site in PGE electric service territory.",
+"Equipment must be qualified Level 2 charging equipment or qualified DC fast charging equipment under the applicable PGE business rebate path.",
+"Applications and required invoices, permits, site and equipment documentation must be submitted through PGE's business EV charging rebate process.",
+"DC fast charger projects must meet PGE public access, connector, ADA, minimum power, and site requirements when applicable.",
+"Rebates are subject to program funding, reservation rules, and PGE approval."
+],
+"blockers": [
+"Current official pages state program funding is exhausted and new reservations or unreserved rebate applications are not being approved except waitlist interest.",
+"Do not match residential home chargers to this commercial and multifamily business rebate.",
+"Do not infer solar, battery storage, fleet vehicle purchase, or general electrical upgrades beyond eligible charging equipment and installation."
+],
+"programType": "rebate_program",
+"administrator": "Portland General Electric",
+"applicationUrl": "[https://bizev.powerclerk.com/MvcAccount/Login](https://bizev.powerclerk.com/MvcAccount/Login)",
+"websiteUrl": "[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/ev-charging-pilot-program-business](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/ev-charging-pilot-program-business)",
+"sourceUrlsChecked": [
+"[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/ev-charging-pilot-program-business](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/ev-charging-pilot-program-business)",
+"[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/level-2-ev-charger-and-install-rebates](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/level-2-ev-charger-and-install-rebates)",
+"[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/dcfc-rebates](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/dcfc-rebates)",
+"[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/business-ev-charging-rebates-faq](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/business-ev-charging-rebates-faq)",
+"[https://bizev.powerclerk.com/MvcAccount/Login](https://bizev.powerclerk.com/MvcAccount/Login)"
+],
+"evidenceText": "PGE pages identify business EV charger rebates for qualified Level 2 and DC fast chargers, but current application sections state funding is exhausted and only a waitlist is available.",
+"reasoningNotes": "The EV charging match is source-backed, but availability must be temporarily closed because official PGE pages say funding is exhausted. Keep only business Level 2 and DCFC charging categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22374",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Portland General Electric"
+],
+"notes": "Limited to PGE residential electric customers and eligible home charging sites in PGE service territory."
+},
+"eligibleApplicantTypes": [
+"residential_pge_customers",
+"homeowners",
+"ev_owners_or_lessees",
+"low_and_moderate_income_customers"
+],
+"eligibleSectors": [
+"residential",
+"single_family"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"residential_ev_charger",
+"electric_panel_upgrade",
+"managed_ev_charging"
+],
+"hardRequirements": [
+"Applicant must have a qualifying residential PGE electric account.",
+"Customer must own or lease an eligible electric vehicle or plug-in hybrid vehicle.",
+"Smart Charging participation requires an eligible connected charger, vehicle connection, or approved Tesla or WeaveGrid pathway.",
+"PGE Plus charger installation rebates require a qualified home installation path, account in good standing, and program documentation.",
+"Income-qualified rebate amounts require income verification where applicable."
+],
+"blockers": [
+"Do not match commercial, fleet, public DC fast charging, or multifamily business projects to this residential home charging path.",
+"PGE Plus home installation terms exclude some multifamily apartment or condominium building configurations.",
+"Panel work is eligible only when tied to PGE Plus home charger installation rules, not as a standalone general panel upgrade."
+],
+"programType": "rebate_program",
+"administrator": "Portland General Electric",
+"applicationUrl": "[https://portlandgeneral.com/secure/pge-plus/ev-charger/rebate-only](https://portlandgeneral.com/secure/pge-plus/ev-charger/rebate-only)",
+"websiteUrl": "[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/charging-your-ev-at-home](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/charging-your-ev-at-home)",
+"sourceUrlsChecked": [
+"[https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/charging-your-ev-at-home](https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/charging-your-ev-at-home)",
+"[https://portlandgeneral.com/save-money/pge-plus](https://portlandgeneral.com/save-money/pge-plus)",
+"[https://portlandgeneral.com/pge-plus-static](https://portlandgeneral.com/pge-plus-static)",
+"[https://portlandgeneral.com/pge-plus-faq](https://portlandgeneral.com/pge-plus-faq)",
+"[https://portlandgeneral.com/charge-faster](https://portlandgeneral.com/charge-faster)",
+"[https://portlandgeneral.com/secure/pge-plus/ev-charger/rebate-only](https://portlandgeneral.com/secure/pge-plus/ev-charger/rebate-only)",
+"[https://portlandgeneral.com/secure/pge-plus-form/choose-account/?suppliedByCustomer=false](https://portlandgeneral.com/secure/pge-plus-form/choose-account/?suppliedByCustomer=false)"
+],
+"evidenceText": "PGE Smart Charging and PGE Plus pages support rebates for qualified residential Level 2 charger purchase or installation, possible panel work, and bill credits for connected home charging.",
+"reasoningNotes": "The residential EV charger match is supported. Electric panel upgrade should be retained only as an enabling measure under the home EV charger installation program."
+},
+{
+"opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"San Diego Gas & Electric"
+],
+"notes": "Limited to eligible medium- and heavy-duty fleet charging sites in SDG&E service territory."
+},
+"eligibleApplicantTypes": [
+"fleet_owners",
+"fleet_operators",
+"businesses",
+"public_agencies",
+"school_districts",
+"transit_agencies"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"public",
+"transportation",
+"fleet"
+],
+"eligibleRetrofitCategories": [
+"fleet_charging_infrastructure",
+"make_ready_ev_charging_infrastructure",
+"ev_charger_installation",
+"dc_fast_ev_charger_installation"
+],
+"hardRequirements": [
+"Project must be in SDG&E service territory.",
+"Applicant must commit to procure at least two Class 2 through Class 8 electric fleet vehicles.",
+"Customer must provide a long-term electrification plan and load increase schedule.",
+"Customer must provide charger usage data for at least five years.",
+"Customer must own or lease the property and operate and maintain the vehicles and chargers for the required program term.",
+"Customers buy, own, and maintain the chargers while SDG&E supports eligible make-ready infrastructure."
+],
+"blockers": [
+"Do not match residential or personal light-duty EV charging.",
+"Do not treat this as an electric vehicle purchase rebate.",
+"Additional charger rebates are limited to eligible school bus, transit, disadvantaged community, or similar qualifying fleets under program terms."
+],
+"programType": "utility_program",
+"administrator": "San Diego Gas & Electric",
+"applicationUrl": "[https://www.sdge.com/mdhd-interest-form](https://www.sdge.com/mdhd-interest-form)",
+"websiteUrl": "[https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets](https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets)",
+"sourceUrlsChecked": [
+"[https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets](https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets)",
+"[https://www.sdge.com/mdhd-interest-form](https://www.sdge.com/mdhd-interest-form)",
+"[https://www.sdge.com/sites/default/files/documents/FINAL_S2370051_PYD%20Fleet_FS_ONLINE%20%282%29.pdf?nid=24741](https://www.sdge.com/sites/default/files/documents/FINAL_S2370051_PYD%20Fleet_FS_ONLINE%20%282%29.pdf?nid=24741)"
+],
+"evidenceText": "SDG&E describes make-ready infrastructure and eligible charger rebates for medium and heavy-duty fleet charging, with Class 2-8 vehicle, data-sharing, and long-term site-operation requirements.",
+"reasoningNotes": "The fleet EV charging infrastructure match is supported. The opportunity should not be generalized to residential EVSE, EV purchases, or non-fleet charging."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22438",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"PA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"PPL Electric Utilities"
+],
+"notes": "Limited to eligible PPL Electric Utilities business customers in Pennsylvania."
+},
+"eligibleApplicantTypes": [
+"business_customers",
+"commercial_customers",
+"industrial_customers",
+"agricultural_customers",
+"nonprofit_customers"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural",
+"nonresidential"
+],
+"eligibleRetrofitCategories": [
+"combined_heat_and_power_system",
+"commercial_solar_pv",
+"fuel_cell_system"
+],
+"hardRequirements": [
+"Applicant must be a qualifying PPL Electric Utilities business customer.",
+"Project must comply with PPL business incentive rules for distributed energy resources, custom incentives, or prescriptive incentives.",
+"Application, energy savings documentation, and equipment documentation must be submitted through the PPL business savings process.",
+"Incentives are subject to program funding, eligibility review, and program rules."
+],
+"blockers": [
+"Current official PPL pages do not support biomass or biogas as eligible measures for this opportunity.",
+"Do not match residential appliances, home weatherization, residential HVAC, or residential renewable installations.",
+"Do not generalize distributed energy resource incentives beyond solar, combined heat and power, and fuel cells listed by current official sources."
+],
+"programType": "rebate_program",
+"administrator": "PPL Electric Utilities",
+"applicationUrl": "[https://cr101.my.salesforce-sites.com/pplportal/](https://cr101.my.salesforce-sites.com/pplportal/)",
+"websiteUrl": "[https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/](https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/)",
+"sourceUrlsChecked": [
+"[https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/](https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/)",
+"[https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/distributed-energy-resources/](https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/distributed-energy-resources/)",
+"[https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/custom-incentives/](https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/custom-incentives/)",
+"[https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/prescriptive-incentives/](https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/prescriptive-incentives/)",
+"[https://cr101.my.salesforce-sites.com/pplportal/](https://cr101.my.salesforce-sites.com/pplportal/)"
+],
+"evidenceText": "PPL's current business savings site lists distributed energy resource incentives for solar, combined heat and power, and fuel cells; official pages do not support biomass or biogas measures.",
+"reasoningNotes": "Retain CHP. Remove biomass and biogas because current PPL official sources do not support those categories for this business incentive."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2789",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Montana property tax abatement for qualifying certified production and manufacturing facilities."
+},
+"eligibleApplicantTypes": [
+"production_facility_owners",
+"manufacturing_facility_owners",
+"renewable_energy_project_owners",
+"industrial_taxpayers"
+],
+"eligibleSectors": [
+"industrial",
+"manufacturing",
+"energy_production"
+],
+"eligibleRetrofitCategories": [
+"biogas_production_facility",
+"biomass_gasification_facility",
+"geothermal_energy_facility",
+"renewable_energy_manufacturing_facility"
+],
+"hardRequirements": [
+"Facility or equipment must fall within the qualifying production or manufacturing facility types in Montana statute.",
+"Construction timing and equipment acquisition timing must meet statutory dates.",
+"Facility must be certified under the applicable Montana certification process.",
+"Qualifying period and taxable value reduction are limited by statute.",
+"Prevailing heavy construction wage requirements apply where required by statute."
+],
+"blockers": [
+"Do not match ground-source geothermal heat pump HVAC; the statute references geothermal facilities, not residential or commercial HVAC heat pumps.",
+"Do not match general biomass boilers or building heating equipment unless the project is a qualifying biomass gasification or biogas production facility.",
+"Do not match residential or ordinary commercial building retrofits."
+],
+"programType": "property_tax_abatement",
+"administrator": "Montana Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html](https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html)",
+"sourceUrlsChecked": [
+"[https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html](https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html)",
+"[https://archive.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html](https://archive.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html)"
+],
+"evidenceText": "Montana statute supports abatements for certified production and manufacturing facilities, including biogas production, biomass gasification, geothermal facilities, and renewable energy manufacturing; it does not identify ground-source heat pumps.",
+"reasoningNotes": "Biomass, biogas, and geothermal matches must be narrowed to statutory facility categories. The original ground-source geothermal heat pump match is a false positive."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22369",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Public Service Company of Oklahoma"
+],
+"notes": "Limited to eligible PSO residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_pso_customers",
+"homeowners_or_renters_with_service_account"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"energy_star_level_2_smart_ev_charger",
+"level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a PSO residential customer.",
+"Charger must be an ENERGY STAR certified Level 2 smart EV charger.",
+"Online rebate application is required.",
+"Product must have been purchased within the program's recent-purchase window.",
+"Receipt and qualifying model documentation are required."
+],
+"blockers": [
+"Do not match commercial chargers, fleet charging, or DC fast charging.",
+"Do not match non-ENERGY STAR or non-Level 2 chargers.",
+"Do not treat Charge Choice bill credits as a charger installation rebate.",
+"Do not match electric vehicle purchase incentives."
+],
+"programType": "rebate_program",
+"administrator": "Public Service Company of Oklahoma",
+"applicationUrl": "[https://pso-esp.com](https://pso-esp.com)",
+"websiteUrl": "[https://powerforwardwithpso.com/rebate/energy-star-certified-electric-vehicle-ev-level-2-charger/?category=Appliances+%26amp%3B+Equipment&link=appliances-equipment](https://powerforwardwithpso.com/rebate/energy-star-certified-electric-vehicle-ev-level-2-charger/?category=Appliances+%26amp%3B+Equipment&link=appliances-equipment)",
+"sourceUrlsChecked": [
+"[https://powerforwardwithpso.com/rebate/energy-star-certified-electric-vehicle-ev-level-2-charger/?category=Appliances+%26amp%3B+Equipment&link=appliances-equipment](https://powerforwardwithpso.com/rebate/energy-star-certified-electric-vehicle-ev-level-2-charger/?category=Appliances+%26amp%3B+Equipment&link=appliances-equipment)",
+"[https://pso-esp.com](https://pso-esp.com)",
+"[https://charge.weavegrid.com](https://charge.weavegrid.com)"
+],
+"evidenceText": "PSO's rebate page is for a $200 ENERGY STAR certified EV Level 2 smart charger rebate for residential customers with recent purchase and receipt documentation.",
+"reasoningNotes": "The Level 2 residential smart EV charger match is source-backed. Keep the product-specific category and avoid broader charging infrastructure matches."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1829",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Reading Municipal Light Department"
+],
+"notes": "Limited to RMLD residential customers and primary homes in the RMLD service territory."
+},
+"eligibleApplicantTypes": [
+"residential_rmld_customers",
+"homeowners"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"ground_source_geothermal_heat_pump",
+"air_sealing_weatherization",
+"electric_panel_upgrade",
+"residential_solar_pv",
+"residential_ev_charger",
+"load_management_device",
+"energy_star_appliance_upgrade",
+"smart_thermostat"
+],
+"hardRequirements": [
+"Applicant must be an RMLD residential customer.",
+"Heat pump projects must serve the customer's primary home in RMLD territory.",
+"Weatherization is required with the heat pump incentive path and must follow program contractor and documentation rules.",
+"Heat pump projects must meet sizing, Manual J, permit, inspection, and equipment requirements where applicable.",
+"Electric panel, solar, EV charger, appliance, load-management, and thermostat measures must follow their separate RMLD program terms.",
+"Customers receiving Mass Save gas heat pump rebates are not eligible for the RMLD heat pump rebate."
+],
+"blockers": [
+"Do not match commercial or industrial measures to this residential program.",
+"Weatherization should be matched as part of the residential heat pump path, not as an unrelated standalone commercial weatherization program.",
+"Do not infer motors, VFDs, commercial refrigeration, or commercial kitchen equipment."
+],
+"programType": "rebate_program",
+"administrator": "Reading Municipal Light Department",
+"applicationUrl": null,
+"websiteUrl": "[https://www.rmld.com/efficiency-electrification-programs](https://www.rmld.com/efficiency-electrification-programs)",
+"sourceUrlsChecked": [
+"[https://www.rmld.com/efficiency-electrification-programs](https://www.rmld.com/efficiency-electrification-programs)",
+"[https://www.rmld.com/188/Heat-Pump-Rebate-or-0-Interest-Loan](https://www.rmld.com/188/Heat-Pump-Rebate-or-0-Interest-Loan)",
+"[https://www.rmld.com/187/Electric-Panel-Upgrade-Rebate](https://www.rmld.com/187/Electric-Panel-Upgrade-Rebate)"
+],
+"evidenceText": "RMLD's residential page and heat pump page support heat pumps, required weatherization, panel upgrades, solar, EV charging, load management, appliances, and thermostats for residential RMLD customers.",
+"reasoningNotes": "Heat pump and weatherization matches are source-backed. Additional residential RMLD measures are included because current official pages list them."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4450",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide New York tax credit for qualifying bioheating fuel used for residential space heating or hot water."
+},
+"eligibleApplicantTypes": [
+"corporate_taxpayers",
+"businesses_purchasing_qualifying_bioheating_fuel"
+],
+"eligibleSectors": [
+"corporate",
+"residential_heating"
+],
+"eligibleRetrofitCategories": [
+"bioheating_fuel_purchase"
+],
+"hardRequirements": [
+"Fuel must be qualifying bioheating fuel used for space heating or hot water production for residential purposes in New York State.",
+"Purchases on or after January 1, 2017 must contain at least 6 percent biodiesel per gallon.",
+"Credit rate and maximum cents per gallon are limited by New York tax rules.",
+"Taxpayer must retain records supporting gallons, biodiesel percentage, use, and credit calculation."
+],
+"blockers": [
+"Do not match biomass or biogas energy system installation; this is a fuel purchase tax credit.",
+"Do not match window replacement.",
+"Do not match general heating equipment, boilers, or building envelope measures unless separately supported by another program."
+],
+"programType": "corporate_tax_credit",
+"administrator": "New York State Department of Taxation and Finance",
+"applicationUrl": null,
+"websiteUrl": "[https://www.tax.ny.gov/pit/credits/clean_heating_fuel_credit.htm](https://www.tax.ny.gov/pit/credits/clean_heating_fuel_credit.htm)",
+"sourceUrlsChecked": [
+"[https://www.tax.ny.gov/pit/credits/clean_heating_fuel_credit.htm](https://www.tax.ny.gov/pit/credits/clean_heating_fuel_credit.htm)"
+],
+"evidenceText": "New York's page describes a refundable credit for qualifying bioheating fuel used for residential space heating or hot water; it is a fuel purchase credit, not an equipment or window incentive.",
+"reasoningNotes": "Both original matched categories were overbroad or false positive. The only supported retrofit-adjacent category is purchase of qualifying bioheating fuel."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3080",
+"confidence": "high",
+"availabilityStatus": "temporarily_closed",
+"geography": {
+"country": "US",
+"states": [
+"AK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Alaska competitive grant program for qualifying renewable heat and power projects with public benefit."
+},
+"eligibleApplicantTypes": [
+"utilities",
+"independent_power_producers",
+"local_governments",
+"tribal_governments",
+"public_entities",
+"community_energy_project_sponsors"
+],
+"eligibleSectors": [
+"public",
+"utility",
+"tribal",
+"community_energy",
+"commercial_public_benefit"
+],
+"eligibleRetrofitCategories": [
+"biomass_biogas_energy_system",
+"ground_source_geothermal_heat_pump",
+"geothermal_heating_system",
+"solar_pv_system",
+"wind_energy_system",
+"hydroelectric_system",
+"waste_heat_recovery",
+"solar_thermal_system",
+"renewable_energy_transmission_infrastructure"
+],
+"hardRequirements": [
+"Project must be located in Alaska.",
+"Project must produce cost-effective renewable energy for heat, power, or related public benefit.",
+"Project must use an eligible renewable resource or eligible heat project type under the AEA Renewable Energy Fund solicitation.",
+"Applicant must satisfy competitive application, public benefit, feasibility, and documentation requirements.",
+"Awards depend on AEA review, legislative appropriation, and current solicitation deadlines."
+],
+"blockers": [
+"The most recent identified application round deadline has passed, so no current open intake was verified.",
+"Private projects without public benefit or eligible renewable heat or power scope should not match.",
+"Do not match fossil-fuel-only projects or ordinary building efficiency measures."
+],
+"programType": "grant_program",
+"administrator": "Alaska Energy Authority",
+"applicationUrl": null,
+"websiteUrl": "[https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund](https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund)",
+"sourceUrlsChecked": [
+"[https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund](https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund)",
+"[https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund/2025-REF-Recommendations](https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Renewable-Energy-Fund/2025-REF-Recommendations)",
+"[https://www.akenergyauthority.org/Portals/0/What%20We%20Do/Grants%20%26%20Loans/Renewable%20Energy%20Fund/REF%20Round%2018%20Request%20for%20Applications%20-%20FINAL_1.pdf?ver=pHP_cmULvfTQnchowd5gLA%3D%3D](https://www.akenergyauthority.org/Portals/0/What%20We%20Do/Grants%20%26%20Loans/Renewable%20Energy%20Fund/REF%20Round%2018%20Request%20for%20Applications%20-%20FINAL_1.pdf?ver=pHP_cmULvfTQnchowd5gLA%3D%3D)",
+"[https://aws.state.ak.us/onlinepublicnotices/notices/View.aspx?id=220157](https://aws.state.ak.us/onlinepublicnotices/notices/View.aspx?id=220157)"
+],
+"evidenceText": "AEA's Renewable Energy Fund supports competitive grants for Alaska renewable heat and power projects, including biomass, digester gas, geothermal heat pumps, wind, solar, hydro, and waste heat; the Round 18 deadline has passed.",
+"reasoningNotes": "The retrofit categories are source-backed, including geothermal heat pumps, biomass, and biogas. Availability is temporarily closed because the current identified solicitation deadline has passed."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4068",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"SD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide South Dakota property tax exemption administered through local property tax valuation."
+},
+"eligibleApplicantTypes": [
+"real_property_owners",
+"residential_property_owners",
+"commercial_property_owners",
+"agricultural_property_owners"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"agricultural",
+"industrial"
+],
+"eligibleRetrofitCategories": [
+"biomass_energy_system",
+"geothermal_energy_system",
+"solar_energy_system",
+"wind_energy_system",
+"hydroelectric_system",
+"hydrogen_energy_system"
+],
+"hardRequirements": [
+"Renewable resource property must use a qualifying resource listed by South Dakota law and DOR guidance.",
+"System must be below the statutory 5 MW nameplate capacity threshold.",
+"Property tax valuation and exemption are handled by local assessment officials.",
+"Exemption amount and geothermal time limits must follow South Dakota property tax rules."
+],
+"blockers": [
+"Do not match ordinary HVAC heat pumps unless the system qualifies as statutory geothermal renewable resource property.",
+"Do not match systems exceeding the 5 MW threshold.",
+"Do not treat this property tax exemption as an upfront rebate or grant."
+],
+"programType": "property_tax_exemption",
+"administrator": "South Dakota Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://dor.sd.gov/businesses/taxes/property-tax/](https://dor.sd.gov/businesses/taxes/property-tax/)",
+"sourceUrlsChecked": [
+"[https://dor.sd.gov/media/aa2jrhcj/renewable-resource-property.pdf](https://dor.sd.gov/media/aa2jrhcj/renewable-resource-property.pdf)",
+"[https://dor.sd.gov/businesses/taxes/property-tax/](https://dor.sd.gov/businesses/taxes/property-tax/)",
+"[https://sdlegislature.gov/Statutes/10-4-44](https://sdlegislature.gov/Statutes/10-4-44)",
+"[https://sdlegislature.gov/Statutes/10-4-42](https://sdlegislature.gov/Statutes/10-4-42)"
+],
+"evidenceText": "South Dakota DOR identifies a renewable resource property exemption for wind, solar, biomass, hydrogen, hydroelectric and geothermal systems below 5 MW with special time limits for geothermal systems.",
+"reasoningNotes": "Biomass and geothermal categories are supported, but the geothermal category should remain a renewable energy system category rather than generic ground-source HVAC."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:173",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Texas property tax exemption applied through local appraisal districts."
+},
+"eligibleApplicantTypes": [
+"property_owners",
+"residential_property_owners",
+"commercial_property_owners",
+"industrial_property_owners"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"solar_water_heating_system",
+"solar_energy_system",
+"wind_energy_system",
+"anaerobic_digestion_solar_bioconversion_system",
+"biomass_gasification_solar_bioconversion_system"
+],
+"hardRequirements": [
+"Property owner must apply to the appraisal district for a solar or wind-powered energy device exemption.",
+"Device must be constructed or installed on real property and meet Texas Tax Code eligibility.",
+"Chief appraiser determines eligibility and exemption value.",
+"Bioconversion-derived energy must fit the Texas definition of a solar energy device and cannot be direct combustion."
+],
+"blockers": [
+"Do not match window replacement, insulation, reflective roofs, solar shades, or other ordinary energy-conservation measures.",
+"Do not match generic biomass or biogas systems unless they meet the specific Texas solar-energy-device bioconversion definition.",
+"Do not match off-site equipment or equipment not appraised as part of eligible real property."
+],
+"programType": "property_tax_exemption",
+"administrator": "Texas Comptroller of Public Accounts and local appraisal districts",
+"applicationUrl": "[https://comptroller.texas.gov/forms/50-123.pdf](https://comptroller.texas.gov/forms/50-123.pdf)",
+"websiteUrl": "[https://comptroller.texas.gov/taxes/property-tax/exemptions/](https://comptroller.texas.gov/taxes/property-tax/exemptions/)",
+"sourceUrlsChecked": [
+"[https://comptroller.texas.gov/taxes/property-tax/exemptions/](https://comptroller.texas.gov/taxes/property-tax/exemptions/)",
+"[https://comptroller.texas.gov/forms/50-123.pdf](https://comptroller.texas.gov/forms/50-123.pdf)",
+"[https://comptroller.texas.gov/taxes/property-tax/docs/96-1569.pdf](https://comptroller.texas.gov/taxes/property-tax/docs/96-1569.pdf)",
+"[https://statutes.capitol.texas.gov/docs/TX/htm/TX.11.htm#11.27](https://statutes.capitol.texas.gov/docs/TX/htm/TX.11.htm#11.27)"
+],
+"evidenceText": "Texas Comptroller guidance identifies a Form 50-123 exemption for solar and wind-powered energy devices; the guidance excludes energy-conservation items such as windows and insulation from this exemption.",
+"reasoningNotes": "Window replacement is a false positive. Biomass or biogas can only remain as a narrowed bioconversion category under the Texas solar energy device definition."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"RI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Rhode Island tangible tax valuation rule applied by municipalities to commercial renewable energy systems."
+},
+"eligibleApplicantTypes": [
+"commercial_renewable_energy_system_owners",
+"municipalities_taxing_systems",
+"residential_property_owners",
+"manufacturing_property_owners"
+],
+"eligibleSectors": [
+"commercial",
+"residential",
+"manufacturing",
+"utility_scale_generation"
+],
+"eligibleRetrofitCategories": [
+"commercial_renewable_energy_system_tax_valuation",
+"biomass_electric_generation",
+"biogas_electric_generation",
+"geothermal_power_generation",
+"solar_pv_system",
+"wind_energy_system",
+"small_hydroelectric_system",
+"fuel_cell_renewable_fuel_system"
+],
+"hardRequirements": [
+"Commercial system must be a grid-connected renewable energy system subject to Rhode Island tangible tax valuation rules.",
+"Eligible resources must satisfy Rhode Island renewable energy statutory definitions.",
+"System owner must provide required interconnection and program documents to the municipality or assessor.",
+"Municipal tax treatment, exemptions, waivers, and valuation formula must be applied under Rhode Island law and rule."
+],
+"blockers": [
+"Do not match ground-source geothermal HVAC; current sources support geothermal renewable generation, not ordinary building heat pump retrofits.",
+"Do not treat this as a grant, rebate, or direct equipment incentive.",
+"Do not match biomass or waste systems that do not use eligible biomass fuels under Rhode Island law."
+],
+"programType": "property_tax_assessment",
+"administrator": "Rhode Island Office of Energy Resources and municipalities",
+"applicationUrl": null,
+"websiteUrl": "[https://rules.sos.ri.gov/regulations/part/300-00-00-2](https://rules.sos.ri.gov/regulations/part/300-00-00-2)",
+"sourceUrlsChecked": [
+"[https://rules.sos.ri.gov/regulations/part/300-00-00-2](https://rules.sos.ri.gov/regulations/part/300-00-00-2)",
+"[https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-5.htm](https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-5.htm)",
+"[https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-2.htm](https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-2.htm)",
+"[https://tax.ri.gov/](https://tax.ri.gov/)"
+],
+"evidenceText": "Rhode Island's active rule sets a $5 per kW tangible tax valuation for commercial renewable energy systems and ties eligible resources to statutory solar, wind, geothermal, small hydro, biomass, and renewable fuel cells.",
+"reasoningNotes": "Biomass and geothermal are supported only as renewable energy generation categories. The original ground-source geothermal heat pump category should be replaced."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5665",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Pacific Gas and Electric",
+"Southern California Edison",
+"San Diego Gas & Electric"
+],
+"notes": "California CPUC ReMAT applies to eligible generators selling to the investor-owned utilities, subject to remaining IOU capacity and tariff rules."
+},
+"eligibleApplicantTypes": [
+"rps_eligible_generators",
+"renewable_energy_project_developers",
+"independent_power_producers",
+"public_entities",
+"businesses"
+],
+"eligibleSectors": [
+"renewable_electric_generation",
+"commercial",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"biomass_biogas_electric_generation",
+"biomethane_electric_generation",
+"geothermal_power_generation",
+"solar_pv_system",
+"wind_energy_system",
+"small_hydroelectric_system",
+"fuel_cell_renewable_fuel_system"
+],
+"hardRequirements": [
+"Project must be an RPS-eligible renewable electricity generator.",
+"Generator must meet the ReMAT size limit and sell electricity to a participating investor-owned utility under the ReMAT tariff and standard contract.",
+"Project must fit an eligible ReMAT product category and meet California RPS eligibility requirements.",
+"Availability depends on the applicable utility's remaining ReMAT capacity, queue, contract, and tariff rules."
+],
+"blockers": [
+"Do not match ground-source geothermal heat pump HVAC; ReMAT is for renewable electricity generation.",
+"Do not treat ReMAT as a rebate, grant, or building retrofit incentive.",
+"Do not match retail net-metered residential solar or behind-the-meter projects that are not selling under ReMAT."
+],
+"programType": "feed_in_tariff",
+"administrator": "California Public Utilities Commission",
+"applicationUrl": null,
+"websiteUrl": "[https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs/renewable-market-adjusting-tariff](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs/renewable-market-adjusting-tariff)",
+"sourceUrlsChecked": [
+"[https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs/renewable-market-adjusting-tariff](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs/renewable-market-adjusting-tariff)"
+],
+"evidenceText": "CPUC describes ReMAT as a feed-in tariff for RPS-eligible generators up to 3 MW selling electricity to IOUs, with eligible technologies including biomass, biomethane and geothermal.",
+"reasoningNotes": "Biogas and geothermal matches are supported only for renewable electricity generation. Ground-source heat pump and building-retrofit interpretations are false positives."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:727",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Nationwide federal tax exclusion for qualifying public utility subsidies for dwelling-unit energy conservation measures."
+},
+"eligibleApplicantTypes": [
+"corporate_taxpayers",
+"business_entities_receiving_utility_subsidies_for_dwelling_units",
+"public_utility_customers"
+],
+"eligibleSectors": [
+"residential",
+"corporate_taxpayer",
+"multifamily_residential"
+],
+"eligibleRetrofitCategories": [
+"residential_energy_conservation_measure_subsidy",
+"residential_demand_management_measure_subsidy",
+"utility_subsidy_tax_exclusion"
+],
+"hardRequirements": [
+"Subsidy must be provided directly or indirectly by a public utility.",
+"Subsidy must be for purchase or installation of an energy conservation measure for a dwelling unit.",
+"Measure must primarily reduce electricity or natural gas consumption or improve energy demand management.",
+"Taxpayer must apply federal tax exclusion, basis reduction, and no-double-benefit rules where applicable."
+],
+"blockers": [
+"Do not match this record as a standalone rooftop solar PV rebate or solar water heating incentive.",
+"A separate public utility subsidy must exist and qualify before the federal exclusion is relevant.",
+"Do not match non-dwelling or purely nonresidential measures except any allocable dwelling-unit portion allowed by tax rules."
+],
+"programType": "corporate_tax_exemption",
+"administrator": "U.S. Internal Revenue Service",
+"applicationUrl": null,
+"websiteUrl": "[https://www.irs.gov/publications/p525](https://www.irs.gov/publications/p525)",
+"sourceUrlsChecked": [
+"[https://www.irs.gov/publications/p525](https://www.irs.gov/publications/p525)",
+"[http://www.irs.gov/publications/p525/index.html](http://www.irs.gov/publications/p525/index.html)",
+"[https://uscode.house.gov/view.xhtml?req=granuleid](https://uscode.house.gov/view.xhtml?req=granuleid):USC-prelim-title26-section136&num=0&edition=prelim",
+"[https://www.irs.gov/pub/irs-wd/1046013.pdf](https://www.irs.gov/pub/irs-wd/1046013.pdf)"
+],
+"evidenceText": "IRS Publication 525 and IRC Section 136 exclude qualifying public utility subsidies for residential energy conservation measures from gross income; this record is tax treatment, not a standalone retrofit rebate.",
+"reasoningNotes": "Do not retain rooftop solar PV or solar water heating as direct retrofit categories. The exclusion may apply to qualifying utility subsidies, but it is not itself a solar incentive."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:666",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Nationwide federal tax exclusion for qualifying public utility subsidies for dwelling-unit energy conservation measures."
+},
+"eligibleApplicantTypes": [
+"individual_taxpayers",
+"residential_public_utility_customers",
+"homeowners",
+"renters"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"residential_energy_conservation_measure_subsidy",
+"residential_demand_management_measure_subsidy",
+"utility_subsidy_tax_exclusion"
+],
+"hardRequirements": [
+"Subsidy must be provided directly or indirectly by a public utility.",
+"Subsidy must be for purchase or installation of an energy conservation measure for a dwelling unit.",
+"Measure must primarily reduce electricity or natural gas consumption or improve energy demand management.",
+"Taxpayer must apply federal tax exclusion, basis reduction, and no-double-benefit rules where applicable."
+],
+"blockers": [
+"Do not match this record as a standalone rooftop solar PV rebate or solar water heating incentive.",
+"A separate public utility subsidy must exist and qualify before the federal exclusion is relevant.",
+"Do not match non-dwelling or purely nonresidential measures except any allocable dwelling-unit portion allowed by tax rules."
+],
+"programType": "personal_tax_exemption",
+"administrator": "U.S. Internal Revenue Service",
+"applicationUrl": null,
+"websiteUrl": "[https://www.irs.gov/publications/p525](https://www.irs.gov/publications/p525)",
+"sourceUrlsChecked": [
+"[https://www.irs.gov/publications/p525](https://www.irs.gov/publications/p525)",
+"[http://www.irs.gov/publications/p525/index.html](http://www.irs.gov/publications/p525/index.html)",
+"[https://uscode.house.gov/view.xhtml?req=granuleid](https://uscode.house.gov/view.xhtml?req=granuleid):USC-prelim-title26-section136&num=0&edition=prelim",
+"[https://www.irs.gov/pub/irs-wd/1046013.pdf](https://www.irs.gov/pub/irs-wd/1046013.pdf)"
+],
+"evidenceText": "IRS guidance permits taxpayers to exclude qualifying public utility subsidies for dwelling-unit energy conservation or demand-management measures; the exclusion does not itself fund solar or other installations.",
+"reasoningNotes": "Do not retain rooftop solar PV or solar water heating as direct retrofit categories. The personal exclusion is tax treatment for qualifying public-utility residential subsidies."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4454",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Ameren Illinois"
+],
+"notes": "EnergySense identifies a path for Ameren Illinois nonresidential facilities and a separate inquiry path for other facilities; eligibility is confirmed through application."
+},
+"eligibleApplicantTypes": [
+"nonresidential_facility_owners",
+"building_operators",
+"businesses",
+"public_facilities",
+"institutional_facilities"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"institutional",
+"nonprofit",
+"industrial"
+],
+"eligibleRetrofitCategories": [
+"retro_commissioning_study",
+"hvac_system_optimization",
+"building_operations_tune_up",
+"energy_assessment"
+],
+"hardRequirements": [
+"Facility must be nonresidential and satisfy EnergySense or utility territory eligibility review.",
+"Applicant must submit the EnergySense application or inquiry.",
+"Facility staff, contractors, and operators must support assessment, testing, documentation, and operational review.",
+"Capital improvements or equipment replacements identified by RCx must be implemented separately and are not automatically funded by this opportunity."
+],
+"blockers": [
+"Do not match high-efficiency HVAC replacement as a direct eligible retrofit for this program.",
+"Do not match residential HVAC replacement or residential commissioning.",
+"Major equipment replacement may be recommended by the study but is not the source-backed incentive category here."
+],
+"programType": "technical_assistance_assessment",
+"administrator": "EnergySense Resilience Center at the University of Illinois System",
+"applicationUrl": "[https://forms.illinois.edu/sec/6156089](https://forms.illinois.edu/sec/6156089)",
+"websiteUrl": "[https://smartenergy.illinois.edu/rcx/](https://smartenergy.illinois.edu/rcx/)",
+"sourceUrlsChecked": [
+"[https://smartenergy.illinois.edu/rcx/](https://smartenergy.illinois.edu/rcx/)",
+"[https://forms.illinois.edu/sec/6156089](https://forms.illinois.edu/sec/6156089)"
+],
+"evidenceText": "EnergySense describes RCx as a nonresidential facility assessment and operational improvement process focused mainly on HVAC optimization and reports, not a direct HVAC replacement incentive.",
+"reasoningNotes": "The retro-commissioning study match is supported. HVAC replacement should be removed because the program supports assessment and optimization, not direct replacement rebates."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22366",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Riverland Energy Cooperative"
+],
+"notes": "Limited to Riverland Energy Cooperative members with equipment installed on cooperative lines."
+},
+"eligibleApplicantTypes": [
+"cooperative_members",
+"residential_members"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ev_charger_installation",
+"controlled_ev_charging_equipment",
+"ev_charging_secondary_meter_installation"
+],
+"hardRequirements": [
+"Applicant must be a Riverland Energy Cooperative member.",
+"EV charger must be installed on cooperative lines.",
+"Charging station must be on load control or time-of-use service as defined by the cooperative.",
+"Rebate submission must include invoice or receipt and proof of installation.",
+"Submission must be made within the required post-installation period and is subject to available funds."
+],
+"blockers": [
+"Current accessible official form does not verify a Level 2-only category.",
+"Do not match DC fast charging, commercial fleet infrastructure, or non-member charging projects.",
+"Rebate cannot exceed charger cost and does not cover unrelated electrical upgrades except the specified secondary meter installation cost."
+],
+"programType": "rebate_program",
+"administrator": "Riverland Energy Cooperative",
+"applicationUrl": "[https://www.riverlandenergy.com/form/ev-chargers-rebate-form](https://www.riverlandenergy.com/form/ev-chargers-rebate-form)",
+"websiteUrl": "[https://www.riverlandenergy.com/rebates](https://www.riverlandenergy.com/rebates)",
+"sourceUrlsChecked": [
+"[https://www.riverlandenergy.com/rebates](https://www.riverlandenergy.com/rebates)",
+"[https://www.riverlandenergy.com/form/ev-chargers-rebate-form](https://www.riverlandenergy.com/form/ev-chargers-rebate-form)"
+],
+"evidenceText": "Riverland's 2026 rebate form covers EV charging stations on load control or TOU and a secondary-meter installation-cost rebate for cooperative members, with documentation and 3-month submission rules.",
+"reasoningNotes": "Retain EV charger installation, but remove the unsupported Level 2-specific category because the current accessible cooperative form does not state Level 2."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22337",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Runestone Electric Association"
+],
+"notes": "Limited to qualifying EV charger installations at a primary residence served by Runestone Electric Association."
+},
+"eligibleApplicantTypes": [
+"residential_rea_members",
+"homeowners"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ev_charger_installation",
+"controlled_ev_charger_installation",
+"ev_meter_socket_installation"
+],
+"hardRequirements": [
+"Charger must be installed at the applicant's primary residence served by Runestone Electric Association.",
+"Uncontrolled charger rebate requires a qualifying uncontrolled EV charger under current residential rebate terms.",
+"Controlled charger rebate requires a qualifying controlled EV charger.",
+"Controlled EV charger rebate requires an EV meter socket to be installed.",
+"Customer must comply with current REA residential rebate documentation and program rules."
+],
+"blockers": [
+"Current official residential rebate page does not support a Level 2-only category.",
+"Do not match DC fast charging, fleet charging infrastructure, or commercial EVSE.",
+"Do not match non-primary-residence or non-REA service territory installations."
+],
+"programType": "rebate_program",
+"administrator": "Runestone Electric Association",
+"applicationUrl": null,
+"websiteUrl": "[https://www.runestoneelectric.com/energy-wise-programs/residential-rebates/](https://www.runestoneelectric.com/energy-wise-programs/residential-rebates/)",
+"sourceUrlsChecked": [
+"[https://www.runestoneelectric.com/energy-wise-programs/residential-rebates/](https://www.runestoneelectric.com/energy-wise-programs/residential-rebates/)",
+"[https://www.runestoneelectric.com/energy-wise-programs/electric-vehicles/](https://www.runestoneelectric.com/energy-wise-programs/electric-vehicles/)"
+],
+"evidenceText": "Runestone's 2026 residential rebates list $250 for qualifying uncontrolled EV chargers and $500 for qualifying controlled EV chargers at a primary residence served by REA.",
+"reasoningNotes": "EV charger installation is supported, but the Level 2-specific match should be removed because the accessible current official page does not state Level 2."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3557",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Salem Electric"
+],
+"notes": "Limited to Salem Electric members with approved solar interconnection and net-metering eligibility."
+},
+"eligibleApplicantTypes": [
+"salem_electric_members",
+"residential_members",
+"general_service_members"
+],
+"eligibleSectors": [
+"residential",
+"commercial_general_service"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"rooftop_solar_pv",
+"net_metered_solar_interconnection"
+],
+"hardRequirements": [
+"Member must submit a solar connection inquiry and obtain Salem Electric approval before installation.",
+"Qualifying net-metered solar system must be 25 kW or less.",
+"Member must obtain required bids and use equipment and installers that satisfy Salem Electric and Oregon Department of Energy requirements.",
+"Net Metering Agreement must be signed before connection.",
+"Final inspection and Salem Electric metering steps are required before system energization.",
+"Rebate is limited by installed kW, project cost cap, maximum incentive, and available funds."
+],
+"blockers": [
+"Do not match submetering or energy monitoring systems; the meter is part of utility interconnection and net-meter billing.",
+"Systems above 25 kW are not eligible for the net-metered rebate path.",
+"Do not match batteries, non-solar measures, or unapproved installations started before required approval."
+],
+"programType": "rebate_program",
+"administrator": "Salem Electric",
+"applicationUrl": "[https://www.salemelectric.com/energy-efficiency/solar-information/solar-connection-inquiry/](https://www.salemelectric.com/energy-efficiency/solar-information/solar-connection-inquiry/)",
+"websiteUrl": "[https://www.salemelectric.com/solar-information](https://www.salemelectric.com/solar-information)",
+"sourceUrlsChecked": [
+"[https://www.salemelectric.com/solar-information](https://www.salemelectric.com/solar-information)",
+"[https://www.salemelectric.com/energy-efficiency/solar-information/solar-connection-inquiry/](https://www.salemelectric.com/energy-efficiency/solar-information/solar-connection-inquiry/)",
+"[https://www.salemelectric.com/energy-efficiency/solar-information/net-metering-policy/](https://www.salemelectric.com/energy-efficiency/solar-information/net-metering-policy/)"
+],
+"evidenceText": "Salem Electric offers $300 per kW, up to $1,500, for qualifying net-metered solar systems of 25 kW or less; new metering is part of interconnection, not submetering.",
+"reasoningNotes": "Solar PV is supported. Submetering or energy monitoring was a false positive caused by net metering language."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5106",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"IN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Indiana sales and use tax exemption for qualifying utility-scale solar or wind energy system components."
+},
+"eligibleApplicantTypes": [
+"public_utilities",
+"power_subsidiaries",
+"electric_generating_businesses",
+"utility_scale_renewable_facility_suppliers"
+],
+"eligibleSectors": [
+"utility",
+"renewable_electric_generation",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"utility_scale_solar_energy_system_components",
+"utility_scale_wind_energy_system_components"
+],
+"hardRequirements": [
+"Property must be a component of a qualifying solar energy system or wind energy system.",
+"Solar or wind system must have an originally rated nameplate production capacity of at least 2 MW.",
+"Purchaser must be an eligible public utility, power subsidiary, or business furnishing or selling electricity to an eligible buyer or facility.",
+"Property used for residential energy production is excluded.",
+"Property that stores, consumes, conveys, transfers, or alters generated energy is excluded where statute excludes it.",
+"Indiana exemption certificate and Department of Revenue documentation rules apply."
+],
+"blockers": [
+"Do not match rooftop solar PV.",
+"Do not match small wind turbines.",
+"Do not match residential self-use systems, batteries, storage, generic electrical equipment, or non-generating components excluded by statute.",
+"Do not treat this as a rebate; it is a sales and use tax exemption for qualifying transactions."
+],
+"programType": "sales_tax_exemption",
+"administrator": "Indiana Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://www.in.gov/dor/tax-forms/sales-tax-forms/](https://www.in.gov/dor/tax-forms/sales-tax-forms/)",
+"sourceUrlsChecked": [
+"[https://www.in.gov/dor/tax-forms/sales-tax-forms/](https://www.in.gov/dor/tax-forms/sales-tax-forms/)",
+"[https://iar.iga.in.gov/register/20260527-IR-045260130NRA](https://iar.iga.in.gov/register/20260527-IR-045260130NRA)",
+"[https://legiscan.com/IN/text/SB0419/id/2793300/Indiana-2023-SB0419-Enrolled.pdf](https://legiscan.com/IN/text/SB0419/id/2793300/Indiana-2023-SB0419-Enrolled.pdf)",
+"[https://codes.findlaw.com/in/title-6-taxation/in-code-sect-6-2-5-5-10-7/](https://codes.findlaw.com/in/title-6-taxation/in-code-sect-6-2-5-5-10-7/)"
+],
+"evidenceText": "Indiana's solar and wind equipment exemption applies to qualifying components of solar or wind systems with at least 2 MW capacity acquired by electricity sellers; residential, storage, and conveyance equipment are excluded.",
+"reasoningNotes": "The original rooftop solar and small wind matches are false positives. Current law is limited to utility-scale solar or wind energy system components and qualifying purchasers."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:5427"
+}

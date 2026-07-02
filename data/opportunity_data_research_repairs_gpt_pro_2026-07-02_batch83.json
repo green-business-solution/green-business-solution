@@ -1,0 +1,1111 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-02",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2742",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "KY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Kentucky projects approved under the large-scale renewable energy statutes; no new applications after August 1, 2018."
+      },
+      "eligibleApplicantTypes": [
+        "approved_company",
+        "business_entity",
+        "renewable_energy_project_developer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "utility_scale_power_generation"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_electric_generation",
+        "biomass_renewable_electric_generation",
+        "landfill_methane_electric_generation",
+        "wind_electric_generation",
+        "hydroelectric_generation"
+      ],
+      "hardRequirements": [
+        "Project must be a new construction, retrofit, or upgrade of a renewable energy facility in Kentucky.",
+        "Facility must generate electricity for sale to unrelated entities.",
+        "Solar electric facilities must exceed 50 kW; other listed renewable facilities must generally exceed 1 MW.",
+        "Project must have been approved before the statutory August 1, 2018 application cutoff."
+      ],
+      "blockers": [
+        "No new applications are accepted after August 1, 2018.",
+        "Solar water heating and non-electric solar thermal building systems are not supported by the cited statute.",
+        "Routine repair or maintenance that does not primarily increase electric production is not a qualifying retrofit."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Kentucky Economic Development Finance Authority",
+      "applicationUrl": null,
+      "websiteUrl": "https://revenue.ky.gov/Business/Sales-Use-Tax/Pages/default.aspx",
+      "sourceUrlsChecked": [
+        "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=51754",
+        "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=51757",
+        "https://apps.legislature.ky.gov/law/kar/titles/103/031/190/",
+        "https://programs.dsireusa.org/system/program/detail/2742/tax-exemption-for-large-scale-renewable-energy-projects"
+      ],
+      "evidenceText": "Kentucky]( law defines eligible renewable energy facilities as electric generation projects and bars applications for these incentives after August 1, 2018.",
+      "reasoningNotes": "The biomass match is valid only for renewable electric generation. The solar water-heating match is a false positive because the statute supports solar electric generation, not thermal water heating."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:104",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WV"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Applies to West Virginia taxable electric generating capacity and related tax credits."
+      },
+      "eligibleApplicantTypes": [
+        "electric_generator_taxpayer",
+        "business_taxpayer",
+        "renewable_energy_project_owner"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "utility_scale_power_generation"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_photovoltaic_electric_generation",
+        "wind_turbine_electric_generation"
+      ],
+      "hardRequirements": [
+        "Taxpayer must generate or sell electricity subject to the West Virginia business and occupation tax provisions.",
+        "Solar must use solar photovoltaic methods as defined in statute.",
+        "Wind credit applies to qualifying wind turbine units and contractually agreed contributions under state law."
+      ],
+      "blockers": [
+        "Solar thermal, solar water heating, and non-electric solar measures are not supported.",
+        "Small wind or rooftop solar should not be matched unless it is an eligible electric generating unit under the tax statute.",
+        "This is a tax treatment, not a rebate or installation grant."
+      ],
+      "programType": "Corporate Tax Exemption",
+      "administrator": "West Virginia Tax Division",
+      "applicationUrl": null,
+      "websiteUrl": "https://code.wvlegislature.gov/11-13-2O/",
+      "sourceUrlsChecked": [
+        "https://code.wvlegislature.gov/11-13-2O/",
+        "https://code.wvlegislature.gov/11-13-2P/",
+        "https://programs.dsireusa.org/system/program/detail/104/tax-exemption-for-renewable-energy-generation"
+      ],
+      "evidenceText": "West]( Virginia statutes provide special taxable-capacity treatment for wind units and solar photovoltaic methods used to generate electricity.",
+      "reasoningNotes": "The PV and wind matches are source-backed, but the opportunity should match electric generation only, not general residential solar or non-electric renewable measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Available for eligible building projects in Pennsylvania."
+      },
+      "eligibleApplicantTypes": [
+        "building_owner",
+        "developer",
+        "eligible_borrower",
+        "nonprofit",
+        "business",
+        "public_entity"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "multifamily",
+        "nonprofit",
+        "institutional",
+        "public"
+      ],
+      "eligibleRetrofitCategories": [
+        "building_energy_efficiency_retrofit",
+        "energy_conservation_measures",
+        "high_performance_building_systems",
+        "onsite_renewable_energy_with_efficiency_project",
+        "combined_heat_and_power_with_efficiency_project"
+      ],
+      "hardRequirements": [
+        "Project must be in Pennsylvania and financed as a GELF loan.",
+        "Projects must achieve required energy-performance targets, including a 25 percent reduction in energy consumption under PA DEP guidance.",
+        "On-site renewable energy or CHP must be part of a larger building energy-efficiency project.",
+        "Loan underwriting and community-benefit requirements apply."
+      ],
+      "blockers": [
+        "Standalone energy audits are not a funded retrofit category.",
+        "Standalone retro-commissioning studies are not clearly supported as eligible loan uses.",
+        "Single-family homes are not eligible under PA DEP guidance.",
+        "Standalone renewable or CHP projects without larger energy-efficiency work should not match."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Reinvestment Fund",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.reinvestment.com/gelf/",
+      "sourceUrlsChecked": [
+        "https://www.reinvestment.com/gelf/",
+        "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/green-energy-loan-fund",
+        "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf"
+      ],
+      "evidenceText": "Official]( GELF sources describe loan financing for energy conservation, efficiency retrofits, and high-performance building systems in Pennsylvania buildings.",
+      "reasoningNotes": "The original audit and commissioning matches overstate the source. Audits or analysis may support underwriting, but the eligible opportunity is financing for implementation projects."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22497",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "Ipswich"
+        ],
+        "utilityTerritories": [
+          "Ipswich Electric Light Department"
+        ],
+        "notes": "Limited to customers served by Ipswich Electric Light Department."
+      },
+      "eligibleApplicantTypes": [
+        "electric_customer",
+        "property_owner",
+        "residential_customer",
+        "commercial_customer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "rooftop_solar_pv"
+      ],
+      "hardRequirements": [
+        "System must be a qualifying solar PV installation for an IELD customer.",
+        "System capacity must not exceed 25 kW DC.",
+        "Expected output reduction from shading must not exceed 20 percent.",
+        "Azimuth must be within the program's allowed orientation range.",
+        "Non-energy attributes or RECs are assigned according to the IELD program terms."
+      ],
+      "blockers": [
+        "Window film, awnings, and shading retrofits are false positives; shading is an eligibility screen, not an incentivized measure.",
+        "Solar thermal and non-PV systems are not supported.",
+        "Projects outside the IELD service territory should not match."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Ipswich Electric Light Department",
+      "applicationUrl": "https://nextzero.org/ipswich/solar-rebates/",
+      "websiteUrl": "https://www.ipswichma.gov/814/Solar-PV",
+      "sourceUrlsChecked": [
+        "https://www.ipswichma.gov/814/Solar-PV",
+        "https://nextzero.org/ipswich/solar-rebates/",
+        "https://programs.dsireusa.org/system/program/detail/22497/town-of-ipswich-electric-light-department-solar-pv-rebate-program"
+      ],
+      "evidenceText": "Ipswich]( states that the rebate applies to Solar PV systems and lists PV-specific capacity, shading, and orientation requirements.",
+      "reasoningNotes": "Keep only PV categories. The matched window-shading category was triggered by an eligibility condition and should be blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5209",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Vermont uniform capacity tax and exemption framework for solar plants and certain grid-connected storage."
+      },
+      "eligibleApplicantTypes": [
+        "solar_plant_owner",
+        "energy_storage_facility_owner",
+        "renewable_energy_taxpayer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "utility_scale_power_generation"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_electric_generation",
+        "solar_pv_system",
+        "stationary_grid_connected_battery_storage"
+      ],
+      "hardRequirements": [
+        "Solar plant must be commissioned to generate solar power in Vermont.",
+        "Solar plants under 50 kW are exempt; solar plants at or above 50 kW are subject to the annual uniform capacity tax.",
+        "Standalone stationary grid-connected storage must have a plant energy rating of at least 600 kWh to be taxed; smaller storage is exempt.",
+        "Tax or exemption applies to fixtures and personal property, not underlying land."
+      ],
+      "blockers": [
+        "Energy storage must be stationary and grid-connected; general home backup batteries are not automatically eligible.",
+        "Storage connected to a renewable energy plant is treated differently from standalone storage.",
+        "This is a property tax treatment, not a rebate, loan, or installation incentive.",
+        "Non-solar renewable generation should not match this opportunity."
+      ],
+      "programType": "Property Tax Incentive",
+      "administrator": "Vermont Department of Taxes",
+      "applicationUrl": null,
+      "websiteUrl": "https://tax.vermont.gov/municipal-officials/solar-plant-taxation",
+      "sourceUrlsChecked": [
+        "https://tax.vermont.gov/municipal-officials/solar-plant-taxation",
+        "https://legislature.vermont.gov/statutes/section/32/215/08701",
+        "https://programs.dsireusa.org/system/program/detail/5209/uniform-capacity-tax-and-exemption-for-solar"
+      ],
+      "evidenceText": "Vermont]( law assesses a uniform capacity tax on solar plants and standalone stationary grid-connected storage, with exemptions below 50 kW and 600 kWh.",
+      "reasoningNotes": "Both solar PV and grid-connected storage are source-backed, but the storage match must be narrowed to stationary grid-connected facilities and not general batteries."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22398",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "United Cooperative Services"
+        ],
+        "notes": "Limited to United Cooperative Services member locations served by United."
+      },
+      "eligibleApplicantTypes": [
+        "electric_cooperative_member",
+        "residential_customer",
+        "property_owner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Applicant must be a United Cooperative Services member.",
+        "Charger must be a new Level 2, 240-volt EV charger installed at a location served by United.",
+        "Member must sign up for Beat the Peak text alerts.",
+        "Charger must be programmable for delayed charging to avoid 4 p.m. to 8 p.m. peak hours from May through October.",
+        "Required rebate documentation must be submitted within the program deadline."
+      ],
+      "blockers": [
+        "Level 1 chargers, DC fast chargers, and non-Level-2 equipment are not supported.",
+        "Installations outside United's service territory should not match.",
+        "Non-residential or public charging uses are not supported by the checked source."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "United Cooperative Services",
+      "applicationUrl": "https://ucs.net/sites/default/files/2025%20REBATE%20APPLICATION_2.pdf",
+      "websiteUrl": "https://ucs.net/rebate-programs",
+      "sourceUrlsChecked": [
+        "https://ucs.net/rebate-programs",
+        "https://ucs.net/sites/default/files/2025%20REBATE%20APPLICATION_2.pdf",
+        "https://programs.dsireusa.org/system/program/detail/22398/united-cooperative-services-ev-charging-station-rebate-program"
+      ],
+      "evidenceText": "United's]( rebate page lists a Level 2 EV charger rebate for members, with service-territory, Beat the Peak, and delayed-charging requirements.",
+      "reasoningNotes": "Use the narrower Level 2 EV charger category rather than a broad EV charging category."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5313",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Eligible projects may be in any U.S. state or eligible territory, subject to USDA program rules."
+      },
+      "eligibleApplicantTypes": [
+        "eligible_lender",
+        "business",
+        "cooperative",
+        "tribal_government",
+        "state_government",
+        "local_government",
+        "public_power_entity",
+        "higher_education_institution",
+        "national_laboratory",
+        "agricultural_producer_association"
+      ],
+      "eligibleSectors": [
+        "agricultural",
+        "industrial",
+        "manufacturing",
+        "public",
+        "tribal",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "commercial_scale_biorefinery",
+        "advanced_biofuel_production_facility",
+        "renewable_chemical_production_facility",
+        "biobased_product_manufacturing_equipment"
+      ],
+      "hardRequirements": [
+        "Assistance is provided through USDA loan guarantees, with an eligible lender as applicant.",
+        "Project must develop, construct, or retrofit a commercial-scale biorefinery or qualifying renewable chemical or biobased product manufacturing facility.",
+        "Applications follow USDA phase and deadline requirements.",
+        "Eligible technology, equity, lender, borrower, and federal-loan-guarantee requirements apply."
+      ],
+      "blockers": [
+        "Standalone engineering feasibility studies are not a source-backed retrofit category for this opportunity.",
+        "Small building biomass boilers or generic biomass energy systems should not match unless part of an eligible commercial-scale biorefinery or manufacturing facility.",
+        "This is not a rebate program for building energy equipment."
+      ],
+      "programType": "Loan Guarantee",
+      "administrator": "USDA Rural Development",
+      "applicationUrl": "https://www.rd.usda.gov/programs-services/energy-programs/biorefinery-renewable-chemical-and-biobased-product-manufacturing-program",
+      "websiteUrl": "https://www.rd.usda.gov/programs-services/energy-programs/biorefinery-renewable-chemical-and-biobased-product-manufacturing-program",
+      "sourceUrlsChecked": [
+        "https://www.rd.usda.gov/programs-services/energy-programs/biorefinery-renewable-chemical-and-biobased-product-manufacturing-program",
+        "https://programs.dsireusa.org/system/program/detail/5313/usda-biorefinery-renewable-chemical-and-biobased-product-manufacturing-assistance-program"
+      ],
+      "evidenceText": "USDA]( describes loan guarantees for developing, constructing, and retrofitting commercial-scale biorefineries and biobased product manufacturing facilities.",
+      "reasoningNotes": "The biomass match is valid only for qualifying commercial-scale production or manufacturing facilities. The feasibility-study match should be blocked as a standalone category."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2511",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "National USDA REAP program; rural-area restrictions apply to most small-business applicants, while agricultural producers may qualify at associated production sites."
+      },
+      "eligibleApplicantTypes": [
+        "agricultural_producer",
+        "rural_small_business",
+        "eligible_lender"
+      ],
+      "eligibleSectors": [
+        "agricultural",
+        "commercial",
+        "rural_small_business"
+      ],
+      "eligibleRetrofitCategories": [
+        "biomass_renewable_energy_system",
+        "anaerobic_digester",
+        "geothermal_energy_system",
+        "ground_source_geothermal_heat_pump",
+        "energy_efficiency_improvements"
+      ],
+      "hardRequirements": [
+        "Borrower must be an agricultural producer or rural small business eligible under USDA REAP rules.",
+        "Guaranteed loan must finance a renewable energy system, energy-efficiency improvement, or eligible energy-efficient agricultural equipment.",
+        "Rural-area requirements apply to small businesses, with specified exceptions for agricultural production.",
+        "Energy-efficiency applications must include a qualifying audit or assessment.",
+        "Federal debt, tax, judgment, and debarment restrictions apply."
+      ],
+      "blockers": [
+        "Residential-only home retrofits for non-business applicants are not supported.",
+        "Non-rural small businesses generally do not qualify unless an agricultural-production exception applies.",
+        "Audit costs alone should not be matched as the funded retrofit unless tied to an eligible REAP project.",
+        "Loan guarantees should not be treated as rebate incentives."
+      ],
+      "programType": "Loan Guarantee",
+      "administrator": "USDA Rural Development",
+      "applicationUrl": "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans",
+      "websiteUrl": "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans",
+      "sourceUrlsChecked": [
+        "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans",
+        "https://programs.dsireusa.org/system/program/detail/2511/usda-rural-energy-for-america-program-reap-loan-guarantees"
+      ],
+      "evidenceText": "USDA]( REAP guaranteed loans finance renewable energy systems, including biomass and geothermal, and energy-efficiency improvements for agricultural producers and rural small businesses.",
+      "reasoningNotes": "The biomass and geothermal matches are source-backed, but matching must enforce agricultural-producer or rural-small-business eligibility and loan-guarantee structure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22344",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "VT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Vermont Electric Cooperative"
+        ],
+        "notes": "Limited to Vermont Electric Cooperative members or qualifying public charging sites in VEC territory."
+      },
+      "eligibleApplicantTypes": [
+        "electric_cooperative_member",
+        "residential_customer",
+        "business",
+        "public_entity",
+        "school",
+        "municipality"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "public",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "public_ev_charging_station"
+      ],
+      "hardRequirements": [
+        "Home charger incentives require VEC membership and Level II charger participation in VEC peak-management terms.",
+        "Members using their own Level II charger must meet scheduling or platform-enrollment requirements.",
+        "Public charging station bill credits require qualifying Level II or Level III public charging stations.",
+        "Public charging stations must be publicly available and meet VEC program conditions."
+      ],
+      "blockers": [
+        "Non-VEC customers should not match.",
+        "Home chargers that cannot be scheduled or enrolled for peak management should not match.",
+        "Private workplace or fleet chargers should not match the public-station bill credit unless public-access rules are met."
+      ],
+      "programType": "Other Incentive",
+      "administrator": "Vermont Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://vermontelectric.coop/energy-transformation-programs",
+      "sourceUrlsChecked": [
+        "https://vermontelectric.coop/energy-transformation-programs",
+        "https://vermontelectric.coop/latest-news/heres-a-rundown-on-vecs-2026-energy-transformation-incentives-01-21-26",
+        "https://programs.dsireusa.org/system/program/detail/22344/vermont-electric-coop-ev-charging-station-bill-credit"
+      ],
+      "evidenceText": "VEC]( lists Level II home charger incentives and public Level II or Level III charging station bill credits with peak-management or public-access conditions.",
+      "reasoningNotes": "EV charging is source-backed. The broad EV charger category should be narrowed to VEC-member Level II chargers or qualifying public charging stations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22206",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "New York Volkswagen settlement funding is administered through project-specific sponsors and solicitations."
+      },
+      "eligibleApplicantTypes": [
+        "fleet_owner",
+        "business",
+        "public_agency",
+        "local_government",
+        "transit_agency",
+        "eligible_project_sponsor"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "public",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "diesel_vehicle_or_equipment_replacement",
+        "zero_emission_vehicle_purchase",
+        "ev_charging_infrastructure",
+        "transit_bus_charging_infrastructure"
+      ],
+      "hardRequirements": [
+        "Project must fit an eligible New York Volkswagen settlement funding category.",
+        "Applicant must apply through the applicable project sponsor or solicitation.",
+        "Vehicle projects must replace eligible diesel vehicles or equipment under program rules.",
+        "EVSE projects must meet the open subprogram's technology, site, and use requirements."
+      ],
+      "blockers": [
+        "Not a general passenger EV purchase rebate.",
+        "Not a general building retrofit or energy-efficiency program.",
+        "Completed or awarded subprograms, including earlier light-duty charging rounds, should not be matched for new applicants.",
+        "Funding status must be checked at the subprogram level."
+      ],
+      "programType": "Grant Program",
+      "administrator": "New York State Department of Environmental Conservation",
+      "applicationUrl": null,
+      "websiteUrl": "https://dec.ny.gov/environmental-protection/air-quality/controlling-motor-vehicle-pollution/vw-settlement-information/vw-funding-for-diesel-replacement-and-evse-projects",
+      "sourceUrlsChecked": [
+        "https://dec.ny.gov/environmental-protection/air-quality/controlling-motor-vehicle-pollution/vw-settlement-information/vw-funding-for-diesel-replacement-and-evse-projects",
+        "https://programs.dsireusa.org/system/program/detail/22206/vw-funding-for-diesel-replacement-and-evse-projects"
+      ],
+      "evidenceText": "DEC]( lists Volkswagen settlement funding for diesel vehicle and equipment replacement projects and EVSE projects, with several sponsor-specific opportunities.",
+      "reasoningNotes": "Both EVSE and vehicle replacement categories are source-backed, but availability is controlled by each subprogram and should not match generic EV purchases."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22662",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Round 1 proposed awards targeted DC fast charging along Washington alternative fuel corridors, including I-90, US 97, US 195, and US 395."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "nonprofit",
+        "public_entity",
+        "charging_site_host",
+        "charging_network_operator"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "nonprofit",
+        "public",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "dc_fast_charging_station",
+        "ev_charging_infrastructure"
+      ],
+      "hardRequirements": [
+        "Round 1 applications closed January 31, 2025.",
+        "Projects must install, operate, and maintain DC fast charging along designated alternative fuel corridors.",
+        "Each charging station must meet NEVI technical requirements, including multiple high-power CCS connectors and minimum station capacity.",
+        "Awards are contingent until grant agreements are signed."
+      ],
+      "blockers": [
+        "Electric vehicle purchases are not eligible under this infrastructure grant.",
+        "Level 2-only charging projects should not match the NEVI DC fast charging solicitation.",
+        "New applicants should not match while the round is closed and awards are being finalized."
+      ],
+      "programType": "Grant Program",
+      "administrator": "Washington State Department of Transportation",
+      "applicationUrl": null,
+      "websiteUrl": "https://wsdot.wa.gov/business-wsdot/grants/zero-emission-vehicle-grants/national-electric-vehicle-infrastructure-nevi-grant",
+      "sourceUrlsChecked": [
+        "https://wsdot.wa.gov/business-wsdot/grants/zero-emission-vehicle-grants/national-electric-vehicle-infrastructure-nevi-grant",
+        "https://wsdot.wa.gov/construction-planning/statewide-plans/washington-state-plan-electric-vehicle-infrastructure-deployment",
+        "https://programs.dsireusa.org/system/program/detail/22662/washington-national-electric-vehicle-infrastructure-nevi-formula-grant-program"
+      ],
+      "evidenceText": "WSDOT]( says Round 1 applications are closed and proposed awards fund DC fast charging ports along designated highway corridors.",
+      "reasoningNotes": "Keep EV charging infrastructure only. The electric-vehicle-purchase match is a false positive."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5417",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy"
+        ],
+        "notes": "Limited to eligible Xcel Energy Minnesota electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "xcel_energy_electric_customer",
+        "residential_customer",
+        "commercial_customer",
+        "solar_customer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "rooftop_solar_pv"
+      ],
+      "hardRequirements": [
+        "Customer must be in Xcel Energy's Minnesota electric service territory.",
+        "Project must be a grid-connected solar PV system meeting Xcel Solar*Rewards requirements.",
+        "Program participation, metering, interconnection, system-size, and production-payment rules apply, including current Xcel Solar*Rewards terms.",
+        "Available funds and enrollment terms should be checked before matching."
+      ],
+      "blockers": [
+        "Production or net metering required for the solar program is not a standalone submetering or energy-monitoring retrofit.",
+        "Non-PV solar thermal measures are not supported.",
+        "Projects outside Xcel's Minnesota electric territory should not match."
+      ],
+      "programType": "Performance-Based Incentive",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://mn.my.xcelenergy.com/s/renewable/solar-rewards",
+      "sourceUrlsChecked": [
+        "https://mn.my.xcelenergy.com/s/renewable/solar-rewards",
+        "https://mn.my.xcelenergy.com/s/renewable",
+        "https://www.xcelenergy.com/staticfiles/xe/Marketing/Files/MN-Res-SR-Meter-Billing-Guide.pdf",
+        "https://programs.dsireusa.org/system/program/detail/5417/xcel-energy-solar-rewards-program"
+      ],
+      "evidenceText": "Xcel's]( Minnesota renewable-energy page describes Solar*Rewards payments and bill credits for customers who install solar panels.",
+      "reasoningNotes": "The solar PV match is supported. The submetering match is a false positive from program metering language and should be blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1255",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Xcel Energy"
+        ],
+        "notes": "Limited to eligible Xcel Energy Colorado electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "xcel_energy_electric_customer",
+        "residential_customer",
+        "solar_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "rooftop_solar_pv"
+      ],
+      "hardRequirements": [
+        "Customer must be in Xcel Energy's Colorado electric service territory.",
+        "Project must be a qualifying residential on-site solar PV system.",
+        "The 2026 Solar*Rewards Residential On-Site Solar program reopened with renewed incentive budget on May 21, 2026.",
+        "Program preapproval, interconnection, metering, and budget limits apply."
+      ],
+      "blockers": [
+        "Production or net metering is not a standalone submetering or energy-monitoring retrofit.",
+        "Non-PV solar thermal systems should not match.",
+        "Projects outside Xcel's Colorado electric territory should not match."
+      ],
+      "programType": "Performance-Based Incentive",
+      "administrator": "Xcel Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://co.my.xcelenergy.com/s/renewable/solar-rewards",
+      "sourceUrlsChecked": [
+        "https://co.my.xcelenergy.com/s/renewable/solar-rewards",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/CO-Solar-Rewards-FAQ.pdf",
+        "https://programs.dsireusa.org/system/program/detail/1255/xcel-energy-solar-rewards-program"
+      ],
+      "evidenceText": "Xcel's]( Colorado page states the 2026 Solar*Rewards Residential On-Site Solar program opened with renewed incentive budget on May 21, 2026.",
+      "reasoningNotes": "The PV match is current and source-backed. The submetering match is false because program meters are for billing and REC/payment accounting."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22255",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Washington priority corridors and communities selected through the 2025-2027 ZEVIP round."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "nonprofit",
+        "public_entity",
+        "charging_site_host",
+        "charging_network_operator",
+        "hydrogen_refueling_project_developer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "nonprofit",
+        "public",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "dc_fast_charging_station",
+        "ev_charging_infrastructure",
+        "hydrogen_refueling_infrastructure"
+      ],
+      "hardRequirements": [
+        "2025-2027 applications were due February 12, 2026.",
+        "Proposed awards were announced for new fast-charging ports and corridor infrastructure.",
+        "Projects must install new or upgraded zero-emission vehicle infrastructure along priority corridors.",
+        "Technology and station requirements apply, including fast-charging specifications for awarded EV sites."
+      ],
+      "blockers": [
+        "Electric vehicle purchases are not supported by this infrastructure partnerships grant.",
+        "General fleet replacement should not match.",
+        "New applicants should not match the closed 2025-2027 round unless WSDOT opens a new solicitation.",
+        "Building energy retrofits unrelated to charging or hydrogen infrastructure are not eligible."
+      ],
+      "programType": "Grant Program",
+      "administrator": "Washington State Department of Transportation",
+      "applicationUrl": null,
+      "websiteUrl": "https://wsdot.wa.gov/business-wsdot/grants/zero-emission-vehicle-grants/zero-emission-vehicle-infrastructure-partnerships-grant",
+      "sourceUrlsChecked": [
+        "https://wsdot.wa.gov/business-wsdot/grants/zero-emission-vehicle-grants/zero-emission-vehicle-infrastructure-partnerships-grant",
+        "https://programs.dsireusa.org/system/program/detail/22255/zero-emission-vehicle-infrastructure-partnerships-program"
+      ],
+      "evidenceText": "WSDOT]( describes ZEVIP as funding zero-emission vehicle infrastructure and lists the 2025-2027 application deadline and proposed awards.",
+      "reasoningNotes": "Keep charging and hydrogen infrastructure. The electric-vehicle-purchase match is a false positive."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NM"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "New Mexico statewide corporate tax credit, subject to certificate and annual cap availability."
+      },
+      "eligibleApplicantTypes": [
+        "corporate_taxpayer",
+        "business",
+        "commercial_property_owner"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "leed_certification",
+        "commercial_building_energy_efficiency_renovation",
+        "energy_conserving_products",
+        "air_source_heat_pump",
+        "ground_source_heat_pump",
+        "heat_pump_water_heater",
+        "energy_star_windows",
+        "energy_star_doors",
+        "insulation_upgrade",
+        "electric_vehicle_charging_equipment"
+      ],
+      "hardRequirements": [
+        "Taxpayer must obtain an EMNRD certificate before claiming the tax credit.",
+        "Commercial new construction must meet the applicable LEED certification requirements.",
+        "Large commercial renovation must meet the required improvement over ASHRAE standards.",
+        "Energy-conserving products must meet listed specifications and be installed in qualifying existing New Mexico buildings.",
+        "Credit availability is subject to statutory and annual caps."
+      ],
+      "blockers": [
+        "LEED certification alone is not enough without a qualifying building project and EMNRD certificate.",
+        "Non-listed products should not match the energy-conserving product portion.",
+        "Projects outside New Mexico or without a state certificate should not match."
+      ],
+      "programType": "Corporate Tax Credit",
+      "administrator": "New Mexico Energy, Minerals and Natural Resources Department",
+      "applicationUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+      "sourceUrlsChecked": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/energy-conserving-products/",
+        "https://wwwapps.emnrd.nm.gov/ECAM/SBTCSubmissions/",
+        "https://wwwapps.emnrd.nm.gov/ECAM/ECPSubmissions/",
+        "https://klvg4oyd4j.execute-api.us-west-2.amazonaws.com/prod/PublicFiles/34821a9573ca43e7b06dfad20f5183fd/f6449484-7c89-4613-aa94-69acac23f580/trd-41252.pdf",
+        "https://programs.dsireusa.org/system/program/detail/22423/2021-sustainable-building-tax-credit-corporate"
+      ],
+      "evidenceText": "EMNRD]( lists sustainable building tax credits for LEED commercial projects, large renovations, and specified energy-conserving products.",
+      "reasoningNotes": "The LEED match is valid but incomplete; the official program also covers specified energy-conserving products and qualifying commercial renovation standards."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NM"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "New Mexico statewide personal tax credit, subject to certificate and annual cap availability."
+      },
+      "eligibleApplicantTypes": [
+        "individual_taxpayer",
+        "homeowner",
+        "residential_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "leed_homes_certification",
+        "build_green_nm_certification",
+        "energy_conserving_products",
+        "air_source_heat_pump",
+        "ground_source_heat_pump",
+        "heat_pump_water_heater",
+        "energy_star_windows",
+        "energy_star_doors",
+        "insulation_upgrade",
+        "electric_vehicle_charging_equipment"
+      ],
+      "hardRequirements": [
+        "Taxpayer must obtain an EMNRD certificate before claiming the personal tax credit.",
+        "Residential new construction must meet qualifying Build Green NM or LEED-H certification levels.",
+        "Energy-conserving products must meet listed specifications and be installed in qualifying existing New Mexico residences or small commercial buildings when allowed.",
+        "Eligible products are limited to taxable years and caps set by New Mexico law."
+      ],
+      "blockers": [
+        "Generic LEED language should be narrowed to LEED-H or listed sustainable-building certifications for residential projects.",
+        "Non-listed products and uncertified projects should not match.",
+        "Projects outside New Mexico or without a state certificate should not match."
+      ],
+      "programType": "Personal Tax Credit",
+      "administrator": "New Mexico Energy, Minerals and Natural Resources Department",
+      "applicationUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+      "sourceUrlsChecked": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/energy-conserving-products/",
+        "https://wwwapps.emnrd.nm.gov/ECAM/SBTCSubmissions/",
+        "https://wwwapps.emnrd.nm.gov/ECAM/ECPSubmissions/",
+        "https://klvg4oyd4j.execute-api.us-west-2.amazonaws.com/prod/PublicFiles/34821a9573ca43e7b06dfad20f5183fd/f6449484-7c89-4613-aa94-69acac23f580/trd-41252.pdf",
+        "https://programs.dsireusa.org/system/program/detail/22424/2021-sustainable-building-tax-credit-personal"
+      ],
+      "evidenceText": "EMNRD]( lists residential sustainable-building certifications and specified energy-conserving products for New Mexico personal tax credit certificates.",
+      "reasoningNotes": "The LEED match is supported only when narrowed to qualifying residential certification. Product-specific ECP categories are also source-backed."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3661",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "AEP Texas Central Company"
+        ],
+        "notes": "Limited to customers receiving AEP Texas Central electric delivery service; service-area eligibility is verified by ESI-ID and program service-provider rules."
+      },
+      "eligibleApplicantTypes": [
+        "aep_texas_distribution_customer",
+        "residential_customer",
+        "commercial_customer",
+        "participating_contractor"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "battery_storage_system_with_solar",
+        "level_2_ev_charger_with_solar"
+      ],
+      "hardRequirements": [
+        "Customer must receive electric delivery service from AEP Texas Central.",
+        "Application and incentive payment must go through an enrolled installation company or participating contractor.",
+        "Solar equipment must be new PV installed on the customer side of the meter.",
+        "Storage and EVSE incentives are only eligible when installed with qualifying solar under the 2026 guidebook.",
+        "Funding is limited and first-come, first-served."
+      ],
+      "blockers": [
+        "Standalone battery storage is not eligible without qualifying solar.",
+        "Standalone EV charging is not eligible without qualifying solar.",
+        "Portable, temporary, or off-grid PV systems should not match.",
+        "Unenrolled installers or commercial work started before incentive commitment should not match."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "AEP Texas",
+      "applicationUrl": "https://aeptexas.p3.enertrek.com/",
+      "websiteUrl": "https://aeptxsaves.com/residential-programs/smart-source/",
+      "sourceUrlsChecked": [
+        "https://aeptxsaves.com/residential-programs/smart-source/",
+        "https://www.txreincentives.com/",
+        "https://www.txreincentives.com/status.php",
+        "https://aeptexas.p3.enertrek.com/",
+        "https://aeptxsaves.com/wp-content/uploads/2026-AEP-Texas-SMART-Source-Program-Guidebook.pdf",
+        "https://programs.dsireusa.org/system/program/detail/3661/aep-texas-central-company-smart-source-solar-pv-rebate-program"
+      ],
+      "evidenceText": "AEP]( Texas says SMART Source helps customers install solar electric systems, requires AEP Texas delivery service, and has funds available through enrolled installers.",
+      "reasoningNotes": "The solar PV match is source-backed. Current program materials also allow storage and Level 2 EVSE only as add-ons with qualifying solar, not as standalone matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3669",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "AEP Texas North Company"
+        ],
+        "notes": "Limited to customers receiving AEP Texas North electric delivery service; service-area eligibility is verified by ESI-ID and program service-provider rules."
+      },
+      "eligibleApplicantTypes": [
+        "aep_texas_distribution_customer",
+        "residential_customer",
+        "commercial_customer",
+        "participating_contractor"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "battery_storage_system_with_solar",
+        "level_2_ev_charger_with_solar"
+      ],
+      "hardRequirements": [
+        "Customer must receive electric delivery service from AEP Texas North.",
+        "Application and incentive payment must go through an enrolled installation company or participating contractor.",
+        "Solar equipment must be new PV installed on the customer side of the meter.",
+        "Storage and EVSE incentives are only eligible when installed with qualifying solar under the 2026 guidebook.",
+        "Funding is limited and first-come, first-served."
+      ],
+      "blockers": [
+        "Standalone battery storage is not eligible without qualifying solar.",
+        "Standalone EV charging is not eligible without qualifying solar.",
+        "Portable, temporary, or off-grid PV systems should not match.",
+        "Unenrolled installers or commercial work started before incentive commitment should not match."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "AEP Texas",
+      "applicationUrl": "https://aeptexas.p3.enertrek.com/",
+      "websiteUrl": "https://aeptxsaves.com/residential-programs/smart-source/",
+      "sourceUrlsChecked": [
+        "https://aeptxsaves.com/residential-programs/smart-source/",
+        "https://www.txreincentives.com/",
+        "https://www.txreincentives.com/status.php",
+        "https://aeptexas.p3.enertrek.com/",
+        "https://aeptxsaves.com/wp-content/uploads/2026-AEP-Texas-SMART-Source-Program-Guidebook.pdf",
+        "https://programs.dsireusa.org/system/program/detail/3669/aep-texas-north-company-smart-source-solar-pv-rebate-program"
+      ],
+      "evidenceText": "AEP]( Texas says SMART Source helps customers install solar electric systems, requires AEP Texas delivery service, and has funds available through enrolled installers.",
+      "reasoningNotes": "The solar PV match is source-backed. Current program materials also allow storage and Level 2 EVSE only as add-ons with qualifying solar, not as standalone matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4495",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NM"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "New Mexico statewide corporate income tax credit for certified transportation of agricultural biomass."
+      },
+      "eligibleApplicantTypes": [
+        "corporate_taxpayer",
+        "agricultural_biomass_transporter",
+        "business"
+      ],
+      "eligibleSectors": [
+        "agricultural",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Taxpayer must receive an EMNRD certificate of transportation for eligible agricultural biomass.",
+        "Agricultural biomass must be transported during taxable years beginning on or after January 1, 2011 and before January 1, 2030.",
+        "Corporate claims must follow the applicable New Mexico corporate income tax rule and TRD claim process."
+      ],
+      "blockers": [
+        "Biomass or biogas energy system installation is a false-positive retrofit match.",
+        "The credit supports certified agricultural biomass transportation, not facility construction or building equipment.",
+        "Projects without an EMNRD certificate of transportation should not match."
+      ],
+      "programType": "Corporate Tax Credit",
+      "administrator": "New Mexico Energy, Minerals and Natural Resources Department",
+      "applicationUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+      "sourceUrlsChecked": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+        "https://programs.dsireusa.org/system/program/detail/4495/agricultural-biomass-income-tax-credit-corporate"
+      ],
+      "evidenceText": "EMNRD]( describes the agricultural biomass income tax credit as based on certificates of transportation for agricultural biomass.",
+      "reasoningNotes": "Clear retrofit categories because the source supports transportation certificates rather than a physical biomass or biogas energy-system installation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4496",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NM"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "New Mexico statewide personal income tax credit for certified transportation of agricultural biomass."
+      },
+      "eligibleApplicantTypes": [
+        "individual_taxpayer",
+        "agricultural_biomass_transporter"
+      ],
+      "eligibleSectors": [
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Taxpayer must receive an EMNRD certificate of transportation for eligible agricultural biomass.",
+        "Agricultural biomass must be transported during taxable years beginning on or after January 1, 2011 and before January 1, 2030.",
+        "Personal claims must follow the applicable New Mexico personal income tax rule and TRD claim process."
+      ],
+      "blockers": [
+        "Biomass or biogas energy system installation is a false-positive retrofit match.",
+        "The credit supports certified agricultural biomass transportation, not facility construction or building equipment.",
+        "Projects without an EMNRD certificate of transportation should not match."
+      ],
+      "programType": "Personal Tax Credit",
+      "administrator": "New Mexico Energy, Minerals and Natural Resources Department",
+      "applicationUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+      "websiteUrl": "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+      "sourceUrlsChecked": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+        "https://programs.dsireusa.org/system/program/detail/4496/agricultural-biomass-income-tax-credit-personal"
+      ],
+      "evidenceText": "EMNRD]( describes the agricultural biomass income tax credit as based on certificates of transportation for agricultural biomass.",
+      "reasoningNotes": "Clear retrofit categories because the source supports transportation certificates rather than a physical biomass or biogas energy-system installation."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:5251"
+}

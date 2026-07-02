@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) GPT Pro opportunity data repair batches 79-96
+
+- Validated the 18 GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-79-96/` and confirmed each output matched its prompt target set, including the final 14-target batch.
+- Imported the outputs as normalized opportunity-data repair batches 79-96 and appended them to the ordered repair manifest.
+- Applied all 96 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures, reducing remaining unrepaired match-confidence targets to zero and low source-confidence follow-ups to five.
+
 ## 2026-07-02 - Codex (GPT-5) state-dependent incentive TODO
 
 - Added a product TODO for tracking user state, already-completed retrofits, and dependent opportunity logic so future estimates can recalculate incentives when prior retrofits change marginal savings, tiers, caps, or eligible basis.

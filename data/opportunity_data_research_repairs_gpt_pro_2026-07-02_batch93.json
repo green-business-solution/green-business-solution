@@ -1,0 +1,1090 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-02",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22419",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide South Carolina property tax exemption administered under S.C. Code Section 12-37-220."
+      },
+      "eligibleApplicantTypes": [
+        "property_owners",
+        "customer_generators",
+        "third_party_system_owners"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "solar_water_heating_system",
+        "small_wind_turbine",
+        "small_hydroelectric_system",
+        "geothermal_heat_pump",
+        "battery_storage_system",
+        "biomass_energy_system",
+        "renewable_hydrogen_system",
+        "renewable_chp_system"
+      ],
+      "hardRequirements": [
+        "Renewable energy resource property must have nameplate capacity and operation no greater than 20 kW AC.",
+        "Battery storage must be a component that enhances operational characteristics of qualifying renewable generating equipment.",
+        "Exemption applies to qualifying renewable energy resource property for property tax purposes."
+      ],
+      "blockers": [
+        "Do not match utility-scale systems over 20 kW AC.",
+        "Do not match standalone nonrenewable backup batteries or general resilience projects.",
+        "This is a property tax exemption, not a rebate or grant."
+      ],
+      "programType": "Property Tax Incentive",
+      "administrator": "South Carolina Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://dor.sc.gov/property/exempt-property",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22419/renewable-energy-and-energy-storage-property-tax-exemption",
+        "https://dor.sc.gov/property/exempt-property",
+        "https://dor.sc.gov/sites/dor/files/Documents/Policy%20Manuals/SCTIED-2025-Chapter%204.pdf"
+      ],
+      "evidenceText": "South]( Carolina property tax guidance exempts renewable energy resource property up to 20 kW AC and defines renewable resources to include components such as advanced inverters and battery storage devices.",
+      "reasoningNotes": "The battery storage match is valid only when tied to qualifying renewable energy resource property within the statutory size limit."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5422",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide South Dakota incentive for qualifying commercial renewable energy facilities."
+      },
+      "eligibleApplicantTypes": [
+        "renewable_energy_facility_owners",
+        "commercial_developers",
+        "utility_scale_project_developers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "utility"
+      ],
+      "eligibleRetrofitCategories": [
+        "utility_scale_wind_energy_system",
+        "utility_scale_solar_pv"
+      ],
+      "hardRequirements": [
+        "Facility must be a commercial wind farm or solar facility.",
+        "Facility must have nameplate capacity of at least 5,000 kW.",
+        "Applicant must meet South Dakota tax reimbursement requirements for qualifying renewable energy facilities."
+      ],
+      "blockers": [
+        "Remove small_wind_turbine as a match; the program is for large commercial wind or solar facilities, not small wind.",
+        "Do not match residential, behind-the-meter, or sub-5 MW systems.",
+        "This is a sales and use tax reimbursement, not a direct equipment rebate."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "South Dakota Governor's Office of Economic Development",
+      "applicationUrl": null,
+      "websiteUrl": "https://sdreadytowork.com/financing-incentives/tax-incentives/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5422/renewable-energy-facility-sales-and-use-tax-reimbursement",
+        "https://sdreadytowork.com/financing-incentives/tax-incentives/",
+        "https://dor.sd.gov/media/riuhxv2u/renewable-energy-facility.pdf"
+      ],
+      "evidenceText": "South]( Dakota guidance defines covered renewable energy facilities as commercial wind farms or solar facilities with nameplate capacity of at least 5,000 kW.",
+      "reasoningNotes": "The matched small_wind_turbine category is a false positive. Only utility-scale wind or solar facility categories should remain."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:158",
+      "confidence": "medium",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NV"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Nevada property tax exemption for qualifying renewable energy systems; large-scale renewable energy tax abatements are a separate program."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_property_owners",
+        "industrial_property_owners",
+        "agricultural_irrigation_system_owners"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "geothermal_heat_pump",
+        "solar_pv_system",
+        "solar_water_heating_system",
+        "wind_energy_system",
+        "small_hydroelectric_system",
+        "solid_waste_energy_system"
+      ],
+      "hardRequirements": [
+        "System must qualify under Nevada renewable energy system property tax exemption rules.",
+        "System must serve a commercial or industrial building or an irrigation system.",
+        "Applicant may not claim the same property under a separate renewable energy tax abatement when prohibited."
+      ],
+      "blockers": [
+        "Do not match residential systems unless a current official source separately supports residential eligibility.",
+        "Do not conflate this exemption with Nevada's large-scale Renewable Energy Tax Abatement program.",
+        "Do not generalize geothermal to all HVAC unless the qualifying system is a geothermal renewable energy system."
+      ],
+      "programType": "Property Tax Incentive",
+      "administrator": "Nevada Department of Taxation",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energy.nv.gov/programs/alternative-fuel/renewable-energy-tax-abatements/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/158/renewable-energy-systems-property-tax-exemption",
+        "https://www.leg.state.nv.us/nrs/nrs-701a.html",
+        "https://www.energy.nv.gov/programs/alternative-fuel/renewable-energy-tax-abatements/"
+      ],
+      "evidenceText": "Nevada]( renewable energy property tax sources support qualifying renewable energy systems, including geothermal, for commercial or industrial buildings and irrigation systems.",
+      "reasoningNotes": "The geothermal match is source-backed for qualifying systems, but the current official materials were not as direct as newer program manuals, so source confidence is medium."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4557",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Massachusetts Clean Energy Center program; no new Solar Hot Water applications are accepted."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "commercial_property_owners",
+        "industrial_property_owners",
+        "public_entities"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "public"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_water_heating_system"
+      ],
+      "hardRequirements": [
+        "Program resources apply only to legacy projects already completing Solar Hot Water program requirements.",
+        "Residential and small-scale projects were defined by collector count in MassCEC program materials.",
+        "Applicants seeking current support must use separate current incentives, tax credits, loans, or renewable thermal programs."
+      ],
+      "blockers": [
+        "MassCEC states it is no longer accepting applications for Solar Hot Water systems.",
+        "Do not mark this as an active rebate opportunity.",
+        "Do not merge separate current incentives such as tax credits, Mass Save financing, or municipal light plant programs into this closed MassCEC rebate."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Massachusetts Clean Energy Center",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.masscec.com/solar-hot-water-installer-resources",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4557/residential-and-small-scale-solar-hot-water-program",
+        "https://www.masscec.com/solar-hot-water-installer-resources",
+        "https://goclean.masscec.com/homeowners/solar-hot-water/"
+      ],
+      "evidenceText": "MassCEC's]( Solar Hot Water installer resources page says the agency is no longer accepting applications and only provides resources for completing legacy projects.",
+      "reasoningNotes": "The solar water heating category is historically correct, but availability must be unavailable because the source no longer accepts applications."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:740",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Focus on Energy participating electric utilities"
+        ],
+        "notes": "Available to eligible customers of participating Wisconsin Focus on Energy utilities."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "multifamily_property_owners",
+        "business_customers",
+        "nonprofit_customers",
+        "government_customers"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily",
+        "commercial",
+        "industrial",
+        "public",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_pv_system"
+      ],
+      "hardRequirements": [
+        "Customer must be served by a participating Focus on Energy electric utility.",
+        "Solar PV system must be grid-tied and installed behind the customer's meter.",
+        "Residential incentives require qualified equipment, installer documentation, warranty, and application deadlines.",
+        "Business solar PV incentives have separate business incentive rules and caps."
+      ],
+      "blockers": [
+        "Do not match battery storage; Focus solar PV incentives do not make batteries eligible in this opportunity.",
+        "Do not merge separate business custom renewable incentives into residential Solar for Homes matching.",
+        "Funding and deadlines are program-year specific and first-come, first-served."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Focus on Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://focusonenergy.com/residential/solar-for-homes",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/740/residential-and-commercial-solar-rebate-program",
+        "https://focusonenergy.com/residential/solar-for-homes",
+        "https://focusonenergy.com/business/renewables"
+      ],
+      "evidenceText": "Focus]( on Energy lists residential Solar for Homes incentives for solar electric PV and business renewable incentives for solar PV projects, subject to participating utility and program requirements.",
+      "reasoningNotes": "The solar PV match is correct. Use utility-territory and sector constraints to distinguish residential Solar for Homes from business renewable incentives."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:80",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide New York personal income tax credit for qualifying residential solar energy system equipment."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "residential_taxpayers",
+        "condominium_owners",
+        "cooperative_housing_shareholders"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_water_heating_system",
+        "solar_pv_system",
+        "solar_space_heating_or_cooling_system"
+      ],
+      "hardRequirements": [
+        "System must use solar radiation to produce energy for heating, cooling, hot water, or electricity.",
+        "System must be installed at a principal residence in New York State.",
+        "Credit is limited by New York personal income tax credit rules, including the statutory credit cap.",
+        "Electric systems must satisfy applicable interconnection and utility requirements."
+      ],
+      "blockers": [
+        "Do not match commercial properties.",
+        "Do not match passive solar, nonsolar water heaters, or unrelated building components.",
+        "Do not treat this as a rebate; it is a personal income tax credit."
+      ],
+      "programType": "Personal Tax Credit",
+      "administrator": "New York State Department of Taxation and Finance",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.tax.ny.gov/pit/credits/solar_energy_system_equipment_credit.htm",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/80/residential-solar-tax-credit",
+        "https://www.tax.ny.gov/pit/credits/solar_energy_system_equipment_credit.htm",
+        "https://www.tax.ny.gov/pdf/current_forms/it/it255i.pdf"
+      ],
+      "evidenceText": "New]( York tax guidance covers residential solar energy systems that use solar radiation for heating, cooling, hot water, or electricity at a principal residence.",
+      "reasoningNotes": "The solar water heating match is valid, and solar PV is also eligible. Keep the residential and tax-credit constraints explicit."
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:retrocommissioning-program",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern California Edison"
+        ],
+        "notes": "For eligible Southern California Edison business customers."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customers",
+        "business_property_owners",
+        "facility_managers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "retrocommissioning",
+        "building_system_optimization"
+      ],
+      "hardRequirements": [
+        "Customer must be an SCE business customer paying the Public Goods Charge.",
+        "Building must generally have at least 25,000 square feet of conditioned space.",
+        "Building must have a direct digital control system.",
+        "Building should have central plant mechanical equipment in relatively good condition."
+      ],
+      "blockers": [
+        "Remove energy_management_system as a direct retrofit match; SCE describes retrocommissioning consultation and optimization, not EMS installation incentives.",
+        "Do not match equipment purchases unless separately covered by another SCE incentive program.",
+        "This is technical assistance, not a rebate for controls hardware."
+      ],
+      "programType": "Technical Assistance",
+      "administrator": "Southern California Edison",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement",
+      "sourceUrlsChecked": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement"
+      ],
+      "evidenceText": "SCE]( describes Existing Building Retrocommissioning as a free consultation for qualifying large commercial buildings with direct digital controls and central plant equipment.",
+      "reasoningNotes": "Energy management language caused a false positive. The correct match is retrocommissioning and operational optimization, not installation of an energy management system."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3023",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "RI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Rhode Island Energy"
+        ],
+        "notes": "Rhode Island Energy electric business service territory; related state grant and OER pages describe overlapping but separate support."
+      },
+      "eligibleApplicantTypes": [
+        "small_business_customers",
+        "commercial_customers",
+        "nonprofit_customers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "small_business",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "commercial_lighting",
+        "lighting_controls",
+        "hvac_controls",
+        "energy_management_system",
+        "food_service_equipment",
+        "commercial_refrigeration",
+        "building_envelope_improvements",
+        "efficient_motors_pumps"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible Rhode Island Energy business customer for utility-administered services.",
+        "Small business participation is based on program screening and no-cost or subsidized assessment pathways.",
+        "Installation incentives and grants require eligible cost-effective energy efficiency measures and program approval."
+      ],
+      "blockers": [
+        "Primary Rhode Island Energy small business page was not fully readable, so avoid over-specific rebate amounts from inaccessible content.",
+        "Do not treat Rhode Island Commerce grant rules as identical to Rhode Island Energy utility program rules.",
+        "Solar and non-efficiency projects are separate and should not be matched here."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Rhode Island Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/savings-for-your-business/small-business-program",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3023/rhode-island-energy-electric-small-business-energy-efficiency-program",
+        "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/savings-for-your-business/small-business-program",
+        "https://energy.ri.gov/incentives",
+        "https://commerceri.com/small-business-energy-efficiency-grant-program/"
+      ],
+      "evidenceText": "Rhode]( Island official energy and commerce pages reference Rhode Island Energy business efficiency incentives, no-cost assessments, and small business audit-based efficiency measures.",
+      "reasoningNotes": "The energy audit match is supported, but confidence is medium because the primary utility page was not fully accessible. Categories are limited to efficiency measures corroborated by official state sources."
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:rule-29-ev-guide",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern California Edison"
+        ],
+        "notes": "Applies to EV charging infrastructure projects in SCE's electric service territory."
+      },
+      "eligibleApplicantTypes": [
+        "business_customers",
+        "commercial_property_owners",
+        "industrial_customers",
+        "multifamily_property_owners",
+        "trade_professionals"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charger_installation",
+        "ev_charging_make_ready_infrastructure"
+      ],
+      "hardRequirements": [
+        "Project must be in SCE service territory.",
+        "Rule 29 is open to nonresidential commercial, industrial, and multifamily projects; single-family residential is ineligible.",
+        "SCE may require easements and separate metering.",
+        "Customer must purchase and install eligible EVSE, maintain and operate it for at least five years, and enroll on an eligible EV rate."
+      ],
+      "blockers": [
+        "Single-family residential projects are not eligible under Rule 29.",
+        "Locations already receiving Charge Ready support at the same site are blocked.",
+        "Rule 29 is not a general EV charger rebate; customer-side charger purchase and installation responsibilities remain."
+      ],
+      "programType": "Technical Assistance",
+      "administrator": "Southern California Edison",
+      "applicationUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure",
+      "websiteUrl": "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+      "sourceUrlsChecked": [
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure",
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure/ready-to-apply"
+      ],
+      "evidenceText": "SCE]( Rule 29 guidance covers EV charging infrastructure for nonresidential commercial, industrial, and multifamily customers, with separate metering, EVSE installation, operation, and rate requirements.",
+      "reasoningNotes": "The EV charging match is valid, but it should be modeled as tariff-guided make-ready and installation support rather than a conventional rebate."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2907",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Maryland rural business, agricultural, food and fiber processing, and resource-based industry borrowers."
+      },
+      "eligibleApplicantTypes": [
+        "farmers",
+        "agricultural_businesses",
+        "resource_based_businesses",
+        "food_processing_businesses",
+        "fiber_processing_businesses"
+      ],
+      "eligibleSectors": [
+        "agricultural",
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_efficiency_equipment_financing",
+        "agricultural_energy_efficiency"
+      ],
+      "hardRequirements": [
+        "Loan proceeds must support energy efficiency improvements for eligible rural or agricultural businesses.",
+        "Borrower must implement recommendations of a third-party energy audit, agricultural energy management plan, or energy savings confirmation letter.",
+        "Loan underwriting includes credit and bankruptcy requirements.",
+        "Program provides financing, not a standalone energy audit rebate."
+      ],
+      "blockers": [
+        "Remove energy_audit as an eligible retrofit; the audit is a prerequisite rather than the financed measure.",
+        "Do not match residential or non-agricultural general commercial properties without a resource-based business connection.",
+        "Do not present this loan as a rebate program."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Maryland Agricultural and Resource Based Industry Development Corporation",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.marbidco.org/marbidco-loan-programs-rural-business-energy-efficiency-improvement-loan-fund",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2907/rural-business-energy-efficiency-improvement-loan-program",
+        "https://www.marbidco.org/marbidco-loan-programs-rural-business-energy-efficiency-improvement-loan-fund"
+      ],
+      "evidenceText": "MARBIDCO]( describes affordable financing for rural and agricultural businesses to purchase energy-saving equipment or technology based on third-party audit or energy plan recommendations.",
+      "reasoningNotes": "The opportunity should match energy efficiency financing for qualifying rural businesses, not the audit itself."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5751",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [
+          "Rock",
+          "Nobles",
+          "Jackson",
+          "Martin",
+          "Faribault",
+          "Mower",
+          "Blue Earth",
+          "Pipestone",
+          "Watonwan",
+          "Murray",
+          "Cottonwood",
+          "Lincoln",
+          "Lyon",
+          "Redwood",
+          "Renville",
+          "Brown",
+          "Freeborn",
+          "Nicollet"
+        ],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Available in Rural Minnesota Energy Board member counties and administered through Southwest Regional Development Commission."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_property_owners",
+        "industrial_property_owners",
+        "agricultural_business_property_owners",
+        "multifamily_property_owners"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_efficiency_improvements",
+        "solar_pv_system",
+        "wind_energy_system"
+      ],
+      "hardRequirements": [
+        "Project must be permanently fixed to eligible property in an RMEB member county.",
+        "Applicant must be the legal property owner and satisfy mortgage, lien, tax, and bankruptcy screening.",
+        "Energy efficiency projects require an energy audit or assessment and must generally have savings-to-investment ratio greater than 1.0.",
+        "Renewable projects require a renewable feasibility study."
+      ],
+      "blockers": [
+        "Remove energy_audit as a standalone retrofit; it is a required study or soft cost, not the financed improvement.",
+        "Do not match residential single-family projects.",
+        "Do not match properties outside the listed RMEB member counties."
+      ],
+      "programType": "PACE Financing",
+      "administrator": "Rural Minnesota Energy Board",
+      "applicationUrl": "https://www.swrdc.org/wp-content/uploads/2025/02/PACE-Application-updated-2-20-25.pdf",
+      "websiteUrl": "https://rmeb.org/pace/index.php",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/5751/rural-minnesota-energy-board-pace-program",
+        "https://rmeb.org/pace/index.php",
+        "https://www.swrdc.org/wp-content/uploads/2025/02/PACE-Application-updated-2-20-25.pdf"
+      ],
+      "evidenceText": "RMEB]( PACE finances commercial, industrial, agricultural, and multifamily property improvements for energy efficiency, solar, and wind; audits or feasibility studies are prerequisites.",
+      "reasoningNotes": "The original audit match was a false positive. PACE should match the financed improvements, with the audit retained as a hard requirement."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2576",
+      "confidence": "high",
+      "availabilityStatus": "expired",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Nebraska C-BED sales and use tax exemption was statewide before repeal."
+      },
+      "eligibleApplicantTypes": [
+        "community_renewable_energy_project_developers",
+        "qualified_owners",
+        "local_community_owners"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "agricultural",
+        "community_renewable_energy"
+      ],
+      "eligibleRetrofitCategories": [
+        "wind_energy_generation",
+        "solar_pv_system",
+        "biomass_power_generation",
+        "landfill_gas_energy_generation"
+      ],
+      "hardRequirements": [
+        "Historically, project had to qualify as a community-based energy development project using wind, solar, biomass, or landfill gas.",
+        "Applicants had to file with Nebraska Department of Revenue and receive approval before purchases.",
+        "C-BED ownership and local community payment requirements applied."
+      ],
+      "blockers": [
+        "Nebraska's current C-BED application form states the exemption is repealed effective July 1, 2026.",
+        "Do not match new projects after repeal.",
+        "Do not treat biomass as a general building biomass retrofit; the exemption covered qualifying community renewable electric generation projects."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Nebraska Department of Revenue",
+      "applicationUrl": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/c-bed.pdf",
+      "websiteUrl": "https://revenue.nebraska.gov/about/forms/sales-and-use-tax-forms",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2576/sales-and-use-tax-exemption-for-community-renewable-energy-projects",
+        "https://revenue.nebraska.gov/about/forms/sales-and-use-tax-forms",
+        "https://revenue.nebraska.gov/sites/default/files/doc/info/6-539-2022.pdf",
+        "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/c-bed.pdf"
+      ],
+      "evidenceText": "Nebraska]( Department of Revenue materials identify C-BED wind, solar, biomass, and landfill gas projects, but the current application form says the exemption is repealed effective July 1, 2026.",
+      "reasoningNotes": "The biomass category was historically supported, but the opportunity is now expired for new applications as of the researched date."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4853",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Maryland sales and use tax exemption for qualifying residential solar and wind electricity sales."
+      },
+      "eligibleApplicantTypes": [
+        "eligible_customer_generators",
+        "residential_electricity_buyers",
+        "electricity_sellers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_electricity_sales",
+        "residential_wind_electricity_sales"
+      ],
+      "hardRequirements": [
+        "Exemption applies to sale of electricity generated by solar energy equipment or residential wind energy equipment.",
+        "Electricity must be for use in residential property owned by an eligible customer-generator.",
+        "The underlying system must meet Maryland solar or residential wind definitions and applicable customer-generator requirements."
+      ],
+      "blockers": [
+        "Remove submetering_energy_monitoring; metering language does not create a submetering or energy monitoring retrofit incentive.",
+        "Do not match commercial electricity sales or general building controls.",
+        "Do not treat this as a solar or wind equipment rebate unless a separate exemption applies."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Comptroller of Maryland",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.marylandcomptroller.gov/taxes/sales-use-tax/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4853/sales-and-use-tax-exemption-for-residential-solar-and-wind-electricity-sales",
+        "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/legal-publications/Sales_and_Use_Tax-List_of_TPP_and_Services.pdf",
+        "https://www.law.cornell.edu/regulations/maryland/COMAR-03-06-01-43"
+      ],
+      "evidenceText": "Maryland]( sales tax guidance exempts sales of electricity generated by solar energy equipment or residential wind energy equipment for residential property owned by an eligible customer-generator.",
+      "reasoningNotes": "The program supports solar and wind electricity sales, not submetering, monitoring equipment, or building controls."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22572",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "KY"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Kentucky sales and use tax exemption for qualifying machinery for new and expanded industry."
+      },
+      "eligibleApplicantTypes": [
+        "manufacturers",
+        "industrial_facility_owners",
+        "processors"
+      ],
+      "eligibleSectors": [
+        "industrial",
+        "manufacturing"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Machinery or appurtenant equipment must be incorporated for the first time into a plant facility in Kentucky.",
+        "Equipment must be used directly in manufacturing or processing production.",
+        "Replacement machinery and storage facilities are generally not eligible under the new and expanded industry exemption.",
+        "Equipment must meet Kentucky sales tax exemption requirements for manufacturing machinery."
+      ],
+      "blockers": [
+        "Remove battery_storage_system; the official exemption is for qualifying manufacturing machinery, not energy storage retrofits.",
+        "Do not match general building energy improvements, resilience, or battery backup systems.",
+        "Do not match equipment that is not directly used in the manufacturing process."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Kentucky Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://revenue.ky.gov/Business/Sales-Use-Tax/Pages/Manufacturing-Exemptions.aspx",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22572/sales-tax-exemption-machinery-for-new-and-expanded-industry",
+        "https://revenue.ky.gov/DOR%20Training%20Materials/103%20KAR%2030.120.%20Machinery%20for%20new%20and%20expanded%20industry.pdf"
+      ],
+      "evidenceText": "Kentucky]( guidance limits the exemption to machinery and related equipment incorporated for the first time into Kentucky plant facilities and used directly in manufacturing or processing.",
+      "reasoningNotes": "This is not a RetroFi energy retrofit match. Eligible retrofit categories are cleared to prevent false positive battery storage matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22489",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Colorado sales and use tax exemption for qualifying residential energy storage systems."
+      },
+      "eligibleApplicantTypes": [
+        "homeowners",
+        "residential_property_owners",
+        "residential_energy_storage_purchasers"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "residential_battery_storage_system"
+      ],
+      "hardRequirements": [
+        "System must be a commercially available battery system capable of storing and delivering energy.",
+        "System must be installed in a residential building.",
+        "Exemption applies to Colorado state sales and use tax treatment for qualifying residential energy storage systems.",
+        "Exemption is scheduled under Colorado statute with an expiration date unless amended."
+      ],
+      "blockers": [
+        "Do not match commercial or industrial battery systems.",
+        "Do not match non-battery energy storage unless specifically covered by current law.",
+        "Do not treat this as an installation rebate or utility incentive."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Colorado Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://tax.colorado.gov/climate-friendly-tax-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22489/sales-tax-exemption-for-energy-storage-systems",
+        "https://tax.colorado.gov/climate-friendly-tax-incentives",
+        "https://content.leg.colorado.gov/sites/default/files/2025-TE15_residential_energy_storage_system_tax_expenditures.pdf"
+      ],
+      "evidenceText": "Colorado]( tax expenditure materials describe a sales and use tax exemption for purchases of residential energy storage systems installed in residential buildings.",
+      "reasoningNotes": "The energy storage match is correct only when narrowed to residential battery storage, not broad commercial energy storage."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2755",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide South Carolina sales and use tax exemption for qualifying hydrogen and fuel cell devices, equipment, and machinery."
+      },
+      "eligibleApplicantTypes": [
+        "businesses",
+        "manufacturers",
+        "research_and_development_facilities",
+        "hydrogen_project_owners"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "research_and_development"
+      ],
+      "eligibleRetrofitCategories": [
+        "fuel_cell_system",
+        "hydrogen_generation_equipment",
+        "hydrogen_distribution_equipment",
+        "hydrogen_fuel_cell_manufacturing_equipment"
+      ],
+      "hardRequirements": [
+        "Equipment must be operated by hydrogen or fuel cells, used to generate, produce, or distribute hydrogen, or used predominantly for hydrogen or fuel cell manufacturing or research and development.",
+        "Equipment must meet South Carolina sales tax exemption requirements under the alternative energy exemption.",
+        "Exemption applies to qualifying device, equipment, or machinery purchases, not unrelated installation costs."
+      ],
+      "blockers": [
+        "Do not match batteries, solar PV, or general renewable electricity systems unless qualifying hydrogen or fuel cell equipment is present.",
+        "Do not match general manufacturing machinery unrelated to hydrogen or fuel cells.",
+        "This is a sales tax exemption, not a direct rebate."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "South Carolina Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://dor.sc.gov/tax/sales",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/2755/sales-tax-exemption-for-hydrogen-fuel-cells",
+        "https://dor.sc.gov/sites/dor/files/Documents/Policy%20Manuals/Chapter%209%20-%20Exemptions.pdf",
+        "https://law.justia.com/codes/south-carolina/title-12/chapter-36/section-12-36-2120/"
+      ],
+      "evidenceText": "South]( Carolina sales tax guidance exempts qualifying hydrogen or fuel cell devices, equipment, and machinery, including hydrogen generation, production, distribution, manufacturing, and research equipment.",
+      "reasoningNotes": "The fuel cell match is valid, but categories must remain specific to hydrogen and fuel cell equipment."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4989",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ND"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide North Dakota exemption for qualifying hydrogen sales and equipment used by hydrogen generation facilities."
+      },
+      "eligibleApplicantTypes": [
+        "hydrogen_generation_facility_owners",
+        "hydrogen_producers",
+        "hydrogen_fuel_sellers"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "transportation_fuel"
+      ],
+      "eligibleRetrofitCategories": [
+        "hydrogen_generation_equipment",
+        "hydrogen_storage_equipment",
+        "hydrogen_fuel_sales"
+      ],
+      "hardRequirements": [
+        "Equipment must be used directly and exclusively in the production or storage of hydrogen by a hydrogen generation facility in North Dakota.",
+        "Hydrogen sales must be for hydrogen used to power an internal combustion engine or fuel cell.",
+        "Storage components must meet the statutory definition for the hydrogen generation facility exemption."
+      ],
+      "blockers": [
+        "Remove fuel_cell_system; the North Dakota exemption covers hydrogen generation, storage equipment, and hydrogen fuel sales, not installing fuel cell systems.",
+        "Do not match general renewable energy systems or building backup power systems.",
+        "Equipment not used directly and exclusively in hydrogen production or storage is not supported."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "North Dakota Office of State Tax Commissioner",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.tax.nd.gov/sales-tax-exemptions-incentives",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/4989/sales-tax-exemption-for-hydrogen-generation-facilities",
+        "https://www.tax.nd.gov/sales-tax-exemptions-incentives",
+        "https://ndlegis.gov/cencode/t57c39-2.pdf"
+      ],
+      "evidenceText": "North]( Dakota law exempts hydrogen fuel sales and equipment used directly and exclusively in hydrogen production or storage by an in-state hydrogen generation facility.",
+      "reasoningNotes": "Fuel cell wording in the statute refers to hydrogen use, not an incentive for installing fuel cell systems."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21862",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Santee Cooper"
+        ],
+        "notes": "For eligible Santee Cooper residential electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customers",
+        "homeowners",
+        "authorized_owner_representatives",
+        "multifamily_residential_account_holders"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv"
+      ],
+      "hardRequirements": [
+        "Customer must be a Santee Cooper residential customer on an eligible residential rate.",
+        "Solar PV project must receive required distributed generation rider and interconnection approval.",
+        "Installer must meet Santee Cooper trade ally or NABCEP requirements.",
+        "System size, application timing, insurance, ownership, and program-period requirements apply."
+      ],
+      "blockers": [
+        "Battery costs are not eligible; only the solar electric portion may qualify.",
+        "Third-party leased systems do not qualify under the residential program manual.",
+        "Solar Share and business solar options are separate programs and should not be merged into this residential rebate."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Santee Cooper",
+      "applicationUrl": "https://www.santeecooper.com/Programs-Incentives/EmpowerSolar/Solar-Home/_pdfs/2026-Solar-Residential-Program-Manual-v1-12012025.pdf",
+      "websiteUrl": "https://www.santeecooper.com/programs-incentives/empowersolar/solar-home/",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/21862/santee-cooper-rooftop-solar-rebate-program",
+        "https://www.santeecooper.com/programs-incentives/empowersolar/solar-home/",
+        "https://www.santeecooper.com/programs-incentives/empowersolar/",
+        "https://www.santeecooper.com/Programs-Incentives/EmpowerSolar/Solar-Home/_pdfs/2026-Solar-Residential-Program-Manual-v1-12012025.pdf"
+      ],
+      "evidenceText": "Santee]( Cooper's Solar Home program manual supports rebates for eligible residential customers installing solar PV, with interconnection, installer, ownership, timing, and size requirements.",
+      "reasoningNotes": "The rooftop solar PV match is valid. Keep Santee Cooper utility territory, residential-sector limits, and battery exclusions."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1459",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern California Edison"
+        ],
+        "notes": "Current multifamily resources apply in SCE territory and, for ESA Multifamily Energy Savings, participating California investor-owned utility territories."
+      },
+      "eligibleApplicantTypes": [
+        "multifamily_property_owners",
+        "multifamily_property_managers",
+        "income_qualified_multifamily_properties"
+      ],
+      "eligibleSectors": [
+        "multifamily",
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "building_energy_benchmarking",
+        "multifamily_lighting",
+        "hvac_efficiency",
+        "domestic_hot_water_efficiency",
+        "building_envelope_weatherization",
+        "multifamily_appliances_plug_loads"
+      ],
+      "hardRequirements": [
+        "SCE multifamily resources generally apply to multifamily properties with five or more units.",
+        "ESA Multifamily Energy Savings requires income-qualified multifamily properties and program screening.",
+        "Program services may include assessments, benchmarking, in-unit upgrades, common-area improvements, and incentive layering.",
+        "Funding and participation are first-come, first-served where applicable."
+      ],
+      "blockers": [
+        "Replace building_benchmarking_compliance with building_energy_benchmarking; SCE provides benchmarking support, not a compliance incentive match.",
+        "Do not match commercial or industrial single-site programs from this multifamily opportunity.",
+        "SOMAH solar and GoGreen financing are separate programs and should not be merged into this rebate record."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Southern California Edison",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.sce.com/save-money/savings-programs/ways-to-save-at-home/multifamily-property-resources",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/1459/sce-multi-family-residential-energy-efficiency-programs",
+        "https://www.sce.com/save-money/savings-programs/ways-to-save-at-home/multifamily-property-resources",
+        "https://esamultifamily.com/",
+        "https://esamultifamily.com/about/"
+      ],
+      "evidenceText": "SCE's]( multifamily resources and ESA Multifamily Energy Savings support no-cost assessments, benchmarking, in-unit upgrades, common-area improvements, weatherization, HVAC, hot water, lighting, and appliances for multifamily properties.",
+      "reasoningNotes": "The current evidence supports benchmarking as a support service, but not benchmarking compliance. The opportunity should be constrained to multifamily residential efficiency services."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22295",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "San Diego Gas & Electric"
+        ],
+        "notes": "SDG&E service territory; Apartments/Condos and Workplaces Power Your Drive programs are fully subscribed for new applications."
+      },
+      "eligibleApplicantTypes": [
+        "apartment_property_owners",
+        "condominium_associations",
+        "workplace_property_owners",
+        "site_hosts",
+        "existing_power_your_drive_drivers"
+      ],
+      "eligibleSectors": [
+        "multifamily",
+        "commercial",
+        "workplace"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charger_installation",
+        "ev_charging_make_ready_infrastructure"
+      ],
+      "hardRequirements": [
+        "Historically applied to eligible apartments, condos, and workplace sites in SDG&E service territory.",
+        "Site hosts had to meet customer, ownership, easement, usage, and operational requirements.",
+        "Driver enrollment page is for existing Power Your Drive sites, not new charger applications."
+      ],
+      "blockers": [
+        "SDG&E states the Apartments/Condos and Workplaces programs are fully subscribed and no longer accepting applications.",
+        "Do not mark this opportunity active for new EVSE installations.",
+        "Power Your Drive for Fleets is a separate active program and should not be merged into this record."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "San Diego Gas & Electric",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.sdge.com/residential/electric-vehicles/power-your-drive",
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22295/sdg-and-e-power-your-drive-program",
+        "https://www.sdge.com/residential/electric-vehicles/power-your-drive",
+        "https://www.sdge.com/business/electric-vehicles/power-your-drive-apartments-and-condos",
+        "https://www.sdge.com/business/electric-vehicles/power-your-drive-workplaces",
+        "https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets"
+      ],
+      "evidenceText": "SDG&E]( states the Apartments/Condos and Workplaces Power Your Drive programs are fully subscribed and no longer accepting applications; the residential page supports driver enrollment at existing sites.",
+      "reasoningNotes": "EV charger installation was source-backed historically, but the opportunity is unavailable for new matching. Fleets must be treated as a separate program."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:small-business-efficiency-services"
+}

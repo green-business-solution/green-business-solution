@@ -1,0 +1,1026 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-02",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5943",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide enabling incentive; local city, county, public industrial authority, or other granting authority must approve the project-specific abatement."
+},
+"eligibleApplicantTypes": [
+"for_profit_business",
+"electric_utility",
+"electric_cooperative",
+"public_authority"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"biomass_energy_generation_system",
+"geothermal_power_generation_system"
+],
+"hardRequirements": [
+"Project must qualify under Alabama Chapter 9B as industrial, research, private-use, renewable-energy, or energy-production property.",
+"Granting authority approval, abatement agreement, and Alabama Department of Revenue procedures are required.",
+"Only eligible non-educational property taxes and construction-related transaction taxes are abated."
+],
+"blockers": [
+"Not a residential rebate or consumer equipment program.",
+"Do not match ground-source geothermal heat pumps used only for building HVAC.",
+"Biomass and geothermal matches must be renewable or energy-production facilities, not general building equipment."
+],
+"programType": "Property Tax Abatement",
+"administrator": "Alabama Department of Revenue",
+"applicationUrl": "[https://www.revenue.alabama.gov/wp-content/uploads/2021/10/Form-CO-CAA-fillable.pdf](https://www.revenue.alabama.gov/wp-content/uploads/2021/10/Form-CO-CAA-fillable.pdf)",
+"websiteUrl": "[https://www.revenue.alabama.gov/tax-incentives/chapter-9b-abatements/](https://www.revenue.alabama.gov/tax-incentives/chapter-9b-abatements/)",
+"sourceUrlsChecked": [
+"[https://www.revenue.alabama.gov/tax-incentives/chapter-9b-abatements/](https://www.revenue.alabama.gov/tax-incentives/chapter-9b-abatements/)",
+"[https://alison.legislature.state.al.us/code-of-alabama?section=40-9B-3&version=2026-06-01](https://alison.legislature.state.al.us/code-of-alabama?section=40-9B-3&version=2026-06-01)",
+"[https://programs.dsireusa.org/system/program/detail/5943](https://programs.dsireusa.org/system/program/detail/5943)"
+],
+"evidenceText": "Alabama Revenue describes Chapter 9B abatements for qualifying projects granted by local authorities. Statutory materials support renewable energy facilities and energy-production facilities as qualifying categories.",
+"reasoningNotes": "Prompt targets and required order came from uploaded file . Retain biomass and geothermal only as generation-facility categories and block building-HVAC geothermal."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:85",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Virginia statewide law with local administration; broader exemptions depend on county, city, or town implementation."
+},
+"eligibleApplicantTypes": [
+"residential_property_owner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"solar_water_heating_system"
+],
+"hardRequirements": [
+"Equipment must meet Virginia solar energy equipment, facility, or device definitions.",
+"Local option exemptions require local adoption or local administration.",
+"Small residential solar facilities must satisfy the state-law capacity and installation requirements."
+],
+"blockers": [
+"Do not match biomass, geothermal, wind, storage, or general efficiency upgrades.",
+"Commercial or utility solar should not match this residential record unless a separate local provision applies."
+],
+"programType": "Property Tax Exemption",
+"administrator": "Virginia Department of Energy and local taxing authorities",
+"applicationUrl": null,
+"websiteUrl": "[https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/](https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/)",
+"sourceUrlsChecked": [
+"[https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/](https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/)",
+"[https://law.lis.virginia.gov/admincodefull/title13/agency5/chapter200/](https://law.lis.virginia.gov/admincodefull/title13/agency5/chapter200/)",
+"[https://www.deq.virginia.gov/business-construction/pollution-prevention/virginia-information-source-for-energy/programs-and-financial-incentives](https://www.deq.virginia.gov/business-construction/pollution-prevention/virginia-information-source-for-energy/programs-and-financial-incentives)"
+],
+"evidenceText": "Virginia law classifies certified solar energy equipment and solar facilities for local tax treatment and exempts qualifying small residential solar facilities. Administrative definitions include photovoltaic and solar equipment.",
+"reasoningNotes": "Solar PV and solar thermal water-heating are source-backed; keep the record limited to residential solar property-tax treatment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5416",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Only in Oregon-designated Rural Renewable Energy Development Zones; eligible zones are local jurisdictions designated by Business Oregon."
+},
+"eligibleApplicantTypes": [
+"for_profit_business",
+"project_developer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"biomass_energy_generation_system",
+"geothermal_power_generation_system",
+"renewable_biofuel_production_system"
+],
+"hardRequirements": [
+"Project must be located in a designated rural renewable energy development zone.",
+"Business must make qualified investments that harness wind, geothermal, solar, biomass, or unconventional energy for electricity or biofuels.",
+"Property tax exemption is generally for qualified property within the zone and subject to local authorization."
+],
+"blockers": [
+"Do not match ground-source geothermal heat pumps for building space conditioning.",
+"Do not match general building electrification, weatherization, or residential renewable equipment outside a designated zone.",
+"This is an enterprise-style property tax incentive, not a point-of-sale rebate."
+],
+"programType": "Property Tax Exemption",
+"administrator": "Business Oregon",
+"applicationUrl": null,
+"websiteUrl": "[https://www.oregon.gov/biz/programs/RuralRenewableEnergyDevelopmentZone/Pages/default.aspx](https://www.oregon.gov/biz/programs/RuralRenewableEnergyDevelopmentZone/Pages/default.aspx)",
+"sourceUrlsChecked": [
+"[https://www.oregon.gov/biz/programs/RuralRenewableEnergyDevelopmentZone/Pages/default.aspx](https://www.oregon.gov/biz/programs/RuralRenewableEnergyDevelopmentZone/Pages/default.aspx)",
+"[https://www.oregon.gov/biz/Publications/Incentives/Strategic-Investment-Program-and-Rural-Renewable-Energy-Development-Zones.pdf](https://www.oregon.gov/biz/Publications/Incentives/Strategic-Investment-Program-and-Rural-Renewable-Energy-Development-Zones.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/5416](https://programs.dsireusa.org/system/program/detail/5416)"
+],
+"evidenceText": "Business Oregon describes RRED zones for businesses making qualified renewable-energy investments in designated rural zones, including geothermal, biomass, and unconventional energy used for electricity or biofuels.",
+"reasoningNotes": "Keep renewable generation and biofuel production categories; remove the building HVAC geothermal heat-pump interpretation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5723",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Virginia local-option machinery and tools tax classification; local tax treatment depends on the taxing jurisdiction."
+},
+"eligibleApplicantTypes": [
+"for_profit_business",
+"renewable_energy_producer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"biomass_energy_generation_system",
+"geothermal_power_generation_system"
+],
+"hardRequirements": [
+"Machinery and tools must be owned by a business and used directly in producing or generating renewable energy.",
+"Applies to local machinery and tools tax classification under Virginia law.",
+"Eligibility and valuation depend on local taxation and applicable statutory definitions."
+],
+"blockers": [
+"Do not match residential renewable installations.",
+"Do not match ground-source geothermal heat pumps used for ordinary building HVAC.",
+"Do not match general machinery, tools, or efficiency measures not directly used to produce or generate renewable energy."
+],
+"programType": "Property Tax Classification",
+"administrator": "Virginia local taxing authorities",
+"applicationUrl": null,
+"websiteUrl": "[https://law.lis.virginia.gov/vacode/title58.1/chapter35/section58.1-3508.6/](https://law.lis.virginia.gov/vacode/title58.1/chapter35/section58.1-3508.6/)",
+"sourceUrlsChecked": [
+"[https://law.lis.virginia.gov/vacode/title58.1/chapter35/section58.1-3508.6/](https://law.lis.virginia.gov/vacode/title58.1/chapter35/section58.1-3508.6/)",
+"[https://www.deq.virginia.gov/business-construction/pollution-prevention/virginia-information-source-for-energy/programs-and-financial-incentives](https://www.deq.virginia.gov/business-construction/pollution-prevention/virginia-information-source-for-energy/programs-and-financial-incentives)",
+"[https://programs.dsireusa.org/system/program/detail/5723](https://programs.dsireusa.org/system/program/detail/5723)"
+],
+"evidenceText": "Virginia Code creates a machinery and tools tax class for business property used directly in producing or generating renewable energy. The source supports generation equipment, not consumer HVAC retrofits.",
+"reasoningNotes": "Biomass and geothermal are valid only when the machinery is directly used for renewable energy production or generation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22636",
+"confidence": "high",
+"availabilityStatus": "upcoming",
+"geography": {
+"country": "US",
+"states": [
+"LA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Louisiana NEVI buildout along federally designated Alternative Fuel Corridors; sites generally must be within one mile of corridor exits or intersections."
+},
+"eligibleApplicantTypes": [
+"business",
+"site_host",
+"charging_network_operator",
+"public_agency",
+"project_developer"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Funding is expected through a competitive DOTD grant process.",
+"Recipients must provide at least the required non-federal match.",
+"Projects must meet federal NEVI standards for DC fast charging, corridor spacing, access, operations, uptime, and data reporting."
+],
+"blockers": [
+"Do not match Level 1 or residential Level 2 home charging.",
+"Do not match general EV charger installation where DC fast charging and NEVI corridor requirements are absent.",
+"No open formula-grant application to individual homeowners was verified."
+],
+"programType": "Grant Program",
+"administrator": "Louisiana Department of Transportation and Development",
+"applicationUrl": null,
+"websiteUrl": "[http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx](http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx)",
+"sourceUrlsChecked": [
+"[http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx](http://wwwsp.dotd.la.gov/Inside_LaDOTD/Divisions/Operations/Electric-Vehicle/Pages/default.aspx)",
+"[https://www.fhwa.dot.gov/environment/nevi/](https://www.fhwa.dot.gov/environment/nevi/)",
+"[https://programs.dsireusa.org/system/program/detail/22636](https://programs.dsireusa.org/system/program/detail/22636)"
+],
+"evidenceText": "Louisiana DOTD describes NEVI as a competitive grant program supporting EV charging infrastructure along designated corridors with DC fast charging and federal requirements.",
+"reasoningNotes": "Use only the DC fast charger category; broader EV charging is too general for NEVI matching."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22708",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"KY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Louisville Gas and Electric",
+"Kentucky Utilities"
+],
+"notes": "Available only to qualifying LG&E and KU residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"electric_vehicle_owner_or_lessee"
+],
+"eligibleSectors": [
+"residential",
+"transportation"
+],
+"eligibleRetrofitCategories": [],
+"hardRequirements": [
+"Customer must be an eligible LG&E or KU participant.",
+"Participant must have a qualifying EV or compatible Level 2 smart charger.",
+"Participant must enroll in optimized charging and allow managed charging events under program terms."
+],
+"blockers": [
+"This is an EV managed-charging demand response enrollment program, not an EV charger installation rebate.",
+"Do not match automated building demand-response controls.",
+"Do not match make-ready electrical work, charger purchase, or installation unless a separate incentive is verified."
+],
+"programType": "Managed Charging Program",
+"administrator": "Louisville Gas and Electric and Kentucky Utilities",
+"applicationUrl": "[https://www.chargingrewards.com/lge-ku-ev/](https://www.chargingrewards.com/lge-ku-ev/)",
+"websiteUrl": "[https://www.chargingrewards.com/lge-ku-ev/](https://www.chargingrewards.com/lge-ku-ev/)",
+"sourceUrlsChecked": [
+"[https://www.chargingrewards.com/lge-ku-ev/](https://www.chargingrewards.com/lge-ku-ev/)",
+"[https://lge-ku.com/residential/ev](https://lge-ku.com/residential/ev)",
+"[https://programs.dsireusa.org/system/program/detail/22708](https://programs.dsireusa.org/system/program/detail/22708)"
+],
+"evidenceText": "The program offers enrollment and monthly participation rewards for allowing optimized EV charging of a qualifying vehicle or smart charger. It does not fund charger installation.",
+"reasoningNotes": "Clear both deterministic retrofit matches because no physical retrofit category is directly funded by this opportunity."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22363",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Madison Gas and Electric"
+],
+"notes": "Available only at qualified residences served by Madison Gas and Electric."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"electric_vehicle_owner_or_lessee"
+],
+"eligibleSectors": [
+"residential",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Customer must qualify for MGE's home EV charging program and sign applicable rider or participation documents.",
+"MGE or its contractor installs, owns, and maintains the networked Level 2 charging station.",
+"Customer pays applicable program charges and must meet electrical and site requirements."
+],
+"blockers": [
+"This is a leasing or utility-owned charger service, not a customer-owned charger rebate.",
+"Do not match DC fast charging or public charging.",
+"Do not generalize to non-MGE customers or commercial sites."
+],
+"programType": "Leasing Program",
+"administrator": "Madison Gas and Electric",
+"applicationUrl": null,
+"websiteUrl": "[https://www.mge.com/our-environment/electric-vehicles/charge-at-home-program](https://www.mge.com/our-environment/electric-vehicles/charge-at-home-program)",
+"sourceUrlsChecked": [
+"[https://www.mge.com/our-environment/electric-vehicles/charge-at-home-program](https://www.mge.com/our-environment/electric-vehicles/charge-at-home-program)",
+"[https://www.mge.com/getattachment/our-environment/electric-vehicles/charge-at-home-program/Home-EV-Charging-Rider-Agreement.pdf](https://www.mge.com/getattachment/our-environment/electric-vehicles/charge-at-home-program/Home-EV-Charging-Rider-Agreement.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/22363](https://programs.dsireusa.org/system/program/detail/22363)"
+],
+"evidenceText": "MGE describes a Charge at Home program in which the utility installs and maintains a networked Level 2 charger for qualifying residential EV customers under program terms.",
+"reasoningNotes": "Keep Level 2 EV charging, but mark as leasing or utility-owned service rather than a rebate-style retrofit."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22637",
+"confidence": "medium",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"ME"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Maine NEVI and EVSE opportunities are administered through Efficiency Maine and MaineDOT; specific solicitations define eligible locations."
+},
+"eligibleApplicantTypes": [
+"business",
+"site_host",
+"charging_network_operator",
+"public_agency",
+"project_developer"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Projects must meet applicable NEVI or Efficiency Maine solicitation requirements.",
+"DC fast charging sites are subject to corridor, power, access, uptime, operations, and reporting requirements.",
+"Funding is available only through open requests for proposals or award rounds."
+],
+"blockers": [
+"No current open NEVI DCFC application round was verified.",
+"Do not match residential EV charger installation.",
+"Do not match Level 2 charging unless a separate open Efficiency Maine solicitation specifically supports it."
+],
+"programType": "Grant Program",
+"administrator": "Maine Department of Transportation and Efficiency Maine",
+"applicationUrl": null,
+"websiteUrl": "[https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/](https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/)",
+"sourceUrlsChecked": [
+"[https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/](https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/)",
+"[https://www.efficiencymaine.com/opportunities/](https://www.efficiencymaine.com/opportunities/)",
+"[https://programs.dsireusa.org/system/program/detail/22637](https://programs.dsireusa.org/system/program/detail/22637)"
+],
+"evidenceText": "Efficiency Maine lists EVSE initiatives and opportunities by solicitation. Current materials show DC fast charging awards or closed phases rather than an open NEVI application.",
+"reasoningNotes": "Preserve DC fast charging as the source-backed measure but set unavailable until a current open solicitation is verified."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3533",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Available only in Maryland jurisdictions that participate in the C-PACE program and for properties meeting local program requirements."
+},
+"eligibleApplicantTypes": [
+"commercial_property_owner",
+"nonprofit_property_owner",
+"multifamily_property_owner",
+"industrial_property_owner"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"multifamily",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"solar_battery_storage",
+"geothermal_energy_system"
+],
+"hardRequirements": [
+"Property must be an eligible commercial or qualifying multifamily property in a participating jurisdiction.",
+"Project must be permanently affixed and qualify as energy efficiency, renewable energy, water efficiency, resiliency, or related eligible improvement.",
+"Financing is repaid through a property tax surcharge or assessment under C-PACE rules."
+],
+"blockers": [
+"Not a rebate program.",
+"Do not match one-to-four-unit residential properties outside C-PACE eligibility.",
+"Battery storage and geothermal should remain only where the C-PACE project documents identify them as eligible improvements."
+],
+"programType": "PACE Financing",
+"administrator": "MD-PACE and participating Maryland jurisdictions",
+"applicationUrl": "[https://www.md-pace.com/get-started/](https://www.md-pace.com/get-started/)",
+"websiteUrl": "[https://www.md-pace.com/](https://www.md-pace.com/)",
+"sourceUrlsChecked": [
+"[https://www.md-pace.com/](https://www.md-pace.com/)",
+"[https://www.md-pace.com/wp-content/uploads/2026/04/MD-PACE-Program-Guidelines-April-2026.pdf](https://www.md-pace.com/wp-content/uploads/2026/04/MD-PACE-Program-Guidelines-April-2026.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/3533](https://programs.dsireusa.org/system/program/detail/3533)"
+],
+"evidenceText": "MD-PACE program guidelines describe commercial PACE financing for eligible energy, water, renewable energy, and resiliency improvements. Eligible examples include geothermal energy and solar-related battery storage.",
+"reasoningNotes": "Keep categories as financing-eligible project types, not rebate matches; limit to commercial or qualifying multifamily C-PACE properties."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22638",
+"confidence": "medium",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Massachusetts NEVI deployment is corridor-based; specific sites and phases are determined by MassDOT solicitations."
+},
+"eligibleApplicantTypes": [
+"business",
+"site_host",
+"charging_network_operator",
+"public_agency",
+"project_developer"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"dc_fast_charger_installation",
+"ev_make_ready_electrical_upgrade"
+],
+"hardRequirements": [
+"Project must meet MassDOT NEVI solicitation requirements.",
+"Charging stations must satisfy federal NEVI requirements for DC fast charging, corridor access, uptime, payment, data, and operations.",
+"Make-ready work is eligible only as part of the NEVI charging-station project."
+],
+"blockers": [
+"No current open public application round was verified.",
+"Do not match residential Level 2 charger installation.",
+"Do not match standalone electrical upgrades unrelated to a NEVI DC fast charging site."
+],
+"programType": "Grant Program",
+"administrator": "Massachusetts Department of Transportation",
+"applicationUrl": null,
+"websiteUrl": "[https://www.mass.gov/massdot-nevi-plan](https://www.mass.gov/massdot-nevi-plan)",
+"sourceUrlsChecked": [
+"[https://www.mass.gov/massdot-nevi-plan](https://www.mass.gov/massdot-nevi-plan)",
+"[https://www.mass.gov/doc/massachusetts-nevi-deployment-plan/download](https://www.mass.gov/doc/massachusetts-nevi-deployment-plan/download)",
+"[https://programs.dsireusa.org/system/program/detail/22638](https://programs.dsireusa.org/system/program/detail/22638)"
+],
+"evidenceText": "MassDOT NEVI materials describe deployment of federally funded EV charging stations, with DC fast charging and associated site infrastructure requirements along designated corridors.",
+"reasoningNotes": "Mass.gov pages were partly access-limited during review, so source confidence is medium and availability is set unavailable without a verified open solicitation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22188",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Massachusetts sites only; applies to eligible multi-unit dwellings and educational campuses."
+},
+"eligibleApplicantTypes": [
+"multifamily_property_owner",
+"condominium_association",
+"educational_institution",
+"property_manager"
+],
+"eligibleSectors": [
+"multifamily",
+"education",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"level_1_ev_charger_installation",
+"level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Site must be an eligible multi-unit dwelling or educational campus.",
+"Charging equipment must meet MassEVIP program requirements.",
+"Application and supporting documentation are required before or as required by program rules."
+],
+"blockers": [
+"Do not match single-family residential home chargers.",
+"Do not match DC fast charging.",
+"Do not match generic EV charging outside the multi-unit dwelling or educational campus program scope."
+],
+"programType": "Grant Program",
+"administrator": "Massachusetts Department of Environmental Protection",
+"applicationUrl": "[https://www.mass.gov/forms/massevip-multi-unit-dwelling-and-educational-campus-mudc-charging-program-application](https://www.mass.gov/forms/massevip-multi-unit-dwelling-and-educational-campus-mudc-charging-program-application)",
+"websiteUrl": "[https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives](https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives)",
+"sourceUrlsChecked": [
+"[https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives](https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives)",
+"[https://www.mass.gov/forms/massevip-multi-unit-dwelling-and-educational-campus-mudc-charging-program-application](https://www.mass.gov/forms/massevip-multi-unit-dwelling-and-educational-campus-mudc-charging-program-application)",
+"[https://programs.dsireusa.org/system/program/detail/22188](https://programs.dsireusa.org/system/program/detail/22188)"
+],
+"evidenceText": "MassEVIP materials identify charging incentives for multi-unit dwellings and educational campuses, with Level 1 and Level 2 equipment within defined site eligibility rules.",
+"reasoningNotes": "Some official page content was access-limited, but official forms and program snippets support the core match; confidence remains medium."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22187",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Massachusetts public-access charging sites only."
+},
+"eligibleApplicantTypes": [
+"business",
+"nonprofit",
+"public_agency",
+"municipality",
+"site_host",
+"property_owner"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"nonprofit",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"level_1_ev_charger_installation",
+"level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Charging must be public-access and meet MassEVIP PAC requirements.",
+"Equipment must be eligible Level 1 or Level 2 AC charging equipment.",
+"Applicant must submit required application materials and comply with program cost-share and access rules."
+],
+"blockers": [
+"Do not match private home charging.",
+"Do not match DC fast charging.",
+"Do not match chargers without public-access availability unless a separate MassEVIP program applies."
+],
+"programType": "Grant Program",
+"administrator": "Massachusetts Department of Environmental Protection",
+"applicationUrl": "[https://www.mass.gov/forms/massevip-public-access-charging-pac-program-application](https://www.mass.gov/forms/massevip-public-access-charging-pac-program-application)",
+"websiteUrl": "[https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives](https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives)",
+"sourceUrlsChecked": [
+"[https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives](https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives)",
+"[https://www.mass.gov/forms/massevip-public-access-charging-pac-program-application](https://www.mass.gov/forms/massevip-public-access-charging-pac-program-application)",
+"[https://www.mass.gov/doc/massevip-public-access-charging-requirements/download](https://www.mass.gov/doc/massevip-public-access-charging-requirements/download)",
+"[https://programs.dsireusa.org/system/program/detail/22187](https://programs.dsireusa.org/system/program/detail/22187)"
+],
+"evidenceText": "MassEVIP PAC materials support incentives for public-access Level 1 and Level 2 charging equipment at eligible Massachusetts sites under program requirements.",
+"reasoningNotes": "Some official content was access-limited, but official application and requirements sources support Level 1 and Level 2 public-access charging."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3128",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"FL"
+],
+"counties": [
+"Miami-Dade County"
+],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Miami-Dade County building permit jurisdiction only."
+},
+"eligibleApplicantTypes": [
+"property_owner",
+"developer",
+"contractor"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"public"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"solar_water_heating_system"
+],
+"hardRequirements": [
+"Project must qualify for Miami-Dade green building expedited plan review.",
+"Most projects must be new construction valued at $50,000 or more and provide evidence of green certification intent.",
+"Additions, alterations, repairs, and accessory structures qualify only when building systems utilize solar, wind, or other renewable resources."
+],
+"blockers": [
+"This is expedited plan review, not a rebate, tax credit, or financing program.",
+"Do not match general green-building measures without source-backed renewable building-system scope.",
+"Solar matches are permitting-service matches, not direct financial incentives."
+],
+"programType": "Green Building Expedited Permitting",
+"administrator": "Miami-Dade County Department of Regulatory and Economic Resources",
+"applicationUrl": null,
+"websiteUrl": "[https://www.miamidade.gov/global/economy/building/expedited-programs-services.page](https://www.miamidade.gov/global/economy/building/expedited-programs-services.page)",
+"sourceUrlsChecked": [
+"[https://www.miamidade.gov/global/economy/building/expedited-programs-services.page](https://www.miamidade.gov/global/economy/building/expedited-programs-services.page)",
+"[https://programs.dsireusa.org/system/program/detail/3128](https://programs.dsireusa.org/system/program/detail/3128)"
+],
+"evidenceText": "Miami-Dade describes green building expedited plan review. Renewable building-system additions, alterations, repairs, and accessory structures may qualify, while the incentive is plan-review priority rather than money.",
+"reasoningNotes": "Retain solar PV and solar water heating only as renewable building systems eligible for expedited review."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4632",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Michigan residential financing through Michigan Saves authorized lenders and contractors."
+},
+"eligibleApplicantTypes": [
+"homeowner",
+"residential_property_owner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade"
+],
+"hardRequirements": [
+"Work must be an eligible home energy improvement financed through Michigan Saves.",
+"Project must use a Michigan Saves authorized contractor unless program rules allow otherwise.",
+"Applicant must qualify for loan underwriting and lender terms."
+],
+"blockers": [
+"This is financing, not a rebate.",
+"Do not match commercial, industrial, or multifamily projects outside the residential home program.",
+"Do not infer unsupported measures beyond Michigan Saves eligible improvement lists."
+],
+"programType": "Loan Program",
+"administrator": "Michigan Saves",
+"applicationUrl": "[https://michigansaves.org/residential-homes/](https://michigansaves.org/residential-homes/)",
+"websiteUrl": "[https://michigansaves.org/home-energy-improvements/](https://michigansaves.org/home-energy-improvements/)",
+"sourceUrlsChecked": [
+"[https://michigansaves.org/home-energy-improvements/](https://michigansaves.org/home-energy-improvements/)",
+"[https://michigansaves.org/residential-homes/](https://michigansaves.org/residential-homes/)",
+"[https://michigansaves.org/wp-content/uploads/2022/10/2020-09-16-MS_Residential-Eligible-Improvements.pdf](https://michigansaves.org/wp-content/uploads/2022/10/2020-09-16-MS_Residential-Eligible-Improvements.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/4632](https://programs.dsireusa.org/system/program/detail/4632)"
+],
+"evidenceText": "Michigan Saves lists residential financing for common home energy improvements, including insulation and air sealing, through authorized contractors and lenders.",
+"reasoningNotes": "Keep the two supplied envelope categories, but classify the opportunity as loan support rather than a rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3312",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Minnesota Energy Resources"
+],
+"notes": "Applies to qualifying new homes in Minnesota Energy Resources natural gas service territory."
+},
+"eligibleApplicantTypes": [
+"home_builder",
+"homeowner"
+],
+"eligibleSectors": [
+"residential",
+"new_construction"
+],
+"eligibleRetrofitCategories": [
+"new_home_whole_building_energy_efficiency",
+"advanced_or_wifi_thermostat",
+"drain_water_heat_recovery"
+],
+"hardRequirements": [
+"Home must be new construction served by Minnesota Energy Resources natural gas.",
+"Project must complete required plan review, inspections, and HERS rating steps.",
+"Home must meet program performance requirements, including exceeding energy code by the specified threshold."
+],
+"blockers": [
+"Not an existing-home retrofit rebate.",
+"Do not match industrial waste heat recovery.",
+"Do not match generic smart thermostat retrofits unless tied to the eligible new-home program measure.",
+"Do not match electric-utility programs outside Minnesota Energy Resources gas territory."
+],
+"programType": "New Construction Rebate Program",
+"administrator": "Minnesota Energy Resources",
+"applicationUrl": null,
+"websiteUrl": "[https://www.minnesotaenergyresources.com/partners/builders/home-energy](https://www.minnesotaenergyresources.com/partners/builders/home-energy)",
+"sourceUrlsChecked": [
+"[https://www.minnesotaenergyresources.com/partners/builders/home-energy](https://www.minnesotaenergyresources.com/partners/builders/home-energy)",
+"[https://www.minnesotaenergyresources.com/savings/energy-efficiency/rebates/new-home](https://www.minnesotaenergyresources.com/savings/energy-efficiency/rebates/new-home)",
+"[https://programs.dsireusa.org/system/program/detail/3312](https://programs.dsireusa.org/system/program/detail/3312)"
+],
+"evidenceText": "Minnesota Energy Resources describes Home Energy Excellence for builders of new natural-gas homes, using plan review, inspections, HERS ratings, and rebates for qualifying efficient new-home measures.",
+"reasoningNotes": "Repair the false positive: heat recovery is drain water heat recovery in residential new construction, not industrial waste heat recovery."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4242",
+"confidence": "medium",
+"availabilityStatus": "unknown",
+"geography": {
+"country": "US",
+"states": [
+"MS"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Mississippi statewide economic-development incentive administered through the Mississippi Development Authority when applicable."
+},
+"eligibleApplicantTypes": [
+"clean_energy_manufacturer",
+"for_profit_business"
+],
+"eligibleSectors": [
+"industrial",
+"manufacturing"
+],
+"eligibleRetrofitCategories": [],
+"hardRequirements": [
+"Company must manufacture systems or components used to generate clean, renewable, or alternative energy.",
+"Historical materials require large capital investment and job-creation commitments.",
+"Mississippi Development Authority certification and statutory incentive requirements apply."
+],
+"blockers": [
+"Not an incentive for installing biomass, solar thermal, or other renewable systems at a customer facility.",
+"Do not match residential or commercial building retrofits.",
+"Do not match energy equipment purchases unless the applicant is a qualifying manufacturer under the economic-development incentive."
+],
+"programType": "Industry Recruitment and Manufacturing Tax Incentive",
+"administrator": "Mississippi Development Authority",
+"applicationUrl": null,
+"websiteUrl": "[https://mississippi.org/community-resources/office-of-energy/](https://mississippi.org/community-resources/office-of-energy/)",
+"sourceUrlsChecked": [
+"[https://mississippi.org/community-resources/office-of-energy/](https://mississippi.org/community-resources/office-of-energy/)",
+"[https://mississippi.org/wp-content/uploads/clean-energy-incentives.pdf](https://mississippi.org/wp-content/uploads/clean-energy-incentives.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/4242](https://programs.dsireusa.org/system/program/detail/4242)"
+],
+"evidenceText": "Mississippi materials describe clean energy incentives for companies that manufacture clean or renewable energy systems or components, with investment, job, and certification requirements.",
+"reasoningNotes": "Clear retrofit categories because the source supports economic development for manufacturers, not end-use installation of biomass or solar thermal equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4345",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AZ"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Mohave Electric Cooperative"
+],
+"notes": "Available to eligible Mohave Electric Cooperative members."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"small_commercial_utility_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"solar_water_heating_system",
+"small_wind_turbine",
+"battery_storage_system"
+],
+"hardRequirements": [
+"Applicant must be an eligible Mohave Electric Cooperative member.",
+"Renewable system must meet SunWatts program requirements and application documentation rules.",
+"Solar PV and wind incentive amounts are capped by system size and program limits; leased systems are not eligible.",
+"Battery incentive is tied to qualifying renewable energy system requirements."
+],
+"blockers": [
+"Do not match non-member installations.",
+"Do not match solar thermal space heating beyond the supported solar water-heating program.",
+"Do not match general battery storage unless it meets the SunWatts renewable-system requirements."
+],
+"programType": "Rebate Program",
+"administrator": "Mohave Electric Cooperative",
+"applicationUrl": "[https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/](https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/)",
+"websiteUrl": "[https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/](https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/)",
+"sourceUrlsChecked": [
+"[https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/](https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/)",
+"[https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/solar-water-heating-rebate-application/](https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/solar-water-heating-rebate-application/)",
+"[https://programs.dsireusa.org/system/program/detail/4345](https://programs.dsireusa.org/system/program/detail/4345)"
+],
+"evidenceText": "Mohave Electric's SunWatts program identifies rebates for member-installed renewable systems, including solar PV, wind, solar water heating, and battery incentives tied to program rules.",
+"reasoningNotes": "The two supplied categories are valid; add wind and battery categories because the current official program page supports them."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22762",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Mountain Parks Electric"
+],
+"notes": "Available only to eligible Mountain Parks Electric members participating in Clean Power Program and net metering."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"commercial_utility_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv"
+],
+"hardRequirements": [
+"Applicant must be a Mountain Parks Electric member and Clean Power Program contributor.",
+"System must be a local renewable net-metered system meeting MPE interconnection and net-metering requirements.",
+"Rebate application and required documentation must be submitted within the program deadline."
+],
+"blockers": [
+"Matched term metering refers to utility net metering, not submetering or energy monitoring.",
+"Do not match submetering, building controls, or generic energy-monitoring retrofits.",
+"Do not match non-renewable or non-net-metered equipment."
+],
+"programType": "Rebate Program",
+"administrator": "Mountain Parks Electric",
+"applicationUrl": "[https://www.mpei.com/CPP-rebate-app](https://www.mpei.com/CPP-rebate-app)",
+"websiteUrl": "[https://www.mpei.com/clean-power-program-net-metering](https://www.mpei.com/clean-power-program-net-metering)",
+"sourceUrlsChecked": [
+"[https://www.mpei.com/clean-power-program-net-metering](https://www.mpei.com/clean-power-program-net-metering)",
+"[https://www.mpei.com/net-metering](https://www.mpei.com/net-metering)",
+"[https://www.mpei.com/CPP-rebate-app](https://www.mpei.com/CPP-rebate-app)",
+"[https://programs.dsireusa.org/system/program/detail/22762](https://programs.dsireusa.org/system/program/detail/22762)"
+],
+"evidenceText": "Mountain Parks Electric describes Clean Power Program rebates for qualifying local renewable net-metered systems. The metering language concerns net metering, not submetering or monitoring equipment.",
+"reasoningNotes": "Retain rooftop solar PV and remove submetering/energy monitoring as a false positive. Rebate amount should be verified because pages show inconsistent current amounts."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22547",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"National Grid Massachusetts"
+],
+"notes": "Available only to qualifying National Grid Massachusetts residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"electric_vehicle_owner_or_lessee",
+"multifamily_property_owner"
+],
+"eligibleSectors": [
+"residential",
+"multifamily",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"ev_make_ready_electrical_upgrade",
+"level_2_ev_charger_installation"
+],
+"hardRequirements": [
+"Customer must have a National Grid Massachusetts electric account and qualifying residential property.",
+"Applicant must own or lease an EV and install eligible 240-volt charging wiring or eligible equipment under program rules.",
+"Single-family participants generally must enroll in the off-peak charging program unless an exception applies.",
+"Enhanced incentives depend on income, environmental-justice, or qualifying rate criteria."
+],
+"blockers": [
+"Do not match DC fast charging.",
+"Do not match non-National Grid territories.",
+"Level 2 charger equipment rebate is limited to eligible customer categories and program-qualified equipment; most base support is for wiring or infrastructure."
+],
+"programType": "Rebate Program",
+"administrator": "National Grid",
+"applicationUrl": "[https://frontdoor.portal.poweredbyefi.org/initiative/ngridma/program/ngridmaev](https://frontdoor.portal.poweredbyefi.org/initiative/ngridma/program/ngridmaev)",
+"websiteUrl": "[https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program](https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program)",
+"sourceUrlsChecked": [
+"[https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program](https://www.nationalgridus.com/electric-vehicle-hub/Programs/Massachusetts/EV-Charging-Upgrade-Program)",
+"[https://frontdoor.portal.poweredbyefi.org/initiative/ngridma/program/ngridmaev](https://frontdoor.portal.poweredbyefi.org/initiative/ngridma/program/ngridmaev)",
+"[https://programs.dsireusa.org/system/program/detail/22547](https://programs.dsireusa.org/system/program/detail/22547)"
+],
+"evidenceText": "National Grid Massachusetts offers residential EV charging upgrade rebates for 240-volt wiring and, for qualifying customers, Level 2 smart chargers under program eligibility and enrollment requirements.",
+"reasoningNotes": "Keep Level 2 and EV make-ready, with the stronger match on wiring or infrastructure upgrades rather than generic charger installation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22454",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NE"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Nebraska Public Power District",
+"NPPD wholesale partner utilities participating in EnergyWise GoEV"
+],
+"notes": "Eligibility depends on NPPD retail service or a participating wholesale utility."
+},
+"eligibleApplicantTypes": [
+"residential_utility_customer",
+"business_utility_customer",
+"nonprofit",
+"public_agency",
+"site_host"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"public",
+"nonprofit",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"ev_make_ready_electrical_upgrade",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be served by NPPD or an eligible participating utility.",
+"Residential charger rebates require eligible home charging station documentation and program application.",
+"Residential pre-wiring must support a qualifying 240-volt circuit and meet new or existing construction rules.",
+"Commercial public-use projects must meet public-access, cost, preapproval, and charger-type requirements."
+],
+"blockers": [
+"Do not match Level 1 charging.",
+"Do not match customers outside NPPD or participating utility service.",
+"Commercial DC fast charging requires preapproval and public-use compliance; do not match private fleet-only DCFC unless program rules allow it."
+],
+"programType": "Rebate Program",
+"administrator": "Nebraska Public Power District",
+"applicationUrl": "[https://nppd.energywisenebraskagoev.com/](https://nppd.energywisenebraskagoev.com/)",
+"websiteUrl": "[https://nppd.energywisenebraskagoev.com/](https://nppd.energywisenebraskagoev.com/)",
+"sourceUrlsChecked": [
+"[https://nppd.energywisenebraskagoev.com/](https://nppd.energywisenebraskagoev.com/)",
+"[https://nppd.energywisenebraskagoev.com/residential-incentives/](https://nppd.energywisenebraskagoev.com/residential-incentives/)",
+"[https://nppd.energywisenebraska.com/electric-vehicle-charging/](https://nppd.energywisenebraska.com/electric-vehicle-charging/)",
+"[https://nppd.energywisenebraskagoev.com/wp-content/uploads/EVCommercialChargerApplication.pdf](https://nppd.energywisenebraskagoev.com/wp-content/uploads/EVCommercialChargerApplication.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/22454](https://programs.dsireusa.org/system/program/detail/22454)"
+],
+"evidenceText": "NPPD GoEV materials support residential home charging station and pre-wiring incentives, plus commercial public-use Level 2 and preapproved DC fast charging incentives.",
+"reasoningNotes": "Keep Level 2 EV charging, add EV make-ready because pre-wiring is explicitly supported, and add DCFC only for the commercial public-use path."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:22383"
+}

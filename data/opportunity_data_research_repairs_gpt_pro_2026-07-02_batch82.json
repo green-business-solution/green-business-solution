@@ -1,0 +1,1071 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-02",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5427",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Nebraska statewide tax incentive; Tier 5 renewable electricity project applications closed to new applicants after December 31, 2020."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "renewable_energy_developer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "utility"
+      ],
+      "eligibleRetrofitCategories": [
+        "biomass_electric_generation_system",
+        "geothermal_electric_generation_system"
+      ],
+      "hardRequirements": [
+        "Project must qualify as renewable electricity production for sale under the Nebraska Advantage Act Tier 5 rules.",
+        "Tier 5 projects required at least $20 million investment in qualified property.",
+        "Only existing approved agreements remain relevant because new Tier 5 applications closed after December 31, 2020."
+      ],
+      "blockers": [
+        "No new applications are accepted for this incentive tier.",
+        "Ground-source geothermal heat pumps are not supported by the statute; geothermal is listed as an electricity-production source, not building HVAC.",
+        "Residential or ordinary building retrofits do not qualify unless part of a qualified business renewable electricity project."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Nebraska Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-5725",
+      "sourceUrlsChecked": [
+        "https://nebraskalegislature.gov/laws/statutes.php?statute=77-5725",
+        "https://nebraskalegislature.gov/laws/statutes.php?statute=77-5715",
+        "https://programs.dsireusa.org/system/program/detail/5427"
+      ],
+      "evidenceText": "Nebraska]( law treated Tier 5 renewable projects as qualified businesses only for electricity production for sale from sources including wind, solar, geothermal, hydroelectric, and biomass; no new Tier 5 applications could be filed after December 31, 2020.",
+      "reasoningNotes": "Keep only renewable electric-generation categories. Block the matched geothermal heat pump category because the statute does not support building HVAC retrofits."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2613",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Connecticut statewide sales-and-use-tax exemption."
+      },
+      "eligibleApplicantTypes": [
+        "contractor",
+        "property_owner",
+        "tenant",
+        "purchaser"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_space_heating_system",
+        "ground_source_geothermal_heat_pump"
+      ],
+      "hardRequirements": [
+        "Purchaser must complete Connecticut CERT-140 for qualifying purchases.",
+        "System must be a solar electricity generating system, passive or active solar water or space heating system, or geothermal resource system.",
+        "Exemption can cover qualifying equipment and installation services when statutory conditions are met."
+      ],
+      "blockers": [
+        "Do not match non-geothermal HVAC, ordinary water heaters, or building weatherization.",
+        "Ice storage and other demand-management equipment are separate topics unless specifically listed as part of the qualified exemption.",
+        "Solar or geothermal equipment must fall within the Connecticut exemption; unrelated renewable equipment is not supported here."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Connecticut Department of Revenue Services",
+      "applicationUrl": "https://portal.ct.gov/-/media/DRS/Forms/1-2018/Certificates/CERT140pdf.pdf",
+      "websiteUrl": "https://portal.ct.gov/drs/sales-tax/exemptions-from-sales-and-use-taxes",
+      "sourceUrlsChecked": [
+        "https://portal.ct.gov/drs/sales-tax/exemptions-from-sales-and-use-taxes",
+        "https://portal.ct.gov/-/media/DRS/Forms/1-2018/Certificates/CERT140pdf.pdf",
+        "https://portal.ct.gov/DRS/Publications/Special-Notices/2007/SN-2007-7"
+      ],
+      "evidenceText": "Connecticut]( DRS lists solar electricity, passive or active solar water or space heating, and geothermal resource systems as sales-and-use-tax exempt when the purchaser completes CERT-140.",
+      "reasoningNotes": "The supplied geothermal and solar-water-heating matches are source-backed. Added rooftop PV and solar space heating because the official exemption expressly supports them."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4552",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Connecticut statewide industry-focused sales-and-use-tax exemption."
+      },
+      "eligibleApplicantTypes": [
+        "renewable_energy_manufacturer",
+        "clean_energy_technology_company"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "manufacturing"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Purchaser must be engaged in renewable or clean energy technology industries.",
+        "Items must be used directly in eligible renewable or clean-energy technology activities.",
+        "Purchaser must use the applicable Connecticut exemption certificate for the industry exemption."
+      ],
+      "blockers": [
+        "This is not an end-user building retrofit incentive for installing geothermal heat pumps or solar water heaters.",
+        "Real property, fixtures, services, repair and replacement parts, administration, and general management uses are excluded.",
+        "Do not match building-level solar thermal or geothermal retrofits from this industry support exemption."
+      ],
+      "programType": "Industry Recruitment/Support",
+      "administrator": "Connecticut Department of Revenue Services",
+      "applicationUrl": null,
+      "websiteUrl": "https://portal.ct.gov/DRS/Publications/Special-Notices/2010/SN-2010-9-1",
+      "sourceUrlsChecked": [
+        "https://portal.ct.gov/DRS/Publications/Special-Notices/2010/SN-2010-9-1",
+        "https://portal.ct.gov/drs/sales-tax/exemptions-from-sales-and-use-taxes"
+      ],
+      "evidenceText": "The]( special notice covers machinery, equipment, tools, materials, supplies, and fuel used directly by renewable or clean-energy technology companies; it excludes real property, fixtures, services, and nonproduction uses.",
+      "reasoningNotes": "Clear retrofit categories because the current official source supports industry inputs, not installation of geothermal or solar-thermal systems in buildings."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3543",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "IL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Illinois statewide program for certified High Impact Businesses and designated large energy facilities."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "renewable_energy_developer",
+        "large_project_developer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "utility"
+      ],
+      "eligibleRetrofitCategories": [
+        "wind_energy_facility",
+        "utility_scale_solar_facility",
+        "utility_scale_battery_energy_storage_facility"
+      ],
+      "hardRequirements": [
+        "Business must qualify and be certified under the Illinois High Impact Business Program.",
+        "Standard High Impact Business qualifications require major investment and job creation or retention thresholds.",
+        "Energy facility eligibility is limited to designated wind, new utility-scale solar, and new battery energy storage solution facilities."
+      ],
+      "blockers": [
+        "Not a customer-sited rooftop solar or home battery rebate.",
+        "Solar-plus-storage should not be matched unless the project is a qualifying utility-scale solar or battery energy storage facility.",
+        "Certification must occur before project commencement and before qualifying purchases."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Illinois Department of Commerce and Economic Opportunity",
+      "applicationUrl": null,
+      "websiteUrl": "https://dceo.illinois.gov/expandrelocate/incentives/highimpactbusinessprogram.html",
+      "sourceUrlsChecked": [
+        "https://dceo.illinois.gov/expandrelocate/incentives/highimpactbusinessprogram.html",
+        "https://dceo.illinois.gov/content/dam/soi/en/web/dceo/aboutdceo/reportsrequiredbystatute/enterprise-zone-program-river-edge-redevelopment-zone-program-blue-collar-jobs-act-and-high-impact-business-program-annual-report-calendar-year-2024.pdf"
+      ],
+      "evidenceText": "DCEO]( describes High Impact Business as a large-scale business incentive expanded to wind, utility-scale solar, and new battery energy storage solution facilities.",
+      "reasoningNotes": "Narrow battery and solar matches to utility-scale facility categories. Block residential, small commercial, and generic solar-plus-storage interpretations."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4292",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "San Miguel Power Association"
+        ],
+        "notes": "Available to qualifying SMPA members in the cooperative service territory."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "commercial_customer",
+        "member_owner",
+        "contractor"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "small_wind_turbine"
+      ],
+      "hardRequirements": [
+        "Installation must be in SMPA territory and connected to the grid.",
+        "Renewable system must be owned by the SMPA member to qualify.",
+        "Solar PV must use listed or approved grid-tied inverters.",
+        "Small wind systems must be grid-tied, listed or approved, and SWCC-certified where required.",
+        "Contractor application and program deadlines apply."
+      ],
+      "blockers": [
+        "Off-grid systems are not supported by the rebate requirements.",
+        "Third-party lease arrangements without member ownership interest do not qualify.",
+        "Do not broaden to unrelated renewable measures beyond listed solar PV, small wind, and any separately listed hydro measures."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "San Miguel Power Association",
+      "applicationUrl": "https://www.smpa.com/form/smpa-solar-pv-small-wind-hydro-r",
+      "websiteUrl": "https://www.smpa.com/content/renewable-rebates",
+      "sourceUrlsChecked": [
+        "https://www.smpa.com/content/renewable-rebates",
+        "https://www.smpa.com/form/smpa-solar-pv-small-wind-hydro-r",
+        "https://www.smpa.com/sites/default/files/309_RenewableEnergyRebates_Updated_04-27-21.pdf"
+      ],
+      "evidenceText": "SMPA]( lists residential and commercial PV rebates and residential small-wind rebates, with grid-tied equipment and member-ownership requirements.",
+      "reasoningNotes": "The matched rooftop solar PV and small wind categories are source-backed. Territory, ownership, grid-tie, and equipment requirements are critical matching constraints."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2776",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "SC"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Santee Cooper"
+        ],
+        "notes": "Available to approved Santee Cooper customers; loan checks are issued directly to the approved trade ally or installer."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "small_wind_turbine",
+        "micro_hydro_system",
+        "biomass_biogas_energy_system"
+      ],
+      "hardRequirements": [
+        "Applicant must be an approved Santee Cooper customer and qualify for financing.",
+        "Renewable Energy Resource Loan can support qualifying solar PV, wind, micro-hydro, or biomass generation.",
+        "Work must be completed through program processes, including approved trade ally or installer payment requirements.",
+        "Solar projects must satisfy applicable interconnection and program requirements."
+      ],
+      "blockers": [
+        "This is financing, not a rebate or grant.",
+        "Biomass eligibility is for renewable generation, not broad biomass heating or building-fuel conversion.",
+        "Commercial projects are not supported by the residential EmpowerHome loan page unless covered by a separate business program."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Santee Cooper",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.santeecooper.com/Programs-Incentives/EmpowerHome/Loans/",
+      "sourceUrlsChecked": [
+        "https://www.santeecooper.com/Programs-Incentives/EmpowerHome/Loans/",
+        "https://www.santeecooper.com/programs-incentives/empowersolar/solar-home/"
+      ],
+      "evidenceText": "Santee]( Cooper describes low-interest loans for residential energy upgrades and renewable generation, including solar panels and Renewable Energy Resource Loans for solar PV, wind, micro-hydro, and biomass generation.",
+      "reasoningNotes": "Keep rooftop solar PV and biomass only as financed renewable generation. Do not treat the loan as a rebate-style retrofit incentive."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5244",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "GA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Satilla REMC"
+        ],
+        "notes": "Available to qualifying Satilla REMC residential members and homeowners."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "homeowner",
+        "member"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Satilla REMC member or otherwise meet program homeowner qualifications.",
+        "Project must pass Satilla REMC prescreening where required.",
+        "Financing must be approved through Go Energy Financial Credit Union or the current program lender.",
+        "Work must use eligible improvements and program processes."
+      ],
+      "blockers": [
+        "This is a loan program, not a rebate or grant.",
+        "Commercial and industrial applicants are not supported by the HomePlus residential loan page.",
+        "Generators, roofs, windows, and HVAC are separate financed item types and should not broaden weatherization matching."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Satilla REMC",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.satillaemc.com/home-plus",
+      "sourceUrlsChecked": [
+        "https://www.satillaemc.com/home-plus"
+      ],
+      "evidenceText": "Satilla]( REMC says HomePlus loans finance energy-efficient home improvements, including insulation and weatherization, subject to EMC prescreening and loan approval.",
+      "reasoningNotes": "The matched insulation and weatherization categories are supported, but should be treated as financed residential measures only."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5622",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "WA"
+        ],
+        "counties": [],
+        "cities": [
+          "Seattle"
+        ],
+        "utilityTerritories": [
+          "Seattle City Light"
+        ],
+        "notes": "Available within Seattle city limits and, for some electrically heated income-qualified homes, to Seattle City Light customers outside city limits."
+      },
+      "eligibleApplicantTypes": [
+        "homeowner",
+        "renter",
+        "multifamily_owner",
+        "property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "air_sealing_weatherization",
+        "insulation_upgrade"
+      ],
+      "hardRequirements": [
+        "Household must meet income eligibility requirements.",
+        "Home must be within Seattle limits or meet Seattle City Light electric-heat eligibility outside the city.",
+        "Weatherization measures depend on audit or inspection findings.",
+        "Rental and multifamily participation may require property owner cooperation and tenant income qualification."
+      ],
+      "blockers": [
+        "Not available statewide in Washington.",
+        "Commercial buildings are not supported by the HomeWise residential weatherization page.",
+        "Some non-envelope measures, such as heat pumps or water heaters, are inspection- or equipment-condition-dependent and should not be generalized from the envelope match."
+      ],
+      "programType": "Grant Program",
+      "administrator": "Seattle Office of Housing",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.seattle.gov/housing/homeowners/weatherization",
+      "sourceUrlsChecked": [
+        "https://www.seattle.gov/housing/homeowners/weatherization"
+      ],
+      "evidenceText": "Seattle]( HomeWise provides free energy-efficiency improvements to income-qualified homes, including insulation and duct or air sealing, with eligibility limited by location, income, and program inspection.",
+      "reasoningNotes": "The air sealing and insulation matches are source-backed. Geography and income limits are essential blockers for deterministic matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22799",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "South Hadley"
+        ],
+        "utilityTerritories": [
+          "South Hadley Electric Light Department"
+        ],
+        "notes": "Available to qualifying SHELD electric customers."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Customer must enroll in the SHELD NextZero Scheduled Charging Program for the required term.",
+        "Eligible charger must be an approved networked charger, such as listed Emporia or ChargePoint models.",
+        "Charger must be installed by a licensed contractor or electrician where required.",
+        "Permit, wiring inspection, application, and participation agreement requirements may apply."
+      ],
+      "blockers": [
+        "Do not match as a generic EV charger rebate without the Level 2 and scheduled-charging requirements.",
+        "Not an EV purchase rebate.",
+        "Unsupported charger brands and nonparticipating customers do not qualify.",
+        "Commercial charger incentives are not supported by this residential SHELD page."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "South Hadley Electric Light Department",
+      "applicationUrl": "https://www.sheld.org/pages/forms/electric-vehicle-incentives/",
+      "websiteUrl": "https://www.sheld.org/pages/forms/electric-vehicle-incentives/",
+      "sourceUrlsChecked": [
+        "https://www.sheld.org/pages/forms/electric-vehicle-incentives/",
+        "https://www.sheld.org/uploads/South-Hadley_ON-Peak-Charging-Agreement.pdf"
+      ],
+      "evidenceText": "SHELD]( offers a residential EV charger rebate after successful participation in its NextZero Scheduled Charging Program and requires approved chargers and proper installation.",
+      "reasoningNotes": "Narrow the match to Level 2 EV charger installation with scheduled-charging participation. Generic EVSE matching is too broad without those requirements."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:49",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "HI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Hawaii statewide income tax credit for qualifying corporate taxpayers; future-year rules may change under Act 24 of 2026."
+      },
+      "eligibleApplicantTypes": [
+        "corporation",
+        "business",
+        "taxpayer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_space_heating_system"
+      ],
+      "hardRequirements": [
+        "Claimant must be a qualifying Hawaii corporate taxpayer.",
+        "System must be a qualifying renewable energy technology system installed and placed in service in Hawaii.",
+        "Taxpayer must claim the credit through the required Hawaii tax forms and comply with cost caps, output capacity rules, and allocation requirements."
+      ],
+      "blockers": [
+        "This is a tax credit, not a rebate.",
+        "Standalone battery storage is not supported by the corporate solar and wind credit match.",
+        "Wind is separately eligible but should not be conflated with solar PV or solar water heating categories.",
+        "Eligibility and credit amount may change for taxable years affected by Act 24 of 2026."
+      ],
+      "programType": "Corporate Tax Credit",
+      "administrator": "Hawaii Department of Taxation",
+      "applicationUrl": null,
+      "websiteUrl": "https://tax.hawaii.gov/geninfo/renewable/",
+      "sourceUrlsChecked": [
+        "https://tax.hawaii.gov/geninfo/renewable/",
+        "https://energy.hawaii.gov/state-of-hawaii-and-federal-incentives/"
+      ],
+      "evidenceText": "Hawaii]( tax guidance describes the Renewable Energy Technologies Income Tax Credit for qualifying solar PV, solar space heating, and solar thermal water-heating systems, subject to statutory caps and rules.",
+      "reasoningNotes": "The matched rooftop solar PV and solar water heating categories are supported. Added solar space heating because Hawaii guidance groups it with qualifying solar technologies."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:50",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "HI"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Hawaii statewide income tax credit for qualifying individual taxpayers; future-year rules may change under Act 24 of 2026."
+      },
+      "eligibleApplicantTypes": [
+        "individual",
+        "homeowner",
+        "residential_taxpayer"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_space_heating_system"
+      ],
+      "hardRequirements": [
+        "Claimant must be a qualifying Hawaii individual taxpayer.",
+        "System must be a qualifying renewable energy technology system installed and placed in service in Hawaii.",
+        "Taxpayer must claim the credit through the required Hawaii tax forms and comply with cost caps, output capacity rules, and allocation requirements."
+      ],
+      "blockers": [
+        "This is a tax credit, not an upfront rebate.",
+        "Standalone battery storage is not supported by the personal solar and wind credit match.",
+        "Wind is separately eligible but should not be conflated with solar PV or solar water heating categories.",
+        "Eligibility and credit amount may change for taxable years affected by Act 24 of 2026."
+      ],
+      "programType": "Personal Tax Credit",
+      "administrator": "Hawaii Department of Taxation",
+      "applicationUrl": null,
+      "websiteUrl": "https://tax.hawaii.gov/geninfo/renewable/",
+      "sourceUrlsChecked": [
+        "https://tax.hawaii.gov/geninfo/renewable/",
+        "https://energy.hawaii.gov/state-of-hawaii-and-federal-incentives/"
+      ],
+      "evidenceText": "Hawaii]( tax guidance describes the Renewable Energy Technologies Income Tax Credit for qualifying solar PV, solar space heating, and solar thermal water-heating systems, subject to statutory caps and rules.",
+      "reasoningNotes": "The matched rooftop solar PV and solar water heating categories are supported for individual taxpayers. Added solar space heating because it is explicitly within the qualifying solar technologies."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:119",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "AZ"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Arizona statewide transaction privilege tax deduction for qualifying solar energy devices sold by registered retailers or lessors."
+      },
+      "eligibleApplicantTypes": [
+        "registered_solar_energy_retailer",
+        "registered_solar_energy_lessor",
+        "purchaser"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_space_heating_system",
+        "solar_daylighting_system"
+      ],
+      "hardRequirements": [
+        "Retailer or lessor must register with the Arizona Department of Revenue as a solar energy retailer or lessor.",
+        "Sale or lease must be of a qualifying solar energy device under Arizona law.",
+        "Retailer must maintain records supporting the deduction from the tax base."
+      ],
+      "blockers": [
+        "Submetering or energy monitoring is not a supported retrofit category unless it is integral to a qualifying solar energy device.",
+        "Standalone metering, monitoring, storage, and non-solar controls do not qualify under this program match.",
+        "Current official solar-device sources do not support a standalone wind-equipment match for this Arizona sales-tax deduction."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Arizona Department of Revenue",
+      "applicationUrl": "https://azdor.gov/sites/default/files/2023-03/FORM_TPT_10447_f_0.pdf",
+      "websiteUrl": "https://www.azleg.gov/ars/42/05061.htm",
+      "sourceUrlsChecked": [
+        "https://www.azleg.gov/ars/42/05061.htm",
+        "https://azdor.gov/sites/default/files/2023-03/FORM_TPT_10447_f_0.pdf",
+        "https://azdor.gov/sites/default/files/2023-03/RULINGS_TPT_2016_16-009-D.pdf"
+      ],
+      "evidenceText": "Arizona]( law deducts amounts received from sales of solar energy devices from the retail tax base and requires the retailer to register as a solar energy retailer.",
+      "reasoningNotes": "Keep solar thermal and solar electric categories. Remove the submetering match because the source supports solar devices, not general energy monitoring systems."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3352",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Pennsylvania statewide program administered through the Commonwealth Financing Authority."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "economic_development_organization",
+        "political_subdivision",
+        "municipality",
+        "county",
+        "school_district"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Applicant must be an eligible Pennsylvania business, economic development organization, or political subdivision.",
+        "Project must qualify under the Alternative and Clean Energy Program rules.",
+        "Program financing may require matching funds, application fees, commitment fees, and Commonwealth Financing Authority approval."
+      ],
+      "blockers": [
+        "The current official page is the Alternative and Clean Energy Program, not a product-specific solar retrofit rebate.",
+        "Do not match rooftop solar PV or solar water heating from this record without a specific source-backed project category.",
+        "Pennsylvania Solar Energy Program is a separate solar-specific financing program and should not be merged into this opportunity."
+      ],
+      "programType": "Industry Recruitment/Support",
+      "administrator": "Pennsylvania Department of Community and Economic Development",
+      "applicationUrl": null,
+      "websiteUrl": "https://dced.pa.gov/programs/alternative-clean-energy-program-ace/",
+      "sourceUrlsChecked": [
+        "https://dced.pa.gov/programs/alternative-clean-energy-program-ace/"
+      ],
+      "evidenceText": "The]( current DCED page is ACE, a grant, loan, and guarantee program for alternative and clean-energy projects; it does not specifically identify rooftop PV or solar thermal as eligible retrofit products.",
+      "reasoningNotes": "Clear retrofit categories to prevent false-positive matches. The official source supports broad clean-energy project financing, not deterministic product-level solar retrofit matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5945",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Pennsylvania statewide Solar Energy Program loan category administered through the Commonwealth Financing Authority."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "economic_development_organization",
+        "political_subdivision",
+        "municipality",
+        "county",
+        "school_district"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_integrated_battery_storage"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Pennsylvania business, economic development organization, or political subdivision.",
+        "Loan must support an eligible solar energy generation or distribution project or qualifying solar manufacturing activity.",
+        "Program loan limits, application fee, loan commitment fee, and matching fund requirements apply.",
+        "Storage costs must be directly related to electricity produced by the solar energy system."
+      ],
+      "blockers": [
+        "This is financing, not a rebate.",
+        "Standalone battery storage is not supported; storage must be tied directly to solar-generated electricity.",
+        "Residential homeowner consumer loans are not supported by the official SEP applicant list.",
+        "Non-solar energy projects belong under separate Pennsylvania programs."
+      ],
+      "programType": "Loan Program",
+      "administrator": "Pennsylvania Department of Community and Economic Development; Pennsylvania Department of Environmental Protection",
+      "applicationUrl": null,
+      "websiteUrl": "https://dced.pa.gov/programs/solar-energy-program-sep/",
+      "sourceUrlsChecked": [
+        "https://dced.pa.gov/programs/solar-energy-program-sep/",
+        "https://dced.pa.gov/download/solar-energy-program-guidelines/?wpdmdl=67690",
+        "https://dced.pa.gov/download/solar-energy-program-fact-sheet/?wpdmdl=121594"
+      ],
+      "evidenceText": "SEP]( loans fund solar energy generation or distribution projects, with storage supported only when directly related to electricity produced by the solar energy system.",
+      "reasoningNotes": "Keep solar categories and replace generic battery storage with solar-integrated storage. Do not match standalone storage or consumer-scale residential loans."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22791",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Pennsylvania statewide Solar Energy Program grant category administered through the Commonwealth Financing Authority."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "economic_development_organization",
+        "political_subdivision",
+        "municipality",
+        "county",
+        "school_district"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "government",
+        "institutional"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_integrated_battery_storage"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Pennsylvania business, economic development organization, or political subdivision.",
+        "Grant must support an eligible solar energy generation or distribution project or qualifying solar manufacturing activity.",
+        "Grant limits, application fee, matching fund requirements, and Commonwealth Financing Authority approval apply.",
+        "Photovoltaic grant recipients may have SREC transfer requirements under program rules.",
+        "Storage costs must be directly related to electricity produced by the solar energy system."
+      ],
+      "blockers": [
+        "This is a grant program, not a rebate for individual homeowners.",
+        "Standalone battery storage is not supported; storage must be tied directly to solar-generated electricity.",
+        "Non-solar storage, ordinary water heaters, and unrelated clean-energy projects should not match this solar-specific record."
+      ],
+      "programType": "Grant Program",
+      "administrator": "Pennsylvania Department of Community and Economic Development; Pennsylvania Department of Environmental Protection",
+      "applicationUrl": null,
+      "websiteUrl": "https://dced.pa.gov/programs/solar-energy-program-sep/",
+      "sourceUrlsChecked": [
+        "https://dced.pa.gov/programs/solar-energy-program-sep/",
+        "https://dced.pa.gov/download/solar-energy-program-guidelines/?wpdmdl=67690",
+        "https://dced.pa.gov/download/solar-energy-program-fact-sheet/?wpdmdl=121594"
+      ],
+      "evidenceText": "SEP]( grants support solar energy generation or distribution projects, and storage is eligible only when directly related to electricity produced by the solar energy system.",
+      "reasoningNotes": "Keep solar PV and solar thermal categories. Replace broad battery storage with a solar-integrated storage category and block standalone storage matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1218",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Minnesota statewide sales-tax exemption for qualifying solar energy systems."
+      },
+      "eligibleApplicantTypes": [
+        "purchaser",
+        "property_owner",
+        "business",
+        "homeowner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "government"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "solar_space_heating_system"
+      ],
+      "hardRequirements": [
+        "Purchase must qualify as a solar energy system under Minnesota law.",
+        "System must collect, transfer, store, or use solar energy for qualifying thermal or power purposes.",
+        "Seller and purchaser must document the nontaxable sale or exemption as required by Minnesota Revenue rules."
+      ],
+      "blockers": [
+        "Do not match non-solar water heating, generic thermal storage, or standalone batteries.",
+        "Solar storage is only supported when it is part of the solar energy system definition.",
+        "Wind, geothermal, and ordinary building-efficiency measures are not supported by this solar-energy sales-tax exemption."
+      ],
+      "programType": "Sales Tax Incentive",
+      "administrator": "Minnesota Department of Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.revenue.state.mn.us/guide/nontaxable-sales",
+      "sourceUrlsChecked": [
+        "https://www.revenue.state.mn.us/guide/nontaxable-sales",
+        "https://www.revisor.mn.gov/statutes/cite/297A.67#stat.297A.67.29",
+        "https://www.revisor.mn.gov/statutes/cite/216C.06#stat.216C.06.17"
+      ],
+      "evidenceText": "Minnesota]( Revenue lists solar energy systems as nontaxable sales under the solar-energy-system statutes, supporting solar electric and solar thermal uses.",
+      "reasoningNotes": "The rooftop solar PV and solar water heating matches are supported. Add solar space heating because the statutory definition includes solar heating of buildings."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5245",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DC"
+        ],
+        "counties": [],
+        "cities": [
+          "Washington"
+        ],
+        "utilityTerritories": [],
+        "notes": "District of Columbia personal property tax exemption for qualifying solar and cogeneration systems."
+      },
+      "eligibleApplicantTypes": [
+        "property_owner",
+        "business",
+        "system_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "multifamily_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "rooftop_solar_pv",
+        "solar_water_heating_system",
+        "combined_heat_and_power_system"
+      ],
+      "hardRequirements": [
+        "Solar system must use exclusively solar energy as defined in District law.",
+        "Cogeneration system must produce electrical energy and steam or another useful form of energy such as heat.",
+        "Property must be located in the District of Columbia and claimed through applicable personal property tax procedures."
+      ],
+      "blockers": [
+        "Generic generators do not qualify unless they meet the cogeneration definition.",
+        "Standalone non-solar storage does not qualify.",
+        "This is a property tax incentive, not a rebate, grant, or installation financing program."
+      ],
+      "programType": "Property Tax Incentive",
+      "administrator": "District of Columbia Office of Tax and Revenue",
+      "applicationUrl": null,
+      "websiteUrl": "https://code.dccouncil.gov/us/dc/council/code/sections/47-1508",
+      "sourceUrlsChecked": [
+        "https://code.dccouncil.gov/us/dc/council/code/sections/47-1508",
+        "https://code.dccouncil.gov/us/dc/council/code/sections/34-1431"
+      ],
+      "evidenceText": "D.C]( law exempts systems using exclusively solar energy and cogeneration systems that produce electricity plus steam or useful heat for eligible purposes.",
+      "reasoningNotes": "The solar thermal and cogeneration matches are supported. Add solar PV because the legal definition of solar energy includes conversion to electrical energy."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2591",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MN"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Austin Utilities",
+          "Blooming Prairie Public Utilities",
+          "Fairmont Public Utilities",
+          "Grand Marais Public Utilities",
+          "Lake City Public Utilities",
+          "Litchfield Public Utilities",
+          "Mora Municipal Utilities",
+          "New Prague Utilities",
+          "Owatonna Public Utilities",
+          "Preston Public Utilities",
+          "Princeton Public Utilities",
+          "Redwood Falls Public Utilities",
+          "Rochester Public Utilities",
+          "Saint Peter Municipal Utilities",
+          "Spring Valley Public Utilities",
+          "Waseca Utilities",
+          "Wells Public Utilities"
+        ],
+        "notes": "Rebates are administered through participating Southern Minnesota Municipal Power Agency member municipal utilities."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_customer",
+        "industrial_customer",
+        "municipal_utility_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "guestroom_energy_management_controls",
+        "high_efficiency_refrigeration_equipment"
+      ],
+      "hardRequirements": [
+        "Applicant must be a commercial or industrial electric customer of a participating SMMPA member utility.",
+        "Measure must appear on the current local member utility rebate form or qualify through a custom program.",
+        "Customer must submit required equipment documentation and utility rebate forms.",
+        "Preapproval may be required for some measures."
+      ],
+      "blockers": [
+        "Not a residential appliance or home weatherization program.",
+        "Energy management should be narrowed to listed guestroom energy management controls or specifically approved custom measures, not broad EMS software or controls.",
+        "Refrigeration rebates apply to commercial refrigeration equipment, not household refrigerators."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Southern Minnesota Municipal Power Agency",
+      "applicationUrl": null,
+      "websiteUrl": "https://smmpa.com/energy-efficiency",
+      "sourceUrlsChecked": [
+        "https://smmpa.com/energy-efficiency",
+        "https://smmpa.com/members/lake-city",
+        "https://smmpa.com/"
+      ],
+      "evidenceText": "SMMPA]( member utility materials list business rebates including refrigeration equipment and guestroom energy management, alongside other commercial and industrial efficiency measures.",
+      "reasoningNotes": "The refrigeration match is supported for C&I customers. Narrow the broad energy-management match to guestroom energy-management controls because that is the product-specific official measure."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22380",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "NE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern Public Power District"
+        ],
+        "notes": "Available to qualifying Southern Public Power District customers through Nebraska public-power EV incentive channels."
+      },
+      "eligibleApplicantTypes": [
+        "residential_customer",
+        "commercial_customer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "industrial",
+        "public_sector"
+      ],
+      "eligibleRetrofitCategories": [
+        "level_2_ev_charger_installation",
+        "ev_charger_make_ready_wiring",
+        "dc_fast_charger_installation"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Southern Public Power District customer.",
+        "Project must install qualifying EV charging infrastructure or make-ready wiring under the current EnergyWise or goEV incentive rules.",
+        "Residential charging incentives are limited to qualifying Level 2 charging and make-ready measures.",
+        "Nonresidential incentives may include Level 2, DC fast charging, and make-ready infrastructure."
+      ],
+      "blockers": [
+        "Not an EV vehicle purchase incentive.",
+        "Residential customers should not be matched to DC fast charging unless a current official source explicitly allows it.",
+        "Customers outside Southern Public Power District territory do not qualify.",
+        "Exact rebate amounts and application details should be verified against the current program portal before quoting."
+      ],
+      "programType": "Rebate Program",
+      "administrator": "Southern Public Power District",
+      "applicationUrl": null,
+      "websiteUrl": "https://southernpd.energywisenebraskagoev.com/",
+      "sourceUrlsChecked": [
+        "https://southernpd.energywisenebraskagoev.com/",
+        "https://southernpd.energywisenebraskagoev.com/public-powers-support/",
+        "https://afdc.energy.gov/laws/12415"
+      ],
+      "evidenceText": "The]( goEV site presents residential and commercial EV incentives for Nebraska public-power customers; federal program data lists SPPD charging and make-ready rebates for residential and nonresidential customers.",
+      "reasoningNotes": "Level 2 EV charger matching is supported. Added make-ready wiring and nonresidential DC fast charging with medium confidence because the official portal is current but detailed terms are limited."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5691",
+      "confidence": "high",
+      "availabilityStatus": "temporarily_closed",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Program procures SRECs for Delmarva Power compliance from Delaware-certified solar systems; some eligible systems may be in municipal, cooperative, or qualifying out-of-state service territory if certified."
+      },
+      "eligibleApplicantTypes": [
+        "solar_system_owner",
+        "homeowner",
+        "farmer",
+        "business",
+        "owner_representative"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "agricultural",
+        "community_solar",
+        "utility"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system",
+        "community_solar_project"
+      ],
+      "hardRequirements": [
+        "Applicant must own or control eligible SRECs from a qualifying solar PV system.",
+        "System must have or obtain Delaware certification and meet applicable metering or monitoring requirements.",
+        "Applications are accepted only during annual procurement windows.",
+        "Awarded systems must enter the required long-term SREC transfer agreement.",
+        "Applicant must not already have conflicting SREC sale or transfer obligations or incompatible Delaware solar grant arrangements."
+      ],
+      "blockers": [
+        "Current procurement window is closed until a future annual solicitation opens.",
+        "This is not an upfront solar rebate or equipment discount.",
+        "Community solar subscriptions are not the supported match; only qualifying community solar projects or solar system owners may participate.",
+        "Net metering is separate from the SREC procurement program."
+      ],
+      "programType": "Solar Renewable Energy Credit Program",
+      "administrator": "Delaware Sustainable Energy Utility / SREC Delaware Program Administrator for Delmarva Power",
+      "applicationUrl": "https://portal.srecdelaware.com/",
+      "websiteUrl": "https://srecdelaware.com/",
+      "sourceUrlsChecked": [
+        "https://srecdelaware.com/",
+        "https://srecdelaware.com/procurements/2024-procurement/",
+        "https://srecdelaware.com/frequently-asked-questions/",
+        "https://depsc.delaware.gov/delawares-renewable-portfolio-standard-green-power-products/",
+        "https://energizedelaware.org/delaware-srec-procurement-to-open-november-3rd-2025/"
+      ],
+      "evidenceText": "SREC]( Delaware buys SRECs from solar system owners through annual procurement windows; the program requires Delaware certification and SREC ownership or control.",
+      "reasoningNotes": "Keep a physical solar PV category and replace community solar subscription with community solar project. Mark temporarily closed because procurements occur in limited annual windows and no current open window was verified."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:2742"
+}

@@ -1,0 +1,1053 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-02",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:832",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"MT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"NorthWestern Energy Montana electric service territory"
+],
+"notes": "Limited to approved NorthWestern Energy commercial electric accounts in Montana, with nonprofit, government, or public-building emphasis."
+},
+"eligibleApplicantTypes": [
+"nonprofit_organization",
+"government_entity",
+"public_building_owner",
+"approved_commercial_electric_customer"
+],
+"eligibleSectors": [
+"nonprofit",
+"government",
+"public_facilities",
+"education"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"small_wind_turbine",
+"renewable_energy_system_installation"
+],
+"hardRequirements": [
+"Project must be on a nonprofit or government/public building with an active NorthWestern Energy account.",
+"Must use a NorthWestern Energy Renewable Energy Qualified Installer.",
+"Project may not exceed 50 kW AC nameplate capacity and must meet interconnection and net-metering requirements.",
+"Proposals are due May 1 or November 1 and must include an education or civic value plan."
+],
+"blockers": [
+"No source support for air_sealing_weatherization under this renewable energy incentive.",
+"Facilities planned or currently under construction do not qualify."
+],
+"programType": "custom_renewable_energy_incentive",
+"administrator": "NorthWestern Energy",
+"applicationUrl": "[https://northwesternenergy.com/docs/default-source/default-document-library/clean-energy/how-you-can-help/renewable-energy-custom-incentive-application.pdf](https://northwesternenergy.com/docs/default-source/default-document-library/clean-energy/how-you-can-help/renewable-energy-custom-incentive-application.pdf)",
+"websiteUrl": "[https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/e-renewable-incentives](https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/e-renewable-incentives)",
+"sourceUrlsChecked": [
+"[https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/e-renewable-incentives](https://northwesternenergy.com/account-services/for-business/energy-efficiency-for-business/e-renewable-incentives)",
+"[https://northwesternenergy.com/docs/default-source/default-document-library/clean-energy/how-you-can-help/renewable-energy-custom-incentive-application.pdf](https://northwesternenergy.com/docs/default-source/default-document-library/clean-energy/how-you-can-help/renewable-energy-custom-incentive-application.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/832/northwestern-energy-usb-renewable-energy-fund](https://programs.dsireusa.org/system/program/detail/832/northwestern-energy-usb-renewable-energy-fund)"
+],
+"evidenceText": "NorthWestern describes USB funding for renewable energy installations on nonprofit, government, or public buildings. Proposal requirements include an active account, qualified installer, net metering, interconnection compliance, and a maximum 50 kW AC size.",
+"reasoningNotes": "The prior weatherization match was caused by unrelated efficiency language. This opportunity should match renewable energy installations, not building-envelope measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5539",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Projects and transactions must support clean energy activity in New York State."
+},
+"eligibleApplicantTypes": [
+"private_sector_capital_provider",
+"clean_energy_industry_participant",
+"developer",
+"property_owner",
+"service_provider",
+"investor"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"multifamily",
+"institutional",
+"clean_energy_finance"
+],
+"eligibleRetrofitCategories": [
+"clean_energy_project_financing"
+],
+"hardRequirements": [
+"Applicant must propose an eligible clean energy financing transaction or capital solution.",
+"Project or portfolio must be located in or benefit New York State.",
+"Transaction must satisfy NY Green Bank solicitation, underwriting, and clean energy eligibility criteria."
+],
+"blockers": [
+"This is financing, not a prescriptive rebate for automated demand response controls.",
+"Do not match to load reduction or controls unless a specific NY Green Bank transaction source independently verifies that measure."
+],
+"programType": "clean_energy_financing",
+"administrator": "NY Green Bank",
+"applicationUrl": "[https://portal.nyserda.ny.gov/CORE_Solicitation_Detail_Page?SolicitationId=a0rt0000000QnxtAAC](https://portal.nyserda.ny.gov/CORE_Solicitation_Detail_Page?SolicitationId=a0rt0000000QnxtAAC)",
+"websiteUrl": "[https://greenbank.ny.gov/](https://greenbank.ny.gov/)",
+"sourceUrlsChecked": [
+"[https://greenbank.ny.gov/](https://greenbank.ny.gov/)",
+"[https://greenbank.ny.gov/Investment-Opportunities/Open-Solicitations](https://greenbank.ny.gov/Investment-Opportunities/Open-Solicitations)",
+"[https://portal.nyserda.ny.gov/CORE_Solicitation_Detail_Page?SolicitationId=a0rt0000000QnxtAAC](https://portal.nyserda.ny.gov/CORE_Solicitation_Detail_Page?SolicitationId=a0rt0000000QnxtAAC)",
+"[https://www.nyserda.ny.gov/Funding-Opportunities/Current-Funding-Opportunities](https://www.nyserda.ny.gov/Funding-Opportunities/Current-Funding-Opportunities)",
+"[https://programs.dsireusa.org/system/program/detail/5539/ny-green-bank](https://programs.dsireusa.org/system/program/detail/5539/ny-green-bank)"
+],
+"evidenceText": "NY Green Bank provides flexible capital and open solicitations for financing clean energy projects and market participants in New York. The official solicitation is transaction-based financing, not a measure-specific rebate.",
+"reasoningNotes": "The phrase load reduction is insufficient to deterministically match automated demand response controls. Keep as financing support only."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4306",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"NYSEG electric service territory"
+],
+"notes": "Small business eligibility is tied to NYSEG service and demand or usage thresholds."
+},
+"eligibleApplicantTypes": [
+"small_business_customer",
+"nonresidential_electric_customer"
+],
+"eligibleSectors": [
+"small_business",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"lighting_controls"
+],
+"hardRequirements": [
+"Small business electric customers generally must use no more than 110 kW per month.",
+"Eligible equipment must meet current NYSEG rebate catalog requirements.",
+"Projects must be submitted through the program application or approved channel."
+],
+"blockers": [
+"Residential customers are not eligible under this small business lighting program.",
+"Do not infer unrelated residential appliances or industrial measures from the business rebate catalog.",
+"Demand response and other NYSEG offerings are separate programs."
+],
+"programType": "small_business_direct_install_rebate",
+"administrator": "NYSEG",
+"applicationUrl": "[https://tradeally.efficiencynavigator.com/](https://tradeally.efficiencynavigator.com/)",
+"websiteUrl": "[https://www.nyseg.com/w/small-business-direct-install](https://www.nyseg.com/w/small-business-direct-install)",
+"sourceUrlsChecked": [
+"[https://www.nyseg.com/w/small-business-direct-install](https://www.nyseg.com/w/small-business-direct-install)",
+"[https://www.nyseg.com/smartenergy/businesssolutions/smallbusiness](https://www.nyseg.com/smartenergy/businesssolutions/smallbusiness)",
+"[https://www.nyseg.com/business-rebates-and-programs](https://www.nyseg.com/business-rebates-and-programs)",
+"[https://www.nyseg.com/documents/40132/5898896/FINAL%2BGSBC001%2BNYSEG%2BRGE%2BSmall%2BBusiness%2BProgram.pdf/7276f14f-220f-44da-d27c-5ede552bcff6?t=1752673731880](https://www.nyseg.com/documents/40132/5898896/FINAL%2BGSBC001%2BNYSEG%2BRGE%2BSmall%2BBusiness%2BProgram.pdf/7276f14f-220f-44da-d27c-5ede552bcff6?t=1752673731880)",
+"[https://programs.dsireusa.org/system/program/detail/4306/nyseg-electric-small-business-lighting-retrofit-program](https://programs.dsireusa.org/system/program/detail/4306/nyseg-electric-small-business-lighting-retrofit-program)"
+],
+"evidenceText": "NYSEG's small business program provides rebates for qualifying lighting and HVAC equipment, and current business catalogs list LED lamps, fixtures, refrigerated case lighting, exterior fixtures, and lighting controls.",
+"reasoningNotes": "The LED lighting retrofit match is supported. Lighting controls are also source-backed, but categories should remain lighting-specific."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:918",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Nationwide for eligible Tribal and Alaska Native applicants, with projects generally located in Indian Country or serving Tribal communities."
+},
+"eligibleApplicantTypes": [
+"federally_recognized_indian_tribe",
+"tribal_entity",
+"alaska_native_regional_corporation",
+"alaska_native_village_corporation",
+"tribal_organization"
+],
+"eligibleSectors": [
+"tribal_government",
+"community_energy",
+"public_sector"
+],
+"eligibleRetrofitCategories": [
+"tribal_energy_project_planning",
+"tribal_energy_infrastructure_deployment",
+"energy_efficiency_assessment"
+],
+"hardRequirements": [
+"Eligibility depends on the currently open DOE Indian Energy funding opportunity or technical assistance pathway.",
+"Competitive awards must satisfy federal FOA requirements, topic areas, deadlines, and Tribal eligibility rules.",
+"Technical assistance requests must be from eligible Tribal or Alaska Native entities."
+],
+"blockers": [
+"No current official source supports a deterministic match to air_sealing_weatherization as a direct retrofit rebate.",
+"Weatherization may appear only as a possible project component under a broader Tribal energy award or assessment."
+],
+"programType": "tribal_energy_grant_and_technical_assistance",
+"administrator": "U.S. Department of Energy Office of Indian Energy Policy and Programs",
+"applicationUrl": "[https://ie-exchange.energy.gov/](https://ie-exchange.energy.gov/)",
+"websiteUrl": "[https://www.energy.gov/indianenergy/current-funding-and-technical-assistance-opportunities](https://www.energy.gov/indianenergy/current-funding-and-technical-assistance-opportunities)",
+"sourceUrlsChecked": [
+"[https://www.energy.gov/indianenergy/current-funding-and-technical-assistance-opportunities](https://www.energy.gov/indianenergy/current-funding-and-technical-assistance-opportunities)",
+"[https://ie-exchange.energy.gov/](https://ie-exchange.energy.gov/)",
+"[https://www.energy.gov/indianenergy/office-indian-energy-policy-and-programs](https://www.energy.gov/indianenergy/office-indian-energy-policy-and-programs)",
+"[https://programs.dsireusa.org/system/program/detail/918/office-of-indian-energy-policy-and-programs-funding-opportunities](https://programs.dsireusa.org/system/program/detail/918/office-of-indian-energy-policy-and-programs-funding-opportunities)"
+],
+"evidenceText": "DOE lists current Indian Energy funding and technical assistance for Tribal energy infrastructure, energy planning, project development, and assessments. Current sources do not describe a standalone weatherization rebate.",
+"reasoningNotes": "This opportunity is broad and FOA-dependent. It should not deterministically match a specific building-envelope retrofit without a current FOA measure list."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3638",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"OG&E Arkansas electric service territory"
+],
+"notes": "The official OG&E business efficiency page also covers Oklahoma; this repair follows the Arkansas target state."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"small_business_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"small_business"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"hvac_tune_up",
+"smart_thermostat",
+"commercial_refrigeration_equipment",
+"commercial_kitchen_equipment",
+"building_controls"
+],
+"hardRequirements": [
+"Customer must be in OG&E's eligible business electric service territory.",
+"Measures must meet current OG&E commercial and industrial efficiency program requirements.",
+"Some measures are delivered through midstream, small business, or direct program channels."
+],
+"blockers": [
+"The matched term fixture refers to lighting fixtures, not plumbing or low-flow water fixtures.",
+"No official source support was found for low_flow_fixture_retrofit or water-conservation measures in this OG&E program.",
+"Do not infer residential appliance or home weatherization eligibility from this commercial and industrial program."
+],
+"programType": "commercial_industrial_efficiency_rebate",
+"administrator": "OG&E",
+"applicationUrl": null,
+"websiteUrl": "[https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency](https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency)",
+"sourceUrlsChecked": [
+"[https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency](https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency)",
+"[https://programs.dsireusa.org/system/program/detail/3638/oge-commercial-energy-efficiency-rebate-programs](https://programs.dsireusa.org/system/program/detail/3638/oge-commercial-energy-efficiency-rebate-programs)"
+],
+"evidenceText": "OG&E describes business efficiency incentives for LED lighting, outdated lighting fixtures, HVAC tune-ups, smart thermostats, refrigeration, kitchen equipment, and building controls. No source-backed water fixture rebate was found.",
+"reasoningNotes": "The original low-flow fixture match is a false positive caused by a generic fixture term in lighting context."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22568",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Oklahoma Municipal Power Authority participating member utilities"
+],
+"notes": "Available to customers of participating OMPA member utilities."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"smart_thermostat_demand_response"
+],
+"hardRequirements": [
+"Customer must be served by a participating OMPA member utility.",
+"Customer must have a qualifying Wi-Fi smart thermostat.",
+"Residence must have a compatible central HVAC or heat pump system.",
+"Customer must allow thermostat adjustments during demand response events, with opt-out allowed."
+],
+"blockers": [
+"Do not generalize this to commercial automated demand response controls.",
+"Customers outside participating OMPA member utilities are not eligible.",
+"Non-thermostat building controls are not source-backed under this program."
+],
+"programType": "residential_demand_response_incentive",
+"administrator": "Oklahoma Municipal Power Authority",
+"applicationUrl": "[https://ompa.virtualpeaker.io/overview/](https://ompa.virtualpeaker.io/overview/)",
+"websiteUrl": "[https://www.ompa.com/turn-down-the-watts/](https://www.ompa.com/turn-down-the-watts/)",
+"sourceUrlsChecked": [
+"[https://www.ompa.com/turn-down-the-watts/](https://www.ompa.com/turn-down-the-watts/)",
+"[https://www.ompa.com/services/rebate-programs/](https://www.ompa.com/services/rebate-programs/)",
+"[https://ompa.virtualpeaker.io/overview/](https://ompa.virtualpeaker.io/overview/)",
+"[https://programs.dsireusa.org/system/program/detail/22568/oklahoma-municipal-power-authority-turn-down-the-watts](https://programs.dsireusa.org/system/program/detail/22568/oklahoma-municipal-power-authority-turn-down-the-watts)"
+],
+"evidenceText": "OMPA describes Turn Down the Watts as an incentive-based demand response program using qualifying Wi-Fi smart thermostats for customers of member utilities.",
+"reasoningNotes": "The demand response concept is correct, but the eligible retrofit category should be narrowed to smart thermostat demand response."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_code_title_hash:OK30F:e57fdd96f549",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Oklahoma Municipal Power Authority participating member utilities"
+],
+"notes": "Rebates are limited to electric customers of OMPA member cities participating in the relevant rebate."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer",
+"subdivision_homebuilder"
+],
+"eligibleSectors": [
+"residential",
+"new_residential_construction"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"attic_ceiling_insulation",
+"electric_heat_pump_hvac",
+"efficient_electric_water_heater"
+],
+"hardRequirements": [
+"Customer must be served by a participating OMPA member city electric utility.",
+"Measure must be one of the current WISE rebate offerings and meet OMPA rebate specifications.",
+"Heat pump rebates may apply to residential customers and qualifying subdivision homebuilders.",
+"Water heater rebates are for participating member city residential electric customers."
+],
+"blockers": [
+"No eligibility outside participating OMPA member utilities.",
+"Do not match non-WISE commercial or industrial measures.",
+"Air sealing support is retained with medium confidence because current official rebate-page evidence is stronger for WISE insulation, heat pump, and water heater measures."
+],
+"programType": "residential_energy_efficiency_rebate",
+"administrator": "Oklahoma Municipal Power Authority",
+"applicationUrl": null,
+"websiteUrl": "[https://www.ompa.com/services/rebate-programs/](https://www.ompa.com/services/rebate-programs/)",
+"sourceUrlsChecked": [
+"[https://www.ompa.com/services/rebate-programs/](https://www.ompa.com/services/rebate-programs/)",
+"[https://www.ompa.com/turn-down-the-watts/](https://www.ompa.com/turn-down-the-watts/)",
+"[https://programs.dsireusa.org/system/program](https://programs.dsireusa.org/system/program)"
+],
+"evidenceText": "OMPA's rebate page describes WISE heat pump, ceiling insulation, and electric water heater rebates for customers of participating member cities. Air sealing appears to be a WISE measure but is less directly visible on the current page.",
+"reasoningNotes": "The air sealing match is plausible but not as directly supported by the currently accessible official rebate page as the other WISE measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22479",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Oncor Electric Delivery service territory"
+],
+"notes": "Commercial facilities must be served by Oncor and participate through approved service providers."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"approved_service_provider"
+],
+"eligibleSectors": [
+"commercial",
+"nonresidential"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system"
+],
+"hardRequirements": [
+"System must be a new photovoltaic installation.",
+"Existing solar arrays are not eligible.",
+"Customer must sign an interconnection agreement.",
+"Incentive-eligible system size is capped at 450 kW DC.",
+"Commercial systems must be less than 75 percent of annual peak demand."
+],
+"blockers": [
+"No source support for solar thermal measures under this program.",
+"Existing PV arrays are excluded.",
+"Projects outside Oncor's service territory are not eligible."
+],
+"programType": "commercial_solar_pv_incentive",
+"administrator": "Oncor Electric Delivery",
+"applicationUrl": null,
+"websiteUrl": "[https://www.oncor.com/content/oncorwww/talot/en/home/get-started/business/commercial-solar.html](https://www.oncor.com/content/oncorwww/talot/en/home/get-started/business/commercial-solar.html)",
+"sourceUrlsChecked": [
+"[https://www.oncor.com/content/oncorwww/talot/en/home/get-started/business/commercial-solar.html](https://www.oncor.com/content/oncorwww/talot/en/home/get-started/business/commercial-solar.html)",
+"[https://www.oncor.com/takealoadofftexas/pages/commercial-solar](https://www.oncor.com/takealoadofftexas/pages/commercial-solar)",
+"[https://programs.dsireusa.org/system/program/detail/22479/oncor-electric-delivery-commercial-solar-program](https://programs.dsireusa.org/system/program/detail/22479/oncor-electric-delivery-commercial-solar-program)"
+],
+"evidenceText": "Oncor states that qualifying commercial customers can receive incentives for new photovoltaic systems through approved service providers, with interconnection, sizing, and annual peak-demand requirements.",
+"reasoningNotes": "The photovoltaic match is supported. Category should be solar PV broadly, not necessarily rooftop-only."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22659",
+"confidence": "high",
+"availabilityStatus": "upcoming",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Oregon NEVI grants target public DC fast charging stations along designated highway corridors and alternative fuel corridors."
+},
+"eligibleApplicantTypes": [
+"private_ev_charging_company",
+"charging_network_operator",
+"site_host",
+"contracted_private_company"
+],
+"eligibleSectors": [
+"transportation",
+"commercial",
+"public_ev_charging"
+],
+"eligibleRetrofitCategories": [
+"dc_fast_ev_charging_station"
+],
+"hardRequirements": [
+"Stations must support public fast charging along Oregon's NEVI-designated corridors.",
+"NEVI stations must generally provide at least four high-power DC fast charging ports.",
+"Grant recipients must provide the required non-federal match.",
+"Future applications depend on ODOT's next grant round."
+],
+"blockers": [
+"Round 2 awards were selected; a third grant opportunity is planned rather than currently open.",
+"Do not match generic private Level 2 workplace or multifamily chargers.",
+"This is a corridor DC fast charging infrastructure grant, not a building retrofit rebate."
+],
+"programType": "nevi_dc_fast_charging_grant",
+"administrator": "Oregon Department of Transportation",
+"applicationUrl": null,
+"websiteUrl": "[https://www.oregon.gov/odot/climate/pages/nevi.aspx](https://www.oregon.gov/odot/climate/pages/nevi.aspx)",
+"sourceUrlsChecked": [
+"[https://www.oregon.gov/odot/climate/pages/nevi.aspx](https://www.oregon.gov/odot/climate/pages/nevi.aspx)",
+"[https://programs.dsireusa.org/system/program/detail/22659/oregon-national-electric-vehicle-infrastructure-nevi-formula-grant-program](https://programs.dsireusa.org/system/program/detail/22659/oregon-national-electric-vehicle-infrastructure-nevi-formula-grant-program)"
+],
+"evidenceText": "ODOT states that Oregon NEVI funds public DC fast charging stations along major corridors. Round 2 selections have been made and another grant opportunity is planned for summer 2026.",
+"reasoningNotes": "EV charging is supported, but it must be narrowed to public corridor DC fast charging rather than generic charger installation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2867",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"FL"
+],
+"counties": [],
+"cities": [
+"Orlando"
+],
+"utilityTerritories": [
+"Orlando Utilities Commission electric service territory"
+],
+"notes": "Available to OUC electric customers; water-only customers are excluded."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"solar_water_heating_system"
+],
+"hardRequirements": [
+"Customer must be an OUC electric customer.",
+"Solar thermal water heater must be FSEC or SRCC certified.",
+"Invoice must be submitted within six months of installation.",
+"Rebate is up to 100 percent of cost, capped at $900."
+],
+"blockers": [
+"Water-only OUC customers are not eligible.",
+"Pool heating systems are not eligible.",
+"This program is for solar thermal water heating, not solar PV."
+],
+"programType": "solar_thermal_water_heater_rebate",
+"administrator": "Orlando Utilities Commission",
+"applicationUrl": null,
+"websiteUrl": "[https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/](https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/)",
+"sourceUrlsChecked": [
+"[https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/](https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/)",
+"[https://programs.dsireusa.org/system/program/detail/2867/orlando-utilities-commission-solar-programs](https://programs.dsireusa.org/system/program/detail/2867/orlando-utilities-commission-solar-programs)"
+],
+"evidenceText": "OUC offers up to $900 for qualifying solar thermal water heaters for OUC electric customers. The current page requires FSEC or SRCC certification and excludes water-only customers and pool heating.",
+"reasoningNotes": "The original solar thermal water heater match is source-backed and should be preserved."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2287",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"HI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Applies to Hawaii county agencies that issue construction, building, or development permits."
+},
+"eligibleApplicantTypes": [
+"private_developer",
+"building_owner",
+"permit_applicant"
+],
+"eligibleSectors": [
+"commercial",
+"residential_development",
+"mixed_use_development"
+],
+"eligibleRetrofitCategories": [
+"leed_certification",
+"green_building_certification"
+],
+"hardRequirements": [
+"Project must require a county construction, building, or development permit.",
+"Project must incorporate qualifying energy and environmental design building standards.",
+"Qualifying standards include LEED Silver, two Green Globes, or comparable state-approved nationally recognized guidelines."
+],
+"blockers": [
+"This is priority permit processing, not a grant, rebate, tax credit, or physical retrofit measure.",
+"Priority processing does not mean automatic permit approval.",
+"Do not match to individual retrofit categories merely because they could contribute to LEED certification."
+],
+"programType": "green_building_permit_priority",
+"administrator": "Hawaii counties under Hawaii Revised Statutes section 46-19.6",
+"applicationUrl": null,
+"websiteUrl": "[https://data.capitol.hawaii.gov/sessions/session2017/HRS-Chapter-PDF%27s/HRS_0046.pdf](https://data.capitol.hawaii.gov/sessions/session2017/HRS-Chapter-PDF%27s/HRS_0046.pdf)",
+"sourceUrlsChecked": [
+"[https://data.capitol.hawaii.gov/sessions/session2017/HRS-Chapter-PDF%27s/HRS_0046.pdf](https://data.capitol.hawaii.gov/sessions/session2017/HRS-Chapter-PDF%27s/HRS_0046.pdf)",
+"[https://law.justia.com/codes/hawaii/title-6/chapter-46/section-46-19-6/](https://law.justia.com/codes/hawaii/title-6/chapter-46/section-46-19-6/)",
+"[https://codes.findlaw.com/hi/division-1-government/hi-rev-st-sect-46-19-6/](https://codes.findlaw.com/hi/division-1-government/hi-rev-st-sect-46-19-6/)",
+"[https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings](https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings)"
+],
+"evidenceText": "Hawaii law requires counties to establish priority permit processing for private projects incorporating green building standards such as LEED Silver, two Green Globes, or comparable approved standards.",
+"reasoningNotes": "The LEED-related match is supported as a nonphysical certification/compliance category. Confidence is medium because county implementation pages were not separately verified."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3036",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"NC"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide North Carolina property tax exclusion administered through local property tax assessment processes."
+},
+"eligibleApplicantTypes": [
+"property_owner",
+"taxpayer",
+"solar_electric_system_owner"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system"
+],
+"hardRequirements": [
+"System must be a solar energy electric system used directly and exclusively for converting solar energy to electricity.",
+"Exclusion applies to 80 percent of appraised value.",
+"Taxpayer must follow county assessor and North Carolina Department of Revenue property tax exemption procedures."
+],
+"blockers": [
+"This is a property tax exclusion, not a rebate.",
+"Solar thermal heating or cooling systems are not supported by the cited solar electric system provision.",
+"Only the statutory 80 percent exclusion is supported."
+],
+"programType": "property_tax_exclusion",
+"administrator": "North Carolina Department of Revenue",
+"applicationUrl": "[https://www.ncdor.gov/taxes-forms/property-tax/property-tax-forms/av-10-application-property-tax-exemption-or-exclusion](https://www.ncdor.gov/taxes-forms/property-tax/property-tax-forms/av-10-application-property-tax-exemption-or-exclusion)",
+"websiteUrl": "[https://www.ncleg.net/enactedlegislation/statutes/html/bysection/chapter_105/gs_105-275.html](https://www.ncleg.net/enactedlegislation/statutes/html/bysection/chapter_105/gs_105-275.html)",
+"sourceUrlsChecked": [
+"[https://www.ncleg.net/enactedlegislation/statutes/html/bysection/chapter_105/gs_105-275.html](https://www.ncleg.net/enactedlegislation/statutes/html/bysection/chapter_105/gs_105-275.html)",
+"[https://www.ncdor.gov/taxes-forms/property-tax/property-tax-forms/av-10-application-property-tax-exemption-or-exclusion](https://www.ncdor.gov/taxes-forms/property-tax/property-tax-forms/av-10-application-property-tax-exemption-or-exclusion)",
+"[https://www.ncdor.gov/documents/bulletins/solar-energy-electric-systems-memorandum-2011/open](https://www.ncdor.gov/documents/bulletins/solar-energy-electric-systems-memorandum-2011/open)",
+"[https://programs.dsireusa.org/system/program/detail/3036/property-tax-abatement-for-solar-electric-systems](https://programs.dsireusa.org/system/program/detail/3036/property-tax-abatement-for-solar-electric-systems)"
+],
+"evidenceText": "North Carolina law excludes 80 percent of the appraised value of a solar energy electric system used directly and exclusively to convert solar energy to electricity.",
+"reasoningNotes": "The photovoltaic match is supported but should be categorized as solar electric or PV, not rooftop-only."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4946",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"NE"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Nebraska tax treatment for qualifying renewable energy generation facilities."
+},
+"eligibleApplicantTypes": [
+"renewable_energy_generation_facility_owner",
+"renewable_energy_generation_facility_operator",
+"independent_power_producer"
+],
+"eligibleSectors": [
+"utility",
+"commercial",
+"industrial",
+"independent_power_producer"
+],
+"eligibleRetrofitCategories": [
+"biomass_electric_generation",
+"landfill_gas_electric_generation",
+"wind_energy_generation",
+"solar_pv_generation"
+],
+"hardRequirements": [
+"Facility must be a renewable energy generation facility subject to Nebraska nameplate capacity tax.",
+"Qualifying generation sources include wind, solar, biomass, and landfill gas.",
+"Solar, biomass, and landfill gas facilities generally must meet nameplate capacity and installation-date requirements described by Nebraska Revenue."
+],
+"blockers": [
+"This is not a rebate or grant.",
+"Do not match ordinary biomass heating, boilers, or building fuel systems unless they are part of a qualifying electric generation facility.",
+"Real property treatment may differ from depreciable tangible personal property used directly for generation."
+],
+"programType": "renewable_generation_property_tax_exemption",
+"administrator": "Nebraska Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://revenue.nebraska.gov/PAD/nameplate-capacity-tax](https://revenue.nebraska.gov/PAD/nameplate-capacity-tax)",
+"sourceUrlsChecked": [
+"[https://revenue.nebraska.gov/PAD/nameplate-capacity-tax](https://revenue.nebraska.gov/PAD/nameplate-capacity-tax)",
+"[https://revenue.nebraska.gov/about/frequently-asked-questions/nebraska-property-assessment-faqs](https://revenue.nebraska.gov/about/frequently-asked-questions/nebraska-property-assessment-faqs)",
+"[https://nebraskalegislature.gov/laws/statutes.php?statute=77-6203](https://nebraskalegislature.gov/laws/statutes.php?statute=77-6203)",
+"[https://revenue.nebraska.gov/sites/default/files/doc/pad/legal/dir24-3.pdf](https://revenue.nebraska.gov/sites/default/files/doc/pad/legal/dir24-3.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/4946/property-tax-exemption-for-renewable-energy-generation-facilities](https://programs.dsireusa.org/system/program/detail/4946/property-tax-exemption-for-renewable-energy-generation-facilities)"
+],
+"evidenceText": "Nebraska Revenue describes nameplate capacity tax for renewable generation facilities and lists wind, solar, biomass, and landfill gas as covered sources replacing certain personal property taxation.",
+"reasoningNotes": "The biomass match is source-backed only for renewable electric generation facilities, not general building-level biomass equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2786",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"ID"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Idaho tax treatment for operating property of qualifying energy producers."
+},
+"eligibleApplicantTypes": [
+"wind_energy_producer",
+"solar_energy_producer",
+"geothermal_energy_producer",
+"operating_property_owner"
+],
+"eligibleSectors": [
+"utility",
+"commercial",
+"independent_power_producer"
+],
+"eligibleRetrofitCategories": [
+"geothermal_electric_generation",
+"wind_energy_generation",
+"solar_pv_generation"
+],
+"hardRequirements": [
+"Property must be qualifying operating property of a wind, solar, or geothermal energy producer.",
+"Tax treatment is under Idaho's operating property and gross earnings tax framework.",
+"Operator statements and filings must follow Idaho State Tax Commission requirements."
+],
+"blockers": [
+"No source support for ground_source_geothermal_heat_pump as a building HVAC retrofit.",
+"This is tax treatment for energy producers, not a residential or commercial heat pump rebate.",
+"Do not match ordinary building geothermal heat pumps to this opportunity."
+],
+"programType": "energy_producer_property_tax_exemption",
+"administrator": "Idaho State Tax Commission",
+"applicationUrl": "[https://tax.idaho.gov/taxes/property/operating-property/forms/](https://tax.idaho.gov/taxes/property/operating-property/forms/)",
+"websiteUrl": "[https://tax.idaho.gov/search-category/property-tax/operating-property/](https://tax.idaho.gov/search-category/property-tax/operating-property/)",
+"sourceUrlsChecked": [
+"[https://tax.idaho.gov/search-category/property-tax/operating-property/](https://tax.idaho.gov/search-category/property-tax/operating-property/)",
+"[https://tax.idaho.gov/taxes/property/operating-property/forms/](https://tax.idaho.gov/taxes/property/operating-property/forms/)",
+"[https://law.justia.com/codes/idaho/title-63/chapter-35/section-63-3502b/](https://law.justia.com/codes/idaho/title-63/chapter-35/section-63-3502b/)",
+"[https://programs.dsireusa.org/system/program/detail/2786/property-tax-exemption-for-wind-solar-and-geothermal-energy-producers](https://programs.dsireusa.org/system/program/detail/2786/property-tax-exemption-for-wind-solar-and-geothermal-energy-producers)"
+],
+"evidenceText": "Idaho State Tax Commission operating-property materials cover wind, solar, and geothermal energy producers, including operator statement forms. The statute imposes producer tax treatment in lieu of property tax.",
+"reasoningNotes": "The geothermal term refers to energy production, not ground-source heat pumps. The prior heat pump match is a false positive."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2844",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"PR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Commonwealth of Puerto Rico tax exemption for qualifying bona fide farmers."
+},
+"eligibleApplicantTypes": [
+"bona_fide_farmer",
+"agricultural_business"
+],
+"eligibleSectors": [
+"agriculture"
+],
+"eligibleRetrofitCategories": [
+"renewable_powered_agricultural_equipment"
+],
+"hardRequirements": [
+"Applicant must qualify as a bona fide farmer or qualifying agricultural business.",
+"Equipment must be for agricultural use and meet the applicable Puerto Rico exemption certificate requirements.",
+"Eligible equipment must depend solely on solar, wind, hydraulic, or other non-petroleum power under the referenced program description."
+],
+"blockers": [
+"No current source support for a general solar_water_heating_system match.",
+"Program is farmer and agricultural-equipment specific, not a residential or commercial solar thermal rebate.",
+"Nonfarm purchases are not eligible."
+],
+"programType": "agricultural_excise_tax_exemption",
+"administrator": "Puerto Rico Department of Treasury",
+"applicationUrl": "[https://hacienda.pr.gov/downloads/pdf/formularios/AS%202916.1.pdf](https://hacienda.pr.gov/downloads/pdf/formularios/AS%202916.1.pdf)",
+"websiteUrl": "[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf)",
+"sourceUrlsChecked": [
+"[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf)",
+"[https://hacienda.pr.gov/downloads/pdf/formularios/AS%202916.1.pdf](https://hacienda.pr.gov/downloads/pdf/formularios/AS%202916.1.pdf)",
+"[https://law.justia.com/codes/puerto-rico/title-thirteen/subtitle-15/part-iii/chapter-941/10405/](https://law.justia.com/codes/puerto-rico/title-thirteen/subtitle-15/part-iii/chapter-941/10405/)",
+"[https://programs.dsireusa.org/system/program/detail/2844/puerto-rico-excise-tax-exemption-for-farmers](https://programs.dsireusa.org/system/program/detail/2844/puerto-rico-excise-tax-exemption-for-farmers)"
+],
+"evidenceText": "The farmer exemption is tied to bona fide farmer status and agricultural equipment using solar, wind, hydraulic, or other non-petroleum power. It is not a general solar water heater incentive.",
+"reasoningNotes": "Official Act 60 and Hacienda materials support agricultural tax-exemption context; older program scope is clearer in DSIRE and statutory summaries, so confidence is medium."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:310",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"PR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Puerto Rico industrial and green-energy tax incentives are available only to qualifying exempt businesses."
+},
+"eligibleApplicantTypes": [
+"exempt_business",
+"industrial_business",
+"green_energy_business",
+"certified_electric_power_company"
+],
+"eligibleSectors": [
+"industrial",
+"manufacturing",
+"green_energy"
+],
+"eligibleRetrofitCategories": [
+"renewable_biomass_energy_generation",
+"green_energy_business_tax_incentive"
+],
+"hardRequirements": [
+"Business must qualify for Puerto Rico industrial or green energy incentives under Act 60 or successor decree requirements.",
+"Renewable energy activity must fall within covered green energy definitions and eligible-business rules.",
+"Certified electric power company status may be required where applicable."
+],
+"blockers": [
+"This is not a general biomass boiler, biogas digester, or building retrofit rebate.",
+"Tax incentives apply only to qualifying businesses with required decrees or certifications.",
+"Do not match ordinary residential or commercial biomass equipment."
+],
+"programType": "industry_and_green_energy_tax_incentive",
+"administrator": "Puerto Rico economic incentives authorities",
+"applicationUrl": null,
+"websiteUrl": "[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf)",
+"sourceUrlsChecked": [
+"[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/60-2019.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/310/puerto-rico-industry-tax-incentives](https://programs.dsireusa.org/system/program/detail/310/puerto-rico-industry-tax-incentives)"
+],
+"evidenceText": "Puerto Rico Act 60 includes green-energy definitions such as renewable biomass and provides tax incentives for qualifying exempt businesses, not general equipment rebates.",
+"reasoningNotes": "Biomass is source-backed only within Puerto Rico's exempt-business and green-energy tax framework. Confidence is medium because the DSIRE legacy opportunity is broad and consolidated under Act 60."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3182",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"PR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Commonwealth-wide Puerto Rico sales and use tax treatment for qualifying solar electric equipment."
+},
+"eligibleApplicantTypes": [
+"solar_electric_equipment_purchaser",
+"dealer",
+"manufacturer",
+"taxpayer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_equipment",
+"solar_pv_system"
+],
+"hardRequirements": [
+"Equipment must be solar electric equipment used to produce electric power.",
+"Exemption may include necessary parts and accessories for the solar electric equipment.",
+"Dealers or manufacturers must meet certification, standards, specifications, and guarantee requirements established by the responsible energy authority."
+],
+"blockers": [
+"No source support for solar_water_heating_system under the current solar electric exemption.",
+"Do not match solar thermal water heating unless a separate current source verifies it.",
+"Non-electric solar equipment is outside the verified scope."
+],
+"programType": "sales_and_use_tax_exemption",
+"administrator": "Puerto Rico Energy Affairs Administration and Department of Treasury",
+"applicationUrl": null,
+"websiteUrl": "[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/83-2010.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/83-2010.pdf)",
+"sourceUrlsChecked": [
+"[https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/83-2010.pdf](https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/83-2010.pdf)",
+"[https://law.justia.com/codes/puerto-rico/title-thirteen/subtitle-17/part-v/chapter-1043/32067/](https://law.justia.com/codes/puerto-rico/title-thirteen/subtitle-17/part-v/chapter-1043/32067/)",
+"[https://hacienda.pr.gov/sites/default/files/prter25_12-3-24_js3_eb3_final_version.1_12.06.2024_rev_acp_june.pdf](https://hacienda.pr.gov/sites/default/files/prter25_12-3-24_js3_eb3_final_version.1_12.06.2024_rev_acp_june.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/3182/puerto-rico-sales-and-use-tax-exemption-for-solar-equipment](https://programs.dsireusa.org/system/program/detail/3182/puerto-rico-sales-and-use-tax-exemption-for-solar-equipment)"
+],
+"evidenceText": "Puerto Rico sources describe a sales and use tax exemption for solar electric equipment used to produce electric power, including necessary parts and accessories.",
+"reasoningNotes": "The original solar thermal water heater match is not supported. Repair to solar electric or PV equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4217",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"OH"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Ohio property tax exemption for small qualified energy projects."
+},
+"eligibleApplicantTypes": [
+"project_owner",
+"property_owner",
+"lessee",
+"renewable_energy_system_owner"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural",
+"utility"
+],
+"eligibleRetrofitCategories": [
+"small_wind_turbine",
+"small_solar_pv_system",
+"small_hydrothermal_energy_system"
+],
+"hardRequirements": [
+"Energy facility must have aggregate nameplate capacity of 250 kW or less.",
+"Construction or installation must have been completed on or after January 1, 2010.",
+"Exemption for small projects is a matter of law under Ohio Revised Code section 5709.53.",
+"Larger qualified energy projects follow a separate certification and payment-in-lieu-of-tax process."
+],
+"blockers": [
+"This is a property tax exemption, not a rebate.",
+"Do not match projects over 250 kW to this small-project record.",
+"Do not infer unrelated building efficiency retrofits."
+],
+"programType": "property_tax_exemption",
+"administrator": "Ohio Department of Development",
+"applicationUrl": null,
+"websiteUrl": "[https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption](https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption)",
+"sourceUrlsChecked": [
+"[https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption](https://development.ohio.gov/business/state-incentives/qualified-energy-project-tax-exemption)",
+"[https://codes.ohio.gov/ohio-revised-code/section-5709.53](https://codes.ohio.gov/ohio-revised-code/section-5709.53)",
+"[https://codes.ohio.gov/ohio-revised-code/section-5727.75](https://codes.ohio.gov/ohio-revised-code/section-5727.75)",
+"[https://programs.dsireusa.org/system/program/detail/4217/qualified-energy-property-tax-exemption-for-projects-250-kw-or-less](https://programs.dsireusa.org/system/program/detail/4217/qualified-energy-property-tax-exemption-for-projects-250-kw-or-less)"
+],
+"evidenceText": "Ohio Development states that projects under 250 kW are exempt as a matter of law. Ohio law covers small energy facilities, including solar, wind, and hydrothermal systems.",
+"reasoningNotes": "The wind turbine match is supported, but the record is a tax exemption for small energy facilities rather than a wind-only rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4605",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [
+"Reading",
+"North Reading",
+"Wilmington",
+"Lynnfield Center"
+],
+"utilityTerritories": [
+"Reading Municipal Light Department service territory"
+],
+"notes": "RMLD serves Reading, North Reading, Wilmington, and Lynnfield Center."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"small_commercial_customer",
+"customer_of_record"
+],
+"eligibleSectors": [
+"residential",
+"small_commercial"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system"
+],
+"hardRequirements": [
+"System must be grid-connected solar installed at a qualifying RMLD customer home or business.",
+"Residential and small commercial rebate is limited to systems up to 20 kW DC.",
+"Interconnection approval is required before installation.",
+"Application must be submitted within 180 days of final wiring inspection.",
+"Customer must assign 100 percent of renewable energy credits to RMLD."
+],
+"blockers": [
+"Third-party owned systems and systems installed for resale are not eligible.",
+"Systems over 20 kW fall under a separate commercial solar rebate pathway.",
+"Do not match solar thermal or non-PV renewable systems."
+],
+"programType": "residential_small_commercial_solar_pv_rebate",
+"administrator": "Reading Municipal Light Department",
+"applicationUrl": null,
+"websiteUrl": "[https://www.rmld.com/189/Residential-Small-Commercial-Solar-Rebat](https://www.rmld.com/189/Residential-Small-Commercial-Solar-Rebat)",
+"sourceUrlsChecked": [
+"[https://www.rmld.com/189/Residential-Small-Commercial-Solar-Rebat](https://www.rmld.com/189/Residential-Small-Commercial-Solar-Rebat)",
+"[https://www.rmld.com/194/Commercial-Solar-Rebate-20-kW](https://www.rmld.com/194/Commercial-Solar-Rebate-20-kW)",
+"[https://www.rmld.com/158/Mission-History-Supply](https://www.rmld.com/158/Mission-History-Supply)",
+"[https://programs.dsireusa.org/system/program/detail/4605/reading-municipal-light-department-residential-and-small-commercial-solar-rebate-program](https://programs.dsireusa.org/system/program/detail/4605/reading-municipal-light-department-residential-and-small-commercial-solar-rebate-program)"
+],
+"evidenceText": "RMLD offers residential and small commercial customers rebates for grid-connected solar PV systems up to 20 kW DC, with interconnection approval and application timing requirements.",
+"reasoningNotes": "The photovoltaic match is supported. Use a general solar PV category rather than requiring rooftop installation."
+},
+{
+"opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Southern California Edison service territory"
+],
+"notes": "Available through SCE's commercial vehicle retrofit rebate pathway."
+},
+"eligibleApplicantTypes": [
+"commercial_vehicle_owner",
+"fleet_owner",
+"participating_retailer"
+],
+"eligibleSectors": [
+"commercial_transportation",
+"fleet"
+],
+"eligibleRetrofitCategories": [
+"commercial_vehicle_electric_retrofit"
+],
+"hardRequirements": [
+"Vehicle must be an eligible existing Class 4, Class 5, or Class 6 internal-combustion commercial vehicle.",
+"Retrofit must convert the vehicle to battery-electric operation.",
+"Customer must use approved retrofitters, conversion kits, or participating retailers as required by the program.",
+"Rebate amount depends on battery capacity and vehicle-to-grid capability."
+],
+"blockers": [
+"This is not an EV charger installation incentive.",
+"Charging infrastructure belongs to separate SCE EV infrastructure programs such as Charge Ready.",
+"Do not match passenger vehicles or non-Class 4 through 6 vehicles unless program documents are updated."
+],
+"programType": "commercial_vehicle_electric_retrofit_rebate",
+"administrator": "Southern California Edison",
+"applicationUrl": "[https://commercialevrebates.sce.com/consumer/recharge](https://commercialevrebates.sce.com/consumer/recharge)",
+"websiteUrl": "[https://www.sce.com/business/smart-energy-solar/evs-for-business](https://www.sce.com/business/smart-energy-solar/evs-for-business)",
+"sourceUrlsChecked": [
+"[https://www.sce.com/business/smart-energy-solar/evs-for-business](https://www.sce.com/business/smart-energy-solar/evs-for-business)",
+"[https://commercialevrebates.sce.com/consumer/recharge](https://commercialevrebates.sce.com/consumer/recharge)",
+"[https://commercialevrebates.sce.com/consumer/pdf/SCE_ReCharge_QUICK_Claim_Submission_Checklist.pdf](https://commercialevrebates.sce.com/consumer/pdf/SCE_ReCharge_QUICK_Claim_Submission_Checklist.pdf)",
+"[https://commercialevrebates.sce.com/consumer/pdf/SCE_ReCharge_JobAid.pdf](https://commercialevrebates.sce.com/consumer/pdf/SCE_ReCharge_JobAid.pdf)"
+],
+"evidenceText": "SCE describes ReCharge as a rebate for converting existing Class 4 through 6 commercial vehicles from internal combustion to battery-electric operation. It is not an EV charger rebate.",
+"reasoningNotes": "The original EV charger installation match is a false positive. The correct retrofit category is commercial vehicle electric conversion."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:22419"
+}

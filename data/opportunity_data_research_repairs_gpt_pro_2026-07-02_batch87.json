@@ -1,0 +1,1139 @@
+{
+  "schemaVersion": "opportunity_data_research_repairs.v1",
+  "researchedAt": "2026-07-02",
+  "source": "gpt_pro",
+  "batchNotes": [
+    "Normalized by scripts/intake-opportunity-data-research-repairs.mjs before validation."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3728",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MA"
+        ],
+        "counties": [],
+        "cities": [
+          "Concord"
+        ],
+        "utilityTerritories": [
+          "Concord Municipal Light Plant"
+        ],
+        "notes": "Available to eligible CMLP electric service addresses in Concord, Massachusetts."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_customer",
+        "commercial_electric_customer",
+        "property_owner",
+        "electric_account_holder"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system"
+      ],
+      "hardRequirements": [
+        "Applicant must be a CMLP customer at an eligible service address.",
+        "Project must be a solar photovoltaic system and must follow CMLP interconnection and rebate documentation requirements.",
+        "Rebate is paid after permission to operate and required documentation is complete.",
+        "Residential systems are eligible up to 167 kW AC.",
+        "Rebate is capped at the lesser of stated dollar cap or eligible system cost limits."
+      ],
+      "blockers": [
+        "Projects outside CMLP service territory are not eligible.",
+        "Battery storage alone is not supported by this opportunity.",
+        "Solar thermal or non-PV renewable systems are not supported.",
+        "Large or medium PV systems may face utility storage or distribution constraints."
+      ],
+      "programType": "Rebate",
+      "administrator": "Concord Municipal Light Plant",
+      "applicationUrl": null,
+      "websiteUrl": "https://concordma.gov/2029/Solar-Panels",
+      "sourceUrlsChecked": [
+        "https://concordma.gov/2029/Solar-Panels",
+        "https://programs.dsireusa.org/system/program/detail/3728/concord-municipal-light-plant-solar-photovoltaic-rebate-program"
+      ],
+      "evidenceText": "CMLP states its Solar PV Rebate is available for residential and commercial solar photovoltaic installations, with a per-kW rebate and a service-address cap.",
+      "reasoningNotes": "The deterministic match to solar PV is source-backed. The category should remain solar photovoltaic systems, not broader renewable energy or storage."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22163",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CT"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Connecticut clean vehicle rebate program."
+      },
+      "eligibleApplicantTypes": [
+        "connecticut_resident",
+        "income_qualified_resident",
+        "licensed_connecticut_dealer",
+        "eligible_original_equipment_manufacturer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_vehicle_purchase",
+        "plug_in_hybrid_vehicle_purchase"
+      ],
+      "hardRequirements": [
+        "Vehicle must be an eligible new or used battery electric or plug-in hybrid electric vehicle.",
+        "Applicant must meet Connecticut residency and program eligibility requirements.",
+        "Vehicle purchase or lease must be processed through an eligible dealer or manufacturer process.",
+        "Vehicle must satisfy program price, eligibility, and documentation requirements.",
+        "Rebate Plus incentives require additional income or participation eligibility."
+      ],
+      "blockers": [
+        "Stationary fuel cell systems are not eligible under this vehicle rebate.",
+        "Hydrogen fueling or EV charger installation is not part of this opportunity.",
+        "A generic fuel cell system retrofit match is a false positive.",
+        "Commercial building or renewable generation projects are outside the program scope."
+      ],
+      "programType": "Rebate",
+      "administrator": "Connecticut Department of Energy and Environmental Protection",
+      "applicationUrl": "https://apply.drivecheapr-ct.org/",
+      "websiteUrl": "https://portal.ct.gov/DEEP/Air/Mobile-Sources/CHEAPR/CHEAPR---Home",
+      "sourceUrlsChecked": [
+        "https://portal.ct.gov/DEEP/Air/Mobile-Sources/CHEAPR/CHEAPR---Home",
+        "https://apply.drivecheapr-ct.org/",
+        "https://programs.dsireusa.org/system/program/detail/22163/connecticut-hydrogen-and-electric-automobile-purchase-rebate-cheapr"
+      ],
+      "evidenceText": "CHEAPR provides rebates for eligible new and used battery electric and plug-in hybrid electric vehicles purchased or leased by Connecticut residents.",
+      "reasoningNotes": "The source-backed opportunity is a clean vehicle purchase rebate. The supplied match to a stationary fuel_cell_system is unsupported and should be blocked."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2794",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [],
+        "cities": [
+          "San Antonio"
+        ],
+        "utilityTerritories": [
+          "CPS Energy"
+        ],
+        "notes": "Available to qualifying CPS Energy service customers under the commercial solar rebate tier."
+      },
+      "eligibleApplicantTypes": [
+        "small_business_customer",
+        "school",
+        "nonprofit_organization",
+        "commercial_electric_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "education",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible CPS Energy customer.",
+        "Commercial small business systems are limited to less than 100 kW AC under the cited tier.",
+        "Project must meet CPS Energy solar PV rebate terms and documentation requirements.",
+        "Rebate amount is calculated by installed AC wattage and is subject to a project cap.",
+        "Funds and program guidelines are subject to change."
+      ],
+      "blockers": [
+        "This commercial tier is not evidence for a residential solar PV match.",
+        "Battery storage alone is not supported by this opportunity.",
+        "Solar thermal or non-PV renewable equipment is not eligible.",
+        "Projects outside CPS Energy service territory are not eligible."
+      ],
+      "programType": "Rebate",
+      "administrator": "CPS Energy",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.cpsenergy.com/en/my-home/savenow/solar-photovoltaic-rebate/comm-solar-rebate-incentive-tiers.html",
+      "sourceUrlsChecked": [
+        "https://www.cpsenergy.com/en/my-home/savenow/solar-photovoltaic-rebate/comm-solar-rebate-incentive-tiers.html",
+        "https://programs.dsireusa.org/system/program/detail/2794/cps-energy-solar-pv-rebate-program"
+      ],
+      "evidenceText": "CPS Energy lists solar photovoltaic rebate tiers for small businesses, schools, and nonprofits, with incentives based on installed AC wattage.",
+      "reasoningNotes": "The deterministic solar PV match is correct, but should be limited to eligible CPS Energy commercial, school, and nonprofit applicants for the cited page."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:709",
+      "confidence": "low",
+      "availabilityStatus": "source_inaccessible",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OR"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Portland General Electric",
+          "Pacific Power",
+          "NW Natural",
+          "Cascade Natural Gas",
+          "Avista"
+        ],
+        "notes": "Energy Trust service territory is utility-limited; current official program page could not be read well enough to verify current custom renewable project eligibility."
+      },
+      "eligibleApplicantTypes": [],
+      "eligibleSectors": [],
+      "eligibleRetrofitCategories": [],
+      "hardRequirements": [
+        "Current official eligibility, technology list, and application status could not be verified from an accessible official program source."
+      ],
+      "blockers": [
+        "The supplied ground_source_geothermal_heat_pump match is not source-backed.",
+        "Older and secondary descriptions indicate custom renewable generation, not HVAC geothermal heat pumps.",
+        "Do not match this opportunity to general HVAC, ground-source heat pumps, or weatherization.",
+        "Do not infer current eligibility from DSIRE alone."
+      ],
+      "programType": "Grant",
+      "administrator": "Energy Trust of Oregon",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.energytrust.org/renewable-energy/",
+      "sourceUrlsChecked": [
+        "https://www.energytrust.org/renewable-energy/",
+        "https://programs.dsireusa.org/system/program/detail/709/custom-renewable-energy-projects",
+        "https://blog.energytrust.org/oregon-tech-first-in-the-nation-to-power-campus-with-onsite-renewable-energy/",
+        "https://oregoncounties.org/energy-trust-helps-counties-thrive-with-energy-efficiency-renewable-energy-projects/"
+      ],
+      "evidenceText": "Accessible sources did not verify a current official custom renewable eligibility list; available descriptions point to renewable generation rather than geothermal heat pumps.",
+      "reasoningNotes": "Because the current official Energy Trust page was inaccessible and the matched retrofit is unsupported, clear categories until an accessible current program manual or application confirms eligibility."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22793",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Maryland statewide public school program for local education agencies."
+      },
+      "eligibleApplicantTypes": [
+        "local_education_agency",
+        "public_school_district"
+      ],
+      "eligibleSectors": [
+        "k12_public_school",
+        "education",
+        "government"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_management_planning",
+        "energy_efficiency_upgrades",
+        "school_solar_pv",
+        "net_zero_energy_school_design"
+      ],
+      "hardRequirements": [
+        "Applicant must be a Maryland local education agency or eligible public school entity.",
+        "Eligible work must align with program areas for capacity building, energy efficiency, solar on schools, or net-zero energy schools.",
+        "Program awards and application rounds are subject to Maryland Energy Administration funding-cycle rules."
+      ],
+      "blockers": [
+        "FY2026 program information states the program is closed.",
+        "A later commercial and community buildings request for information is a separate effort.",
+        "The term energy management refers to capacity, data, planning, and efficiency work, not a generic physical energy management system rebate.",
+        "Private commercial, residential, and non-school projects are not eligible."
+      ],
+      "programType": "Grant",
+      "administrator": "Maryland Energy Administration and Interagency Commission on School Construction",
+      "applicationUrl": null,
+      "websiteUrl": "https://energy.maryland.gov/Pages/SchoolDecarbonization.aspx",
+      "sourceUrlsChecked": [
+        "https://energy.maryland.gov/Pages/SchoolDecarbonization.aspx",
+        "https://programs.dsireusa.org/system/program/detail/22793/decarbonizing-public-schools-program"
+      ],
+      "evidenceText": "Maryland describes program areas for public school energy management capacity, energy efficiency, solar on schools, and net-zero energy schools; the FY2026 program is closed.",
+      "reasoningNotes": "The supplied energy_management_system match is too broad and physical-equipment oriented. The source supports planning/capacity and defined school decarbonization project areas."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22165",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "DE"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Statewide Delaware clean transportation rebate program."
+      },
+      "eligibleApplicantTypes": [
+        "delaware_resident",
+        "delaware_business",
+        "participating_dealer"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_vehicle_purchase",
+        "plug_in_hybrid_vehicle_purchase"
+      ],
+      "hardRequirements": [
+        "Vehicle must be an eligible battery electric or plug-in hybrid electric vehicle.",
+        "Purchase or lease must meet Delaware program timing and documentation requirements.",
+        "Lease terms must satisfy the minimum program term requirement.",
+        "Applicant must meet Delaware residency or business eligibility requirements.",
+        "Applications must be submitted through the approved dealer or rebate portal process."
+      ],
+      "blockers": [
+        "EV charger installation is a separate type of measure and is not supported by this vehicle rebate.",
+        "Building retrofits are outside the program scope.",
+        "Natural gas, propane, or conventional vehicles are not eligible under the current clean vehicle rebate.",
+        "Do not match this to stationary battery or renewable energy systems."
+      ],
+      "programType": "Rebate",
+      "administrator": "Delaware Department of Natural Resources and Environmental Control",
+      "applicationUrl": "https://driveelectricdelaware.org/",
+      "websiteUrl": "https://dnrec.delaware.gov/climate-coastal-energy/clean-transportation/vehicle-rebates/",
+      "sourceUrlsChecked": [
+        "https://dnrec.delaware.gov/climate-coastal-energy/clean-transportation/vehicle-rebates/",
+        "https://driveelectricdelaware.org/",
+        "https://programs.dsireusa.org/system/program/detail/22165/delaware-clean-vehicle-rebate-program"
+      ],
+      "evidenceText": "Delaware offers rebates to residents and businesses for eligible new battery electric and plug-in hybrid vehicles, plus used eligible vehicles for residents.",
+      "reasoningNotes": "The electric_vehicle_purchase match is accurate but is not a building retrofit. Keep it as a transportation purchase category and block charger or building matches."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Delta-Montrose Electric Association"
+        ],
+        "notes": "Available to qualifying DMEA residential members; free weatherization is income-limited through partner agencies."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_member",
+        "low_income_residential_member"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "low_income_residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "weatherization",
+        "insulation",
+        "duct_sealing",
+        "lighting_upgrade",
+        "appliance_replacement",
+        "furnace_replacement"
+      ],
+      "hardRequirements": [
+        "Applicant must be a DMEA residential member for utility services.",
+        "Free weatherization is offered through the Colorado Energy Office and Housing Resources of Western Colorado partnership.",
+        "Income eligibility applies to free weatherization services.",
+        "Energy audit or walk-through assessment may be required to identify eligible improvements."
+      ],
+      "blockers": [
+        "Commercial customers are not supported by this residential weatherization opportunity.",
+        "This is not a general cash rebate for any home improvement.",
+        "Measures are limited to program-approved weatherization and efficiency improvements.",
+        "Applicants outside DMEA service territory are not eligible."
+      ],
+      "programType": "Weatherization Service",
+      "administrator": "Delta-Montrose Electric Association",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.dmea.com/efficiency",
+      "sourceUrlsChecked": [
+        "https://www.dmea.com/efficiency",
+        "https://dmea.com/free-home-weatherization",
+        "https://programs.dsireusa.org/system/program/detail/3580/delta-montrose-electric-association-residential-weatherization-rebate-program"
+      ],
+      "evidenceText": "DMEA describes free walk-through audits and free weatherization for eligible low-income members, including insulation, duct sealing, appliance, lighting, and furnace improvements.",
+      "reasoningNotes": "The energy_audit match is source-backed, but the opportunity should also capture the actual residential weatherization measures and income/service-territory limits."
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:demand-response-aggregator-options",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern California Edison"
+        ],
+        "notes": "Available to eligible SCE business customers through approved demand response aggregators and program-specific participation rules."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_electric_customer",
+        "industrial_electric_customer",
+        "agricultural_electric_customer",
+        "third_party_aggregator_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "demand_response_enrollment",
+        "demand_response_aggregation"
+      ],
+      "hardRequirements": [
+        "Customer must be in SCE service territory and meet the selected demand response program requirements.",
+        "Enrollment is through an approved demand response aggregator or program channel.",
+        "Customer must be able to reduce or shift load during demand response events.",
+        "Program terms, incentives, and enabling technologies depend on the aggregator and demand response option selected."
+      ],
+      "blockers": [
+        "This is not an automated demand response controls rebate.",
+        "Control equipment installation is not directly funded by this opportunity unless separately offered by an aggregator or program.",
+        "Do not match as a general building controls retrofit.",
+        "Energy efficiency upgrades are separate from demand response participation."
+      ],
+      "programType": "Demand Response",
+      "administrator": "Southern California Edison",
+      "applicationUrl": "https://cloud.sce.com/DRProviders",
+      "websiteUrl": "https://www.sce.com/business/save-costs-energy/savings-strategies/what-is-demand-response",
+      "sourceUrlsChecked": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/what-is-demand-response",
+        "https://cloud.sce.com/DRProviders",
+        "https://www.sce.com/business/savings-incentives/demand-response/demand-responces-aggregator"
+      ],
+      "evidenceText": "SCE lists demand response aggregator options for business customers; aggregators help customers participate in demand response and reduce load during events.",
+      "reasoningNotes": "The match should be demand response enrollment or aggregation, not physical automated demand response controls unless another program specifically funds those controls."
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_13556",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "San Diego Gas & Electric"
+        ],
+        "notes": "Available to eligible SDG&E business customers under program-specific demand response rules."
+      },
+      "eligibleApplicantTypes": [
+        "business_electric_customer",
+        "commercial_electric_customer",
+        "industrial_electric_customer",
+        "third_party_demand_response_provider_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "demand_response_enrollment",
+        "capacity_bidding_program",
+        "emergency_load_reduction",
+        "critical_peak_pricing"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible SDG&E business electric customer.",
+        "Customer must enroll in the applicable demand response option or through an approved third-party provider.",
+        "Customer must be able to reduce or shift electric use during called events.",
+        "Specific eligibility, notification, and incentive terms vary by demand response program."
+      ],
+      "blockers": [
+        "This is not an automated demand response controls rebate.",
+        "No source-backed incentive for installing controls was found on the demand response page.",
+        "Energy efficiency equipment retrofits are separate from demand response participation.",
+        "Third-party provider participation is governed by separate provider agreements and tariff rules."
+      ],
+      "programType": "Demand Response",
+      "administrator": "San Diego Gas & Electric",
+      "applicationUrl": "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response",
+      "websiteUrl": "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response",
+      "sourceUrlsChecked": [
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response",
+        "https://www.sdge.com/businesses/savings-center/third-party-demand-response-providers",
+        "https://www.sdge.com/node/13556"
+      ],
+      "evidenceText": "SDG&E presents business demand response options including capacity bidding, emergency load reduction, pricing events, and third-party demand response providers.",
+      "reasoningNotes": "The deterministic demand response text match is correct, but it should not imply physical automated controls are funded or required."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5809",
+      "confidence": "high",
+      "availabilityStatus": "rolling",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MD"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Maryland statewide program for eligible affordable multifamily rental properties."
+      },
+      "eligibleApplicantTypes": [
+        "affordable_multifamily_property_owner",
+        "multifamily_developer",
+        "qualified_energy_professional"
+      ],
+      "eligibleSectors": [
+        "multifamily_affordable_housing"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "energy_efficiency_upgrades",
+        "building_electrification",
+        "solar_pv_system",
+        "ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Property must be eligible affordable multifamily rental housing in Maryland.",
+        "Existing building projects require an energy audit by a qualified energy professional or equivalent required review.",
+        "New construction projects require applicable certification or energy review.",
+        "Owner must submit the MEEHA application and required project documentation.",
+        "Payment is made after approved measures are installed and inspected."
+      ],
+      "blockers": [
+        "Single-family homes are not eligible under this multifamily program.",
+        "General commercial buildings outside affordable multifamily housing are not eligible.",
+        "Energy audit alone should be treated as a prerequisite or support measure, not the only project scope.",
+        "Funding pathways for solar PV, EV charging, electrification, and efficiency have specific subprogram requirements."
+      ],
+      "programType": "Grant Or Loan",
+      "administrator": "Maryland Department of Housing and Community Development",
+      "applicationUrl": "https://dhcd.maryland.gov/Energy-Home-Repair/Documents/MEEHA/MEEHA-Energy-Application.docx",
+      "websiteUrl": "https://dhcd.maryland.gov/Energy-Home-Repair/Pages/Multifamily-Energy-Program/MEEHA.aspx",
+      "sourceUrlsChecked": [
+        "https://dhcd.maryland.gov/Energy-Home-Repair/Pages/Multifamily-Energy-Program/MEEHA.aspx",
+        "https://dhcd.maryland.gov/Energy-Home-Repair/Documents/MEEHA/MEEHA-Energy-Application.docx",
+        "https://programs.dsireusa.org/system/program/detail/5809/dhcd-multifamily-energy-efficiency-and-housing-affordability-program"
+      ],
+      "evidenceText": "Maryland DHCD describes MEEHA as one application for affordable multifamily energy efficiency, electrification, solar PV, and EV charger upgrades, with audit requirements for rehab projects.",
+      "reasoningNotes": "The energy_audit match is source-backed as a required project step, but the opportunity covers broader multifamily efficiency and clean energy improvements."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22305",
+      "confidence": "high",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "FL"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Duke Energy Florida"
+        ],
+        "notes": "Historical Duke Energy Florida Park and Plug pilot; no current accepting program verified."
+      },
+      "eligibleApplicantTypes": [
+        "public_site_host",
+        "business_site_host",
+        "multifamily_property",
+        "workplace_site_host"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "multifamily",
+        "transportation",
+        "public_sector"
+      ],
+      "eligibleRetrofitCategories": [
+        "ev_charger_installation"
+      ],
+      "hardRequirements": [
+        "Program was a Duke Energy Florida EV charging pilot for public, workplace, multifamily, and similar host sites.",
+        "Current official Duke information indicates the Park and Plug program is closed or completed.",
+        "Do not treat this as currently accepting applications."
+      ],
+      "blockers": [
+        "Program is closed or completed and should not match as an available current incentive.",
+        "Residential home charger rebates are separate from this Park and Plug pilot.",
+        "Other Duke Energy EV charging programs, if available, are separate opportunities.",
+        "Vehicle purchase rebates are not part of this program."
+      ],
+      "programType": "Pilot Program",
+      "administrator": "Duke Energy Florida",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.duke-energy.com/home/products/park-and-plug",
+      "sourceUrlsChecked": [
+        "https://www.duke-energy.com/home/products/park-and-plug",
+        "https://news.duke-energy.com/releases/duke-energy-florida-celebrates-significant-milestone-by-completing-park-plug-pilot-program",
+        "https://programs.dsireusa.org/system/program/detail/22305/duke-energy-park-and-plug-program"
+      ],
+      "evidenceText": "Duke Energy describes Park and Plug as a completed Florida pilot that installed public EV charging stations; current program information indicates it is closed.",
+      "reasoningNotes": "The EV charger category describes the historical project type, but availability must be unavailable to prevent current matching."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22786",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [
+          "Eagle County"
+        ],
+        "cities": [
+          "Vail",
+          "Avon",
+          "Eagle"
+        ],
+        "utilityTerritories": [
+          "Holy Cross Energy"
+        ],
+        "notes": "Eligible Eagle River Valley areas include Vail, Avon, Edwards Metro District, Eagle, and unincorporated Eagle County; program is not available to all residents."
+      },
+      "eligibleApplicantTypes": [
+        "residential_property_owner",
+        "business_customer",
+        "multifamily_property_owner"
+      ],
+      "eligibleSectors": [
+        "residential",
+        "commercial",
+        "multifamily"
+      ],
+      "eligibleRetrofitCategories": [
+        "solar_pv_system"
+      ],
+      "hardRequirements": [
+        "Project must be a grid-tied and net-metered solar PV system.",
+        "Applicant must be in an eligible Eagle River Valley jurisdiction or area.",
+        "Applicant must receive the Holy Cross Energy solar rebate to receive the matching local rebate.",
+        "Application and required documentation should be submitted before project completion.",
+        "Annual rebate caps apply by residential, business, and multifamily applicant type."
+      ],
+      "blockers": [
+        "Not all Eagle County residents are eligible.",
+        "Battery storage is not supported by this solar PV rebate unless covered by a separate program.",
+        "Off-grid systems are not supported by the cited rebate language.",
+        "Projects without the Holy Cross Energy rebate are not eligible for the matching rebate."
+      ],
+      "programType": "Rebate",
+      "administrator": "Walking Mountains Science Center and Energy Smart Colorado",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/rebates-incentives/",
+      "sourceUrlsChecked": [
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/rebates-incentives/",
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/",
+        "https://programs.dsireusa.org/system/program/detail/22786/eagle-county-walking-mountains-science-center-solar-pv-rebate"
+      ],
+      "evidenceText": "Walking Mountains lists Eagle County solar PV rebates that match the Holy Cross Energy rebate for grid-tied, net-metered PV, with eligible local areas and caps.",
+      "reasoningNotes": "The solar PV match is correct, but geography is narrower than statewide Colorado and eligibility depends on local area and Holy Cross Energy participation."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "OK"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "East Central Electric Cooperative"
+        ],
+        "notes": "Available to qualifying East Central Electric Cooperative residential members."
+      },
+      "eligibleApplicantTypes": [
+        "residential_electric_member",
+        "cooperative_member"
+      ],
+      "eligibleSectors": [
+        "residential"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "weatherization",
+        "air_source_heat_pump",
+        "ductless_mini_split_heat_pump",
+        "ground_source_geothermal_heat_pump",
+        "smart_thermostat",
+        "heat_pump_water_heater"
+      ],
+      "hardRequirements": [
+        "Applicant must be an East Central Electric Cooperative member in good standing.",
+        "Weatherization rebate requires a current ECE energy audit.",
+        "Weatherization repairs must be identified on the ECE audit report.",
+        "Rebates are issued as bill credits and are subject to cooperative program rules.",
+        "Eligible equipment must meet the cooperative's efficiency and installation requirements."
+      ],
+      "blockers": [
+        "Weatherization rebate excludes HVAC equipment and appliances.",
+        "Commercial customers are not supported by this residential program.",
+        "Weatherization work completed without the required ECE audit should not match.",
+        "Projects outside ECE service territory are not eligible."
+      ],
+      "programType": "Rebate",
+      "administrator": "East Central Electric Cooperative",
+      "applicationUrl": null,
+      "websiteUrl": "https://ecoec.com/rebates",
+      "sourceUrlsChecked": [
+        "https://ecoec.com/rebates",
+        "https://www.ecoec.com/energy-efficiency-services",
+        "https://programs.dsireusa.org/system/program/detail/5250/east-central-electric-cooperative-residential-rebate-program"
+      ],
+      "evidenceText": "ECE lists residential bill-credit rebates for heat pumps, thermostats, heat pump water heaters, and weatherization, with a free home energy audit service.",
+      "reasoningNotes": "The energy_audit match is correct. Add the actual eligible residential measures and block weatherization claims that are not tied to the required ECE audit."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22714",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "ME"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Maine electric utilities"
+        ],
+        "notes": "Available to eligible behind-the-meter demand-metered utility customers in Maine."
+      },
+      "eligibleApplicantTypes": [
+        "commercial_demand_metered_customer",
+        "nonprofit_demand_metered_customer",
+        "institutional_demand_metered_customer",
+        "government_demand_metered_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "nonprofit",
+        "institutional",
+        "government"
+      ],
+      "eligibleRetrofitCategories": [
+        "battery_storage_system",
+        "behind_the_meter_energy_storage",
+        "peak_demand_management"
+      ],
+      "hardRequirements": [
+        "Project must be behind the meter for a Maine utility account.",
+        "Applicant must be a demand-metered customer; residential and small business customers are excluded.",
+        "Battery system must be at least 20 kW and meet technical requirements including round-trip efficiency, data, warranty, and safety listing criteria.",
+        "Project must be approved before installation.",
+        "Incentive is based on validated peak demand reduction and dispatch performance."
+      ],
+      "blockers": [
+        "Residential and small business customers are not eligible.",
+        "Systems intended primarily to export to the grid are not eligible.",
+        "This is not a generic backup-battery rebate.",
+        "Projects outside Maine or without eligible interval data are not eligible.",
+        "Payments are performance-based and require dispatch compliance."
+      ],
+      "programType": "Performance Based Incentive",
+      "administrator": "Efficiency Maine",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.efficiencymaine.com/energy-storage-system-projects/",
+      "sourceUrlsChecked": [
+        "https://www.efficiencymaine.com/energy-storage-system-projects/",
+        "https://www.efficiencymaine.com/docs/PON-EM-003-2026-ESS-V1.pdf",
+        "https://programs.dsireusa.org/system/program/detail/22714/efficiency-maine-large-battery-management-program"
+      ],
+      "evidenceText": "Efficiency Maine offers performance incentives for behind-the-meter energy storage projects by eligible demand-metered customers, excluding residential and small business accounts.",
+      "reasoningNotes": "The battery storage match is source-backed, but the program should be narrowed to large behind-the-meter storage used for peak demand management."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4593",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "TX"
+        ],
+        "counties": [
+          "El Paso County",
+          "Culberson County",
+          "Hudspeth County"
+        ],
+        "cities": [],
+        "utilityTerritories": [
+          "El Paso Electric Texas service territory"
+        ],
+        "notes": "Eligibility is limited to qualifying EPE Texas service customers that pay the applicable energy efficiency cost recovery factor."
+      },
+      "eligibleApplicantTypes": [
+        "public_k12_school",
+        "higher_education_institution",
+        "local_government_customer",
+        "municipality",
+        "county_government"
+      ],
+      "eligibleSectors": [
+        "education",
+        "government"
+      ],
+      "eligibleRetrofitCategories": [
+        "lighting_upgrade",
+        "unitary_air_conditioner",
+        "unitary_heat_pump",
+        "chiller_replacement",
+        "cool_roof",
+        "window_film",
+        "commercial_refrigeration",
+        "commercial_kitchen_equipment",
+        "variable_frequency_drive",
+        "lighting_controls",
+        "hvac_controls",
+        "energy_performance_benchmarking",
+        "energy_master_planning",
+        "technical_assistance"
+      ],
+      "hardRequirements": [
+        "Customer facility must be in El Paso Electric's Texas service territory.",
+        "Applicant must be a qualifying public school, higher education, county, municipality, or other local government customer.",
+        "Customer must pay the Texas energy efficiency cost recovery factor.",
+        "Retrofit projects must produce measurable electric demand or energy savings and satisfy program documentation and inspection requirements.",
+        "Incentives are subject to available program funding and project completion deadlines."
+      ],
+      "blockers": [
+        "Building benchmarking compliance is a false-positive match; benchmarking is a support service, not a compliance rebate.",
+        "Residential projects are not eligible.",
+        "Benchmarking and master planning do not by themselves establish an eligible physical retrofit.",
+        "The currently linked Texas SCORE manual is older, so current year measure details should be confirmed before payment estimates."
+      ],
+      "programType": "Rebate And Technical Assistance",
+      "administrator": "CLEAResult Consulting Company for El Paso Electric",
+      "applicationUrl": null,
+      "websiteUrl": "https://www.epelectric.com/tx/business/program-manuals-and-guidelines",
+      "sourceUrlsChecked": [
+        "https://www.epelectric.com/tx/business/program-manuals-and-guidelines",
+        "https://www.epelectric.com/company/regulatory/energy-efficiency-filings",
+        "https://www.epelectric.com/el-paso-electric/uploads/2020-epe-score-program-manual-final.pdf",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf",
+        "https://programs.dsireusa.org/system/program/detail/4593/el-paso-electric-company-score-program-for-counties-municipalities-and-schools"
+      ],
+      "evidenceText": "EPE Texas SCORE materials support public sector and school efficiency projects with technical assistance, benchmarking, master planning, and incentives for verified efficiency measures.",
+      "reasoningNotes": "The deterministic benchmarking match was too broad. Keep benchmarking only as support, and match the opportunity to verified public-sector energy efficiency measures."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22228",
+      "confidence": "medium",
+      "availabilityStatus": "unavailable",
+      "geography": {
+        "country": "US",
+        "states": [
+          "PA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Pennsylvania statewide Driving PA Forward cargo handling grant category, but no current application information was found."
+      },
+      "eligibleApplicantTypes": [
+        "government_applicant",
+        "non_government_applicant",
+        "equipment_owner"
+      ],
+      "eligibleSectors": [
+        "government",
+        "commercial",
+        "industrial",
+        "transportation",
+        "ports",
+        "aviation"
+      ],
+      "eligibleRetrofitCategories": [
+        "electric_forklift_material_handling",
+        "electric_airport_ground_support_equipment",
+        "electric_port_cargo_handling_equipment"
+      ],
+      "hardRequirements": [
+        "Eligible project must replace or repower qualifying diesel-powered cargo handling equipment with all-electric equipment.",
+        "Covered equipment includes large diesel forklifts, airport ground support equipment, and port cargo handling equipment.",
+        "Scrappage or replacement requirements apply to the existing vehicle or equipment.",
+        "Award percentages differ for government and non-government applicants."
+      ],
+      "blockers": [
+        "No current application or award information was available on the official program awards page.",
+        "Do not match as a general EV charging or building retrofit opportunity.",
+        "Passenger or on-road vehicles are outside this cargo handling equipment category.",
+        "Equipment outside the specified forklift, airport, and port cargo handling classes is not supported."
+      ],
+      "programType": "Grant",
+      "administrator": "Pennsylvania Department of Environmental Protection",
+      "applicationUrl": null,
+      "websiteUrl": "https://gis.dep.pa.gov/DrivingPAForward/",
+      "sourceUrlsChecked": [
+        "https://gis.dep.pa.gov/DrivingPAForward/",
+        "https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward/driving-pa-forward-grant-and-rebate-awards",
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates",
+        "https://programs.dsireusa.org/system/program/detail/22228/electric-cargo-handling-grant-program"
+      ],
+      "evidenceText": "Pennsylvania describes the cargo handling grant category for replacing diesel forklifts, airport ground support equipment, and port cargo handling equipment with all-electric equipment.",
+      "reasoningNotes": "The electric forklift/material handling match is source-backed as a project type, but current official pages do not show an open application, so availability should be unavailable."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22160",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [],
+        "notes": "Colorado statewide EV fast-charging plaza grant program with location priorities including corridors, high-density housing, commercial areas, transit hubs, and underserved communities."
+      },
+      "eligibleApplicantTypes": [
+        "business",
+        "government_entity",
+        "public_institution",
+        "tribal_government",
+        "nonprofit_organization"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "government",
+        "tribal",
+        "nonprofit",
+        "transportation"
+      ],
+      "eligibleRetrofitCategories": [
+        "dc_fast_charger_installation",
+        "public_ev_charging_plaza",
+        "battery_storage_for_ev_charging"
+      ],
+      "hardRequirements": [
+        "Project must be a public DC fast-charging plaza in Colorado.",
+        "Grant funding is for eligible project costs and may require applicant cost share.",
+        "Awardees must maintain continuous public use for the required term.",
+        "Current rounds may require multiple charging ports and high-power DC fast charging capability.",
+        "Battery storage is eligible only when tied to the EV fast-charging plaza project."
+      ],
+      "blockers": [
+        "Private residential EV chargers are not eligible.",
+        "Level 2-only charging projects are not supported by the fast-charging plaza program.",
+        "Battery storage unrelated to EV charging is not supported.",
+        "The official Colorado Energy Office program page was difficult to access directly, so current round details should be confirmed through the state portal."
+      ],
+      "programType": "Grant",
+      "administrator": "Colorado Energy Office",
+      "applicationUrl": "https://socgov27.my.site.com/CEOEVGrants/s/",
+      "websiteUrl": "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+      "sourceUrlsChecked": [
+        "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+        "https://socgov27.my.site.com/CEOEVGrants/s/",
+        "https://www.codot.gov/programs/innovativemobility/electrification/nevi-plan",
+        "https://afdc.energy.gov/laws/12432",
+        "https://programs.dsireusa.org/system/program/detail/22160/electric-vehicle-fast-charging-plazas-program"
+      ],
+      "evidenceText": "Colorado sources describe grants for public DC fast-charging plazas, with priority locations and cost-share funding; related state portals handle applications.",
+      "reasoningNotes": "The EV charger installation match is correct only when narrowed to public DC fast-charging plazas, not general EV charger installation."
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:emergency-load-reduction-program-elrp",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Southern California Edison"
+        ],
+        "notes": "Available to eligible SCE non-residential bundled-service customers with qualifying interval metering and load-reduction capability."
+      },
+      "eligibleApplicantTypes": [
+        "non_residential_bundled_service_customer",
+        "commercial_electric_customer",
+        "industrial_electric_customer",
+        "agricultural_electric_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "agricultural"
+      ],
+      "eligibleRetrofitCategories": [
+        "demand_response_enrollment",
+        "load_reduction"
+      ],
+      "hardRequirements": [
+        "Customer must be an eligible SCE non-residential bundled-service customer.",
+        "Customer must be able to reduce at least the required minimum load during emergency events.",
+        "Customer must have SCE-approved interval or SmartConnect metering capable of measuring hourly load or export.",
+        "Events occur under program-defined grid emergency or alert conditions.",
+        "Payments are based on measured kWh reduction during called events."
+      ],
+      "blockers": [
+        "This is not an automated demand response controls rebate.",
+        "Control equipment installation is not required or directly incentivized by the cited ELRP page.",
+        "Residential equipment measures are outside this opportunity.",
+        "Energy efficiency retrofits are separate from voluntary emergency load reduction participation."
+      ],
+      "programType": "Demand Response",
+      "administrator": "Southern California Edison",
+      "applicationUrl": "https://elrp.sce.com/",
+      "websiteUrl": "https://www.sce.com/business/save-costs-energy/savings-strategies/what-is-demand-response",
+      "sourceUrlsChecked": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/what-is-demand-response",
+        "https://elrp.sce.com/"
+      ],
+      "evidenceText": "SCE describes ELRP as a voluntary program that pays bill credits for verified load reduction during emergency events, with no penalties for nonperformance.",
+      "reasoningNotes": "The source supports demand response enrollment and load reduction, not a physical automated demand response controls retrofit."
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:emerging-technologies-grant",
+      "confidence": "high",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "CA"
+        ],
+        "counties": [],
+        "cities": [
+          "Santa Clara"
+        ],
+        "utilityTerritories": [
+          "Silicon Valley Power"
+        ],
+        "notes": "Available to qualifying nonresidential Silicon Valley Power electric customers in Santa Clara."
+      },
+      "eligibleApplicantTypes": [
+        "nonresidential_electric_customer",
+        "business_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial",
+        "institutional",
+        "nonprofit"
+      ],
+      "eligibleRetrofitCategories": [
+        "custom_energy_efficiency_measure",
+        "emerging_energy_efficiency_technology"
+      ],
+      "hardRequirements": [
+        "Applicant must be a nonresidential SVP customer.",
+        "Project must be pre-approved before implementation or installation.",
+        "Project must demonstrate measurable electricity savings and remain in place for the required term.",
+        "Grant is based on energy saved and is capped by project-cost and customer limits.",
+        "Measures eligible under other SVP programs are not eligible for this grant."
+      ],
+      "blockers": [
+        "Low-flow fixture retrofit is a false-positive match.",
+        "Water conservation fixtures are not supported by the cited energy grant.",
+        "Self-generation, cogeneration, fuel switching, power factor correction, and behavior-only projects are excluded.",
+        "Standard SVP rebate measures should use the separate applicable rebate program."
+      ],
+      "programType": "Grant",
+      "administrator": "Silicon Valley Power",
+      "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/46967/638868862568870000",
+      "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+      "sourceUrlsChecked": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/46967/638868862568870000",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/5082/638917985630870000"
+      ],
+      "evidenceText": "SVP describes the grant for creative energy technologies and new efficiency applications, with funding tied to energy saved and required pre-approval.",
+      "reasoningNotes": "The matched word fixture was misleading. This is an electric emerging-efficiency grant, not a water fixture or low-flow plumbing program."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22056",
+      "confidence": "medium",
+      "availabilityStatus": "active",
+      "geography": {
+        "country": "US",
+        "states": [
+          "MO"
+        ],
+        "counties": [],
+        "cities": [],
+        "utilityTerritories": [
+          "Liberty Utilities Missouri Gas",
+          "Empire District Gas Company"
+        ],
+        "notes": "Available within Liberty Utilities Missouri natural gas service territory; specific commercial pathway varies by rate class and program portal."
+      },
+      "eligibleApplicantTypes": [
+        "small_commercial_gas_customer",
+        "large_commercial_gas_customer"
+      ],
+      "eligibleSectors": [
+        "commercial",
+        "industrial"
+      ],
+      "eligibleRetrofitCategories": [
+        "energy_audit",
+        "natural_gas_furnace",
+        "natural_gas_boiler",
+        "natural_gas_water_heater",
+        "programmable_thermostat"
+      ],
+      "hardRequirements": [
+        "Applicant must be an eligible Liberty Utilities Missouri gas customer.",
+        "Equipment rebate applicants must provide required bill, invoice, customer, and contractor documentation.",
+        "Small commercial appliance rebates require qualifying natural gas equipment or thermostat measures.",
+        "Large commercial audit and rebate participation is handled through the program application portal.",
+        "Rebates are subject to funding availability and program terms."
+      ],
+      "blockers": [
+        "Energy audit details for the large commercial program were not fully accessible because the application portal requires JavaScript.",
+        "Do not infer electric efficiency or building envelope measures from the gas rebate sources.",
+        "Residential appliance rebates are separate from the commercial and industrial opportunity.",
+        "Broad commercial and industrial gas retrofit categories are not fully verified from accessible official sources."
+      ],
+      "programType": "Rebate",
+      "administrator": "Liberty Utilities Missouri Gas",
+      "applicationUrl": "https://empiremogas.customerapplication.com/",
+      "websiteUrl": "https://central.libertyutilities.com/all/commercial/ways-to-save/rebates.html",
+      "sourceUrlsChecked": [
+        "https://central.libertyutilities.com/all/commercial/ways-to-save/rebates.html",
+        "https://central.libertyutilities.com/all/residential/ways-to-save/rebates.html",
+        "https://central.libertyutilities.com/uploads/EDG%20Rebate%20Updated%202025.03.21.pdf",
+        "https://central.libertyutilities.com/uploads/EDG%20GAS%20RULES%20081522.pdf",
+        "https://empiremogas.customerapplication.com/",
+        "https://programs.dsireusa.org/system/program/detail/22056/empire-district-electric-gas-commercial-and-industrial-gas-efficiency-program"
+      ],
+      "evidenceText": "Liberty's Missouri gas rebate sources list commercial gas rebate pathways, small-commercial equipment rebates, and a large commercial audit and rebate portal.",
+      "reasoningNotes": "The energy_audit match is partially source-backed by the large commercial audit program name, but accessible official details are limited. Use medium confidence and block unsupported broad C&I measures."
+    }
+  ],
+  "continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:5724"
+}

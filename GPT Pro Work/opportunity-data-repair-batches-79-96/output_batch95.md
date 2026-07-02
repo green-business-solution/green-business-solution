@@ -1,0 +1,1110 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-02",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22621",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Virgin Islands Water and Power Authority"
+],
+"notes": "Available in the U.S. Virgin Islands for qualifying full-time territory residents with an active WAPA account."
+},
+"eligibleApplicantTypes": [
+"homeowner",
+"business_owner",
+"nonprofit_owner",
+"electric_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"battery_storage_system"
+],
+"hardRequirements": [
+"Applicant must be a full-time U.S. Virgin Islands resident.",
+"Applicant must own the home, business, or nonprofit facility where the system is installed.",
+"Applicant must provide an active WAPA utility bill.",
+"Battery system must be a new approved grid-interactive battery energy storage system with 3 kWh to 21 kWh capacity.",
+"System must provide automatic whole-home or partial backup through an automatic transfer switch or smart critical load panel.",
+"A DPNR permit is required."
+],
+"blockers": [
+"Do not match solar photovoltaic installation unless a separate solar incentive applies.",
+"Do not match generators or non-battery backup equipment.",
+"Portable batteries and non-grid-interactive storage are unsupported."
+],
+"programType": "Rebate Program",
+"administrator": "Virgin Islands Energy Office",
+"applicationUrl": "[https://app.smartsheet.com/b/form/01966f3340f77792ac8a5c5eded67e36](https://app.smartsheet.com/b/form/01966f3340f77792ac8a5c5eded67e36)",
+"websiteUrl": "[https://energy.vi.gov/vibes/](https://energy.vi.gov/vibes/)",
+"sourceUrlsChecked": [
+"[https://energy.vi.gov/vibes/](https://energy.vi.gov/vibes/)",
+"[https://app.smartsheet.com/b/form/01966f3340f77792ac8a5c5eded67e36](https://app.smartsheet.com/b/form/01966f3340f77792ac8a5c5eded67e36)"
+],
+"evidenceText": "The VIEO VIBES page offers rebates for qualifying automatic battery backup systems up to 21 kWh for eligible homes, businesses, and nonprofits in the territory.",
+"reasoningNotes": "The deterministic battery-storage match is source-backed. Eligibility is limited to approved grid-interactive battery energy storage systems and should not be broadened to solar or generators."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22661",
+"confidence": "high",
+"availabilityStatus": "temporarily_closed",
+"geography": {
+"country": "US",
+"states": [
+"UT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Utah NEVI projects are corridor-based and must meet federal NEVI Alternative Fuel Corridor spacing and siting requirements."
+},
+"eligibleApplicantTypes": [
+"charging_site_host",
+"business_customer",
+"public_entity",
+"private_entity",
+"tribal_entity"
+],
+"eligibleSectors": [
+"transportation",
+"commercial",
+"public",
+"tribal"
+],
+"eligibleRetrofitCategories": [
+"public_dc_fast_ev_charging_station",
+"ev_charging_infrastructure"
+],
+"hardRequirements": [
+"Charging infrastructure must satisfy federal NEVI Formula Program requirements.",
+"Sites must generally be within one driving mile of an Alternative Fuel Corridor and spaced to meet NEVI corridor buildout goals.",
+"Projects must meet applicable federal charging, uptime, accessibility, data, and procurement requirements.",
+"New funding rounds require UDOT solicitation terms and award approval."
+],
+"blockers": [
+"The Phase 1.A request for applications is closed and should not be matched as an open rebate.",
+"Do not match residential Level 2 home charging.",
+"Do not match EV purchase incentives; this is charging infrastructure funding."
+],
+"programType": "Grant Program",
+"administrator": "Utah Department of Transportation",
+"applicationUrl": null,
+"websiteUrl": "[https://udotinput.utah.gov/evplan?HTTPSRedirected=true](https://udotinput.utah.gov/evplan?HTTPSRedirected=true)",
+"sourceUrlsChecked": [
+"[https://udotinput.utah.gov/evplan?HTTPSRedirected=true](https://udotinput.utah.gov/evplan?HTTPSRedirected=true)"
+],
+"evidenceText": "UDOT describes Utah NEVI as deploying public EV charging infrastructure along Alternative Fuel Corridors; the Phase 1.A solicitation is closed, while later phase planning continues.",
+"reasoningNotes": "The EV charging match is correct, but current application availability is not open for the closed Phase 1.A round. Treat as corridor public fast-charging infrastructure, not residential charging."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22346",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Vermont Electric Cooperative"
+],
+"notes": "Available to Vermont Electric Cooperative members in the cooperative service territory."
+},
+"eligibleApplicantTypes": [
+"member_customer",
+"business_customer",
+"farm_customer"
+],
+"eligibleSectors": [
+"commercial",
+"agricultural",
+"industrial"
+],
+"eligibleRetrofitCategories": [
+"electric_forklift_material_handling"
+],
+"hardRequirements": [
+"Applicant must be a Vermont Electric Cooperative member.",
+"Forklift may be new or used.",
+"Forklift must be used for a new application or directly replace a fossil-fuel-powered forklift.",
+"Incentive is provided as a bill credit."
+],
+"blockers": [
+"Do not match passenger EV purchase incentives.",
+"Do not match EV charging infrastructure unless separately supported.",
+"Do not broaden to all material-handling equipment beyond electric forklifts."
+],
+"programType": "Bill Credit",
+"administrator": "Vermont Electric Cooperative",
+"applicationUrl": "[https://eternityweb.formstack.com/forms/vermont_electric_forklift](https://eternityweb.formstack.com/forms/vermont_electric_forklift)",
+"websiteUrl": "[https://vermontelectric.coop/energy-transformation-programs](https://vermontelectric.coop/energy-transformation-programs)",
+"sourceUrlsChecked": [
+"[https://vermontelectric.coop/energy-transformation-programs](https://vermontelectric.coop/energy-transformation-programs)",
+"[https://eternityweb.formstack.com/forms/vermont_electric_forklift](https://eternityweb.formstack.com/forms/vermont_electric_forklift)"
+],
+"evidenceText": "Vermont Electric Cooperative offers a bill credit for purchase of electric forklifts used in new applications or replacing fossil-fuel forklifts.",
+"reasoningNotes": "The electric forklift match is source-backed and should remain product-specific. It should not trigger broad EV, EV charger, or unrelated equipment categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22584",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Vermont Electric Cooperative"
+],
+"notes": "Available to Vermont Electric Cooperative members in the cooperative service territory."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"member_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"residential_induction_cooking"
+],
+"hardRequirements": [
+"Applicant must be a Vermont Electric Cooperative member.",
+"Induction cooktop must be installed, not portable.",
+"Purchase must be on or after the program eligibility date stated by VEC.",
+"Proof of purchase is required."
+],
+"blockers": [
+"Portable induction cooktops are not eligible.",
+"Do not match commercial kitchen equipment.",
+"Do not match general appliance rebates beyond installed residential induction cooktops."
+],
+"programType": "Bill Credit",
+"administrator": "Vermont Electric Cooperative",
+"applicationUrl": "[https://smarthub.tfaforms.net/1600](https://smarthub.tfaforms.net/1600)",
+"websiteUrl": "[https://vermontelectric.coop/energy-transformation-programs](https://vermontelectric.coop/energy-transformation-programs)",
+"sourceUrlsChecked": [
+"[https://vermontelectric.coop/energy-transformation-programs](https://vermontelectric.coop/energy-transformation-programs)",
+"[https://smarthub.tfaforms.net/1600](https://smarthub.tfaforms.net/1600)"
+],
+"evidenceText": "VEC offers an induction cooktop incentive for installed induction cooktops and states portable induction cooktops are not eligible.",
+"reasoningNotes": "The match should be narrowed from commercial induction cooking equipment to residential installed induction cooking. This is a product-specific residential electrification bill credit."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22494",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [
+"Middlesex County"
+],
+"cities": [
+"Wakefield"
+],
+"utilityTerritories": [
+"Wakefield Municipal Gas & Light Department"
+],
+"notes": "Limited to eligible WMGLD customers in good standing."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"commercial_customer",
+"municipal_customer",
+"multifamily_customer",
+"industrial_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"municipal",
+"multifamily",
+"industrial"
+],
+"eligibleRetrofitCategories": [
+"solar_photovoltaic_system"
+],
+"hardRequirements": [
+"Applicant must be a WMGLD customer in good standing.",
+"Project must be customer-owned.",
+"Rebate is limited by installed system size, installed cost, and annual program funding.",
+"Solar access or shading requirements must be met.",
+"Projects should not begin until program approval is received."
+],
+"blockers": [
+"The word shading refers to solar access or shade analysis, not window film or window shading.",
+"Do not match window film, window treatment, or building-envelope shading retrofit.",
+"Do not match battery storage unless a separate WMGLD program supports it."
+],
+"programType": "Rebate Program",
+"administrator": "Wakefield Municipal Gas & Light Department",
+"applicationUrl": "[https://nextzero.org/wakefield/solar-rebates/](https://nextzero.org/wakefield/solar-rebates/)",
+"websiteUrl": "[https://wmgld.com/residential/solar-rebate-form/](https://wmgld.com/residential/solar-rebate-form/)",
+"sourceUrlsChecked": [
+"[https://wmgld.com/residential/solar-rebate-form/](https://wmgld.com/residential/solar-rebate-form/)",
+"[https://nextzero.org/wakefield/solar-rebates/](https://nextzero.org/wakefield/solar-rebates/)"
+],
+"evidenceText": "WMGLD and NextZero describe a solar rebate for customer-owned photovoltaic systems with caps, funding limits, and shade or solar-access requirements.",
+"reasoningNotes": "The original window-film/shading match is a false positive. The opportunity is for solar photovoltaic systems; shading is an eligibility constraint for solar production."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5725",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Federal WAP is administered by states, territories, tribes, and local weatherization providers."
+},
+"eligibleApplicantTypes": [
+"low_income_household",
+"homeowner",
+"renter"
+],
+"eligibleSectors": [
+"residential",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade",
+"duct_sealing_repair",
+"energy_audit",
+"weatherization_health_safety_repairs"
+],
+"hardRequirements": [
+"Household must meet income eligibility requirements used by the administering state or territory.",
+"Applicants generally apply through the state, territory, tribal, or local weatherization provider.",
+"Renters may need landlord permission.",
+"Homes receive an energy audit and cost-effective weatherization work determined by program rules."
+],
+"blockers": [
+"Do not match commercial or industrial retrofits.",
+"Do not infer renewable energy, EV charging, or appliance rebates unless a state WAP plan specifically supports them.",
+"Measures must be determined through the WAP audit and program rules."
+],
+"programType": "Grant Program",
+"administrator": "U.S. Department of Energy Weatherization Assistance Program",
+"applicationUrl": "[https://www.energy.gov/cmei/scep/wap/how-apply-weatherization-assistance](https://www.energy.gov/cmei/scep/wap/how-apply-weatherization-assistance)",
+"websiteUrl": "[https://www.energy.gov/cmei/scep/wap/weatherization-assistance-program](https://www.energy.gov/cmei/scep/wap/weatherization-assistance-program)",
+"sourceUrlsChecked": [
+"[https://www.energy.gov/cmei/scep/wap/weatherization-assistance-program](https://www.energy.gov/cmei/scep/wap/weatherization-assistance-program)",
+"[https://www.energy.gov/cmei/scep/wap/how-apply-weatherization-assistance](https://www.energy.gov/cmei/scep/wap/how-apply-weatherization-assistance)"
+],
+"evidenceText": "DOE states WAP serves eligible low-income households through local providers and uses energy audits to identify cost-effective home weatherization measures.",
+"reasoningNotes": "The weatherization match is source-backed. Categories are limited to residential weatherization, insulation, duct sealing, audit, and related health and safety measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5618",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AK"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Alaska Weatherization is delivered through regional service providers statewide."
+},
+"eligibleApplicantTypes": [
+"low_income_household",
+"homeowner",
+"renter",
+"landlord"
+],
+"eligibleSectors": [
+"residential",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade",
+"energy_audit",
+"weatherization_health_safety_repairs"
+],
+"hardRequirements": [
+"Applicant household must meet AHFC income eligibility limits.",
+"Applications are submitted through the appropriate regional weatherization service provider.",
+"Rental and multifamily work must meet AHFC program requirements.",
+"Previously weatherized homes may have priority limitations."
+],
+"blockers": [
+"Do not match commercial or industrial energy-efficiency measures.",
+"Do not infer solar, EV charging, or general appliance rebates.",
+"Measures must be part of AHFC weatherization scope and provider approval."
+],
+"programType": "Grant Program",
+"administrator": "Alaska Housing Finance Corporation",
+"applicationUrl": "[https://www.ahfc.us/efficiency/weatherization/weatherization-service-providers](https://www.ahfc.us/efficiency/weatherization/weatherization-service-providers)",
+"websiteUrl": "[https://www.ahfc.us/efficiency/weatherization](https://www.ahfc.us/efficiency/weatherization)",
+"sourceUrlsChecked": [
+"[https://www.ahfc.us/efficiency/weatherization](https://www.ahfc.us/efficiency/weatherization)",
+"[https://www.ahfc.us/efficiency/weatherization/weatherization-service-providers](https://www.ahfc.us/efficiency/weatherization/weatherization-service-providers)",
+"[https://www.ahfc.us/efficiency/weatherization/weatherization-operations-manual](https://www.ahfc.us/efficiency/weatherization/weatherization-operations-manual)"
+],
+"evidenceText": "AHFC states eligible individuals apply through weatherization providers and receive no-cost weatherization services under AHFC program rules.",
+"reasoningNotes": "The weatherization match is supported by current AHFC sources. Eligibility is residential and income-based, with service-provider delivery and AHFC measure requirements."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:601",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"MN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Minnesota sales tax exemption applies statewide to qualifying wind energy conversion systems and related materials."
+},
+"eligibleApplicantTypes": [
+"taxpayer",
+"business_owner",
+"homeowner",
+"public_entity"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural",
+"public"
+],
+"eligibleRetrofitCategories": [
+"wind_energy_conversion_system",
+"small_wind_turbine"
+],
+"hardRequirements": [
+"System must qualify as a wind energy conversion system under Minnesota law.",
+"System must be used as an electric power source.",
+"Exemption covers systems and materials used to manufacture, install, construct, repair, or replace them."
+],
+"blockers": [
+"Do not match solar, biomass, or other renewable technologies.",
+"Do not match non-electric wind equipment.",
+"Small wind is eligible only as a subset of qualifying wind energy conversion systems."
+],
+"programType": "Sales Tax Incentive",
+"administrator": "Minnesota Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://www.revisor.mn.gov/statutes/cite/297A.68](https://www.revisor.mn.gov/statutes/cite/297A.68)",
+"sourceUrlsChecked": [
+"[https://www.revisor.mn.gov/statutes/cite/297A.68](https://www.revisor.mn.gov/statutes/cite/297A.68)"
+],
+"evidenceText": "Minnesota law exempts wind energy conversion systems used as an electric power source and related installation or replacement materials from sales tax.",
+"reasoningNotes": "The wind turbine match is source-backed, but it should be described as a statutory sales tax exemption for qualifying wind energy conversion systems."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22650",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "WEVI projects are corridor-based in Wisconsin and tied to NEVI Alternative Fuel Corridors or additional Connecting Corridors."
+},
+"eligibleApplicantTypes": [
+"charging_site_host",
+"business_customer",
+"public_entity",
+"private_entity",
+"tribal_entity",
+"nonprofit_organization"
+],
+"eligibleSectors": [
+"transportation",
+"commercial",
+"public",
+"tribal",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"public_dc_fast_ev_charging_station",
+"ev_charging_infrastructure"
+],
+"hardRequirements": [
+"Project must meet NEVI and Wisconsin Electric Vehicle Infrastructure program requirements.",
+"Eligible projects must involve installation, ownership, operation, and maintenance of NEVI-compliant charging infrastructure.",
+"Federal funding is generally limited to 80 percent with required non-federal match.",
+"Projects must meet applicable federal corridor, procurement, labor, accessibility, and technical standards.",
+"For the 2026 Connecting Corridors round, applications are due by the WisDOT deadline."
+],
+"blockers": [
+"Do not match residential Level 2 charging.",
+"Do not match EV purchase incentives.",
+"Do not match utility make-ready programs unless they are part of an eligible WEVI project."
+],
+"programType": "Grant Program",
+"administrator": "Wisconsin Department of Transportation",
+"applicationUrl": "[https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx](https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx)",
+"websiteUrl": "[https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx](https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx)",
+"sourceUrlsChecked": [
+"[https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx](https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx)"
+],
+"evidenceText": "WisDOT describes WEVI as competitive NEVI funding for eligible entities to install, own, operate, and maintain NEVI-compliant EV charging stations.",
+"reasoningNotes": "The EV charging match is correct and should be limited to public corridor fast-charging infrastructure under NEVI and WEVI rules."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:234",
+"confidence": "high",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"MO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Applies to qualifying Missouri wood energy producers using Missouri forestry residues."
+},
+"eligibleApplicantTypes": [
+"business_owner",
+"individual_taxpayer",
+"wood_energy_producer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural"
+],
+"eligibleRetrofitCategories": [
+"processed_wood_fuel_production"
+],
+"hardRequirements": [
+"Producer must use Missouri forestry industry residues.",
+"Residues must be processed into a qualifying wood energy product.",
+"Tax credit is based on tons of processed material.",
+"Producer must apply by the annual deadline and meet Missouri Department of Natural Resources requirements.",
+"Program authority is scheduled to end after the statutory sunset unless extended."
+],
+"blockers": [
+"This is a production tax credit, not a building retrofit rebate.",
+"Do not match biomass or biogas electric generation systems.",
+"Do not match residential wood stoves or heating-system installation.",
+"Do not match equipment purchases unless tied to qualifying processed wood fuel production."
+],
+"programType": "Corporate Tax Credit",
+"administrator": "Missouri Department of Natural Resources Division of Energy",
+"applicationUrl": "[https://dnr.mo.gov/document-search/wood-energy-tax-credit-application-mo-780-1305](https://dnr.mo.gov/document-search/wood-energy-tax-credit-application-mo-780-1305)",
+"websiteUrl": "[https://dnr.mo.gov/energy/financial-assistance-opportunities/wood-energy-tax-credit](https://dnr.mo.gov/energy/financial-assistance-opportunities/wood-energy-tax-credit)",
+"sourceUrlsChecked": [
+"[https://dnr.mo.gov/energy/financial-assistance-opportunities/wood-energy-tax-credit](https://dnr.mo.gov/energy/financial-assistance-opportunities/wood-energy-tax-credit)",
+"[https://dnr.mo.gov/document-search/wood-energy-tax-credit-application-mo-780-1305](https://dnr.mo.gov/document-search/wood-energy-tax-credit-application-mo-780-1305)"
+],
+"evidenceText": "Missouri DNR describes a tax credit for wood energy producers that process Missouri forestry industry residues into wood energy products.",
+"reasoningNotes": "The original broad biomass energy-system match is too broad. This opportunity supports processed wood fuel production through a tax credit, not building energy-system installation."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:46",
+"confidence": "medium",
+"availabilityStatus": "rolling",
+"geography": {
+"country": "US",
+"states": [
+"AL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Alabama income tax deduction applies statewide to qualifying individual domestic home heating conversions."
+},
+"eligibleApplicantTypes": [
+"individual_taxpayer",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"wood_burning_heating_system"
+],
+"hardRequirements": [
+"Deduction applies to the cost of installation for conversion from gas or electricity to wood as the primary heating energy source.",
+"Property must be an individual domestic home.",
+"Deduction is tied to the tax year in which conversion is completed.",
+"Taxpayer must satisfy Alabama income tax filing rules."
+],
+"blockers": [
+"Do not match biomass or biogas electric generation.",
+"Do not match commercial or industrial biomass systems.",
+"Do not match wood-fuel production incentives.",
+"Do not match first-time non-conversion heating installations unless Alabama tax rules allow them."
+],
+"programType": "Personal Tax Deduction",
+"administrator": "Alabama Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/](https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/)",
+"sourceUrlsChecked": [
+"[https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/](https://law.justia.com/codes/alabama/title-40/chapter-18/article-1/section-40-18-15/)",
+"[https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2025RS/HB389-int.pdf](https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2025RS/HB389-int.pdf)",
+"[https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2024RS/SB42-int.pdf](https://alison.legislature.state.al.us/files/pdf/SearchableInstruments/2024RS/SB42-int.pdf)"
+],
+"evidenceText": "Current Alabama code text identifies an income tax deduction for installing a conversion from gas or electricity to wood as primary home heating.",
+"reasoningNotes": "Official code access was limited, but current statutory text is corroborated by Alabama legislative documents. Narrow the match to residential wood-burning heating conversion, not biomass power."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4079",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NM"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Xcel Energy New Mexico electric service territory",
+"Southwestern Public Service Company"
+],
+"notes": "Limited to eligible Xcel Energy New Mexico residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"smart_thermostat_zoning_retrofit",
+"smart_thermostat_demand_response"
+],
+"hardRequirements": [
+"Applicant must be an eligible Xcel Energy New Mexico residential electric customer.",
+"Customer generally must have eligible central air conditioning or electric heat for thermostat rewards participation.",
+"Thermostat must be an eligible Wi-Fi or smart thermostat.",
+"Customer must comply with Xcel Energy rebate and demand-response enrollment rules."
+],
+"blockers": [
+"Do not match commercial HVAC, commercial controls, or industrial energy-management systems.",
+"Do not infer broad HVAC replacement from a smart thermostat program.",
+"Other Xcel rebates, solar, EV charging, and financing are separate programs unless explicitly included on the current residential rebate page."
+],
+"programType": "Rebate Program",
+"administrator": "Xcel Energy",
+"applicationUrl": "[https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards](https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards)",
+"websiteUrl": "[https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards](https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards)",
+"sourceUrlsChecked": [
+"[https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards](https://nm.my.xcelenergy.com/s/residential/heating-cooling/thermostat-rewards)",
+"[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/SPS%20NM%20IRP%20Stakeholder%20Slides-%20EE_LM.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/SPS%20NM%20IRP%20Stakeholder%20Slides-%20EE_LM.pdf)",
+"[https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/22-08-605%20It%20Pays%20To%20Save%20Booklet_NM%202022.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/22-08-605%20It%20Pays%20To%20Save%20Booklet_NM%202022.pdf)"
+],
+"evidenceText": "Xcel New Mexico sources identify Thermostat Rewards and eligible smart thermostats for residential customers, including rebate and demand-response participation.",
+"reasoningNotes": "The thermostat match is supported, but current official pages are dynamic and not all rebate details were fully readable. Keep only thermostat and thermostat demand-response categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5295",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Xcel Energy Colorado electric service territory",
+"Public Service Company of Colorado"
+],
+"notes": "Limited to eligible Xcel Energy Colorado electric customers and projects processed through Xcel's solar application process."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer",
+"business_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"solar_photovoltaic_system"
+],
+"hardRequirements": [
+"Project must be an eligible solar photovoltaic installation in Xcel Energy Colorado territory.",
+"Project must follow Xcel Energy interconnection and Solar Rewards application requirements.",
+"Application is typically managed by the solar installer.",
+"Incentive availability, program capacity, and terms must follow the current Xcel renewable energy plan and tariff rules."
+],
+"blockers": [
+"The matched term window is a false positive and does not support window replacement.",
+"Do not match building-envelope windows, glazing, or window film.",
+"Battery storage is separate unless enrolled through a current Xcel battery program.",
+"Do not match solar loans or financing unless separately verified."
+],
+"programType": "Performance-Based Incentive",
+"administrator": "Xcel Energy",
+"applicationUrl": "[https://co.my.xcelenergy.com/s/renewable/solar-application-process](https://co.my.xcelenergy.com/s/renewable/solar-application-process)",
+"websiteUrl": "[https://co.my.xcelenergy.com/s/renewable/solar-rewards](https://co.my.xcelenergy.com/s/renewable/solar-rewards)",
+"sourceUrlsChecked": [
+"[https://co.my.xcelenergy.com/s/renewable/solar-rewards](https://co.my.xcelenergy.com/s/renewable/solar-rewards)",
+"[https://co.my.xcelenergy.com/s/renewable/solar-application-process](https://co.my.xcelenergy.com/s/renewable/solar-application-process)",
+"[https://www.xcelenergy.com/company/rates_and_regulations/filings/renewable_energy_plans_and_reports](https://www.xcelenergy.com/company/rates_and_regulations/filings/renewable_energy_plans_and_reports)"
+],
+"evidenceText": "Xcel Colorado describes Solar Rewards as incentives for installing solar through Xcel's solar application and interconnection process.",
+"reasoningNotes": "The original window-replacement match is a false positive. This opportunity should match solar photovoltaic installation only, with battery treated as a separate related program unless explicitly included."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22182",
+"confidence": "high",
+"availabilityStatus": "temporarily_closed",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Maryland program for eligible public local education agency school bus fleets and vendors operating on their behalf."
+},
+"eligibleApplicantTypes": [
+"public_school_district",
+"local_education_agency",
+"school_bus_vendor"
+],
+"eligibleSectors": [
+"education",
+"public",
+"transportation"
+],
+"eligibleRetrofitCategories": [
+"electric_school_bus_purchase",
+"school_bus_charging_infrastructure",
+"ev_fleet_transition_planning"
+],
+"hardRequirements": [
+"Applicant must be an eligible public local education agency or a fleet or vendor operating on behalf of one.",
+"Bus must be a publicly funded school bus used for routine student transportation.",
+"Eligible vehicles must be purchased new.",
+"Retrofit and repowered vehicles are not eligible.",
+"Application portal is closed until the next funding round opens."
+],
+"blockers": [
+"Do not match general consumer EV purchase incentives.",
+"Do not match used EVs or repowered school buses.",
+"Do not match non-school-bus fleet vehicles unless covered by a separate Maryland medium-duty or heavy-duty program.",
+"Charging infrastructure should be tied to eligible school bus deployment."
+],
+"programType": "Grant Program",
+"administrator": "Maryland Energy Administration",
+"applicationUrl": "[https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx](https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx)",
+"websiteUrl": "[https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx](https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx)",
+"sourceUrlsChecked": [
+"[https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx](https://energy.maryland.gov/Pages/ElectricSchoolBus.aspx)",
+"[https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/hb1255/?ys=2019rs](https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/hb1255/?ys=2019rs)"
+],
+"evidenceText": "MEA states the FY26 electric school bus portal is closed and eligible projects involve new zero-emission school buses, with charging infrastructure support.",
+"reasoningNotes": "The EV purchase match should be narrowed to new electric school buses and associated charging infrastructure. Current application status is closed pending the next expected round."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1882",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Stanislaus County"
+],
+"cities": [
+"Modesto"
+],
+"utilityTerritories": [
+"Modesto Irrigation District electric service territory"
+],
+"notes": "Limited to qualifying MID residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"high_efficiency_hvac_replacement",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"insulation_upgrade",
+"window_replacement",
+"window_sunscreen_shading",
+"smart_thermostat_demand_response",
+"residential_refrigerator_rebate",
+"high_efficiency_laundry_equipment",
+"residential_induction_cooking",
+"room_air_conditioner"
+],
+"hardRequirements": [
+"Applicant must be an MID residential electric customer.",
+"Equipment must meet current MID residential rebate specifications.",
+"HVAC and heat-pump measures may have size, permit, and household quantity limits.",
+"Power Smart thermostat participation requires qualifying smart thermostat enrollment.",
+"Applications and supporting documentation must satisfy MID current application rules."
+],
+"blockers": [
+"Do not match commercial kitchen equipment; induction support is residential cooktop support only.",
+"Do not match commercial refrigeration; refrigerator support is residential appliance support.",
+"Air filtration was not verified from current official MID sources.",
+"EV charger incentives appear separate and should not be matched to this residential home rebate.",
+"Energy management systems should not be inferred beyond smart thermostat demand response."
+],
+"programType": "Rebate Program",
+"administrator": "Modesto Irrigation District",
+"applicationUrl": "[https://www.mid.org/mid-home-rebate-application/](https://www.mid.org/mid-home-rebate-application/)",
+"websiteUrl": "[https://www.mid.org/saving-energy-money/rebates/residential-rebates/](https://www.mid.org/saving-energy-money/rebates/residential-rebates/)",
+"sourceUrlsChecked": [
+"[https://www.mid.org/saving-energy-money/rebates/residential-rebates/](https://www.mid.org/saving-energy-money/rebates/residential-rebates/)",
+"[https://www.mid.org/mid-home-rebate-application/](https://www.mid.org/mid-home-rebate-application/)",
+"[https://www.mid.org/saving-energy-money/rebates/power-smart/](https://www.mid.org/saving-energy-money/rebates/power-smart/)",
+"[https://www.mid.org/saving-energy-money/rebates/power-smart/approved-thermostat-models/](https://www.mid.org/saving-energy-money/rebates/power-smart/approved-thermostat-models/)",
+"[https://www.mid.org/saving-energy-money/home-saving-tips/three-easy-ways-to-help-manage-your-electric-bill/](https://www.mid.org/saving-energy-money/home-saving-tips/three-easy-ways-to-help-manage-your-electric-bill/)"
+],
+"evidenceText": "Official MID pages and snippets identify residential rebates for HVAC, heat pumps, insulation, windows or sunscreens, appliances, heat pump water heaters, induction cooktops, and smart thermostats.",
+"reasoningNotes": "Direct page access was limited, but official MID snippets were stronger than the prior repair. Confidence can rise to medium while keeping residential-only and product-specific boundaries."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2399",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Sangre de Cristo Electric Association"
+],
+"notes": "Limited to SDCEA members in the cooperative service area."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"member_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"electric_water_heater",
+"residential_heat_pump_clothes_dryer",
+"residential_induction_cooking",
+"smart_thermostat_demand_response",
+"level_2_ev_charger_installation",
+"energy_star_room_air_conditioner",
+"whole_house_fan",
+"air_sealing_weatherization",
+"insulation_upgrade"
+],
+"hardRequirements": [
+"Applicant must be an SDCEA member.",
+"Measure must be installed in SDCEA service territory.",
+"Rebate requests must meet SDCEA current program deadlines and documentation rules.",
+"Some demand-response and managed charging incentives require enrollment or device control participation."
+],
+"blockers": [
+"Direct official pages were partially access-restricted, so unsupported legacy categories should not be retained.",
+"Do not match LED lighting, commercial refrigeration, or commercial kitchen equipment.",
+"Residential induction cooktops are not commercial foodservice equipment.",
+"Do not broaden whole-house fan or room air conditioner support into all HVAC replacement."
+],
+"programType": "Energy Efficiency Credit Program",
+"administrator": "Sangre de Cristo Electric Association",
+"applicationUrl": null,
+"websiteUrl": "[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/)",
+"sourceUrlsChecked": [
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/)",
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/heat-pump-rebates/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/heat-pump-rebates/)",
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/electric-hot-water-rebate/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/electric-hot-water-rebate/)",
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/smart-thermostat-rebates/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/smart-thermostat-rebates/)",
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/electric-vehicle-charging-equipment-rebates/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/electric-vehicle-charging-equipment-rebates/)",
+"[https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/weatherization-rebates/](https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/weatherization-rebates/)"
+],
+"evidenceText": "Official SDCEA result text identifies rebates for heat pumps, electric hot water, smart thermostats, EV charging equipment, weatherization, room air conditioners, and whole-house fans.",
+"reasoningNotes": "Current official snippets support more categories than the prior low-confidence repair, but direct pages remained partly blocked. Confidence rises to medium with conservative residential-only categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2138",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [
+"Lane County"
+],
+"cities": [],
+"utilityTerritories": [
+"Emerald People's Utility District"
+],
+"notes": "Applies to qualifying EPUD non-residential customers in the Oregon utility service area."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"agricultural_customer",
+"non_residential_electric_customer",
+"business_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural"
+],
+"eligibleRetrofitCategories": [
+"window_replacement",
+"insulation_upgrade",
+"led_lighting_retrofit",
+"lighting_controls_retrofit",
+"high_efficiency_hvac_replacement",
+"custom_energy_efficiency_project",
+"agricultural_lighting_efficiency",
+"industrial_lighting_efficiency"
+],
+"hardRequirements": [
+"Applicant must be a qualifying EPUD non-residential customer.",
+"Commercial, industrial, and agricultural incentives must meet current EPUD and Bonneville Power Administration measure rules.",
+"Lighting incentives may require use of BPA or EPUD calculators.",
+"Some projects may require utility coordination, contractor participation, or preapproval."
+],
+"blockers": [
+"Do not infer residential insulation, residential weatherization, or residential appliances from this commercial and industrial program.",
+"Do not match refrigeration or compressed air without current EPUD measure confirmation.",
+"Do not match heat pumps beyond EPUD-supported commercial heating and cooling measures.",
+"Renewable energy and EV programs are separate unless independently verified."
+],
+"programType": "Rebate Program",
+"administrator": "Emerald People's Utility District",
+"applicationUrl": null,
+"websiteUrl": "[https://www.epud.org/energy-efficiency/energy-incentive-programs/](https://www.epud.org/energy-efficiency/energy-incentive-programs/)",
+"sourceUrlsChecked": [
+"[https://www.epud.org/energy-efficiency/energy-incentive-programs/](https://www.epud.org/energy-efficiency/energy-incentive-programs/)",
+"[https://www.epud.org/energy-efficiency/energy-incentive-programs/commercial-incentive-programs/](https://www.epud.org/energy-efficiency/energy-incentive-programs/commercial-incentive-programs/)",
+"[https://www.epud.org/energy-efficiency/energy-incentive-programs/industrial-incentive-programs/](https://www.epud.org/energy-efficiency/energy-incentive-programs/industrial-incentive-programs/)",
+"[https://www.epud.org/energy-efficiency/energy-incentive-programs/agricultural-incentive-programs/](https://www.epud.org/energy-efficiency/energy-incentive-programs/agricultural-incentive-programs/)"
+],
+"evidenceText": "EPUD official snippets identify commercial windows, heating and cooling, lighting upgrades, insulation, custom projects, and BPA-based industrial or agricultural lighting incentives.",
+"reasoningNotes": "Official snippets are stronger than prior access-limited evidence. Confidence rises to medium, while unsupported air compressor and refrigeration categories remain blocked."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2469",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"OR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Lane Electric Cooperative"
+],
+"notes": "Limited to eligible Lane Electric Cooperative members."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"commercial_member",
+"low_income_household"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade",
+"ductless_heat_pump",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater"
+],
+"hardRequirements": [
+"Applicant must be a Lane Electric Cooperative member.",
+"Heat pump rebates and loans require preapproval before installation.",
+"Heat pump work must use a Lane Electric-approved HVAC contractor where required.",
+"Weatherization may require qualifying income or electric heat depending on program track.",
+"Projects must meet Lane Electric and Bonneville Power Administration requirements."
+],
+"blockers": [
+"Do not match renewable energy incentives; Lane Electric states member renewable incentives ended January 1, 2023.",
+"Do not broaden ductless heat pump support into all HVAC replacements.",
+"Do not infer commercial refrigeration, lighting, or industrial measures.",
+"Solar net metering is not a rebate or weatherization incentive."
+],
+"programType": "Grant Program",
+"administrator": "Lane Electric Cooperative",
+"applicationUrl": null,
+"websiteUrl": "[https://www.laneelectric.com/energy-efficiency/energy-saving-programs/](https://www.laneelectric.com/energy-efficiency/energy-saving-programs/)",
+"sourceUrlsChecked": [
+"[https://www.laneelectric.com/energy-efficiency/energy-saving-programs/](https://www.laneelectric.com/energy-efficiency/energy-saving-programs/)",
+"[https://www.laneelectric.com/energy-efficiency/weatherization-programs/](https://www.laneelectric.com/energy-efficiency/weatherization-programs/)",
+"[https://www.laneelectric.com/energy-efficiency/heat-pump-program/](https://www.laneelectric.com/energy-efficiency/heat-pump-program/)",
+"[https://www.laneelectric.com/energy-efficiency/heat-pump-water-heaters/](https://www.laneelectric.com/energy-efficiency/heat-pump-water-heaters/)",
+"[https://www.laneelectric.com/energy-efficiency/renewable-energy/member-renewable-programs/](https://www.laneelectric.com/energy-efficiency/renewable-energy/member-renewable-programs/)"
+],
+"evidenceText": "Lane Electric official snippets identify weatherization, heat pump, and heat pump water heater programs, and state renewable member incentives ended in 2023.",
+"reasoningNotes": "Direct access remained limited, but official snippets are adequate for medium source confidence. Keep core weatherization and heat-pump categories and block expired renewable incentives."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2297",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IN"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Duke Energy Indiana electric service territory"
+],
+"notes": "Limited to eligible Duke Energy Indiana business, school, institutional, industrial, and agricultural electric accounts."
+},
+"eligibleApplicantTypes": [
+"business_customer",
+"commercial_customer",
+"industrial_customer",
+"institutional_customer",
+"school_customer",
+"agricultural_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"institutional",
+"education",
+"agriculture"
+],
+"eligibleRetrofitCategories": [
+"led_lighting_retrofit",
+"lighting_controls_retrofit",
+"high_efficiency_hvac_replacement",
+"high_efficiency_chiller",
+"commercial_equipment_efficiency",
+"industrial_equipment_efficiency",
+"agricultural_equipment_efficiency",
+"custom_energy_efficiency_measure"
+],
+"hardRequirements": [
+"Applicant must be an eligible Duke Energy Indiana business or institutional electric customer.",
+"Equipment must qualify under current Smart $aver Business requirements for Indiana.",
+"Applications must follow Duke Energy documentation, installation date, inspection, and incentive cap rules.",
+"Custom and nonstandard incentives require Duke Energy review and approval."
+],
+"blockers": [
+"Do not match residential Smart $aver home rebates to this business record.",
+"Insulation and refrigeration were not retained without readable current Duke Indiana measure confirmation.",
+"EV charging, solar, and financing offers are separate Duke programs.",
+"Do not infer water or gas measures not supported by the Indiana electric Smart $aver business program."
+],
+"programType": "Rebate Program",
+"administrator": "Duke Energy Indiana",
+"applicationUrl": "[https://www.duke-energy.com/business/products/smartsaver/application-question](https://www.duke-energy.com/business/products/smartsaver/application-question)",
+"websiteUrl": "[https://www.duke-energy.com/business/products/smartsaver](https://www.duke-energy.com/business/products/smartsaver)",
+"sourceUrlsChecked": [
+"[https://www.duke-energy.com/business/products/smartsaver](https://www.duke-energy.com/business/products/smartsaver)",
+"[https://www.duke-energy.com/business/products/smartsaver/application-question](https://www.duke-energy.com/business/products/smartsaver/application-question)",
+"[https://www.duke-energy.com/business/products/smartsaver/application-calculation-assistance?jur=IN01](https://www.duke-energy.com/business/products/smartsaver/application-calculation-assistance?jur=IN01)",
+"[https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates?jur=IN01](https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates?jur=IN01)",
+"[https://www.duke-energy.com/business/products/smartsaver/hvac-incentives](https://www.duke-energy.com/business/products/smartsaver/hvac-incentives)",
+"[https://www.duke-energy.com/business/products/smartsaver/chiller](https://www.duke-energy.com/business/products/smartsaver/chiller)"
+],
+"evidenceText": "Duke Energy official snippets describe Smart $aver Business incentives for qualifying equipment, including lighting, HVAC, chiller, commercial, industrial, agricultural, and custom measures.",
+"reasoningNotes": "Direct Duke pages were partly blocked, but official snippets provide stronger evidence than the prior repair. Confidence rises to medium while unsupported refrigeration and insulation remain blocked."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1968",
+"confidence": "low",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Dixie Electric Cooperative"
+],
+"notes": "Applies to eligible Dixie Electric Cooperative residential members in Alabama; current detailed loan terms were not fully readable."
+},
+"eligibleApplicantTypes": [
+"residential_member",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"residential_energy_efficiency_loan",
+"heat_pump_hvac_financing",
+"high_efficiency_hvac_financing"
+],
+"hardRequirements": [
+"Applicant must be an eligible Dixie Electric Cooperative residential member.",
+"Loan approval and underwriting terms must be verified with the cooperative.",
+"Heat-pump or HVAC financing must follow current cooperative program requirements.",
+"Manufactured home incentives, if applicable, must be verified as part of the current program or treated separately."
+],
+"blockers": [
+"This is financing, not a rebate.",
+"Do not match commercial, industrial, or agricultural measures.",
+"Do not infer biomass, refrigeration, lighting, weatherization, or appliance rebates from this loan record.",
+"Current rates, caps, credit terms, and eligible equipment details require administrator verification because official pages were not fully readable."
+],
+"programType": "Loan Program",
+"administrator": "Dixie Electric Cooperative",
+"applicationUrl": null,
+"websiteUrl": "[https://www.dixie.coop/energy-efficiency-program](https://www.dixie.coop/energy-efficiency-program)",
+"sourceUrlsChecked": [
+"[https://www.dixie.coop/energy-efficiency-program](https://www.dixie.coop/energy-efficiency-program)",
+"[https://www.dixie.coop/manufacturedhomeprogram](https://www.dixie.coop/manufacturedhomeprogram)"
+],
+"evidenceText": "Official Dixie Electric result text identifies a Co-op Energy Efficiency Loan Program and heat-pump-related financing, but detailed current terms were access-restricted.",
+"reasoningNotes": "Keep confidence low because official current program details could not be fully read. Retain only financing categories tied to residential heat-pump or HVAC efficiency."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:1885"
+}
