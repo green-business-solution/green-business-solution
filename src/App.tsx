@@ -6422,7 +6422,6 @@ export function RetrofitRecommendationsPreview({
   const [lastAddedRetrofitId, setLastAddedRetrofitId] = useState<string | null>(null);
   const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -6625,16 +6624,14 @@ export function RetrofitRecommendationsPreview({
 
   return (
     <div
-      className={`user-preview-shell${sidebarCollapsed ? " is-sidebar-collapsed" : ""}${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}`}
+      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}`}
       data-testid="retrofit-recommendations-preview"
     >
       <UserPreviewSidebar
         activeRetrofitId={activeRetrofit?.id || ""}
-        collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
         onSelectRetrofit={handleSidebarRetrofitSelect}
-        onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
         retrofits={displayedRetrofits}
       />
       <main className="user-preview-main">
@@ -6644,33 +6641,6 @@ export function RetrofitRecommendationsPreview({
             <span>Retrofits</span>
           </button>
           {error ? <p className="error-message">{error}</p> : null}
-
-          <RetrofitPickerView
-            activeRetrofitId={activeRetrofit?.id || ""}
-            displayedRetrofits={displayedRetrofits}
-            emptyMessage={emptyMessage}
-            isLoading={isLoading}
-            loadingMessage={loadingMessage}
-            hideBillData={shouldMaskBillDerivedMetrics}
-            onCloseDetails={() => setActiveRetrofitId("")}
-            onSearchChange={(value) => {
-              setSearchQuery(value);
-              setPickerVisibleCount(6);
-            }}
-            onSelectRetrofit={handleRetrofitTabClick}
-            onSetViewMode={setPickerViewMode}
-            onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
-            onShowLess={() => setPickerVisibleCount(6)}
-            onSortChange={(value) => {
-              setSortBy(value);
-              setPickerVisibleCount(6);
-            }}
-            onUploadBills={handleUploadBills}
-            pickerViewMode={pickerViewMode}
-            pickerVisibleCount={pickerVisibleCount}
-            searchQuery={searchQuery}
-            sortBy={sortBy}
-          />
 
           {activeRetrofit ? (
             <>
@@ -6740,7 +6710,34 @@ export function RetrofitRecommendationsPreview({
                 </div>
               </section>
             </>
-          ) : null}
+          ) : (
+            <RetrofitPickerView
+              activeRetrofitId=""
+              displayedRetrofits={displayedRetrofits}
+              emptyMessage={emptyMessage}
+              isLoading={isLoading}
+              loadingMessage={loadingMessage}
+              hideBillData={shouldMaskBillDerivedMetrics}
+              onCloseDetails={() => setActiveRetrofitId("")}
+              onSearchChange={(value) => {
+                setSearchQuery(value);
+                setPickerVisibleCount(6);
+              }}
+              onSelectRetrofit={handleRetrofitTabClick}
+              onSetViewMode={setPickerViewMode}
+              onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
+              onShowLess={() => setPickerVisibleCount(6)}
+              onSortChange={(value) => {
+                setSortBy(value);
+                setPickerVisibleCount(6);
+              }}
+              onUploadBills={handleUploadBills}
+              pickerViewMode={pickerViewMode}
+              pickerVisibleCount={pickerVisibleCount}
+              searchQuery={searchQuery}
+              sortBy={sortBy}
+            />
+          )}
 
           {financingRetrofit ? (
             <FinancingPreviewDrawer retrofit={financingRetrofit} onClose={() => setFinancingRetrofit(null)} />
@@ -6762,19 +6759,15 @@ export function RetrofitRecommendationsPreview({
 
 function UserPreviewSidebar({
   activeRetrofitId,
-  collapsed,
   mobileOpen,
   onCloseMobile,
   onSelectRetrofit,
-  onToggleCollapsed,
   retrofits
 }: {
   activeRetrofitId: string;
-  collapsed: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
-  onToggleCollapsed: () => void;
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(true);
@@ -6782,7 +6775,7 @@ function UserPreviewSidebar({
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
-      <aside className={`user-preview-sidebar${collapsed ? " is-collapsed" : ""}${mobileOpen ? " is-mobile-open" : ""}`} aria-label="RetroFi navigation">
+      <aside className={`user-preview-sidebar${mobileOpen ? " is-mobile-open" : ""}`} aria-label="RetroFi navigation">
         <div className="user-preview-sidebar-brand">
           <RetroFiBrandIcon />
           <strong className="sidebar-wordmark">RetroFi</strong>
@@ -6824,9 +6817,6 @@ function UserPreviewSidebar({
             </button>
           </div>
         </nav>
-        <button className="user-preview-sidebar-collapse" onClick={onToggleCollapsed} type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
-          <DoubleChevronIcon />
-        </button>
       </aside>
     </>
   );
@@ -7079,15 +7069,6 @@ function ChevronDownIcon() {
   return (
     <svg className="chevron-down-icon" fill="none" viewBox="0 0 20 20">
       <path d="m5.8 7.6 4.2 4.2 4.2-4.2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
-function DoubleChevronIcon() {
-  return (
-    <svg className="double-chevron-icon" fill="none" viewBox="0 0 20 20">
-      <path d="m12 5-5 5 5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-      <path d="m16 5-5 5 5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
     </svg>
   );
 }

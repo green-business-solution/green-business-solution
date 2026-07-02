@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) selected retrofit page mode
+
+- Removed the leftover sidebar collapse control and divider under the Retrofits navigation group.
+- Changed selected retrofit behavior so choosing a retrofit replaces the picker with the selected retrofit workspace instead of appending details underneath the grid.
+- Kept the mobile Retrofits drawer opener and focused preview coverage for the cleaned sidebar states.
+
 ## 2026-07-02 - Codex (GPT-5) application prep extraction quality pass
 
 - Added application artifact relevance ranking so billing portals, generic navigation, and unrelated utility forms are filtered into diagnostics instead of final ApplicationProfile artifacts.
