@@ -120,6 +120,10 @@
 - Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
 - Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
 
+## 2026-07-02 - Codex (GPT-5) how it works hero seam blend
+
+- Adjusted the `How It Works` hero gradient so the lower portion fades into the same dark tone used by the journey image section, removing the hard visual seam.
+
 ## 2026-07-02 - Codex (GPT-5) how it works premium hero restyle
 
 - Restyled the top `How It Works` hero into a premium black and gray treatment with darker gradients, brighter typography, and more subdued chrome.
