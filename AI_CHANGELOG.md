@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) state-dependent incentive TODO
+
+- Added a product TODO for tracking user state, already-completed retrofits, and dependent opportunity logic so future estimates can recalculate incentives when prior retrofits change marginal savings, tiers, caps, or eligible basis.
+
 ## 2026-07-02 - Codex (GPT-5) GPT Pro repair packet 79-96
 
 - Created a combined GPT Pro opportunity-data repair packet in `GPT Pro Work/opportunity-data-repair-batches-79-96/`.

@@ -18,6 +18,10 @@ This document captures product, data-quality, and verification work that should 
 - Use the v2 incentive calculation model in [Incentive Calculation Model V2](./incentive-calculation-model-v2.md) as the implementation direction for replacing simple one-rule opportunity incentives.
 - Redesign incentive rules so an opportunity can hold rate tables, measure catalogs, multiple calculation components, caps, per-customer limits, eligibility conditions, and both one-time and recurring effects. Do not assume one opportunity maps to one simple formula.
 - Preserve multiple incentive effects even before the full v2 schema lands: an opportunity-retrofit pair may have separate upfront, recurring savings, recurring expense, tax, and grant-estimate rules with the same `opportunityId`.
+- Current simplifying assumption: retrofit estimates and opportunity matches are treated independently. If one opportunity applies to multiple retrofits, the estimator currently assumes the user has not already implemented related retrofits and does not recalculate value based on prior completed work.
+- TODO: Add user state tracking for already-implemented retrofits and dependent opportunities. A user's current state should include completed retrofits, installed measures, prior incentive use, achieved energy reduction, remaining eligible basis, and other facts that can change the marginal value of a later retrofit. For opportunities with state-dependent thresholds, caps, tiers, or stacking rules, recalculate one-time savings, recurring savings, grant estimates, rebates, and tax credits from the user's current state instead of treating each retrofit as independent.
+- Example dependency to model later: energy-savings tax credits or incentives where the first 50% energy reduction earns one fixed dollar amount per square foot, but savings beyond that threshold earn a different value. If completed retrofits already put the user past the 50% threshold, the next retrofit's one-time and recurring savings should be valued using the correct marginal tier rather than the base tier.
+- Keep the future state/dependency logic case-specific and source-backed. Some opportunities may depend on cumulative energy reduction, some on prior rebate claims, some on caps across measures, and some on whether another retrofit has already used the same eligible cost basis.
 - Fact-check existing simple-formula rules with GPT Pro help. Some opportunities currently modeled with simple formulas may actually require rate-card or measure-catalog extraction, and those rules should be repaired before they are trusted in user-facing estimates.
 - Classify grant estimates into the correct calculation bucket:
   - deterministic upfront grants or rebates should reduce one-time cost;
@@ -37,6 +41,7 @@ This document captures product, data-quality, and verification work that should 
 - Add a future user interface where users can deselect opportunities from the best scenario and choose the opportunities they actually want to pursue.
 - Recalculate one-time cost, one-time savings, recurring savings, recurring expenses, payback, ROI, and grant estimates dynamically from the selected opportunity subset.
 - Clearly show when a selected opportunity conflicts with another selected opportunity or when adding an opportunity changes the calculation basis.
+- Add a future state editor where users can record retrofits they have already completed before using RetroFi. This state should feed the dependent-opportunity calculator so recommended next retrofits reflect already-used incentives, cumulative project history, and marginal savings tiers.
 
 ## User Portal
 
