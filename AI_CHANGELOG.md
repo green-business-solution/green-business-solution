@@ -1,5 +1,6 @@
 # AI Changelog
 
+<<<<<<< HEAD
 ## 2026-07-02 - Codex (GPT-5) Geocodio quota guard
 
 - Added a DynamoDB-backed daily quota guard for Geocodio fallback lookups so the API stops calling Geocodio after 2,500 fallback reservations in a UTC day.
@@ -22,6 +23,10 @@
 - Collapsed the `/user-preview` sidebar Retrofits dropdown by default on first load.
 - Kept Profile info and Dashboard visible below the group while hiding retrofit items until the group is expanded.
 - Auto-expands the Retrofits group once a retrofit is active, without marking the first item active before selection.
+
+## 2026-07-02 - Codex (GPT-5) revert permanent dark mode
+
+- Restored the shared site stylesheet to the prior light theme after the dark-mode rollout, bringing the admin panel and other shared surfaces back to the original light look.
 
 ## 2026-07-02 - Codex (GPT-5) user preview sidebar brand icon removal
 
