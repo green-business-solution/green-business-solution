@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) opportunity retention policy TODOs
+
+- Clarified product TODOs so source-inaccessible opportunities that fail targeted GPT Pro repair should be archived or excluded instead of treated as indefinite manual blockers.
+- Added guidance to retain non-monetary special-workflow opportunities and expand the retrofit/workflow taxonomy for currently unsupported but source-backed opportunity paths, including future no-retrofit-needed/action-only opportunities.
+- Clarified that tax credits should be modeled as first-class tax incentive effects rather than routed through grant estimation or ignored.
+
 ## 2026-07-02 - Codex (GPT-5) GPT Pro opportunity data repair batches 79-96
 
 - Validated the 18 GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-79-96/` and confirmed each output matched its prompt target set, including the final 14-target batch.
