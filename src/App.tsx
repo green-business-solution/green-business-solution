@@ -380,6 +380,14 @@ type ApplicationMethod =
 
 type SourceExtractionStatus = "not_started" | "source_found" | "source_missing" | "needs_review";
 type SourceConfidence = "High" | "Medium" | "Low" | "Needs review";
+type ApplicationPathStatus =
+  | "application_path_found"
+  | "program_source_only"
+  | "contact_only"
+  | "needs_review"
+  | "source_unreadable"
+  | "not_attempted";
+type ApplicationMethodStatus = "confirmed" | "inferred" | "unknown";
 
 type OpportunityApplicationSource = {
   opportunityId: string;
@@ -404,6 +412,34 @@ type AdminApplicationSourcesResponse = {
   note?: string | null;
   error?: string;
   sources: OpportunityApplicationSource[];
+};
+
+type ApplicationPathEvidence = {
+  label: string;
+  textSnippet?: string;
+  url?: string;
+};
+
+type ApplicationPathProfile = {
+  opportunityId: string;
+  opportunityName?: string;
+  programSourceUrl?: string;
+  discoveredApplicationUrl?: string;
+  discoveredPdfUrl?: string;
+  discoveredContactEmail?: string;
+  confirmedApplicationMethod: ApplicationMethod;
+  methodStatus: ApplicationMethodStatus;
+  pathStatus: ApplicationPathStatus;
+  evidence: ApplicationPathEvidence[];
+  sourceFetchedAt?: string;
+  sourceTitle?: string;
+  error?: string;
+  notes: string[];
+};
+
+type AdminApplicationPathDiscoverResponse = {
+  generatedAt: string;
+  profile: ApplicationPathProfile;
 };
 
 type SampleMatchResult = {
@@ -5533,12 +5569,20 @@ export function RetrofitRecommendationsPreview({
       ? formatCents(confirmedRetrofit.metrics.upfrontFinancialIncentive)
       : "Not included yet";
   const recalculationStatus = addedPlanCount === 0 ? "No retrofit added yet" : "Recalculation pending";
+  const totalMatchedRetrofits = payload?.summary.matchedRetrofitCount || preview.retrofits.length;
+  const shownFirstCount = Math.min(5, totalMatchedRetrofits || displayedRetrofits.length);
 
   useEffect(() => {
     if (activeRetrofit && activeRetrofit.id !== activeRetrofitId) {
       setActiveRetrofitId(activeRetrofit.id);
     }
   }, [activeRetrofit, activeRetrofitId]);
+
+  useEffect(() => {
+    if (typeof document === "undefined" || !activeRetrofitId) return;
+    const activeTab = document.querySelector(`[data-retrofit-tab-id="${activeRetrofitId}"]`);
+    activeTab?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [activeRetrofitId]);
 
   function handleUploadBills() {
     if (typeof window !== "undefined") {
@@ -5667,11 +5711,8 @@ export function RetrofitRecommendationsPreview({
             <span className="soft-badge">{preview.dataSourceLabel}</span>
             {payload?.generatedAt ? <span className="soft-badge">Last updated: {formatDate(payload.generatedAt)}</span> : null}
             {isAdminPreview && preview.customerName ? <span className="soft-badge">Selected profile: {preview.customerName}</span> : null}
+            {totalMatchedRetrofits ? <span className="soft-badge">Top {shownFirstCount} shown first · {totalMatchedRetrofits} total</span> : null}
           </div>
-        </div>
-        <div className="retrofit-preview-header-meta">
-          <strong>{Math.min(5, payload?.summary.matchedRetrofitCount || 0)}</strong>
-          <span>{isLoading ? "loading matches" : "top retrofits shown first"}</span>
         </div>
       </header>
 
@@ -5695,7 +5736,7 @@ export function RetrofitRecommendationsPreview({
       <section className="retrofit-refinement-panel">
         <div>
           <h2>Improve your estimates</h2>
-          <p>Upload utility bills or answer retrofit-specific questions to unlock more accurate savings, eligibility, and payback estimates.</p>
+          <p>Upload utility bills, add quotes, or answer retrofit-specific questions to improve savings, eligibility, and payback estimates.</p>
           <p className="muted-message">
             Estimate completeness: {preview.estimateCompletenessPercent == null ? "Not enough information yet" : preview.estimateCompletenessPercent < 50 ? "Partial estimate" : `${preview.estimateCompletenessPercent}%`}
             {preview.missingInputs.length ? ` · Missing: ${preview.missingInputs.join(", ")}` : ""}
@@ -5773,11 +5814,11 @@ export function RetrofitRecommendationsPreview({
           <h2>Current retrofit plan</h2>
           <p>
             {addedPlanCount === 0
-              ? "No retrofit added yet. Choose one retrofit, select a scenario and opportunities, then add it to your plan. Other retrofit estimates may update after each confirmed retrofit."
+              ? "No retrofit added yet."
               : `${confirmedRetrofitName || "Selected retrofit"} added. Scenario: ${formatScenarioDefaultLabel(confirmedScenario?.name)}. Selected opportunities: ${confirmedPlan?.opportunityIds.length || 0}. Included incentive: ${confirmedIncludedIncentive}. Missing: ${confirmedRetrofit?.missingInfo.length ? confirmedRetrofit.missingInfo.join(", ") : "No blockers currently flagged"}.`}
           </p>
           <p className="current-plan-guidance">
-            Choose one retrofit at a time. Adding one retrofit can change the savings, payback, and eligibility assumptions for other retrofits because your building's energy baseline may change.
+            Choose one retrofit at a time. Adding one retrofit may update savings, payback, and eligibility assumptions for the others.
           </p>
         </div>
         <div className="current-plan-stats">
@@ -5789,21 +5830,34 @@ export function RetrofitRecommendationsPreview({
         </div>
         {planMessage ? <p className="preview-local-note">{planMessage}</p> : null}
         <div className="current-plan-actions">
-          <button className="secondary-button" disabled={addedPlanCount === 0} type="button">Prepare applications</button>
-          <button
-            className="secondary-button"
-            disabled={!activeRetrofit}
-            onClick={() => {
-              const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit?.id);
-              if (next) handleRetrofitTabClick(next.id);
-            }}
-            type="button"
-          >
-            Review next retrofit
-          </button>
-          <button className="secondary-button" disabled={!activeRetrofit} onClick={() => activeRetrofit && markRetrofitDirty(activeRetrofit.id)} type="button">
-            Update this selection
-          </button>
+          {addedPlanCount === 0 ? (
+            <button
+              className="secondary-button"
+              disabled={!activeRetrofit}
+              onClick={() => document.querySelector(".retrofit-preview-card-active")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              type="button"
+            >
+              Continue editing active retrofit
+            </button>
+          ) : (
+            <>
+              <button className="secondary-button" type="button">Prepare applications</button>
+              <button
+                className="secondary-button"
+                disabled={!activeRetrofit}
+                onClick={() => {
+                  const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit?.id);
+                  if (next) handleRetrofitTabClick(next.id);
+                }}
+                type="button"
+              >
+                Review next retrofit
+              </button>
+              <button className="secondary-button" disabled={!activeRetrofit} onClick={() => activeRetrofit && markRetrofitDirty(activeRetrofit.id)} type="button">
+                Update this selection
+              </button>
+            </>
+          )}
         </div>
       </section>
 
@@ -5828,11 +5882,12 @@ export function RetrofitRecommendationsPreview({
                   key={retrofit.id}
                   type="button"
                   className={`retrofit-tab${activeRetrofit?.id === retrofit.id ? " is-active" : ""}`}
+                  data-retrofit-tab-id={retrofit.id}
                   onClick={() => handleRetrofitTabClick(retrofit.id)}
                 >
                   <div className="retrofit-tab-top">
                     <span className="rank-pill">#{retrofit.rank}</span>
-                    {tabState ? <span className="plan-state-badge">{tabState}</span> : null}
+                    {tabState ? <span className={`plan-state-badge ${slugify(tabState)}`}>{tabState}</span> : null}
                   </div>
                   <strong className="retrofit-tab-title">{retrofit.name}</strong>
                   <span className="retrofit-tab-category">{retrofit.category || "Retrofit"}</span>
@@ -9343,6 +9398,9 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
   const [statusFilter, setStatusFilter] = useState("");
   const [sourceTypeFilter, setSourceTypeFilter] = useState("");
   const [methodFilter, setMethodFilter] = useState("");
+  const [pathProfiles, setPathProfiles] = useState<Record<string, ApplicationPathProfile>>({});
+  const [pathLoading, setPathLoading] = useState<Record<string, boolean>>({});
+  const [pathErrors, setPathErrors] = useState<Record<string, string>>({});
   const batchLimit = 100;
 
   async function loadSources(options?: { cursor?: string | null; append?: boolean }) {
@@ -9388,6 +9446,41 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
       } else {
         setIsLoading(false);
       }
+    }
+  }
+
+  async function discoverPath(row: OpportunityApplicationSource) {
+    if (!credential) {
+      setPathErrors((current) => ({
+        ...current,
+        [row.opportunityId]: "Sign in again to discover application paths."
+      }));
+      return;
+    }
+
+    setPathLoading((current) => ({ ...current, [row.opportunityId]: true }));
+    setPathErrors((current) => {
+      const next = { ...current };
+      delete next[row.opportunityId];
+      return next;
+    });
+
+    try {
+      const response = await apiPost<AdminApplicationPathDiscoverResponse>("/api/admin/application-paths/discover", {
+        ...adminAuthBody(credential),
+        sourceProfile: row
+      });
+      setPathProfiles((current) => ({
+        ...current,
+        [row.opportunityId]: response.profile
+      }));
+    } catch (requestError) {
+      setPathErrors((current) => ({
+        ...current,
+        [row.opportunityId]: requestError instanceof Error ? requestError.message : "Could not discover application path."
+      }));
+    } finally {
+      setPathLoading((current) => ({ ...current, [row.opportunityId]: false }));
     }
   }
 
@@ -9488,6 +9581,7 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
                   <th>Status</th>
                   <th>Confidence</th>
                   <th>Notes</th>
+                  <th>Path discovery</th>
                   <th>Open</th>
                 </tr>
               </thead>
@@ -9518,6 +9612,15 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
                           <li key={note}>{note}</li>
                         ))}
                       </ul>
+                    </td>
+                    <td>
+                      {renderApplicationPathDiscovery({
+                        row,
+                        profile: pathProfiles[row.opportunityId],
+                        isLoading: Boolean(pathLoading[row.opportunityId]),
+                        error: pathErrors[row.opportunityId],
+                        onDiscover: () => void discoverPath(row)
+                      })}
                     </td>
                     <td>
                       <div className="application-source-actions">
@@ -9567,6 +9670,77 @@ function renderApplicationSourceLink(url?: string) {
   );
 }
 
+function renderApplicationPathDiscovery({
+  row,
+  profile,
+  isLoading,
+  error,
+  onDiscover
+}: {
+  row: OpportunityApplicationSource;
+  profile?: ApplicationPathProfile;
+  isLoading: boolean;
+  error?: string;
+  onDiscover: () => void;
+}) {
+  const canDiscover = Boolean(row.programSourceUrl || row.applicationUrl);
+  return (
+    <div className="application-path-discovery">
+      <button className="secondary-button" disabled={!canDiscover || isLoading} onClick={onDiscover} type="button">
+        {isLoading ? "Discovering..." : profile ? "Refresh path" : "Discover path"}
+      </button>
+      {!canDiscover ? <small>No source URL</small> : null}
+      {error ? <small className="application-path-error">{error}</small> : null}
+      {profile ? (
+        <div className="application-path-result">
+          <div className="application-path-pill-row">
+            <span className={`application-source-status-pill ${applicationPathStatusClassName(profile.pathStatus)}`}>
+              {formatApplicationPathStatusLabel(profile.pathStatus)}
+            </span>
+            <span className="application-path-method">
+              {formatApplicationMethodLabel(profile.confirmedApplicationMethod)} · {formatApplicationMethodStatusLabel(profile.methodStatus)}
+            </span>
+          </div>
+          {profile.sourceTitle ? <small>{profile.sourceTitle}</small> : null}
+          <dl className="application-path-links">
+            {profile.discoveredApplicationUrl ? (
+              <div>
+                <dt>Application</dt>
+                <dd>{renderApplicationSourceLink(profile.discoveredApplicationUrl)}</dd>
+              </div>
+            ) : null}
+            {profile.discoveredPdfUrl && profile.discoveredPdfUrl !== profile.discoveredApplicationUrl ? (
+              <div>
+                <dt>PDF</dt>
+                <dd>{renderApplicationSourceLink(profile.discoveredPdfUrl)}</dd>
+              </div>
+            ) : null}
+            {profile.discoveredContactEmail ? (
+              <div>
+                <dt>Email</dt>
+                <dd>{profile.discoveredContactEmail}</dd>
+              </div>
+            ) : null}
+          </dl>
+          {profile.evidence.length ? (
+            <ul className="application-path-evidence">
+              {profile.evidence.slice(0, 3).map((item, index) => (
+                <li key={`${item.label}:${index}`}>
+                  <strong>{item.label}</strong>
+                  {item.textSnippet ? <span>{item.textSnippet}</span> : null}
+                  {item.url ? renderApplicationSourceLink(item.url) : null}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {profile.error ? <small className="application-path-error">{profile.error}</small> : null}
+          {!profile.evidence.length && profile.notes.length ? <small>{profile.notes[0]}</small> : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function truncateLinkLabel(value: string, maxLength = 44) {
   if (value.length <= maxLength) return value;
   return `${value.slice(0, maxLength - 1)}...`;
@@ -9593,10 +9767,32 @@ function formatExtractionStatusLabel(value: SourceExtractionStatus) {
   return "Not started";
 }
 
+function formatApplicationPathStatusLabel(value: ApplicationPathStatus) {
+  if (value === "application_path_found") return "Path found";
+  if (value === "program_source_only") return "Source only";
+  if (value === "contact_only") return "Contact only";
+  if (value === "source_unreadable") return "Unreadable";
+  if (value === "not_attempted") return "Not attempted";
+  return "Needs review";
+}
+
+function formatApplicationMethodStatusLabel(value: ApplicationMethodStatus) {
+  if (value === "confirmed") return "confirmed";
+  if (value === "inferred") return "inferred";
+  return "unknown";
+}
+
 function applicationSourceStatusClassName(value: SourceExtractionStatus) {
   if (value === "source_found") return "is-found";
   if (value === "source_missing") return "is-missing";
   if (value === "needs_review") return "is-review";
+  return "is-pending";
+}
+
+function applicationPathStatusClassName(value: ApplicationPathStatus) {
+  if (value === "application_path_found") return "is-found";
+  if (value === "source_unreadable") return "is-missing";
+  if (value === "program_source_only" || value === "contact_only" || value === "needs_review") return "is-review";
   return "is-pending";
 }
 

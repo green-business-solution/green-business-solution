@@ -1619,6 +1619,88 @@ dd {
   min-width: 70px;
 }
 
+.application-path-discovery {
+  display: grid;
+  gap: 8px;
+  min-width: 280px;
+}
+
+.application-path-discovery .secondary-button {
+  width: fit-content;
+}
+
+.application-path-discovery small {
+  color: #62736a;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.application-path-error {
+  color: #a13c2f !important;
+}
+
+.application-path-result {
+  background: #f8fbf9;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+}
+
+.application-path-pill-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.application-path-method {
+  color: #4f5e56;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.application-path-links {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.application-path-links div {
+  display: grid;
+  gap: 2px;
+}
+
+.application-path-links dt {
+  color: #62736a;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.application-path-links dd {
+  margin: 0;
+}
+
+.application-path-evidence {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.application-path-evidence li {
+  color: #4f5e56;
+  display: grid;
+  gap: 3px;
+  line-height: 1.35;
+}
+
+.application-path-evidence strong {
+  color: #223128;
+}
+
 .opportunity-review-layout {
   align-items: start;
   display: grid;

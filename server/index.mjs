@@ -16,6 +16,7 @@ import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchPr
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
+import { findOpportunityApplicationPath } from "./applicationSources/ApplicationPathFinder.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -3157,6 +3158,34 @@ app.get("/api/admin/application-sources", async (req, res) => {
       sources: batch.sources
     });
   } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-paths/discover", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const sourceProfile = req.body?.sourceProfile || req.body?.applicationSource || null;
+    if (!sourceProfile || typeof sourceProfile !== "object") {
+      const error = new Error("Application source profile is required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const startedAt = Date.now();
+    const profile = await findOpportunityApplicationPath({ sourceProfile });
+    console.log(
+      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} pathStatus=${profile.pathStatus} methodStatus=${profile.methodStatus} durationMs=${Date.now() - startedAt}`
+    );
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      profile
+    });
+  } catch (error) {
+    if (classifyError(error).status >= 500) {
+      console.error("[admin/application-paths/discover] failed", error);
+    }
     handleError(res, error);
   }
 });

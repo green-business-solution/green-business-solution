@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application path finder
+
+- Added read-only `ApplicationPathFinder` source-page inspection for one opportunity source profile at a time, with bounded fetch timeout/response size, no crawling, no browser automation, and no DynamoDB writes.
+- Added mocked fixture tests covering apply links, PDF application links, email application paths, contractor-submitted instructions, tax/accountant filing language, utility portal links, readable no-path pages, and unreadable source failures.
+- Added a separate admin path-discovery endpoint and per-row `/admin/application-sources` action so path discovery is explicit and does not trigger external fetches during initial source-audit page load.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview readability follow-up
 
 - Further tightened the Retrofit Recommendations active workspace after screenshot review by removing sticky mini-navigation overlap and shortening default scenario tab copy.
