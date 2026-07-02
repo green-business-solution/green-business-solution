@@ -3062,7 +3062,6 @@ function HowItWorksPage({
             >
               <p className="journey-intro-eyebrow">How it works</p>
               <h1>From outdated building to high-performing business</h1>
-              <p>Scroll to clear the clouds and reveal the RetroFi transformation.</p>
             </header>
           ) : (
             <div className="journey-story-shell">
