@@ -2229,7 +2229,7 @@ dd {
 
 .retrofit-refinement-panel {
   align-items: center;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.7fr) auto;
 }
 
 .retrofit-refinement-panel p,
@@ -2267,6 +2267,35 @@ dd {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-end;
+}
+
+.retrofit-refinement-status {
+  background: #fbfdfb;
+  border: 1px solid #e2eae5;
+  border-radius: 14px;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+}
+
+.retrofit-refinement-status span {
+  color: var(--rf-muted);
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 15px;
+}
+
+.retrofit-refinement-status p {
+  color: var(--rf-text);
+  font-weight: 650;
+}
+
+.retrofit-refinement-status small {
+  color: var(--rf-muted);
+  font-size: 12px;
+  line-height: 16px;
+  max-height: 32px;
+  overflow: hidden;
 }
 
 .retrofit-card-actions {
@@ -2417,7 +2446,7 @@ dd {
   border-radius: 18px;
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.4fr) auto;
+  grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1fr) minmax(190px, 0.5fr) auto;
   padding: 14px 16px;
 }
 
@@ -2436,7 +2465,7 @@ dd {
 .current-plan-stats {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(5, minmax(90px, 1fr));
+  grid-template-columns: repeat(3, minmax(90px, 1fr));
 }
 
 .current-plan-stats .detail-item {
@@ -2453,6 +2482,29 @@ dd {
   gap: 8px;
   grid-column: auto;
   justify-content: flex-end;
+}
+
+.current-plan-next-step {
+  align-self: center;
+  background: #fbfdfb;
+  border: 1px solid #e4ebe6;
+  border-radius: 12px;
+  display: grid;
+  gap: 4px;
+  padding: 8px 10px;
+}
+
+.current-plan-next-step span {
+  color: var(--rf-muted);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.current-plan-next-step strong {
+  color: var(--rf-text);
+  font-size: 14px;
+  line-height: 19px;
 }
 
 .retrofit-tab-shell {
@@ -2485,7 +2537,7 @@ dd {
   color: #17211b;
   display: grid;
   gap: 4px;
-  height: 122px;
+  height: 118px;
   overflow: hidden;
   padding: 10px 12px;
   scroll-snap-align: start;
@@ -2644,8 +2696,8 @@ dd {
 
 .retrofit-tab .rank-pill {
   font-size: 11px;
-  height: 24px;
-  min-width: 34px;
+  height: 22px;
+  min-width: 32px;
   padding: 0 8px;
 }
 
@@ -2728,6 +2780,13 @@ dd {
   color: #32443a;
   min-height: 36px;
   padding: 7px 12px;
+}
+
+.retrofit-section-chip.is-active,
+.retrofit-section-chip[aria-current="true"] {
+  background: var(--rf-green-soft);
+  border-color: var(--rf-green-border);
+  color: var(--rf-text);
 }
 
 .why-recommended {

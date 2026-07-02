@@ -6,6 +6,12 @@
 - Added mocked fixture tests covering apply links, PDF application links, email application paths, contractor-submitted instructions, tax/accountant filing language, utility portal links, readable no-path pages, and unreadable source failures.
 - Added a separate admin path-discovery endpoint and per-row `/admin/application-sources` action so path discovery is explicit and does not trigger external fetches during initial source-audit page load.
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview full polish follow-up
+
+- Completed the next Retrofit Recommendations polish pass by making the improve-estimates panel a true three-zone row, reducing the current plan to active draft / selected count / recalculation / next step, and keeping initial plan actions relevant.
+- Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
+- Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview hover and flow cleanup
 
 - Fixed Retrofit Recommendations preview hover states so tabs, scenario cards, subnav chips, secondary buttons, opportunity rows, and action rows use light readable hover styles instead of inheriting dark global button hover.

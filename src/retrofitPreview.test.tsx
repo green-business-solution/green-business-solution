@@ -216,13 +216,18 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Current retrofit plan");
     expect(html).toContain("Choose one retrofit at a time");
     expect(html).toContain("Continue editing active retrofit");
+    expect(html).not.toContain("Prepare applications</button>");
+    expect(html).toContain("retrofit-refinement-status");
+    expect(html).toContain("current-plan-next-step");
     expect(html).not.toContain("retrofit-preview-header-meta");
     expect(html).toContain("Top 1 shown first · 1 total");
     expect(html).toContain("Add this retrofit to plan");
     expect(html).toContain("Retrofit tabs");
     expect(html).toContain("Default: Low upfront");
     expect(html).toContain("Decision summary");
+    expect(html).toContain("aria-current=\"true\"");
     expect(html).not.toContain("Summary across selected retrofits");
+    expect(html).not.toContain("Opportunities: 1 selected / 1 found");
     expect(html).not.toContain("No major missing inputs flagged");
     expect(html).toContain("Scenario A: Low upfront cost");
     expect(html).toContain("Scenario B: Best payback");
@@ -344,9 +349,14 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .retrofit-section-chip:hover");
+    expect(css).toContain(".retrofit-section-chip.is-active");
     expect(css).toContain(".retrofit-tab.is-active");
     expect(css).toContain("background: var(--rf-green-soft)");
     expect(css).toContain("background: var(--rf-bg)");
+    expect(css).toContain("height: 118px");
+    expect(css).toContain("grid-template-columns: repeat(3, minmax(90px, 1fr))");
+    expect(css).toContain(".retrofit-refinement-status");
+    expect(css).toContain(".current-plan-next-step");
 
     const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
     expect(tabHoverRule).not.toContain("#0f573c");

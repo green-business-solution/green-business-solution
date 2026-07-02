@@ -5737,11 +5737,14 @@ export function RetrofitRecommendationsPreview({
         <div>
           <h2>Improve your estimates</h2>
           <p>Upload utility bills, add quotes, or answer retrofit-specific questions to improve savings, eligibility, and payback estimates.</p>
-          <p className="muted-message">
-            Estimate completeness: {preview.estimateCompletenessPercent == null ? "Not enough information yet" : preview.estimateCompletenessPercent < 50 ? "Partial estimate" : `${preview.estimateCompletenessPercent}%`}
-            {preview.missingInputs.length ? ` · Missing: ${preview.missingInputs.join(", ")}` : ""}
-          </p>
           {refinementMessage ? <p className="preview-local-note">{refinementMessage}</p> : null}
+        </div>
+        <div className="retrofit-refinement-status">
+          <span>Estimate completeness</span>
+          <p className="muted-message">
+            {preview.estimateCompletenessPercent == null ? "Not enough information yet" : preview.estimateCompletenessPercent < 50 ? "Partial estimate" : `${preview.estimateCompletenessPercent}%`}
+          </p>
+          <small>{preview.missingInputs.length ? `Missing: ${preview.missingInputs.join(", ")}` : "No major blockers flagged"}</small>
         </div>
         <div className="retrofit-refinement-actions">
           <button onClick={handleUploadBills} type="button">Upload bills</button>
@@ -5822,11 +5825,13 @@ export function RetrofitRecommendationsPreview({
           </p>
         </div>
         <div className="current-plan-stats">
-          <DetailItem label="Selected retrofit count" value={`${addedPlanCount}`} />
           <DetailItem label="Active draft retrofit" value={activeDraftName} />
-          <DetailItem label="Confirmed retrofit" value={confirmedRetrofitName || "None added yet"} />
+          <DetailItem label="Selected count" value={`${addedPlanCount}`} />
           <DetailItem label="Recalculation status" value={recalculationStatus} />
-          <DetailItem label="Next step" value={addedPlanCount ? "Prepare applications or review next retrofit" : "Select a scenario and add one retrofit"} />
+        </div>
+        <div className="current-plan-next-step">
+          <span>Next step</span>
+          <strong>{addedPlanCount ? "Prepare applications or review next retrofit" : "Select a scenario and add one retrofit"}</strong>
         </div>
         {planMessage ? <p className="preview-local-note">{planMessage}</p> : null}
         <div className="current-plan-actions">
@@ -6036,6 +6041,7 @@ function RetrofitPreviewCardView({
   });
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
+  const [activeSectionKey, setActiveSectionKey] = useState<string>("financial");
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -6212,6 +6218,7 @@ function RetrofitPreviewCardView({
   }
 
   function openSectionAndScroll(section: keyof typeof sectionIds) {
+    setActiveSectionKey(section);
     setOpenSections((current) => ({ ...current, [section]: true }));
     if (typeof document !== "undefined") {
       window.requestAnimationFrame(() => {
@@ -6260,7 +6267,8 @@ function RetrofitPreviewCardView({
         {subnavItems.map((item) => (
           <button
             key={item.key}
-            className="retrofit-section-chip"
+            aria-current={activeSectionKey === item.key ? "true" : undefined}
+            className={`retrofit-section-chip${activeSectionKey === item.key ? " is-active" : ""}`}
             onClick={() => openSectionAndScroll(item.key as keyof typeof sectionIds)}
             type="button"
           >
