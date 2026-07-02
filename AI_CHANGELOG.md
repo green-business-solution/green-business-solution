@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) incentive formula repair runtime apply
+
+- Added an apply script for GPT Pro formula/rate-table repairs that generates conservative legacy runtime incentive rules, a richer v2 calculation-package artifact, and an apply report from the consolidated 984-opportunity repair artifact.
+- Reapplied the formula/rate-table repairs to `data/opportunity_incentive_rules.json`, preserving only 10 high-confidence legacy-compatible rules while tracking the remaining reviewed opportunities as v2 packages or reviewed no-rule rows.
+- Removed GPT Pro-identified bad physical retrofit edges from the public matching fixtures and packaged the new v2 calculation package with production Lambda deploys.
+
 ## 2026-07-02 - Codex (GPT-5) user-preview picker icon and sizing fix
 
 - Replaced the broken before-click upload banner text fallback with a local cloud-upload SVG and restored real Savings, Cost, and Payback metric SVG icons on retrofit cards.

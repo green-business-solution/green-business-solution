@@ -12,6 +12,8 @@ const CALCULATION_STATUSES = new Set([
   "custom_quote_estimate",
   "source_inaccessible_repair_failure",
   "unavailable_archived",
+  "non_monetary_workflow",
+  "no_calculable_value",
   "needs_repair_review"
 ]);
 
@@ -21,7 +23,9 @@ const EFFECT_TYPES = new Set([
   "recurring_expense",
   "grant_expected_value",
   "tax_credit",
-  "financing_subsidy"
+  "financing_subsidy",
+  "process_value",
+  "no_cash_value"
 ]);
 
 const CALCULATION_METHODS = new Set([
