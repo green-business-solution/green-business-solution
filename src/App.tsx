@@ -2782,6 +2782,8 @@ function HowItWorksPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const transitionStart = 0.38;
+  const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
   const [journeyProgress, setJourneyProgress] = useState(0);
   const stages = [
@@ -2825,12 +2827,40 @@ function HowItWorksPage({
       title: "Track your impact",
       copy: "Monitor savings, impact, certification progress, and project status over time.",
       accent: "Impact",
-      image: "/how-it-works/transformation-stage-07.jpg"
+      image: "/how-it-works/transformation-stage-07-retrofi.jpg"
     }
   ];
 
+  const reducedMotion =
+    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
   const activeStageIndex = Math.min(stages.length - 1, Math.max(0, Math.round(journeyProgress)));
   const activeStage = stages[activeStageIndex];
+  const visualProgress = (() => {
+    if (reducedMotion) {
+      return activeStageIndex;
+    }
+
+    const clamped = Math.min(stages.length - 1, Math.max(0, journeyProgress));
+    const whole = Math.floor(clamped);
+
+    if (whole >= stages.length - 1) {
+      return stages.length - 1;
+    }
+
+    const local = clamped - whole;
+
+    if (local <= transitionStart) {
+      return whole;
+    }
+
+    if (local >= transitionEnd) {
+      return whole + 1;
+    }
+
+    const normalized = (local - transitionStart) / (transitionEnd - transitionStart);
+    const eased = normalized * normalized * (3 - 2 * normalized);
+    return whole + eased;
+  })();
 
   useEffect(() => {
     const journey = journeyRef.current;
@@ -2839,6 +2869,7 @@ function HowItWorksPage({
       return undefined;
     }
 
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
 
     const updateProgress = () => {
@@ -2846,7 +2877,7 @@ function HowItWorksPage({
       const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
       const normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
       const nextProgress = normalizedProgress * (stages.length - 1);
-      setJourneyProgress(Math.round(nextProgress));
+      setJourneyProgress(mediaQuery.matches ? Math.round(nextProgress) : nextProgress);
       animationFrame = 0;
     };
 
@@ -2859,10 +2890,12 @@ function HowItWorksPage({
     updateProgress();
     window.addEventListener("scroll", requestProgressUpdate, { passive: true });
     window.addEventListener("resize", requestProgressUpdate);
+    mediaQuery.addEventListener("change", requestProgressUpdate);
 
     return () => {
       window.removeEventListener("scroll", requestProgressUpdate);
       window.removeEventListener("resize", requestProgressUpdate);
+      mediaQuery.removeEventListener("change", requestProgressUpdate);
       window.cancelAnimationFrame(animationFrame);
     };
   }, [stages.length]);
@@ -2888,7 +2921,12 @@ function HowItWorksPage({
                 loading={index < 2 ? "eager" : "lazy"}
                 src={stage.image}
                 style={{
-                  opacity: activeStageIndex >= index ? 1 : 0
+                  opacity:
+                    visualProgress >= index
+                      ? 1
+                      : visualProgress > index - 1
+                        ? visualProgress - (index - 1)
+                        : 0
                 }}
               />
             ))}
@@ -2905,7 +2943,7 @@ function HowItWorksPage({
               <p>{activeStage.copy}</p>
             </article>
             <div className="journey-progress" aria-hidden="true">
-              <span style={{ transform: `scaleX(${activeStageIndex / (stages.length - 1)})` }} />
+              <span style={{ transform: `scaleX(${visualProgress / (stages.length - 1)})` }} />
               <div className="journey-progress-dots">
                 {stages.map((stage, index) => (
                   <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />

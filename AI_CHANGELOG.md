@@ -114,6 +114,11 @@
 - Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
 - Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
 
+## 2026-07-02 - Codex (GPT-5) how it works eased step transitions
+
+- Reworked the public `How It Works` progress motion into an approximate step function so the journey mostly locks to each dot but still uses a short eased crossfade between stages.
+- Replaced the final stage seven background with the updated RetroFi-branded upgraded building image.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview hover and flow cleanup
 
 - Fixed Retrofit Recommendations preview hover states so tabs, scenario cards, subnav chips, secondary buttons, opportunity rows, and action rows use light readable hover styles instead of inheriting dark global button hover.
