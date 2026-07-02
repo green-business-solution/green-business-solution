@@ -4742,7 +4742,8 @@ function CustomerRetrofitEstimatesPanel({
   eyebrow,
   intro,
   loadingMessage,
-  title
+  title,
+  hideBillData = false
 }: {
   credential: AuthCredential | null;
   emptyMessage: string;
@@ -4751,6 +4752,7 @@ function CustomerRetrofitEstimatesPanel({
   intro: string;
   loadingMessage: string;
   title: string;
+  hideBillData?: boolean;
 }) {
   const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -4791,16 +4793,17 @@ function CustomerRetrofitEstimatesPanel({
   }, [credential, endpoint]);
 
   return (
-    <RetrofitRecommendationsPreview
-      emptyMessage={emptyMessage}
-      error={error}
-      eyebrow={eyebrow}
-      intro={intro}
-      isLoading={isLoading}
-      loadingMessage={loadingMessage}
-      payload={payload}
-      title={title}
-    />
+      <RetrofitRecommendationsPreview
+        emptyMessage={emptyMessage}
+        error={error}
+        eyebrow={eyebrow}
+        intro={intro}
+        isLoading={isLoading}
+        loadingMessage={loadingMessage}
+        hideBillData={hideBillData}
+        payload={payload}
+        title={title}
+      />
   );
 }
 
@@ -5741,6 +5744,7 @@ export function RetrofitRecommendationsPreview({
   intro,
   isLoading,
   loadingMessage,
+  hideBillData = false,
   payload,
   title
 }: {
@@ -5750,10 +5754,13 @@ export function RetrofitRecommendationsPreview({
   intro: string;
   isLoading: boolean;
   loadingMessage: string;
+  hideBillData?: boolean;
   payload: PortalRetrofitRecommendationsResponse | null;
   title: string;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
+  const hasUploadedBills = Boolean(payload?.intake?.uploadedUtilityFiles?.length || payload?.intake?.utilityExtractedValues?.length);
+  const shouldMaskBillDerivedMetrics = hideBillData || !hasUploadedBills;
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
     const ids: Record<string, string> = {};
@@ -5995,6 +6002,7 @@ export function RetrofitRecommendationsPreview({
         emptyMessage={emptyMessage}
         isLoading={isLoading}
         loadingMessage={loadingMessage}
+        hideBillData={shouldMaskBillDerivedMetrics}
         onCloseDetails={() => setActiveRetrofitId("")}
         onSearchChange={(value) => {
           setSearchQuery(value);
@@ -6048,6 +6056,7 @@ export function RetrofitRecommendationsPreview({
               retrofit={activeRetrofit}
               selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
               selectedOpportunityIds={selectedOpportunityIds}
+              hideBillData={shouldMaskBillDerivedMetrics}
             />
           </div>
 
@@ -6105,6 +6114,7 @@ function RetrofitPickerView({
   emptyMessage,
   isLoading,
   loadingMessage,
+  hideBillData,
   onCloseDetails,
   onSearchChange,
   onSelectRetrofit,
@@ -6122,6 +6132,7 @@ function RetrofitPickerView({
   emptyMessage: string;
   isLoading: boolean;
   loadingMessage: string;
+  hideBillData: boolean;
   onCloseDetails: () => void;
   onSearchChange: (value: string) => void;
   onSelectRetrofit: (retrofitId: string) => void;
@@ -6139,13 +6150,13 @@ function RetrofitPickerView({
 
   return (
     <section className="retrofit-picker-shell" aria-label="Select a retrofit to explore">
-      <section className="estimate-accuracy-banner">
+              <section className="estimate-accuracy-banner">
         <div className="estimate-accuracy-icon" aria-hidden="true">
           <UploadCloudIcon />
         </div>
         <div>
-          <h1>Improve your estimate accuracy</h1>
-          <p>Upload your bills and answer a few questions within the retrofit.</p>
+          <h1>Retrieve your estimates</h1>
+          <p>Upload bills to continue and answer retrofit-specific questions after selecting a retrofit.</p>
         </div>
         <button onClick={onUploadBills} type="button">Upload bills</button>
       </section>
@@ -6214,9 +6225,9 @@ function RetrofitPickerView({
                   </div>
                 </div>
                 <div className="retrofit-picker-card-metrics" aria-label={`${retrofit.name} summary metrics`}>
-                  <PickerMetric kind="savings" label="Savings" value={retrofitPickerSavings(retrofit)} />
-                  <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit)} />
-                  <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit)} />
+                  <PickerMetric kind="savings" label="Savings" value={retrofitPickerSavings(retrofit, hideBillData)} />
+                  <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit, hideBillData)} />
+                  <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit, hideBillData)} />
                 </div>
               </button>
             ))}
@@ -6250,16 +6261,47 @@ type PickerMetricKind = "savings" | "cost" | "payback";
 
 function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: string; value: string }) {
   const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
-  const isFallback = /needs|pending|not/i.test(value);
+  const isFallback = value === "?" || /needs|pending|not/i.test(value);
+  const placeholderClass =
+    value === "?"
+      ? kind === "savings"
+        ? " metric-placeholder--bill"
+        : " metric-placeholder--question"
+      : "";
+  const tooltip = getPickerMetricTooltip(kind, value);
   return (
-    <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}`}>
+    <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}${placeholderClass}`}>
       <span className="retrofit-picker-metric-label">
         <Icon />
         <span>{label}</span>
       </span>
-      <strong className="retrofit-picker-metric-value">{value}</strong>
+      <strong className="retrofit-picker-metric-value" title={tooltip.title ? `${tooltip.title}: ${tooltip.body}` : tooltip.body}>
+        {value}
+      </strong>
     </div>
   );
+}
+
+function getPickerMetricTooltip(kind: PickerMetricKind, value: string) {
+  if (value !== "?") {
+    return { body: "" };
+  }
+  if (kind === "savings") {
+    return {
+      title: "What’s needed",
+      body: "Upload bills to estimate savings."
+    };
+  }
+  if (kind === "cost") {
+    return {
+      title: "What’s needed",
+      body: "Answer retrofit-specific questions or add a quote to estimate cost."
+    };
+  }
+  return {
+    title: "What’s needed",
+    body: "Upload bills and answer retrofit-specific questions to estimate payback."
+  };
 }
 
 function UploadCloudIcon() {
@@ -6380,23 +6422,26 @@ function customerFriendlyRetrofitDescription({
   return cleanedFallback.replace(/\.$/, ".").slice(0, 110);
 }
 
-function retrofitPickerSavings(retrofit: RetrofitPreviewCard) {
+function retrofitPickerSavings(retrofit: RetrofitPreviewCard, hideBillData: boolean) {
+  if (hideBillData) return "?";
   const annual = retrofit.metrics.recurringOperationalSavingsAnnual;
   if (annual == null) return "Needs bill";
   if (annual < 0) return "Net impact pending";
   return `${formatCompactCents(annual)}/yr`;
 }
 
-function retrofitPickerCost(retrofit: RetrofitPreviewCard) {
+function retrofitPickerCost(retrofit: RetrofitPreviewCard, hideBillData: boolean) {
+  if (hideBillData) return "?";
   const cost =
     retrofit.metrics.effectiveCostAfterOneTimeBenefits ??
     retrofit.metrics.netCostBeforeTaxBenefits ??
     retrofit.metrics.estimatedUpfrontProjectCost;
-  return cost == null ? "Needs quote" : formatCompactCents(cost);
+  return cost == null ? "?" : formatCompactCents(cost);
 }
 
-function retrofitPickerPayback(retrofit: RetrofitPreviewCard) {
-  return formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote");
+function retrofitPickerPayback(retrofit: RetrofitPreviewCard, hideBillData: boolean) {
+  if (hideBillData) return "?";
+  return formatPayback(retrofit.metrics.paybackPeriodYears, "?");
 }
 
 function formatCompactCents(value: number | null | undefined) {
@@ -6431,6 +6476,7 @@ function RetrofitPreviewCardView({
   onToggleOpportunity,
   planState,
   retrofit,
+  hideBillData,
   selectedScenarioId,
   selectedOpportunityIds
 }: {
@@ -6446,6 +6492,7 @@ function RetrofitPreviewCardView({
   onToggleOpportunity: (opportunityId: string) => void;
   planState: string;
   retrofit: RetrofitPreviewCard;
+  hideBillData: boolean;
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
@@ -6466,6 +6513,7 @@ function RetrofitPreviewCardView({
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(false);
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
+  const billDataLocked = hideBillData;
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -6505,48 +6553,54 @@ function RetrofitPreviewCardView({
   const includedOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings != null || item.monthlySavings != null);
   const pendingOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings == null && item.monthlySavings == null);
   const displayedUpfrontFinancialIncentive = selectedIncludedOpportunities.length > 0
-    ? retrofit.metrics.upfrontFinancialIncentive
+    ? billDataLocked
+      ? null
+      : retrofit.metrics.upfrontFinancialIncentive
     : null;
   const displayedNetCostBeforeTaxBenefits =
-    retrofit.metrics.estimatedUpfrontProjectCost != null
+    billDataLocked
+      ? null
+      : retrofit.metrics.estimatedUpfrontProjectCost != null
       ? Math.max(0, retrofit.metrics.estimatedUpfrontProjectCost - (displayedUpfrontFinancialIncentive || 0))
       : null;
   const financialBreakdown = [
     {
       id: "project-cost",
       label: "Project cost",
-      value: formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote"),
-      basis: retrofit.metrics.estimatedUpfrontProjectCost != null ? "Based on current estimate" : "Needs confirmed quote"
+      value: billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote"),
+      basis: billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.estimatedUpfrontProjectCost != null ? "Based on current estimate" : "Needs confirmed quote"
     },
     {
       id: "incentives",
       label: "Less selected upfront rebates or grants",
-      value: formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives"),
-      basis: displayedUpfrontFinancialIncentive != null ? "Based on selected and included opportunities" : "Selected opportunities need validation before they affect this estimate"
+      value: billDataLocked ? "?" : formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives"),
+      basis: billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : displayedUpfrontFinancialIncentive != null ? "Based on selected and included opportunities" : "Selected opportunities need validation before they affect this estimate"
     },
     {
       id: "net-cost",
       label: "Net cost before tax benefits",
-      value: formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet"),
-      basis: displayedNetCostBeforeTaxBenefits != null ? "Project cost minus selected incentives" : "Needs project cost and selected opportunities"
+      value: billDataLocked ? "?" : formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet"),
+      basis: billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : displayedNetCostBeforeTaxBenefits != null ? "Project cost minus selected incentives" : "Needs project cost and selected opportunities"
     },
     {
       id: "tax-benefits",
       label: "Potential one-time tax benefits",
       value:
-        retrofit.metrics.taxBenefits == null
+        billDataLocked
+          ? "?"
+          : retrofit.metrics.taxBenefits == null
           ? "Needs tax review"
           : typeof retrofit.metrics.taxBenefits === "number"
             ? formatCents(retrofit.metrics.taxBenefits)
             : String(retrofit.metrics.taxBenefits),
-      basis: retrofit.metrics.taxBenefits == null ? "Needs tax or entity information" : "Based on current tax inputs"
+      basis: billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.taxBenefits == null ? "Needs tax or entity information" : "Based on current tax inputs"
     },
     {
       id: "effective-cost",
       label: "Effective cost after one-time benefits",
-      value: formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review"),
+      value: billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review"),
       basis:
-        retrofit.metrics.effectiveCostAfterOneTimeBenefits != null
+        billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.effectiveCostAfterOneTimeBenefits != null
           ? "Includes selected incentives and one-time benefits"
           : "Needs selected incentives and tax review"
     },
@@ -6554,13 +6608,13 @@ function RetrofitPreviewCardView({
       id: "annual-savings",
       label: "Annual operating savings",
       value:
-        retrofit.metrics.recurringOperationalSavingsAnnual == null
+        billDataLocked || retrofit.metrics.recurringOperationalSavingsAnnual == null
           ? "Needs bill"
           : retrofit.metrics.recurringOperationalSavingsAnnual >= 0
             ? formatCents(retrofit.metrics.recurringOperationalSavingsAnnual)
             : "Estimated operating cost change",
       basis:
-        retrofit.metrics.recurringOperationalSavingsAnnual != null
+        billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.recurringOperationalSavingsAnnual != null
           ? "Based on uploaded bills and industry assumptions"
           : "Needs bill or confirmed operating details"
     },
@@ -6568,13 +6622,13 @@ function RetrofitPreviewCardView({
       id: "monthly-savings",
       label: "Monthly operating savings",
       value:
-        retrofit.metrics.recurringOperationalSavingsMonthly == null
+        billDataLocked || retrofit.metrics.recurringOperationalSavingsMonthly == null
           ? "Needs bill"
           : retrofit.metrics.recurringOperationalSavingsMonthly >= 0
             ? formatCents(retrofit.metrics.recurringOperationalSavingsMonthly)
             : "Estimated operating cost change",
       basis:
-        retrofit.metrics.recurringOperationalSavingsMonthly != null
+        billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.recurringOperationalSavingsMonthly != null
           ? "Based on uploaded bills and industry assumptions"
           : "Needs bill or confirmed operating details"
     },
@@ -6582,10 +6636,12 @@ function RetrofitPreviewCardView({
       id: "payback-roi",
       label: "Payback / ROI",
       value:
-        retrofit.metrics.paybackPeriodYears == null
-          ? "Needs quote"
-          : `${formatPayback(retrofit.metrics.paybackPeriodYears)}${retrofit.metrics.roi == null ? "" : ` · ${String(retrofit.metrics.roi)}`}`,
-      basis: retrofit.metrics.paybackPeriodYears != null ? "Based on current cost and savings inputs" : "Needs quote and savings validation"
+        billDataLocked
+          ? "?"
+          : retrofit.metrics.paybackPeriodYears == null
+            ? "Needs quote"
+            : `${formatPayback(retrofit.metrics.paybackPeriodYears)}${retrofit.metrics.roi == null ? "" : ` · ${String(retrofit.metrics.roi)}`}`,
+      basis: billDataLocked ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations." : retrofit.metrics.paybackPeriodYears != null ? "Based on current cost and savings inputs" : "Needs quote and savings validation"
     }
   ];
   const workspaceTabs = [
@@ -6616,16 +6672,18 @@ function RetrofitPreviewCardView({
     opportunity.eligibilityStatus === "unknown" ||
     opportunity.eligibilityStatus === "needs review"
   ).length;
-  const netCostSnapshot = formatMaybeCents(displayedNetCostBeforeTaxBenefits, retrofit.tabSummary.fallback || "Net cost pending");
+  const netCostSnapshot = billDataLocked ? "?" : formatMaybeCents(displayedNetCostBeforeTaxBenefits, retrofit.tabSummary.fallback || "Net cost pending");
   const annualSavingsSnapshot =
-    retrofit.metrics.recurringOperationalSavingsAnnual == null
-      ? "Savings need bill"
+    billDataLocked
+      ? "?"
+      : retrofit.metrics.recurringOperationalSavingsAnnual == null
+        ? "Savings need bill"
       : retrofit.metrics.recurringOperationalSavingsAnnual >= 0
         ? `${formatCents(retrofit.metrics.recurringOperationalSavingsAnnual)}/year`
         : "Net impact pending";
-  const paybackSnapshot = formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote");
+  const paybackSnapshot = billDataLocked ? "?" : formatPayback(retrofit.metrics.paybackPeriodYears, "Needs bill");
   const includedIncentiveSnapshot = formatMaybeCents(
-    displayedUpfrontFinancialIncentive,
+    billDataLocked ? null : displayedUpfrontFinancialIncentive,
     selectedIncludedOpportunities.length ? "Value not estimated yet" : "None included"
   );
   const topBlocker = retrofit.missingInfo[0] ? capitalizeLabel(retrofit.missingInfo[0]) : "None";
@@ -6635,11 +6693,13 @@ function RetrofitPreviewCardView({
     ...needsReviewOpportunities,
     ...availableUnselectedOpportunities
   ].filter((opportunity, index, list) => list.findIndex((item) => item.id === opportunity.id) === index).slice(0, 3);
-  const financialSummary = retrofit.metrics.paybackPeriodYears != null
-    ? `Preliminary payback ${formatPayback(retrofit.metrics.paybackPeriodYears)}`
-    : retrofit.metrics.estimatedUpfrontProjectCost != null
-      ? "Preliminary cost estimate"
-      : "Needs quote";
+  const financialSummary = billDataLocked
+    ? "Detailed breakdown locked until bills are uploaded"
+    : retrofit.metrics.paybackPeriodYears != null
+      ? `Preliminary payback ${formatPayback(retrofit.metrics.paybackPeriodYears)}`
+      : retrofit.metrics.estimatedUpfrontProjectCost != null
+        ? "Preliminary cost estimate"
+        : "Needs quote";
   const includedSummary = `${selectedIncludedOpportunities.length} included · ${selectedPendingOpportunities.length} pending`;
   const scenarioSummary = `${retrofit.scenarios.length} options · ${selectedScenario?.name || "Scenario A"}`;
   const opportunitySummary = `${retrofit.opportunities.length} found · ${selectedCount} selected`;
@@ -6651,7 +6711,9 @@ function RetrofitPreviewCardView({
     ? selectedScenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]).length
     : selectedCount;
   const actionBarPrimary =
-    planState === "Added to plan"
+    billDataLocked
+      ? "Upload bills"
+      : planState === "Added to plan"
       ? "Continue to application prep"
       : !selectedScenario
         ? "Select a scenario"
@@ -6661,7 +6723,9 @@ function RetrofitPreviewCardView({
             ? "Add preliminary plan"
             : "Add this retrofit to plan";
   const actionBarHelper =
-    planState === "Added to plan"
+    billDataLocked
+      ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations."
+      : planState === "Added to plan"
       ? "This retrofit is in your current plan."
       : retrofit.missingInfo.length
         ? "You can refine this after uploading a bill or quote."
@@ -6811,7 +6875,7 @@ function RetrofitPreviewCardView({
             </div>
             <div>
               <span>Operating savings included</span>
-              <strong>{includedOperatingSavings.length ? formatMaybeRecurringSavings(retrofit) : "Needs bill"}</strong>
+              <strong>{billDataLocked ? "?" : includedOperatingSavings.length ? formatMaybeRecurringSavings(retrofit) : "Needs bill"}</strong>
             </div>
             <div>
               <span>Pending values</span>
@@ -6868,14 +6932,14 @@ function RetrofitPreviewCardView({
         title="Financials"
       >
         <div className="retrofit-metric-grid">
-          <PreviewMetric basis={retrofit.metrics.estimatedUpfrontProjectCost == null ? "Needs confirmed project quote" : "Current estimate basis"} label="Estimated upfront project cost" value={formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
-          <PreviewMetric basis={displayedUpfrontFinancialIncentive == null ? "Needs selected eligible opportunity" : "Selected and included opportunities"} label="Upfront financial incentive" value={formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
-          <PreviewMetric basis={displayedNetCostBeforeTaxBenefits == null ? "Needs project cost" : "Project cost minus included incentives"} label="Net cost before tax benefits" value={formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} />
-          <PreviewMetric basis={retrofit.metrics.taxBenefits == null ? "Needs tax/entity information" : "Current tax inputs"} label="Tax benefits" value={retrofit.metrics.taxBenefits == null ? "Needs tax review" : typeof retrofit.metrics.taxBenefits === "number" ? formatCents(retrofit.metrics.taxBenefits) : String(retrofit.metrics.taxBenefits)} />
-          <PreviewMetric basis={retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? "Needs tax review" : "After selected one-time benefits"} label="Effective cost after one-time benefits" value={formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review")} />
-          <PreviewMetric basis="Internal recurring savings only" label="Recurring Operational Savings" value={formatMaybeRecurringSavings(retrofit)} />
-          <PreviewMetric basis={retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={formatPayback(retrofit.metrics.paybackPeriodYears)} />
-          <PreviewMetric basis={retrofit.metrics.roi == null ? "Needs validated cost and savings" : "Current estimate inputs"} label="ROI" value={retrofit.metrics.roi == null ? "Not estimated yet" : String(retrofit.metrics.roi)} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.estimatedUpfrontProjectCost == null ? "Needs confirmed project quote" : "Current estimate basis"} label="Estimated upfront project cost" value={billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : displayedUpfrontFinancialIncentive == null ? "Needs selected eligible opportunity" : "Selected and included opportunities"} label="Upfront financial incentive" value={billDataLocked ? "?" : formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : displayedNetCostBeforeTaxBenefits == null ? "Needs project cost" : "Project cost minus included incentives"} label="Net cost before tax benefits" value={billDataLocked ? "?" : formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.taxBenefits == null ? "Needs tax/entity information" : "Current tax inputs"} label="Tax benefits" value={billDataLocked ? "?" : retrofit.metrics.taxBenefits == null ? "Needs tax review" : typeof retrofit.metrics.taxBenefits === "number" ? formatCents(retrofit.metrics.taxBenefits) : String(retrofit.metrics.taxBenefits)} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? "Needs tax review" : "After selected one-time benefits"} label="Effective cost after one-time benefits" value={billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review")} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : "Internal recurring savings only"} label="Recurring Operational Savings" value={billDataLocked ? "?" : formatMaybeRecurringSavings(retrofit)} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={billDataLocked ? "?" : formatPayback(retrofit.metrics.paybackPeriodYears)} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.roi == null ? "Needs validated cost and savings" : "Current estimate inputs"} label="ROI" value={billDataLocked ? "?" : retrofit.metrics.roi == null ? "Not estimated yet" : String(retrofit.metrics.roi)} />
         </div>
         <div className="financial-tab-actions">
           <button className="secondary-button" onClick={() => setShowCalculationBreakdown((current) => !current)} type="button">
@@ -6940,7 +7004,7 @@ function RetrofitPreviewCardView({
             items={selectedIncludedOpportunities.map((opportunity) => ({
               name: opportunity.name,
               type: capitalizeLabel(opportunity.type),
-              value: opportunity.estimatedValue != null ? formatCents(opportunity.estimatedValue) : formatMaybeCents(displayedUpfrontFinancialIncentive, "Value not estimated yet"),
+              value: billDataLocked ? "?" : opportunity.estimatedValue != null ? formatCents(opportunity.estimatedValue) : formatMaybeCents(displayedUpfrontFinancialIncentive, "Value not estimated yet"),
               affects: "Upfront financial incentive",
               reason: opportunity.whySelected || "Selected because it reduces upfront cost."
             }))}
@@ -6973,7 +7037,7 @@ function RetrofitPreviewCardView({
             items={includedOperatingSavings.map((savings) => ({
               name: savings.name,
               type: "Operating savings",
-              value: savings.annualSavings != null ? `${formatCents(savings.annualSavings)}/year` : "Needs bill",
+              value: billDataLocked ? "?" : savings.annualSavings != null ? `${formatCents(savings.annualSavings)}/year` : "Needs bill",
               affects: "Recurring Operational Savings",
               reason: savings.customerFacingBasis || "Based on uploaded bills and industry assumptions."
             }))}
@@ -7573,7 +7637,7 @@ function ScenarioMetric({ label, value }: { label: string; value: string }) {
 
 function PreviewMetric({ basis, label, value }: { basis?: string; label: string; value: string }) {
   return (
-    <div className="preview-metric">
+    <div className={`preview-metric${value === "?" ? " is-placeholder" : ""}`}>
       <span>{label}</span>
       <strong>{value}</strong>
       {basis ? <small>{basis}</small> : null}
@@ -8505,6 +8569,7 @@ function AdminUserPreviewStandalonePage({
   const [rows, setRows] = useState(initialRows);
   const [adminControlsOpen, setAdminControlsOpen] = useState(false);
   const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
+  const [hideBillData, setHideBillData] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
@@ -8635,6 +8700,14 @@ function AdminUserPreviewStandalonePage({
                   Preview as customer
                 </button>
                 <button
+                  aria-pressed={hideBillData}
+                  className={`secondary-button user-preview-bill-toggle${hideBillData ? " is-active" : ""}`}
+                  onClick={() => setHideBillData((current) => !current)}
+                  type="button"
+                >
+                  {hideBillData ? "Show bill data" : "Hide bill data"}
+                </button>
+                <button
                   aria-expanded={adminControlsOpen}
                   className="secondary-button user-preview-admin-controls-button"
                   onClick={() => setAdminControlsOpen((current) => !current)}
@@ -8643,6 +8716,7 @@ function AdminUserPreviewStandalonePage({
                   Admin controls
                   <span aria-hidden="true">{adminControlsOpen ? "v" : ">"}</span>
                 </button>
+                {hideBillData ? <span className="soft-badge user-preview-admin-badge">Bill data hidden</span> : null}
               </div>
             </div>
             {adminControlsOpen ? (
@@ -8684,6 +8758,7 @@ function AdminUserPreviewStandalonePage({
           intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
           key={selectedOption.userId}
           loadingMessage="Loading live retrofit recommendations for this client..."
+          hideBillData={hideBillData}
           title="Retrofit Recommendations"
         />
       ) : (

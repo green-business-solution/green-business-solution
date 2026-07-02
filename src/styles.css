@@ -2753,6 +2753,42 @@ dd {
   line-height: 1.2;
 }
 
+.metric-placeholder--bill .retrofit-picker-metric-value,
+.preview-metric.is-placeholder > strong,
+.financial-breakdown-item .metric-placeholder--bill {
+  color: #9a6a00;
+}
+
+.metric-placeholder--question .retrofit-picker-metric-value {
+  color: #48616a;
+}
+
+.metric-placeholder--bill .retrofit-picker-metric-value {
+  background: #fff7e6;
+  border: 1px solid #e8d8a8;
+  border-radius: 999px;
+  display: inline-flex;
+  padding: 0 8px;
+}
+
+.metric-placeholder--question .retrofit-picker-metric-value {
+  background: #eef4f6;
+  border: 1px solid #d8e4e7;
+  border-radius: 999px;
+  display: inline-flex;
+  padding: 0 8px;
+}
+
+.preview-metric.is-placeholder > strong {
+  align-self: start;
+  background: #fff7e6;
+  border: 1px solid #e8d8a8;
+  border-radius: 999px;
+  display: inline-flex;
+  padding: 0 10px;
+  width: fit-content;
+}
+
 .retrofit-picker-empty {
   background: #ffffff;
   border: 1px solid var(--rf-border);

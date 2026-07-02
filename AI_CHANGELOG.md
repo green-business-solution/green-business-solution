@@ -6,6 +6,12 @@
 - Reapplied the formula/rate-table repairs to `data/opportunity_incentive_rules.json`, preserving only 10 high-confidence legacy-compatible rules while tracking the remaining reviewed opportunities as v2 packages or reviewed no-rule rows.
 - Removed GPT Pro-identified bad physical retrofit edges from the public matching fixtures and packaged the new v2 calculation package with production Lambda deploys.
 
+## 2026-07-02 - Codex (GPT-5) no-bill preview gating
+
+- Added an admin-only `Hide bill data` control on `/user-preview` so preview mode can simulate a customer with no uploaded bill data without deleting the underlying sample/live recommendation data.
+- Changed the before-click retrofit picker and the selected retrofit workspace to show gated `?` placeholders, bill-needed styling, and compact tooltips when bill-derived metrics are unavailable or intentionally hidden.
+- Updated the top banner copy to `Retrieve your estimates` and tightened the preview tests so bill-gated metrics, admin toggles, and no-fake-number states are verified.
+
 ## 2026-07-02 - Codex (GPT-5) user-preview picker icon and sizing fix
 
 - Replaced the broken before-click upload banner text fallback with a local cloud-upload SVG and restored real Savings, Cost, and Payback metric SVG icons on retrofit cards.

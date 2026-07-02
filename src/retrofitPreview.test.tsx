@@ -241,13 +241,14 @@ describe("retrofit recommendations preview", () => {
         intro="Review recommended retrofits, eligible opportunities, operating savings, and next steps based on the information provided."
         isLoading={false}
         loadingMessage="Loading live retrofit recommendations for this client..."
+        hideBillData={true}
         payload={multiRetrofitPayload}
         title="Retrofit Recommendations"
       />
     );
 
-    expect(html).toContain("Improve your estimate accuracy");
-    expect(html).toContain("Upload your bills and answer a few questions within the retrofit.");
+    expect(html).toContain("Retrieve your estimates");
+    expect(html).toContain("Upload bills to continue and answer retrofit-specific questions after selecting a retrofit.");
     expect(html).toContain("Upload bills");
     expect(html).toContain("upload-cloud-icon");
     expect(html).not.toContain(">UP<");
@@ -268,6 +269,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Savings");
     expect(html).toContain("Cost");
     expect(html).toContain("Payback");
+    expect(html).toContain("?");
+    expect(html).toContain("metric-placeholder--bill");
+    expect(html).toContain("metric-placeholder--question");
     expect(html).toContain("metric-savings-icon");
     expect(html).toContain("metric-cost-icon");
     expect(html).toContain("metric-payback-icon");
@@ -318,6 +322,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("<span>Estimated upfront project cost</span>");
     expect(html).not.toContain("<span>Upfront financial incentive</span>");
     expect(html).not.toContain("<span>Recurring Operational Savings</span>");
+    expect(html).not.toContain("$810");
+    expect(html).not.toContain("$3,160");
+    expect(html).not.toContain("3.9 yrs");
     expect(html).not.toContain("<span>Payback Period</span>");
     expect(html).not.toContain("<span>Tax benefits</span>");
     expect(html).not.toContain("<span>ROI</span>");
@@ -379,6 +386,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Add quote");
     expect(source).toContain("Add tax/entity info");
     expect(source).toContain("Preview as customer");
+    expect(source).toContain("Hide bill data");
     expect(source).toContain("Exit customer preview");
     expect(source).toContain("Back to all retrofits");
     expect(source).toContain("data-workspace-tab");
