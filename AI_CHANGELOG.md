@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview workspace tab build fix
+
+- Preserved the updated Retrofit Recommendations workspace-tab rendering so the committed frontend build remains valid and matches the deployed UI bundle.
+
 ## 2026-07-02 - Codex (GPT-5) application path one-hop discovery
 
 - Updated `ApplicationPathFinder` to follow one official program website link from DSIRE-style source pages and inspect that one page for real application URLs, PDF forms, email paths, contractor instructions, or tax/accountant filing language.

@@ -5492,7 +5492,6 @@ export function RetrofitRecommendationsPreview({
   title: string;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
-  const isAdminPreview = eyebrow.toLowerCase().includes("admin");
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
     const ids: Record<string, string> = {};
@@ -6044,7 +6043,6 @@ function RetrofitPreviewCardView({
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
-  const selectedScenarioOpportunityIds = selectedScenarioOpportunities.map((opportunity) => opportunity.id);
   const deselectedScenarioOpportunityIds = [
     ...(selectedScenario?.deselectedOpportunityIds || []),
     ...((selectedScenario?.selectedOpportunityIds || []).filter((id) => selectedOpportunityIds[id] === false))
@@ -6224,15 +6222,6 @@ function RetrofitPreviewCardView({
     setOpenSections((current) => ({ ...current, [section]: !current[section] }));
   }
 
-  function openSectionAndScroll(section: keyof typeof sectionIds) {
-    setOpenSections((current) => ({ ...current, [section]: true }));
-    if (typeof document !== "undefined") {
-      window.requestAnimationFrame(() => {
-        document.getElementById(sectionIds[section])?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
-  }
-
   function handleUploadBillShortcut() {
     if (typeof window !== "undefined") {
       window.open(pathForRoute("scan-energy-data"), "_blank", "noopener,noreferrer");
@@ -6359,7 +6348,12 @@ function RetrofitPreviewCardView({
           <PreviewMetric basis={retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={formatPayback(retrofit.metrics.paybackPeriodYears)} />
           <PreviewMetric basis={retrofit.metrics.roi == null ? "Needs validated cost and savings" : "Current estimate inputs"} label="ROI" value={retrofit.metrics.roi == null ? "Not estimated yet" : String(retrofit.metrics.roi)} />
         </div>
-        <div className="financial-breakdown-list">
+        <div className="financial-tab-actions">
+          <button className="secondary-button" onClick={() => setShowCalculationBreakdown((current) => !current)} type="button">
+            {showCalculationBreakdown ? "Hide calculation" : "View calculation"}
+          </button>
+        </div>
+        {showCalculationBreakdown ? <div className="financial-breakdown-list">
           {financialBreakdown.map((item) => (
             <article className="financial-breakdown-item" key={item.id}>
               <div>
@@ -6369,7 +6363,7 @@ function RetrofitPreviewCardView({
               <span>{item.value}</span>
             </article>
           ))}
-        </div>
+        </div> : null}
       </PreviewAccordionSection>
       ) : null}
 
@@ -6654,7 +6648,11 @@ function RetrofitPreviewCardView({
           <p>Estimate will update when enough confirmed inputs are available.</p>
         </section>
       </PreviewAccordionSection>
+      </>
+      ) : null}
 
+      {activeWorkspaceTab === "more" ? (
+      <>
       <PreviewAccordionSection
         defaultOpen={openSections.operatingSavings}
         onToggle={() => toggleSection("operatingSavings")}
@@ -6696,7 +6694,11 @@ function RetrofitPreviewCardView({
           })}
         </div>
       </PreviewAccordionSection>
+      </>
+      ) : null}
 
+      {activeWorkspaceTab === "requirements" ? (
+      <>
       <PreviewAccordionSection
         defaultOpen={openSections.assumptions}
         onToggle={() => toggleSection("assumptions")}
@@ -6773,7 +6775,11 @@ function RetrofitPreviewCardView({
           </div>
         </section>
       </PreviewAccordionSection>
+      </>
+      ) : null}
 
+      {activeWorkspaceTab === "more" ? (
+      <>
       <PreviewAccordionSection
         defaultOpen={openSections.why}
         onToggle={() => toggleSection("why")}
@@ -6806,6 +6812,8 @@ function RetrofitPreviewCardView({
           <span>Validate tax or entity information</span>
         </div>
       </PreviewAccordionSection>
+      </>
+      ) : null}
 
       {applicationPrepOpportunity ? (
         <ApplicationPrepDrawer opportunity={applicationPrepOpportunity} onClose={() => setApplicationPrepOpportunity(null)} retrofitName={retrofit.name} />
@@ -8087,15 +8095,15 @@ function AdminUserPreviewStandalonePage({
         >
           <div className="brand-block">
             <img alt="RetroFi" className="workspace-logo" src="/retrofi-logo.png" />
-            <div>
-              <p className="eyebrow">Admin controls</p>
-              <h1>User Preview</h1>
+            <div className="user-preview-admin-title">
+              <span>Admin preview</span>
+              <small>
+                {selectedOption ? `${selectedOption.clientName}${selectedOption.companyName ? ` · ${selectedOption.companyName}` : ""}` : "No test profile selected"}
+              </small>
             </div>
           </div>
           <div>
-            <span className="soft-badge">
-              {selectedOption ? `${selectedOption.clientName}${selectedOption.companyName ? ` · ${selectedOption.companyName}` : ""}` : "No test profile selected"}
-            </span>
+            <span className="soft-badge">Admin controls</span>
             <span className="soft-badge">{adminControlsOpen ? "▾" : "▸"}</span>
           </div>
         </button>
