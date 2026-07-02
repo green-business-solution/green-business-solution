@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-01 - Codex (GPT-5) application source resolver audit
+
+- Added a read-only `ApplicationSourceResolver` for DSIRE opportunity records that classifies application source type, application method, extraction status, confidence, and related retrofit context without writing to DynamoDB.
+- Added an admin-only `/api/admin/application-sources` endpoint plus an authenticated `/admin/application-sources` audit view so RetroFi can review source/program URLs, application URLs, email-only flows, confidence, and resolver notes across visible opportunities.
+- Added resolver coverage for PDF, utility portal, tax/accountant filing, email, online portal, contractor-submitted, ambiguous webpage, and missing-source cases, and fixed the local frontend build blockers needed to run the repo’s required smoke checks.
+
 ## 2026-07-02 - Codex (GPT-5) final source-confidence repair follow-up
 
 - Normalized and imported GPT Pro's final low-source-confidence follow-up as opportunity data repair batch 97, cleaning markdown-formatted URLs before validation.

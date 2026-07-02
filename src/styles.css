@@ -1497,6 +1497,128 @@ dd {
   color: #17211b;
 }
 
+.application-source-filters {
+  grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(160px, 1fr));
+}
+
+.application-source-table-shell {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.application-source-table-wrap {
+  overflow: auto;
+}
+
+.application-source-table {
+  border-collapse: collapse;
+  min-width: 1440px;
+  width: 100%;
+}
+
+.application-source-table th,
+.application-source-table td {
+  border-bottom: 1px solid #edf1ee;
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.application-source-table th {
+  background: #f7faf7;
+  color: #516259;
+  font-size: 12px;
+  font-weight: 850;
+  position: sticky;
+  text-transform: uppercase;
+  top: 0;
+  z-index: 1;
+}
+
+.application-source-table tbody tr:hover {
+  background: #f8fbf9;
+}
+
+.application-source-table td {
+  color: #223128;
+  font-size: 14px;
+}
+
+.application-source-table td a {
+  color: #176b4c;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.application-source-table td a:hover {
+  text-decoration: underline;
+}
+
+.application-source-cell {
+  display: grid;
+  gap: 4px;
+}
+
+.application-source-cell strong {
+  overflow-wrap: anywhere;
+}
+
+.application-source-cell small {
+  color: #62736a;
+  font-size: 12px;
+}
+
+.application-source-status-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  padding: 7px 10px;
+  white-space: nowrap;
+}
+
+.application-source-status-pill.is-found {
+  background: #edf8ef;
+  color: #25603e;
+}
+
+.application-source-status-pill.is-review {
+  background: #fff6e4;
+  color: #8a5e0c;
+}
+
+.application-source-status-pill.is-missing {
+  background: #fff0ef;
+  color: #a13c2f;
+}
+
+.application-source-status-pill.is-pending {
+  background: #eef2ef;
+  color: #5f6e66;
+}
+
+.application-source-notes {
+  color: #4f5e56;
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  min-width: 280px;
+  padding-left: 18px;
+}
+
+.application-source-notes li {
+  line-height: 1.4;
+}
+
+.application-source-actions {
+  display: grid;
+  gap: 8px;
+  min-width: 70px;
+}
+
 .opportunity-review-layout {
   align-items: start;
   display: grid;

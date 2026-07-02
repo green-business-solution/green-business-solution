@@ -15,6 +15,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
+import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -2174,6 +2175,18 @@ async function buildAdminUserRows() {
   }));
 }
 
+async function buildAdminApplicationSources() {
+  const opportunities = await scanAll(opportunitiesTable);
+  return opportunities
+    .filter((opportunity) => isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity))
+    .sort((a, b) =>
+      String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
+        String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
+      )
+    )
+    .map((opportunity) => resolveOpportunityApplicationSource(opportunity));
+}
+
 async function buildAdminTableSnapshot(tableName) {
   const cleanTableName = cleanText(tableName);
 
@@ -3045,6 +3058,20 @@ app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) =
   }
 });
 
+app.get("/api/admin/application-sources", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const sources = await buildAdminApplicationSources();
+    res.json({
+      generatedAt: new Date().toISOString(),
+      total: sources.length,
+      sources
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
   try {
     const opportunity = await updateOpportunityReview({
@@ -3064,7 +3091,7 @@ app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
 if (!isLambdaRuntime) {
   activeServer = app.listen(port, "127.0.0.1", () => {
     console.log(`Green Business Solution API running at http://127.0.0.1:${port}`);
-    console.log(`Using AWS profile ${profile || "default credential chain"}, region ${region}`);
+    console.log(`Using AWS profile ${profile || "default credential chain"}, region ${dataRegion}`);
   });
   activeServer.on("error", (error) => {
     console.error(`Could not start Green Business Solution API on http://127.0.0.1:${port}`);
