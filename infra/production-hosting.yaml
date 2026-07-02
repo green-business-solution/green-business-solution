@@ -42,6 +42,9 @@ Parameters:
   EnergyDataTable:
     Type: String
     Default: gbs-energy-data
+  EnergyDataBucketName:
+    Type: String
+    Description: Existing S3 bucket used for uploaded utility/energy data.
 
 Resources:
   FrontendBucket:
@@ -56,34 +59,6 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
-
-  EnergyDataBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub gbs-retrofi-org-energy-data-${AWS::AccountId}
-      OwnershipControls:
-        Rules:
-          - ObjectOwnership: BucketOwnerEnforced
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
-        BlockPublicPolicy: true
-        IgnorePublicAcls: true
-        RestrictPublicBuckets: true
-      CorsConfiguration:
-        CorsRules:
-          - AllowedHeaders:
-              - "*"
-            AllowedMethods:
-              - GET
-              - PUT
-            AllowedOrigins:
-              - https://retrofi.org
-              - https://www.retrofi.org
-              - http://localhost:5173
-              - http://127.0.0.1:5173
-            ExposedHeaders:
-              - ETag
-            MaxAge: 3600
 
   FrontendOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
@@ -135,7 +110,7 @@ Resources:
                 Action:
                   - s3:GetObject
                   - s3:PutObject
-                Resource: !Sub ${EnergyDataBucket.Arn}/*
+                Resource: !Sub arn:aws:s3:::${EnergyDataBucketName}/*
 
   ApiFunction:
     Type: AWS::Lambda::Function
@@ -154,7 +129,7 @@ Resources:
           GBS_INTAKE_TABLE: !Ref IntakeTable
           GBS_ENERGY_DATA_TABLE: !Ref EnergyDataTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
-          GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucket
+          GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
           GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
@@ -358,7 +333,7 @@ Outputs:
   FrontendBucketName:
     Value: !Ref FrontendBucket
   EnergyDataBucketName:
-    Value: !Ref EnergyDataBucket
+    Value: !Ref EnergyDataBucketName
   SiteUrl:
     Value: !Sub https://${DomainName}
   WwwSiteUrl:

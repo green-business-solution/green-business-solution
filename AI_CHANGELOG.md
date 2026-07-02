@@ -36,6 +36,7 @@
 - Added v2 expression calculators and tests for tax-exempt liability, tax-rate preference savings, and local renewable property-tax valuation workflows.
 - Added synthetic test-case defaults for the new tax/profile/local assessor fields and kept tax runtime summaries explicit when human review is the suppressing reason.
 - Updated production Lambda packaging so removed legacy calculator data files are skipped as optional while required runtime data files still fail fast if missing.
+- Updated production infrastructure/deploy configuration to reference the existing energy-data S3 bucket instead of attempting to create a duplicate bucket during CloudFormation updates.
 - Added a tax-estimate TODO to keep tax calculations locality-aware when local tax liability, municipal treatment, or assessor rules affect value.
 
 ## 2026-07-02 - Codex (GPT-5) tax and form input GPT Pro prompts

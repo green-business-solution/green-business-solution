@@ -56,10 +56,48 @@ ensure_energy_data_table() {
   aws_data_region dynamodb wait table-exists --table-name "${ENERGY_DATA_TABLE}"
 }
 
+ensure_energy_data_bucket() {
+  if ! aws_region s3api head-bucket --bucket "${ENERGY_DATA_BUCKET}" >/dev/null 2>&1; then
+    echo "Creating S3 bucket ${ENERGY_DATA_BUCKET} in ${REGION}..."
+    if [ "${REGION}" = "us-east-1" ]; then
+      aws_region s3api create-bucket --bucket "${ENERGY_DATA_BUCKET}"
+    else
+      aws_region s3api create-bucket \
+        --bucket "${ENERGY_DATA_BUCKET}" \
+        --create-bucket-configuration "LocationConstraint=${REGION}"
+    fi
+  fi
+
+  aws_region s3api put-public-access-block \
+    --bucket "${ENERGY_DATA_BUCKET}" \
+    --public-access-block-configuration \
+    BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+
+  aws_region s3api put-bucket-cors \
+    --bucket "${ENERGY_DATA_BUCKET}" \
+    --cors-configuration '{
+      "CORSRules": [
+        {
+          "AllowedHeaders": ["*"],
+          "AllowedMethods": ["GET", "PUT"],
+          "AllowedOrigins": [
+            "https://retrofi.org",
+            "https://www.retrofi.org",
+            "http://localhost:5173",
+            "http://127.0.0.1:5173"
+          ],
+          "ExposeHeaders": ["ETag"],
+          "MaxAgeSeconds": 3600
+        }
+      ]
+    }'
+}
+
 cd "${ROOT_DIR}"
 
 ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
 ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
+ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCOUNT_ID}}"
 LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
 
 echo "Building frontend..."
@@ -112,6 +150,7 @@ fi
 aws_region s3 cp "${LAMBDA_ZIP}" "s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}"
 
 ensure_energy_data_table
+ensure_energy_data_bucket
 
 echo "Deploying CloudFormation stack ${STACK_NAME}..."
 parameter_overrides=(
@@ -124,6 +163,7 @@ parameter_overrides=(
   "AdminEmails=${ADMIN_EMAILS}"
   "DataRegion=${DATA_REGION}"
   "EnergyDataTable=${ENERGY_DATA_TABLE}"
+  "EnergyDataBucketName=${ENERGY_DATA_BUCKET}"
 )
 
 if [ -n "${GOOGLE_CLIENT_SECRET}" ]; then
