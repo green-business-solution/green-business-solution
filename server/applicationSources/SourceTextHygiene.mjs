@@ -5,6 +5,12 @@ const BOILERPLATE_PATTERNS = [
   /\bno phone calls required\b/i,
   /\bcookie(s)?\b.{0,80}\b(accept|settings|preferences|privacy)\b/i,
   /\b(accept|manage)\s+cookie(s)?\b/i,
+  /\bcaptcha\b/i,
+  /\bverification email\b/i,
+  /\bverify your email address to submit form\b/i,
+  /\bemail link to\b/i,
+  /\bplease enter a valid email address to configure zoho sign settings\b/i,
+  /\bsupport@zohoforms\.com\b/i,
   /\bskip to (main )?content\b/i,
   /^\s*(home|about|contact|privacy policy|terms of use|login|sign in|search|menu)\s*$/i,
   /^\s*(facebook|twitter|linkedin|youtube|instagram)\s*$/i

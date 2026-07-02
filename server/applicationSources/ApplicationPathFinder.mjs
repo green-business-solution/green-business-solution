@@ -1,14 +1,21 @@
 import { cleanSourceText, isBoilerplateSourceText, sanitizeSnippet } from "./SourceTextHygiene.mjs";
+import { rankApplicationArtifacts, scoreApplicationArtifactCandidate } from "./ApplicationArtifactRanker.mjs";
 
 const CONCRETE_APPLICATION_METHODS = new Set([
   "online_portal",
   "online_form",
+  "multi_step_utility_rebate",
+  "pdf_checklist",
   "pdf",
   "email",
   "grant_package",
   "hybrid_email_online_portal",
   "contractor_submitted",
   "utility_portal",
+  "contractor_involved",
+  "loan_application",
+  "pdf_guidelines",
+  "utility_interconnection",
   "tax_accountant_filing",
   "unknown"
 ]);
@@ -150,7 +157,9 @@ function extractEmail(value) {
   const text = cleanText(value);
   if (!text) return "";
   const match = text.match(EMAIL_PATTERN);
-  return match?.[0]?.toLowerCase() || "";
+  const email = match?.[0]?.toLowerCase() || "";
+  if (/\b(?:support|help)@(?:zohoforms|jotform)\.com$/i.test(email)) return "";
+  return email;
 }
 
 function decodeHtmlEntities(value) {
@@ -691,6 +700,20 @@ function collectAnchorCandidates(profile, anchors, { sourceUrl, utilityContext, 
 function findCandidatePageLink(profile, sourceUrl) {
   return profile.candidates
     .filter((candidate) => candidate.url && candidate.sourcePageUrl === sourceUrl && ["forms_page", "application_instructions"].includes(candidate.linkType))
+    .filter((candidate) => {
+      const ranking = scoreApplicationArtifactCandidate(
+        {
+          type: artifactTypeForCandidate(candidate),
+          label: candidate.label,
+          url: candidate.url,
+          evidenceSnippet: candidate.evidenceSnippet,
+          sourceUrl: candidate.sourcePageUrl,
+          reason: candidate.reason
+        },
+        { opportunity: profile._opportunity || {} }
+      );
+      return !ranking.ignored && ranking.score >= 55;
+    })
     .sort((a, b) => b.score - a.score)[0] || null;
 }
 
@@ -878,7 +901,16 @@ function buildBaseProfile(input) {
           }
         ]
       : [],
+    primaryApplicationArtifacts: [],
+    artifactDiagnostics: {
+      keptArtifacts: [],
+      filteredArtifacts: [],
+      lowConfidenceArtifacts: [],
+      filteredCount: 0
+    },
     applicationMethod: "unknown",
+    primaryMethod: "unknown",
+    secondaryMethods: [],
     applicationStatus: cleanOptional(sourceProfile?.applicationStatusHint) || "unknown",
     linkDiscoveryStatus: "needs_review",
     discoveryStatus: "not_attempted",
@@ -895,6 +927,70 @@ function buildBaseProfile(input) {
     error: undefined,
     notes: []
   };
+}
+
+function classifyApplicationMethods(profile, opportunity) {
+  const artifacts = Array.isArray(profile.applicationArtifacts) ? profile.applicationArtifacts : [];
+  const artifactText = [profile.opportunityName, ...artifacts.map((artifact) => [artifact.type, artifact.label, artifact.url, artifact.email, artifact.evidenceSnippet].join(" "))]
+    .join(" ");
+  const opportunityText = [
+    opportunity?.canonicalTitle,
+    opportunity?.normalizedTitle,
+    opportunity?.programName,
+    opportunity?.category,
+    opportunity?.description,
+    opportunity?.summary,
+    opportunity?.raw?.programName,
+    opportunity?.raw?.category
+  ].filter(Boolean).join(" ");
+  const hasOnlineForm = artifacts.some((artifact) => artifact.type === "online_form" || (!isPdfUrl(artifact.url) && /jotform|zoho|interest-form|\/form(?:\/|$)/i.test(artifact.url || artifact.label || "")));
+  const hasPortal = artifacts.some((artifact) =>
+    artifact.type !== "program_website" &&
+    artifact.type === "application_portal" &&
+      !/application instructions/i.test(artifact.label || "") &&
+      ![profile.programWebsiteUrl, profile.programSourceUrl, profile.originalSourceUrl].filter(Boolean).includes(artifact.url) ||
+    (artifact.type !== "program_website" && /portal|grants\.pa\.gov|rebates\.nextzero\.org/i.test(artifact.url || artifact.label || ""))
+  );
+  const hasPdf = artifacts.some((artifact) => artifact.type === "pdf" || /\.pdf(?:$|[?#])/i.test(artifact.url || ""));
+  const hasChecklistOrGuidelines = artifacts.some((artifact) => ["checklist", "guidelines", "grant_package", "supporting_document"].includes(artifact.type) || /\b(checklist|guidelines?|interconnection|nofo|foa|workbook)\b/i.test(`${artifact.label} ${artifact.url}`));
+  const hasChecklistPdf = artifacts.some((artifact) => (artifact.type === "pdf" || /\.pdf(?:$|[?#])/i.test(artifact.url || "")) && /\b(checklist|guidelines?|interconnection|nofo|foa|workbook)\b/i.test(`${artifact.label} ${artifact.url}`));
+  const hasEmail = artifacts.some((artifact) => artifact.type === "email_submission" || artifact.email);
+  const hasGrant = artifacts.some((artifact) => artifact.type === "grant_package" || /\b(nofo|foa|grant|grants\.pa\.gov|jotform questions|budget workbook|technical application)\b/i.test(`${artifact.label} ${artifact.url}`));
+  const hasContractor = artifacts.some((artifact) => artifact.type === "contractor_portal" || /\b(contractor|installer|trade ally)\b/i.test(`${artifact.label} ${artifact.evidenceSnippet}`));
+  const secondary = new Set();
+
+  if (hasOnlineForm) secondary.add("online_form");
+  if (hasPortal) secondary.add(profile.confirmedApplicationMethod === "utility_portal" ? "utility_portal" : "online_portal");
+  if (hasPdf) secondary.add("pdf");
+  if (hasChecklistOrGuidelines) secondary.add(hasGrant ? "pdf_guidelines" : "pdf_checklist");
+  if (hasEmail) secondary.add("email_submission");
+  if (hasContractor) secondary.add("contractor_involved");
+  if (/\bloan|zero[- ]?interest|financing\b/i.test(`${artifactText} ${opportunityText}`)) secondary.add("loan_application");
+  if (/\binterconnection|net metering\b/i.test(`${artifactText} ${opportunityText}`)) secondary.add("utility_interconnection");
+
+  let primary = profile.applicationMethod || "unknown";
+  if (profile.applicationStatus === "needs_user_selection" && /\b(nextzero|rebates\.nextzero|municipal light plant|utility)\b/i.test(`${artifactText} ${opportunityText}`)) primary = "utility_portal";
+  else if (/\btmlp|heat pump.*loan|multi[- ]?step|home energy assessment\b/i.test(`${artifactText} ${opportunityText}`) && (hasOnlineForm || hasPdf || hasContractor)) primary = "multi_step_utility_rebate";
+  else if (profile.applicationMethod === "contractor_submitted") primary = "contractor_submitted";
+  else if (profile.applicationMethod === "tax_accountant_filing") primary = "tax_accountant_filing";
+  else if (profile.applicationMethod === "email" && hasEmail && !hasPortal && !hasOnlineForm && !hasPdf) primary = "email";
+  else if (hasGrant) primary = "grant_package";
+  else if (hasEmail && (hasPortal || hasOnlineForm || hasPdf)) primary = "hybrid_email_online_portal";
+  else if (hasPdf && (hasChecklistPdf || /\binterconnection|checklist\b/i.test(artifactText))) primary = "pdf_checklist";
+  else if (hasOnlineForm) primary = "online_form";
+  else if (hasPortal && profile.confirmedApplicationMethod === "utility_portal") primary = "utility_portal";
+  else if (hasPortal) primary = "online_portal";
+  else if (hasPdf) primary = "pdf";
+  else if (hasEmail) primary = "email";
+
+  if (!CONCRETE_APPLICATION_METHODS.has(primary)) primary = profile.applicationMethod || "unknown";
+  if (!CONCRETE_APPLICATION_METHODS.has(primary)) primary = "unknown";
+  profile.primaryMethod = primary;
+  profile.secondaryMethods = [...secondary].filter((method) => method !== primary).slice(0, 8);
+  profile.applicationMethod = primary;
+  if (profile.methodStatus === "confirmed" && CONCRETE_APPLICATION_METHODS.has(primary)) {
+    profile.confirmedApplicationMethod = primary;
+  }
 }
 
 function finalizeProfile(profile) {
@@ -920,14 +1016,25 @@ function finalizeProfile(profile) {
     profile.applicationStatus = "unknown";
   }
   const artifactSeen = new Set();
-  profile.applicationArtifacts = (profile.applicationArtifacts || []).filter((artifact) => {
+  const dedupedArtifacts = (profile.applicationArtifacts || []).filter((artifact) => {
     const key = [artifact.type, artifact.url || artifact.email, artifact.sourceUrl].join("|");
     if (!artifact.type || artifactSeen.has(key)) return false;
     artifactSeen.add(key);
     return true;
-  }).slice(0, 20);
+  }).slice(0, 30);
+  const rankedArtifacts = rankApplicationArtifacts({
+    artifacts: dedupedArtifacts,
+    opportunity: profile._opportunity || {}
+  });
+  profile.applicationArtifacts = rankedArtifacts.artifacts.slice(0, 20);
+  profile.primaryApplicationArtifacts = rankedArtifacts.artifacts
+    .filter((artifact) => artifact.type !== "program_website")
+    .slice(0, 6);
+  profile.artifactDiagnostics = rankedArtifacts.diagnostics;
+  classifyApplicationMethods(profile, profile._opportunity || {});
   profile.evidence = profile.evidence.filter((item) => item?.label);
   profile.notes = uniqueValues(profile.notes.map(cleanText)).filter(Boolean);
+  delete profile._opportunity;
   return profile;
 }
 
@@ -1386,6 +1493,7 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
   const sourceProfile = sourceProfileFromInput(input);
   const opportunity = input?.opportunity || {};
   const profile = buildBaseProfile(input);
+  profile._opportunity = opportunity;
   const timeoutMs = Math.max(1_000, Number(options.timeoutMs || DEFAULT_TIMEOUT_MS));
   const maxResponseBytes = Math.max(50_000, Number(options.maxResponseBytes || DEFAULT_MAX_RESPONSE_BYTES));
   const now = typeof options.now === "function" ? options.now : () => new Date();

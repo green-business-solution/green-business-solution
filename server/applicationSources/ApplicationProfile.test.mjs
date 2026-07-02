@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { composeDraftApplicationProfile, validateApplicationProfile } from "./ApplicationProfile.mjs";
+import { assessApplicationProfileQuality, composeDraftApplicationProfile, validateApplicationProfile } from "./ApplicationProfile.mjs";
 
 describe("ApplicationProfile", () => {
   it("composes a draft AI-extracted profile from path and requirement outputs", () => {
@@ -94,5 +94,42 @@ describe("ApplicationProfile", () => {
 
     expect(validation.valid).toBe(false);
     expect(validation.errors.join(" ")).toMatch(/should not contain extracted requirements/i);
+  });
+
+  it("marks schema-valid profiles with artifacts but no requirements as quality-incomplete", () => {
+    const profile = composeDraftApplicationProfile({
+      opportunity: { opportunityId: "opp_quality", canonicalTitle: "Quality Program" },
+      applicationPathProfile: {
+        programWebsiteUrl: "https://official.example.com/program",
+        applicationMethod: "online_form",
+        applicationStatus: "open",
+        applicationArtifacts: [{ type: "online_form", label: "Interest Form", url: "https://official.example.com/interest-form/" }]
+      },
+      applicationRequirementProfile: {
+        extractionStatus: "needs_review",
+        requiredFields: [],
+        requiredDocuments: [],
+        optionalFields: [],
+        notes: ["Form found but fields were not extracted."]
+      }
+    });
+    const validation = validateApplicationProfile(profile, { extractionStatus: "needs_review", createdAutomatically: true });
+
+    expect(validation.valid).toBe(true);
+    expect(profile.profileQuality).toBe("needs_form_field_extraction");
+    expect(profile.qualityWarnings.join(" ")).toMatch(/artifacts were found/i);
+  });
+
+  it("does not mark closed profiles ready even when requirements are extractable", () => {
+    const quality = assessApplicationProfileQuality({
+      opportunityId: "opp_closed_quality",
+      applicationStatus: "funding_exhausted",
+      requiredFields: [{ id: "applicant_entity", label: "Applicant entity", sourceUrl: "https://example.com", evidenceSnippet: "Applicant entity", required: true }],
+      requiredDocuments: [{ id: "w9", label: "W-9", sourceUrl: "https://example.com", evidenceSnippet: "W-9", required: true }],
+      optionalFields: [],
+      applicationArtifacts: [{ type: "grant_package", label: "FOA", url: "https://example.com/foa.pdf" }]
+    });
+
+    expect(quality.profileQuality).toBe("closed_but_profile_extractable");
   });
 });

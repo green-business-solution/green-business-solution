@@ -1,5 +1,6 @@
 import { cleanSourceText, normalizeWhitespace, sanitizeSnippet } from "./SourceTextHygiene.mjs";
 import { extractOpportunitySummaryLinks } from "./OpportunitySummaryLinks.mjs";
+import { extractPdfText } from "./PdfTextExtractor.mjs";
 
 const DEFAULT_TIMEOUT_MS = 10_000;
 const DEFAULT_MAX_RESPONSE_BYTES = 600_000;
@@ -80,6 +81,41 @@ async function readResponseTextWithLimit(response, maxBytes) {
   return text.length > maxBytes ? text.slice(0, maxBytes) : text;
 }
 
+async function readResponseBufferWithLimit(response, maxBytes) {
+  if (typeof response.arrayBuffer === "function") {
+    const arrayBuffer = await response.arrayBuffer();
+    if (arrayBuffer.byteLength > maxBytes) {
+      throw new Error(`Source response exceeded ${maxBytes} byte limit.`);
+    }
+    return Buffer.from(arrayBuffer);
+  }
+
+  if (response.body && typeof response.body.getReader === "function") {
+    const reader = response.body.getReader();
+    let bytes = 0;
+    const chunks = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value?.byteLength || 0;
+      if (bytes > maxBytes) {
+        throw new Error(`Source response exceeded ${maxBytes} byte limit.`);
+      }
+      chunks.push(Buffer.from(value));
+    }
+
+    return Buffer.concat(chunks);
+  }
+
+  const text = await response.text();
+  const buffer = Buffer.from(text);
+  if (buffer.byteLength > maxBytes) {
+    throw new Error(`Source response exceeded ${maxBytes} byte limit.`);
+  }
+  return buffer;
+}
+
 function extractTitle(html) {
   const match = cleanText(html).match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   return match ? normalizeWhitespace(stripHtml(match[1])).slice(0, 180) : undefined;
@@ -128,18 +164,21 @@ export async function fetchSourceContent(url, options = {}) {
 
       const isPdf = /application\/pdf/i.test(contentType) || PDF_URL_PATTERN.test(url);
       if (isPdf) {
-        const rawText = await readResponseTextWithLimit(response, maxResponseBytes).catch(() => "");
-        const readable = htmlToReadableText(rawText);
-        const cleaned = cleanSourceText(readable).text;
+        const buffer = await readResponseBufferWithLimit(response, maxResponseBytes);
+        const pdfText = await extractPdfText(buffer);
         return {
           url,
           contentType,
           httpStatus,
-          title: undefined,
-          rawText: readable,
-          cleanedText: cleaned,
+          title: pdfText.title,
+          rawText: pdfText.rawText,
+          cleanedText: pdfText.cleanedText,
           links: [],
-          isPdf: true
+          isPdf: true,
+          pageCount: pdfText.pageCount,
+          pdfExtractionStatus: pdfText.extractionStatus,
+          extractionStatus: pdfText.extractionStatus,
+          error: pdfText.extractionStatus === "pdf_text_unavailable" ? pdfText.error || "PDF fetched but text extraction unavailable." : undefined
         };
       }
 
@@ -151,6 +190,7 @@ export async function fetchSourceContent(url, options = {}) {
         contentType,
         httpStatus,
         title: extractTitle(raw),
+        rawHtml: raw,
         rawText: readable,
         cleanedText: cleaned,
         links: sourceLinksFromHtml(raw, url),
@@ -165,13 +205,16 @@ export async function fetchSourceContent(url, options = {}) {
       clearTimeout(timeout);
     }
   } catch (error) {
+    const isPdf = PDF_URL_PATTERN.test(cleanText(url));
     return {
       url,
       error: cleanText(error?.message || "Source could not be fetched.").slice(0, 240),
       links: [],
       rawText: "",
       cleanedText: "",
-      isPdf: PDF_URL_PATTERN.test(cleanText(url))
+      isPdf,
+      pdfExtractionStatus: isPdf ? "pdf_fetch_failed" : undefined,
+      extractionStatus: isPdf ? "pdf_fetch_failed" : undefined
     };
   }
 }

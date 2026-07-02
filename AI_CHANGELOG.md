@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application prep extraction quality pass
+
+- Added application artifact relevance ranking so billing portals, generic navigation, and unrelated utility forms are filtered into diagnostics instead of final ApplicationProfile artifacts.
+- Added safe PDF text extraction, form-field extraction, grant/package extraction, and multi-source requirement extraction across official pages, primary application URLs, and top relevant documents without adding writes or submission behavior.
+- Added profile quality scoring, expanded application-prep tests, and regenerated the first-10 audit JSON/Markdown with artifact filtering, PDF extraction, source-inspection, method, and quality diagnostics.
+
 ## 2026-07-02 - Codex (GPT-5) user preview sidebar cleanup
 
 - Removed the extra customer-style top bar from the `/user-preview` retrofit picker shell so the page starts directly with the estimate banner.

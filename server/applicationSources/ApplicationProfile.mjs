@@ -30,7 +30,7 @@ export function composeDraftApplicationProfile({
     applicationRequirementProfile?.extractionStatus === "requirements_extracted" ||
     applicationRequirementProfile?.extractionStatus === "partial";
 
-  return {
+  const profile = {
     opportunityId: String(
       opportunity?.opportunityId ||
         officialProgramWebsiteProfile?.opportunityId ||
@@ -56,11 +56,17 @@ export function composeDraftApplicationProfile({
     contactEmail: cleanOptional(applicationPathProfile?.contactEmail || applicationPathProfile?.bestContactEmail || applicationPathProfile?.discoveredContactEmail),
 
     applicationMethod: cleanOptional(applicationPathProfile?.applicationMethod || applicationRequirementProfile?.applicationMethod) || "unknown",
+    primaryMethod: cleanOptional(applicationPathProfile?.primaryMethod || applicationRequirementProfile?.primaryMethod || applicationPathProfile?.applicationMethod) || "unknown",
+    secondaryMethods: Array.isArray(applicationPathProfile?.secondaryMethods) ? applicationPathProfile.secondaryMethods : [],
     applicationStatus: cleanOptional(applicationPathProfile?.applicationStatus || applicationRequirementProfile?.applicationStatus) || "unknown",
 
     applicationArtifacts: uniqueBy(applicationPathProfile?.applicationArtifacts || applicationRequirementProfile?.applicationArtifacts || [], (item) =>
       [item?.type, item?.url || item?.email, item?.sourceUrl].join("|")
     ),
+    primaryApplicationArtifacts: uniqueBy(applicationPathProfile?.primaryApplicationArtifacts || [], (item) =>
+      [item?.type, item?.url || item?.email, item?.sourceUrl].join("|")
+    ),
+    artifactDiagnostics: applicationPathProfile?.artifactDiagnostics || {},
 
     requiredFields: applicationRequirementProfile?.requiredFields || [],
     requiredDocuments: applicationRequirementProfile?.requiredDocuments || [],
@@ -79,6 +85,8 @@ export function composeDraftApplicationProfile({
       ...(Array.isArray(applicationRequirementProfile?.evidence) ? applicationRequirementProfile.evidence : [])
     ].slice(0, 40),
     sourceChain: applicationPathProfile?.sourceChain || officialProgramWebsiteProfile?.sourceChain || [],
+    extractionDiagnostics: applicationRequirementProfile?.extractionDiagnostics || {},
+    diagnostics: applicationRequirementProfile?.diagnostics || {},
 
     reviewStatus: extracted ? "ai_extracted" : "needs_review",
     createdFrom: "extraction",
@@ -91,6 +99,76 @@ export function composeDraftApplicationProfile({
       ...(Array.isArray(applicationRequirementProfile?.notes) ? applicationRequirementProfile.notes : [])
     ].filter(Boolean)
   };
+
+  const quality = assessApplicationProfileQuality(profile, {
+    pathProfile: applicationPathProfile,
+    requirementProfile: applicationRequirementProfile
+  });
+  profile.profileQuality = quality.profileQuality;
+  profile.qualityWarnings = quality.qualityWarnings;
+  return profile;
+}
+
+export function assessApplicationProfileQuality(profile = {}, context = {}) {
+  const warnings = [];
+  const requirementCount = (profile.requiredFields?.length || 0) + (profile.requiredDocuments?.length || 0);
+  const optionalCount = profile.optionalFields?.length || 0;
+  const artifactCount = (profile.applicationArtifacts || []).filter((artifact) => artifact?.type !== "program_website").length;
+  const extractionStatus = context?.requirementProfile?.extractionStatus || profile.extractionStatus;
+  const diagnostics = context?.requirementProfile?.extractionDiagnostics || profile.extractionDiagnostics || {};
+  const artifactDiagnostics = context?.pathProfile?.artifactDiagnostics || profile.artifactDiagnostics || {};
+  const stepText = (profile.applicationSteps || []).join(" ");
+
+  if (profile.applicationStatus === "source_unreadable_or_js_required" || extractionStatus === "source_unreadable_or_js_required") {
+    if (requirementCount + optionalCount > 0) warnings.push("Source is unreadable or JavaScript-required but profile contains extracted requirements.");
+    return { profileQuality: "source_unreadable_or_js_required", qualityWarnings: warnings };
+  }
+
+  if (profile.applicationStatus === "needs_user_selection" || extractionStatus === "needs_user_selection") {
+    if (!profile.notes?.some((note) => /selection|utility|town|municipal|territory/i.test(note))) {
+      warnings.push("Needs-user-selection profile should explain the required selection.");
+    }
+    return { profileQuality: "needs_user_selection", qualityWarnings: warnings };
+  }
+
+  if (["closed", "funding_exhausted"].includes(profile.applicationStatus)) {
+    if (profile.readyToApply) warnings.push("Closed/funding-exhausted profile must not be marked ready-to-apply.");
+    if (requirementCount > 0) return { profileQuality: "closed_but_profile_extractable", qualityWarnings: warnings };
+    return { profileQuality: "closed_no_action", qualityWarnings: warnings };
+  }
+
+  if (diagnostics.pdfTextExtractionStatus === "pdf_text_unavailable" || extractionStatus === "needs_pdf_text_extraction") {
+    warnings.push("One or more relevant PDF artifacts need readable text extraction before requirements can be trusted.");
+    return { profileQuality: "needs_pdf_text_extraction", qualityWarnings: warnings };
+  }
+
+  if (artifactDiagnostics.filteredArtifacts?.length) {
+    warnings.push(`${artifactDiagnostics.filteredArtifacts.length} unrelated or low-confidence artifacts were filtered from the final profile.`);
+  }
+
+  if (/\b(captcha|verification email|zoho sign settings|support@zohoforms\.com)\b/i.test(stepText)) {
+    warnings.push("Application steps include system, CAPTCHA, validation, or vendor-support text.");
+  }
+
+  if (artifactCount > 0 && requirementCount === 0) {
+    warnings.push("Application artifacts were found, but required fields/documents are missing.");
+    if (diagnostics.formFieldExtractionStatus !== "form_fields_extracted" && (profile.applicationArtifacts || []).some((artifact) => /form|jotform|zoho|interest-form/i.test(`${artifact.type} ${artifact.label} ${artifact.url}`))) {
+      return { profileQuality: "needs_form_field_extraction", qualityWarnings: warnings };
+    }
+    return { profileQuality: "artifacts_found_requirements_missing", qualityWarnings: warnings };
+  }
+
+  if (extractionStatus === "requirements_extracted" && requirementCount <= 2) {
+    warnings.push("Extraction status says requirements_extracted, but only one or two generic requirements were found.");
+    return { profileQuality: "needs_manual_review", qualityWarnings: warnings };
+  }
+
+  if (requirementCount >= 3 && (profile.evidence || []).length > 0) {
+    return { profileQuality: "requirements_ready_for_admin_review", qualityWarnings: warnings };
+  }
+
+  if (artifactCount > 0) return { profileQuality: "artifacts_found_requirements_missing", qualityWarnings: warnings };
+  return { profileQuality: "needs_manual_review", qualityWarnings: warnings };
 }
 
 export function validateApplicationProfile(profile = {}, context = {}) {
