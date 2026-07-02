@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application link discovery quality gate
+
+- Refactored application path discovery into a link-discovery-first flow with aggregator detection, ranked application candidates, inspected-page diagnostics, DSIRE embedded-data program website extraction, and one bounded forms/candidate-page follow from official program websites.
+- Added source-text hygiene and stricter requirement-extraction gates so source-only DSIRE/general pages return `needs_review` with zero fake fields, documents, deadlines, or steps unless a reliable application path or explicit application section is present.
+- Updated the admin application-sources page to show ranked candidates, inspected pages, extraction diagnostics, and a clear “Requirements not extracted” state when no reliable application path exists.
+
 ## 2026-07-02 - Codex (GPT-5) user-preview clean picker first view
 
 - Changed the admin-nav `/user-preview` Retrofit Recommendations flow so no retrofit is active on first load and the user first sees a clean retrofit picker instead of the full workspace.

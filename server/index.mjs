@@ -16,7 +16,7 @@ import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchPr
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
-import { findOpportunityApplicationPath } from "./applicationSources/ApplicationPathFinder.mjs";
+import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
 import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
 import {
   buildSiteEnergyProfile,
@@ -3174,9 +3174,9 @@ app.post("/api/admin/application-paths/discover", async (req, res) => {
     }
 
     const startedAt = Date.now();
-    const profile = await findOpportunityApplicationPath({ sourceProfile });
+    const profile = await discoverOpportunityApplicationLinks({ sourceProfile });
     console.log(
-      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} discoveryStatus=${profile.discoveryStatus || profile.pathStatus} applicationMethod=${profile.applicationMethod || profile.confirmedApplicationMethod} methodStatus=${profile.methodStatus} durationMs=${Date.now() - startedAt}`
+      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} linkDiscoveryStatus=${profile.linkDiscoveryStatus || profile.discoveryStatus || profile.pathStatus} applicationMethod=${profile.applicationMethod || profile.confirmedApplicationMethod} methodStatus=${profile.methodStatus} candidates=${profile.candidates?.length || 0} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({

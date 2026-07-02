@@ -1764,6 +1764,43 @@ dd {
   width: fit-content;
 }
 
+.application-requirement-blocked {
+  background: #fff8e8;
+  border: 1px solid #eedaa8;
+  border-radius: 6px;
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+}
+
+.application-requirement-blocked strong {
+  color: #6d521a;
+  font-size: 12px;
+}
+
+.application-link-candidates {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.application-link-candidates li {
+  color: #4f5e56;
+  display: grid;
+  gap: 2px;
+  line-height: 1.35;
+}
+
+.application-link-candidates span {
+  color: #223128;
+  font-weight: 800;
+}
+
+.application-link-candidates small {
+  color: #62736a;
+}
+
 .application-requirement-result {
   background: #ffffff;
   border: 1px solid #dce3dd;
@@ -1860,6 +1897,31 @@ dd {
 .application-requirement-list small,
 .application-requirement-evidence small {
   color: #62736a;
+}
+
+.application-diagnostics dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.application-diagnostics dl div {
+  display: grid;
+  gap: 2px;
+}
+
+.application-diagnostics dt {
+  color: #62736a;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.application-diagnostics dd {
+  color: #223128;
+  font-size: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .opportunity-review-layout {

@@ -395,6 +395,38 @@ type ApplicationPathStatus =
   | "source_unreadable"
   | "not_attempted";
 type ApplicationMethodStatus = "confirmed" | "inferred" | "unknown";
+type ApplicationLinkDiscoveryStatus = "application_link_found" | "pdf_found" | "email_found" | "program_website_found" | "source_only" | "needs_review" | "source_unreadable";
+type ApplicationLinkCandidateType =
+  | "application_url"
+  | "pdf_application"
+  | "portal"
+  | "program_website"
+  | "contact_email"
+  | "contractor_portal"
+  | "tax_guidance"
+  | "forms_page"
+  | "application_instructions"
+  | "unknown";
+
+type ApplicationLinkCandidate = {
+  url?: string;
+  email?: string;
+  linkType: ApplicationLinkCandidateType;
+  label?: string;
+  sourcePageUrl?: string;
+  evidenceSnippet?: string;
+  score: number;
+  confidence: SourceConfidence;
+  reason: string;
+};
+
+type ApplicationPageInspected = {
+  url: string;
+  role: "aggregator" | "program_website" | "candidate_page" | "application_candidate" | string;
+  status: "fetched" | "failed" | "skipped";
+  title?: string;
+  error?: string;
+};
 
 type OpportunityApplicationSource = {
   opportunityId: string;
@@ -436,19 +468,28 @@ type ApplicationPathEvidence = {
 type ApplicationPathProfile = {
   opportunityId: string;
   opportunityName?: string;
+  originalSourceUrl?: string;
+  isAggregatorSource?: boolean;
+  aggregatorType?: "dsire" | "utility_database" | "other" | "unknown";
   programSourceUrl?: string;
   programWebsiteUrl?: string;
   discoveredApplicationUrl?: string;
   discoveredPdfUrl?: string;
   discoveredContactEmail?: string;
+  bestApplicationUrl?: string;
+  bestPdfUrl?: string;
+  bestContactEmail?: string;
   pdfUrl?: string;
   contactEmail?: string;
   applicationMethod?: ApplicationMethod;
+  linkDiscoveryStatus?: ApplicationLinkDiscoveryStatus;
   discoveryStatus?: ApplicationPathStatus;
   confidence?: SourceConfidence;
   confirmedApplicationMethod: ApplicationMethod;
   methodStatus: ApplicationMethodStatus;
   pathStatus: ApplicationPathStatus;
+  candidates?: ApplicationLinkCandidate[];
+  pagesInspected?: ApplicationPageInspected[];
   evidence: ApplicationPathEvidence[];
   sourceFetchedAt?: string;
   sourceTitle?: string;
@@ -512,6 +553,15 @@ type ApplicationRequirementProfile = {
   estimatedTime?: string;
   applicationSteps: string[];
   evidence: ApplicationRequirementEvidence[];
+  extractionDiagnostics?: {
+    sourceUsed?: string;
+    isAggregatorSource?: boolean;
+    aggregatorType?: string;
+    applicationPathFound?: boolean;
+    applicationSpecificSectionFound?: boolean;
+    extractionAllowed?: boolean;
+    reason?: string;
+  };
   notes: string[];
   error?: string;
 };
@@ -10285,8 +10335,10 @@ function renderApplicationPathDiscovery({
   const canDiscover = Boolean(row.programSourceUrl || row.applicationUrl);
   const discoveryStatus = profile ? applicationPathDiscoveryStatus(profile) : undefined;
   const applicationMethod = profile ? applicationPathMethod(profile) : undefined;
+  const bestApplicationUrl = profile ? applicationPathBestApplicationUrl(profile) : undefined;
   const pdfUrl = profile ? applicationPathPdfUrl(profile) : undefined;
   const contactEmail = profile ? applicationPathContactEmail(profile) : undefined;
+  const canExtractRequirements = profile ? canExtractRequirementsFromPath(profile) : false;
   return (
     <div className="application-path-discovery">
       <button className="secondary-button" disabled={!canDiscover || isLoading} onClick={onDiscover} type="button">
@@ -10321,7 +10373,7 @@ function renderApplicationPathDiscovery({
             ) : null}
             <div>
               <dt>Application URL</dt>
-              <dd>{profile.discoveredApplicationUrl ? renderApplicationSourceLink(profile.discoveredApplicationUrl) : "Application URL not found."}</dd>
+              <dd>{bestApplicationUrl ? renderApplicationSourceLink(bestApplicationUrl) : "Application URL not found."}</dd>
             </div>
             <div>
               <dt>PDF URL</dt>
@@ -10337,7 +10389,11 @@ function renderApplicationPathDiscovery({
             </div>
             <div>
               <dt>Discovery status</dt>
-              <dd>{formatApplicationPathStatusLabel(discoveryStatus || profile.pathStatus)}</dd>
+              <dd>{profile.linkDiscoveryStatus ? formatApplicationLinkDiscoveryStatus(profile.linkDiscoveryStatus) : formatApplicationPathStatusLabel(discoveryStatus || profile.pathStatus)}</dd>
+            </div>
+            <div>
+              <dt>Aggregator</dt>
+              <dd>{profile.isAggregatorSource ? (profile.aggregatorType || "aggregator") : "No"}</dd>
             </div>
             {profile.confidence ? (
               <div>
@@ -10348,17 +10404,55 @@ function renderApplicationPathDiscovery({
           </dl>
           <small>{applicationPathResultSummary(profile)}</small>
           <div className="application-requirement-discovery">
-            <button
-              className="secondary-button"
-              disabled={requirementLoading}
-              onClick={() => onExtractRequirements(profile)}
-              type="button"
-            >
-              {requirementLoading ? "Extracting..." : requirementProfile ? "Refresh requirements" : "Extract requirements"}
-            </button>
+            {canExtractRequirements ? (
+              <button
+                className="secondary-button"
+                disabled={requirementLoading}
+                onClick={() => onExtractRequirements(profile)}
+                type="button"
+              >
+                {requirementLoading ? "Extracting..." : requirementProfile ? "Refresh requirements" : "Extract requirements"}
+              </button>
+            ) : (
+              <div className="application-requirement-blocked">
+                <strong>Requirements not extracted</strong>
+                <small>Reason: source only / no reliable application path found.</small>
+                <small>Next: open program source or review manually.</small>
+              </div>
+            )}
             {requirementError ? <small className="application-path-error">{requirementError}</small> : null}
             {requirementProfile ? renderApplicationRequirementPreview(requirementProfile) : null}
           </div>
+          {profile.candidates?.length ? (
+            <div className="application-requirement-section">
+              <strong>Ranked application link candidates</strong>
+              <ul className="application-link-candidates">
+                {profile.candidates.slice(0, 5).map((candidate, index) => (
+                  <li key={`${candidate.linkType}:${candidate.url || candidate.email || index}`}>
+                    <span>{formatApplicationLinkCandidateType(candidate.linkType)} · score {candidate.score}</span>
+                    {candidate.url ? renderApplicationSourceLink(candidate.url) : candidate.email ? <small>{candidate.email}</small> : null}
+                    {candidate.evidenceSnippet ? <small>{candidate.evidenceSnippet}</small> : null}
+                    <small>{candidate.reason}</small>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {profile.pagesInspected?.length ? (
+            <div className="application-requirement-section">
+              <strong>Pages inspected</strong>
+              <ul className="application-link-candidates">
+                {profile.pagesInspected.slice(0, 4).map((page) => (
+                  <li key={`${page.role}:${page.url}`}>
+                    <span>{page.role.replaceAll("_", " ")} · {page.status}</span>
+                    {renderApplicationSourceLink(page.url)}
+                    {page.title ? <small>{page.title}</small> : null}
+                    {page.error ? <small>{page.error}</small> : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           {profile.evidence.length ? (
             <ul className="application-path-evidence">
               {profile.evidence.slice(0, 3).map((item, index) => (
@@ -10387,6 +10481,12 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
     `Contractor: ${formatRequirementValue(profile.contractorRequired)}`,
     `Tax review: ${formatRequirementValue(profile.taxReviewRequired)}`
   ];
+  const hasExtractedRequirements =
+    profile.requiredFields.length + profile.requiredDocuments.length + profile.optionalFields.length + profile.applicationSteps.length > 0 ||
+    profile.preApprovalRequired === true ||
+    profile.contractorRequired === true ||
+    profile.taxReviewRequired === true ||
+    Boolean(profile.deadline);
   return (
     <div className="application-requirement-result">
       <div className="application-path-pill-row">
@@ -10395,6 +10495,12 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
         </span>
         <span className="application-path-method">{formatApplicationMethodLabel(profile.applicationMethod)}</span>
       </div>
+      {!hasExtractedRequirements && profile.extractionStatus === "needs_review" ? (
+        <div className="application-requirement-blocked">
+          <strong>Requirements not extracted</strong>
+          <small>{profile.extractionDiagnostics?.reason || "No reliable application path or explicit application section was found."}</small>
+        </div>
+      ) : null}
       <dl className="application-requirement-summary">
         <div>
           <dt>Source used</dt>
@@ -10428,6 +10534,34 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
           <span key={rule}>{rule}</span>
         ))}
       </div>
+      {profile.extractionDiagnostics ? (
+        <div className="application-requirement-section application-diagnostics">
+          <strong>Extraction diagnostics</strong>
+          <dl>
+            <div>
+              <dt>Source used</dt>
+              <dd>{profile.extractionDiagnostics.sourceUsed ? renderApplicationSourceLink(profile.extractionDiagnostics.sourceUsed) : "Not available"}</dd>
+            </div>
+            <div>
+              <dt>Aggregator source</dt>
+              <dd>{profile.extractionDiagnostics.isAggregatorSource ? (profile.extractionDiagnostics.aggregatorType || "Yes") : "No"}</dd>
+            </div>
+            <div>
+              <dt>Application path found</dt>
+              <dd>{profile.extractionDiagnostics.applicationPathFound ? "Yes" : "No"}</dd>
+            </div>
+            <div>
+              <dt>Application section found</dt>
+              <dd>{profile.extractionDiagnostics.applicationSpecificSectionFound ? "Yes" : "No"}</dd>
+            </div>
+            <div>
+              <dt>Extraction allowed</dt>
+              <dd>{profile.extractionDiagnostics.extractionAllowed ? "Yes" : "No"}</dd>
+            </div>
+          </dl>
+          {profile.extractionDiagnostics.reason ? <small>{profile.extractionDiagnostics.reason}</small> : null}
+        </div>
+      ) : null}
       {profile.applicationSteps.length ? (
         <div className="application-requirement-section">
           <strong>Application steps</strong>
@@ -10532,6 +10666,29 @@ function formatApplicationMethodLabel(value: ApplicationMethod) {
   if (value === "source_only") return "Source only";
   if (value === "needs_review") return "Needs review";
   if (value === "unreadable") return "Unreadable";
+  return value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function formatApplicationLinkDiscoveryStatus(value: ApplicationLinkDiscoveryStatus) {
+  if (value === "application_link_found") return "Application link found";
+  if (value === "pdf_found") return "PDF found";
+  if (value === "email_found") return "Email application found";
+  if (value === "program_website_found") return "Program website found";
+  if (value === "source_only") return "Source only";
+  if (value === "source_unreadable") return "Source unreadable";
+  if (value === "needs_review") return "Needs review";
+  return (value as string).replace(/_/g, " ").replace(/\b\w/g, (character: string) => character.toUpperCase());
+}
+
+function formatApplicationLinkCandidateType(value: ApplicationLinkCandidateType) {
+  if (value === "application_url") return "Application URL";
+  if (value === "pdf_application") return "PDF application";
+  if (value === "program_website") return "Program website";
+  if (value === "contact_email") return "Contact email";
+  if (value === "contractor_portal") return "Contractor portal";
+  if (value === "tax_guidance") return "Tax guidance";
+  if (value === "forms_page") return "Forms page";
+  if (value === "application_instructions") return "Application instructions";
   return value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
 }
 

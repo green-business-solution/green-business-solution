@@ -116,7 +116,8 @@ describe("extractOpportunityApplicationRequirements", () => {
           discoveredApplicationUrl: undefined,
           discoveredContactEmail: "rebates@example.com",
           contactEmail: "rebates@example.com",
-          applicationMethod: "email"
+          applicationMethod: "email",
+          methodStatus: "confirmed"
         })
       },
       fixedOptions(
@@ -141,7 +142,7 @@ describe("extractOpportunityApplicationRequirements", () => {
     const result = await extractOpportunityApplicationRequirements(
       {
         sourceProfile: makeSourceProfile({ applicationMethod: "contractor_submitted" }),
-        pathProfile: makePathProfile({ applicationMethod: "contractor_submitted", discoveredApplicationUrl: undefined, programWebsiteUrl: "https://example.com/contractor-program" })
+        pathProfile: makePathProfile({ applicationMethod: "contractor_submitted", methodStatus: "confirmed", discoveredApplicationUrl: undefined, programWebsiteUrl: "https://example.com/contractor-program" })
       },
       fixedOptions(
         mockTextFetch(`
@@ -163,7 +164,7 @@ describe("extractOpportunityApplicationRequirements", () => {
     const result = await extractOpportunityApplicationRequirements(
       {
         sourceProfile: makeSourceProfile({ applicationMethod: "tax_accountant_filing" }),
-        pathProfile: makePathProfile({ applicationMethod: "tax_accountant_filing", discoveredApplicationUrl: undefined, programWebsiteUrl: "https://irs.example.com/credit" })
+        pathProfile: makePathProfile({ applicationMethod: "tax_accountant_filing", methodStatus: "confirmed", discoveredApplicationUrl: undefined, programWebsiteUrl: "https://irs.example.com/credit" })
       },
       fixedOptions(
         mockTextFetch(`
@@ -200,6 +201,158 @@ describe("extractOpportunityApplicationRequirements", () => {
     expect(result.evidence.some((item) => item.label === "Deadline language found")).toBe(true);
   });
 
+  it("does not extract requirements from DSIRE boilerplate/source-only text", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_boilerplate",
+          programSourceUrl: "https://programs.dsireusa.org/system/program/detail/999/boilerplate"
+        }),
+        pathProfile: makePathProfile({
+          opportunityId: "opp_dsire_boilerplate",
+          programSourceUrl: "https://programs.dsireusa.org/system/program/detail/999/boilerplate",
+          discoveredApplicationUrl: undefined,
+          applicationMethod: "source_only",
+          discoveryStatus: "source_only",
+          linkDiscoveryStatus: "source_only",
+          isAggregatorSource: true,
+          aggregatorType: "dsire"
+        })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h1>DSIRE Program Summary</h1>
+            <p>{{ contact.contact.email }}</p>
+            <p>Get free, expert advice (no phone calls required)</p>
+            <p>Expiration Date:</p>
+            <p>This page summarizes eligibility and incentive amounts.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.extractionStatus).toBe("needs_review");
+    expect(result.requiredFields).toHaveLength(0);
+    expect(result.requiredDocuments).toHaveLength(0);
+    expect(result.optionalFields).toHaveLength(0);
+    expect(result.applicationSteps).toHaveLength(0);
+    expect(result.deadline).toBeUndefined();
+    expect(result.notes.join(" ")).toMatch(/only a general program\/source page/i);
+    expect(result.extractionDiagnostics?.extractionAllowed).toBe(false);
+  });
+
+  it("extracts phone only when it appears in a real application requirement section", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({ discoveredApplicationUrl: "https://example.com/apply" })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h2>Application Requirements</h2>
+            <p>Applicants must provide contact name, phone number, and service address.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.extractionStatus).not.toBe("needs_review");
+    expect(result.requiredFields.map((item) => item.id)).toEqual(expect.arrayContaining(["contact_name", "phone", "site_service_address"]));
+  });
+
+  it("ignores phone language from non-application boilerplate", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({
+          discoveredApplicationUrl: undefined,
+          applicationMethod: "source_only",
+          discoveryStatus: "source_only",
+          linkDiscoveryStatus: "source_only"
+        })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <p>Get free, expert advice (no phone calls required)</p>
+            <p>Program overview and incentive summary.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.requiredFields.map((item) => item.id)).not.toContain("phone");
+    expect(result.extractionStatus).toBe("needs_review");
+  });
+
+  it("ignores an empty Expiration Date label", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({ discoveredApplicationUrl: "https://example.com/apply" })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h2>Application Requirements</h2>
+            <p>Expiration Date:</p>
+            <p>Applicants must provide business legal name.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.deadline).toBeUndefined();
+    expect(result.requiredFields.map((item) => item.id)).toContain("business_legal_name");
+  });
+
+  it("extracts Expiration Date only when a real value is present", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({ discoveredApplicationUrl: "https://example.com/apply" })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h2>Application Requirements</h2>
+            <p>Expiration Date: December 31, 2026</p>
+            <p>Applicants must provide business legal name.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.deadline).toMatch(/December 31, 2026/i);
+  });
+
+  it("never turns template placeholders into application steps", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({
+          discoveredApplicationUrl: undefined,
+          applicationMethod: "source_only",
+          discoveryStatus: "source_only",
+          linkDiscoveryStatus: "source_only"
+        })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <p>{{ contact.contact.email }}</p>
+            <p>Program overview only.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.applicationSteps).toHaveLength(0);
+    expect(result.evidence.map((item) => item.textSnippet || "").join(" ")).not.toMatch(/\{\{/);
+  });
+
   it("returns needs_review for a vague readable source", async () => {
     const result = await extractOpportunityApplicationRequirements(
       { sourceProfile: makeSourceProfile(), pathProfile: makePathProfile({ discoveredApplicationUrl: undefined, programWebsiteUrl: "https://example.com/program" }) },
@@ -216,7 +369,7 @@ describe("extractOpportunityApplicationRequirements", () => {
     expect(result.requiredFields).toHaveLength(0);
     expect(result.requiredDocuments).toHaveLength(0);
     expect(result.extractionStatus).toBe("needs_review");
-    expect(result.notes.join(" ")).toMatch(/no exact required fields/i);
+    expect(result.notes.join(" ")).toMatch(/no reliable application requirements/i);
   });
 
   it("returns source_unavailable for unreadable sources", async () => {

@@ -1,3 +1,5 @@
+import { cleanSourceText, isBoilerplateSourceText, sanitizeSnippet } from "./SourceTextHygiene.mjs";
+
 const APPLICATION_METHODS = new Set([
   "online_portal",
   "pdf",
@@ -27,6 +29,10 @@ const DEADLINE_PATTERN =
   /\b(deadline|apply by|applications? due|submit by|expires?|expiration|reservation deadline|rolling|first[- ]come|funds are limited|until funds are exhausted|by (?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}(?:,\s*\d{4})?)\b/i;
 const STEP_PATTERN =
   /\b(apply|complete|download|submit|email|contact|upload|attach|provide|confirm eligibility|review eligibility|reserve|pre[- ]?approval|sign|send)\b/i;
+const APPLICATION_SPECIFIC_SECTION_PATTERN =
+  /\b(how to apply|application requirements?|required documents?|documents needed|before you apply|required information|application instructions?|application form|submit application|apply online|rebate application|pre[- ]?approval application|applicants? must provide|submit the following|upload (?:the )?(?:following )?(?:documents?|forms?))\b/i;
+const DEADLINE_VALUE_PATTERN =
+  /\b(rolling|first[- ]come|funds are limited|until funds are exhausted|january|february|march|april|may|june|july|august|september|october|november|december|\d{1,2}\/\d{1,2}\/\d{2,4}|\d{4}-\d{2}-\d{2})\b/i;
 
 const FIELD_DEFINITIONS = [
   { id: "business_legal_name", label: "Business legal name", requirementType: "field", patterns: [/\bbusiness legal name\b/i, /\blegal business name\b/i, /\bcompany legal name\b/i] },
@@ -104,7 +110,7 @@ function htmlToReadableText(value) {
 }
 
 function safeSnippet(value, maxLength = 280) {
-  const text = normalizeWhitespace(stripHtml(value));
+  const text = sanitizeSnippet(stripHtml(value), maxLength);
   return text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
 }
 
@@ -231,6 +237,8 @@ function normalizeApplicationMethod(value) {
 
 function chooseRequirementSource(sourceProfile, pathProfile, opportunity) {
   return firstHttpUrl(
+    pathProfile?.bestApplicationUrl,
+    pathProfile?.bestPdfUrl,
     pathProfile?.discoveredApplicationUrl,
     pathProfile?.discoveredPdfUrl,
     pathProfile?.pdfUrl,
@@ -269,6 +277,15 @@ function buildBaseProfile(input) {
     estimatedTime: undefined,
     applicationSteps: [],
     evidence: [],
+    extractionDiagnostics: {
+      sourceUsed: cleanOptional(sourceUrl),
+      isAggregatorSource: Boolean(pathProfile?.isAggregatorSource),
+      aggregatorType: cleanOptional(pathProfile?.aggregatorType),
+      applicationPathFound: Boolean(pathProfile?.bestApplicationUrl || pathProfile?.bestPdfUrl || pathProfile?.discoveredApplicationUrl || pathProfile?.discoveredPdfUrl || pathProfile?.pdfUrl),
+      applicationSpecificSectionFound: false,
+      extractionAllowed: false,
+      reason: "Extraction has not been attempted."
+    },
     notes: [],
     error: undefined
   };
@@ -319,17 +336,40 @@ function definitionMatchesUnit(definition, unit) {
   return definition.patterns.some((pattern) => pattern.test(unit));
 }
 
-function hasRequiredContext(unit, fullText, fetched) {
-  return REQUIRED_CONTEXT_PATTERN.test(unit) || (FORM_FIELD_PATTERN.test(fullText) && /[:?]\s*$/.test(unit)) || (fetched.isPdf && /[:?]\s*$/.test(unit));
+function hasApplicationSpecificSection(text, units) {
+  return APPLICATION_SPECIFIC_SECTION_PATTERN.test(text) || units.some((unit) => APPLICATION_SPECIFIC_SECTION_PATTERN.test(unit));
 }
 
-function confidenceForUnit(unit, fullText, fetched) {
+function hasReliableApplicationPath(pathProfile, profile) {
+  const method = normalizeApplicationMethod(pathProfile?.applicationMethod || pathProfile?.confirmedApplicationMethod || profile.applicationMethod);
+  if (pathProfile?.bestPdfUrl || pathProfile?.discoveredPdfUrl || pathProfile?.pdfUrl) return true;
+  if (pathProfile?.bestApplicationUrl || pathProfile?.discoveredApplicationUrl) return true;
+  if (method === "email" && (pathProfile?.bestContactEmail || pathProfile?.discoveredContactEmail || pathProfile?.contactEmail) && pathProfile?.methodStatus === "confirmed") return true;
+  if (["contractor_submitted", "tax_accountant_filing"].includes(method) && pathProfile?.methodStatus === "confirmed") return true;
+  return false;
+}
+
+function isSourceOnlyPath(pathProfile) {
+  const status = cleanText(pathProfile?.linkDiscoveryStatus || pathProfile?.discoveryStatus || pathProfile?.pathStatus);
+  const method = cleanText(pathProfile?.applicationMethod || pathProfile?.confirmedApplicationMethod);
+  return ["source_only", "program_website_found", "program_website_only", "program_source_only"].includes(status) || ["source_only", "program_website_only"].includes(method);
+}
+
+function hasRequiredContext(unit, fetched, applicationSpecificSectionFound) {
+  if (isBoilerplateSourceText(unit)) return false;
+  if (REQUIRED_CONTEXT_PATTERN.test(unit) && (applicationSpecificSectionFound || APPLICATION_SPECIFIC_SECTION_PATTERN.test(unit))) return true;
+  if (fetched.isPdf && /[:?]\s*$/.test(unit)) return true;
+  if (applicationSpecificSectionFound && FORM_FIELD_PATTERN.test(unit) && /[:?]\s*$/.test(unit)) return true;
+  return false;
+}
+
+function confidenceForUnit(unit, fetched, applicationSpecificSectionFound) {
   if (REQUIRED_CONTEXT_PATTERN.test(unit)) return "High";
-  if (FORM_FIELD_PATTERN.test(fullText) || fetched.isPdf || /[:?]\s*$/.test(unit)) return "Medium";
+  if (applicationSpecificSectionFound || fetched.isPdf || /[:?]\s*$/.test(unit)) return "Medium";
   return "Low";
 }
 
-function buildRequirement(definition, unit, sourceUrl, required, fullText, fetched) {
+function buildRequirement(definition, unit, sourceUrl, required, fetched, applicationSpecificSectionFound) {
   return {
     id: definition.id,
     label: definition.label,
@@ -337,11 +377,11 @@ function buildRequirement(definition, unit, sourceUrl, required, fullText, fetch
     required,
     sourceUrl,
     evidenceSnippet: safeSnippet(unit),
-    confidence: required ? confidenceForUnit(unit, fullText, fetched) : "Medium"
+    confidence: required ? confidenceForUnit(unit, fetched, applicationSpecificSectionFound) : "Medium"
   };
 }
 
-function extractRequirementsFromDefinitions({ definitions, units, fullText, fetched, sourceUrl }) {
+function extractRequirementsFromDefinitions({ definitions, units, fetched, sourceUrl, applicationSpecificSectionFound }) {
   const required = [];
   const optional = [];
 
@@ -349,13 +389,13 @@ function extractRequirementsFromDefinitions({ definitions, units, fullText, fetc
     const matchingUnits = units.filter((unit) => definitionMatchesUnit(definition, unit));
     const optionalUnit = matchingUnits.find((unit) => OPTIONAL_CONTEXT_PATTERN.test(unit));
     const requiredUnit =
-      matchingUnits.find((unit) => hasRequiredContext(unit, fullText, fetched) && !OPTIONAL_CONTEXT_PATTERN.test(unit)) ||
-      matchingUnits.find((unit) => /[:?]\s*$/.test(unit) && !OPTIONAL_CONTEXT_PATTERN.test(unit));
+      matchingUnits.find((unit) => hasRequiredContext(unit, fetched, applicationSpecificSectionFound) && !OPTIONAL_CONTEXT_PATTERN.test(unit)) ||
+      matchingUnits.find((unit) => fetched.isPdf && /[:?]\s*$/.test(unit) && !OPTIONAL_CONTEXT_PATTERN.test(unit));
 
     if (requiredUnit) {
-      required.push(buildRequirement(definition, requiredUnit, sourceUrl, true, fullText, fetched));
+      required.push(buildRequirement(definition, requiredUnit, sourceUrl, true, fetched, applicationSpecificSectionFound));
     } else if (optionalUnit) {
-      optional.push(buildRequirement(definition, optionalUnit, sourceUrl, false, fullText, fetched));
+      optional.push(buildRequirement(definition, optionalUnit, sourceUrl, false, fetched, applicationSpecificSectionFound));
     }
   }
 
@@ -376,7 +416,7 @@ function addEvidence(profile, label, sourceUrl, textSnippet) {
 }
 
 function extractDeadline(units) {
-  const deadlineUnit = findFirstSnippet(units, DEADLINE_PATTERN);
+  const deadlineUnit = units.find((unit) => DEADLINE_PATTERN.test(unit) && DEADLINE_VALUE_PATTERN.test(unit) && !/^\s*(expiration date|deadline|application deadline|program expiration date)\s*:\s*$/i.test(unit)) || "";
   if (!deadlineUnit) return "";
   if (/\brolling\b|\bfirst[- ]come\b|\bfunds are limited\b|\buntil funds are exhausted\b/i.test(deadlineUnit)) {
     return safeSnippet(deadlineUnit, 180);
@@ -392,6 +432,7 @@ function extractEstimatedTime(units) {
 function extractApplicationSteps(units) {
   const steps = [];
   for (const unit of units) {
+    if (isBoilerplateSourceText(unit)) continue;
     const numbered = unit.match(/^(?:step\s*)?\d+[\).:-]?\s+(.+)/i);
     if (numbered && STEP_PATTERN.test(numbered[1])) {
       steps.push(safeSnippet(numbered[1], 180));
@@ -441,12 +482,14 @@ function safeErrorMessage(error) {
 
 export async function extractOpportunityApplicationRequirements(input = {}, options = {}) {
   const profile = buildBaseProfile(input);
+  const pathProfile = pathProfileFromInput(input);
   const timeoutMs = Math.max(1_000, Number(options.timeoutMs || DEFAULT_TIMEOUT_MS));
   const maxResponseBytes = Math.max(50_000, Number(options.maxResponseBytes || DEFAULT_MAX_RESPONSE_BYTES));
 
   if (!profile.sourceUrl) {
     profile.extractionStatus = "source_unavailable";
     profile.notes.push("No application URL, PDF URL, program website URL, or program source URL was available for requirement extraction.");
+    profile.extractionDiagnostics.reason = "No source URL was available for requirement extraction.";
     return finalizeProfile(profile);
   }
 
@@ -457,27 +500,67 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
       maxResponseBytes
     });
 
-    const text = normalizeWhitespace(htmlToReadableText(fetched.text));
-    const units = splitEvidenceUnits(htmlToReadableText(fetched.text));
+    const readableText = htmlToReadableText(fetched.text);
+    const cleanedSource = cleanSourceText(readableText);
+    const text = normalizeWhitespace(cleanedSource.text);
+    const units = splitEvidenceUnits(cleanedSource.text);
     if (!text) {
       profile.extractionStatus = "needs_review";
       profile.notes.push("Requirement source was readable but did not contain extractable text.");
+      profile.extractionDiagnostics.reason = "Readable source did not contain extractable non-boilerplate text.";
+      return finalizeProfile(profile);
+    }
+
+    const applicationSpecificSectionFound = hasApplicationSpecificSection(text, units);
+    const reliableApplicationPathFound = hasReliableApplicationPath(pathProfile, profile);
+    const requirementContextFound = applicationSpecificSectionFound || reliableApplicationPathFound || fetched.isPdf;
+    const sourceOnlyPath = isSourceOnlyPath(pathProfile);
+    const extractionAllowed = reliableApplicationPathFound || applicationSpecificSectionFound;
+    profile.extractionDiagnostics = {
+      sourceUsed: profile.sourceUrl,
+      isAggregatorSource: Boolean(pathProfile?.isAggregatorSource),
+      aggregatorType: cleanOptional(pathProfile?.aggregatorType),
+      applicationPathFound: reliableApplicationPathFound,
+      applicationSpecificSectionFound,
+      extractionAllowed,
+      reason: extractionAllowed
+        ? reliableApplicationPathFound
+          ? "Reliable application URL, PDF, email application path, contractor instruction, or tax/accountant filing instruction was found by link discovery."
+          : "No direct application path was found, but the inspected source contains explicit application-specific sections."
+        : "Only a general program/source page was available. No reliable application requirements were extracted."
+    };
+
+    if (!extractionAllowed || (sourceOnlyPath && !applicationSpecificSectionFound && !reliableApplicationPathFound)) {
+      profile.extractionStatus = "needs_review";
+      profile.requiredFields = [];
+      profile.requiredDocuments = [];
+      profile.optionalFields = [];
+      profile.applicationSteps = [];
+      profile.deadline = undefined;
+      profile.estimatedTime = undefined;
+      profile.preApprovalRequired = "unknown";
+      profile.contractorRequired = "unknown";
+      profile.taxReviewRequired = "unknown";
+      profile.notes.push("Only a general program/source page was available. No reliable application requirements were extracted.");
+      if (pathProfile?.isAggregatorSource) {
+        profile.notes.push("Aggregator source pages such as DSIRE are not treated as application forms unless they contain explicit application instructions.");
+      }
       return finalizeProfile(profile);
     }
 
     const fieldResult = extractRequirementsFromDefinitions({
       definitions: FIELD_DEFINITIONS,
       units,
-      fullText: text,
       fetched,
-      sourceUrl: profile.sourceUrl
+      sourceUrl: profile.sourceUrl,
+      applicationSpecificSectionFound: requirementContextFound
     });
     const documentResult = extractRequirementsFromDefinitions({
       definitions: DOCUMENT_DEFINITIONS,
       units,
-      fullText: text,
       fetched,
-      sourceUrl: profile.sourceUrl
+      sourceUrl: profile.sourceUrl,
+      applicationSpecificSectionFound: requirementContextFound
     });
 
     profile.requiredFields.push(...fieldResult.required);
@@ -514,6 +597,8 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
   } catch (error) {
     profile.extractionStatus = "source_unavailable";
     profile.error = safeErrorMessage(error);
+    profile.extractionDiagnostics.extractionAllowed = false;
+    profile.extractionDiagnostics.reason = "Requirement source could not be fetched or read.";
     profile.notes.push("Requirement source could not be fetched or read.");
     return finalizeProfile(profile);
   }

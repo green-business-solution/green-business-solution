@@ -423,6 +423,111 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.notes.join(" ")).toMatch(/no direct application path/i);
   });
 
+  it("treats DSIRE boilerplate as source-only without contact or application candidates", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/999/boilerplate-program";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_boilerplate",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockHtmlFetch(`
+          <html>
+            <head><title>DSIRE - Boilerplate Program</title></head>
+            <body>
+              <h1>Program Summary</h1>
+              <p>{{ contact.contact.email }}</p>
+              <p>Get free, expert advice (no phone calls required)</p>
+              <p>Expiration Date:</p>
+              <p>This DSIRE page summarizes eligibility and incentive amounts.</p>
+            </body>
+          </html>
+        `)
+      )
+    );
+
+    expect(result.isAggregatorSource).toBe(true);
+    expect(result.aggregatorType).toBe("dsire");
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.discoveredPdfUrl).toBeUndefined();
+    expect(result.discoveredContactEmail).toBeUndefined();
+    expect(result.applicationMethod).toBe("source_only");
+    expect(result.discoveryStatus).toBe("source_only");
+    expect(result.linkDiscoveryStatus).toBe("source_only");
+    expect(result.candidates.some((candidate) => candidate.linkType === "contact_email")).toBe(false);
+    expect(result.notes.join(" ")).toMatch(/dsire\/source aggregator page found/i);
+  });
+
+  it("follows one relevant forms page from the official program website to find a PDF application", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/777/forms-program";
+    const programWebsiteUrl = "https://utility.example.com/business-rebates";
+    const formsPageUrl = "https://utility.example.com/business-rebates/forms";
+    const pdfUrl = "https://utility.example.com/business-rebates/forms/rebate-application.pdf";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_forms_page_pdf",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `<html><body><a href="${programWebsiteUrl}">Program Website</a></body></html>`,
+          [programWebsiteUrl]: `
+            <html><body>
+              <h1>Business rebate overview</h1>
+              <a href="${formsPageUrl}">Rebate forms and documents</a>
+            </body></html>
+          `,
+          [formsPageUrl]: `
+            <html><body>
+              <a href="${pdfUrl}">Download rebate application form PDF</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.discoveredApplicationUrl).toBe(pdfUrl);
+    expect(result.bestPdfUrl).toBe(pdfUrl);
+    expect(result.applicationMethod).toBe("pdf");
+    expect(result.linkDiscoveryStatus).toBe("pdf_found");
+    expect(result.pagesInspected.map((page) => page.role)).toEqual(expect.arrayContaining(["aggregator", "program_website", "candidate_page"]));
+    expect(result.candidates.some((candidate) => candidate.linkType === "forms_page" && candidate.url === formsPageUrl)).toBe(true);
+  });
+
+  it("extracts an official program website from DSIRE embedded data without calling it an application URL", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/888/json-program";
+    const programWebsiteUrl = "https://program.example.com/overview";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire_json",
+          programSourceUrl: sourceUrl
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [sourceUrl]: `
+            <html><body>
+              <script>window.__DATA__ = {"programUrl":"${programWebsiteUrl}","contactEmail":"{{ contact.contact.email }}"}</script>
+              <p>DSIRE summary page.</p>
+            </body></html>
+          `,
+          [programWebsiteUrl]: `<html><body><p>Program overview only.</p></body></html>`
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.applicationMethod).toBe("program_website_only");
+    expect(result.linkDiscoveryStatus).toBe("program_website_found");
+  });
+
   it("does not classify a general rebate program URL as an application URL without application evidence", async () => {
     const result = await findOpportunityApplicationPath(
       {
