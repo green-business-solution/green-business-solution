@@ -1,38 +1,61 @@
 # Low Source-Confidence Opportunity Queue
 
-Generated: 2026-07-01T22:58:06.409Z
+Generated: 2026-07-02T00:18:10.628Z
 
 This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not represent deterministic `match_confidence`.
 
 ## Summary
 
-- Repair batches scanned: 58
-- Latest unique repaired opportunities: 785
-- Low source-confidence opportunities: 15
-- Availability status counts: active 4, source_inaccessible 10, unknown 1
-- Recommended next-step counts: deeper_gpt_pro_research_before_trusting_active_program 4, human_or_gpt_pro_availability_verification 1, human_or_gpt_pro_source_access_followup 10
+- Repair batches scanned: 78
+- Latest unique repaired opportunities: 1185
+- Low source-confidence opportunities: 20
+- Availability status counts: active 6, source_inaccessible 13, unknown 1
+- Recommended next-step counts: deeper_gpt_pro_research_before_trusting_active_program 6, human_or_gpt_pro_availability_verification 1, human_or_gpt_pro_source_access_followup 13
 
 ## Queue
 
 | Priority | Opportunity | State | Availability | Source confidence | Match confidence | Latest repair | Next step |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Emerald PUD - Commercial and Industrial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2138 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29 | deeper_gpt_pro_research_before_trusting_active_program |
-| 2 | Lane Electric Cooperative - Commercial/Residential Weatherization & Energy Efficiency Program / SOURCE_DSIRE:dsire_program_id:2469 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34 | deeper_gpt_pro_research_before_trusting_active_program |
-| 3 | Duke Energy - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2297 | IN | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39 | deeper_gpt_pro_research_before_trusting_active_program |
-| 4 | Dixie Electric Cooperative - Residential Energy Efficiency Loan Program / SOURCE_DSIRE:dsire_program_id:1968 | AL | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | deeper_gpt_pro_research_before_trusting_active_program |
-| 5 | Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1885 | CA | unknown | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1 | human_or_gpt_pro_availability_verification |
-| 6 | Gunnison County Electric - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:3372 | CO | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4 | human_or_gpt_pro_source_access_followup |
-| 7 | Tillamook County PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2185 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14 | human_or_gpt_pro_source_access_followup |
-| 8 | Emerald PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2132 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22 | human_or_gpt_pro_source_access_followup |
-| 9 | Mason County PUD 3 - Commercial and Industrial Energy Rebates / SOURCE_DSIRE:dsire_program_id:2199 | WA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30 | human_or_gpt_pro_source_access_followup |
-| 10 | Northern Lights Inc. - Energy Conservation Rebate Program / SOURCE_DSIRE:dsire_program_id:4198 | ID | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9 | human_or_gpt_pro_source_access_followup |
-| 11 | Duke Energy - Non-Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1553 | KY | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8 | human_or_gpt_pro_source_access_followup |
-| 12 | Farmers Electric Cooperative (Kalona) - Residential Energy Efficiency Grant Program / SOURCE_DSIRE:dsire_program_id:4535 | IA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45 | human_or_gpt_pro_source_access_followup |
-| 13 | Xcel Energy - Residential Energy Efficiency Rebate Programs / SOURCE_DSIRE:dsire_program_id:4816 | ND | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49 | human_or_gpt_pro_source_access_followup |
-| 14 | Duke Energy Indiana Off-Peak Charging Credit / SOURCE_DSIRE:dsire_program_id:22551 | IN | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
-| 15 | Flathead Electric Cooperative - Commercial Incentive Programs / SOURCE_DSIRE:dsire_program_id:2180 | MT | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
+| 1 | Modesto Irrigation District - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1882 | CA | active | low | 0.86 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch61 | deeper_gpt_pro_research_before_trusting_active_program |
+| 2 | Sangre De Cristo Electric Association - Energy Efficiency Credit Program / SOURCE_DSIRE:dsire_program_id:2399 | CO | active | low | 0.86 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch62 | deeper_gpt_pro_research_before_trusting_active_program |
+| 3 | Emerald PUD - Commercial and Industrial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2138 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29 | deeper_gpt_pro_research_before_trusting_active_program |
+| 4 | Lane Electric Cooperative - Commercial/Residential Weatherization & Energy Efficiency Program / SOURCE_DSIRE:dsire_program_id:2469 | OR | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34 | deeper_gpt_pro_research_before_trusting_active_program |
+| 5 | Duke Energy - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2297 | IN | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39 | deeper_gpt_pro_research_before_trusting_active_program |
+| 6 | Dixie Electric Cooperative - Residential Energy Efficiency Loan Program / SOURCE_DSIRE:dsire_program_id:1968 | AL | active | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | deeper_gpt_pro_research_before_trusting_active_program |
+| 7 | Modesto Irrigation District - Commercial Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1885 | CA | unknown | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1 | human_or_gpt_pro_availability_verification |
+| 8 | Gunnison County Electric - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:3372 | CO | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4 | human_or_gpt_pro_source_access_followup |
+| 9 | Tillamook County PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2185 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14 | human_or_gpt_pro_source_access_followup |
+| 10 | Emerald PUD - Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:2132 | OR | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22 | human_or_gpt_pro_source_access_followup |
+| 11 | Mason County PUD 3 - Commercial and Industrial Energy Rebates / SOURCE_DSIRE:dsire_program_id:2199 | WA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30 | human_or_gpt_pro_source_access_followup |
+| 12 | Northern Lights Inc. - Energy Conservation Rebate Program / SOURCE_DSIRE:dsire_program_id:4198 | ID | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9 | human_or_gpt_pro_source_access_followup |
+| 13 | City of Chicago - Green Building Permit Programs / SOURCE_DSIRE:dsire_program_id:2466 | IL | source_inaccessible | low | 0.86 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch67 | human_or_gpt_pro_source_access_followup |
+| 14 | Central Lincoln People's Utility District - Renewable Energy Incentive Program / SOURCE_DSIRE:dsire_program_id:5377 | OR | source_inaccessible | low | 0.86 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69 | human_or_gpt_pro_source_access_followup |
+| 15 | Modesto Irrigation District - Commercial New Construction Rebate Program / SOURCE_DSIRE:dsire_program_id:3219 | CA | source_inaccessible | low | 0.86 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69 | human_or_gpt_pro_source_access_followup |
+| 16 | Duke Energy - Non-Residential Energy Efficiency Rebate Program / SOURCE_DSIRE:dsire_program_id:1553 | KY | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8 | human_or_gpt_pro_source_access_followup |
+| 17 | Farmers Electric Cooperative (Kalona) - Residential Energy Efficiency Grant Program / SOURCE_DSIRE:dsire_program_id:4535 | IA | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45 | human_or_gpt_pro_source_access_followup |
+| 18 | Xcel Energy - Residential Energy Efficiency Rebate Programs / SOURCE_DSIRE:dsire_program_id:4816 | ND | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49 | human_or_gpt_pro_source_access_followup |
+| 19 | Duke Energy Indiana Off-Peak Charging Credit / SOURCE_DSIRE:dsire_program_id:22551 | IN | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
+| 20 | Flathead Electric Cooperative - Commercial Incentive Programs / SOURCE_DSIRE:dsire_program_id:2180 | MT | source_inaccessible | low | 0.68 | opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51 | human_or_gpt_pro_source_access_followup |
 
 ## Verification Notes
+
+### Modesto Irrigation District - Residential Energy Efficiency Rebate Program
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:1882`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch61` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch61.json`
+- Recommended next step: `deeper_gpt_pro_research_before_trusting_active_program`
+- Evidence: MID sources indicate residential rebates for central air conditioning, heat pumps, heat pump water heaters, insulation, smart thermostats, appliance rebates, and energy audits.
+- Reasoning: Direct official page access was limited, so categories were narrowed to measures supported by accessible official MID snippets and URLs.
+- Sources checked: https://www.mid.org/saving-energy-money/rebates/residential-rebates/, https://www.mid.org/mid-home-rebate-application/, https://www.mid.org/saving-energy-money/rebates/power-smart/, https://www.mid.org/saving-energy-money/rebates/power-smart/approved-thermostat-models/
+
+### Sangre De Cristo Electric Association - Energy Efficiency Credit Program
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2399`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch62` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch62.json`
+- Recommended next step: `deeper_gpt_pro_research_before_trusting_active_program`
+- Evidence: SDCEA]( official snippets identify heat pump, electric water heater, heat pump clothes dryer, induction cooktop, smart thermostat, managed EV, and pilot demand-response rebates.
+- Reasoning: Direct official pages returned 403 or browser access errors, so this repair is conservative and excludes unsupported matched categories.
+- Sources checked: https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/, https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/smart-thermostat-rebates/, https://www.myelectric.coop/energy-efficiency/energy-efficiency-credit-programs/electric-vehicle-charging-equipment-rebates/
 
 ### Emerald PUD - Commercial and Industrial Energy Efficiency Rebate Program
 
@@ -123,6 +146,33 @@ This queue uses GPT Pro repair `confidence` as `source_confidence`. It does not 
 - Evidence: The official Northern Lights Inc. rebate URLs checked were inaccessible with 403 Forbidden responses, so no current official measure table, application form or eligibility language could be verified.
 - Reasoning: Marked source_inaccessible and cleared categories to avoid carrying forward DSIRE-only or search-snippet-derived matches.
 - Sources checked: https://www.nli.coop/save/rebates/, https://www.nli.coop/rebate-clothes-washer/, https://www.nli.coop/smart-thermostat-rebate/, https://programs.dsireusa.org/system/program/detail/4198/northern-lights-inc-energy-conservation-rebate-program
+
+### City of Chicago - Green Building Permit Programs
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:2466`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch67` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch67.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: The City green-permit page could not be read, and the CHI311 article rendered only a CSS error, preventing current eligibility verification.
+- Reasoning: Current official source failed: the green-permits page was not readable and the CHI311 article rendered a CSS error. Categories were cleared pending readable official confirmation.
+- Sources checked: https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html, https://311.chicago.gov/s/article/Green-permit-program-LEED-submittal-requirements?language=en_US, https://www.chicago.gov/city/en/depts/bldgs/provdrs/e_plan.html
+
+### Central Lincoln People's Utility District - Renewable Energy Incentive Program
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:5377`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: Official]( Central Lincoln renewable pages were inaccessible, but available official snippets identify rebates for renewable energy and storage systems, including solar and battery storage.
+- Reasoning: Marked source_inaccessible because current official pages could not be read well enough to verify detailed eligibility; unsupported submetering match removed.
+- Sources checked: https://clpud.org/energy-efficiency/renewable-energy-programs/, https://clpud.org/energy-efficiency/renewable-energy-programs/renewable-energy-storage-rebates/
+
+### Modesto Irrigation District - Commercial New Construction Rebate Program
+
+- Opportunity ID: `SOURCE_DSIRE:dsire_program_id:3219`
+- Latest repair: `opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69` from `data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69.json`
+- Recommended next step: `human_or_gpt_pro_source_access_followup`
+- Evidence: MID]( official pages were inaccessible, but snippets indicate new-construction rebates for high-efficiency equipment above codes and standards in business projects.
+- Reasoning: Marked source_inaccessible and narrowed to a new-construction efficiency category; supplied existing-retrofit equipment categories should not drive active matches.
+- Sources checked: http://www.mid.org/rebates/commercial/default.html, https://www.mid.org/saving-energy-money/rebates/, https://www.mid.org/saving-energy-money/rebates/business-rebates/, https://www.mid.org/power/new-construction/, https://programs.dsireusa.org/system/program/detail/3219/modesto-irrigation-district-commercial-new-construction-rebate-program
 
 ### Duke Energy - Non-Residential Energy Efficiency Rebate Program
 

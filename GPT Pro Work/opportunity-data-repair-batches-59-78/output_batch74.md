@@ -1,0 +1,1232 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22341",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"VT"
+],
+"counties": [],
+"cities": [
+"Stowe"
+],
+"utilityTerritories": [
+"Stowe Electric Department"
+],
+"notes": "Limited to sites served by Stowe Electric and located at qualifying public, workplace, multifamily, or commercial charging locations."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"workplace_site_host",
+"public_facility",
+"multifamily_property_owner",
+"municipal_customer"
+],
+"eligibleSectors": [
+"commercial",
+"public",
+"multifamily",
+"municipal"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be in Stowe Electric service territory.",
+"Eligible projects must install qualifying Level 2 or Level 3 DC fast charging equipment.",
+"Public and workplace chargers must be available to customers, visitors, employees, or the public as applicable.",
+"DC fast chargers must be public and networked or otherwise support required operation and fee collection functionality.",
+"Rebates are subject to per-customer and annual program caps."
+],
+"blockers": [
+"Private single-family residential home chargers are not supported by this public-charging opportunity.",
+"Level 1 charging is not an eligible category.",
+"DC fast chargers without public access or required networking/operation functionality should not match."
+],
+"programType": "Rebate Program",
+"administrator": "Stowe Electric Department",
+"applicationUrl": null,
+"websiteUrl": "[https://www.stoweelectric.com/rebates/public-ev-charging-stations](https://www.stoweelectric.com/rebates/public-ev-charging-stations)",
+"sourceUrlsChecked": [
+"[https://www.stoweelectric.com/rebates/public-ev-charging-stations](https://www.stoweelectric.com/rebates/public-ev-charging-stations)",
+"[https://programs.dsireusa.org/system/program/detail/22341/stowe-electric-public-ev-charging-station-rebate](https://programs.dsireusa.org/system/program/detail/22341/stowe-electric-public-ev-charging-station-rebate)"
+],
+"evidenceText": "Official program information supports rebates for Level 2 and Level 3 DCFC stations at workplace, public, commercial, parking lot, and multifamily sites, with extra public and network requirements for DCFC.",
+"reasoningNotes": "Batch target source cited as . Current official source supports Level 2 and DC fast public charging; it does not support private home EV charger matching."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3117",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AZ"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Tucson Electric Power"
+],
+"notes": "Limited to Tucson Electric Power residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"high_efficiency_hvac_replacement",
+"duct_sealing_and_insulation",
+"ductless_mini_split_heat_pump",
+"hvac_tune_up"
+],
+"hardRequirements": [
+"Applicant must be a TEP residential electric customer.",
+"Work must be completed by a licensed participating contractor where required.",
+"HVAC and duct measures must meet program efficiency and installation requirements.",
+"Customers should verify contractor participation and program eligibility before work begins."
+],
+"blockers": [
+"Commercial and industrial efficiency measures are not part of this residential opportunity.",
+"The HVAC program should not be generalized to unrelated water heating, appliance, or building-envelope rebates unless separately verified.",
+"Mini-split eligibility is product-specific and should not be broadened beyond qualifying ductless systems."
+],
+"programType": "Rebate Program",
+"administrator": "Tucson Electric Power",
+"applicationUrl": null,
+"websiteUrl": "[https://www.tep.com/efficient-home-program/](https://www.tep.com/efficient-home-program/)",
+"sourceUrlsChecked": [
+"[https://www.tep.com/efficient-home-program/](https://www.tep.com/efficient-home-program/)",
+"[https://programs.dsireusa.org/system/program/detail/3117/tep-residential-energy-efficiency-rebate-program](https://programs.dsireusa.org/system/program/detail/3117/tep-residential-energy-efficiency-rebate-program)"
+],
+"evidenceText": "TEP's current Efficient Home Program lists residential rebates for high-efficiency heat pumps, high-efficiency air conditioners, duct sealing, mini-split systems, and advanced AC tune-ups.",
+"reasoningNotes": "The supplied HVAC-related matches are generally correct, with the addition of tune-ups and ductless mini-splits as distinct supported measures."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2283",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"KY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Big Sandy RECC",
+"Blue Grass Energy",
+"Clark Energy",
+"Cumberland Valley Electric",
+"Farmers RECC",
+"Fleming-Mason Energy",
+"Grayson Rural Electric",
+"Inter-County Energy",
+"Jackson Energy",
+"Licking Valley RECC",
+"Nolin RECC",
+"Owen Electric",
+"Salt River Electric",
+"Shelby Energy",
+"South Kentucky RECC",
+"Taylor County RECC"
+],
+"notes": "Program availability and rebate levels vary by participating Kentucky Touchstone Energy cooperative."
+},
+"eligibleApplicantTypes": [
+"cooperative_member",
+"residential_customer",
+"commercial_customer",
+"industrial_customer",
+"income_qualified_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"low_income"
+],
+"eligibleRetrofitCategories": [
+"insulation_upgrade",
+"air_sealing_weatherization",
+"heat_pump_hvac_retrofit",
+"heat_pump_water_heater",
+"led_lighting_retrofit",
+"smart_thermostat",
+"demand_response_central_ac_control",
+"home_energy_review"
+],
+"hardRequirements": [
+"Applicant must be served by a participating Kentucky Touchstone Energy cooperative.",
+"Button-Up weatherization requires eligible existing homes and pre/post review or inspection.",
+"Heat pump, water heater, lighting, thermostat, and demand response measures must meet the applicable cooperative program rules.",
+"Income-qualified CARES weatherization is limited to qualifying customers."
+],
+"blockers": [
+"EV charger installation is a false-positive match; the EV pilot is a bill-credit or managed-charging pilot for members with existing Level 2 EVSE, not an installation rebate.",
+"The EV pilot was identified as running through June 30, 2026 and should not be treated as an open charger-installation incentive on July 1, 2026 without new official confirmation.",
+"Net metering workbook references are guidance for distributed generation, not submetering or energy monitoring retrofit rebates.",
+"Program details vary by cooperative and should not be matched outside listed territories."
+],
+"programType": "Rebate Program",
+"administrator": "Kentucky Touchstone Energy Cooperatives",
+"applicationUrl": null,
+"websiteUrl": "[https://togetherwesaveky.com/cooperatives/](https://togetherwesaveky.com/cooperatives/)",
+"sourceUrlsChecked": [
+"[https://togetherwesaveky.com/cooperatives/](https://togetherwesaveky.com/cooperatives/)",
+"[https://togetherwesaveky.com/cooperatives/south-kentucky-recc/](https://togetherwesaveky.com/cooperatives/south-kentucky-recc/)",
+"[https://togetherwesaveky.com/ev-pilot-program/](https://togetherwesaveky.com/ev-pilot-program/)",
+"[https://www.intercountyenergy.net/residential-ev-peak-charging-pilot-program](https://www.intercountyenergy.net/residential-ev-peak-charging-pilot-program)",
+"[https://programs.dsireusa.org/system/program/detail/2283/together-we-save-kentucky-s-touchstone-energy-cooperatives-16-cooperatives](https://programs.dsireusa.org/system/program/detail/2283/together-we-save-kentucky-s-touchstone-energy-cooperatives-16-cooperatives)"
+],
+"evidenceText": "Official cooperative pages show heat pump, water heater, Button-Up weatherization, CARES, lighting, thermostat, and demand-response offerings. EV references are a charging pilot, not a charger-installation rebate.",
+"reasoningNotes": "Keep weatherization, HVAC, lighting, water-heating, thermostat, and demand-response categories. Remove EV charger installation and submetering or energy monitoring as unsupported false positives."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3119",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AZ"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"UniSource Energy Services"
+],
+"notes": "Limited to UniSource Energy Services residential electric service territory."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"high_efficiency_hvac_replacement",
+"duct_sealing_and_insulation",
+"hvac_tune_up"
+],
+"hardRequirements": [
+"Applicant must be a UniSource residential electric customer.",
+"Qualifying work must be completed by a licensed participating contractor where required.",
+"Heat pump, air conditioner, duct sealing, and tune-up measures must meet program specifications."
+],
+"blockers": [
+"Commercial or industrial efficiency measures are not part of this residential opportunity.",
+"Do not infer broad building-envelope weatherization beyond duct sealing.",
+"Gas-only customers and non-UniSource electric customers should not match this electric residential program."
+],
+"programType": "Rebate Program",
+"administrator": "UniSource Energy Services",
+"applicationUrl": null,
+"websiteUrl": "[https://www.uesaz.com/efficient-home-program/](https://www.uesaz.com/efficient-home-program/)",
+"sourceUrlsChecked": [
+"[https://www.uesaz.com/efficient-home-program/](https://www.uesaz.com/efficient-home-program/)",
+"[https://programs.dsireusa.org/system/program/detail/3119/ues-electric-residential-efficiency-program](https://programs.dsireusa.org/system/program/detail/3119/ues-electric-residential-efficiency-program)"
+],
+"evidenceText": "UniSource's current Efficient Home Program lists rebates for high-efficiency heat pumps, high-efficiency air conditioners, duct sealing, and advanced AC tune-ups for residential customers.",
+"reasoningNotes": "The supplied HVAC matches are correct. Add HVAC tune-up as a supported non-replacement measure and keep program limited to residential electric customers."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22740",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Unitil Energy Systems",
+"Fitchburg Gas and Electric Light Company"
+],
+"notes": "Massachusetts electric customers of Unitil, including Fitchburg Gas and Electric Light Company dba Unitil."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"income_qualified_customer",
+"commercial_customer",
+"public_charging_site_host",
+"business_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"public",
+"low_income"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"ev_charging_infrastructure",
+"dc_fast_charger_make_ready_infrastructure",
+"ev_managed_charging"
+],
+"hardRequirements": [
+"Applicant must be a Unitil Massachusetts electric customer.",
+"Residential customers must receive approval before purchase or installation where program rules require it.",
+"Residential incentives apply to qualifying Level 2 home charging and may include eligible electric upgrades.",
+"Commercial projects must install required minimum charging equipment and meet public-access, networking, and activation rules.",
+"Commercial Ready2Charge incentives support make-ready infrastructure and related electric upgrades rather than EVSE purchase."
+],
+"blockers": [
+"Commercial EVSE purchase itself is not eligible where the program only covers make-ready infrastructure.",
+"Level 1 chargers are not supported by the verified rebate categories.",
+"Non-Massachusetts Unitil customers should not match this opportunity.",
+"Commercial chargers lacking required public access, networking, or activation timing should not match."
+],
+"programType": "Rebate Program",
+"administrator": "Unitil Energy Systems",
+"applicationUrl": "[https://unitil.com/rebates/ev-ready2charge-residential-rebate-program-ma](https://unitil.com/rebates/ev-ready2charge-residential-rebate-program-ma)",
+"websiteUrl": "[https://unitil.com/electric-vehicles/ev-Ready2Charge-program](https://unitil.com/electric-vehicles/ev-Ready2Charge-program)",
+"sourceUrlsChecked": [
+"[https://unitil.com/electric-vehicles/ev-Ready2Charge-program](https://unitil.com/electric-vehicles/ev-Ready2Charge-program)",
+"[https://unitil.com/rebates/ev-ready2charge-residential-rebate-program-ma](https://unitil.com/rebates/ev-ready2charge-residential-rebate-program-ma)",
+"[https://unitil.com/rebates/ev-ready2charge-commercial-rebate-program-ma](https://unitil.com/rebates/ev-ready2charge-commercial-rebate-program-ma)",
+"[https://unitil.com/sites/default/files/2023-10/Ready2Charge-TCs-Residential.pdf](https://unitil.com/sites/default/files/2023-10/Ready2Charge-TCs-Residential.pdf)",
+"[https://unitil.com/sites/default/files/2023-11/Unitil-Ready2Charge-FAQs-MA-Commercial.pdf](https://unitil.com/sites/default/files/2023-11/Unitil-Ready2Charge-FAQs-MA-Commercial.pdf)",
+"[https://unitil.com/sites/default/files/2023-11/Application-Ready2Charge-Commercial-Customers.pdf](https://unitil.com/sites/default/files/2023-11/Application-Ready2Charge-Commercial-Customers.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/22740/unitil-electric-ev-ready2charge-rebate-program](https://programs.dsireusa.org/system/program/detail/22740/unitil-electric-ev-ready2charge-rebate-program)"
+],
+"evidenceText": "Unitil supports residential Level 2 charging rebates and commercial make-ready incentives for Level 2 or DCFC projects, with commercial public-access and equipment requirements.",
+"reasoningNotes": "Keep Level 2 charger matching for residential. Treat commercial DCFC as make-ready infrastructure support, not a direct DC fast charger equipment rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2503",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"We Energies",
+"Focus on Energy participating utility territories"
+],
+"notes": "Focus on Energy business renewable incentives for Wisconsin customers served by participating utilities; this DSIRE target is tied to We Energies territory."
+},
+"eligibleApplicantTypes": [
+"business_customer",
+"agribusiness_customer",
+"farm_owner",
+"municipal_customer",
+"multifamily_property_owner",
+"industrial_customer"
+],
+"eligibleSectors": [
+"agricultural",
+"commercial",
+"industrial",
+"municipal",
+"multifamily"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"biomass_biogas_energy_system",
+"solar_thermal_system",
+"wind_energy_system",
+"hydropower_system",
+"renewable_energy_feasibility_study"
+],
+"hardRequirements": [
+"Applicant must be an eligible Wisconsin business or agribusiness customer of a participating utility.",
+"Custom renewable energy projects require preapproval before ordering equipment, signing purchase orders, or contracting labor.",
+"Solar PV may qualify through prescriptive business renewable incentives.",
+"Feasibility-study incentives are limited to qualifying renewable energy studies and program cost-share caps."
+],
+"blockers": [
+"This is not a residential rebate opportunity.",
+"Renewable feasibility-study funding is not a physical retrofit installation.",
+"Solar thermal should not be generalized into all water-heating replacements.",
+"We Energies is a participating utility; Focus on Energy administers the statewide business incentive structure."
+],
+"programType": "Rebate Program",
+"administrator": "Focus on Energy",
+"applicationUrl": null,
+"websiteUrl": "[https://focusonenergy.com/business/renewables](https://focusonenergy.com/business/renewables)",
+"sourceUrlsChecked": [
+"[https://focusonenergy.com/business/renewables](https://focusonenergy.com/business/renewables)",
+"[https://focusonenergy.com/business/agribusiness](https://focusonenergy.com/business/agribusiness)",
+"[https://assets.focusonenergy.com/production/docs/business/Focus-2026_Custom_Incentives_Guide_Fillable.pdf](https://assets.focusonenergy.com/production/docs/business/Focus-2026_Custom_Incentives_Guide_Fillable.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/2503/we-energies-focus-on-energy-agriculture-rebate-program](https://programs.dsireusa.org/system/program/detail/2503/we-energies-focus-on-energy-agriculture-rebate-program)"
+],
+"evidenceText": "Focus on Energy business renewable sources list solar PV rebates and custom incentives for biogas, biomass, solar thermal, wind, hydroelectric, and renewable feasibility studies.",
+"reasoningNotes": "The original renewable-energy matches are broadly correct, but the administrator should be Focus on Energy and the opportunity should be limited to business or agribusiness customers of participating utilities."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22245",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"UT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Utah funding assistance program; official page says program funding has run out."
+},
+"eligibleApplicantTypes": [
+"business",
+"nonprofit",
+"local_government",
+"public_entity",
+"workplace_site_host"
+],
+"eligibleSectors": [
+"commercial",
+"nonprofit",
+"public",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Historically limited to eligible Utah businesses, nonprofits, and government entities other than State Executive Branch agencies.",
+"Eligible projects were workplace EV charging projects using qualifying Level 2 or DC fast charging equipment.",
+"Reimbursements were limited by cost-share and program funding caps.",
+"Applications and approvals were required while funding was available."
+],
+"blockers": [
+"Official program page states that funding has run out.",
+"Do not match as currently accepting applications unless a new official funding round is verified.",
+"Utah State Executive Branch entities were excluded.",
+"Non-workplace or purely private residential charging should not match."
+],
+"programType": "Grant Program",
+"administrator": "Utah Department of Environmental Quality",
+"applicationUrl": null,
+"websiteUrl": "[https://deq.utah.gov/air-quality/workplace-electric-vehicle-charging-funding-assistance-program](https://deq.utah.gov/air-quality/workplace-electric-vehicle-charging-funding-assistance-program)",
+"sourceUrlsChecked": [
+"[https://deq.utah.gov/air-quality/workplace-electric-vehicle-charging-funding-assistance-program](https://deq.utah.gov/air-quality/workplace-electric-vehicle-charging-funding-assistance-program)",
+"[https://deq.utah.gov/daq/workplace-ev-charging-funding-assistance](https://deq.utah.gov/daq/workplace-ev-charging-funding-assistance)",
+"[https://programs.dsireusa.org/system/program/detail/22245/workplace-ev-charging-funding-assistance-program](https://programs.dsireusa.org/system/program/detail/22245/workplace-ev-charging-funding-assistance-program)"
+],
+"evidenceText": "The official Utah DEQ workplace EV charging page identifies the program as workplace charging funding assistance and states that funding has run out.",
+"reasoningNotes": "The EV charging categories were historically appropriate, but availability must be repaired to unavailable because the official program is no longer funded."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5840",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Washington financing program; not limited to a specific electric or gas utility territory."
+},
+"eligibleApplicantTypes": [
+"business_property_owner",
+"multifamily_property_owner",
+"nonprofit_facility_owner",
+"housing_developer",
+"project_developer"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily",
+"nonprofit",
+"affordable_housing",
+"agricultural"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"community_solar_project_financing",
+"biomass_biogas_energy_system",
+"combined_heat_and_power_system",
+"wind_energy_system",
+"energy_efficiency_upgrade_financing",
+"lighting_retrofit",
+"hvac_efficiency_upgrade",
+"building_envelope_upgrade",
+"water_efficiency_upgrade",
+"plumbing_efficiency_upgrade"
+],
+"hardRequirements": [
+"Financing is for eligible clean energy or energy-efficiency projects in Washington.",
+"Borrowers must be eligible property owners, facility owners, businesses, nonprofits, multifamily owners, or developers.",
+"Single-family homeowners are not eligible for the Sustainable Energy Trust loan program.",
+"Energy-efficiency and water projects must meet applicable utility-consumption reduction requirements.",
+"Loan underwriting, project review, and program financing terms apply."
+],
+"blockers": [
+"This is loan financing, not a rebate.",
+"Community solar subscription is a false-positive category; the program may finance community solar projects for project owners or developers, not retail subscriptions.",
+"Single-family homeowner retrofit loans belong to separate WSHFC offerings and should not be matched here.",
+"Do not force broad renewable financing into rebate-style eligibility."
+],
+"programType": "Loan Program",
+"administrator": "Washington State Housing Finance Commission",
+"applicationUrl": null,
+"websiteUrl": "[https://www.wshfc.org/energy/](https://www.wshfc.org/energy/)",
+"sourceUrlsChecked": [
+"[https://www.wshfc.org/energy/](https://www.wshfc.org/energy/)",
+"[https://www.wshfc.org/energy/SETfactsheet.pdf](https://www.wshfc.org/energy/SETfactsheet.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/5840/wshfc-sustainable-energy-program](https://programs.dsireusa.org/system/program/detail/5840/wshfc-sustainable-energy-program)"
+],
+"evidenceText": "WSHFC describes low-interest loans for clean energy and efficiency projects, including solar, community solar models, biodigesters, CHP, biomass, wind, and efficiency improvements for eligible non-single-family borrowers.",
+"reasoningNotes": "Repair as financing. Keep biomass and CHP, replace community_solar_subscription with project financing, and include efficiency categories only as financed upgrades."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5215",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NM"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Xcel Energy New Mexico",
+"Southwestern Public Service Company"
+],
+"notes": "Facilities must be in Xcel Energy New Mexico electric service territory with an active business electric account."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"industrial_customer",
+"municipal_customer",
+"nonprofit_customer",
+"business_customer"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"municipal",
+"nonprofit",
+"public"
+],
+"eligibleRetrofitCategories": [
+"efficient_air_compressor",
+"vfd_motor_drive",
+"high_efficiency_motor",
+"led_lighting_retrofit",
+"lighting_controls",
+"energy_audit",
+"building_tune_up",
+"commercial_hvac_cooling_upgrade",
+"refrigeration_efficiency_upgrade",
+"custom_energy_efficiency"
+],
+"hardRequirements": [
+"Applicant must be an Xcel Energy New Mexico business electric customer.",
+"Project must be located in the New Mexico service territory on an active electric account.",
+"Equipment must meet the applicable prescriptive or custom program requirements.",
+"Preapproval is required for custom, study, and some non-prescriptive projects.",
+"Energy studies and audits are non-physical services and should be treated separately from installed measures."
+],
+"blockers": [
+"Residential appliances, home weatherization, and residential HVAC are not part of this commercial electric program.",
+"Energy audit or study matching should not be counted as a physical retrofit.",
+"Kitchen, refrigeration, compressed-air, and motor measures are commercial or industrial only.",
+"Programs and measure lists can change; verify the current New Mexico business summary before final incentive commitment."
+],
+"programType": "Rebate Program",
+"administrator": "Xcel Energy",
+"applicationUrl": null,
+"websiteUrl": "[https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates](https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates)",
+"sourceUrlsChecked": [
+"[https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates](https://www.xcelenergy.com/programs_and_rebates/business_programs_and_rebates)",
+"[https://www.xcelenergy.com/staticfiles/xe-responsive/Marketing/nm-business-programs-summary.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Marketing/nm-business-programs-summary.pdf)",
+"[https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Business/NM-Biz-Programs-Summary.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Business/NM-Biz-Programs-Summary.pdf)",
+"[https://programs.dsireusa.org/system/program/detail/5215/xcel-energy-electric-commercial-energy-efficiency-rebate-program](https://programs.dsireusa.org/system/program/detail/5215/xcel-energy-electric-commercial-energy-efficiency-rebate-program)"
+],
+"evidenceText": "Xcel New Mexico business materials list lighting, building tune-up, motors, drives, compressed air, cooling, refrigeration, custom efficiency, and study offerings for business electric customers.",
+"reasoningNotes": "The supplied air compressor, lighting, and audit matches are correct, but the audit is a non-physical service and the opportunity is strictly commercial or industrial."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22441",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Illinois statewide photovoltaic REC incentive program."
+},
+"eligibleApplicantTypes": [
+"approved_vendor",
+"residential_customer",
+"commercial_customer",
+"school",
+"public_entity",
+"nonprofit",
+"community_solar_subscriber",
+"project_developer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"public",
+"nonprofit",
+"education",
+"community_solar"
+],
+"eligibleRetrofitCategories": [
+"rooftop_solar_pv",
+"ground_mounted_solar_pv",
+"community_solar_subscription",
+"solar_pv_system"
+],
+"hardRequirements": [
+"Project must be eligible photovoltaic distributed generation or community solar under Illinois Shines.",
+"Incentives are based on renewable energy credit contracts.",
+"Customers generally work through an Illinois Shines Approved Vendor.",
+"Distributed generation projects must be on-site systems such as roof or land-mounted solar.",
+"Community solar subscriptions must meet program subscription and project-category requirements."
+],
+"blockers": [
+"This program does not support non-solar renewables.",
+"Battery storage is not a supported retrofit category for this opportunity unless separately paired with another verified incentive.",
+"The incentive is not a simple utility point-of-sale rebate; REC contract structure and Approved Vendor rules apply.",
+"Do not match non-photovoltaic distributed generation."
+],
+"programType": "Solar Renewable Energy Credit Program",
+"administrator": "Energy Solutions on behalf of the Illinois Power Agency",
+"applicationUrl": null,
+"websiteUrl": "[https://illinoisshines.com/](https://illinoisshines.com/)",
+"sourceUrlsChecked": [
+"[https://illinoisshines.com/](https://illinoisshines.com/)",
+"[https://illinoisshines.com/about/](https://illinoisshines.com/about/)",
+"[https://illinoisshines.com/traditional-community-solar/](https://illinoisshines.com/traditional-community-solar/)",
+"[https://programs.dsireusa.org/system/program/detail/22441/adjustable-block-program-illinois-shines](https://programs.dsireusa.org/system/program/detail/22441/adjustable-block-program-illinois-shines)"
+],
+"evidenceText": "Illinois Shines supports photovoltaic distributed generation and community solar through REC incentives administered for the Illinois Power Agency, generally through Approved Vendors.",
+"reasoningNotes": "Both rooftop or on-site PV and community solar subscription matches are supported, but only within the solar photovoltaic REC program framework."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22274",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Alameda"
+],
+"cities": [
+"Alameda"
+],
+"utilityTerritories": [
+"Alameda Municipal Power"
+],
+"notes": "Limited to current Alameda Municipal Power residential D1 customers."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"income_qualified_customer",
+"homeowner",
+"renter"
+],
+"eligibleSectors": [
+"residential",
+"low_income"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"ev_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a current Alameda Municipal Power residential D1 customer.",
+"Charger must be a new, unused, permanently installed 240-volt Level 2 home charger.",
+"Equipment must be safety-certified, such as UL or ETL listed.",
+"Application must be submitted with required receipts and documentation within the program deadline.",
+"Limit is one rebate per account and rebate applies only toward charging station cost."
+],
+"blockers": [
+"DC fast charging is not eligible under this residential rebate.",
+"Level 1 chargers are not eligible.",
+"Used, resold, rebuilt, or warranty-replacement chargers should not match.",
+"Commercial, public, fleet, or multifamily charging should not be matched to this residential home charger rebate unless separately verified."
+],
+"programType": "Rebate Program",
+"administrator": "Alameda Municipal Power",
+"applicationUrl": "[https://alamedaprod.my.site.com/rebates/s/](https://alamedaprod.my.site.com/rebates/s/)",
+"websiteUrl": "[https://www.alamedamp.com/407/Rebates-and-Incentives](https://www.alamedamp.com/407/Rebates-and-Incentives)",
+"sourceUrlsChecked": [
+"[https://www.alamedamp.com/407/Rebates-and-Incentives](https://www.alamedamp.com/407/Rebates-and-Incentives)",
+"[https://www.alamedamp.com/349/Electric-Vehicles](https://www.alamedamp.com/349/Electric-Vehicles)",
+"[https://alamedaprod.my.site.com/rebates/s/](https://alamedaprod.my.site.com/rebates/s/)",
+"[https://programs.dsireusa.org/system/program/detail/22274/alameda-municipal-power-electric-vehicle-rebate-program](https://programs.dsireusa.org/system/program/detail/22274/alameda-municipal-power-electric-vehicle-rebate-program)"
+],
+"evidenceText": "Alameda Municipal Power's rebate page lists a Level 2 home EV charger rebate for current residential D1 customers, with higher income-qualified amounts and new equipment requirements.",
+"reasoningNotes": "The original EV and Level 2 matches are correct but must be limited to AMP residential home chargers."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:604",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Project must be located in Montana."
+},
+"eligibleApplicantTypes": [
+"individual",
+"small_business",
+"local_government",
+"university_system",
+"nonprofit"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"public",
+"education",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"solar_thermal_system",
+"ground_source_geothermal_heat_pump",
+"wood_pellet_heating_system",
+"small_hydropower_system",
+"insulation_upgrade",
+"window_replacement",
+"energy_efficient_appliances",
+"energy_conservation_measures_with_alternative_energy_system"
+],
+"hardRequirements": [
+"Applicant must be an eligible Montana individual, small business, local government, university-system unit, or nonprofit.",
+"Loan proceeds must support an eligible alternative energy system or qualifying energy conservation measures connected with an alternative energy system.",
+"Projects are reviewed under quarterly application deadlines and program scoring.",
+"Maximum loan amount, loan term, interest rate, collateral, and underwriting requirements apply.",
+"Projects already completed before approval are not eligible for retroactive financing."
+],
+"blockers": [
+"This is a loan program, not a rebate.",
+"Broad biogas or biomass should not be inferred beyond verified eligible low-emission biomass or pellet/wood heating systems unless the current official program approves the specific project.",
+"Energy conservation measures are limited when they are financed in conjunction with alternative energy systems.",
+"Fossil-fuel generators, fossil heating systems, roof repair or replacement, land, buildings, and vehicles are excluded."
+],
+"programType": "Loan Program",
+"administrator": "Montana Department of Environmental Quality",
+"applicationUrl": "[https://deq.mt.gov/energy/Programs/AERLP](https://deq.mt.gov/energy/Programs/AERLP)",
+"websiteUrl": "[https://deq.mt.gov/energy/Programs/AERLP](https://deq.mt.gov/energy/Programs/AERLP)",
+"sourceUrlsChecked": [
+"[https://deq.mt.gov/energy/Programs/AERLP](https://deq.mt.gov/energy/Programs/AERLP)",
+"[https://programs.dsireusa.org/system/program/detail/604/alternative-energy-revolving-loan-program](https://programs.dsireusa.org/system/program/detail/604/alternative-energy-revolving-loan-program)"
+],
+"evidenceText": "Montana DEQ describes low-interest loans for alternative energy systems and related energy conservation measures, including solar, geothermal, low-emission biomass heating, hydro, insulation, windows, and efficient appliances.",
+"reasoningNotes": "Geothermal heat pump matching is supported. Repair broad biomass or biogas to narrower low-emission biomass or pellet/wood heating unless project-specific approval exists."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22553",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Ameren Illinois"
+],
+"notes": "Limited to Ameren Illinois electric service territory and does not apply to Ameren Missouri."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"nonresidential_customer",
+"renewable_generation_owner",
+"renewable_generation_operator",
+"community_generation_owner",
+"project_developer"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"public",
+"community_solar"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_smart_inverter",
+"renewable_distributed_generation_interconnection",
+"battery_storage_system",
+"smart_inverter_installation"
+],
+"hardRequirements": [
+"Applicant must be an Ameren Illinois customer or eligible owner/operator of interconnected distributed generation.",
+"Distributed generation must use qualifying smart inverter equipment.",
+"Energy storage must meet program and tariff requirements and be associated with eligible distributed generation where required.",
+"Replacement inverters are not eligible for the smart inverter rebate.",
+"Customers receiving storage rebates may have rate, time-of-use, or other participation obligations."
+],
+"blockers": [
+"Submetering or building energy monitoring is a false-positive match.",
+"Standalone battery storage without eligible interconnected renewable generation should not match.",
+"Replacement inverter projects should not match.",
+"Receiving the distributed generation rebate can affect delivery-service crediting or netting; do not present as a simple appliance rebate."
+],
+"programType": "Rebate Program",
+"administrator": "Ameren Illinois",
+"applicationUrl": "[https://www.ameren.com/-/media/illinois-site/files/electricchoice/illinois-distributed-energy-rebate-application.ashx](https://www.ameren.com/-/media/illinois-site/files/electricchoice/illinois-distributed-energy-rebate-application.ashx)",
+"websiteUrl": "[https://www.ameren.com/service/renewables/solar](https://www.ameren.com/service/renewables/solar)",
+"sourceUrlsChecked": [
+"[https://www.ameren.com/service/renewables/solar](https://www.ameren.com/service/renewables/solar)",
+"[https://www.ameren.com/service/renewables/developers](https://www.ameren.com/service/renewables/developers)",
+"[https://www.ameren.com/-/media/rates/files/illinois/aiel59rdcgr.pdf](https://www.ameren.com/-/media/rates/files/illinois/aiel59rdcgr.pdf)",
+"[https://www.ameren.com/-/media/illinois-site/files/electricchoice/illinois-distributed-energy-rebate-application.ashx](https://www.ameren.com/-/media/illinois-site/files/electricchoice/illinois-distributed-energy-rebate-application.ashx)",
+"[https://programs.dsireusa.org/system/program/detail/22553/ameren-illinois-distributed-generation-rebate-program](https://programs.dsireusa.org/system/program/detail/22553/ameren-illinois-distributed-generation-rebate-program)"
+],
+"evidenceText": "Ameren Illinois distributed-generation materials support smart inverter and energy storage rebates tied to eligible customer-owned renewable generation, with tariff requirements and application forms.",
+"reasoningNotes": "Keep battery storage only when tied to eligible distributed generation rules. Remove submetering or general energy monitoring as unsupported."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22277",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Orange"
+],
+"cities": [
+"Anaheim"
+],
+"utilityTerritories": [
+"Anaheim Public Utilities"
+],
+"notes": "Limited to Anaheim Public Utilities electric service area."
+},
+"eligibleApplicantTypes": [
+"commercial_customer",
+"business_fleet_customer",
+"school",
+"public_fleet"
+],
+"eligibleSectors": [
+"commercial",
+"education",
+"public"
+],
+"eligibleRetrofitCategories": [
+"fleet_ev_charger_installation",
+"ev_charging_infrastructure",
+"submeter_installation_for_ev_charging",
+"ev_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be an Anaheim Public Utilities commercial customer, school, or eligible fleet site.",
+"Project must support fleet electrification and qualifying EV charger infrastructure.",
+"Reservation form and approval letter are required before rebate payment.",
+"Required documentation includes final permits, receipts, and proof of qualifying fleet vehicles.",
+"Annual charger-count and dollar caps apply."
+],
+"blockers": [
+"Personal or residential EV chargers are covered by a separate Anaheim rebate and should not match this fleet program.",
+"The official fleet page supports fleet charger and infrastructure rebates, not general public home charging.",
+"Projects outside Anaheim Public Utilities service area should not match.",
+"Rebate is subject to available funds and program approval."
+],
+"programType": "Rebate Program",
+"administrator": "Anaheim Public Utilities",
+"applicationUrl": "[https://www.anaheim.net/DocumentCenter/View/36752/EV-Fleet-Charger-Infrastructure-Rebate-Reservation-Form](https://www.anaheim.net/DocumentCenter/View/36752/EV-Fleet-Charger-Infrastructure-Rebate-Reservation-Form)",
+"websiteUrl": "[https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate](https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate)",
+"sourceUrlsChecked": [
+"[https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate](https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate)",
+"[https://www.anaheim.net/DocumentCenter/View/36752/EV-Fleet-Charger-Infrastructure-Rebate-Reservation-Form](https://www.anaheim.net/DocumentCenter/View/36752/EV-Fleet-Charger-Infrastructure-Rebate-Reservation-Form)",
+"[https://www.anaheim.net/DocumentCenter/View/36751/EV-Fleet-Charger-Infrastructure-Rebate-Program-Agreement](https://www.anaheim.net/DocumentCenter/View/36751/EV-Fleet-Charger-Infrastructure-Rebate-Program-Agreement)",
+"[https://programs.dsireusa.org/system/program/detail/22277/anaheim-public-utilities-ev-fleet-charger-and-infrastructure-rebate](https://programs.dsireusa.org/system/program/detail/22277/anaheim-public-utilities-ev-fleet-charger-and-infrastructure-rebate)"
+],
+"evidenceText": "Anaheim's fleet program offers commercial customers and schools rebates for EV fleet charging stations, associated infrastructure, submeters, plan check fees, and service fees.",
+"reasoningNotes": "Use fleet-specific EV charging categories. Do not assume this is the same as Anaheim's personal Level 2 charger rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22275",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Orange"
+],
+"cities": [
+"Anaheim"
+],
+"utilityTerritories": [
+"Anaheim Public Utilities"
+],
+"notes": "Limited to Anaheim Public Utilities electric service area."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"commercial_customer",
+"business_customer"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"ev_charger_installation",
+"electrical_panel_upgrade_for_ev_charging"
+],
+"hardRequirements": [
+"Applicant must receive electric service from Anaheim Public Utilities.",
+"Project must install a qualifying Level 2 EV charger at a home or business in the service area.",
+"Final City permit, proof of purchase and installation cost, photos, and current utility bill are required.",
+"Rebate is limited to one per customer.",
+"Eligible costs may include charger, installation, electric upgrades, and permit fees."
+],
+"blockers": [
+"Fleet charger and infrastructure rebates are a separate Anaheim program.",
+"Public DC fast charging projects are not supported by this personal-use rebate.",
+"Level 1 charging should not match.",
+"Projects outside Anaheim Public Utilities electric service area should not match."
+],
+"programType": "Rebate Program",
+"administrator": "Anaheim Public Utilities",
+"applicationUrl": "[https://www.anaheim.net/593/Private-EV-Charger-Rebate](https://www.anaheim.net/593/Private-EV-Charger-Rebate)",
+"websiteUrl": "[https://www.anaheim.net/593/Private-EV-Charger-Rebate](https://www.anaheim.net/593/Private-EV-Charger-Rebate)",
+"sourceUrlsChecked": [
+"[https://www.anaheim.net/593/Private-EV-Charger-Rebate](https://www.anaheim.net/593/Private-EV-Charger-Rebate)",
+"[https://programs.dsireusa.org/system/program/detail/22275/anaheim-public-utilities-personal-use-ev-charger-rebates](https://programs.dsireusa.org/system/program/detail/22275/anaheim-public-utilities-personal-use-ev-charger-rebates)"
+],
+"evidenceText": "Anaheim's private EV charger rebate supports Level 2 charger installation at homes or businesses and may include panel upgrades, permit fees, and installation costs.",
+"reasoningNotes": "Original EV charger and Level 2 categories are correct; add electric panel upgrade for EV charging as a supported related measure."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22393",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [
+"Austin"
+],
+"utilityTerritories": [
+"Austin Energy"
+],
+"notes": "Limited to Austin Energy residential electric customers for the home-charging page tied to this opportunity."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"renter"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"ev_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be an Austin Energy electric customer.",
+"Applicant must have purchased or leased a plug-in electric vehicle.",
+"Rebate applies to qualifying Level 2 240-volt home charging stations.",
+"Licensed electrician, permit, inspection, and new safety-certified equipment requirements apply.",
+"Application is submitted after installation with required documentation."
+],
+"blockers": [
+"Business, nonprofit, multifamily, Level 1, and DCFC charger rebates are on a separate Austin Energy business charging program path.",
+"Level 1 and DC fast charging should not match this residential home-charging opportunity.",
+"Projects outside Austin Energy service territory should not match.",
+"Used or uncertified charging equipment should not match."
+],
+"programType": "Rebate Program",
+"administrator": "Austin Energy",
+"applicationUrl": "[https://austinenergy.com/green-power/plug-in-austin/home-charging](https://austinenergy.com/green-power/plug-in-austin/home-charging)",
+"websiteUrl": "[https://austinenergy.com/green-power/plug-in-austin/home-charging](https://austinenergy.com/green-power/plug-in-austin/home-charging)",
+"sourceUrlsChecked": [
+"[https://austinenergy.com/green-power/plug-in-austin/home-charging](https://austinenergy.com/green-power/plug-in-austin/home-charging)",
+"[https://austinenergy.com/green-power/plug-in-austin/workplace-charging](https://austinenergy.com/green-power/plug-in-austin/workplace-charging)",
+"[https://programs.dsireusa.org/system/program/detail/22393/austin-energy-ev-charging-station-rebate-program](https://programs.dsireusa.org/system/program/detail/22393/austin-energy-ev-charging-station-rebate-program)"
+],
+"evidenceText": "Austin Energy's home charging page lists a residential rebate for Level 2 home charging stations, with customer, vehicle, permit, inspection, and equipment requirements.",
+"reasoningNotes": "For this home-charging opportunity, keep only residential Level 2 EV charger categories. Business DCFC and Level 1 incentives are separate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22768",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [
+"Austin"
+],
+"utilityTerritories": [
+"Austin Energy"
+],
+"notes": "Limited to eligible Austin Energy customer homes in the program service area."
+},
+"eligibleApplicantTypes": [
+"income_qualified_customer",
+"residential_customer",
+"homeowner",
+"renter",
+"landlord_authorized_renter"
+],
+"eligibleSectors": [
+"residential",
+"low_income"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade",
+"duct_sealing_and_insulation",
+"hvac_tune_up",
+"high_efficiency_hvac_replacement",
+"led_lighting_retrofit",
+"solar_screens",
+"smart_thermostat",
+"reflective_roof_coating_mobile_home"
+],
+"hardRequirements": [
+"Applicant must be an Austin Energy customer.",
+"Applicant must meet income or medically vulnerable eligibility criteria through the applicable Austin Energy program.",
+"Eligible homes must meet program type, size, age, occupancy, and prior-participation rules.",
+"Renters must obtain landlord permission.",
+"The 0 percent AC financing or replacement support is available only in connection with participation in Weatherization Assistance."
+],
+"blockers": [
+"High-efficiency AC loan or rebate should not be matched as a standalone offer for non-weatherization participants.",
+"Austin Energy's standard Home Energy Savings loan is a separate program boundary.",
+"Commercial properties are not eligible.",
+"Window replacement is not supported by this weatherization assistance source; solar screens and sealing are distinct measures."
+],
+"programType": "Weatherization Assistance and Loan Program",
+"administrator": "Austin Energy",
+"applicationUrl": "[https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization](https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization)",
+"websiteUrl": "[https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization](https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization)",
+"sourceUrlsChecked": [
+"[https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization](https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization)",
+"[https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings](https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings)",
+"[https://programs.dsireusa.org/system/program/detail/22768/austin-energy-weatherization-assistance-loan-program](https://programs.dsireusa.org/system/program/detail/22768/austin-energy-weatherization-assistance-loan-program)"
+],
+"evidenceText": "Austin Energy Weatherization Assistance includes attic insulation, duct repair or sealing, air sealing, solar screens, LED lighting, AC inspection or cleaning, smart thermostats, and 0 percent AC financing for participants.",
+"reasoningNotes": "Air sealing and weatherization are correct. HVAC replacement should be retained only as conditional financing for Weatherization Assistance participants."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4640",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Avista Utilities"
+],
+"notes": "Limited to Avista Washington residential electric or natural gas customers, depending on measure and primary heating fuel."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"homeowner",
+"multifamily_property_owner",
+"income_qualified_customer"
+],
+"eligibleSectors": [
+"residential",
+"multifamily",
+"low_income"
+],
+"eligibleRetrofitCategories": [
+"window_replacement",
+"storm_window_installation",
+"sliding_glass_door_replacement",
+"insulation_upgrade",
+"air_sealing_weatherization",
+"exterior_door_replacement",
+"hvac_efficiency_upgrade",
+"water_heating_upgrade"
+],
+"hardRequirements": [
+"Applicant must be an eligible Avista Washington residential customer.",
+"Window and sliding-glass-door rebates require replacement of existing units in an existing primary residence.",
+"Primary heating fuel and service type requirements apply by measure.",
+"Applications and required documentation must be submitted within program deadlines.",
+"Insulation and weatherization measures may require approved program contractors or income qualification."
+],
+"blockers": [
+"Commercial and five-or-more-unit multifamily projects should use business program pathways and not this single-family or small multifamily residential opportunity.",
+"New construction, seasonal homes, and recreational homes should not match window rebates.",
+"A generic window match should not be confused with window air conditioners.",
+"Do not infer unrelated commercial refrigeration, motors, or industrial measures."
+],
+"programType": "Rebate Program",
+"administrator": "Avista Utilities",
+"applicationUrl": "[https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows](https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows)",
+"websiteUrl": "[https://www.myavista.com/energy-savings/rebates-washington](https://www.myavista.com/energy-savings/rebates-washington)",
+"sourceUrlsChecked": [
+"[https://www.myavista.com/energy-savings/rebates-washington](https://www.myavista.com/energy-savings/rebates-washington)",
+"[https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington](https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington)",
+"[https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows](https://www.myavista.com/energy-savings/rebates-washington/single-family-energy-rebates-washington/windows)",
+"[https://www.myavista.com/energy-savings/rebates-washington/residential-multifamily-energy-rebates-washington](https://www.myavista.com/energy-savings/rebates-washington/residential-multifamily-energy-rebates-washington)",
+"[https://programs.dsireusa.org/system/program/detail/4640/avista-utilities-residential-energy-efficiency-rebate-programs](https://programs.dsireusa.org/system/program/detail/4640/avista-utilities-residential-energy-efficiency-rebate-programs)"
+],
+"evidenceText": "Avista Washington residential pages list window, storm window, sliding glass door, insulation, weatherization, HVAC, and water-heating rebates or assistance for eligible customers.",
+"reasoningNotes": "Both insulation and window replacement are supported. Narrow window-related categories to actual windows, storm windows, and sliding glass doors."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"Los Angeles"
+],
+"cities": [
+"Azusa"
+],
+"utilityTerritories": [
+"Azusa Light & Water"
+],
+"notes": "Limited to Azusa Light & Water accounts with a service address in Azusa."
+},
+"eligibleApplicantTypes": [
+"residential_customer"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ev_charger_installation",
+"residential_ev_charger"
+],
+"hardRequirements": [
+"Applicant must have an Azusa Light & Water account and qualifying service address.",
+"Application must include paid receipts or invoices dated within the program deadline.",
+"Required product and efficiency documentation must be submitted.",
+"Limit is one EV charger rebate per residence per year.",
+"Rebate cannot exceed product cost and is subject to available funding."
+],
+"blockers": [
+"Current official rebate form verifies an electric vehicle charger rebate but does not state DC fast charging eligibility.",
+"Current official application does not clearly state Level 2 specificity; do not preserve Level 2 matching unless independently verified in current terms.",
+"Azusa public charging station listings are separate city charging services, not customer charger rebates.",
+"Projects outside Azusa Light & Water service addresses should not match."
+],
+"programType": "Rebate Program",
+"administrator": "Azusa Light & Water",
+"applicationUrl": "[https://www.azusaca.gov/DocumentCenter/View/47059/Final-ES-and-Weatherization-Application-Form-08022023](https://www.azusaca.gov/DocumentCenter/View/47059/Final-ES-and-Weatherization-Application-Form-08022023)",
+"websiteUrl": "[https://www.azusaca.gov/1625/Plug-In-Electric-Vehicles](https://www.azusaca.gov/1625/Plug-In-Electric-Vehicles)",
+"sourceUrlsChecked": [
+"[https://www.azusaca.gov/1625/Plug-In-Electric-Vehicles](https://www.azusaca.gov/1625/Plug-In-Electric-Vehicles)",
+"[https://www.azusaca.gov/DocumentCenter/View/47059/Final-ES-and-Weatherization-Application-Form-08022023](https://www.azusaca.gov/DocumentCenter/View/47059/Final-ES-and-Weatherization-Application-Form-08022023)",
+"[https://programs.dsireusa.org/system/program/detail/22278/azusa-light-and-water-ev-charger-rebate](https://programs.dsireusa.org/system/program/detail/22278/azusa-light-and-water-ev-charger-rebate)"
+],
+"evidenceText": "Azusa's current rebate application lists an Electric Vehicle Charger rebate with a one-per-residence-per-year limit, account and service-address requirements, receipt requirements, and funding limits.",
+"reasoningNotes": "Repair to generic residential EV charger because current official application verifies the charger rebate but not Level 2 specificity."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22323",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Baltimore Gas and Electric"
+],
+"notes": "Limited to BGE electric customers in Maryland."
+},
+"eligibleApplicantTypes": [
+"residential_customer",
+"electric_vehicle_owner"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"ev_managed_charging",
+"ev_time_of_use_rate"
+],
+"hardRequirements": [
+"Applicant must be a BGE residential electric customer.",
+"Customer must enroll in the applicable EVsmart savings, time-of-use, or smart-charge-management program.",
+"Smart charging credits require a compatible EV or eligible Level 2 charger connected through the program platform.",
+"Bill credits, charging behavior, and program participation requirements apply."
+],
+"blockers": [
+"Current official BGE EVsmart sources do not verify an active Level 2 EV charger installation rebate.",
+"Do not match physical EV charger installation to the current BGE EVsmart bill-credit or rate program.",
+"Maryland Energy Administration EVSE rebates are separate state programs and should not be merged into this BGE opportunity.",
+"Commercial EV charging infrastructure is not supported by the verified current residential BGE EVsmart source."
+],
+"programType": "Rate and Bill Credit Program",
+"administrator": "Baltimore Gas and Electric",
+"applicationUrl": "[https://bge.chooseev.com/promos/](https://bge.chooseev.com/promos/)",
+"websiteUrl": "[https://bge.chooseev.com/](https://bge.chooseev.com/)",
+"sourceUrlsChecked": [
+"[https://bge.chooseev.com/](https://bge.chooseev.com/)",
+"[https://bge.chooseev.com/ev/about/](https://bge.chooseev.com/ev/about/)",
+"[https://bge.chooseev.com/promos/](https://bge.chooseev.com/promos/)",
+"[https://www.bge.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicles.aspx](https://www.bge.com/SmartEnergy/InnovationTechnology/Pages/ElectricVehicles.aspx)",
+"[https://programs.dsireusa.org/system/program/detail/22323/baltimore-gas-and-electric-evsmart-program](https://programs.dsireusa.org/system/program/detail/22323/baltimore-gas-and-electric-evsmart-program)"
+],
+"evidenceText": "Current BGE EVsmart materials describe EV time-of-use and smart charge management savings with bill credits, not a verified active EVSE installation rebate.",
+"reasoningNotes": "Repair away from physical EV charger installation. Keep BGE EVsmart as an active EV charging management and rate program unless a current official installation rebate source becomes readable."
+}
+],
+"continueFromOpportunityId": "SOURCE_DSIRE:dsire_program_id:22357"
+}

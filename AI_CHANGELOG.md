@@ -6,6 +6,12 @@
 - Added seven narrative stages covering profile setup through ongoing impact tracking, each paired with an evolving commercial environment that gains greenery, lighting, solar, EV charging, rooftop upgrades, and subtle data overlays.
 - Kept the redesign frontend-only with responsive CSS, lightweight motion, and `prefers-reduced-motion` handling.
 
+## 2026-07-02 - Codex (GPT-5) GPT Pro opportunity data repair batches 59-78
+
+- Validated the 20 GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-59-78/` and confirmed each output matched its 20-opportunity prompt target set.
+- Imported the outputs as normalized opportunity-data repair batches 59-78 and appended them to the ordered repair manifest.
+- Applied all 78 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures, then refreshed the remaining low source-confidence queue.
+
 ## 2026-07-01 - Codex (GPT-5) pricing rollback and team page update
 
 - Restored the public Pricing page to the earlier project-based RetroFi pricing structure, including the original tier copy and FAQ set.

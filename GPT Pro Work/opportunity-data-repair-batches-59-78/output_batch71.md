@@ -1,0 +1,1178 @@
+{
+"schemaVersion": "opportunity_data_research_repairs.v1",
+"researchedAt": "2026-07-01",
+"source": "gpt_pro",
+"repairs": [
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22811",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"GA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Cobb EMC"
+],
+"notes": "Limited to non-residential sites with an active Cobb EMC electric meter."
+},
+"eligibleApplicantTypes": [
+"non_residential_cobb_emc_members",
+"businesses",
+"commercial_property_owners",
+"multifamily_property_owners_operators",
+"government_entities"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily",
+"government",
+"institutional",
+"fleet"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a Cobb EMC member at the service address.",
+"Eligible charger must be Level 2 or Level 3 and installed on or after January 1, 2019.",
+"Installation must use a licensed contractor and meet code and permitting requirements.",
+"Charger must remain operational for at least three years and meet signage, protection, verification, and branding requirements.",
+"Grants are subject to available funds and are based on charger classification, ports, and installation price."
+],
+"blockers": [
+"Residential home EV charging incentives are not part of this business grant.",
+"EV charger vendors and EV charging businesses are ineligible.",
+"Sites without an active Cobb EMC electric meter do not qualify.",
+"Level 1 chargers or non-installed portable charging equipment are not supported."
+],
+"programType": "grant",
+"administrator": "Cobb EMC",
+"applicationUrl": "[https://www.cobbemc.com/sites/default/files/documents/ev/EVGrantApplicationFinal.pdf](https://www.cobbemc.com/sites/default/files/documents/ev/EVGrantApplicationFinal.pdf)",
+"websiteUrl": "[https://www.cobbemc.com/ev-charging-business](https://www.cobbemc.com/ev-charging-business)",
+"sourceUrlsChecked": [
+"[https://www.cobbemc.com/ev-charging-business](https://www.cobbemc.com/ev-charging-business)",
+"[https://www.cobbemc.com/sites/default/files/documents/ev/EVGrantApplicationFinal.pdf](https://www.cobbemc.com/sites/default/files/documents/ev/EVGrantApplicationFinal.pdf)",
+"[https://www.cobbemc.com/sites/default/files/documents/ev/Program%20Requirements%20and%20Acknowledgements.pdf](https://www.cobbemc.com/sites/default/files/documents/ev/Program%20Requirements%20and%20Acknowledgements.pdf)"
+],
+"evidenceText": "Cobb EMC describes business EV charging grants for Level 2 and Level 3 chargers at non-residential member sites, with requirements for licensed installation, signage, protection, verification, and continued operation.",
+"reasoningNotes": "Original EV charger matches were directionally correct, but the generic EV category was narrowed to Level 2 and DC fast charging. Residential and vendor use cases should be blocked."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2628",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MO"
+],
+"counties": [],
+"cities": [
+"Columbia"
+],
+"utilityTerritories": [
+"Columbia Water & Light",
+"City of Columbia Utilities"
+],
+"notes": "Available to City of Columbia Utilities electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"commercial_electric_customers"
+],
+"eligibleSectors": [
+"residential",
+"commercial"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system"
+],
+"hardRequirements": [
+"Applicant must be a Columbia Utilities electric customer.",
+"Rebate is based on installed photovoltaic capacity and modeled peak energy production factors.",
+"System must satisfy Columbia solar interconnection and net metering requirements.",
+"Customer must complete the utility solar rebate process before payment."
+],
+"blockers": [
+"Net metering or utility metering references do not support submetering or energy monitoring as a retrofit category.",
+"Shading is used to calculate solar production and does not support window film or building shading retrofit matches.",
+"Residential and commercial solar loans on the page are separate financing support and should not be treated as rebates under this opportunity."
+],
+"programType": "rebate",
+"administrator": "Columbia Water & Light",
+"applicationUrl": null,
+"websiteUrl": "[https://www.como.gov/utilities/columbia-power-partners/solar/solar-rebates/](https://www.como.gov/utilities/columbia-power-partners/solar/solar-rebates/)",
+"sourceUrlsChecked": [
+"[https://www.como.gov/utilities/columbia-power-partners/solar/solar-rebates/](https://www.como.gov/utilities/columbia-power-partners/solar/solar-rebates/)",
+"[https://www.como.gov/utilities/columbia-power-partners/solar/getting-started-with-solar/](https://www.como.gov/utilities/columbia-power-partners/solar/getting-started-with-solar/)"
+],
+"evidenceText": "Columbia's solar rebate page bases incentives on installed photovoltaic capacity and peak energy production. The customer guide describes residential and business electric customers using solar with net metering.",
+"reasoningNotes": "Keep only solar photovoltaic system eligibility. The previous submetering and window-shading matches are false positives caused by net-metering and solar-shading terminology."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22233",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"IL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"ComEd"
+],
+"notes": "Applies to qualified distributed generation and associated storage interconnected to ComEd's distribution system."
+},
+"eligibleApplicantTypes": [
+"residential_customers",
+"commercial_customers",
+"industrial_customers",
+"agricultural_customers",
+"community_supply_project_owners_operators",
+"distributed_generation_owners_operators"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"agricultural",
+"government",
+"nonprofit",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"battery_storage_system",
+"solar_pv_system",
+"small_wind_turbine",
+"biomass_biogas_energy_system",
+"fuel_cell_system",
+"small_hydroelectric_generation"
+],
+"hardRequirements": [
+"Distributed generation must be a qualified renewable generating facility of 5,000 kW or less.",
+"System must be interconnected by a smart inverter to ComEd's distribution system after the statutory date.",
+"Storage must be fixed in place and associated with qualified distributed generation.",
+"Residential and small commercial or industrial storage must satisfy ComEd storage rate requirements.",
+"Applicant must follow ComEd rebate terms, conditions, application, and documentation requirements."
+],
+"blockers": [
+"Community solar subscription is not a physical retrofit and is not the rebate recipient category.",
+"Smart meter, net meter, or interconnection language does not support submetering or energy monitoring retrofits.",
+"Storage not associated with qualified distributed generation is outside this rebate."
+],
+"programType": "rebate",
+"administrator": "ComEd",
+"applicationUrl": null,
+"websiteUrl": "[https://www.comed.com/smart-energy/my-green-power-connection/solar-energy/solar-rebates](https://www.comed.com/smart-energy/my-green-power-connection/solar-energy/solar-rebates)",
+"sourceUrlsChecked": [
+"[https://www.comed.com/smart-energy/my-green-power-connection/solar-energy/solar-rebates](https://www.comed.com/smart-energy/my-green-power-connection/solar-energy/solar-rebates)",
+"[https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt2810b689df2e361f/67741700adc7815acf7dba44/DGRebate_TermsConditions-2024-v2.pdf](https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt2810b689df2e361f/67741700adc7815acf7dba44/DGRebate_TermsConditions-2024-v2.pdf)",
+"[https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/bltceb8d9495434223b/695be67c33699162b6ea350c/20065_Net_Metering_FAQ_2025_1223A.pdf](https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/bltceb8d9495434223b/695be67c33699162b6ea350c/20065_Net_Metering_FAQ_2025_1223A.pdf)"
+],
+"evidenceText": "ComEd rebate terms cover qualified distributed generation and storage associated with distributed generation, including renewable resources and fixed storage. The terms distinguish community supply projects from subscriptions.",
+"reasoningNotes": "Battery storage is valid. The match should add supported renewable DG technologies, while blocking community solar subscriptions and submetering as false positives."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:5362",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"RI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Rhode Island Renewable Energy Fund commercial-scale solar program with scheduled application rounds."
+},
+"eligibleApplicantTypes": [
+"businesses",
+"nonprofits",
+"academic_institutions",
+"municipal_buildings",
+"state_buildings",
+"large_facility_owners",
+"solar_installers"
+],
+"eligibleSectors": [
+"commercial",
+"government",
+"nonprofit",
+"institutional"
+],
+"eligibleRetrofitCategories": [
+"commercial_solar_pv",
+"solar_carport",
+"battery_storage_system"
+],
+"hardRequirements": [
+"Project must be a commercial-scale solar project in Rhode Island.",
+"Applicant must apply during an open Commerce RI Renewable Energy Fund round.",
+"Energy storage and solar carport incentives apply as adders to eligible solar projects.",
+"Project cannot be paired with the Renewable Energy Growth Program.",
+"Awards are subject to per-project, per-installer, and round funding caps."
+],
+"blockers": [
+"Biomass or biogas energy systems are not supported by the current commercial-scale solar grant materials.",
+"Residential homeowner incentives are a separate REF track and were described separately from the commercial-scale program.",
+"Standalone storage without an eligible solar project is not supported by the checked commercial-scale materials."
+],
+"programType": "grant",
+"administrator": "Commerce RI Renewable Energy Fund",
+"applicationUrl": null,
+"websiteUrl": "[https://commerceri.com/renewable-energy-fund/](https://commerceri.com/renewable-energy-fund/)",
+"sourceUrlsChecked": [
+"[https://commerceri.com/renewable-energy-fund/](https://commerceri.com/renewable-energy-fund/)",
+"[https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/rhodeisland/Commercial_Flyer_778e7b33-c575-431c-9973-44bc372ed4cc.pdf](https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/rhodeisland/Commercial_Flyer_778e7b33-c575-431c-9973-44bc372ed4cc.pdf)"
+],
+"evidenceText": "Commerce RI's commercial flyer describes large-scale solar project grants for businesses, nonprofits, academic institutions, municipal or state buildings, with adders for solar carports and energy storage.",
+"reasoningNotes": "Solar carport and storage matches are supported only as parts of eligible commercial-scale solar projects. Biomass should be removed."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22329",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Consumers Energy"
+],
+"notes": "Applies within Consumers Energy electric service territory."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"commercial_electric_customers",
+"multifamily_property_owners_operators",
+"hospitality_site_owners",
+"workplace_site_owners",
+"fleet_operators",
+"municipal_or_public_site_hosts"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"multifamily",
+"government",
+"fleet",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a Consumers Energy electric customer or eligible site host in Consumers Energy territory.",
+"Residential rebate requires purchase, lease, or preorder of an EV or plug-in hybrid and installation of qualified Level 2 charging at the primary residence.",
+"Commercial Level 2 projects must meet site, port, installation, data, signage, parking, and timing requirements.",
+"DC fast charging rebates are for eligible commercial DCFC projects.",
+"Projects must follow Consumers Energy PowerMIDrive terms and conditions."
+],
+"blockers": [
+"Level 1 chargers and portable connectors are not supported by the checked rebate pages.",
+"Commercial and residential incentive tracks have different eligibility rules and caps.",
+"Sites outside Consumers Energy electric territory do not qualify."
+],
+"programType": "rebate",
+"administrator": "Consumers Energy",
+"applicationUrl": null,
+"websiteUrl": "[https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/powermidrive](https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/powermidrive)",
+"sourceUrlsChecked": [
+"[https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/powermidrive](https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/powermidrive)",
+"[https://www.consumersenergy.com/residential/savings-and-clean-energy/electric-vehicles/home-charger-rebates](https://www.consumersenergy.com/residential/savings-and-clean-energy/electric-vehicles/home-charger-rebates)",
+"[https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/level-2-charging-station-rebates](https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/level-2-charging-station-rebates)",
+"[https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/dc-fast-charger-rebates](https://www.consumersenergy.com/residential/programs-and-services/electric-vehicles/dc-fast-charger-rebates)",
+"[https://www.consumersenergy.com/-/media/CE/Documents/residential/programs-and-services/electric-vehicles/powermidrive-commercial-terms-and-conditions.pdf](https://www.consumersenergy.com/-/media/CE/Documents/residential/programs-and-services/electric-vehicles/powermidrive-commercial-terms-and-conditions.pdf)"
+],
+"evidenceText": "Consumers Energy lists residential Level 2 home charger rebates and commercial public Level 2 and DC fast charging incentives under PowerMIDrive, each with separate eligibility requirements.",
+"reasoningNotes": "Original EV charging matches are correct when narrowed to Level 2 and DC fast charging. Generic EV charger installation should not include unsupported Level 1 or portable equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:4504",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MD"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Delmarva Power Maryland"
+],
+"notes": "Limited to Delmarva Power Maryland residential electric customers in eligible one-to-four-unit homes."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"homeowners",
+"tenants_with_landlord_permission"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"energy_audit",
+"air_sealing_weatherization",
+"insulation_upgrade",
+"duct_sealing",
+"high_efficiency_hvac_replacement",
+"heat_pump_hvac_retrofit",
+"energy_star_windows_doors",
+"heat_pump_water_heater",
+"smart_thermostat_zoning_retrofit"
+],
+"hardRequirements": [
+"Customer must have an active Delmarva Power Maryland residential account.",
+"Home must be a primary residence and generally a single-family, townhome, rowhome, or one-to-four-unit dwelling.",
+"Participating Contractor must perform the Home Energy Assessment and eligible upgrades.",
+"Rebate eligibility is tied to qualifying modeled electric savings and program rules.",
+"Tenant applicants must obtain landlord permission."
+],
+"blockers": [
+"Delaware Delmarva customers are outside this Maryland program.",
+"Commercial properties and multifamily buildings above the eligible residential dwelling limit are not supported.",
+"Do-it-yourself work outside the participating contractor process does not qualify for program incentives."
+],
+"programType": "rebate",
+"administrator": "Delmarva Power Maryland Home Energy Savings",
+"applicationUrl": null,
+"websiteUrl": "[https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program](https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program)",
+"sourceUrlsChecked": [
+"[https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program](https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program)",
+"[https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program/rebates](https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program/rebates)",
+"[https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program/home-energy-assessment](https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program/home-energy-assessment)"
+],
+"evidenceText": "Delmarva's Maryland Home Performance pages list a Home Energy Assessment and rebates for air sealing, insulation, HVAC, windows and doors, heat pump water heaters, duct sealing, and smart thermostats.",
+"reasoningNotes": "The original air sealing, insulation, and audit matches are valid. Additional supported home-performance measures should be included but kept residential and Maryland-specific."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22371",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"HI"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Hawaii Energy service territory"
+],
+"notes": "Program materials apply to Hawaii sites; payment is contingent on additional state funding."
+},
+"eligibleApplicantTypes": [
+"businesses",
+"commercial_property_owners",
+"nonprofits",
+"government_entities",
+"multifamily_property_owners_operators",
+"homeowner_associations",
+"fleet_operators"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily",
+"government",
+"nonprofit",
+"fleet",
+"workplace",
+"public_facility",
+"affordable_housing"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Eligible equipment must be networked Level 2 or networked DC fast charging equipment.",
+"Site must be in Hawaii and must be public, serve multiple tenants, guests, employees, or customers, or serve EV fleets.",
+"Program application and documentation requirements must be met.",
+"Affordable housing bonuses apply only to qualifying Level 2 installations.",
+"Rebate payment depends on availability of additional state funding."
+],
+"blockers": [
+"Single-family residences and individually owned parking stalls are not the intended eligible sites.",
+"Non-networked chargers and Level 1 chargers are not supported by the checked materials.",
+"Accepted applications may not be paid until additional state funding is received."
+],
+"programType": "rebate",
+"administrator": "Hawaii Energy",
+"applicationUrl": "[https://hawaiienergy.com/wp-content/uploads/evcs-program-requirements-application.pdf](https://hawaiienergy.com/wp-content/uploads/evcs-program-requirements-application.pdf)",
+"websiteUrl": "[https://hawaiienergy.com/for-business/rebates-for-business/electric-vehicle-charging-stations/](https://hawaiienergy.com/for-business/rebates-for-business/electric-vehicle-charging-stations/)",
+"sourceUrlsChecked": [
+"[https://hawaiienergy.com/for-business/rebates-for-business/electric-vehicle-charging-stations/](https://hawaiienergy.com/for-business/rebates-for-business/electric-vehicle-charging-stations/)",
+"[https://hawaiienergy.com/wp-content/uploads/evcs-faq.pdf](https://hawaiienergy.com/wp-content/uploads/evcs-faq.pdf)",
+"[https://hawaiienergy.com/wp-content/uploads/evcs-program-requirements-application.pdf](https://hawaiienergy.com/wp-content/uploads/evcs-program-requirements-application.pdf)",
+"[https://hawaiienergy.com/wp-content/uploads/commercial-incentive-application.pdf](https://hawaiienergy.com/wp-content/uploads/commercial-incentive-application.pdf)"
+],
+"evidenceText": "Hawaii Energy's EV charging station materials list networked Level 2 and DC fast charger rebates for eligible public, multi-user, fleet, commercial, municipal, and multifamily sites.",
+"reasoningNotes": "EV charging matches are correct, but eligibility is non-residential or multi-user and funding is pending. Avoid treating this as a single-family residential EV charger rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22210",
+"confidence": "high",
+"availabilityStatus": "unavailable",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Central Hudson",
+"Con Edison",
+"National Grid",
+"NYSEG",
+"Orange and Rockland",
+"Rochester Gas and Electric"
+],
+"notes": "Legacy statewide investor-owned utility make-ready program; no longer accepting new applications after April 21, 2026."
+},
+"eligibleApplicantTypes": [
+"legacy_pre_deadline_applicants",
+"commercial_site_hosts",
+"multifamily_site_hosts",
+"fleet_operators",
+"public_charging_site_hosts",
+"government_entities"
+],
+"eligibleSectors": [
+"commercial",
+"multifamily",
+"government",
+"fleet",
+"public_facility"
+],
+"eligibleRetrofitCategories": [
+"ev_make_ready_electrical_upgrade",
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Only completed Level 2 or DCFC applications submitted before the April 21, 2026 deadline remain under review.",
+"Incentive primarily offsets qualifying utility-side and customer-side make-ready infrastructure for EV charging.",
+"Equipment and contractor standards in the Joint Utilities program rules must be met.",
+"Project must be in a participating New York utility territory."
+],
+"blockers": [
+"New applications are no longer accepted.",
+"Standalone charger hardware without qualifying make-ready scope should not be matched as the core incentive.",
+"Level 1 charging and ordinary residential home charging are outside the checked make-ready program.",
+"Applicants without a pre-deadline completed application should not match."
+],
+"programType": "make_ready_incentive",
+"administrator": "New York Joint Utilities",
+"applicationUrl": null,
+"websiteUrl": "[https://jointutilitiesofny.org/ev/make-ready](https://jointutilitiesofny.org/ev/make-ready)",
+"sourceUrlsChecked": [
+"[https://jointutilitiesofny.org/ev/make-ready](https://jointutilitiesofny.org/ev/make-ready)"
+],
+"evidenceText": "The Joint Utilities page states that, as of April 21, 2026, the program no longer accepts new EV Make-Ready applications and is reviewing completed pre-deadline applications.",
+"reasoningNotes": "Set unavailable for new matching. Keep legacy categories to describe historical scope, but hard-block new applicants and standalone EVSE-hardware-only matches."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:1596",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide New York real property tax exemption for qualifying energy conservation improvements to one-to-four-family homes."
+},
+"eligibleApplicantTypes": [
+"homeowners",
+"private_residential_property_owners",
+"residential_property_owning_organizations"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"air_sealing_weatherization",
+"insulation_upgrade",
+"efficient_windows_doors",
+"high_efficiency_furnace_boiler_replacement",
+"furnace_boiler_efficiency_retrofit",
+"heat_pump_hvac_retrofit",
+"clock_thermostat",
+"water_heater_insulation",
+"residential_solar_energy_system",
+"small_wind_turbine",
+"load_management_device",
+"energy_use_meter"
+],
+"hardRequirements": [
+"Improvement must be added to a one-, two-, three-, or four-family residence.",
+"Measure must be an energy conservation improvement listed or qualifying under the statute.",
+"Exemption applies only to the assessed value increase attributable to eligible improvements.",
+"Special assessments remain taxable.",
+"Ownership must fall within the statute's private individual or organization requirements."
+],
+"blockers": [
+"Battery storage, fuel cells, and combined heat and power are not supported by this RPTL 487-a conservation-improvement record.",
+"Commercial buildings and residential buildings with more than four dwelling units are not supported.",
+"This is a property tax exemption, not a cash rebate or equipment grant."
+],
+"programType": "property_tax_exemption",
+"administrator": "New York State Department of Taxation and Finance",
+"applicationUrl": null,
+"websiteUrl": "[https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487_a.htm](https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487_a.htm)",
+"sourceUrlsChecked": [
+"[https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487_a.htm](https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487_a.htm)"
+],
+"evidenceText": "The state assessor manual describes RPTL 487-a as an exemption for qualifying energy conservation measures added to one-to-four-family homes, listing insulation, air sealing, HVAC, thermostats, windows, doors, solar, wind, and meters.",
+"reasoningNotes": "The original battery, CHP, and fuel-cell matches are false positives from a different New York property tax exemption. Replace them with residential conservation categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22072",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NY"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide New York RPTL 487 clean energy exemption, subject to local opt-out and PILOT provisions."
+},
+"eligibleApplicantTypes": [
+"property_owners",
+"residential_property_owners",
+"commercial_property_owners",
+"industrial_property_owners",
+"institutional_property_owners",
+"agricultural_property_owners"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"institutional",
+"agricultural",
+"government",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"battery_storage_system",
+"fuel_cell_system",
+"micro_combined_heat_and_power_system",
+"solar_pv_system",
+"small_wind_turbine",
+"farm_waste_biogas_energy_system",
+"micro_hydroelectric_generation",
+"fuel_flexible_linear_generator"
+],
+"hardRequirements": [
+"Eligible clean energy system must be solar, wind, farm waste, micro-hydroelectric, fuel cell, micro-CHP, fuel-flexible linear generator, or approved electric energy storage.",
+"Exemption applies for fifteen years to the assessed value increase attributable to the eligible system.",
+"System construction must meet the statute's date windows, generally before January 1, 2030 for many technologies.",
+"Electric energy storage must be approved by NYSERDA.",
+"Local governments may opt out or require PILOT agreements where permitted."
+],
+"blockers": [
+"Broad non-micro combined heat and power should not match; the statute supports micro-CHP with specific residential and performance limits.",
+"Ordinary conservation improvements such as insulation or boiler replacement belong to RPTL 487-a, not this record.",
+"Special ad valorem levies and special assessments are not exempt."
+],
+"programType": "property_tax_exemption",
+"administrator": "New York State Department of Taxation and Finance",
+"applicationUrl": null,
+"websiteUrl": "[https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487.htm](https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487.htm)",
+"sourceUrlsChecked": [
+"[https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487.htm](https://www.tax.ny.gov/research/property/assess/manuals/vol4/pt1/sec4_01/sec487.htm)",
+"[https://www.nyc.gov/site/finance/property/clean-energy-systems-exemption.page](https://www.nyc.gov/site/finance/property/clean-energy-systems-exemption.page)"
+],
+"evidenceText": "The state assessor manual lists solar, wind, farm waste, micro-hydro, fuel cell, micro-CHP, fuel-flexible linear generator, and electric storage systems as eligible clean energy systems under RPTL 487.",
+"reasoningNotes": "Battery and fuel-cell matches are correct. CHP must be narrowed to micro-CHP, and additional statutory clean energy system categories should be included."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22317",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"LA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Entergy Louisiana",
+"Entergy Gulf States Louisiana"
+],
+"notes": "Applies to eligible Entergy customers in Louisiana outside separate Entergy New Orleans incentive treatment."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"commercial_electric_customers",
+"industrial_electric_customers",
+"fleet_operators"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"fleet",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be an eligible Entergy customer.",
+"Level 2 charger must be ENERGY STAR certified.",
+"DC fast charger rebates depend on charger power rating below or above 50 kW.",
+"Customer must apply through the Entergy eTech rebate process and provide required documentation."
+],
+"blockers": [
+"Entergy New Orleans incentives are separate and should not be mixed into this Louisiana and Gulf States record.",
+"Level 1 chargers and non-installed portable charging equipment are not supported.",
+"Sites outside the applicable Entergy Louisiana territory do not qualify."
+],
+"programType": "rebate",
+"administrator": "Entergy Louisiana",
+"applicationUrl": null,
+"websiteUrl": "[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"sourceUrlsChecked": [
+"[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"[https://entergyetech.com/](https://entergyetech.com/)"
+],
+"evidenceText": "Entergy eTech lists rebates for ENERGY STAR Level 2 charging ports and DC fast chargers, with DC incentives varying by charger power rating.",
+"reasoningNotes": "Original EV charging matches are supported but should be narrowed to Level 2 and DC fast charging. Keep geography limited to Entergy Louisiana and Gulf States service."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22273",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"AR"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Entergy Arkansas"
+],
+"notes": "Applies to eligible Entergy Arkansas customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"commercial_electric_customers",
+"industrial_electric_customers",
+"fleet_operators"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"fleet",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be an eligible Entergy Arkansas customer.",
+"Level 2 charger must be ENERGY STAR certified.",
+"DC fast charger rebate amount depends on charger power rating below or above 50 kW.",
+"Customer must apply through the Entergy eTech rebate process and submit required documentation."
+],
+"blockers": [
+"This record should not match customers outside Entergy Arkansas territory.",
+"Level 1 chargers and non-installed portable charging equipment are not supported.",
+"Non-EV electrification rebates on eTech are separate from this EV charging scope."
+],
+"programType": "rebate",
+"administrator": "Entergy Arkansas",
+"applicationUrl": null,
+"websiteUrl": "[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"sourceUrlsChecked": [
+"[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"[https://entergyetech.com/](https://entergyetech.com/)"
+],
+"evidenceText": "Entergy eTech lists rebates for ENERGY STAR Level 2 EV charging ports and DC fast chargers, including separate amounts for lower- and higher-power DC fast charging.",
+"reasoningNotes": "Original EV charging matches are valid when limited to Entergy Arkansas and eligible Level 2 or DC fast charger equipment."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22396",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"TX"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Entergy Texas"
+],
+"notes": "Applies to eligible Entergy Texas customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"commercial_electric_customers",
+"industrial_electric_customers",
+"fleet_operators"
+],
+"eligibleSectors": [
+"residential",
+"commercial",
+"industrial",
+"fleet",
+"workplace"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be an eligible Entergy Texas customer.",
+"Level 2 charger must be ENERGY STAR certified.",
+"DC fast charger rebate amount depends on charger power rating below or above 50 kW.",
+"Customer must apply through the Entergy eTech rebate process and submit required documentation."
+],
+"blockers": [
+"The Entergy Texas managed charging or charging rewards program is separate from the eTech charger rebate.",
+"Level 1 chargers and non-installed portable charging equipment are not supported.",
+"Sites outside Entergy Texas service territory do not qualify."
+],
+"programType": "rebate",
+"administrator": "Entergy Texas",
+"applicationUrl": null,
+"websiteUrl": "[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"sourceUrlsChecked": [
+"[https://entergyetech.com/electric-vehicles/](https://entergyetech.com/electric-vehicles/)",
+"[https://entergyetech.com/](https://entergyetech.com/)",
+"[https://www.chargingrewards.com/entergytx-ev/](https://www.chargingrewards.com/entergytx-ev/)"
+],
+"evidenceText": "Entergy eTech lists charger rebates for Level 2 and DC fast charging. A separate Entergy Texas charging rewards site covers managed charging participation rather than charger installation rebates.",
+"reasoningNotes": "Original charger matches are supported for Entergy Texas eTech. Demand-response style managed charging should be kept separate from this rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2932",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MO"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Evergy Missouri"
+],
+"notes": "This repair reflects the residential Missouri rebate context in the DSIRE target; Evergy availability depends on customer location."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"homeowners",
+"residential_developers"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"smart_thermostat_zoning_retrofit"
+],
+"hardRequirements": [
+"Applicant must be an eligible Evergy residential customer or qualifying residential developer in Missouri.",
+"EV charging rebate supports Level 2 home charging or qualifying 240-volt charging upgrades.",
+"Smart thermostat incentives require eligible smart thermostat equipment and program enrollment or marketplace eligibility.",
+"Rebate availability and details depend on the customer's Evergy location."
+],
+"blockers": [
+"Evergy commercial EV charging rebates are separate and should not be merged into this residential program.",
+"Public DC fast charging, fleet charging, and employee or tenant commercial projects are not part of this residential record.",
+"Manual thermostats or non-connected thermostat replacements are not supported as smart thermostat retrofits."
+],
+"programType": "rebate",
+"administrator": "Evergy",
+"applicationUrl": null,
+"websiteUrl": "[https://www.evergy.com/ways-to-save/discounts](https://www.evergy.com/ways-to-save/discounts)",
+"sourceUrlsChecked": [
+"[https://www.evergy.com/ways-to-save/discounts](https://www.evergy.com/ways-to-save/discounts)",
+"[https://www.evergy.com/ways-to-save/discounts-link/ev-charging](https://www.evergy.com/ways-to-save/discounts-link/ev-charging)",
+"[https://www.evergy.com/ways-to-save/discounts/thermostats](https://www.evergy.com/ways-to-save/discounts/thermostats)",
+"[https://www.evergy.com/ways-to-save/discounts-link/thermostats/thermostat-program-details](https://www.evergy.com/ways-to-save/discounts-link/thermostats/thermostat-program-details)",
+"[https://www.evergy.com/ways-to-save/incentives-link/ev-charging-rebates](https://www.evergy.com/ways-to-save/incentives-link/ev-charging-rebates)",
+"[https://www.evergy.com/ways-to-save/incentives-link/ev-charging-rebates/residential-developer/developer-ev-rebate-application](https://www.evergy.com/ways-to-save/incentives-link/ev-charging-rebates/residential-developer/developer-ev-rebate-application)"
+],
+"evidenceText": "Evergy residential discount pages list smart thermostats and Level 2 home EV charging. Separate Evergy pages cover commercial EV charging rebates for businesses.",
+"reasoningNotes": "Keep residential Level 2 charging and smart thermostat categories. Block commercial EV and fleet categories as a separate Evergy program boundary."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3692",
+"confidence": "medium",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"FL"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Florida Public Utilities electric service territory"
+],
+"notes": "Residential electric customers in the FPUC electric service area."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"homeowners"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"heat_pump_hvac_retrofit",
+"central_air_conditioner_replacement",
+"high_efficiency_hvac_replacement"
+],
+"hardRequirements": [
+"Applicant must be a Florida Public Utilities electric customer and owner of a residence in the electric service area.",
+"Eligible equipment is a qualifying ducted heat pump or central air conditioning system.",
+"Central air conditioning minimum efficiency and heat pump AHRI and thermostat requirements must be met.",
+"Application and required documentation must be submitted within the stated post-installation deadline.",
+"Equipment must satisfy applicable codes and program standards."
+],
+"blockers": [
+"Efficient pump replacement is a false positive; heat pump language refers to HVAC, not water, process, or motor pumps.",
+"Commercial HVAC and natural gas appliance rebates are separate from this residential electric HVAC program.",
+"Non-ducted or nonqualifying HVAC systems should not match."
+],
+"programType": "rebate",
+"administrator": "Florida Public Utilities",
+"applicationUrl": "[https://rebate.fpuc.com](https://rebate.fpuc.com)",
+"websiteUrl": "[https://fpuc.com/residential-electric/residential-electric-rebates/](https://fpuc.com/residential-electric/residential-electric-rebates/)",
+"sourceUrlsChecked": [
+"[https://fpuc.com/residential-electric/residential-electric-rebates/](https://fpuc.com/residential-electric/residential-electric-rebates/)",
+"[https://rebate.fpuc.com](https://rebate.fpuc.com)",
+"[https://fpuc.com/wp-content/uploads/FPU23-130-14-15-16-17_E_Website-FM_Electric-residential-rebates_ADA_i_F.pdf](https://fpuc.com/wp-content/uploads/FPU23-130-14-15-16-17_E_Website-FM_Electric-residential-rebates_ADA_i_F.pdf)"
+],
+"evidenceText": "FPUC's residential electric rebate materials list HVAC rebates for high-efficiency heat pump and central air conditioning replacements or installations, with customer, ownership, efficiency, and documentation requirements.",
+"reasoningNotes": "Heat pump HVAC and high-efficiency HVAC matches are supported. The pump replacement match must be removed because it is not a motor or pump rebate."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:2080",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"WA"
+],
+"counties": [
+"Franklin County"
+],
+"cities": [],
+"utilityTerritories": [
+"Franklin PUD"
+],
+"notes": "Applies to eligible Franklin PUD residential electric customers."
+},
+"eligibleApplicantTypes": [
+"residential_electric_customers",
+"homeowners"
+],
+"eligibleSectors": [
+"residential"
+],
+"eligibleRetrofitCategories": [
+"energy_star_clothes_washer",
+"energy_star_clothes_dryer",
+"smart_thermostat_zoning_retrofit",
+"insulation_upgrade",
+"energy_audit"
+],
+"hardRequirements": [
+"Applicant must be an eligible Franklin PUD residential customer.",
+"Appliance rebate applications must be submitted within 60 days of purchase with required documentation.",
+"Clothes washer and dryer equipment must meet ENERGY STAR or listed qualifying criteria.",
+"Smart thermostat must be on the qualifying thermostat list.",
+"Insulation rebates require coordination with Franklin PUD Energy Services."
+],
+"blockers": [
+"High-efficiency laundry equipment should be narrowed to residential ENERGY STAR clothes washers and dryers.",
+"Commercial laundry, commercial kitchen, and industrial equipment are not supported by the residential rebate page.",
+"Nonqualifying appliances or late rebate submissions should not match."
+],
+"programType": "rebate",
+"administrator": "Franklin PUD",
+"applicationUrl": null,
+"websiteUrl": "[https://www.franklinpud.com/programs-services/energy-efficiency/rebates-incentive-programs/](https://www.franklinpud.com/programs-services/energy-efficiency/rebates-incentive-programs/)",
+"sourceUrlsChecked": [
+"[https://www.franklinpud.com/programs-services/energy-efficiency/rebates-incentive-programs/](https://www.franklinpud.com/programs-services/energy-efficiency/rebates-incentive-programs/)",
+"[https://www.franklinpud.com/programs-services/energy-efficiency/residential-energy-audits/](https://www.franklinpud.com/programs-services/energy-efficiency/residential-energy-audits/)"
+],
+"evidenceText": "Franklin PUD's rebate page lists qualifying ENERGY STAR clothes washer, clothes dryer, select smart thermostat, and insulation rebates. Its energy audit page separately describes residential energy audits.",
+"reasoningNotes": "Original insulation and smart thermostat matches are correct. Laundry should be product-specific rather than broad commercial laundry equipment; an audit category is supported by the current redirected residential audit page."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:978",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"MT"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide Montana property tax exemption for qualifying small electric generation equipment."
+},
+"eligibleApplicantTypes": [
+"property_owners",
+"businesses",
+"generation_facility_owners"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"agricultural",
+"institutional",
+"government",
+"nonprofit"
+],
+"eligibleRetrofitCategories": [
+"solar_electric_generation_system",
+"small_wind_turbine",
+"geothermal_electric_generation",
+"biomass_biogas_energy_system",
+"fuel_cell_system",
+"small_hydroelectric_generation",
+"landfill_methane_generation"
+],
+"hardRequirements": [
+"Equipment must be machinery or equipment used in a qualifying electric generation facility.",
+"Generation facility must produce less than one megawatt of electrical energy.",
+"Facility must be powered by an alternative renewable energy source listed in the statute.",
+"Exemption applies for five years after generation begins.",
+"Owner business improvements and ordinary personal property are excluded."
+],
+"blockers": [
+"Ground-source geothermal heat pumps are not electric generation equipment and should not match.",
+"Solar water heating is not eligible unless it is part of solar electric generation equipment covered by the statute.",
+"Facilities of one megawatt or more do not meet the small generation equipment limit."
+],
+"programType": "property_tax_exemption",
+"administrator": "Montana Department of Revenue",
+"applicationUrl": null,
+"websiteUrl": "[https://mca.legmt.gov/bills/mca/title_0150/chapter_0060/part_0020/section_0250/0150-0060-0020-0250.html](https://mca.legmt.gov/bills/mca/title_0150/chapter_0060/part_0020/section_0250/0150-0060-0020-0250.html)",
+"sourceUrlsChecked": [
+"[https://mca.legmt.gov/bills/mca/title_0150/chapter_0060/part_0020/section_0250/0150-0060-0020-0250.html](https://mca.legmt.gov/bills/mca/title_0150/chapter_0060/part_0020/section_0250/0150-0060-0020-0250.html)"
+],
+"evidenceText": "Montana statute exempts machinery and equipment in qualifying renewable electric generation facilities under one megawatt for five years, listing solar, wind, geothermal, biomass, fuel cells, hydro, and methane sources.",
+"reasoningNotes": "Biomass is valid when used for electric generation. Replace ground-source heat pump and solar water heating with generation-only geothermal and solar electric categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:22309",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"GA"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [
+"Georgia Power"
+],
+"notes": "Limited to Georgia Power business accounts and qualifying multifamily house accounts under a business name."
+},
+"eligibleApplicantTypes": [
+"business_electric_customers",
+"commercial_customers",
+"industrial_customers",
+"multifamily_property_owners_operators",
+"workplace_site_hosts",
+"fleet_site_hosts"
+],
+"eligibleSectors": [
+"commercial",
+"industrial",
+"multifamily",
+"workplace",
+"fleet"
+],
+"eligibleRetrofitCategories": [
+"level_2_ev_charger_installation",
+"dc_fast_charger_installation"
+],
+"hardRequirements": [
+"Applicant must be a Georgia Power business customer with an active permanent-service account.",
+"Equipment must be new, Nationally Recognized Testing Laboratory certified, and at least Level 2 208 or 240 volt EVSE.",
+"Installation must use dedicated circuits or breakers and be performed by a licensed electrician or certified electrical worker.",
+"Application must meet timing, documentation, and cap requirements.",
+"Incentive is limited by project, premises, service account, applicant annual cap, and percentage of eligible cost."
+],
+"blockers": [
+"Residential home charging rebates are separate and should not match this business program.",
+"Mobile or portable connectors, used chargers, and Level 1 chargers are not eligible.",
+"Georgia Power Make Ready support is a separate program boundary and should not be conflated with this rebate."
+],
+"programType": "rebate",
+"administrator": "Georgia Power",
+"applicationUrl": "[https://gpcevchargerplus.customerapplication.com](https://gpcevchargerplus.customerapplication.com)",
+"websiteUrl": "[https://www.georgiapower.com/business/products-programs/business-solutions/electric-transportation-business-programs/electric-vehicle-charger-rebate.html](https://www.georgiapower.com/business/products-programs/business-solutions/electric-transportation-business-programs/electric-vehicle-charger-rebate.html)",
+"sourceUrlsChecked": [
+"[https://www.georgiapower.com/business/products-programs/business-solutions/electric-transportation-business-programs/electric-vehicle-charger-rebate.html](https://www.georgiapower.com/business/products-programs/business-solutions/electric-transportation-business-programs/electric-vehicle-charger-rebate.html)",
+"[https://www.georgiapower.com/content/dam/georgia-power/pdfs/business-pdfs/business-ev-charger-plus-terms-conditions.pdf](https://www.georgiapower.com/content/dam/georgia-power/pdfs/business-pdfs/business-ev-charger-plus-terms-conditions.pdf)",
+"[https://gpcevchargerplus.customerapplication.com](https://gpcevchargerplus.customerapplication.com)"
+],
+"evidenceText": "Georgia Power's business EV Charger Plus materials support Level 2 and DC fast charging rebates for business customers, with new certified equipment, licensed installation, documentation, and rebate caps.",
+"reasoningNotes": "Original EV categories are correct if narrowed to Level 2 and DC fast charging and kept within Georgia Power business account eligibility."
+},
+{
+"opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"CA"
+],
+"counties": [
+"San Diego County"
+],
+"cities": [],
+"utilityTerritories": [
+"San Diego Gas & Electric"
+],
+"notes": "Targets eligible grocery stores, restaurants, and food storage warehouses in SDG&E territory."
+},
+"eligibleApplicantTypes": [
+"sdge_commercial_customers",
+"grocery_store_operators",
+"restaurant_operators",
+"food_storage_warehouse_operators",
+"enrolled_aggregators"
+],
+"eligibleSectors": [
+"commercial",
+"grocery",
+"restaurant",
+"food_storage",
+"small_business"
+],
+"eligibleRetrofitCategories": [
+"high_efficiency_refrigeration_equipment",
+"refrigeration_controls_optimization",
+"commercial_food_service_equipment",
+"commercial_hvac_retrofit",
+"commercial_lighting_retrofit",
+"commercial_water_heating_retrofit",
+"commercial_kitchen_ventilation_controls"
+],
+"hardRequirements": [
+"Customer site must be an eligible SDG&E commercial grocery, restaurant, or food storage facility.",
+"Projects are delivered through enrolled aggregators under the GRFS program.",
+"Savings are paid or measured through approved population NMEC, site NMEC, or deemed rebate pathways.",
+"Projects must comply with program manual rules, measure eligibility, documentation, and no-double-dipping requirements.",
+"Funds are first-come first-served and the program may be modified or terminated."
+],
+"blockers": [
+"Battery storage is not an eligible retrofit; the program manual treats solar or battery storage installations near the project as an NMEC ineligibility issue.",
+"Demand response participation is separate; DR event days are handled in measurement rules and do not make automated demand response controls an eligible GRFS retrofit.",
+"Residential appliances, home weatherization, and non-food-sector commercial projects should not match."
+],
+"programType": "energy_efficiency_incentive",
+"administrator": "San Diego Gas & Electric",
+"applicationUrl": "[https://aesc-inc.com/grfs-program](https://aesc-inc.com/grfs-program)",
+"websiteUrl": "[https://aesc-inc.com/grfs-program](https://aesc-inc.com/grfs-program)",
+"sourceUrlsChecked": [
+"[https://www.sdge.com/business/save-energy-and-money](https://www.sdge.com/business/save-energy-and-money)",
+"[https://aesc-inc.com/groceries-restaurants-and-food-storage-program](https://aesc-inc.com/groceries-restaurants-and-food-storage-program)",
+"[https://aesc-inc.com/grfs-program](https://aesc-inc.com/grfs-program)",
+"[https://cedars.cpuc.ca.gov/programs/SDGE4169/details/](https://cedars.cpuc.ca.gov/programs/SDGE4169/details/)",
+"[https://cedars.cpuc.ca.gov/documents/download/3385/mainchange_summary%7Cmain%7Credline%29/](https://cedars.cpuc.ca.gov/documents/download/3385/mainchange_summary%7Cmain%7Credline%29/)"
+],
+"evidenceText": "AESC and SDG&E describe GRFS as an aggregator-delivered commercial energy efficiency program for grocery, restaurant, and food storage customers, with refrigeration, foodservice, HVAC, lighting, and water-heating measures.",
+"reasoningNotes": "Refrigeration is correct. Battery storage and automated demand response controls are false positives or separate-program concepts, not eligible GRFS retrofit categories."
+},
+{
+"opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
+"confidence": "high",
+"availabilityStatus": "active",
+"geography": {
+"country": "US",
+"states": [
+"NM"
+],
+"counties": [],
+"cities": [],
+"utilityTerritories": [],
+"notes": "Statewide New Mexico gross receipts tax deduction for sales to federal or New Mexico state-level governments and their governmental units."
+},
+"eligibleApplicantTypes": [
+"vendors_selling_to_government",
+"government_entities",
+"federal_agencies",
+"state_agencies",
+"governmental_units"
+],
+"eligibleSectors": [
+"government"
+],
+"eligibleRetrofitCategories": [
+"solar_pv_system",
+"solar_thermal_electric_generation",
+"small_wind_turbine",
+"battery_storage_system"
+],
+"hardRequirements": [
+"Receipts must be from selling qualifying wind generation equipment, solar generation equipment, energy storage equipment, or related equipment to a government.",
+"Sale must be for installing a wind or solar electric generation facility or an energy storage facility.",
+"Deduction is available only before the statutory July 1, 2034 sunset.",
+"Related equipment must connect qualifying generation or storage to the electric grid or eligible plant.",
+"Buyer must meet the statute's definition of government."
+],
+"blockers": [
+"Private residential, commercial, and nonprofit purchases are not eligible unless the buyer is a qualifying government.",
+"Solar water heating for domestic hot water is not supported unless it is solar thermal equipment used to generate electricity.",
+"This is a seller gross receipts tax deduction, not a customer cash rebate.",
+"The current statute also supports energy storage, which was missing from the original matched categories."
+],
+"programType": "gross_receipts_tax_deduction",
+"administrator": "New Mexico Taxation and Revenue Department",
+"applicationUrl": null,
+"websiteUrl": "[https://www.nmlegis.gov/handouts/RSTP%20121525%20Item%202%20B%20Tax%20Expenditure%20Report.pdf](https://www.nmlegis.gov/handouts/RSTP%20121525%20Item%202%20B%20Tax%20Expenditure%20Report.pdf)",
+"sourceUrlsChecked": [
+"[https://law.justia.com/codes/new-mexico/chapter-7/article-9/section-7-9-54-3/](https://law.justia.com/codes/new-mexico/chapter-7/article-9/section-7-9-54-3/)",
+"[https://www.nmlegis.gov/handouts/RSTP%20121525%20Item%202%20B%20Tax%20Expenditure%20Report.pdf](https://www.nmlegis.gov/handouts/RSTP%20121525%20Item%202%20B%20Tax%20Expenditure%20Report.pdf)"
+],
+"evidenceText": "Current New Mexico materials describe a gross receipts deduction for selling wind, solar generation, and energy storage equipment to governments for qualifying electric generation or storage facilities.",
+"reasoningNotes": "Rooftop solar PV and wind generation are supported, but solar water heating must be narrowed to solar thermal electric generation. Add battery storage because the current statute includes storage equipment."
+}
+],
+"continueFromOpportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:heat-pump-air-conditioner-rebates-conversion-to-all-electric-heating-and-cooling"
+}
