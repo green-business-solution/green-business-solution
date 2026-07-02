@@ -215,9 +215,13 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Upload bills");
     expect(html).toContain("Current retrofit plan");
     expect(html).toContain("Choose one retrofit at a time");
+    expect(html).toContain("Continue editing active retrofit");
+    expect(html).not.toContain("retrofit-preview-header-meta");
+    expect(html).toContain("Top 1 shown first · 1 total");
     expect(html).toContain("Add this retrofit to plan");
     expect(html).toContain("Retrofit tabs");
     expect(html).toContain("Default: Low upfront");
+    expect(html).toContain("Decision summary");
     expect(html).not.toContain("Summary across selected retrofits");
     expect(html).not.toContain("No major missing inputs flagged");
     expect(html).toContain("Scenario A: Low upfront cost");
@@ -251,6 +255,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Included in current estimate");
     expect(html).toContain("Selected but not included yet");
     expect(html).toContain("View details");
+    expect(html.indexOf("<h3>Financials</h3>")).toBeLessThan(html.indexOf("<h3>Why this is recommended</h3>"));
+    expect(html.indexOf("<h3>Missing information</h3>")).toBeLessThan(html.indexOf("<h3>Estimate assumptions</h3>"));
     expect(html).not.toContain("Premium insight");
     expect(html).not.toContain("Preview-only until a safe persistence API is available");
     expect(html).not.toContain("Backend savings preview is available");
@@ -328,5 +334,22 @@ describe("retrofit recommendations preview", () => {
     expect(opportunity.whySelected).toContain("utility territory confirmation");
     expect(retrofit.missingInfo).toContain("utility territory confirmation");
     expect(retrofit.confidenceLabel).toBe("Needs review");
+  });
+
+  it("keeps preview hover and active states readable and visually distinct", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
+    expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
+    expect(css).toContain(".retrofit-preview-page .retrofit-section-chip:hover");
+    expect(css).toContain(".retrofit-tab.is-active");
+    expect(css).toContain("background: var(--rf-green-soft)");
+    expect(css).toContain("background: var(--rf-bg)");
+
+    const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
+    expect(tabHoverRule).not.toContain("#0f573c");
+    expect(tabHoverRule).not.toContain("#176b4c");
   });
 });

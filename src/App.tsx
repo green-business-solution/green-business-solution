@@ -6022,7 +6022,7 @@ function RetrofitPreviewCardView({
   selectedOpportunityIds: Record<string, boolean>;
 }) {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    why: true,
+    why: false,
     financial: true,
     included: true,
     scenarios: true,
@@ -6239,25 +6239,21 @@ function RetrofitPreviewCardView({
             <span className="soft-badge">{retrofit.category || "Retrofit"}</span>
             <span className="soft-badge">Confidence: {retrofit.confidenceLabel || "Needs review"}</span>
             <span className="soft-badge">Estimate basis: {estimateBasisLabel(retrofit.estimateBasis)}</span>
-            <span className="soft-badge">Selected scenario: {selectedScenario?.name || "Scenario A: Low upfront cost"}</span>
-            <span className="soft-badge">{selectedCount.toLocaleString()} opportunities selected</span>
-            <span className="soft-badge">Missing: {retrofit.missingInfo.length}</span>
-            <span className="soft-badge">Plan state: {planState}</span>
           </div>
         </div>
         <div className="retrofit-card-actions">
+          <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
           <button className="secondary-button" onClick={handleUploadBillShortcut} type="button">Upload bill</button>
           <button className="secondary-button" onClick={() => openSectionAndScroll("details")} type="button">Enter details</button>
           <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
-          <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
         </div>
       </div>
 
-      <div className="retrofit-count-row">
-        <span>Opportunities: {selectedCount.toLocaleString()} selected / {retrofit.opportunities.length.toLocaleString()} found</span>
-        <span>Operating Savings: {retrofit.operatingSavings.length.toLocaleString()} estimates</span>
-        <span>{retrofit.missingInfo.length ? `Missing: ${retrofit.missingInfo.join(", ")}` : "No blockers currently flagged"}</span>
-        <span>Next step: {retrofit.recommendedNextStep || "Review this retrofit with a contractor or vendor."}</span>
+      <div className="decision-summary-strip" aria-label="Decision summary">
+        <span><strong>Scenario</strong>{formatScenarioTabLabel(selectedScenario?.name)}</span>
+        <span><strong>Selected opportunities</strong>{selectedCount.toLocaleString()} of {retrofit.opportunities.length.toLocaleString()}</span>
+        <span><strong>Blockers</strong>{retrofit.missingInfo.length.toLocaleString()}</span>
+        <span><strong>Next</strong>{retrofit.recommendedNextStep || "Review scope"}</span>
       </div>
 
       <nav aria-label="Retrofit section navigation" className="retrofit-section-subnav">
@@ -6274,23 +6270,6 @@ function RetrofitPreviewCardView({
       </nav>
 
       <PreviewAccordionSection
-        defaultOpen={openSections.why}
-        onToggle={() => toggleSection("why")}
-        statusBadge="Matched"
-        subtitle="Why this retrofit is ranked highly."
-        summary={`${retrofit.whyRecommended.length} reasons`}
-        title="Why this is recommended"
-      >
-        <section className="why-recommended">
-          <ul>
-            {retrofit.whyRecommended.map((reason) => (
-              <li key={reason}>{reason}</li>
-            ))}
-          </ul>
-        </section>
-      </PreviewAccordionSection>
-
-      <PreviewAccordionSection
         defaultOpen={openSections.financial}
         onToggle={() => toggleSection("financial")}
         sectionId={sectionIds.financial}
@@ -6299,14 +6278,14 @@ function RetrofitPreviewCardView({
         title="Financials"
       >
         <div className="retrofit-metric-grid">
-          <PreviewMetric label="Estimated upfront project cost" value={formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
-          <PreviewMetric label="Upfront financial incentive" value={formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
-          <PreviewMetric label="Net cost before tax benefits" value={formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} />
-          <PreviewMetric label="Tax benefits" value={retrofit.metrics.taxBenefits == null ? "Needs tax review" : typeof retrofit.metrics.taxBenefits === "number" ? formatCents(retrofit.metrics.taxBenefits) : String(retrofit.metrics.taxBenefits)} />
-          <PreviewMetric label="Effective cost after one-time benefits" value={formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review")} />
-          <PreviewMetric label="Recurring Operational Savings" value={formatMaybeRecurringSavings(retrofit)} />
-          <PreviewMetric label="Payback Period" value={formatPayback(retrofit.metrics.paybackPeriodYears)} />
-          <PreviewMetric label="ROI" value={retrofit.metrics.roi == null ? "Not estimated yet" : String(retrofit.metrics.roi)} />
+          <PreviewMetric basis={retrofit.metrics.estimatedUpfrontProjectCost == null ? "Needs confirmed project quote" : "Current estimate basis"} label="Estimated upfront project cost" value={formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
+          <PreviewMetric basis={displayedUpfrontFinancialIncentive == null ? "Needs selected eligible opportunity" : "Selected and included opportunities"} label="Upfront financial incentive" value={formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
+          <PreviewMetric basis={displayedNetCostBeforeTaxBenefits == null ? "Needs project cost" : "Project cost minus included incentives"} label="Net cost before tax benefits" value={formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} />
+          <PreviewMetric basis={retrofit.metrics.taxBenefits == null ? "Needs tax/entity information" : "Current tax inputs"} label="Tax benefits" value={retrofit.metrics.taxBenefits == null ? "Needs tax review" : typeof retrofit.metrics.taxBenefits === "number" ? formatCents(retrofit.metrics.taxBenefits) : String(retrofit.metrics.taxBenefits)} />
+          <PreviewMetric basis={retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? "Needs tax review" : "After selected one-time benefits"} label="Effective cost after one-time benefits" value={formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review")} />
+          <PreviewMetric basis="Internal recurring savings only" label="Recurring Operational Savings" value={formatMaybeRecurringSavings(retrofit)} />
+          <PreviewMetric basis={retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={formatPayback(retrofit.metrics.paybackPeriodYears)} />
+          <PreviewMetric basis={retrofit.metrics.roi == null ? "Needs validated cost and savings" : "Current estimate inputs"} label="ROI" value={retrofit.metrics.roi == null ? "Not estimated yet" : String(retrofit.metrics.roi)} />
         </div>
         <div className="financial-breakdown-list">
           {financialBreakdown.map((item) => (
@@ -6569,6 +6548,37 @@ function RetrofitPreviewCardView({
       </PreviewAccordionSection>
 
       <PreviewAccordionSection
+        defaultOpen={openSections.missing}
+        onToggle={() => toggleSection("missing")}
+        sectionId={sectionIds.missing}
+        statusBadge={retrofit.missingInfo.length ? "Blockers" : "Ready"}
+        summary={missingSummary}
+        title="Missing information"
+      >
+        <section className="missing-info-list">
+          {retrofit.missingInfo.length ? (
+            retrofit.missingInfo.map((item) => {
+              const details = missingInfoGuidance(item);
+              return (
+                <article className="missing-info-item" key={item}>
+                  <div>
+                    <h4>{capitalizeLabel(item)}</h4>
+                    <p>{details.reason}</p>
+                    <small>Affects: {details.affects}</small>
+                  </div>
+                  <button className="secondary-button" type="button">{details.action}</button>
+                </article>
+              );
+            })
+          ) : (
+            <p>No missing information flagged in the current estimate.</p>
+          )}
+          <p>Next step: {retrofit.recommendedNextStep || "Review this retrofit with a contractor or vendor."}</p>
+          <p>Estimate will update when enough confirmed inputs are available.</p>
+        </section>
+      </PreviewAccordionSection>
+
+      <PreviewAccordionSection
         defaultOpen={openSections.assumptions}
         onToggle={() => toggleSection("assumptions")}
         sectionId={sectionIds.assumptions}
@@ -6646,33 +6656,19 @@ function RetrofitPreviewCardView({
       </PreviewAccordionSection>
 
       <PreviewAccordionSection
-        defaultOpen={openSections.missing}
-        onToggle={() => toggleSection("missing")}
-        sectionId={sectionIds.missing}
-        statusBadge={retrofit.missingInfo.length ? "Blockers" : "Ready"}
-        summary={missingSummary}
-        title="Missing information"
+        defaultOpen={openSections.why}
+        onToggle={() => toggleSection("why")}
+        statusBadge="Matched"
+        subtitle="Open for the match rationale."
+        summary={`${retrofit.whyRecommended.length} reasons`}
+        title="Why this is recommended"
       >
-        <section className="missing-info-list">
-          {retrofit.missingInfo.length ? (
-            retrofit.missingInfo.map((item) => {
-              const details = missingInfoGuidance(item);
-              return (
-                <article className="missing-info-item" key={item}>
-                  <div>
-                    <h4>{capitalizeLabel(item)}</h4>
-                    <p>{details.reason}</p>
-                    <small>Affects: {details.affects}</small>
-                  </div>
-                  <button className="secondary-button" type="button">{details.action}</button>
-                </article>
-              );
-            })
-          ) : (
-            <p>No missing information flagged in the current estimate.</p>
-          )}
-          <p>Next step: {retrofit.recommendedNextStep || "Review this retrofit with a contractor or vendor."}</p>
-          <p>Estimate will update when enough confirmed inputs are available.</p>
+        <section className="why-recommended">
+          <ul>
+            {retrofit.whyRecommended.map((reason) => (
+              <li key={reason}>{reason}</li>
+            ))}
+          </ul>
         </section>
       </PreviewAccordionSection>
 
@@ -6970,11 +6966,12 @@ function ScenarioMetric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function PreviewMetric({ label, value }: { label: string; value: string }) {
+function PreviewMetric({ basis, label, value }: { basis?: string; label: string; value: string }) {
   return (
     <div className="preview-metric">
       <span>{label}</span>
       <strong>{value}</strong>
+      {basis ? <small>{basis}</small> : null}
     </div>
   );
 }

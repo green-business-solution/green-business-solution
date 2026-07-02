@@ -6,6 +6,12 @@
 - Added mocked fixture tests covering apply links, PDF application links, email application paths, contractor-submitted instructions, tax/accountant filing language, utility portal links, readable no-path pages, and unreadable source failures.
 - Added a separate admin path-discovery endpoint and per-row `/admin/application-sources` action so path discovery is explicit and does not trigger external fetches during initial source-audit page load.
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview hover and flow cleanup
+
+- Fixed Retrofit Recommendations preview hover states so tabs, scenario cards, subnav chips, secondary buttons, opportunity rows, and action rows use light readable hover styles instead of inheriting dark global button hover.
+- Made the current plan, top recommendation, refinement panel, active retrofit header, and horizontal retrofit tabs more compact while preserving one-retrofit-at-a-time planning, scenario, opportunity, financing, and application-prep controls.
+- Reordered the active retrofit workspace so Financials leads the decision flow, Missing Info appears before assumptions/details, and “Why this is recommended” remains available as a collapsed rationale section.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview readability follow-up
 
 - Further tightened the Retrofit Recommendations active workspace after screenshot review by removing sticky mini-navigation overlap and shortening default scenario tab copy.
