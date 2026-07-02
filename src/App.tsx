@@ -4905,13 +4905,15 @@ function customerRetrofitCategoryLabel(retrofit: SampleRetrofitGroup) {
 }
 
 function customerRetrofitDescription(retrofit: SampleRetrofitGroup) {
-  if (retrofit.typicalComponents && retrofit.typicalComponents.length > 0) {
-    return `Programs related to ${retrofit.typicalComponents.slice(0, 3).join(", ").toLowerCase()}.`;
-  }
   if (!retrofit.isPhysicalRetrofit) {
     return planningRetrofitExplanation(retrofit.retrofitTypeId);
   }
-  return "Live programs currently matched to this retrofit category for the selected profile.";
+  return customerFriendlyRetrofitDescription({
+    category: customerRetrofitCategoryLabel(retrofit),
+    fallback: retrofit.displayName,
+    id: retrofit.retrofitTypeId,
+    name: customerRetrofitUiName(retrofit)
+  });
 }
 
 function customerOpportunitySourceLabel(opportunity: SampleMatchResult) {
@@ -6139,7 +6141,7 @@ function RetrofitPickerView({
     <section className="retrofit-picker-shell" aria-label="Select a retrofit to explore">
       <section className="estimate-accuracy-banner">
         <div className="estimate-accuracy-icon" aria-hidden="true">
-          <span>UP</span>
+          <UploadCloudIcon />
         </div>
         <div>
           <h1>Improve your estimate accuracy</h1>
@@ -6208,13 +6210,13 @@ function RetrofitPickerView({
                   <RetrofitPickerIcon retrofit={retrofit} />
                   <div>
                     <h3>{retrofit.name}</h3>
-                    <p>{retrofitPickerDescription(retrofit.description)}</p>
+                    <p>{retrofitPickerDescription(retrofit)}</p>
                   </div>
                 </div>
                 <div className="retrofit-picker-card-metrics" aria-label={`${retrofit.name} summary metrics`}>
-                  <PickerMetric label="Savings" value={retrofitPickerSavings(retrofit)} />
-                  <PickerMetric label="Cost" value={retrofitPickerCost(retrofit)} />
-                  <PickerMetric label="Payback" value={retrofitPickerPayback(retrofit)} />
+                  <PickerMetric kind="savings" label="Savings" value={retrofitPickerSavings(retrofit)} />
+                  <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit)} />
+                  <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit)} />
                 </div>
               </button>
             ))}
@@ -6244,12 +6246,67 @@ function RetrofitPickerView({
   );
 }
 
-function PickerMetric({ label, value }: { label: string; value: string }) {
+type PickerMetricKind = "savings" | "cost" | "payback";
+
+function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: string; value: string }) {
+  const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
+  const isFallback = /needs|pending|not/i.test(value);
   return (
-    <div className="retrofit-picker-metric">
-      <span>{label}</span>
-      <strong>{value}</strong>
+    <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}`}>
+      <span className="retrofit-picker-metric-label">
+        <Icon />
+        <span>{label}</span>
+      </span>
+      <strong className="retrofit-picker-metric-value">{value}</strong>
     </div>
+  );
+}
+
+function UploadCloudIcon() {
+  return (
+    <svg className="upload-cloud-icon" fill="none" viewBox="0 0 48 48">
+      <path
+        d="M17.2 35.6H14a9.4 9.4 0 0 1-1.6-18.7A12.8 12.8 0 0 1 36.5 20a7.8 7.8 0 0 1-1.9 15.4h-3.2"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+      />
+      <path d="m24 17.8-7.2 7.2M24 17.8l7.2 7.2M24 17.8v24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+    </svg>
+  );
+}
+
+function MetricSavingsIcon() {
+  return (
+    <svg className="metric-icon metric-savings-icon" fill="none" viewBox="0 0 20 20">
+      <path
+        d="M14.8 3.4c-4.2.3-8.5 2.2-9.8 5.5-1 2.5.2 5 2.8 5.7 4.2 1.1 7.7-2.7 8.3-9.7.1-.8-.4-1.5-1.3-1.5Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path d="M4.3 16.2c2.2-3.8 5-6.4 8.6-7.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function MetricCostIcon() {
+  return (
+    <svg className="metric-icon metric-cost-icon" fill="none" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="7.4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+      <path d="M10 5.7v8.6M12.2 7.1c-.5-.5-1.2-.8-2-.8-1.3 0-2.2.6-2.2 1.6 0 2.2 4.4 1.1 4.4 3.4 0 1-.9 1.8-2.4 1.8-1 0-1.9-.3-2.5-.9" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function MetricPaybackIcon() {
+  return (
+    <svg className="metric-icon metric-payback-icon" fill="none" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="7.4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+      <path d="M10 5.8v4.5l3 1.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+    </svg>
   );
 }
 
@@ -6276,8 +6333,51 @@ function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
   );
 }
 
-function retrofitPickerDescription(description: string) {
-  return description.replace(/\.$/, ".").slice(0, 92);
+function retrofitPickerDescription(retrofit: RetrofitPreviewCard) {
+  return customerFriendlyRetrofitDescription({
+    category: retrofit.category,
+    fallback: retrofit.description,
+    id: retrofit.id,
+    name: retrofit.name
+  });
+}
+
+function customerFriendlyRetrofitDescription({
+  category,
+  fallback,
+  id,
+  name
+}: {
+  category?: string;
+  fallback?: string;
+  id?: string;
+  name?: string;
+}) {
+  const key = `${id || ""} ${name || ""} ${category || ""}`.toLowerCase();
+
+  if (key.includes("insulation") || key.includes("envelope")) return "Improve building envelope efficiency and comfort.";
+  if (key.includes("ev") || key.includes("charger")) return "Add EV charging capability for residents or tenants.";
+  if (key.includes("heat_pump") || key.includes("heat pump")) return "Upgrade to high-efficiency heat pump systems.";
+  if (key.includes("hvac")) return "Replace existing HVAC with high-efficiency equipment.";
+  if (key.includes("solar_water") || key.includes("solar thermal") || key.includes("water heating")) return "Use solar energy to heat water efficiently.";
+  if (key.includes("solar") || key.includes("pv")) return "Generate clean renewable energy on-site.";
+  if (key.includes("led") || key.includes("lighting")) return "Replace existing lights with high-efficiency LEDs.";
+  if (key.includes("water") || key.includes("plumb")) return "Reduce water usage with efficient fixtures.";
+  if (key.includes("waste_heat") || key.includes("waste heat")) return "Capture and reuse waste heat for efficiency.";
+  if (key.includes("refrigeration")) return "Improve refrigeration performance and reduce energy use.";
+  if (key.includes("battery") || key.includes("storage")) return "Store energy for resilience and load management.";
+  if (key.includes("biomass") || key.includes("biogas")) return "Use organic waste or fuel streams for clean energy.";
+  if (key.includes("roof")) return "Improve roof performance and energy efficiency.";
+  if (key.includes("window") || key.includes("glazing")) return "Upgrade windows to reduce heat loss and improve comfort.";
+  if (key.includes("motor") || key.includes("drive")) return "Improve motor efficiency and control energy use.";
+  if (key.includes("compressed_air")) return "Reduce compressed-air leaks and system waste.";
+  if (key.includes("audit") || key.includes("study") || key.includes("assessment")) return "Identify savings opportunities and next-step requirements.";
+
+  const cleanedFallback = (fallback || "").replace(/\s+/g, " ").trim();
+  if (!cleanedFallback || /^Programs related to/i.test(cleanedFallback) || /^Live programs currently matched/i.test(cleanedFallback)) {
+    return "Review matched programs, savings, and next steps for this retrofit.";
+  }
+  return cleanedFallback.replace(/\.$/, ".").slice(0, 110);
 }
 
 function retrofitPickerSavings(retrofit: RetrofitPreviewCard) {

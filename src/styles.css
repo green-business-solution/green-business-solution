@@ -2333,10 +2333,10 @@ dd {
   --rf-red-soft: #fdecec;
   --rf-text: #071b12;
   display: grid;
-  gap: 20px;
+  gap: 18px;
   margin: 0 auto;
   max-width: 1280px;
-  padding: 22px 32px 96px;
+  padding: 18px 28px 90px;
   width: 100%;
 }
 
@@ -2460,7 +2460,7 @@ dd {
 
 .retrofit-picker-shell {
   display: grid;
-  gap: 20px;
+  gap: 18px;
   min-width: 0;
 }
 
@@ -2470,10 +2470,10 @@ dd {
   border: 1px solid var(--rf-border);
   border-radius: 20px;
   display: grid;
-  gap: 24px;
+  gap: 22px;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 118px;
-  padding: 24px;
+  min-height: 112px;
+  padding: 20px 22px;
 }
 
 .estimate-accuracy-icon {
@@ -2482,21 +2482,24 @@ dd {
   border-radius: 14px;
   color: var(--rf-green);
   display: inline-flex;
-  font-size: 13px;
-  font-weight: 800;
-  height: 72px;
+  height: 68px;
   justify-content: center;
-  letter-spacing: 0;
-  width: 72px;
+  width: 68px;
+}
+
+.estimate-accuracy-icon svg {
+  display: block;
+  height: 40px;
+  width: 40px;
 }
 
 .estimate-accuracy-banner h1 {
   color: #071b12;
-  font-size: 30px;
+  font-size: 29px;
   font-weight: 800;
   letter-spacing: 0;
-  line-height: 36px;
-  margin-bottom: 8px;
+  line-height: 34px;
+  margin-bottom: 6px;
 }
 
 .estimate-accuracy-banner p,
@@ -2519,19 +2522,19 @@ dd {
 
 .retrofit-picker-heading-row h2 {
   color: #071b12;
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 800;
   letter-spacing: 0;
-  line-height: 32px;
-  margin-bottom: 6px;
+  line-height: 30px;
+  margin-bottom: 4px;
 }
 
 .retrofit-picker-controls {
   align-items: center;
   display: grid;
-  gap: 14px;
+  gap: 12px;
   grid-template-columns: minmax(180px, 260px) minmax(260px, 1fr) auto;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .picker-sort-control,
@@ -2592,7 +2595,7 @@ dd {
 
 .retrofit-picker-grid {
   display: grid;
-  gap: 18px;
+  gap: 16px 18px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-width: 0;
 }
@@ -2604,7 +2607,7 @@ dd {
 .retrofit-picker-grid.is-panel .retrofit-picker-card {
   align-items: center;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
-  min-height: 118px;
+  min-height: 112px;
 }
 
 .retrofit-picker-grid.is-panel .retrofit-picker-card-metrics {
@@ -2619,10 +2622,10 @@ dd {
   color: var(--rf-text);
   cursor: pointer;
   display: grid;
-  gap: 18px;
-  min-height: 214px;
+  gap: 14px;
+  min-height: 196px;
   min-width: 0;
-  padding: 20px;
+  padding: 18px;
   text-align: left;
 }
 
@@ -2634,7 +2637,7 @@ dd {
 .retrofit-picker-card-top {
   align-items: start;
   display: grid;
-  gap: 16px;
+  gap: 14px;
   grid-template-columns: auto minmax(0, 1fr);
   min-width: 0;
 }
@@ -2645,24 +2648,24 @@ dd {
   border-radius: 14px;
   color: var(--rf-green);
   display: inline-flex;
-  height: 68px;
+  height: 60px;
   justify-content: center;
-  width: 68px;
+  width: 60px;
 }
 
 .retrofit-picker-icon svg {
-  height: 36px;
-  width: 36px;
+  height: 32px;
+  width: 32px;
 }
 
 .retrofit-picker-card h3 {
   color: #071b12;
   display: -webkit-box;
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 800;
   letter-spacing: 0;
-  line-height: 27px;
-  margin-bottom: 6px;
+  line-height: 25px;
+  margin-bottom: 5px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2671,8 +2674,8 @@ dd {
 .retrofit-picker-card p {
   color: #44554c;
   display: -webkit-box;
-  font-size: 15px;
-  line-height: 23px;
+  font-size: 14px;
+  line-height: 21px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2683,15 +2686,18 @@ dd {
   display: grid;
   gap: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding-top: 14px;
+  padding-top: 12px;
 }
 
 .retrofit-picker-metric {
+  align-items: start;
   border-right: 1px solid var(--rf-border);
-  display: grid;
-  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-start;
   min-width: 0;
-  padding: 0 14px;
+  padding: 0 12px;
 }
 
 .retrofit-picker-metric:first-child {
@@ -2703,35 +2709,48 @@ dd {
   padding-right: 0;
 }
 
-.retrofit-picker-metric span {
+.retrofit-picker-metric-label {
+  align-items: center;
   color: #405149;
+  display: inline-flex;
   font-size: 13px;
   font-weight: 650;
+  gap: 6px;
   line-height: 17px;
+  min-width: 0;
 }
 
-.retrofit-picker-metric span::before {
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  content: "";
-  display: inline-block;
-  height: 11px;
-  margin-right: 6px;
-  vertical-align: -1px;
-  width: 11px;
+.metric-icon {
+  flex: 0 0 auto;
+  height: 16px;
+  width: 16px;
 }
 
-.retrofit-picker-metric strong {
+.metric-savings-icon {
+  color: var(--rf-green);
+}
+
+.metric-cost-icon,
+.metric-payback-icon {
+  color: #405149;
+}
+
+.retrofit-picker-metric-value {
   color: #071b12;
-  font-size: clamp(16px, 1.45vw, 21px);
+  font-size: clamp(16px, 1.35vw, 21px);
   font-weight: 800;
-  line-height: 24px;
+  line-height: 1.15;
   overflow-wrap: anywhere;
   white-space: normal;
 }
 
-.retrofit-picker-metric:first-child strong {
+.retrofit-picker-metric.is-savings .retrofit-picker-metric-value {
   color: var(--rf-green);
+}
+
+.retrofit-picker-metric.is-fallback .retrofit-picker-metric-value {
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.2;
 }
 
 .retrofit-picker-empty {
@@ -4570,7 +4589,7 @@ dd {
   margin: 0;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1099px) {
   .recommendation-readiness-strip,
   .estimate-accuracy-banner,
   .retrofit-preview-header,
@@ -4634,7 +4653,7 @@ dd {
 	  }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 719px) {
   .retrofit-metric-grid,
   .filter-toolbar-main,
   .filter-advanced-panel,
@@ -4673,6 +4692,11 @@ dd {
   .estimate-accuracy-icon {
     height: 56px;
     width: 56px;
+  }
+
+  .estimate-accuracy-icon svg {
+    height: 32px;
+    width: 32px;
   }
 
   .estimate-accuracy-banner h1,
