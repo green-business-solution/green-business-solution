@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   CUSTOMER_RETROFIT_UI_NAMES,
   RetrofitRecommendationsPreview,
+  buildRetrofitEnvironmentalImpactPreview,
   buildUserRetrofitPreviewResult,
   confirmAllEstimateState,
   confirmSingleEstimateState,
@@ -320,6 +321,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Incentives included");
     expect(html).not.toContain("Operating savings included");
     expect(html).not.toContain("Active retrofit workspace tabs");
+    expect(html).not.toContain("data-workspace-tab=\"environmental\"");
+    expect(html).not.toContain("data-workspace-panel=\"environmental\"");
     expect(html).not.toContain("data-workspace-panel=\"overview\"");
     expect(html).not.toContain("Summary across selected retrofits");
     expect(html).not.toContain("No major missing inputs flagged");
@@ -394,6 +397,12 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Prepare application");
     expect(source).toContain("Open program source");
     expect(source).toContain("Operating Savings");
+    expect(source).toContain("{ key: \"environmental\", label: \"Environmental Impact\" }");
+    expect(source).toContain("Estimated annual emissions avoided");
+    expect(source).toContain("Resource breakdown");
+    expect(source).toContain("Certification contribution");
+    expect(source).toContain("Opportunity impact supported");
+    expect(source).toContain("Impact supported");
     expect(source).toContain("Confirm all estimates");
     expect(source).toContain("Financing preview");
     expect(source).toContain("Add quote");
@@ -404,8 +413,45 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Exit customer preview");
     expect(source).toContain("Back to all retrofits");
     expect(source).toContain("data-workspace-tab");
+    expect(source).toContain("data-workspace-panel=\"environmental\"");
     expect(source).toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("{ key: \"more\", label: \"More\" }");
+  });
+
+  it("builds honest environmental impact fallbacks without fake values", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const impact = preview.retrofits[0].environmentalImpact;
+
+    expect(impact.overall.label).toBe("Estimated annual emissions avoided");
+    expect(impact.overall.displayValue).toBe("?");
+    expect(impact.overall.confidence).toBe("Needs data");
+    expect(impact.overall.fallback).toContain("Needs bills");
+    expect(impact.resources.map((resource) => resource.label)).toContain("Electricity avoided");
+    expect(impact.resources.some((resource) => resource.displayValue === "Needs bills")).toBe(true);
+    expect(impact.missingInfo).toContain("Upload bills");
+    expect(impact.missingInfo).toContain("Answer retrofit-specific questions");
+  });
+
+  it("uses category-aware environmental impact fallback rows", () => {
+    const solarImpact = buildRetrofitEnvironmentalImpactPreview(
+      { retrofitTypeId: "rooftop_solar_pv", parentCategory: "solar_renewable_electricity", isPhysicalRetrofit: true } as any,
+      []
+    );
+    const evImpact = buildRetrofitEnvironmentalImpactPreview(
+      { retrofitTypeId: "ev_charger_installation", parentCategory: "ev_charging_transportation", isPhysicalRetrofit: true } as any,
+      []
+    );
+    const auditImpact = buildRetrofitEnvironmentalImpactPreview(
+      { retrofitTypeId: "energy_audit", parentCategory: "audits_studies_planning", isPhysicalRetrofit: false } as any,
+      []
+    );
+
+    expect(solarImpact.resources.map((resource) => resource.label)).toContain("Renewable electricity generated");
+    expect(solarImpact.missingInfo).toContain("Add system size");
+    expect(evImpact.resources.map((resource) => resource.label)).toContain("Fuel displaced");
+    expect(evImpact.missingInfo).toContain("Add utilization estimate");
+    expect(auditImpact.overall.label).toBe("Potential emissions reduction identified");
+    expect(auditImpact.overall.displayValue).toBe("?");
   });
 
   it("scopes scenario selection counts and included labels to the retrofit state", () => {

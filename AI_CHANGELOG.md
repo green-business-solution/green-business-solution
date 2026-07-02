@@ -6,6 +6,13 @@
 - Split the existing cloud artwork into two clipped full-screen layers that fade and drift apart during the opening scroll before handing off to the unchanged seven-step image progression.
 - Preserved one-active-step copy behavior, responsive full-bleed rendering, requestAnimationFrame scroll updates, and a non-animated reduced-motion path without adding dependencies.
 
+## 2026-07-02 - Codex (GPT-5) selected retrofit environmental impact detail
+
+- Added an Environmental Impact workspace tab after a retrofit is selected, leaving the before-click retrofit picker unchanged.
+- Added category-aware environmental impact fallback details for overall impact, resource breakdown, basis, missing inputs, certification contribution, and opportunity impact support without fabricating values.
+- Updated opportunity detail impact wording to say opportunities support the retrofit impact rather than claiming rebates directly reduce emissions.
+- Covered the new impact tab and fallback model in focused preview tests.
+
 ## 2026-07-02 - Codex (GPT-5) full-screen natural how it works hero
 
 - Removed the dark gradient, radial shader, and boundary overlay so the How It Works cloud artwork renders at its natural color and opacity.

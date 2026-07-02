@@ -5204,6 +5204,40 @@ type OperatingSavingsPreview = {
   customerFacingBasis?: string;
 };
 
+type EnvironmentalImpactConfidence = "High" | "Medium" | "Low" | "Needs data";
+
+type RetrofitEnvironmentalImpact = {
+  overall: {
+    label: string;
+    displayValue: string;
+    unit: "tCO2e/year";
+    fallback?: string;
+    impactType:
+      | "avoided_emissions"
+      | "potential_identified"
+      | "impact_supported"
+      | "certification_progress"
+      | "not_estimated";
+    confidence: EnvironmentalImpactConfidence;
+    subtext: string;
+    basis: string[];
+  };
+  resources: Array<{
+    label: string;
+    displayValue: string;
+    unit: string;
+    fallback?: string;
+    confidence: EnvironmentalImpactConfidence;
+    basis: string;
+  }>;
+  certificationContribution: Array<{
+    program: string;
+    status: "Supports" | "May support" | "Needs review" | "Not evaluated yet";
+    detail: string;
+  }>;
+  missingInfo: string[];
+};
+
 type RetrofitDetailQuestion = {
   id: string;
   retrofitId: string;
@@ -5258,6 +5292,7 @@ type RetrofitPreviewCard = {
   scenarios: RetrofitScenarioPreview[];
   opportunities: RetrofitOpportunityPreview[];
   operatingSavings: OperatingSavingsPreview[];
+  environmentalImpact: RetrofitEnvironmentalImpact;
   detailQuestions: RetrofitDetailQuestion[];
 };
 
@@ -5521,8 +5556,215 @@ function buildRetrofitPreviewCard(
     scenarios: buildRetrofitScenarios(retrofit, scenarioMetrics, missingInfo),
     opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview, payload)),
     operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
+    environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo),
     detailQuestions: detailQuestionsForRetrofit(retrofit)
   };
+}
+
+export function buildRetrofitEnvironmentalImpactPreview(
+  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
+  missingInfo: string[] = []
+): RetrofitEnvironmentalImpact {
+  const id = retrofit.retrofitTypeId.toLowerCase();
+  const parent = retrofit.parentCategory.toLowerCase();
+  const isCertification = parent.includes("certification") || id.includes("certification") || id.includes("compliance") || id.includes("benchmarking");
+  const isPlanning = !retrofit.isPhysicalRetrofit && !isCertification;
+  const resources = environmentalResourceFallbackRows(retrofit);
+  const missingInputs = environmentalMissingInputsForRetrofit(retrofit, missingInfo);
+  const overallLabel = isCertification
+    ? "Certification progress supported"
+    : isPlanning
+      ? "Potential emissions reduction identified"
+      : "Estimated annual emissions avoided";
+  const impactType: RetrofitEnvironmentalImpact["overall"]["impactType"] = isCertification
+    ? "certification_progress"
+    : isPlanning
+      ? "potential_identified"
+      : "not_estimated";
+  const subtext = isCertification
+    ? "Certification impact is not quantified until certification requirements are reviewed."
+    : isPlanning
+      ? "Planning items can identify impact potential, but avoided emissions depend on follow-on retrofit work."
+      : "Estimated climate impact from completing this retrofit.";
+
+  return {
+    overall: {
+      label: overallLabel,
+      displayValue: "?",
+      unit: "tCO2e/year",
+      fallback: isCertification ? "Not evaluated yet" : isPlanning ? "Needs audit scope" : "Needs bills and retrofit-specific details",
+      impactType,
+      confidence: "Needs data",
+      subtext,
+      basis: ["Needs bills and retrofit-specific details"]
+    },
+    resources,
+    certificationContribution: certificationContributionForRetrofit(retrofit),
+    missingInfo: missingInputs
+  };
+}
+
+function environmentalResourceFallbackRows(
+  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">
+): RetrofitEnvironmentalImpact["resources"] {
+  const id = retrofit.retrofitTypeId.toLowerCase();
+  const parent = retrofit.parentCategory.toLowerCase();
+  const row = (label: string, unit: string, fallback: string, basis = fallback) => ({
+    label,
+    displayValue: fallback,
+    unit,
+    fallback,
+    confidence: "Needs data" as const,
+    basis
+  });
+
+  if (parent.includes("certification") || id.includes("certification") || id.includes("compliance") || id.includes("benchmarking")) {
+    return [row("Certification contribution", "status", "Not evaluated yet", "Needs certification review")];
+  }
+  if (!retrofit.isPhysicalRetrofit || parent.includes("audits") || id.includes("audit") || id.includes("study") || id.includes("assessment")) {
+    return [row("Reduction potential identified", "tCO2e/year", "Needs audit scope", "Needs audit scope")];
+  }
+  if (id.includes("ev") || id.includes("charger") || id.includes("vehicle") || parent.includes("transportation")) {
+    return [
+      row("Fuel displaced", "GGE/year", "Needs utilization estimate"),
+      row("Net emissions avoided", "tCO2e/year", "Needs fuel baseline")
+    ];
+  }
+  if (id.includes("solar") || id.includes("wind") || id.includes("renewable") || parent.includes("solar_renewable")) {
+    return [
+      row("Renewable electricity generated", "kWh/year", "Needs system size"),
+      row("Emissions avoided", "tCO2e/year", "Needs system size and usage baseline")
+    ];
+  }
+  if (id.includes("storage") || id.includes("microgrid") || id.includes("backup") || parent.includes("storage")) {
+    return [
+      row("Peak demand reduction", "kW", "Needs load profile"),
+      row("Emissions impact", "tCO2e/year", "Needs dispatch model")
+    ];
+  }
+  if (id.includes("water") || id.includes("irrigation") || id.includes("toilet") || id.includes("urinal") || id.includes("leak") || parent.includes("water")) {
+    return [
+      row("Potable water avoided", "gallons/year", "Needs water bill"),
+      row("Emissions avoided", "tCO2e/year", "Needs water bill")
+    ];
+  }
+  if (id.includes("heat_pump") || id.includes("electrification")) {
+    return [
+      row("Net emissions avoided", "tCO2e/year", "Needs gas/electric baseline"),
+      row("Thermal load reduction", "MMBtu/year", "Needs retrofit details")
+    ];
+  }
+  if (parent.includes("refrigeration") || id.includes("refrigeration") || id.includes("cooler") || id.includes("freezer")) {
+    return [
+      row("Electricity avoided", "kWh/year", "Needs bills"),
+      row("Refrigerant leakage avoided", "tCO2e/year", "Needs equipment details")
+    ];
+  }
+  if (parent.includes("lighting") || id.includes("lighting") || id.includes("led")) {
+    return [
+      row("Electricity avoided", "kWh/year", "Needs bills"),
+      row("Emissions avoided", "tCO2e/year", "Needs bills")
+    ];
+  }
+  if (parent.includes("building_envelope") || id.includes("insulation") || id.includes("weatherization") || id.includes("window") || id.includes("roof")) {
+    return [
+      row("Thermal load reduction", "MMBtu/year", "Needs bills and retrofit details"),
+      row("Emissions avoided", "tCO2e/year", "Needs bills")
+    ];
+  }
+  if (parent.includes("hvac") || id.includes("hvac") || id.includes("boiler") || id.includes("furnace")) {
+    return [
+      row("Site energy avoided", "kWh or therms/year", "Needs bills and system details"),
+      row("Emissions avoided", "tCO2e/year", "Needs bills")
+    ];
+  }
+  if (id.includes("waste_heat")) {
+    return [
+      row("Thermal load reduction", "MMBtu/year", "Needs process baseline"),
+      row("Emissions avoided", "tCO2e/year", "Needs bills")
+    ];
+  }
+  return [
+    row("Electricity avoided", "kWh/year", "Needs bills"),
+    row("Emissions avoided", "tCO2e/year", "Needs retrofit details")
+  ];
+}
+
+function environmentalMissingInputsForRetrofit(
+  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
+  missingInfo: string[]
+) {
+  const id = retrofit.retrofitTypeId.toLowerCase();
+  const parent = retrofit.parentCategory.toLowerCase();
+  const missing = new Set<string>();
+  for (const item of missingInfo) {
+    const normalized = item.toLowerCase();
+    if (normalized.includes("bill")) missing.add("Upload bills");
+    if (normalized.includes("utility")) missing.add("Confirm utility");
+    if (normalized.includes("quote") || normalized.includes("size") || normalized.includes("area") || normalized.includes("r-value")) {
+      missing.add("Answer retrofit-specific questions");
+    }
+  }
+
+  if (parent.includes("certification") || id.includes("certification") || id.includes("compliance")) {
+    missing.add("Review certification requirements");
+  } else if (!retrofit.isPhysicalRetrofit || id.includes("audit") || id.includes("study") || id.includes("assessment")) {
+    missing.add("Confirm audit scope");
+  } else {
+    missing.add("Upload bills");
+    missing.add("Answer retrofit-specific questions");
+  }
+  if (id.includes("solar")) missing.add("Add system size");
+  if (id.includes("ev") || id.includes("charger")) {
+    missing.add("Add utilization estimate");
+    missing.add("Add fuel baseline");
+  }
+  if (id.includes("water") || parent.includes("water")) missing.add("Add water bill");
+
+  return [...missing].slice(0, 6);
+}
+
+function certificationContributionForRetrofit(
+  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">
+): RetrofitEnvironmentalImpact["certificationContribution"] {
+  const id = retrofit.retrofitTypeId.toLowerCase();
+  const isCertification = retrofit.parentCategory.toLowerCase().includes("certification") || id.includes("certification") || id.includes("benchmarking");
+  const energyDetail = isCertification
+    ? "Certification pathway support can be reviewed after requirements are confirmed."
+    : "May support Energy & Atmosphere or equivalent efficiency criteria after impact is estimated.";
+  return [
+    {
+      program: "LEED",
+      status: isCertification ? "Needs review" : "May support",
+      detail: energyDetail
+    },
+    {
+      program: "ENERGY STAR",
+      status: "Needs review",
+      detail: "May improve ENERGY STAR score after utility data is uploaded."
+    },
+    {
+      program: "Green Business certification",
+      status: retrofit.isPhysicalRetrofit ? "May support" : "Needs review",
+      detail: retrofit.isPhysicalRetrofit ? "May support energy-efficiency or resource-conservation requirements." : "Certification contribution needs program review."
+    }
+  ];
+}
+
+function opportunityImpactSupportedLabel(environmentalImpact: RetrofitEnvironmentalImpact) {
+  if (environmentalImpact.overall.displayValue !== "?") {
+    if (environmentalImpact.overall.impactType === "avoided_emissions") {
+      return `Supports a retrofit estimated to avoid ${environmentalImpact.overall.displayValue} ${environmentalImpact.overall.unit}.`;
+    }
+    return `Supports a retrofit impact currently estimated as ${environmentalImpact.overall.displayValue}.`;
+  }
+  if (environmentalImpact.overall.impactType === "potential_identified") {
+    return "Potential impact identified after audit scope is confirmed.";
+  }
+  if (environmentalImpact.overall.impactType === "certification_progress") {
+    return "Certification progress supported after requirements are reviewed.";
+  }
+  return "Needs bills and retrofit details.";
 }
 
 function buildOpportunityPreview(
@@ -6792,7 +7034,7 @@ function RetrofitPreviewCardView({
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "scenarios" | "opportunities" | "requirements" | "more">("overview");
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "requirements" | "more">("overview");
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     why: false,
     financial: true,
@@ -6848,6 +7090,7 @@ function RetrofitPreviewCardView({
   ];
   const includedOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings != null || item.monthlySavings != null);
   const pendingOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings == null && item.monthlySavings == null);
+  const environmentalImpact = retrofit.environmentalImpact;
   const displayedUpfrontFinancialIncentive = selectedIncludedOpportunities.length > 0
     ? billDataLocked
       ? null
@@ -6943,8 +7186,9 @@ function RetrofitPreviewCardView({
   const workspaceTabs = [
     { key: "overview", label: "Overview" },
     { key: "financials", label: "Financials" },
-    { key: "scenarios", label: "Scenarios" },
     { key: "opportunities", label: "Opportunities" },
+    { key: "environmental", label: "Environmental Impact" },
+    { key: "scenarios", label: "Scenarios" },
     { key: "requirements", label: "Requirements" },
     { key: "more", label: "More" }
   ] as const;
@@ -6999,6 +7243,7 @@ function RetrofitPreviewCardView({
   const includedSummary = `${selectedIncludedOpportunities.length} included · ${selectedPendingOpportunities.length} pending`;
   const scenarioSummary = `${retrofit.scenarios.length} options · ${selectedScenario?.name || "Scenario A"}`;
   const opportunitySummary = `${retrofit.opportunities.length} found · ${selectedCount} selected`;
+  const environmentalSummary = `${environmentalImpact.overall.displayValue} · ${environmentalImpact.overall.confidence}`;
   const savingsSummary = includedOperatingSavings.length ? `${includedOperatingSavings.length} estimate${includedOperatingSavings.length > 1 ? "s" : ""}` : "Needs bill";
   const assumptionsSummary = `${retrofit.editableAssumptions.length} inputs · ${Math.max(0, retrofit.editableAssumptions.length - assumptionsConfirmedCount)} unconfirmed`;
   const missingSummary = retrofit.missingInfo.length ? `${retrofit.missingInfo.length} blocker${retrofit.missingInfo.length > 1 ? "s" : ""}` : "Ready for review";
@@ -7357,6 +7602,121 @@ function RetrofitPreviewCardView({
       </PreviewAccordionSection>
       ) : null}
 
+      {activeWorkspaceTab === "environmental" ? (
+      <section className="workspace-panel environmental-impact-panel" data-workspace-panel="environmental">
+        <div className="overview-panel-header">
+          <div>
+            <p className="eyebrow">Environmental Impact</p>
+            <h3>{retrofit.name} impact detail</h3>
+          </div>
+          <span className="soft-badge">{environmentalSummary}</span>
+        </div>
+        <div className="environmental-impact-top-grid">
+          <article className="environmental-impact-card primary-impact-card">
+            <span>{environmentalImpact.overall.label}</span>
+            <strong className={environmentalImpact.overall.displayValue === "?" ? "impact-value is-placeholder" : "impact-value"}>
+              {environmentalImpact.overall.displayValue}
+            </strong>
+            <small>{environmentalImpact.overall.displayValue === "?" ? environmentalImpact.overall.fallback : environmentalImpact.overall.unit}</small>
+            <p>{environmentalImpact.overall.subtext}</p>
+          </article>
+          <article className="environmental-impact-card">
+            <span>Impact confidence</span>
+            <strong>{environmentalImpact.overall.confidence}</strong>
+            <small>{environmentalImpact.overall.confidence === "Needs data" ? "Bills and retrofit inputs needed" : "Based on available impact inputs"}</small>
+          </article>
+          <article className="environmental-impact-card">
+            <span>Top missing input</span>
+            <strong>{environmentalImpact.missingInfo[0] || "Not evaluated yet"}</strong>
+            <small>{environmentalImpact.missingInfo.length > 1 ? `+${environmentalImpact.missingInfo.length - 1} more` : "Impact inputs"}</small>
+          </article>
+        </div>
+
+        <section className="environmental-impact-section">
+          <div className="section-title-row">
+            <div>
+              <h4>Resource breakdown</h4>
+              <p>Relevant impact metrics for this retrofit. Missing rows stay as requirements, not estimates.</p>
+            </div>
+          </div>
+          <div className="environmental-resource-list">
+            {environmentalImpact.resources.map((resource) => (
+              <article className="environmental-resource-row" key={`${resource.label}:${resource.unit}`}>
+                <div>
+                  <strong>{resource.label}</strong>
+                  <small>{resource.basis}</small>
+                </div>
+                <span className="impact-resource-value">{resource.displayValue}</span>
+                <span className="soft-badge">{resource.unit}</span>
+                <span className="soft-badge">{resource.confidence}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div className="environmental-impact-detail-grid">
+          <section className="environmental-impact-section">
+            <h4>Impact basis</h4>
+            <div className="impact-basis-list">
+              {environmentalImpact.overall.basis.map((basis) => (
+                <span key={basis}>{basis}</span>
+              ))}
+            </div>
+            <p className="compact-empty">Methodology details will appear when impact inputs are available.</p>
+          </section>
+          <section className="environmental-impact-section">
+            <h4>Confidence / missing inputs</h4>
+            <div className="impact-basis-list">
+              {environmentalImpact.missingInfo.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="environmental-impact-section">
+          <div className="section-title-row">
+            <div>
+              <h4>Certification contribution</h4>
+              <p>Certification relevance is directional until certification rules and utility data are reviewed.</p>
+            </div>
+          </div>
+          <div className="certification-contribution-grid">
+            {environmentalImpact.certificationContribution.map((item) => (
+              <article className="certification-contribution-card" key={item.program}>
+                <span>{item.program}</span>
+                <strong>{item.status}</strong>
+                <small>{item.detail}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="environmental-impact-section">
+          <div className="section-title-row">
+            <div>
+              <h4>Opportunity impact supported</h4>
+              <p>Opportunities support the retrofit; the retrofit is what creates the impact.</p>
+            </div>
+          </div>
+          <div className="environmental-resource-list">
+            {(selectedScenarioOpportunities.length ? selectedScenarioOpportunities : retrofit.opportunities.slice(0, 3)).map((opportunity) => (
+              <article className="environmental-resource-row" key={`impact-supported:${opportunity.id}`}>
+                <div>
+                  <strong>{opportunity.name}</strong>
+                  <small>{opportunityImpactSupportedLabel(environmentalImpact)}</small>
+                </div>
+                <span className={selectedOpportunityIds[opportunity.id] ? "included-label" : "not-included-label"}>
+                  {selectedOpportunityIds[opportunity.id] ? "Selected" : "Not selected"}
+                </span>
+              </article>
+            ))}
+            {retrofit.opportunities.length === 0 ? <p className="compact-empty">Opportunity impact supported: Needs bills and retrofit details.</p> : null}
+          </div>
+        </section>
+      </section>
+      ) : null}
+
       {activeWorkspaceTab === "scenarios" ? (
       <>
       <PreviewAccordionSection
@@ -7487,6 +7847,7 @@ function RetrofitPreviewCardView({
                         onPrepareApplication={() => setApplicationPrepOpportunity(opportunity)}
                         onToggle={() => onToggleOpportunity(opportunity.id)}
                         onToggleExpanded={() => setExpandedOpportunityIds((current) => ({ ...current, [opportunity.id]: !current[opportunity.id] }))}
+                        environmentalImpact={environmentalImpact}
                         opportunity={opportunity}
                         selected={Boolean(selectedOpportunityIds[opportunity.id])}
                       />
@@ -7697,6 +8058,7 @@ function RetrofitPreviewCardView({
 
 function OpportunityPreviewRow({
   expanded,
+  environmentalImpact,
   onPrepareApplication,
   onToggle,
   onToggleExpanded,
@@ -7704,6 +8066,7 @@ function OpportunityPreviewRow({
   selected
 }: {
   expanded: boolean;
+  environmentalImpact: RetrofitEnvironmentalImpact;
   onPrepareApplication: () => void;
   onToggle: () => void;
   onToggleExpanded: () => void;
@@ -7776,7 +8139,8 @@ function OpportunityPreviewRow({
             </div>
             <div className="opportunity-detail-column opportunity-impact-row">
               <h5>Impact</h5>
-              <DetailItem label="Environmental impact contribution" value={opportunity.environmentalImpactContribution || "Source unavailable"} />
+              <DetailItem label="Impact supported" value={opportunityImpactSupportedLabel(environmentalImpact)} />
+              <DetailItem label="Impact note" value={opportunity.environmentalImpactContribution || "Source unavailable"} />
               <DetailItem label="Certification boost" value={opportunity.certificationBoost || "Source unavailable"} />
               <DetailItem label="Selected state" value={selectionReason} />
               <DetailItem label="Source" value={opportunity.sourceUrl ? "Open program source" : "Source unavailable"} />

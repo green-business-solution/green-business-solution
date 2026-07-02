@@ -3790,6 +3790,128 @@ dd {
   width: fit-content;
 }
 
+.environmental-impact-panel {
+  align-content: start;
+}
+
+.environmental-impact-top-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1.5fr 1fr 1fr;
+}
+
+.environmental-impact-card,
+.environmental-impact-section,
+.certification-contribution-card {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 16px;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.environmental-impact-card span,
+.certification-contribution-card span {
+  color: var(--rf-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.environmental-impact-card strong,
+.certification-contribution-card strong {
+  color: var(--rf-text);
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.primary-impact-card .impact-value {
+  color: var(--rf-green);
+  font-size: 34px;
+  letter-spacing: 0;
+  line-height: 38px;
+}
+
+.primary-impact-card .impact-value.is-placeholder {
+  color: #7c5e1c;
+}
+
+.environmental-impact-card small,
+.environmental-impact-card p,
+.certification-contribution-card small,
+.environmental-impact-section p {
+  color: var(--rf-muted);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.environmental-resource-list {
+  display: grid;
+  gap: 8px;
+}
+
+.environmental-resource-row {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e4ebe6;
+  border-radius: 13px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  padding: 10px 12px;
+}
+
+.environmental-resource-row strong,
+.environmental-resource-row small {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.environmental-resource-row small {
+  color: var(--rf-muted);
+  margin-top: 2px;
+}
+
+.impact-resource-value {
+  color: #7c5e1c;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 19px;
+}
+
+.environmental-impact-detail-grid,
+.certification-contribution-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.certification-contribution-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.impact-basis-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.impact-basis-list span {
+  background: #ffffff;
+  border: 1px solid #dce5df;
+  border-radius: 999px;
+  color: var(--rf-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  padding: 6px 10px;
+}
+
 .financial-tab-actions {
   display: flex;
   justify-content: flex-start;
@@ -4745,6 +4867,9 @@ dd {
 	  .overview-decision-grid,
 	  .overview-command-grid,
 	  .overview-included-strip,
+	  .environmental-impact-top-grid,
+	  .environmental-impact-detail-grid,
+	  .certification-contribution-grid,
 	  .opportunities-summary-strip,
 	  .requirements-summary-strip {
 	    grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4762,6 +4887,10 @@ dd {
 	  .overview-decision-grid,
 	  .overview-command-grid,
 	  .overview-included-strip,
+	  .environmental-impact-top-grid,
+	  .environmental-impact-detail-grid,
+	  .certification-contribution-grid,
+	  .environmental-resource-row,
 	  .opportunities-summary-strip,
 	  .requirements-summary-strip,
 	  .selected-scenario-rows,
