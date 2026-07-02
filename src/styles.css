@@ -2460,7 +2460,7 @@ dd {
 
 .retrofit-picker-shell {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   min-width: 0;
 }
 
@@ -2502,8 +2502,7 @@ dd {
   margin-bottom: 4px;
 }
 
-.estimate-accuracy-banner p,
-.retrofit-picker-heading-row p {
+.estimate-accuracy-banner p {
   color: #43524a;
   font-size: 16px;
   line-height: 23px;
@@ -2513,20 +2512,6 @@ dd {
   min-height: 42px;
   padding: 0 22px;
   white-space: nowrap;
-}
-
-.retrofit-picker-heading-row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.retrofit-picker-heading-row h2 {
-  color: #071b12;
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: 0;
-  line-height: 29px;
-  margin-bottom: 4px;
 }
 
 .retrofit-picker-controls {
@@ -2624,7 +2609,7 @@ dd {
   cursor: pointer;
   display: grid;
   gap: 12px;
-  min-height: 186px;
+  min-height: 228px;
   min-width: 0;
   overflow: visible;
   padding: 16px;
@@ -2697,6 +2682,23 @@ dd {
   padding-top: 10px;
 }
 
+.retrofit-picker-card-impact {
+  border-top: 1px solid var(--rf-border);
+  display: grid;
+  padding-top: 10px;
+}
+
+.retrofit-picker-card-impact .retrofit-picker-metric {
+  border-right: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.retrofit-picker-card-impact .retrofit-picker-metric-label {
+  font-size: 13px;
+}
+
 .retrofit-picker-metric {
   align-items: start;
   border-right: 1px solid var(--rf-border);
@@ -2741,7 +2743,8 @@ dd {
 }
 
 .metric-cost-icon,
-.metric-payback-icon {
+.metric-payback-icon,
+.metric-impact-icon {
   color: #405149;
 }
 
@@ -4770,8 +4773,7 @@ dd {
     width: 32px;
   }
 
-  .estimate-accuracy-banner h1,
-  .retrofit-picker-heading-row h2 {
+  .estimate-accuracy-banner h1 {
     font-size: 24px;
     line-height: 30px;
   }
@@ -4816,6 +4818,12 @@ dd {
     grid-template-columns: 1fr;
   }
 
+  .retrofit-picker-card-impact .retrofit-picker-metric {
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .retrofit-picker-metric {
     border-bottom: 1px solid var(--rf-border);
     border-right: 0;
@@ -4827,6 +4835,11 @@ dd {
   }
 
   .retrofit-picker-metric:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .retrofit-picker-card-impact .retrofit-picker-metric {
     border-bottom: 0;
     padding-bottom: 0;
   }

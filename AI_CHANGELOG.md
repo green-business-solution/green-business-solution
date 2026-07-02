@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit picker impact row
+
+- Removed the visible before-click `Select a retrofit to explore` heading and subtitle so the retrofit cards move closer to the upload banner.
+- Added a fourth Environmental impact metric row to each before-click retrofit card with honest gated placeholder styling instead of fabricated impact values.
+- Increased picker card height and updated focused preview tests for the new card content and layout.
+
 ## 2026-07-02 - Codex (GPT-5) no-bill metric tooltip repair
 
 - Replaced native browser `title` fallback behavior on no-bill retrofit picker question marks with an explicit styled tooltip so the needed next step appears reliably on hover.

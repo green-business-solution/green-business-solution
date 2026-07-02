@@ -6224,7 +6224,7 @@ function RetrofitPickerView({
   }
 
   return (
-    <section className="retrofit-picker-shell" aria-label="Select a retrofit to explore">
+    <section className="retrofit-picker-shell" aria-label="Available retrofits">
       <section className="estimate-accuracy-banner">
         <div className="estimate-accuracy-icon" aria-hidden="true">
           <UploadCloudIcon />
@@ -6235,13 +6235,6 @@ function RetrofitPickerView({
         </div>
         <button onClick={onUploadBills} type="button">Upload bills</button>
       </section>
-
-      <div className="retrofit-picker-heading-row">
-        <div>
-          <h2>Select a retrofit to explore</h2>
-          <p>Choose one retrofit to see opportunities, detailed metrics, and next steps.</p>
-        </div>
-      </div>
 
       <section className="retrofit-picker-controls" aria-label="Sort, search, and view controls">
         <label className="picker-sort-control">
@@ -6304,6 +6297,9 @@ function RetrofitPickerView({
                   <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit, hideBillData)} />
                   <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit, hideBillData)} />
                 </div>
+                <div className="retrofit-picker-card-impact" aria-label={`${retrofit.name} environmental impact`}>
+                  <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact()} />
+                </div>
               </button>
             ))}
           </section>
@@ -6331,10 +6327,10 @@ function RetrofitPickerView({
   );
 }
 
-type PickerMetricKind = "savings" | "cost" | "payback";
+type PickerMetricKind = "savings" | "cost" | "payback" | "impact";
 
 function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: string; value: string }) {
-  const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
+  const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : kind === "payback" ? MetricPaybackIcon : MetricImpactIcon;
   const placeholderState = getPickerMetricPlaceholderState(kind, value);
   const isFallback = value === "?" || /needs|pending|not/i.test(value);
   return (
@@ -6367,6 +6363,12 @@ function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) 
     return {
       className: " metric-placeholder--question",
       accessibleLabel: "Answer retrofit-specific questions to estimate cost."
+    };
+  }
+  if (kind === "impact") {
+    return {
+      className: " metric-placeholder--both",
+      accessibleLabel: "Upload bills and answer retrofit-specific questions to estimate environmental impact."
     };
   }
   return {
@@ -6419,6 +6421,21 @@ function MetricPaybackIcon() {
     <svg className="metric-icon metric-payback-icon" fill="none" viewBox="0 0 20 20">
       <circle cx="10" cy="10" r="7.4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
       <path d="M10 5.8v4.5l3 1.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+    </svg>
+  );
+}
+
+function MetricImpactIcon() {
+  return (
+    <svg className="metric-icon metric-impact-icon" fill="none" viewBox="0 0 20 20">
+      <path
+        d="M10 17.2c3.5-1.4 5.8-4.8 5.8-8.6V4.9L10 2.8 4.2 4.9v3.7c0 3.8 2.3 7.2 5.8 8.6Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+      <path d="M7.2 10.1 9.2 12l3.8-4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
     </svg>
   );
 }
@@ -6513,6 +6530,10 @@ function retrofitPickerCost(retrofit: RetrofitPreviewCard, hideBillData: boolean
 function retrofitPickerPayback(retrofit: RetrofitPreviewCard, hideBillData: boolean) {
   if (hideBillData) return "?";
   return formatPayback(retrofit.metrics.paybackPeriodYears, "?");
+}
+
+function retrofitPickerEnvironmentalImpact() {
+  return "?";
 }
 
 function formatCompactCents(value: number | null | undefined) {

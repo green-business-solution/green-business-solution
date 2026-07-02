@@ -252,8 +252,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Upload bills");
     expect(html).toContain("upload-cloud-icon");
     expect(html).not.toContain(">UP<");
-    expect(html).toContain("Select a retrofit to explore");
-    expect(html).toContain("Choose one retrofit to see opportunities, detailed metrics, and next steps.");
+    expect(html).not.toContain("Select a retrofit to explore");
+    expect(html).not.toContain("Choose one retrofit to see opportunities, detailed metrics, and next steps.");
     expect(html).toContain("Sort by");
     expect(html).toContain("<option value=\"recommended\" selected=\"\">Recommended</option>");
     expect(html).toContain("<option value=\"total_savings\">Savings</option>");
@@ -269,6 +269,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Savings");
     expect(html).toContain("Cost");
     expect(html).toContain("Payback");
+    expect(html).toContain("Environmental impact");
     expect(html).toContain("?");
     expect(html).toContain("metric-placeholder--bill");
     expect(html).toContain("metric-placeholder--question");
@@ -282,6 +283,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("metric-savings-icon");
     expect(html).toContain("metric-cost-icon");
     expect(html).toContain("metric-payback-icon");
+    expect(html).toContain("metric-impact-icon");
     expect(html).toContain("retrofit-picker-metric-label");
     expect((html.match(/class=\"retrofit-picker-card\"/g) || []).length).toBe(6);
     expect(html).toContain("Show more retrofits");
@@ -524,10 +526,12 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("@media (max-width: 1099px)");
     expect(css).toContain("@media (max-width: 719px)");
     expect(css).toContain(".retrofit-picker-metric-label");
+    expect(css).toContain(".retrofit-picker-card-impact");
     expect(css).not.toContain(".retrofit-picker-metric-value[data-tooltip]");
     expect(css).toContain(".metric-savings-icon");
     expect(css).toContain(".metric-cost-icon");
     expect(css).toContain(".metric-payback-icon");
+    expect(css).toContain(".metric-impact-icon");
     expect(css).not.toContain(".retrofit-picker-metric span::before");
     expect(css).toContain(".recommendation-readiness-strip");
     expect(css).toContain(".filter-toolbar-main");
@@ -543,7 +547,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".selected-scenario-rows");
     expect(css).toContain(".compact-detail-row");
     const pickerCardRule = css.match(/(?:^|\n)\.retrofit-picker-card\s*{([^}]*)}/)?.[1] || "";
-    expect(pickerCardRule).toContain("min-height: 186px;");
+    expect(pickerCardRule).toContain("min-height: 228px;");
     expect(pickerCardRule).not.toContain("\n  height: 118px;");
 
     const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
