@@ -1,9 +1,9 @@
 # AI Changelog
 
-## 2026-07-02 - Codex (GPT-5) natural how it works hero image
+## 2026-07-02 - Codex (GPT-5) full-screen natural how it works hero
 
-- Removed the dark gradient, radial shader, and boundary overlay from the How It Works hero.
-- Rendered the cloud background at its natural color and opacity so the upper image no longer appears darker or differently filtered than the journey below.
+- Removed the dark gradient, radial shader, and boundary overlay so the How It Works cloud artwork renders at its natural color and opacity.
+- Expanded the cloud hero to fill the viewport below the navigation on desktop and mobile, keeping the building transformation below the fold until the user scrolls.
 
 ## 2026-07-02 - Codex (GPT-5) retrofit picker view toggle icons
 
