@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit form assembly TODO
+
+- Captured the agreed product direction for a structured input-question catalog that separates base retrofit questions, opportunity-specific incentive inputs, tax/profile questions, bill/quote-derived fields, and application-prep requirements.
+- Documented that the selected retrofit/scenario form should be assembled by merging and deduping those sources, with user answers stored separately from question definitions.
+- Added explicit guidance that conservative placeholder defaults such as `unit_count = 1` must be visible, editable, and provenance-labeled before they are treated as reliable customer-specific estimates.
+
 ## 2026-07-02 - Codex (GPT-5) v2 incentive input runtime plumbing
 
 - Added canonical v2 incentive input resolution for derived project costs, eligible costs, quantity aliases, energy-savings aliases, conservative `unit_count = 1` placeholders, and admin-only synthetic test-case defaults from the GPT Pro input-resolution work.
