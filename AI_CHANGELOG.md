@@ -183,6 +183,11 @@
 
 - Added a product TODO for tracking user state, already-completed retrofits, and dependent opportunity logic so future estimates can recalculate incentives when prior retrofits change marginal savings, tiers, caps, or eligible basis.
 
+## 2026-07-02 - Codex (GPT-5) how it works step copy refresh
+
+- Updated the public `How It Works` step labels and descriptions to the new official 7-step flow.
+- Kept the existing scroll-driven transformation visuals, route structure, and behavior unchanged.
+
 ## 2026-07-02 - Codex (GPT-5) GPT Pro repair packet 79-96
 
 - Created a combined GPT Pro opportunity-data repair packet in `GPT Pro Work/opportunity-data-repair-batches-79-96/`.

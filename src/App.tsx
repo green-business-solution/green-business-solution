@@ -2786,44 +2786,44 @@ function HowItWorksPage({
   const [journeyProgress, setJourneyProgress] = useState(0);
   const stages = [
     {
-      title: "Business Profile",
-      copy: "Tell us about your property, operations, and energy use.",
-      accent: "Profile",
+      title: "Create your account",
+      copy: "Sign up and add your basic property details to get started.",
+      accent: "Account",
       image: "/how-it-works/transformation-stage-01.jpg"
     },
     {
-      title: "AI Opportunity Discovery",
-      copy: "RetroFi finds the strongest efficiency and electrification opportunities.",
+      title: "Discover opportunities",
+      copy: "RetroFi analyzes your property and identifies the most impactful retrofit opportunities.",
       accent: "Discovery",
       image: "/how-it-works/transformation-stage-02.jpg"
     },
     {
-      title: "Financial Analysis",
-      copy: "Costs, savings, and payback become a clear investment case.",
-      accent: "Analysis",
+      title: "Refine your estimates",
+      copy: "Add utility data and answer a few project-specific questions to improve accuracy.",
+      accent: "Estimates",
       image: "/how-it-works/transformation-stage-03.jpg"
     },
     {
-      title: "Retrofit Recommendations",
-      copy: "See the upgrades that fit your building, ranked by impact.",
-      accent: "Recommendations",
+      title: "Review recommendations",
+      copy: "Compare projected savings, costs, incentives, and environmental impact.",
+      accent: "Review",
       image: "/how-it-works/transformation-stage-04.jpg"
     },
     {
-      title: "Incentives & Savings",
-      copy: "Connect each project to relevant incentives and estimated savings.",
-      accent: "Savings",
+      title: "Choose your retrofits",
+      copy: "Select the upgrades that best fit your goals and budget.",
+      accent: "Choose",
       image: "/how-it-works/transformation-stage-05.jpg"
     },
     {
-      title: "Implementation Roadmap",
-      copy: "Turn priorities into a practical sequence your team can execute.",
-      accent: "Roadmap",
+      title: "Automate paperwork",
+      copy: "Generate and complete the required forms and documentation for your selected projects.",
+      accent: "Forms",
       image: "/how-it-works/transformation-stage-06.jpg"
     },
     {
-      title: "Ongoing Impact Tracking",
-      copy: "Measure savings and keep improving performance over time.",
+      title: "Track your impact",
+      copy: "Monitor savings, impact, certification progress, and project status over time.",
       accent: "Impact",
       image: "/how-it-works/transformation-stage-07.jpg"
     }
