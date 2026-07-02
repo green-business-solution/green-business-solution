@@ -233,6 +233,57 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.evidence.some((item) => item.sourcePage === "program website" && /Apply Now/i.test(item.textSnippet || ""))).toBe(true);
   });
 
+  it("uses structured programWebsiteUrl before DSIRE source fallback", async () => {
+    const sourceUrl = "https://programs.dsireusa.org/system/program/detail/100/structured-website";
+    const programWebsiteUrl = "https://official.example.com/rebates";
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_structured_website",
+          programSourceUrl: sourceUrl,
+          programWebsiteUrl,
+          programWebsiteSource: "raw.websiteUrl",
+          sourceChain: [
+            {
+              role: "official_program_website",
+              url: programWebsiteUrl,
+              sourceField: "raw.websiteUrl",
+              status: "selected",
+              reason: "Raw opportunity website URL is treated as official."
+            },
+            {
+              role: "aggregator_source",
+              url: sourceUrl,
+              sourceField: "sourceUrl",
+              status: "fallback",
+              reason: "DSIRE source URL retained as fallback."
+            }
+          ]
+        })
+      },
+      fixedOptions(
+        mockFetchByUrl({
+          [programWebsiteUrl]: `
+            <html><body>
+              <a href="/apply">Apply Now</a>
+            </body></html>
+          `
+        })
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
+    expect(result.programWebsiteSource).toBe("raw.websiteUrl");
+    expect(result.discoveredApplicationUrl).toBe("https://official.example.com/apply");
+    expect(result.bestApplicationUrl).toBe("https://official.example.com/apply");
+    expect(result.pagesInspected).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ url: sourceUrl, role: "aggregator", status: "skipped" }),
+        expect.objectContaining({ url: programWebsiteUrl, role: "program_website", status: "fetched" })
+      ])
+    );
+  });
+
   it("follows an official program website one hop to find a PDF application", async () => {
     const sourceUrl = "https://programs.dsireusa.org/system/program/detail/456/pdf-program";
     const programWebsiteUrl = "https://utility.example.com/rebates";
@@ -359,10 +410,10 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.discoveredPdfUrl).toBeUndefined();
     expect(result.confirmedApplicationMethod).toBe("unknown");
-    expect(result.applicationMethod).toBe("program_website_only");
-    expect(result.discoveryStatus).toBe("program_website_only");
+    expect(result.applicationMethod).toBe("unknown");
+    expect(result.discoveryStatus).toBe("program_website_found");
     expect(result.methodStatus).toBe("unknown");
-    expect(result.pathStatus).toBe("program_source_only");
+    expect(result.pathStatus).toBe("program_website_found");
     expect(result.evidence.some((item) => item.label === "Official program website link found")).toBe(true);
     expect(result.notes.join(" ")).toMatch(/program website found, application url not found/i);
   });
@@ -397,8 +448,8 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.pdfUrl).toBeUndefined();
     expect(result.contactEmail).toBeUndefined();
-    expect(result.applicationMethod).toBe("program_website_only");
-    expect(result.discoveryStatus).toBe("program_website_only");
+    expect(result.applicationMethod).toBe("unknown");
+    expect(result.discoveryStatus).toBe("program_website_found");
     expect(result.evidence.some((item) => /no direct application path/i.test(item.textSnippet || ""))).toBe(true);
   });
 
@@ -416,7 +467,7 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.discoveredPdfUrl).toBeUndefined();
     expect(result.confirmedApplicationMethod).toBe("unknown");
-    expect(result.applicationMethod).toBe("source_only");
+    expect(result.applicationMethod).toBe("unknown");
     expect(result.discoveryStatus).toBe("source_only");
     expect(result.methodStatus).toBe("unknown");
     expect(result.pathStatus).toBe("program_source_only");
@@ -453,7 +504,7 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.discoveredApplicationUrl).toBeUndefined();
     expect(result.discoveredPdfUrl).toBeUndefined();
     expect(result.discoveredContactEmail).toBeUndefined();
-    expect(result.applicationMethod).toBe("source_only");
+    expect(result.applicationMethod).toBe("unknown");
     expect(result.discoveryStatus).toBe("source_only");
     expect(result.linkDiscoveryStatus).toBe("source_only");
     expect(result.candidates.some((candidate) => candidate.linkType === "contact_email")).toBe(false);
@@ -524,7 +575,7 @@ describe("findOpportunityApplicationPath", () => {
 
     expect(result.programWebsiteUrl).toBe(programWebsiteUrl);
     expect(result.discoveredApplicationUrl).toBeUndefined();
-    expect(result.applicationMethod).toBe("program_website_only");
+    expect(result.applicationMethod).toBe("unknown");
     expect(result.linkDiscoveryStatus).toBe("program_website_found");
   });
 
@@ -548,7 +599,7 @@ describe("findOpportunityApplicationPath", () => {
 
     expect(result.programSourceUrl).toBe("https://utility.example.com/business-rebate-program");
     expect(result.discoveredApplicationUrl).toBeUndefined();
-    expect(result.applicationMethod).toBe("source_only");
+    expect(result.applicationMethod).toBe("unknown");
     expect(result.discoveryStatus).toBe("source_only");
   });
 
@@ -561,10 +612,10 @@ describe("findOpportunityApplicationPath", () => {
     );
 
     expect(result.confirmedApplicationMethod).toBe("online_portal");
-    expect(result.applicationMethod).toBe("unreadable");
-    expect(result.discoveryStatus).toBe("unreadable");
+    expect(result.applicationMethod).toBe("unknown");
+    expect(result.discoveryStatus).toBe("source_unreadable_or_js_required");
     expect(result.methodStatus).toBe("inferred");
-    expect(result.pathStatus).toBe("source_unreadable");
+    expect(result.pathStatus).toBe("source_unreadable_or_js_required");
     expect(result.error).toMatch(/network failed/i);
     expect(result.discoveredApplicationUrl).toBeUndefined();
   });

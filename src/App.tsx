@@ -371,8 +371,11 @@ type ApplicationSourceType =
 
 type ApplicationMethod =
   | "online_portal"
+  | "online_form"
   | "pdf"
   | "email"
+  | "grant_package"
+  | "hybrid_email_online_portal"
   | "contractor_submitted"
   | "utility_portal"
   | "tax_accountant_filing"
@@ -386,6 +389,7 @@ type SourceExtractionStatus = "not_started" | "source_found" | "source_missing" 
 type SourceConfidence = "High" | "Medium" | "Low" | "Needs review";
 type ApplicationPathStatus =
   | "application_path_found"
+  | "program_website_found"
   | "program_website_only"
   | "source_only"
   | "program_source_only"
@@ -393,9 +397,20 @@ type ApplicationPathStatus =
   | "needs_review"
   | "unreadable"
   | "source_unreadable"
+  | "source_unreadable_or_js_required"
+  | "needs_user_selection"
   | "not_attempted";
 type ApplicationMethodStatus = "confirmed" | "inferred" | "unknown";
-type ApplicationLinkDiscoveryStatus = "application_link_found" | "pdf_found" | "email_found" | "program_website_found" | "source_only" | "needs_review" | "source_unreadable";
+type ApplicationLinkDiscoveryStatus = "application_link_found" | "pdf_found" | "email_found" | "program_website_found" | "source_only" | "needs_review" | "source_unreadable" | "source_unreadable_or_js_required";
+type ApplicationStatus =
+  | "open"
+  | "closed"
+  | "funding_exhausted"
+  | "future_round_expected"
+  | "source_unreadable_or_js_required"
+  | "needs_user_selection"
+  | "needs_review"
+  | "unknown";
 type ApplicationLinkCandidateType =
   | "application_url"
   | "pdf_application"
@@ -407,6 +422,25 @@ type ApplicationLinkCandidateType =
   | "forms_page"
   | "application_instructions"
   | "unknown";
+
+type ApplicationSourceChainItem = {
+  role: string;
+  url?: string;
+  email?: string;
+  sourceField?: string;
+  status?: "candidate" | "selected" | "fallback" | "ignored";
+  reason?: string;
+};
+
+type ApplicationArtifact = {
+  type: string;
+  label: string;
+  url?: string;
+  email?: string;
+  evidenceSnippet?: string;
+  sourceUrl?: string;
+  confidence: SourceConfidence;
+};
 
 type ApplicationLinkCandidate = {
   url?: string;
@@ -434,8 +468,12 @@ type OpportunityApplicationSource = {
   retrofitId?: string;
   retrofitName?: string;
   programSourceUrl?: string;
+  programWebsiteUrl?: string;
+  programWebsiteSource?: string;
   applicationUrl?: string;
   contactEmail?: string;
+  applicationStatusHint?: ApplicationStatus;
+  sourceChain?: ApplicationSourceChainItem[];
   sourceType: ApplicationSourceType;
   applicationMethod: ApplicationMethod;
   extractionStatus: SourceExtractionStatus;
@@ -473,6 +511,7 @@ type ApplicationPathProfile = {
   aggregatorType?: "dsire" | "utility_database" | "other" | "unknown";
   programSourceUrl?: string;
   programWebsiteUrl?: string;
+  programWebsiteSource?: string;
   discoveredApplicationUrl?: string;
   discoveredPdfUrl?: string;
   discoveredContactEmail?: string;
@@ -481,7 +520,10 @@ type ApplicationPathProfile = {
   bestContactEmail?: string;
   pdfUrl?: string;
   contactEmail?: string;
+  applicationUrl?: string;
+  applicationArtifacts?: ApplicationArtifact[];
   applicationMethod?: ApplicationMethod;
+  applicationStatus?: ApplicationStatus;
   linkDiscoveryStatus?: ApplicationLinkDiscoveryStatus;
   discoveryStatus?: ApplicationPathStatus;
   confidence?: SourceConfidence;
@@ -490,6 +532,7 @@ type ApplicationPathProfile = {
   pathStatus: ApplicationPathStatus;
   candidates?: ApplicationLinkCandidate[];
   pagesInspected?: ApplicationPageInspected[];
+  sourceChain?: ApplicationSourceChainItem[];
   evidence: ApplicationPathEvidence[];
   sourceFetchedAt?: string;
   sourceTitle?: string;
@@ -502,7 +545,14 @@ type AdminApplicationPathDiscoverResponse = {
   profile: ApplicationPathProfile;
 };
 
-type RequirementExtractionStatus = "requirements_extracted" | "partial" | "needs_review" | "source_unavailable" | "not_attempted";
+type RequirementExtractionStatus =
+  | "requirements_extracted"
+  | "partial"
+  | "needs_review"
+  | "source_unavailable"
+  | "source_unreadable_or_js_required"
+  | "needs_user_selection"
+  | "not_attempted";
 type RequirementValueStatus = boolean | "unknown";
 type ApplicationRequirementType =
   | "field"
@@ -516,6 +566,10 @@ type ApplicationRequirementType =
   | "account_number"
   | "quote"
   | "bill"
+  | "invoice"
+  | "form"
+  | "guidelines"
+  | "checklist"
   | "other";
 
 type ApplicationRequirement = {
@@ -542,6 +596,7 @@ type ApplicationRequirementProfile = {
   applicationUrl?: string;
   programWebsiteUrl?: string;
   applicationMethod: ApplicationMethod;
+  applicationStatus?: ApplicationStatus;
   extractionStatus: RequirementExtractionStatus;
   requiredFields: ApplicationRequirement[];
   requiredDocuments: ApplicationRequirement[];
@@ -552,7 +607,17 @@ type ApplicationRequirementProfile = {
   deadline?: string;
   estimatedTime?: string;
   applicationSteps: string[];
+  applicationArtifacts?: ApplicationArtifact[];
   evidence: ApplicationRequirementEvidence[];
+  diagnostics?: {
+    officialWebsiteUsed: boolean;
+    officialWebsiteSource?: string;
+    dsireAggregatorSkipped: boolean;
+    applicationPathFound: boolean;
+    applicationSpecificSectionFound: boolean;
+    extractionAllowed: boolean;
+    reason?: string;
+  };
   extractionDiagnostics?: {
     sourceUsed?: string;
     isAggregatorSource?: boolean;
@@ -10421,9 +10486,11 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
     programWebsitesFound: discoveredPathProfiles.filter((profile) => Boolean(profile.programWebsiteUrl)).length,
     pdfsFound: discoveredPathProfiles.filter((profile) => Boolean(applicationPathPdfUrl(profile))).length,
     contactEmailsFound: discoveredPathProfiles.filter((profile) => Boolean(applicationPathContactEmail(profile))).length,
-    programWebsiteOnly: discoveredPathProfiles.filter((profile) => applicationPathDiscoveryStatus(profile) === "program_website_only").length,
+    programWebsiteOnly: discoveredPathProfiles.filter((profile) => ["program_website_only", "program_website_found"].includes(applicationPathDiscoveryStatus(profile))).length,
     sourceOnly: discoveredPathProfiles.filter((profile) => applicationPathDiscoveryStatus(profile) === "source_only").length,
-    unreadable: discoveredPathProfiles.filter((profile) => ["unreadable", "source_unreadable"].includes(applicationPathDiscoveryStatus(profile))).length,
+    unreadable: discoveredPathProfiles.filter((profile) => ["unreadable", "source_unreadable", "source_unreadable_or_js_required"].includes(applicationPathDiscoveryStatus(profile))).length,
+    needsUserSelection: discoveredPathProfiles.filter((profile) => applicationPathDiscoveryStatus(profile) === "needs_user_selection" || profile.applicationStatus === "needs_user_selection").length,
+    closedOrExhausted: discoveredPathProfiles.filter((profile) => ["closed", "funding_exhausted"].includes(profile.applicationStatus || "")).length,
     needsReview: discoveredPathProfiles.filter((profile) => ["needs_review", "not_attempted"].includes(applicationPathDiscoveryStatus(profile))).length
   };
 
@@ -10466,6 +10533,8 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
         <span><strong>{pathDiscoverySummary.contactEmailsFound}</strong> contact emails found</span>
         <span><strong>{pathDiscoverySummary.programWebsiteOnly}</strong> program website only</span>
         <span><strong>{pathDiscoverySummary.sourceOnly}</strong> source only</span>
+        <span><strong>{pathDiscoverySummary.needsUserSelection}</strong> needs user selection</span>
+        <span><strong>{pathDiscoverySummary.closedOrExhausted}</strong> closed/funding exhausted</span>
         <span><strong>{pathDiscoverySummary.unreadable}</strong> unreadable</span>
         <span><strong>{pathDiscoverySummary.needsReview}</strong> needs review</span>
       </div>
@@ -10616,10 +10685,12 @@ function applicationPathBestApplicationUrl(profile: ApplicationPathProfile) {
 }
 
 function canExtractRequirementsFromPath(profile: ApplicationPathProfile) {
+  if (profile.applicationStatus === "source_unreadable_or_js_required" || profile.applicationStatus === "needs_user_selection") return false;
   const method = applicationPathMethod(profile);
   if (applicationPathBestApplicationUrl(profile) || applicationPathPdfUrl(profile)) return true;
   if (method === "email" && applicationPathContactEmail(profile) && profile.methodStatus === "confirmed") return true;
   if ((method === "contractor_submitted" || method === "tax_accountant_filing") && profile.methodStatus === "confirmed") return true;
+  if (profile.applicationArtifacts?.some((artifact) => ["application_portal", "online_form", "pdf", "email_submission", "grant_package", "pre_approval_form", "post_install_form"].includes(artifact.type))) return true;
   return Boolean(profile.candidates?.some((candidate) => candidate.linkType === "application_instructions" && candidate.score >= 65));
 }
 
@@ -10683,6 +10754,12 @@ function renderApplicationPathDiscovery({
                 <dd>{renderApplicationSourceLink(profile.programWebsiteUrl)}</dd>
               </div>
             ) : null}
+            {profile.programWebsiteSource ? (
+              <div>
+                <dt>Website source</dt>
+                <dd>{profile.programWebsiteSource}</dd>
+              </div>
+            ) : null}
             <div>
               <dt>Application URL</dt>
               <dd>{bestApplicationUrl ? renderApplicationSourceLink(bestApplicationUrl) : "Application URL not found."}</dd>
@@ -10704,6 +10781,10 @@ function renderApplicationPathDiscovery({
               <dd>{profile.linkDiscoveryStatus ? formatApplicationLinkDiscoveryStatus(profile.linkDiscoveryStatus) : formatApplicationPathStatusLabel(discoveryStatus || profile.pathStatus)}</dd>
             </div>
             <div>
+              <dt>Application status</dt>
+              <dd>{formatApplicationStatusLabel(profile.applicationStatus)}</dd>
+            </div>
+            <div>
               <dt>Aggregator</dt>
               <dd>{profile.isAggregatorSource ? (profile.aggregatorType || "aggregator") : "No"}</dd>
             </div>
@@ -10715,6 +10796,21 @@ function renderApplicationPathDiscovery({
             ) : null}
           </dl>
           <small>{applicationPathResultSummary(profile)}</small>
+          {profile.sourceChain?.length ? (
+            <div className="application-requirement-section">
+              <strong>Source chain</strong>
+              <ul className="application-link-candidates">
+                {profile.sourceChain.slice(0, 5).map((item, index) => (
+                  <li key={`${item.role}:${item.url || item.email || index}`}>
+                    <span>{item.role.replaceAll("_", " ")} · {item.status || "candidate"}</span>
+                    {item.url ? renderApplicationSourceLink(item.url) : item.email ? <small>{item.email}</small> : null}
+                    {item.sourceField ? <small>{item.sourceField}</small> : null}
+                    {item.reason ? <small>{item.reason}</small> : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           <div className="application-requirement-discovery">
             {canExtractRequirements ? (
               <button
@@ -10745,6 +10841,20 @@ function renderApplicationPathDiscovery({
                     {candidate.url ? renderApplicationSourceLink(candidate.url) : candidate.email ? <small>{candidate.email}</small> : null}
                     {candidate.evidenceSnippet ? <small>{candidate.evidenceSnippet}</small> : null}
                     <small>{candidate.reason}</small>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {profile.applicationArtifacts?.length ? (
+            <div className="application-requirement-section">
+              <strong>Application artifacts</strong>
+              <ul className="application-link-candidates">
+                {profile.applicationArtifacts.slice(0, 6).map((artifact, index) => (
+                  <li key={`${artifact.type}:${artifact.url || artifact.email || index}`}>
+                    <span>{artifact.type.replaceAll("_", " ")} · {artifact.confidence}</span>
+                    {artifact.url ? renderApplicationSourceLink(artifact.url) : artifact.email ? <small>{artifact.email}</small> : null}
+                    {artifact.evidenceSnippet ? <small>{artifact.evidenceSnippet}</small> : null}
                   </li>
                 ))}
               </ul>
@@ -10806,6 +10916,7 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
           {formatRequirementExtractionStatus(profile.extractionStatus)}
         </span>
         <span className="application-path-method">{formatApplicationMethodLabel(profile.applicationMethod)}</span>
+        <span className="application-path-method">{formatApplicationStatusLabel(profile.applicationStatus)}</span>
       </div>
       {!hasExtractedRequirements && profile.extractionStatus === "needs_review" ? (
         <div className="application-requirement-blocked">
@@ -10834,6 +10945,10 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
           <dt>Deadline</dt>
           <dd>{profile.deadline || "Not found"}</dd>
         </div>
+        <div>
+          <dt>Application status</dt>
+          <dd>{formatApplicationStatusLabel(profile.applicationStatus)}</dd>
+        </div>
         {profile.estimatedTime ? (
           <div>
             <dt>Estimated time</dt>
@@ -10858,6 +10973,18 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
               <dt>Aggregator source</dt>
               <dd>{profile.extractionDiagnostics.isAggregatorSource ? (profile.extractionDiagnostics.aggregatorType || "Yes") : "No"}</dd>
             </div>
+            {profile.diagnostics ? (
+              <>
+                <div>
+                  <dt>Official website used</dt>
+                  <dd>{profile.diagnostics.officialWebsiteUsed ? profile.diagnostics.officialWebsiteSource || "Yes" : "No"}</dd>
+                </div>
+                <div>
+                  <dt>DSIRE skipped</dt>
+                  <dd>{profile.diagnostics.dsireAggregatorSkipped ? "Yes" : "No"}</dd>
+                </div>
+              </>
+            ) : null}
             <div>
               <dt>Application path found</dt>
               <dd>{profile.extractionDiagnostics.applicationPathFound ? "Yes" : "No"}</dd>
@@ -10872,6 +10999,30 @@ function renderApplicationRequirementPreview(profile: ApplicationRequirementProf
             </div>
           </dl>
           {profile.extractionDiagnostics.reason ? <small>{profile.extractionDiagnostics.reason}</small> : null}
+        </div>
+      ) : null}
+      {profile.diagnostics && !profile.extractionDiagnostics ? (
+        <div className="application-requirement-section application-diagnostics">
+          <strong>Extraction diagnostics</strong>
+          <dl>
+            <div>
+              <dt>Official website</dt>
+              <dd>{profile.diagnostics.officialWebsiteUsed ? profile.diagnostics.officialWebsiteSource || "Yes" : "No"}</dd>
+            </div>
+            <div>
+              <dt>DSIRE skipped</dt>
+              <dd>{profile.diagnostics.dsireAggregatorSkipped ? "Yes" : "No"}</dd>
+            </div>
+            <div>
+              <dt>Application path found</dt>
+              <dd>{profile.diagnostics.applicationPathFound ? "Yes" : "No"}</dd>
+            </div>
+            <div>
+              <dt>Extraction allowed</dt>
+              <dd>{profile.diagnostics.extractionAllowed ? "Yes" : "No"}</dd>
+            </div>
+          </dl>
+          {profile.diagnostics.reason ? <small>{profile.diagnostics.reason}</small> : null}
         </div>
       ) : null}
       {profile.applicationSteps.length ? (
@@ -10936,10 +11087,22 @@ function renderRequirementList(title: string, requirements: ApplicationRequireme
 function applicationPathResultSummary(profile: ApplicationPathProfile) {
   const discoveryStatus = applicationPathDiscoveryStatus(profile);
   const hasEmailPath = applicationPathMethod(profile) === "email" && Boolean(applicationPathContactEmail(profile));
+  if (profile.applicationStatus === "source_unreadable_or_js_required" || discoveryStatus === "source_unreadable_or_js_required") {
+    return "Requirements not extracted: source blocked, unreadable, or JavaScript required.";
+  }
+  if (profile.applicationStatus === "needs_user_selection" || discoveryStatus === "needs_user_selection") {
+    return "Requirements not extracted: official page requires user selection.";
+  }
+  if (profile.applicationStatus === "closed") {
+    return "Application currently closed.";
+  }
+  if (profile.applicationStatus === "funding_exhausted") {
+    return "Application currently closed/funding exhausted.";
+  }
   if (profile.discoveredApplicationUrl || applicationPathPdfUrl(profile) || hasEmailPath) {
     return "Application path found.";
   }
-  if (discoveryStatus === "program_website_only") {
+  if (discoveryStatus === "program_website_only" || discoveryStatus === "program_website_found") {
     return "Program website found; no direct application path found yet.";
   }
   if (discoveryStatus === "source_only") {
@@ -10948,7 +11111,7 @@ function applicationPathResultSummary(profile: ApplicationPathProfile) {
   if (profile.programWebsiteUrl) {
     return "Program website found, application URL not found.";
   }
-  if (discoveryStatus === "unreadable" || profile.pathStatus === "source_unreadable") {
+  if (discoveryStatus === "unreadable" || profile.pathStatus === "source_unreadable" || profile.pathStatus === "source_unreadable_or_js_required") {
     return "Source unreadable.";
   }
   if (profile.pathStatus === "program_source_only") {
@@ -10971,7 +11134,10 @@ function formatApplicationSourceLabel(value: ApplicationSourceType) {
 
 function formatApplicationMethodLabel(value: ApplicationMethod) {
   if (value === "online_portal") return "Online portal";
+  if (value === "online_form") return "Online form";
   if (value === "utility_portal") return "Utility portal";
+  if (value === "grant_package") return "Grant package";
+  if (value === "hybrid_email_online_portal") return "Hybrid email + online portal";
   if (value === "tax_accountant_filing") return "Tax/accountant filing";
   if (value === "contractor_submitted") return "Contractor-submitted";
   if (value === "program_website_only") return "Program website only";
@@ -10988,6 +11154,7 @@ function formatApplicationLinkDiscoveryStatus(value: ApplicationLinkDiscoverySta
   if (value === "program_website_found") return "Program website found";
   if (value === "source_only") return "Source only";
   if (value === "source_unreadable") return "Source unreadable";
+  if (value === "source_unreadable_or_js_required") return "Source unreadable/JS required";
   if (value === "needs_review") return "Needs review";
   return (value as string).replace(/_/g, " ").replace(/\b\w/g, (character: string) => character.toUpperCase());
 }
@@ -11013,12 +11180,15 @@ function formatExtractionStatusLabel(value: SourceExtractionStatus) {
 
 function formatApplicationPathStatusLabel(value: ApplicationPathStatus) {
   if (value === "application_path_found") return "Path found";
+  if (value === "program_website_found") return "Program website found";
   if (value === "program_website_only") return "Program website only";
   if (value === "source_only") return "Source only";
   if (value === "program_source_only") return "Source only";
   if (value === "contact_only") return "Contact only";
   if (value === "unreadable") return "Unreadable";
   if (value === "source_unreadable") return "Unreadable";
+  if (value === "source_unreadable_or_js_required") return "Unreadable/JS required";
+  if (value === "needs_user_selection") return "Needs user selection";
   if (value === "not_attempted") return "Not attempted";
   return "Needs review";
 }
@@ -11026,6 +11196,8 @@ function formatApplicationPathStatusLabel(value: ApplicationPathStatus) {
 function formatRequirementExtractionStatus(value: RequirementExtractionStatus) {
   if (value === "requirements_extracted") return "Requirements extracted";
   if (value === "source_unavailable") return "Source unavailable";
+  if (value === "source_unreadable_or_js_required") return "Source unreadable/JS required";
+  if (value === "needs_user_selection") return "Needs user selection";
   if (value === "not_attempted") return "Not attempted";
   if (value === "partial") return "Partial";
   return "Needs review";
@@ -11040,6 +11212,17 @@ function formatRequirementValue(value: RequirementValueStatus | undefined) {
 function formatRequirementTypeLabel(value: ApplicationRequirementType) {
   if (value === "account_number") return "Account number";
   return value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function formatApplicationStatusLabel(value?: ApplicationStatus) {
+  if (value === "open") return "Open";
+  if (value === "closed") return "Closed";
+  if (value === "funding_exhausted") return "Funding exhausted";
+  if (value === "future_round_expected") return "Future round expected";
+  if (value === "source_unreadable_or_js_required") return "Source unreadable/JS required";
+  if (value === "needs_user_selection") return "Needs user selection";
+  if (value === "needs_review") return "Needs review";
+  return "Unknown";
 }
 
 function formatApplicationMethodStatusLabel(value: ApplicationMethodStatus) {
@@ -11059,14 +11242,15 @@ function applicationPathStatusClassName(value: ApplicationPathStatus) {
   if (value === "application_path_found") return "is-found";
   if (value === "unreadable") return "is-missing";
   if (value === "source_unreadable") return "is-missing";
-  if (value === "program_website_only" || value === "source_only" || value === "program_source_only" || value === "contact_only" || value === "needs_review") return "is-review";
+  if (value === "source_unreadable_or_js_required") return "is-missing";
+  if (value === "program_website_found" || value === "program_website_only" || value === "source_only" || value === "program_source_only" || value === "contact_only" || value === "needs_review" || value === "needs_user_selection") return "is-review";
   return "is-pending";
 }
 
 function requirementStatusClassName(value: RequirementExtractionStatus) {
   if (value === "requirements_extracted") return "is-found";
-  if (value === "source_unavailable") return "is-missing";
-  if (value === "partial" || value === "needs_review") return "is-review";
+  if (value === "source_unavailable" || value === "source_unreadable_or_js_required") return "is-missing";
+  if (value === "partial" || value === "needs_review" || value === "needs_user_selection") return "is-review";
   return "is-pending";
 }
 

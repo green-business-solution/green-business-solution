@@ -1,5 +1,6 @@
 import { buildOpportunityMatchProfile } from "../matching/buildOpportunityMatchProfile.mjs";
 import { classifyRetrofitsForOpportunity } from "../matching/retrofitTaxonomy.mjs";
+import { resolveOfficialProgramWebsite } from "./OfficialProgramWebsiteResolver.mjs";
 
 const APPLICATION_SOURCE_TYPES = new Set([
   "webpage",
@@ -39,6 +40,8 @@ const PORTAL_URL_PATTERN =
   /(portal|apply|application|formstack|customerapplication|salesforce-sites|my\.site\.com|rebate|rebatesdiscounts|financialrequestapplication|capturesportal|app\.|login|account)/i;
 const PDF_URL_PATTERN = /\.pdf(?:$|[?#])/i;
 const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+const CLOSED_OR_EXHAUSTED_PATTERN =
+  /\b(closed for applications?|applications? closed|funding exhausted|fully subscribed|no longer accepting|not accepting applications|funds? (?:are )?exhausted|100% of funding|100% of funding has been awarded)\b/i;
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -265,6 +268,22 @@ function buildSignals(opportunity, urls) {
   };
 }
 
+function applicationStatusHintFromOpportunity(opportunity) {
+  const text = uniqueValues([
+    cleanText(opportunity?.summary),
+    cleanText(opportunity?.summaryHtml),
+    cleanText(opportunity?.raw?.summary),
+    cleanText(opportunity?.raw?.summaryHtml),
+    cleanText(opportunity?.availabilityReview?.status),
+    cleanText(opportunity?.status),
+    ...((opportunity?.details || []).flatMap((detail) => [detail?.label, detail?.value])),
+    ...((opportunity?.dsireClone?.overviewDetails || []).flatMap((detail) => [detail?.label, detail?.value]))
+  ]).join(" ");
+  const match = text.match(CLOSED_OR_EXHAUSTED_PATTERN);
+  if (!match) return undefined;
+  return /funding|funds|100%/i.test(match[0]) ? "funding_exhausted" : "closed";
+}
+
 function resolveRetrofitSummary(opportunity) {
   try {
     const matchProfile = buildOpportunityMatchProfile(opportunity);
@@ -283,15 +302,20 @@ function resolveRetrofitSummary(opportunity) {
   }
 }
 
-function buildBaseResult(opportunity, urls, email, retrofitSummary) {
+function buildBaseResult(opportunity, urls, email, retrofitSummary, officialWebsiteProfile) {
   return {
     opportunityId: String(opportunity?.opportunityId || ""),
     opportunityName: cleanOptional(opportunity?.canonicalTitle) || cleanOptional(opportunity?.normalizedTitle) || undefined,
     retrofitId: retrofitSummary.retrofitId,
     retrofitName: retrofitSummary.retrofitName,
     programSourceUrl: cleanOptional(urls.programSource?.value) || undefined,
+    programWebsiteUrl: cleanOptional(officialWebsiteProfile?.programWebsiteUrl) || undefined,
+    programWebsiteSource: cleanOptional(officialWebsiteProfile?.programWebsiteSource) || undefined,
     applicationUrl: cleanOptional(urls.application?.value) || undefined,
     contactEmail: cleanOptional(email?.value) || undefined,
+    applicationStatusHint: applicationStatusHintFromOpportunity(opportunity),
+    sourceChain: Array.isArray(officialWebsiteProfile?.sourceChain) ? officialWebsiteProfile.sourceChain : [],
+    summaryLinkCandidates: Array.isArray(officialWebsiteProfile?.summaryLinkCandidates) ? officialWebsiteProfile.summaryLinkCandidates : [],
     sourceType: "unknown",
     applicationMethod: "unknown",
     extractionStatus: "not_started",
@@ -313,7 +337,8 @@ export function resolveOpportunityApplicationSource(opportunity) {
   const urls = collectUrlCandidates(opportunity);
   const email = collectEmailCandidates(opportunity);
   const retrofitSummary = resolveRetrofitSummary(opportunity);
-  const result = buildBaseResult(opportunity, urls, email, retrofitSummary);
+  const officialWebsiteProfile = resolveOfficialProgramWebsite(opportunity);
+  const result = buildBaseResult(opportunity, urls, email, retrofitSummary, officialWebsiteProfile);
   const signals = buildSignals(opportunity, urls);
 
   if (urls.application?.source) {
@@ -321,6 +346,12 @@ export function resolveOpportunityApplicationSource(opportunity) {
   }
   if (urls.programSource?.source) {
     result.notes.push(`Program/source URL found in ${urls.programSource.source}.`);
+  }
+  if (officialWebsiteProfile?.programWebsiteUrl) {
+    result.notes.push(`Official program website found from ${officialWebsiteProfile.programWebsiteSource}.`);
+  }
+  for (const note of officialWebsiteProfile?.notes || []) {
+    result.notes.push(note);
   }
   if (email?.source) {
     result.notes.push(`Contact email found in ${email.source}.`);

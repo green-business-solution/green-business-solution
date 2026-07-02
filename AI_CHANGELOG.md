@@ -17,6 +17,12 @@
 - Added simple v2 rate-table runtime calculation support and allowed source-supported v2 tax-credit effects to enter the runtime as tax incentives instead of grants when their calculation method is supported.
 - Regenerated static admin sample savings previews with v2 calculation packages loaded, while recording defaulted inputs so future UI fields can make placeholder assumptions user-editable.
 
+## 2026-07-02 - Codex (GPT-5) application prep official source chain
+
+- Added official program website resolution ahead of DSIRE fallback, including structured `websiteUrl`, `raw.websiteUrl`, `dsireClone.program.websiteUrl`, summary-link classification, source-chain evidence, and application-status hints from existing metadata.
+- Upgraded application path discovery with official-site-first inspection, application artifacts, relevance-ranked link candidates, source unreadable/user-selection/closed status handling, stricter generic-link filtering, and draft ApplicationProfile composition/validation.
+- Added a repeatable `npm run application-prep:first10` audit that generates after-fix JSON/Markdown reports and mocked first-10 regression coverage, with no DynamoDB writes or customer-facing submission behavior.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit picker impact row
 
 - Removed the visible before-click `Select a retrofit to explore` heading and subtitle so the retrofit cards move closer to the upload banner.

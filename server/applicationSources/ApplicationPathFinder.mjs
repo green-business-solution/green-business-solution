@@ -2,8 +2,11 @@ import { cleanSourceText, isBoilerplateSourceText, sanitizeSnippet } from "./Sou
 
 const CONCRETE_APPLICATION_METHODS = new Set([
   "online_portal",
+  "online_form",
   "pdf",
   "email",
+  "grant_package",
+  "hybrid_email_online_portal",
   "contractor_submitted",
   "utility_portal",
   "tax_accountant_filing",
@@ -20,6 +23,7 @@ const APPLICATION_METHODS = new Set([
 const METHOD_STATUSES = new Set(["confirmed", "inferred", "unknown"]);
 const PATH_STATUSES = new Set([
   "application_path_found",
+  "program_website_found",
   "program_website_only",
   "source_only",
   "program_source_only",
@@ -27,15 +31,20 @@ const PATH_STATUSES = new Set([
   "needs_review",
   "unreadable",
   "source_unreadable",
+  "source_unreadable_or_js_required",
+  "needs_user_selection",
   "not_attempted"
 ]);
 const DISCOVERY_STATUSES = new Set([
   "application_path_found",
+  "program_website_found",
   "program_website_only",
   "source_only",
   "contact_only",
   "needs_review",
   "unreadable",
+  "source_unreadable_or_js_required",
+  "needs_user_selection",
   "not_attempted"
 ]);
 const SOURCE_PAGE_LABELS = {
@@ -43,14 +52,15 @@ const SOURCE_PAGE_LABELS = {
   program_source: "program source",
   program_website: "program website",
   candidate_page: "candidate page",
-  application_candidate: "application candidate"
+  application_candidate: "application candidate",
+  official_program_website: "official program website"
 };
 
 const DEFAULT_TIMEOUT_MS = 10_000;
 const DEFAULT_MAX_RESPONSE_BYTES = 500_000;
 const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 const PDF_URL_PATTERN = /\.pdf(?:$|[?#])/i;
-const PDF_APPLICATION_URL_PATTERN = /(application|app|form|rebate|claim|incentive|reservation|pre-approval|preapproval)/i;
+const PDF_APPLICATION_URL_PATTERN = /(application|app(?!endix)|form|rebate|claim|reservation|pre-approval|preapproval|checklist|guidelines?|workbook|foa|nofo)/i;
 const PDF_LINK_TEXT_PATTERN =
   /\b(pdf|application form|rebate form|program form|application pdf|program application|download application|download form|application packet|reservation form)\b/i;
 const APPLY_LINK_TEXT_PATTERN =
@@ -60,11 +70,13 @@ const APPLY_LINK_URL_PATTERN =
 const PORTAL_LINK_TEXT_PATTERN =
   /\b(application portal|apply portal|rebate portal|incentive portal|contractor portal|customer portal|enrollment portal|online portal)\b/i;
 const NON_APPLICATION_LINK_TEXT_PATTERN =
-  /\b(program website|program web site|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details|overview|eligibility|guidelines|faq)\b/i;
+  /\b(program website|program web site|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details|overview|eligibility|faq|forms?\s*&\s*reports?|fillable form help|document help|help|download (?:windows media|quicktime|vlc)|newsletter|sign up|contact us|privacy|accessibility)\b/i;
+const GENERIC_NAV_OR_HELP_LINK_PATTERN =
+  /\b(forms?\s*&\s*reports?|forms?|reports?|fillable form help|document help|help|download (?:windows media|quicktime|vlc)|newsletter|sign up|contact us|privacy|accessibility)\b/i;
 const PROGRAM_WEBSITE_LINK_TEXT_PATTERN =
   /\b(program website|program web site|program url|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details)\b/i;
 const FORMS_PAGE_LINK_TEXT_PATTERN =
-  /\b(forms?|documents?|downloads?|resources?|rebate forms?|application materials?|application documents?|application packet|program forms?)\b/i;
+  /\b(forms?|documents?|downloads?|resources?|rebate forms?|application materials?|application documents?|application packet|program forms?|guidelines?|checklist|foa|nofo|workbook)\b/i;
 const APPLICATION_INSTRUCTION_PATTERN =
   /\b(how to apply|application instructions?|application requirements?|required documents?|documents needed|before you apply|submit application|apply online|rebate application|pre[- ]?approval application|application form|applicants? must provide|submit the following|upload (?:the )?(?:following )?(?:documents?|forms?))\b/i;
 const AGGREGATOR_PATTERN =
@@ -77,6 +89,10 @@ const UTILITY_PATTERN =
   /\b(utility|utilities|public utility district|pud|electric cooperative|electric company|gas and electric|rebate portal|customer portal|utility portal)\b/i;
 const EMAIL_APPLICATION_PATTERN =
   /\b(email|send|submit|contact).{0,120}\b(application|form|rebate|request|documents?|to apply)\b|\b(application|form|rebate|request|documents?|to apply).{0,120}\b(email|send|submit|contact)\b/i;
+const CLOSED_OR_EXHAUSTED_PATTERN =
+  /\b(closed for applications?|applications? closed|funding exhausted|fully subscribed|no longer accepting|not accepting applications|funds? (?:are )?exhausted|100% of funding)\b/i;
+const USER_SELECTION_PATTERN =
+  /\b(select|choose|find|enter).{0,80}\b(town|community|municipal light plant|utility|service territory|zip code|municipality)\b|\bmunicipal light plant selection\b/i;
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -345,6 +361,37 @@ function isSameUrl(a, b) {
   }
 }
 
+function topicTokensForContext(sourceProfile, opportunity) {
+  const text = [
+    sourceProfile?.opportunityName,
+    opportunity?.canonicalTitle,
+    opportunity?.normalizedTitle,
+    opportunity?.category,
+    opportunity?.programType,
+    ...(Array.isArray(opportunity?.technologies) ? opportunity.technologies : [])
+  ]
+    .join(" ")
+    .toLowerCase();
+  return [...new Set((text.match(/[a-z0-9-]{4,}/g) || []).filter((token) => !["program", "rebate", "grant", "loan", "residential", "commercial", "energy"].includes(token)))].slice(0, 12);
+}
+
+function topicRelevanceScore(anchor, sourceProfile, opportunity) {
+  const tokens = topicTokensForContext(sourceProfile, opportunity);
+  if (!tokens.length) return 0;
+  const haystack = [anchor?.text, anchor?.url, anchor?.nearbyText].join(" ").toLowerCase();
+  return tokens.reduce((score, token) => score + (haystack.includes(token) ? 2 : 0), 0);
+}
+
+function unrelatedPenalty(anchor, sourceProfile, opportunity) {
+  const title = [sourceProfile?.opportunityName, opportunity?.canonicalTitle, opportunity?.normalizedTitle].join(" ").toLowerCase();
+  const haystack = [anchor?.text, anchor?.url].join(" ").toLowerCase();
+  let penalty = 0;
+  if (title.includes("solar") && /\bgas\b|gas-service|gasline|gas-line|time-of-use|cutoff|cut-off|demo/.test(haystack)) penalty += 16;
+  if (title.includes("c-pace") && /\bagricultural|compressed-air|appendix-a|appendix-h\b/.test(haystack) && !/c-pace|project-application|program-guidelines/i.test(haystack)) penalty += 12;
+  if (title.includes("school") && /\bveterans|w2|act-32|employer|local-government|publications/.test(haystack)) penalty += 12;
+  return penalty;
+}
+
 function isAggregatorContext(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle) {
   const sourceText = [
     sourceProfile?.programSourceUrl,
@@ -489,18 +536,76 @@ function addLinkCandidate(profile, candidate) {
     return;
   }
   profile.candidates.push(normalized);
+  if (["application_url", "pdf_application", "portal", "program_website", "contact_email", "contractor_portal", "forms_page", "application_instructions"].includes(normalized.linkType)) {
+    addArtifactFromCandidate(profile, normalized);
+  }
 }
 
-function applicationLinkScore(anchor) {
+function artifactTypeForCandidate(candidate) {
+  if (!candidate) return "supporting_document";
+  if (candidate.linkType === "pdf_application") return "pdf";
+  if (candidate.linkType === "portal") return "application_portal";
+  if (candidate.linkType === "application_url") return /form|jotform|zoho/i.test(candidate.url || candidate.label || "") ? "online_form" : "application_portal";
+  if (candidate.linkType === "contractor_portal") return "contractor_portal";
+  if (candidate.linkType === "contact_email") return "email_submission";
+  if (candidate.linkType === "tax_guidance") return "supporting_document";
+  if (candidate.linkType === "forms_page") return "supporting_document";
+  if (candidate.linkType === "application_instructions") return "application_portal";
+  if (candidate.linkType === "program_website") return "program_website";
+  return "supporting_document";
+}
+
+function addApplicationArtifact(profile, artifact) {
+  if (!artifact || (!artifact.url && !artifact.email) || !artifact.type) return;
+  const normalized = {
+    type: artifact.type,
+    label: cleanText(artifact.label || artifact.url || artifact.email || artifact.type),
+    url: cleanOptional(artifact.url),
+    email: cleanOptional(artifact.email),
+    evidenceSnippet: cleanOptional(safeSnippet(artifact.evidenceSnippet || artifact.label || artifact.url || artifact.email)),
+    sourceUrl: cleanOptional(artifact.sourceUrl),
+    confidence: artifact.confidence || "Medium"
+  };
+  const key = [normalized.type, normalized.url || normalized.email, normalized.sourceUrl].join("|");
+  if (profile.applicationArtifacts.some((item) => [item.type, item.url || item.email, item.sourceUrl].join("|") === key)) {
+    return;
+  }
+  profile.applicationArtifacts.push(normalized);
+}
+
+function addArtifactFromCandidate(profile, candidate) {
+  if (!candidate) return;
+  addApplicationArtifact(profile, {
+    type: artifactTypeForCandidate(candidate),
+    label: candidate.label || candidate.linkType,
+    url: candidate.url,
+    email: candidate.email,
+    sourceUrl: candidate.sourcePageUrl,
+    evidenceSnippet: candidate.evidenceSnippet,
+    confidence: candidate.confidence
+  });
+}
+
+function applicationLinkScore(anchor, { sourceProfile = {}, opportunity = {} } = {}) {
   if (!isHttpUrl(anchor?.url) || isPdfUrl(anchor?.url)) return 0;
 
   const text = cleanText(anchor.text);
   const url = cleanText(anchor.url);
+  const combined = [text, url, anchor.nearbyText].join(" ");
+  if (GENERIC_NAV_OR_HELP_LINK_PATTERN.test(combined) && !/\b(apply|application|application portal|submit application|online application|rebate application|pre[- ]?approval|interest form|request rebate)\b/i.test(combined)) {
+    return 0;
+  }
   let score = 0;
 
   if (APPLY_LINK_TEXT_PATTERN.test(text)) score += 6;
   if (PORTAL_LINK_TEXT_PATTERN.test(text)) score += 6;
   if (APPLY_LINK_URL_PATTERN.test(url)) score += 4;
+  if (/\b(grants\.pa\.gov|rebates\.nextzero\.org|form\.jotform\.com|jotform|zoho|forms\.zohopublic\.com)\b/i.test(url)) score += 7;
+  if (/^apply$/i.test(text)) score += 3;
+  if (/\bhow to apply\b/i.test(text) && !/\b(grants\.pa\.gov|jotform|zoho|portal|login)\b/i.test(url)) score -= 5;
+  if (score <= 0) return 0;
+  score += topicRelevanceScore(anchor, sourceProfile, opportunity);
+  score -= unrelatedPenalty(anchor, sourceProfile, opportunity);
 
   if (NON_APPLICATION_LINK_TEXT_PATTERN.test(text) && !APPLY_LINK_TEXT_PATTERN.test(text) && !PORTAL_LINK_TEXT_PATTERN.test(text)) {
     score -= 8;
@@ -509,7 +614,7 @@ function applicationLinkScore(anchor) {
   return score;
 }
 
-function linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext }) {
+function linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext, sourceProfile, opportunity }) {
   if (!anchor) return null;
   if (/^mailto:/i.test(anchor.href || "")) {
     const email = mailtoEmail(anchor);
@@ -527,14 +632,16 @@ function linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext }) {
   }
   if (!isHttpUrl(anchor.url)) return null;
   if (isApplicationPdfLink(anchor)) {
+    const score = pdfLinkScore(anchor, sourceProfile, opportunity);
+    if (score <= 0) return null;
     return {
       url: anchor.url,
       linkType: "pdf_application",
       label: anchor.text || anchor.url,
       sourcePageUrl: sourceUrl,
       evidenceSnippet: anchor.text || anchor.nearbyText || anchor.url,
-      score: 95,
-      reason: "Link points to a PDF and its text or URL indicates an application/form."
+      score,
+      reason: "Link points to a PDF and its text or URL indicates an application/form/checklist/guideline artifact."
     };
   }
   if (PORTAL_LINK_TEXT_PATTERN.test(anchor.text || "") || /portal/i.test(anchor.url || "")) {
@@ -549,7 +656,7 @@ function linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext }) {
       reason: isContractor ? "Link appears to be a contractor or installer portal." : "Link appears to be an application or rebate portal."
     };
   }
-  const applyScore = applicationLinkScore(anchor);
+  const applyScore = applicationLinkScore(anchor, { sourceProfile, opportunity });
   if (applyScore > 0) {
     return {
       url: anchor.url,
@@ -575,9 +682,9 @@ function linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext }) {
   return null;
 }
 
-function collectAnchorCandidates(profile, anchors, { sourceUrl, utilityContext }) {
+function collectAnchorCandidates(profile, anchors, { sourceUrl, utilityContext, sourceProfile, opportunity }) {
   for (const anchor of anchors) {
-    addLinkCandidate(profile, linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext }));
+    addLinkCandidate(profile, linkCandidateFromAnchor(anchor, { sourceUrl, utilityContext, sourceProfile, opportunity }));
   }
 }
 
@@ -587,9 +694,28 @@ function findCandidatePageLink(profile, sourceUrl) {
     .sort((a, b) => b.score - a.score)[0] || null;
 }
 
-function findBestApplyLink(anchors) {
+function pdfLinkScore(anchor, sourceProfile, opportunity) {
+  if (!isApplicationPdfLink(anchor)) return 0;
+  const text = [anchor.text, anchor.url, anchor.nearbyText].join(" ");
+  let score = 60;
+  if (/\b(application|application form|rebate form|interconnection application|project application guide|checklist|guidelines|foa|nofo|workbook)\b/i.test(text)) score += 25;
+  if (PDF_APPLICATION_URL_PATTERN.test(anchor.url || "")) score += 10;
+  score += topicRelevanceScore(anchor, sourceProfile, opportunity);
+  score -= unrelatedPenalty(anchor, sourceProfile, opportunity);
+  if (GENERIC_NAV_OR_HELP_LINK_PATTERN.test(text)) score -= 20;
+  return score;
+}
+
+function findBestPdfLink(anchors, sourceProfile, opportunity) {
   return anchors
-    .map((anchor) => ({ anchor, score: applicationLinkScore(anchor) }))
+    .map((anchor) => ({ anchor, score: pdfLinkScore(anchor, sourceProfile, opportunity) }))
+    .filter((candidate) => candidate.score > 0)
+    .sort((a, b) => b.score - a.score)[0]?.anchor || null;
+}
+
+function findBestApplyLink(anchors, sourceProfile, opportunity) {
+  return anchors
+    .map((anchor) => ({ anchor, score: applicationLinkScore(anchor, { sourceProfile, opportunity }) }))
     .filter((candidate) => candidate.score > 0)
     .sort((a, b) => b.score - a.score)[0]?.anchor || null;
 }
@@ -597,8 +723,11 @@ function findBestApplyLink(anchors) {
 function legacyPathStatusForDiscovery(discoveryStatus) {
   if (discoveryStatus === "application_path_found") return "application_path_found";
   if (discoveryStatus === "contact_only") return "contact_only";
-  if (discoveryStatus === "program_website_only" || discoveryStatus === "source_only") return "program_source_only";
-  if (discoveryStatus === "unreadable") return "source_unreadable";
+  if (discoveryStatus === "program_website_found" || discoveryStatus === "program_website_only") return "program_website_found";
+  if (discoveryStatus === "source_only") return "program_source_only";
+  if (discoveryStatus === "source_unreadable_or_js_required") return "source_unreadable_or_js_required";
+  if (discoveryStatus === "needs_user_selection") return "needs_user_selection";
+  if (discoveryStatus === "unreadable") return "source_unreadable_or_js_required";
   if (discoveryStatus === "not_attempted") return "not_attempted";
   return "needs_review";
 }
@@ -610,6 +739,15 @@ function setOutcome(profile, { applicationMethod, confirmedApplicationMethod, me
   profile.discoveryStatus = discoveryStatus || profile.discoveryStatus || "needs_review";
   profile.pathStatus = legacyPathStatusForDiscovery(profile.discoveryStatus);
   profile.confidence = confidence || profile.confidence || "Low";
+  if (["application_path_found", "contact_only"].includes(profile.discoveryStatus) && ["unknown", "needs_review"].includes(profile.applicationStatus || "unknown")) {
+    profile.applicationStatus = "open";
+  }
+  if (profile.discoveryStatus === "source_unreadable_or_js_required") {
+    profile.applicationStatus = "source_unreadable_or_js_required";
+  }
+  if (profile.discoveryStatus === "needs_user_selection") {
+    profile.applicationStatus = "needs_user_selection";
+  }
 }
 
 function hasConcreteDiscoveredPath(profile) {
@@ -689,7 +827,7 @@ function syncBestCandidates(profile) {
   const bestEmail = profile.candidates.find((candidate) => candidate.linkType === "contact_email" && candidate.email && candidate.score >= 65);
 
   profile.bestPdfUrl = cleanOptional(profile.bestPdfUrl || profile.discoveredPdfUrl || profile.pdfUrl || bestPdf?.url);
-  profile.bestApplicationUrl = cleanOptional(profile.bestApplicationUrl || profile.discoveredApplicationUrl || bestApplication?.url || profile.bestPdfUrl);
+  profile.bestApplicationUrl = cleanOptional(profile.bestApplicationUrl || (profile.discoveredApplicationUrl && !isPdfUrl(profile.discoveredApplicationUrl) ? profile.discoveredApplicationUrl : "") || bestApplication?.url);
   profile.bestContactEmail = cleanOptional(profile.bestContactEmail || profile.discoveredContactEmail || profile.contactEmail || bestEmail?.email);
 }
 
@@ -706,15 +844,17 @@ function linkDiscoveryStatusForProfile(profile) {
 function buildBaseProfile(input) {
   const sourceProfile = sourceProfileFromInput(input);
   const opportunity = input?.opportunity || {};
-  const originalSourceUrl = cleanOptional(firstHttpUrl(sourceProfile?.programSourceUrl, opportunity?.sourceUrl, opportunity?.websiteUrl));
+  const originalSourceUrl = cleanOptional(firstHttpUrl(sourceProfile?.programSourceUrl, opportunity?.sourceUrl, opportunity?.sourceUrl));
+  const programWebsiteUrl = cleanOptional(firstHttpUrl(sourceProfile?.programWebsiteUrl, opportunity?.websiteUrl, opportunity?.raw?.websiteUrl, opportunity?.dsireClone?.program?.websiteUrl));
   return {
     opportunityId: String(sourceProfile?.opportunityId || opportunity?.opportunityId || ""),
     opportunityName: cleanOptional(sourceProfile?.opportunityName || opportunity?.canonicalTitle || opportunity?.normalizedTitle),
     originalSourceUrl,
     programSourceUrl: originalSourceUrl,
+    programWebsiteUrl,
+    programWebsiteSource: cleanOptional(sourceProfile?.programWebsiteSource),
     isAggregatorSource: false,
     aggregatorType: "unknown",
-    programWebsiteUrl: undefined,
     discoveredApplicationUrl: undefined,
     discoveredPdfUrl: undefined,
     discoveredContactEmail: undefined,
@@ -723,7 +863,23 @@ function buildBaseProfile(input) {
     bestContactEmail: undefined,
     pdfUrl: undefined,
     contactEmail: undefined,
+    applicationUrl: undefined,
+    applicationArtifacts: programWebsiteUrl
+      ? [
+          {
+            type: "program_website",
+            label: "Official program website",
+            url: programWebsiteUrl,
+            sourceUrl: originalSourceUrl,
+            confidence: "High",
+            evidenceSnippet: sourceProfile?.programWebsiteSource
+              ? `Official website found from ${sourceProfile.programWebsiteSource}.`
+              : "Official website found from opportunity metadata."
+          }
+        ]
+      : [],
     applicationMethod: "unknown",
+    applicationStatus: cleanOptional(sourceProfile?.applicationStatusHint) || "unknown",
     linkDiscoveryStatus: "needs_review",
     discoveryStatus: "not_attempted",
     confidence: "Needs review",
@@ -735,6 +891,7 @@ function buildBaseProfile(input) {
     evidence: [],
     sourceFetchedAt: undefined,
     sourceTitle: undefined,
+    sourceChain: Array.isArray(sourceProfile?.sourceChain) ? sourceProfile.sourceChain : [],
     error: undefined,
     notes: []
   };
@@ -746,10 +903,12 @@ function finalizeProfile(profile) {
   profile.discoveredPdfUrl = cleanOptional(profile.discoveredPdfUrl || profile.pdfUrl);
   profile.discoveredContactEmail = cleanOptional(profile.discoveredContactEmail || profile.contactEmail);
   syncBestCandidates(profile);
+  profile.applicationUrl = cleanOptional(profile.applicationUrl || profile.bestApplicationUrl || (profile.discoveredApplicationUrl && !isPdfUrl(profile.discoveredApplicationUrl) ? profile.discoveredApplicationUrl : ""));
   profile.linkDiscoveryStatus = linkDiscoveryStatusForProfile(profile);
   profile.applicationMethod = cleanText(profile.applicationMethod || profile.confirmedApplicationMethod || "unknown");
   profile.discoveryStatus = cleanText(profile.discoveryStatus || profile.pathStatus || "needs_review");
   profile.confidence = cleanText(profile.confidence || "Low");
+  profile.applicationStatus = cleanText(profile.applicationStatus || "unknown");
 
   if (!APPLICATION_METHODS.has(profile.applicationMethod)) profile.applicationMethod = "unknown";
   if (!APPLICATION_METHODS.has(profile.confirmedApplicationMethod)) profile.confirmedApplicationMethod = "unknown";
@@ -757,6 +916,16 @@ function finalizeProfile(profile) {
   if (!PATH_STATUSES.has(profile.pathStatus)) profile.pathStatus = "needs_review";
   if (!DISCOVERY_STATUSES.has(profile.discoveryStatus)) profile.discoveryStatus = "needs_review";
   if (!["High", "Medium", "Low", "Needs review"].includes(profile.confidence)) profile.confidence = "Low";
+  if (!["open", "closed", "funding_exhausted", "future_round_expected", "source_unreadable_or_js_required", "needs_user_selection", "needs_review", "unknown"].includes(profile.applicationStatus)) {
+    profile.applicationStatus = "unknown";
+  }
+  const artifactSeen = new Set();
+  profile.applicationArtifacts = (profile.applicationArtifacts || []).filter((artifact) => {
+    const key = [artifact.type, artifact.url || artifact.email, artifact.sourceUrl].join("|");
+    if (!artifact.type || artifactSeen.has(key)) return false;
+    artifactSeen.add(key);
+    return true;
+  }).slice(0, 20);
   profile.evidence = profile.evidence.filter((item) => item?.label);
   profile.notes = uniqueValues(profile.notes.map(cleanText)).filter(Boolean);
   return profile;
@@ -856,12 +1025,14 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
   const aggregatorType = aggregatorTypeForSource(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle);
   const programWebsiteLink = allowProgramWebsiteDiscovery ? findProgramWebsiteLink(anchors, sourceUrl, isAggregator) : null;
   const dsireDataCandidates = allowProgramWebsiteDiscovery && (isDsire || isAggregator) ? extractDsireDataCandidates(html, sourceUrl) : {};
-  const pdfLink = anchors.find((anchor) => isHttpUrl(anchor.url) && isApplicationPdfLink(anchor));
-  const applyLink = findBestApplyLink(anchors);
+  const pdfLink = findBestPdfLink(anchors, sourceProfile, opportunity);
+  const applyLink = findBestApplyLink(anchors, sourceProfile, opportunity);
   const contractorSnippet = snippetForPattern(pageText, CONTRACTOR_PATTERN);
   const taxSnippet = snippetForPattern(pageText, TAX_PATTERN);
   const emailResult = findEmailEvidence(anchors, pageText, sourcePage, sourceUrl);
   const hasEmailApplicationLanguage = EMAIL_APPLICATION_PATTERN.test(pageText);
+  const closedSnippet = snippetForPattern(pageText, CLOSED_OR_EXHAUSTED_PATTERN);
+  const needsSelectionSnippet = snippetForPattern(pageText, USER_SELECTION_PATTERN);
 
   if (sourcePage === "program_source") {
     profile.sourceTitle = sourceTitle;
@@ -874,7 +1045,31 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
     status: "fetched",
     title: sourceTitle
   });
-  collectAnchorCandidates(profile, anchors, { sourceUrl, utilityContext });
+  collectAnchorCandidates(profile, anchors, { sourceUrl, utilityContext, sourceProfile, opportunity });
+
+  if (closedSnippet) {
+    profile.applicationStatus = /funding|funds|100%/i.test(closedSnippet) ? "funding_exhausted" : "closed";
+    profile.evidence.push(evidenceFromSnippet({
+      label: profile.applicationStatus === "funding_exhausted" ? "Funding exhausted/awarded language found" : "Closed application language found",
+      textSnippet: closedSnippet,
+      sourcePage,
+      sourceUrl,
+      reason: "The inspected page states applications are closed, not accepting, or funding is exhausted."
+    }));
+    profile.notes.push(profile.applicationStatus === "funding_exhausted" ? "Application appears funding-exhausted or fully awarded." : "Application appears closed on the inspected source.");
+  }
+
+  if (needsSelectionSnippet && !hasConcreteDiscoveredPath(profile)) {
+    profile.applicationStatus = "needs_user_selection";
+    profile.evidence.push(evidenceFromSnippet({
+      label: "User selection required",
+      textSnippet: needsSelectionSnippet,
+      sourcePage,
+      sourceUrl,
+      reason: "The inspected page requires a utility, town, municipality, ZIP, or service-territory selection before a final application path can be confirmed."
+    }));
+    profile.notes.push("Official page appears to require user selection before final application requirements can be identified.");
+  }
 
   if (programWebsiteLink) {
     profile.programWebsiteUrl = programWebsiteLink.url;
@@ -980,7 +1175,7 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
     });
   }
 
-  if (pdfLink) {
+  if (pdfLink && !applyLink) {
     profile.discoveredPdfUrl = pdfLink.url;
     profile.discoveredApplicationUrl = pdfLink.url;
     profile.pdfUrl = pdfLink.url;
@@ -1072,7 +1267,14 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
 
   if (applyLink) {
     profile.discoveredApplicationUrl = applyLink.url;
-    const applicationMethod = utilityContext ? "utility_portal" : "online_portal";
+    const applyTarget = applyLink.url || applyLink.text || "";
+    const applicationMethod = /grants\.pa\.gov|grant|funding portal/i.test(applyTarget)
+      ? "online_portal"
+      : /jotform|zoho|forms?\.|interest-form|application-payment|\/form/i.test(applyTarget)
+        ? "online_form"
+        : utilityContext
+          ? "utility_portal"
+          : "online_portal";
     setOutcome(profile, {
       applicationMethod,
       confirmedApplicationMethod: applicationMethod,
@@ -1157,8 +1359,8 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
     return;
   }
 
-  const applicationMethod = profile.programWebsiteUrl ? "program_website_only" : "source_only";
-  const discoveryStatus = profile.programWebsiteUrl ? "program_website_only" : "source_only";
+  const applicationMethod = "unknown";
+  const discoveryStatus = profile.programWebsiteUrl ? "program_website_found" : "source_only";
   setOutcome(profile, {
     applicationMethod,
     confirmedApplicationMethod: inferredMethod,
@@ -1188,11 +1390,21 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
   const maxResponseBytes = Math.max(50_000, Number(options.maxResponseBytes || DEFAULT_MAX_RESPONSE_BYTES));
   const now = typeof options.now === "function" ? options.now : () => new Date();
 
+  if (sourceProfile?.applicationStatusHint && sourceProfile.applicationStatusHint !== "unknown") {
+    profile.notes.push(`Opportunity metadata indicates application status: ${sourceProfile.applicationStatusHint}.`);
+    profile.evidence.push({
+      label: "Application status hint from opportunity metadata",
+      textSnippet: `Application status hint: ${sourceProfile.applicationStatusHint}`,
+      sourcePage: sourcePageLabel("metadata"),
+      reason: "Existing opportunity summary/status metadata included closed or funding-exhausted language."
+    });
+  }
+
   if (applyExistingApplicationUrl(profile, sourceProfile, opportunity)) {
     return finalizeProfile(profile);
   }
 
-  const sourceUrl = firstHttpUrl(profile.programSourceUrl, sourceProfile?.programSourceUrl, sourceProfile?.applicationUrl);
+  const sourceUrl = firstHttpUrl(profile.programWebsiteUrl, profile.programSourceUrl, sourceProfile?.programWebsiteUrl, sourceProfile?.programSourceUrl, sourceProfile?.applicationUrl);
   if (!sourceUrl) {
     const existingEmail = extractEmail(sourceProfile?.contactEmail || opportunity?.contactEmail || opportunity?.email);
     if (existingEmail) {
@@ -1219,7 +1431,21 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
     return finalizeProfile(profile);
   }
 
-  profile.programSourceUrl = sourceUrl;
+  const inspectingOfficialWebsite = Boolean(profile.programWebsiteUrl && isSameUrl(sourceUrl, profile.programWebsiteUrl));
+  if (!profile.programSourceUrl && !inspectingOfficialWebsite) {
+    profile.programSourceUrl = sourceUrl;
+  }
+  if (inspectingOfficialWebsite && profile.programSourceUrl && isDsireSourceUrl(profile.programSourceUrl)) {
+    profile.isAggregatorSource = true;
+    profile.aggregatorType = "dsire";
+    addPageInspected(profile, {
+      url: profile.programSourceUrl,
+      role: "aggregator",
+      status: "skipped",
+      error: "DSIRE used only as aggregator/source reference because structured official website URL was available."
+    });
+    profile.notes.push("DSIRE used only as aggregator/source reference; official program website was inspected first.");
+  }
 
   try {
     const fetched = await fetchSourceText(sourceUrl, {
@@ -1273,8 +1499,8 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
       opportunity,
       sourceUrl,
       html: fetched.text,
-      sourcePage: "program_source",
-      allowProgramWebsiteDiscovery: true
+      sourcePage: inspectingOfficialWebsite ? "program_website" : "program_source",
+      allowProgramWebsiteDiscovery: !inspectingOfficialWebsite
     });
 
     if (shouldFollowProgramWebsite(profile, sourceUrl, options)) {
@@ -1327,10 +1553,10 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
           error: profile.error
         });
         setOutcome(profile, {
-          applicationMethod: "needs_review",
+          applicationMethod: "unknown",
           confirmedApplicationMethod: profile.confirmedApplicationMethod,
           methodStatus: profile.methodStatus,
-          discoveryStatus: "needs_review",
+          discoveryStatus: "source_unreadable_or_js_required",
           confidence: "Needs review"
         });
         profile.evidence.push({
@@ -1415,20 +1641,20 @@ export async function findOpportunityApplicationPath(input = {}, options = {}) {
     if (sourceUrl) {
       addPageInspected(profile, {
         url: sourceUrl,
-        role: isDsireSourceUrl(sourceUrl) ? "aggregator" : "application_candidate",
+        role: inspectingOfficialWebsite ? "program_website" : isDsireSourceUrl(sourceUrl) ? "aggregator" : "application_candidate",
         status: "failed",
         error: safeErrorMessage(error)
       });
     }
     setOutcome(profile, {
-      applicationMethod: "unreadable",
+      applicationMethod: "unknown",
       confirmedApplicationMethod: inferredMethod,
       methodStatus: inferredMethod === "unknown" ? "unknown" : "inferred",
-      discoveryStatus: "unreadable",
+      discoveryStatus: "source_unreadable_or_js_required",
       confidence: "Needs review"
     });
     profile.error = safeErrorMessage(error);
-    profile.notes.push("Source page could not be fetched or read for application path discovery.");
+    profile.notes.push("Source page could not be fetched or read for application path discovery; source may be blocked, unreadable, or JavaScript-required.");
     return finalizeProfile(profile);
   }
 }

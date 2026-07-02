@@ -2,15 +2,26 @@ import { cleanSourceText, isBoilerplateSourceText, sanitizeSnippet } from "./Sou
 
 const APPLICATION_METHODS = new Set([
   "online_portal",
+  "online_form",
   "pdf",
   "email",
+  "grant_package",
+  "hybrid_email_online_portal",
   "contractor_submitted",
   "utility_portal",
   "tax_accountant_filing",
   "unknown"
 ]);
 
-const EXTRACTION_STATUSES = new Set(["requirements_extracted", "partial", "needs_review", "source_unavailable", "not_attempted"]);
+const EXTRACTION_STATUSES = new Set([
+  "requirements_extracted",
+  "partial",
+  "needs_review",
+  "source_unavailable",
+  "source_unreadable_or_js_required",
+  "needs_user_selection",
+  "not_attempted"
+]);
 const DEFAULT_TIMEOUT_MS = 10_000;
 const DEFAULT_MAX_RESPONSE_BYTES = 600_000;
 const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
@@ -237,6 +248,7 @@ function normalizeApplicationMethod(value) {
 
 function chooseRequirementSource(sourceProfile, pathProfile, opportunity) {
   return firstHttpUrl(
+    pathProfile?.applicationUrl,
     pathProfile?.bestApplicationUrl,
     pathProfile?.bestPdfUrl,
     pathProfile?.discoveredApplicationUrl,
@@ -266,6 +278,7 @@ function buildBaseProfile(input) {
     applicationUrl: cleanOptional(firstHttpUrl(pathProfile?.discoveredApplicationUrl, pathProfile?.discoveredPdfUrl, pathProfile?.pdfUrl, sourceProfile?.applicationUrl, opportunity?.applicationUrl)),
     programWebsiteUrl: cleanOptional(firstHttpUrl(pathProfile?.programWebsiteUrl)),
     applicationMethod,
+    applicationStatus: cleanOptional(pathProfile?.applicationStatus) || "unknown",
     extractionStatus: "not_attempted",
     requiredFields: [],
     requiredDocuments: [],
@@ -276,7 +289,17 @@ function buildBaseProfile(input) {
     deadline: undefined,
     estimatedTime: undefined,
     applicationSteps: [],
+    applicationArtifacts: Array.isArray(pathProfile?.applicationArtifacts) ? pathProfile.applicationArtifacts : [],
     evidence: [],
+    diagnostics: {
+      officialWebsiteUsed: Boolean(pathProfile?.programWebsiteUrl),
+      officialWebsiteSource: cleanOptional(pathProfile?.programWebsiteSource),
+      dsireAggregatorSkipped: Boolean(pathProfile?.isAggregatorSource && pathProfile?.programWebsiteUrl),
+      applicationPathFound: Boolean(pathProfile?.bestApplicationUrl || pathProfile?.bestPdfUrl || pathProfile?.discoveredApplicationUrl || pathProfile?.discoveredPdfUrl || pathProfile?.pdfUrl),
+      applicationSpecificSectionFound: false,
+      extractionAllowed: false,
+      reason: "Extraction has not been attempted."
+    },
     extractionDiagnostics: {
       sourceUsed: cleanOptional(sourceUrl),
       isAggregatorSource: Boolean(pathProfile?.isAggregatorSource),
@@ -294,6 +317,9 @@ function buildBaseProfile(input) {
 function finalizeProfile(profile) {
   if (!APPLICATION_METHODS.has(profile.applicationMethod)) profile.applicationMethod = "unknown";
   if (!EXTRACTION_STATUSES.has(profile.extractionStatus)) profile.extractionStatus = "needs_review";
+  if (!["open", "closed", "funding_exhausted", "future_round_expected", "source_unreadable_or_js_required", "needs_user_selection", "needs_review", "unknown"].includes(profile.applicationStatus)) {
+    profile.applicationStatus = "unknown";
+  }
   profile.requiredFields = dedupeRequirements(profile.requiredFields);
   profile.requiredDocuments = dedupeRequirements(profile.requiredDocuments);
   profile.optionalFields = dedupeRequirements(profile.optionalFields);
@@ -342,10 +368,12 @@ function hasApplicationSpecificSection(text, units) {
 
 function hasReliableApplicationPath(pathProfile, profile) {
   const method = normalizeApplicationMethod(pathProfile?.applicationMethod || pathProfile?.confirmedApplicationMethod || profile.applicationMethod);
+  if (pathProfile?.applicationUrl) return true;
   if (pathProfile?.bestPdfUrl || pathProfile?.discoveredPdfUrl || pathProfile?.pdfUrl) return true;
   if (pathProfile?.bestApplicationUrl || pathProfile?.discoveredApplicationUrl) return true;
   if (method === "email" && (pathProfile?.bestContactEmail || pathProfile?.discoveredContactEmail || pathProfile?.contactEmail) && pathProfile?.methodStatus === "confirmed") return true;
   if (["contractor_submitted", "tax_accountant_filing"].includes(method) && pathProfile?.methodStatus === "confirmed") return true;
+  if ((pathProfile?.applicationArtifacts || []).some((artifact) => ["application_portal", "online_form", "pdf", "email_submission", "grant_package", "pre_approval_form", "post_install_form"].includes(artifact?.type))) return true;
   return false;
 }
 
@@ -413,6 +441,29 @@ function addEvidence(profile, label, sourceUrl, textSnippet) {
     sourceUrl,
     textSnippet: safeSnippet(textSnippet)
   });
+}
+
+function setExtractionDiagnostics(profile, values = {}) {
+  profile.diagnostics = {
+    ...profile.diagnostics,
+    officialWebsiteUsed: Boolean(values.officialWebsiteUsed ?? profile.diagnostics?.officialWebsiteUsed),
+    officialWebsiteSource: cleanOptional(values.officialWebsiteSource || profile.diagnostics?.officialWebsiteSource),
+    dsireAggregatorSkipped: Boolean(values.dsireAggregatorSkipped ?? profile.diagnostics?.dsireAggregatorSkipped),
+    applicationPathFound: Boolean(values.applicationPathFound ?? profile.diagnostics?.applicationPathFound),
+    applicationSpecificSectionFound: Boolean(values.applicationSpecificSectionFound ?? profile.diagnostics?.applicationSpecificSectionFound),
+    extractionAllowed: Boolean(values.extractionAllowed ?? profile.diagnostics?.extractionAllowed),
+    reason: cleanOptional(values.reason || profile.diagnostics?.reason)
+  };
+  profile.extractionDiagnostics = {
+    ...profile.extractionDiagnostics,
+    sourceUsed: cleanOptional(values.sourceUsed || profile.extractionDiagnostics?.sourceUsed),
+    isAggregatorSource: Boolean(values.isAggregatorSource ?? profile.extractionDiagnostics?.isAggregatorSource),
+    aggregatorType: cleanOptional(values.aggregatorType || profile.extractionDiagnostics?.aggregatorType),
+    applicationPathFound: profile.diagnostics.applicationPathFound,
+    applicationSpecificSectionFound: profile.diagnostics.applicationSpecificSectionFound,
+    extractionAllowed: profile.diagnostics.extractionAllowed,
+    reason: profile.diagnostics.reason
+  };
 }
 
 function extractDeadline(units) {
@@ -489,7 +540,32 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
   if (!profile.sourceUrl) {
     profile.extractionStatus = "source_unavailable";
     profile.notes.push("No application URL, PDF URL, program website URL, or program source URL was available for requirement extraction.");
-    profile.extractionDiagnostics.reason = "No source URL was available for requirement extraction.";
+    setExtractionDiagnostics(profile, {
+      extractionAllowed: false,
+      reason: "No source URL was available for requirement extraction."
+    });
+    return finalizeProfile(profile);
+  }
+
+  if (pathProfile?.applicationStatus === "source_unreadable_or_js_required" || pathProfile?.pathStatus === "source_unreadable_or_js_required") {
+    profile.extractionStatus = "source_unreadable_or_js_required";
+    profile.notes.push("Requirements not extracted because the official source appears blocked, unreadable, or JavaScript-required.");
+    setExtractionDiagnostics(profile, {
+      sourceUsed: profile.sourceUrl,
+      extractionAllowed: false,
+      reason: "Requirements not extracted: source blocked, unreadable, or JavaScript required."
+    });
+    return finalizeProfile(profile);
+  }
+
+  if (pathProfile?.applicationStatus === "needs_user_selection" || pathProfile?.pathStatus === "needs_user_selection") {
+    profile.extractionStatus = "needs_user_selection";
+    profile.notes.push("Requirements not extracted because the official page requires user selection before a final application path can be confirmed.");
+    setExtractionDiagnostics(profile, {
+      sourceUsed: profile.sourceUrl,
+      extractionAllowed: false,
+      reason: "Requirements not extracted: official page requires user selection."
+    });
     return finalizeProfile(profile);
   }
 
@@ -507,7 +583,11 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
     if (!text) {
       profile.extractionStatus = "needs_review";
       profile.notes.push("Requirement source was readable but did not contain extractable text.");
-      profile.extractionDiagnostics.reason = "Readable source did not contain extractable non-boilerplate text.";
+      setExtractionDiagnostics(profile, {
+        sourceUsed: profile.sourceUrl,
+        extractionAllowed: false,
+        reason: "Readable source did not contain extractable non-boilerplate text."
+      });
       return finalizeProfile(profile);
     }
 
@@ -516,10 +596,13 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
     const requirementContextFound = applicationSpecificSectionFound || reliableApplicationPathFound || fetched.isPdf;
     const sourceOnlyPath = isSourceOnlyPath(pathProfile);
     const extractionAllowed = reliableApplicationPathFound || applicationSpecificSectionFound;
-    profile.extractionDiagnostics = {
+    setExtractionDiagnostics(profile, {
       sourceUsed: profile.sourceUrl,
       isAggregatorSource: Boolean(pathProfile?.isAggregatorSource),
       aggregatorType: cleanOptional(pathProfile?.aggregatorType),
+      officialWebsiteUsed: Boolean(pathProfile?.programWebsiteUrl),
+      officialWebsiteSource: cleanOptional(pathProfile?.programWebsiteSource),
+      dsireAggregatorSkipped: Boolean(pathProfile?.isAggregatorSource && pathProfile?.programWebsiteUrl),
       applicationPathFound: reliableApplicationPathFound,
       applicationSpecificSectionFound,
       extractionAllowed,
@@ -528,7 +611,7 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
           ? "Reliable application URL, PDF, email application path, contractor instruction, or tax/accountant filing instruction was found by link discovery."
           : "No direct application path was found, but the inspected source contains explicit application-specific sections."
         : "Only a general program/source page was available. No reliable application requirements were extracted."
-    };
+    });
 
     if (!extractionAllowed || (sourceOnlyPath && !applicationSpecificSectionFound && !reliableApplicationPathFound)) {
       profile.extractionStatus = "needs_review";
@@ -597,8 +680,11 @@ export async function extractOpportunityApplicationRequirements(input = {}, opti
   } catch (error) {
     profile.extractionStatus = "source_unavailable";
     profile.error = safeErrorMessage(error);
-    profile.extractionDiagnostics.extractionAllowed = false;
-    profile.extractionDiagnostics.reason = "Requirement source could not be fetched or read.";
+    setExtractionDiagnostics(profile, {
+      sourceUsed: profile.sourceUrl,
+      extractionAllowed: false,
+      reason: "Requirement source could not be fetched or read."
+    });
     profile.notes.push("Requirement source could not be fetched or read.");
     return finalizeProfile(profile);
   }
