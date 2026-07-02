@@ -114,6 +114,10 @@
 - Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
 - Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
 
+## 2026-07-02 - Codex (GPT-5) how it works CTA removal
+
+- Removed the bottom call-to-action box from the public `How It Works` page so the scroll journey ends without the extra retrofit insight promo panel.
+
 ## 2026-07-02 - Codex (GPT-5) how it works eased step transitions
 
 - Reworked the public `How It Works` progress motion into an approximate step function so the journey mostly locks to each dot but still uses a short eased crossfade between stages.

@@ -2953,11 +2953,6 @@ function HowItWorksPage({
           </div>
         </div>
       </section>
-      <section className="final-cta">
-        <h2>Get useful retrofit insight without doing the research manually.</h2>
-        <p>Start with a lightweight account and move to a clearer home upgrade decision faster.</p>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
-      </section>
     </PublicShell>
   );
 }
