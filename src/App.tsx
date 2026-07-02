@@ -6789,8 +6789,11 @@ function UserPreviewSidebar({
   onSelectRetrofit: (retrofitId: string) => void;
   retrofits: RetrofitPreviewCard[];
 }) {
-  const [retrofitsOpen, setRetrofitsOpen] = useState(true);
-  const activeNavRetrofitId = activeRetrofitId || retrofits[0]?.id || "";
+  const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const activeNavRetrofitId = activeRetrofitId;
+  useEffect(() => {
+    if (activeRetrofitId) setRetrofitsOpen(true);
+  }, [activeRetrofitId]);
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}

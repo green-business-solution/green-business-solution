@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user preview collapsed retrofit nav
+
+- Collapsed the `/user-preview` sidebar Retrofits dropdown by default on first load.
+- Kept Profile info and Dashboard visible below the group while hiding retrofit items until the group is expanded.
+- Auto-expands the Retrofits group once a retrofit is active, without marking the first item active before selection.
+
 ## 2026-07-02 - Codex (GPT-5) user preview sidebar brand icon removal
 
 - Removed the remaining RetroFi brand icon/wordmark block from the `/user-preview` sidebar so the rail starts directly with the Retrofits navigation group.

@@ -272,6 +272,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("retrofi-brand-icon");
     expect(html).not.toContain("sidebar-wordmark");
     expect(html).toContain("Retrofits");
+    expect(html).toContain("aria-expanded=\"false\"");
+    expect(html).not.toContain("sidebar-retrofit-list");
+    expect(html).not.toContain("sidebar-retrofit-item");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
     expect(html).not.toContain("Customer preview bar");
@@ -425,6 +428,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Back to all retrofits");
     expect(source).toContain("function UserPreviewSidebar");
     expect(source).not.toContain("function UserPreviewTopBar");
+    expect(source).toContain("Profile info");
+    expect(source).toContain("Dashboard");
+    expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
+    expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
+    expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
     expect(source).not.toContain("user-preview-sidebar-collapse");
     expect(source).not.toContain("onToggleCollapsed");
     expect(source).toContain("activeRetrofit ? (");
