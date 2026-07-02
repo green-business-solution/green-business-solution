@@ -150,6 +150,12 @@
 - Imported the outputs as normalized opportunity-data repair batches 59-78 and appended them to the ordered repair manifest.
 - Applied all 78 repair batches cumulatively to the public retrofit opportunity index and sample matching fixtures, then refreshed the remaining low source-confidence queue.
 
+## 2026-07-01 - Codex (GPT-5) premium how it works scroll transformation
+
+- Replaced the repeated framed `How It Works` scenes and synthetic landscape overlays with one full-bleed, viewport-sticky transformation experience.
+- Added five coherent intermediate property renders between the supplied gray and sustainable business endpoints, then compressed all seven stages for smooth production loading.
+- Connected scroll progress to continuous image crossfades and a single active step-copy block, with responsive full-screen presentation and reduced-motion handling.
+
 ## 2026-07-01 - Codex (GPT-5) pricing rollback and team page update
 
 - Restored the public Pricing page to the earlier project-based RetroFi pricing structure, including the original tier copy and FAQ set.

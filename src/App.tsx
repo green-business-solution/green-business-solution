@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { apiGet, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -2706,117 +2706,145 @@ function HowItWorksPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const journeyRef = useRef<HTMLElement | null>(null);
+  const [journeyProgress, setJourneyProgress] = useState(0);
   const stages = [
     {
       title: "Business Profile",
-      copy: "Start with the basics so RetroFi understands your building, operations, and utility footprint.",
-      icon: <BuildingOutlineIcon />,
-      accent: "Profile"
+      copy: "Tell us about your property, operations, and energy use.",
+      accent: "Profile",
+      image: "/how-it-works/transformation-stage-01.jpg"
     },
     {
       title: "AI Opportunity Discovery",
-      copy: "RetroFi scans your business data for the strongest retrofit paths and upgrade signals.",
-      icon: <EyeIcon />,
-      accent: "Discovery"
+      copy: "RetroFi finds the strongest efficiency and electrification opportunities.",
+      accent: "Discovery",
+      image: "/how-it-works/transformation-stage-02.jpg"
     },
     {
       title: "Financial Analysis",
-      copy: "Usage, project costs, and savings are organized into a clearer business case.",
-      icon: <LandmarkOutlineIcon />,
-      accent: "Analysis"
+      copy: "Costs, savings, and payback become a clear investment case.",
+      accent: "Analysis",
+      image: "/how-it-works/transformation-stage-03.jpg"
     },
     {
       title: "Retrofit Recommendations",
-      copy: "You get a prioritized set of upgrades instead of a scattered list of possibilities.",
-      icon: <LeafOutlineIcon />,
-      accent: "Recommendations"
+      copy: "See the upgrades that fit your building, ranked by impact.",
+      accent: "Recommendations",
+      image: "/how-it-works/transformation-stage-04.jpg"
     },
     {
       title: "Incentives & Savings",
-      copy: "Relevant incentives and estimated savings are surfaced alongside each retrofit path.",
-      icon: <HandHeartOutlineIcon />,
-      accent: "Savings"
+      copy: "Connect each project to relevant incentives and estimated savings.",
+      accent: "Savings",
+      image: "/how-it-works/transformation-stage-05.jpg"
     },
     {
       title: "Implementation Roadmap",
-      copy: "RetroFi turns the opportunity set into clear next steps your team can act on.",
-      icon: <CheckIcon />,
-      accent: "Roadmap"
+      copy: "Turn priorities into a practical sequence your team can execute.",
+      accent: "Roadmap",
+      image: "/how-it-works/transformation-stage-06.jpg"
     },
     {
       title: "Ongoing Impact Tracking",
-      copy: "Track progress over time as your business becomes more efficient and resilient.",
-      icon: <HomeOutlineIcon />,
-      accent: "Impact"
+      copy: "Measure savings and keep improving performance over time.",
+      accent: "Impact",
+      image: "/how-it-works/transformation-stage-07.jpg"
     }
   ];
 
+  const activeStageIndex = Math.min(stages.length - 1, Math.max(0, Math.round(journeyProgress)));
+  const activeStage = stages[activeStageIndex];
+
+  useEffect(() => {
+    const journey = journeyRef.current;
+
+    if (!journey) {
+      return undefined;
+    }
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame = 0;
+
+    const updateProgress = () => {
+      const bounds = journey.getBoundingClientRect();
+      const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
+      const normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
+      const nextProgress = normalizedProgress * (stages.length - 1);
+      setJourneyProgress(reducedMotion.matches ? Math.round(nextProgress) : nextProgress);
+      animationFrame = 0;
+    };
+
+    const requestProgressUpdate = () => {
+      if (!animationFrame) {
+        animationFrame = window.requestAnimationFrame(updateProgress);
+      }
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", requestProgressUpdate, { passive: true });
+    window.addEventListener("resize", requestProgressUpdate);
+    reducedMotion.addEventListener("change", requestProgressUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestProgressUpdate);
+      window.removeEventListener("resize", requestProgressUpdate);
+      reducedMotion.removeEventListener("change", requestProgressUpdate);
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, [stages.length]);
+
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+    <PublicShell navigate={navigate} pageClassName="how-it-works-page" publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="How it works"
-        title="Watch your business environment improve with every RetroFi step"
-        copy="The process starts with a standard commercial property and steadily turns it into a cleaner, smarter, more valuable place to operate."
+        title="From outdated building to high-performing business"
+        copy="Scroll through the RetroFi process and watch each decision turn into a visible upgrade."
       />
-      <section className="how-it-works-journey-section">
-        <div className="how-it-works-journey-intro">
-          <SectionHeading
-            eyebrow="A continuous transformation"
-            title="RetroFi makes progress visible from the first input to the long-term outcome"
-            copy="As you move through the workflow, the business landscape becomes cleaner, greener, and more intelligent to reflect the value of each decision."
-          />
-          <div className="how-it-works-journey-pills" aria-label="RetroFi process qualities">
-            {["Continuous progress", "Actionable analysis", "Modern retrofit outcomes"].map((item) => (
-              <span key={item}>{item}</span>
+      <section className="how-it-works-journey-section" ref={journeyRef}>
+        <div className="journey-canvas" aria-label="RetroFi business transformation journey">
+          <div className="journey-image-stack" aria-hidden="true">
+            {stages.map((stage, index) => (
+              <img
+                alt=""
+                className="journey-scene-image"
+                decoding="async"
+                fetchPriority={index === 0 ? "high" : "auto"}
+                key={stage.image}
+                loading={index < 2 ? "eager" : "lazy"}
+                src={stage.image}
+                style={{
+                  opacity:
+                    journeyProgress >= index
+                      ? 1
+                      : journeyProgress > index - 1
+                        ? journeyProgress - (index - 1)
+                        : 0
+                }}
+              />
             ))}
           </div>
-        </div>
-        <div className="journey-canvas" aria-label="RetroFi business transformation journey">
-          <div className="journey-canvas-glow" aria-hidden="true" />
-          <div className="journey-progress-spine" aria-hidden="true">
-            <span />
-          </div>
-          {stages.map((stage, index) => (
-            <article className={`journey-stage journey-stage-${index + 1}`} key={stage.title}>
-              <div className={`journey-scene journey-scene-${index + 1}`} aria-hidden="true">
-                <div className="journey-scene-image journey-scene-image-base" />
-                <div className="journey-scene-image journey-scene-image-future" />
-                <div className="journey-scene-tint" />
-                <div className="journey-scene-overlay">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="journey-landscape">
-                  <span className="journey-tree journey-tree-left" />
-                  <span className="journey-tree journey-tree-center" />
-                  <span className="journey-tree journey-tree-right" />
-                  <span className="journey-lamp journey-lamp-left" />
-                  <span className="journey-lamp journey-lamp-right" />
-                  <span className="journey-charger" />
-                  <span className="journey-pathway" />
-                  <span className="journey-data-node journey-data-node-a" />
-                  <span className="journey-data-node journey-data-node-b" />
-                </div>
-              </div>
-              <div className="journey-stage-copy">
-                <div className="journey-stage-marker" aria-hidden="true">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                </div>
-                <div className="journey-stage-heading">
-                  <span className="feature-icon" aria-hidden="true">
-                    {stage.icon}
-                  </span>
-                  <div>
-                    <p className="eyebrow">{stage.accent}</p>
-                    <h3>{stage.title}</h3>
-                  </div>
-                </div>
-                <p>{stage.copy}</p>
-              </div>
+          <div className="journey-vignette" aria-hidden="true" />
+          <div className="journey-story-shell">
+            <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
+              <p className="journey-step-label">
+                Step {String(activeStageIndex + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
+                <span aria-hidden="true">·</span>
+                {activeStage.accent}
+              </p>
+              <h2>{activeStage.title}</h2>
+              <p>{activeStage.copy}</p>
             </article>
-          ))}
+            <div className="journey-progress" aria-hidden="true">
+              <span style={{ transform: `scaleX(${journeyProgress / (stages.length - 1)})` }} />
+              <div className="journey-progress-dots">
+                {stages.map((stage, index) => (
+                  <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <section className="final-cta">
