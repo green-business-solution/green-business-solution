@@ -23,6 +23,12 @@
 - Fixed the Retrofits sidebar chevron so expanded points down and collapsed points right.
 - Moved Profile info and Dashboard directly under the expanded Retrofits navigation list while preserving sidebar retrofit selection behavior.
 
+## 2026-07-02 - Codex (GPT-5) permanent dark mode rollout
+
+- Flipped the shared site tokens, base controls, and public-shell styling to a dark-only palette with green used as the primary accent.
+- Added a broad compatibility layer for the shared cards, panels, forms, modals, tables, tabs, and action buttons so the landing, auth, dashboard, and admin surfaces stay readable in dark mode.
+- Kept the existing routes, behaviors, and dark hero styling intact while removing the light-mode look from the visible site shell.
+
 ## 2026-07-02 - Codex (GPT-5) user preview app shell
 
 - Added a modern RetroFi left sidebar shell to the `/user-preview` retrofit picker, with generated retrofit navigation, active state, collapse behavior, and mobile drawer support.
