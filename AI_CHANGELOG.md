@@ -120,6 +120,11 @@
 - Added active mini-subnav state, tightened retrofit tabs to the target compact height, and preserved active-tab auto-scroll for the one-active-retrofit workflow.
 - Expanded focused preview tests for compact plan/refinement structure, active subnav state, 118px tab height, and removal of duplicated header opportunity counts.
 
+## 2026-07-02 - Codex (GPT-5) how it works shared cloudy backdrop
+
+- Replaced the top `How It Works` hero background with the same stage-one cloudy scene used below so the header reads like a direct extension of the journey image.
+- Kept a dark overlay on top of that shared image treatment so the headline remains readable while the transition looks seamless.
+
 ## 2026-07-02 - Codex (GPT-5) how it works hero seam blend
 
 - Adjusted the `How It Works` hero gradient so the lower portion fades into the same dark tone used by the journey image section, removing the hard visual seam.
