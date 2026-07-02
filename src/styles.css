@@ -5802,14 +5802,39 @@ body {
 }
 
 .how-it-works-page .page-hero {
+  background:
+    radial-gradient(circle at 14% 22%, rgba(255, 255, 255, 0.12), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.08), transparent 26%),
+    linear-gradient(135deg, rgba(46, 50, 54, 0.94) 0%, rgba(19, 21, 24, 0.98) 48%, rgba(6, 7, 9, 1) 100%);
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 0;
   border-radius: 0;
   border-right: 0;
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 28px 70px rgba(0, 0, 0, 0.28);
   margin: 0;
   max-width: none;
   min-height: 46svh;
   padding-inline: clamp(24px, 7vw, 112px);
   width: 100%;
+}
+
+.how-it-works-page .page-hero .eyebrow {
+  color: rgba(255, 255, 255, 0.66);
+  letter-spacing: 0.18em;
+}
+
+.how-it-works-page .page-hero h1 {
+  color: #f5f7fa;
+  max-width: 12ch;
+  text-wrap: balance;
+}
+
+.how-it-works-page .page-hero p:last-child {
+  color: rgba(232, 236, 240, 0.78);
+  max-width: 760px;
 }
 
 .journey-canvas {
