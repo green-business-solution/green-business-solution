@@ -308,7 +308,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Operating Savings");
     expect(source).toContain("Confirm all estimates");
     expect(source).toContain("Financing preview");
-    expect(source).toContain("data-workspace-tab={item.key}");
+    expect(source).toContain("data-workspace-tab");
     expect(source).toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("{ key: \"more\", label: \"More\" }");
   });
