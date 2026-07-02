@@ -4049,7 +4049,7 @@ dd {
   .user-preview-toolbar {
     align-items: flex-start;
     flex-direction: column;
-    padding: 18px 24px;
+    padding: 8px 16px;
   }
 
   .user-preview-actions {
@@ -4068,7 +4068,7 @@ dd {
   }
 
   .user-preview-toolbar {
-    padding: 16px;
+    padding: 8px 12px;
   }
 
   .scenario-grid {
