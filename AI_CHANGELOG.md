@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) natural how it works hero image
+
+- Removed the dark gradient, radial shader, and boundary overlay from the How It Works hero.
+- Rendered the cloud background at its natural color and opacity so the upper image no longer appears darker or differently filtered than the journey below.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit picker view toggle icons
 
 - Replaced the before-click retrofit picker Grid/Panel text toggle with accessible icon-only segmented buttons using local SVG grid, panel, and active-check icons.

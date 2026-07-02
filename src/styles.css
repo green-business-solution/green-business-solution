@@ -5826,14 +5826,8 @@ body {
 }
 
 .how-it-works-page .page-hero {
-  background:
-    linear-gradient(180deg, rgba(22, 32, 27, 0.1) 0%, rgba(22, 32, 27, 0.46) 72%, rgba(19, 29, 23, 0.82) 100%),
-    linear-gradient(90deg, rgba(7, 14, 10, 0.66) 0%, rgba(7, 14, 10, 0.36) 34%, rgba(7, 14, 10, 0.16) 62%, rgba(7, 14, 10, 0.24) 100%),
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.07), transparent 24%),
-    url("/how-it-works/hero-clouds-gray.png");
-  background-position: center top, center top, 18% 18%, center center;
+  background: url("/how-it-works/hero-clouds-gray.png") center center / cover;
   background-repeat: no-repeat;
-  background-size: cover, cover, auto, cover;
   border: 0;
   border-left: 0;
   border-radius: 0;
@@ -5843,26 +5837,7 @@ body {
   max-width: none;
   min-height: 46svh;
   padding-inline: clamp(24px, 7vw, 112px);
-  position: relative;
   width: 100%;
-  z-index: 4;
-}
-
-.how-it-works-page .page-hero::after {
-  background: linear-gradient(
-    180deg,
-    rgba(19, 29, 23, 0.82) 0%,
-    rgba(14, 23, 18, 0.58) 34%,
-    rgba(9, 17, 12, 0.24) 70%,
-    rgba(7, 14, 10, 0) 100%
-  );
-  content: "";
-  height: clamp(140px, 18svh, 210px);
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 100%;
 }
 
 .how-it-works-page .page-hero .eyebrow {
