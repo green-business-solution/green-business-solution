@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) how it works transformation journey
+
+- Rebuilt the public `How It Works` section into a continuous visual business-transformation journey instead of a set of cards.
+- Added seven narrative stages covering profile setup through ongoing impact tracking, each paired with an evolving commercial environment that gains greenery, lighting, solar, EV charging, rooftop upgrades, and subtle data overlays.
+- Kept the redesign frontend-only with responsive CSS, lightweight motion, and `prefers-reduced-motion` handling.
+
 ## 2026-07-01 - Codex (GPT-5) pricing rollback and team page update
 
 - Restored the public Pricing page to the earlier project-based RetroFi pricing structure, including the original tier copy and FAQ set.

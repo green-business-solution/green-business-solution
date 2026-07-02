@@ -2544,37 +2544,49 @@ function HowItWorksPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const steps = [
+  const stages = [
     {
-      title: "Create your account",
-      copy: "Start quickly with a simple sign-in and no heavy setup.",
-      icon: <LockIcon />
+      title: "Business Profile",
+      copy: "Start with the basics so RetroFi understands your building, operations, and utility footprint.",
+      icon: <BuildingOutlineIcon />,
+      accent: "Profile"
     },
     {
-      title: "Add home information",
-      copy: "Share the basics that shape the right retrofit recommendations.",
-      icon: <HomeOutlineIcon />
+      title: "AI Opportunity Discovery",
+      copy: "RetroFi scans your business data for the strongest retrofit paths and upgrade signals.",
+      icon: <EyeIcon />,
+      accent: "Discovery"
     },
     {
-      title: "Upload utility data",
-      copy: "Bills or usage history help RetroFi sharpen savings and incentive analysis.",
-      icon: <StoreOutlineIcon />
+      title: "Financial Analysis",
+      copy: "Usage, project costs, and savings are organized into a clearer business case.",
+      icon: <LandmarkOutlineIcon />,
+      accent: "Analysis"
     },
     {
-      title: "RetroFi analyzes opportunities",
-      copy: "We connect usage, incentives, and retrofit options into one clear model.",
-      icon: <LeafOutlineIcon />
+      title: "Retrofit Recommendations",
+      copy: "You get a prioritized set of upgrades instead of a scattered list of possibilities.",
+      icon: <LeafOutlineIcon />,
+      accent: "Recommendations"
     },
     {
-      title: "Receive your report",
-      copy: "Get a personalized retrofit report with savings, incentives, and next steps.",
-      icon: <EyeIcon />
+      title: "Incentives & Savings",
+      copy: "Relevant incentives and estimated savings are surfaced alongside each retrofit path.",
+      icon: <HandHeartOutlineIcon />,
+      accent: "Savings"
+    },
+    {
+      title: "Implementation Roadmap",
+      copy: "RetroFi turns the opportunity set into clear next steps your team can act on.",
+      icon: <CheckIcon />,
+      accent: "Roadmap"
+    },
+    {
+      title: "Ongoing Impact Tracking",
+      copy: "Track progress over time as your business becomes more efficient and resilient.",
+      icon: <HomeOutlineIcon />,
+      accent: "Impact"
     }
-  ];
-  const highlights = [
-    "Fast to start",
-    "Personalized recommendations",
-    "Clear next steps"
   ];
 
   return (
@@ -2582,48 +2594,76 @@ function HowItWorksPage({
       <PageHero
         compact
         eyebrow="How it works"
-        title="From utility data to a clear retrofit plan"
-        copy="RetroFi keeps the process simple: add the essentials, let the product do the research, and get an actionable report quickly."
+        title="Watch your business environment improve with every RetroFi step"
+        copy="The process starts with a standard commercial property and steadily turns it into a cleaner, smarter, more valuable place to operate."
       />
-      <section className="how-it-works-overview">
-        <div className="how-it-works-overview-copy">
+      <section className="how-it-works-journey-section">
+        <div className="how-it-works-journey-intro">
           <SectionHeading
-            eyebrow="Why it feels simple"
-            title="The product does the heavy research for you"
-            copy="Instead of comparing programs, incentives, and savings estimates by hand, RetroFi turns home and utility data into one readable decision path."
+            eyebrow="A continuous transformation"
+            title="RetroFi makes progress visible from the first input to the long-term outcome"
+            copy="As you move through the workflow, the business landscape becomes cleaner, greener, and more intelligent to reflect the value of each decision."
           />
-          <div className="public-highlight-strip" aria-label="How RetroFi helps">
-            {highlights.map((item) => (
+          <div className="how-it-works-journey-pills" aria-label="RetroFi process qualities">
+            {["Continuous progress", "Actionable analysis", "Modern retrofit outcomes"].map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
         </div>
-        <article className="feature-card public-summary-card">
-          <p className="eyebrow">What you get</p>
-          <h2>Meaningful retrofit guidance, faster</h2>
-          <ul>
-            {[
-              "A focused list of relevant upgrades",
-              "Estimated savings, incentives, and payback context",
-              "A report built to be readable and actionable"
-            ].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-      <section className="how-it-works-steps-section">
-        <div className="how-it-works-steps-grid">
-          {steps.map((step, index) => (
-            <article className="feature-card how-it-works-step-panel" key={step.title}>
-              <div className="how-it-works-step-top">
-                <span className="how-it-works-step-marker">{index + 1}</span>
-                <span className="feature-icon" aria-hidden="true">
-                  {step.icon}
-                </span>
+        <div className="journey-canvas" aria-label="RetroFi business transformation journey">
+          <div className="journey-canvas-glow" aria-hidden="true" />
+          <div className="journey-progress-spine" aria-hidden="true">
+            <span />
+          </div>
+          {stages.map((stage, index) => (
+            <article className={`journey-stage journey-stage-${index + 1}`} key={stage.title}>
+              <div className="journey-stage-marker" aria-hidden="true">
+                <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
+              <div className="journey-stage-copy">
+                <div className="journey-stage-heading">
+                  <span className="feature-icon" aria-hidden="true">
+                    {stage.icon}
+                  </span>
+                  <div>
+                    <p className="eyebrow">{stage.accent}</p>
+                    <h3>{stage.title}</h3>
+                  </div>
+                </div>
+                <p>{stage.copy}</p>
+              </div>
+              <div className={`journey-scene journey-scene-${index + 1}`} aria-hidden="true">
+                <div className="journey-scene-sky" />
+                <div className="journey-scene-overlay">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="journey-scene-campus">
+                  <div className="journey-building journey-building-main">
+                    <span className="journey-roof journey-roof-solar" />
+                    <span className="journey-window-band" />
+                    <span className="journey-window-band" />
+                    <span className="journey-window-band" />
+                  </div>
+                  <div className="journey-building journey-building-annex">
+                    <span className="journey-roof journey-roof-garden" />
+                    <span className="journey-window-band" />
+                    <span className="journey-window-band" />
+                  </div>
+                  <div className="journey-landscape">
+                    <span className="journey-tree journey-tree-left" />
+                    <span className="journey-tree journey-tree-center" />
+                    <span className="journey-tree journey-tree-right" />
+                    <span className="journey-lamp journey-lamp-left" />
+                    <span className="journey-lamp journey-lamp-right" />
+                    <span className="journey-charger" />
+                    <span className="journey-pathway" />
+                    <span className="journey-data-node journey-data-node-a" />
+                    <span className="journey-data-node journey-data-node-b" />
+                  </div>
+                </div>
+              </div>
             </article>
           ))}
         </div>
