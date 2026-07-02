@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) tax and form input GPT Pro prompts
+
+- Added a new GPT Pro work folder for tax-credit package repair, structured question-catalog/form assembly repair, and synthetic test-case profile defaults.
+- Scoped the prompts to the remaining tax-related v2 packages, user-overridable v2 inputs, and the agreed split between base retrofit questions, opportunity-specific inputs, and reusable tax/profile fields.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit form assembly TODO
 
 - Captured the agreed product direction for a structured input-question catalog that separates base retrofit questions, opportunity-specific incentive inputs, tax/profile questions, bill/quote-derived fields, and application-prep requirements.

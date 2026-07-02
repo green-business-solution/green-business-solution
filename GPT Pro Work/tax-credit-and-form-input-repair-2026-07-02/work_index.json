@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "gpt_pro_work_index.v1",
+  "createdAt": "2026-07-02",
+  "workId": "tax-credit-and-form-input-repair-2026-07-02",
+  "status": "waiting_for_gpt_pro_outputs",
+  "files": [
+    {
+      "prompt": "prompt_001_tax_credit_package_repair.md",
+      "output": "output_001_tax_credit_package_repair.md",
+      "purpose": "Repair remaining tax-related v2 incentive packages."
+    },
+    {
+      "prompt": "prompt_002_question_catalog_form_assembly.md",
+      "output": "output_002_question_catalog_form_assembly.md",
+      "purpose": "Create structured input-question catalog and retrofit/scenario form assembly rules."
+    },
+    {
+      "prompt": "prompt_003_test_case_profile_defaults.md",
+      "output": "output_003_test_case_profile_defaults.md",
+      "purpose": "Create synthetic profile defaults for test cases and future form fields."
+    }
+  ]
+}
+
