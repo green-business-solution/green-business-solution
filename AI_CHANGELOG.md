@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) GPT Pro repair packet 79-96
+
+- Created a combined GPT Pro opportunity-data repair packet in `GPT Pro Work/opportunity-data-repair-batches-79-96/`.
+- Included all 334 remaining unrepaired low match-confidence targets plus 20 repaired low source-confidence follow-up targets.
+- Generated 18 prompt files with matching blank output files, covering 354 total targets with 20 targets per prompt except the final 14-target prompt.
+
 ## 2026-07-02 - Codex (GPT-5) how it works transformation journey
 
 - Rebuilt the public `How It Works` section into a continuous visual business-transformation journey instead of a set of cards.
