@@ -6,6 +6,12 @@
 - Kept `ApplicationSourceResolver` classification read-only and based on existing opportunity metadata only, with no live external URL validation in the endpoint path.
 - Updated the admin application-sources page to handle loading, empty, error, and incremental load-more states against the paged response.
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview tab overlap cleanup
+
+- Corrected the Retrofit Recommendations preview layout so horizontal retrofit tabs are fixed-height, lighter-weight, and non-overlapping with the active retrofit workspace.
+- Removed the sticky bottom action-bar overlay behavior so the add-to-plan CTA no longer covers accordion content while scrolling.
+- Tightened preview badges, tab metadata, mini navigation chips, and section scroll offsets to improve readability without changing backend data, opportunity selection logic, or production persistence behavior.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview consistency polish
 
 - Tightened the Retrofit Recommendations preview labels so the included-estimate truth table visibly uses “Included in current estimate” even when all selected opportunities are pending validation.

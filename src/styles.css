@@ -2008,7 +2008,12 @@ dd {
 .retrofit-preview-page input,
 .retrofit-preview-page select {
   font-size: 14px;
+  font-weight: 400;
   line-height: 21px;
+}
+
+.retrofit-preview-page button {
+  font-weight: 650;
 }
 
 .retrofit-preview-header {
@@ -2063,7 +2068,7 @@ dd {
 .included-label,
 .not-included-label {
   font-size: 12px;
-  font-weight: 750;
+  font-weight: 600;
   line-height: 16px;
 }
 
@@ -2075,6 +2080,13 @@ dd {
   display: inline-flex;
   min-height: 24px;
   padding: 3px 9px;
+}
+
+.retrofit-preview-page .soft-badge,
+.retrofit-preview-page .retrofit-count-row span,
+.retrofit-preview-page .included-label,
+.retrofit-preview-page .not-included-label {
+  font-weight: 600;
 }
 
 .retrofit-refinement-panel,
@@ -2117,6 +2129,7 @@ dd {
 
 .retrofit-refinement-actions,
 .retrofit-card-actions {
+  align-self: start;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -2127,7 +2140,9 @@ dd {
 .retrofit-card-actions button,
 .editable-estimates-panel button,
 .modal-close-button {
-  min-height: 38px;
+  min-height: 36px;
+  padding-inline: 13px;
+  white-space: nowrap;
 }
 
 .scenario-grid {
@@ -2245,7 +2260,7 @@ dd {
 .retrofit-preview-list {
   display: grid;
   gap: 16px;
-  scroll-margin-top: 220px;
+  scroll-margin-top: 96px;
 }
 
 .current-plan-panel {
@@ -2284,21 +2299,21 @@ dd {
 .retrofit-tab-shell {
   background: #f7faf7;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   margin-inline: -4px;
-  padding: 8px 4px 10px;
-  position: sticky;
-  top: 8px;
-  z-index: 5;
+  padding: 6px 4px 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .retrofit-tab-bar {
   display: grid;
   gap: 12px;
-  grid-auto-columns: minmax(190px, 230px);
+  grid-auto-columns: minmax(190px, 220px);
   grid-auto-flow: column;
   overflow-x: auto;
   padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 
 .retrofit-tab {
@@ -2308,11 +2323,10 @@ dd {
   border-radius: 16px;
   color: #17211b;
   display: grid;
-  gap: 7px;
-  max-height: 130px;
-  min-height: 112px;
+  gap: 5px;
+  height: 118px;
   overflow: hidden;
-  padding: 14px;
+  padding: 12px 14px;
   text-align: left;
 }
 
@@ -2341,9 +2355,10 @@ dd {
 .retrofit-tab-title {
   color: #102019;
   display: -webkit-box;
-  font-size: 14px;
-  font-weight: 760;
-  line-height: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  max-height: 32px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2357,22 +2372,45 @@ dd {
 }
 
 .retrofit-tab-category {
-  font-size: 12px;
-  font-weight: 750;
-  line-height: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .retrofit-tab-metric {
   font-size: 12px;
-  font-weight: 700;
-  line-height: 17px;
+  font-weight: 650;
+  line-height: 16px;
+  min-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .retrofit-tab-meta {
-  flex-wrap: wrap;
-  font-size: 11px;
-  gap: 6px;
+  flex-wrap: nowrap;
+  font-size: 10.5px;
+  gap: 5px;
   justify-content: flex-start;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.retrofit-tab-meta span {
+  flex: 0 0 auto;
+  font-weight: 600;
+  line-height: 14px;
+  min-width: 0;
+}
+
+.retrofit-tab-meta span:last-child {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .plan-state-badge {
@@ -2393,8 +2431,8 @@ dd {
 .retrofit-preview-card-active {
   display: grid;
   gap: 14px;
-  padding-bottom: 132px;
-  scroll-margin-top: 220px;
+  padding-bottom: 20px;
+  scroll-margin-top: 120px;
 }
 
 .retrofit-card-top-row,
@@ -2402,7 +2440,7 @@ dd {
   align-items: start;
   display: grid;
   gap: 14px;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, auto);
 }
 
 .retrofit-card-title-line {
@@ -2419,12 +2457,19 @@ dd {
   border-radius: 999px;
   color: #176143;
   display: inline-flex;
-  font-size: 13px;
-  font-weight: 850;
-  height: 28px;
+  font-size: 12px;
+  font-weight: 750;
+  height: 26px;
   justify-content: center;
   min-width: 42px;
   padding: 0 10px;
+}
+
+.retrofit-tab .rank-pill {
+  font-size: 11px;
+  height: 24px;
+  min-width: 34px;
+  padding: 0 8px;
 }
 
 .retrofit-card-top-row p,
@@ -2467,7 +2512,7 @@ dd {
   gap: 8px;
   padding: 8px;
   position: sticky;
-  top: 154px;
+  top: 8px;
   z-index: 4;
 }
 
@@ -2476,7 +2521,8 @@ dd {
   border: 1px solid #dce5df;
   border-radius: 999px;
   color: #32443a;
-  padding: 7px 12px;
+  min-height: 34px;
+  padding: 6px 11px;
 }
 
 .why-recommended {
@@ -2544,7 +2590,7 @@ dd {
   border: 1px solid #e1e8e3;
   border-radius: 16px;
   padding: 14px 16px;
-  scroll-margin-top: 248px;
+  scroll-margin-top: 96px;
 }
 
 .preview-accordion-trigger {
@@ -2840,13 +2886,12 @@ dd {
   background: #ffffff;
   border: 1px solid #dce5df;
   border-radius: 16px;
-  bottom: 16px;
-  box-shadow: 0 14px 40px rgba(26, 44, 34, 0.12);
+  box-shadow: none;
   display: grid;
   gap: 12px;
   grid-template-columns: minmax(0, 1fr) auto;
   padding: 14px 16px;
-  position: sticky;
+  position: static;
   z-index: 6;
 }
 
