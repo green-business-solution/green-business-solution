@@ -6776,10 +6776,6 @@ function UserPreviewSidebar({
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
       <aside className={`user-preview-sidebar${mobileOpen ? " is-mobile-open" : ""}`} aria-label="RetroFi navigation">
-        <div className="user-preview-sidebar-brand">
-          <RetroFiBrandIcon />
-          <strong className="sidebar-wordmark">RetroFi</strong>
-        </div>
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
           <button
             aria-expanded={retrofitsOpen}
@@ -7046,21 +7042,6 @@ function UploadCloudIcon() {
         strokeWidth="3"
       />
       <path d="m24 17.8-7.2 7.2M24 17.8l7.2 7.2M24 17.8v24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-    </svg>
-  );
-}
-
-function RetroFiBrandIcon() {
-  return (
-    <svg className="retrofi-brand-icon" fill="none" viewBox="0 0 24 24">
-      <path
-        d="M5.2 12.2c0-3.6 2.8-6.8 7.6-8.5 3.8 1.4 6 4 6 7.2 0 4.4-3.8 7.9-8.5 7.9H7.6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path d="M12.8 3.7v16.6M12.8 11.5l-5.1 5.1M12.8 12.8l4.1-4.1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
     </svg>
   );
 }

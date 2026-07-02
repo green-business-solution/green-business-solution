@@ -269,7 +269,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain(">Panel<");
     expect(html).toContain("user-preview-shell");
     expect(html).toContain("user-preview-sidebar");
-    expect(html).toContain("RetroFi");
+    expect(html).not.toContain("retrofi-brand-icon");
+    expect(html).not.toContain("sidebar-wordmark");
     expect(html).toContain("Retrofits");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");

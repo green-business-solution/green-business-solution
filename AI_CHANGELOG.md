@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user preview sidebar brand icon removal
+
+- Removed the remaining RetroFi brand icon/wordmark block from the `/user-preview` sidebar so the rail starts directly with the Retrofits navigation group.
+- Removed the now-unused sidebar brand CSS and added focused preview coverage to prevent the icon from returning.
+
 ## 2026-07-02 - Codex (GPT-5) selected retrofit page mode
 
 - Removed the leftover sidebar collapse control and divider under the Retrofits navigation group.
