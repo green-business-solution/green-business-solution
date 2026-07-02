@@ -6,6 +6,11 @@
 - Restyled the toggle as a rounded pill with RetroFi soft-green active state and readable hover behavior.
 - Updated focused retrofit preview tests to cover the icon-only view controls.
 
+## 2026-07-02 - Codex (GPT-5) how it works section seam blend
+
+- Removed the hard shadow and brightness break between the How It Works hero and the first transformation scene.
+- Added a responsive tonal crossfade over the section boundary so the cloudy hero background flows into the journey without changing the later scroll-driven image states.
+
 ## 2026-07-02 - Codex (GPT-5) tax and form input GPT Pro prompts
 
 - Added a new GPT Pro work folder for tax-credit package repair, structured question-catalog/form assembly repair, and synthetic test-case profile defaults.
