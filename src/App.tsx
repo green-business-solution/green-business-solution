@@ -6343,46 +6343,46 @@ type PickerMetricKind = "savings" | "cost" | "payback";
 
 function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: string; value: string }) {
   const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
+  const placeholderState = getPickerMetricPlaceholderState(kind, value);
   const isFallback = value === "?" || /needs|pending|not/i.test(value);
-  const placeholderClass =
-    value === "?"
-      ? kind === "savings"
-        ? " metric-placeholder--bill"
-        : " metric-placeholder--question"
-      : "";
-  const tooltip = getPickerMetricTooltip(kind, value);
   return (
-    <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}${placeholderClass}`}>
+    <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}${placeholderState.className}`}>
       <span className="retrofit-picker-metric-label">
         <Icon />
         <span>{label}</span>
       </span>
-      <strong className="retrofit-picker-metric-value" title={tooltip.title ? `${tooltip.title}: ${tooltip.body}` : tooltip.body}>
+      <strong
+        className="retrofit-picker-metric-value"
+        title={placeholderState.tooltipTitle ? `${placeholderState.tooltipTitle}: ${placeholderState.tooltipBody}` : placeholderState.tooltipBody}
+      >
         {value}
       </strong>
     </div>
   );
 }
 
-function getPickerMetricTooltip(kind: PickerMetricKind, value: string) {
+function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) {
   if (value !== "?") {
-    return { body: "" };
+    return { className: "", tooltipBody: "", tooltipTitle: "" };
   }
   if (kind === "savings") {
     return {
-      title: "Upload bills",
-      body: "Upload bills to estimate savings."
+      className: " metric-placeholder--bill",
+      tooltipTitle: "Upload bills",
+      tooltipBody: "Upload bills to estimate savings."
     };
   }
   if (kind === "cost") {
     return {
-      title: "Answer retrofit-specific questions",
-      body: "Answer retrofit-specific questions or add a quote to estimate cost."
+      className: " metric-placeholder--question",
+      tooltipTitle: "Answer retrofit-specific questions",
+      tooltipBody: "Answer retrofit-specific questions or add a quote to estimate cost."
     };
   }
   return {
-    title: "Upload bills and answer retrofit-specific questions",
-    body: "Upload bills and answer retrofit-specific questions to estimate payback."
+    className: " metric-placeholder--both",
+    tooltipTitle: "Upload bills and answer retrofit-specific questions",
+    tooltipBody: "Upload bills and answer retrofit-specific questions to estimate payback."
   };
 }
 

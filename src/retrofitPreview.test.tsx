@@ -275,6 +275,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Upload bills to estimate savings.");
     expect(html).toContain("Answer retrofit-specific questions or add a quote to estimate cost.");
     expect(html).toContain("Upload bills and answer retrofit-specific questions to estimate payback.");
+    expect(html).toContain("metric-placeholder--both");
     expect(html).toContain("metric-savings-icon");
     expect(html).toContain("metric-cost-icon");
     expect(html).toContain("metric-payback-icon");

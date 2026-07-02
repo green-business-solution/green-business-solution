@@ -2763,6 +2763,10 @@ dd {
   color: #48616a;
 }
 
+.metric-placeholder--both .retrofit-picker-metric-value {
+  color: #5c4f76;
+}
+
 .metric-placeholder--bill .retrofit-picker-metric-value {
   background: #fff7e6;
   border: 1px solid #e8d8a8;
@@ -2774,6 +2778,14 @@ dd {
 .metric-placeholder--question .retrofit-picker-metric-value {
   background: #eef4f6;
   border: 1px solid #d8e4e7;
+  border-radius: 999px;
+  display: inline-flex;
+  padding: 0 8px;
+}
+
+.metric-placeholder--both .retrofit-picker-metric-value {
+  background: #f1eef9;
+  border: 1px solid #d8cdeb;
   border-radius: 999px;
   display: inline-flex;
   padding: 0 8px;
