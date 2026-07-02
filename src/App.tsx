@@ -6286,7 +6286,7 @@ function RetrofitPreviewCardView({
               affects: "Upfront financial incentive",
               reason: opportunity.whySelected || "Selected because it reduces upfront cost."
             }))}
-            title="Included now"
+            title="Included in current estimate"
           />
           <IncludedEstimateGroup
             emptyText="No selected opportunities are pending."
@@ -6730,7 +6730,7 @@ function OpportunityPreviewRow({
           <strong>{estimatedValueLabel}</strong>
           {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open program source</a> : <span>Source unavailable</span>}
           <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
-          <button className="secondary-button" onClick={onToggleExpanded} type="button">{expanded ? "Details ▾" : "Details ▸"}</button>
+          <button className="secondary-button" onClick={onToggleExpanded} type="button">{expanded ? "Details open ▾" : "View details"}</button>
         </div>
       </div>
       {expanded ? (

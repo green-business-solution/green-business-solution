@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview consistency polish
+
+- Tightened the Retrofit Recommendations preview labels so the included-estimate truth table visibly uses “Included in current estimate” even when all selected opportunities are pending validation.
+- Replaced the opportunity details toggle copy with a cleaner “View details” / “Details open” pattern instead of terse disclosure-only text.
+- Added focused preview tests for default scenario tab labeling, no contradictory missing-info copy, included-estimate summary labels, and utility-territory uncertainty preventing an opportunity from contributing to financial estimates.
+
 ## 2026-07-02 - Codex (GPT-5) incentive formula repair packet 1-50
 
 - Added a reusable GPT Pro work-packet generator for incentive formula, rate-table, measure-catalog, grant, tax-credit, recurring-effect, non-monetary workflow, and bad-edge repair.

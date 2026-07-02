@@ -6,6 +6,7 @@ import {
   confirmAllEstimateState,
   confirmSingleEstimateState,
   countScenarioSelectedOpportunities,
+  getScenarioSelectedOpportunityCount,
   getOpportunityIncludedLabel
 } from "./App";
 
@@ -216,7 +217,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Choose one retrofit at a time");
     expect(html).toContain("Add this retrofit to plan");
     expect(html).toContain("Retrofit tabs");
+    expect(html).toContain("Default scenario: Low upfront");
     expect(html).not.toContain("Summary across selected retrofits");
+    expect(html).not.toContain("No major missing inputs flagged");
     expect(html).toContain("Scenario A: Low upfront cost");
     expect(html).toContain("Scenario B: Best payback");
     expect(html).toContain("Scenario C: Highest total savings");
@@ -244,6 +247,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Prepare application");
     expect(html).toContain("Next-best-action checklist");
     expect(html).toContain("Open program source");
+    expect(html).toContain("Included incentives");
     expect(html).toContain("Included in current estimate");
     expect(html).toContain("Selected but not included yet");
     expect(html).toContain("View details");
@@ -272,10 +276,57 @@ describe("retrofit recommendations preview", () => {
     const opportunity = preview.retrofits[0].opportunities[0];
 
     expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: true })).toBe(1);
+    expect(getScenarioSelectedOpportunityCount(scenario, { [opportunity.id]: true })).toBe(1);
     expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: false })).toBe(0);
     expect(getOpportunityIncludedLabel(opportunity, true)).toBe("Not included yet — needs more information");
     expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Included in current estimate" }, true)).toBe("Included in current estimate");
     expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included in current estimate" }, false)).toBe("Not included in current estimate");
     expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included yet — needs more information" }, false)).toBe("Not included yet — needs more information");
+  });
+
+  it("does not include uncertain utility-territory opportunities in financial estimates", () => {
+    const utilityMismatchPayload = {
+      ...liveShapedPayload,
+      intake: {
+        ...liveShapedPayload.intake,
+        business: {
+          ...liveShapedPayload.intake.business,
+          headquarters: "Seattle, WA"
+        },
+        site: {
+          ...liveShapedPayload.intake.site,
+          electricUtilityProvider: "Seattle City Light",
+          address: "Seattle, WA"
+        }
+      },
+      retrofits: [
+        {
+          ...liveShapedPayload.retrofits[0],
+          opportunities: [
+            {
+              ...liveShapedPayload.retrofits[0].opportunities[0],
+              unresolvedRequirements: [],
+              sourceSummary: {
+                ...liveShapedPayload.retrofits[0].opportunities[0].sourceSummary,
+                administrator: "Richland Energy Services",
+                sourceName: "Richland Energy Services"
+              }
+            }
+          ]
+        }
+      ]
+    } as any;
+
+    const preview = buildUserRetrofitPreviewResult(utilityMismatchPayload);
+    const retrofit = preview.retrofits[0];
+    const opportunity = retrofit.opportunities[0];
+
+    expect(opportunity.eligibilityStatus).toBe("needs review");
+    expect(opportunity.requiredInfo).toContain("utility territory confirmation");
+    expect(opportunity.includedState).toBe("Not included yet — needs more information");
+    expect(opportunity.estimatedValue).toBeNull();
+    expect(opportunity.whySelected).toContain("utility territory confirmation");
+    expect(retrofit.missingInfo).toContain("utility territory confirmation");
+    expect(retrofit.confidenceLabel).toBe("Needs review");
   });
 });
