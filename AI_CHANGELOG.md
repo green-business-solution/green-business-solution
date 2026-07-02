@@ -12,6 +12,11 @@
 - Added seven narrative stages covering profile setup through ongoing impact tracking, each paired with an evolving commercial environment that gains greenery, lighting, solar, EV charging, rooftop upgrades, and subtle data overlays.
 - Kept the redesign frontend-only with responsive CSS, lightweight motion, and `prefers-reduced-motion` handling.
 
+## 2026-07-02 - Codex (GPT-5) how it works photo transition backgrounds
+
+- Replaced the abstract transformation scene with the provided gray-business and sunlit future-business images as the actual stage backgrounds.
+- Updated the scroll journey so each step overlays concise copy on top of a sticky photo treatment that gradually crossfades from the older property to the upgraded property while environmental enhancements appear.
+
 ## 2026-07-02 - Codex (GPT-5) GPT Pro opportunity data repair batches 59-78
 
 - Validated the 20 GPT Pro outputs in `GPT Pro Work/opportunity-data-repair-batches-59-78/` and confirmed each output matched its 20-opportunity prompt target set.

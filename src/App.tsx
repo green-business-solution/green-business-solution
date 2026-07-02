@@ -2617,10 +2617,31 @@ function HowItWorksPage({
           </div>
           {stages.map((stage, index) => (
             <article className={`journey-stage journey-stage-${index + 1}`} key={stage.title}>
-              <div className="journey-stage-marker" aria-hidden="true">
-                <span>{String(index + 1).padStart(2, "0")}</span>
+              <div className={`journey-scene journey-scene-${index + 1}`} aria-hidden="true">
+                <div className="journey-scene-image journey-scene-image-base" />
+                <div className="journey-scene-image journey-scene-image-future" />
+                <div className="journey-scene-tint" />
+                <div className="journey-scene-overlay">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="journey-landscape">
+                  <span className="journey-tree journey-tree-left" />
+                  <span className="journey-tree journey-tree-center" />
+                  <span className="journey-tree journey-tree-right" />
+                  <span className="journey-lamp journey-lamp-left" />
+                  <span className="journey-lamp journey-lamp-right" />
+                  <span className="journey-charger" />
+                  <span className="journey-pathway" />
+                  <span className="journey-data-node journey-data-node-a" />
+                  <span className="journey-data-node journey-data-node-b" />
+                </div>
               </div>
               <div className="journey-stage-copy">
+                <div className="journey-stage-marker" aria-hidden="true">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                </div>
                 <div className="journey-stage-heading">
                   <span className="feature-icon" aria-hidden="true">
                     {stage.icon}
@@ -2631,38 +2652,6 @@ function HowItWorksPage({
                   </div>
                 </div>
                 <p>{stage.copy}</p>
-              </div>
-              <div className={`journey-scene journey-scene-${index + 1}`} aria-hidden="true">
-                <div className="journey-scene-sky" />
-                <div className="journey-scene-overlay">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="journey-scene-campus">
-                  <div className="journey-building journey-building-main">
-                    <span className="journey-roof journey-roof-solar" />
-                    <span className="journey-window-band" />
-                    <span className="journey-window-band" />
-                    <span className="journey-window-band" />
-                  </div>
-                  <div className="journey-building journey-building-annex">
-                    <span className="journey-roof journey-roof-garden" />
-                    <span className="journey-window-band" />
-                    <span className="journey-window-band" />
-                  </div>
-                  <div className="journey-landscape">
-                    <span className="journey-tree journey-tree-left" />
-                    <span className="journey-tree journey-tree-center" />
-                    <span className="journey-tree journey-tree-right" />
-                    <span className="journey-lamp journey-lamp-left" />
-                    <span className="journey-lamp journey-lamp-right" />
-                    <span className="journey-charger" />
-                    <span className="journey-pathway" />
-                    <span className="journey-data-node journey-data-node-a" />
-                    <span className="journey-data-node journey-data-node-b" />
-                  </div>
-                </div>
               </div>
             </article>
           ))}
