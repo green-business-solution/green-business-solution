@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) scroll-driven cloud property reveal
+
+- Integrated the How It Works intro into the existing sticky transformation canvas so the stage-one property scene is present beneath the clouds from the start.
+- Split the existing cloud artwork into two clipped full-screen layers that fade and drift apart during the opening scroll before handing off to the unchanged seven-step image progression.
+- Preserved one-active-step copy behavior, responsive full-bleed rendering, requestAnimationFrame scroll updates, and a non-animated reduced-motion path without adding dependencies.
+
 ## 2026-07-02 - Codex (GPT-5) full-screen natural how it works hero
 
 - Removed the dark gradient, radial shader, and boundary overlay so the How It Works cloud artwork renders at its natural color and opacity.

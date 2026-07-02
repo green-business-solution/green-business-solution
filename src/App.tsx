@@ -2866,7 +2866,10 @@ function HowItWorksPage({
   const transitionStart = 0.38;
   const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
-  const [journeyProgress, setJourneyProgress] = useState(0);
+  const [sectionProgress, setSectionProgress] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false
+  );
   const stages = [
     {
       title: "Create your account",
@@ -2912,12 +2915,28 @@ function HowItWorksPage({
     }
   ];
 
-  const reducedMotion =
-    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
+  const revealScrollUnits = 1.2;
+  const journeyScrollUnits = stages.length - 1;
+  const revealShare = revealScrollUnits / (revealScrollUnits + journeyScrollUnits);
+  const revealProgress = Math.min(1, Math.max(0, sectionProgress / revealShare));
+  const continuousJourneyProgress =
+    Math.min(1, Math.max(0, (sectionProgress - revealShare) / (1 - revealShare))) * journeyScrollUnits;
+  const journeyProgress = prefersReducedMotion
+    ? Math.round(continuousJourneyProgress)
+    : continuousJourneyProgress;
   const activeStageIndex = Math.min(stages.length - 1, Math.max(0, Math.round(journeyProgress)));
   const activeStage = stages[activeStageIndex];
+  const easedRevealProgress = revealProgress * revealProgress * (3 - 2 * revealProgress);
+  const cloudOpacity = prefersReducedMotion
+    ? revealProgress < 1
+      ? 1
+      : 0
+    : 1 - easedRevealProgress;
+  const cloudTravelProgress = prefersReducedMotion ? 0 : easedRevealProgress;
+  const showIntro = prefersReducedMotion ? revealProgress < 1 : revealProgress < 0.7;
+  const introOpacity = prefersReducedMotion ? 1 : Math.max(0, 1 - revealProgress / 0.55);
   const visualProgress = (() => {
-    if (reducedMotion) {
+    if (prefersReducedMotion) {
       return activeStageIndex;
     }
 
@@ -2957,8 +2976,7 @@ function HowItWorksPage({
       const bounds = journey.getBoundingClientRect();
       const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
       const normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
-      const nextProgress = normalizedProgress * (stages.length - 1);
-      setJourneyProgress(mediaQuery.matches ? Math.round(nextProgress) : nextProgress);
+      setSectionProgress(normalizedProgress);
       animationFrame = 0;
     };
 
@@ -2968,27 +2986,26 @@ function HowItWorksPage({
       }
     };
 
+    const updateMotionPreference = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+      requestProgressUpdate();
+    };
+
     updateProgress();
     window.addEventListener("scroll", requestProgressUpdate, { passive: true });
     window.addEventListener("resize", requestProgressUpdate);
-    mediaQuery.addEventListener("change", requestProgressUpdate);
+    mediaQuery.addEventListener("change", updateMotionPreference);
 
     return () => {
       window.removeEventListener("scroll", requestProgressUpdate);
       window.removeEventListener("resize", requestProgressUpdate);
-      mediaQuery.removeEventListener("change", requestProgressUpdate);
+      mediaQuery.removeEventListener("change", updateMotionPreference);
       window.cancelAnimationFrame(animationFrame);
     };
   }, [stages.length]);
 
   return (
     <PublicShell navigate={navigate} pageClassName="how-it-works-page" publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="How it works"
-        title="From outdated building to high-performing business"
-        copy="Scroll through the RetroFi process and watch each decision turn into a visible upgrade."
-      />
       <section className="how-it-works-journey-section" ref={journeyRef}>
         <div className="journey-canvas" aria-label="RetroFi business transformation journey">
           <div className="journey-image-stack" aria-hidden="true">
@@ -3013,25 +3030,61 @@ function HowItWorksPage({
             ))}
           </div>
           <div className="journey-vignette" aria-hidden="true" />
-          <div className="journey-story-shell">
-            <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
-              <p className="journey-step-label">
-                Step {String(activeStageIndex + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
-                <span aria-hidden="true">·</span>
-                {activeStage.accent}
-              </p>
-              <h2>{activeStage.title}</h2>
-              <p>{activeStage.copy}</p>
-            </article>
-            <div className="journey-progress" aria-hidden="true">
-              <span style={{ transform: `scaleX(${visualProgress / (stages.length - 1)})` }} />
-              <div className="journey-progress-dots">
-                {stages.map((stage, index) => (
-                  <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />
-                ))}
+          <div className="journey-cloud-reveal" aria-hidden="true" style={{ opacity: cloudOpacity }}>
+            <img
+              alt=""
+              className="journey-cloud-layer journey-cloud-layer-upper"
+              decoding="async"
+              fetchPriority="high"
+              src="/how-it-works/hero-clouds-gray.png"
+              style={{
+                transform: `translate3d(${-4 * cloudTravelProgress}vw, ${-16 * cloudTravelProgress}vh, 0) scale(${1 + 0.04 * cloudTravelProgress})`
+              }}
+            />
+            <img
+              alt=""
+              className="journey-cloud-layer journey-cloud-layer-lower"
+              decoding="async"
+              fetchPriority="high"
+              src="/how-it-works/hero-clouds-gray.png"
+              style={{
+                transform: `translate3d(${4 * cloudTravelProgress}vw, ${16 * cloudTravelProgress}vh, 0) scale(${1 + 0.04 * cloudTravelProgress})`
+              }}
+            />
+          </div>
+          {showIntro ? (
+            <header
+              className="journey-intro-copy"
+              style={{
+                opacity: introOpacity,
+                transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`
+              }}
+            >
+              <p className="journey-intro-eyebrow">How it works</p>
+              <h1>From outdated building to high-performing business</h1>
+              <p>Scroll to clear the clouds and reveal the RetroFi transformation.</p>
+            </header>
+          ) : (
+            <div className="journey-story-shell">
+              <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
+                <p className="journey-step-label">
+                  Step {String(activeStageIndex + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
+                  <span aria-hidden="true">·</span>
+                  {activeStage.accent}
+                </p>
+                <h2>{activeStage.title}</h2>
+                <p>{activeStage.copy}</p>
+              </article>
+              <div className="journey-progress" aria-hidden="true">
+                <span style={{ transform: `scaleX(${visualProgress / (stages.length - 1)})` }} />
+                <div className="journey-progress-dots">
+                  {stages.map((stage, index) => (
+                    <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </PublicShell>
