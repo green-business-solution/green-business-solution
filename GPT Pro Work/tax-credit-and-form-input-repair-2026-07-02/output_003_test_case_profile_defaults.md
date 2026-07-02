@@ -1,0 +1,1361 @@
+{
+"schemaVersion": "retrofi_test_case_profile_defaults.v1",
+"researchedAt": "2026-07-02",
+"source": "gpt_pro",
+"promptId": "test_case_profile_defaults",
+"sourcePromptCitation": "",
+"globalRules": [
+{
+"ruleId": "synthetic_only_not_production",
+"description": "All defaults in these templates are synthetic test-case values and must not be treated as source-backed production data or real-user profile data.",
+"implementationNotes": "Persist source="synthetic_test_case" on every generated answer. Downstream calculators should surface these values only in test fixtures, seed data, preview environments, or explicitly marked synthetic estimate runs."
+},
+{
+"ruleId": "user_override_required_for_confidence",
+"description": "Synthetic defaults may allow deterministic calculator execution, but confirmed user or project inputs are required before estimates are promoted beyond placeholder confidence.",
+"implementationNotes": "Use defaultIsPlaceholder=true and userOverrideAllowed=true. When any sensitive or high-impact field remains synthetic, mark confidenceImpactUntilConfirmed as medium unless the field only affects UI routing or eligibility messaging."
+},
+{
+"ruleId": "separate_tax_benefits_from_cash_incentives",
+"description": "Tax credits, abatements, exemptions, and valuation preferences should not be merged into cash rebate totals by default.",
+"implementationNotes": "For tax opportunities, set includeInUserFacingTotalDefault=false unless the product explicitly supports tax benefit monetization assumptions and the user has confirmed tax appetite, taxable status, and relevant local tax profile data."
+},
+{
+"ruleId": "sensitive_tax_fields_late_intake",
+"description": "Tax-liability, gross-receipts, assessed-value, and local-tax fields are sensitive and should not be collected in first-pass public intake unless needed to explain a materially different estimate path.",
+"implementationNotes": "Place sensitive fields in tax_profile, organization_profile, property_tax_profile, project_quote, or admin_only steps. Prefer optional advanced estimate controls over mandatory first-screen questions."
+},
+{
+"ruleId": "quantity_overrides_drive_scaling",
+"description": "Quantity-based incentives must rely on explicit project quantity fields rather than defaulting to unit_count=1.",
+"implementationNotes": "Fixtures should include materially non-unit quantities for lighting, EV charging, equipment replacement, and multi-site projects so v2 calculators exercise quantity scaling and override behavior."
+}
+],
+"profileTemplates": [
+{
+"templateId": "normal_commercial_retrofit_generic",
+"displayName": "Normal commercial retrofit with quote and preapproval placeholders",
+"intendedCoverage": [
+"rebate_rate_table",
+"grant_expected_value",
+"quantity_override",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [],
+"applicableRetrofitFamilies": [
+"commercial_hvac",
+"commercial_lighting",
+"commercial_ev_charging",
+"building_envelope",
+"solar_pv"
+],
+"syntheticAnswers": [
+{
+"inputKey": "project_total_cost_cents",
+"value": 18500000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a generic installed-cost input so quote-based and percentage-of-cost calculators can run end to end."
+},
+{
+"inputKey": "eligible_project_cost_cents",
+"value": 16000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Separates total project cost from estimated incentive-eligible cost for programs that exclude design, contingency, or non-energy scope."
+},
+{
+"inputKey": "unit_count",
+"value": 24,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises quantity scaling for equipment-level calculators and prevents accidental unit_count=1 estimates."
+},
+{
+"inputKey": "annual_electric_bill_cents",
+"value": 4200000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Allows bill-screened eligibility, savings sanity checks, and commercial customer segmentation to be tested."
+},
+{
+"inputKey": "annual_therm_bill_cents",
+"value": 1350000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Supports generic gas-using commercial retrofit scenarios without using real customer utility spend."
+},
+{
+"inputKey": "contractor_quote_received",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Tests estimate status transitions when a quote is available."
+},
+{
+"inputKey": "quote_date",
+"value": "2026-06-15",
+"valueType": "date",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Supports stale-quote checks and project timeline logic."
+},
+{
+"inputKey": "preapproval_required_acknowledged",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Allows test cases to verify that preapproval messaging appears before installation or purchase."
+},
+{
+"inputKey": "installation_started",
+"value": false,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Prevents synthetic cases from accidentally failing programs that require approval before work begins."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "deterministic_estimate",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator should produce a deterministic placeholder estimate for non-tax opportunities while clearly marking all major values as synthetic and user-overridable."
+},
+"warnings": [
+"Do not use this profile as a default for real commercial customers.",
+"Quote and cost fields are placeholders and should be replaced by user, contractor, or admin-confirmed values.",
+"Cash rebate outputs may be previewed, but tax-related outputs should remain separated unless a tax profile is confirmed."
+]
+},
+{
+"templateId": "nonprofit_school_public_entity_low_tax_appetite",
+"displayName": "Nonprofit, school, or public entity with low tax appetite",
+"intendedCoverage": [
+"tax_credit",
+"tax_rate_preference",
+"grant_expected_value",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [],
+"applicableRetrofitFamilies": [
+"solar_pv",
+"battery_storage",
+"commercial_lighting",
+"commercial_ev_charging",
+"heat_pump",
+"building_envelope"
+],
+"syntheticAnswers": [
+{
+"inputKey": "organization_type",
+"value": "school",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises nonprofit, school, and public-sector branching where tax credits may need different treatment than cash incentives."
+},
+{
+"inputKey": "taxable_entity",
+"value": false,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests suppression or alternate display of tax credits for entities that may not directly use income-tax benefits."
+},
+{
+"inputKey": "annual_federal_tax_liability_cents",
+"value": 0,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows tax-credit calculators to distinguish nominal credit value from likely direct usability."
+},
+{
+"inputKey": "annual_state_tax_liability_cents",
+"value": 0,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports state tax-credit display logic for tax-exempt or low-tax-appetite organizations."
+},
+{
+"inputKey": "direct_pay_or_transferability_interest",
+"value": "needs_review",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Creates a test hook for routing tax-credit opportunities into a review or education path instead of a cash-equivalent total."
+},
+{
+"inputKey": "project_total_cost_cents",
+"value": 72500000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a larger public-sector project value for grant and percentage-of-cost calculations."
+},
+{
+"inputKey": "capital_budget_approved",
+"value": false,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Allows grant expected-value flows to test budget-readiness messaging."
+},
+{
+"inputKey": "expected_procurement_method",
+"value": "public_bid",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Supports school and government procurement branching without implying a real procurement status."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "needs_tax_profile",
+"includeInUserFacingTotalDefault": false,
+"notes": "Cash incentives and grants may produce placeholder values, but tax-credit benefits should be labeled as potentially unusable, transferable, direct-pay-dependent, or requiring tax review."
+},
+"warnings": [
+"Tax-credit values should not be presented as cash rebates for this profile.",
+"Tax-exempt status and direct-pay or transferability treatment require confirmation.",
+"Sensitive tax fields should be optional and placed outside first-pass public intake."
+]
+},
+{
+"templateId": "washington_solar_manufacturer_tax_abatement",
+"displayName": "Washington solar manufacturer tax abatement profile",
+"intendedCoverage": [
+"tax_rate_preference",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:381"
+],
+"applicableRetrofitFamilies": [
+"solar_manufacturing",
+"manufacturing_equipment",
+"industrial_facility"
+],
+"syntheticAnswers": [
+{
+"inputKey": "state",
+"value": "WA",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Targets the Washington-specific solar manufacturer tax abatement opportunity."
+},
+{
+"inputKey": "organization_type",
+"value": "manufacturer",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Confirms that the fixture is exercising manufacturer eligibility rather than a standard building retrofit."
+},
+{
+"inputKey": "manufactures_solar_energy_equipment",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a synthetic eligibility flag for solar manufacturing activity."
+},
+{
+"inputKey": "eligible_manufacturing_equipment_cost_cents",
+"value": 240000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows tax-abatement calculations to run against a significant synthetic equipment investment."
+},
+{
+"inputKey": "annual_gross_receipts_cents",
+"value": 1850000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises sensitive business-size and tax-base branching for manufacturer tax preference scenarios."
+},
+{
+"inputKey": "state_b_and_o_tax_rate_percent",
+"value": 0.484,
+"valueType": "percent",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a placeholder tax-rate preference input so a calculator can estimate directional abatement value."
+},
+{
+"inputKey": "estimated_taxable_manufacturing_activity_share_percent",
+"value": 65,
+"valueType": "percent",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests allocation of mixed business activity to eligible manufacturing revenue."
+},
+{
+"inputKey": "tax_preference_preapproval_or_registration_confirmed",
+"value": false,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows the estimate to route to human review or documentation-required status before inclusion in totals."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "human_review_required",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator may produce a directional tax-preference preview, but it should not include the result in a user-facing total without confirming eligibility, tax classification, registration or filing requirements, and eligible activity allocation."
+},
+"warnings": [
+"This is not a generic solar installation incentive.",
+"Gross receipts and tax-rate fields are sensitive and should be collected only in an advanced tax or organization profile step.",
+"Washington tax classification and eligibility should be verified before showing a firm estimate."
+]
+},
+{
+"templateId": "michigan_renewable_energy_renaissance_zone_company",
+"displayName": "Michigan renewable energy renaissance zone company profile",
+"intendedCoverage": [
+"tax_rate_preference",
+"property_tax_valuation",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:3216"
+],
+"applicableRetrofitFamilies": [
+"renewable_energy_manufacturing",
+"renewable_energy_development",
+"industrial_facility",
+"solar_pv",
+"battery_storage"
+],
+"syntheticAnswers": [
+{
+"inputKey": "state",
+"value": "MI",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Targets the Michigan renewable energy renaissance zone opportunity."
+},
+{
+"inputKey": "site_in_renaissance_zone",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides the core location-based eligibility flag needed to exercise zone-specific tax preference logic."
+},
+{
+"inputKey": "renaissance_zone_certification_status",
+"value": "pending_confirmation",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Prevents the synthetic case from implying confirmed zone certification while still allowing estimate flow testing."
+},
+{
+"inputKey": "organization_type",
+"value": "developer",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises eligibility for a renewable energy business rather than a household retrofit."
+},
+{
+"inputKey": "renewable_energy_business_activity",
+"value": "renewable_energy_system_development",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a synthetic activity classification for renewable energy zone eligibility."
+},
+{
+"inputKey": "project_total_cost_cents",
+"value": 1250000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports large commercial or industrial renewable energy test cases."
+},
+{
+"inputKey": "local_real_property_tax_rate_percent",
+"value": 1.85,
+"valueType": "percent",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises property-tax preference calculations where local tax rates materially affect results."
+},
+{
+"inputKey": "assessed_real_property_value_cents",
+"value": 620000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a sensitive placeholder for property-tax valuation and abatement testing."
+},
+{
+"inputKey": "estimated_zone_benefit_years",
+"value": 8,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows multi-year tax preference logic to be exercised without asserting a real benefit period."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "human_review_required",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator should use these values to test zone-based tax benefit modeling, but output should remain a review-required estimate until zone location, certification, eligible business activity, local tax rates, and assessed values are confirmed."
+},
+"warnings": [
+"Zone eligibility is location- and certification-dependent.",
+"Local property-tax and assessed-value fields are sensitive and must not be required in first-pass intake.",
+"Any multi-year value should be displayed separately from one-time rebates and marked as tax-profile-dependent."
+]
+},
+{
+"templateId": "rhode_island_renewable_generation_property_tax_valuation",
+"displayName": "Rhode Island renewable generation property-tax valuation profile",
+"intendedCoverage": [
+"property_tax_valuation",
+"tax_rate_preference",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:22798"
+],
+"applicableRetrofitFamilies": [
+"solar_pv",
+"wind",
+"renewable_generation",
+"battery_storage"
+],
+"syntheticAnswers": [
+{
+"inputKey": "state",
+"value": "RI",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Targets Rhode Island renewable generation property-tax valuation testing."
+},
+{
+"inputKey": "renewable_generation_system_present",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides an eligibility flag for property-tax valuation treatment tied to renewable generation."
+},
+{
+"inputKey": "system_capacity_kw_dc",
+"value": 250,
+"valueType": "number",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports generation-scale tests beyond small residential systems."
+},
+{
+"inputKey": "system_fair_market_value_cents",
+"value": 47500000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a synthetic system value for valuation and local property-tax impact testing."
+},
+{
+"inputKey": "assessed_property_value_before_project_cents",
+"value": 180000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises comparison between pre-project assessed value and post-project valuation treatment."
+},
+{
+"inputKey": "assessed_property_value_after_project_cents",
+"value": 225000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows the property-tax calculator to test whether renewable generation value should be excluded, capped, or specially valued."
+},
+{
+"inputKey": "local_property_tax_rate_percent",
+"value": 1.62,
+"valueType": "percent",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a local-tax placeholder for estimating annual property-tax impact."
+},
+{
+"inputKey": "municipality",
+"value": "synthetic_rhode_island_municipality",
+"valueType": "string",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows fixture routing for local-tax logic while avoiding use of a real customer location."
+},
+{
+"inputKey": "property_tax_assessor_confirmation_status",
+"value": "not_confirmed",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Routes valuation-sensitive output to needs-property-tax-profile status until assessor treatment is confirmed."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "needs_property_tax_profile",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator should estimate a placeholder annual property-tax effect, not a cash incentive. It should require confirmation of assessed values, local rate, system valuation, and assessor treatment before user-facing inclusion."
+},
+"warnings": [
+"Property-tax valuation is not equivalent to a cash rebate.",
+"Assessed-value and local-tax fields are sensitive.",
+"Municipality and assessor treatment should be confirmed before calculating a firm estimate."
+]
+},
+{
+"templateId": "lighting_quantity_scaling_stress",
+"displayName": "Lighting quantity-scaling stress profile",
+"intendedCoverage": [
+"rebate_rate_table",
+"quantity_override",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [],
+"applicableRetrofitFamilies": [
+"commercial_lighting"
+],
+"syntheticAnswers": [
+{
+"inputKey": "retrofit_family",
+"value": "commercial_lighting",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Targets a fixture family where quantity scaling is central to the estimate."
+},
+{
+"inputKey": "fixture_count_existing",
+"value": 420,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a materially non-unit count so tests fail if calculators silently default to one fixture."
+},
+{
+"inputKey": "fixture_count_new",
+"value": 420,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests one-for-one replacement quantity handling."
+},
+{
+"inputKey": "unit_count",
+"value": 420,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Provides a generic quantity field for v2 calculators that expect unit_count."
+},
+{
+"inputKey": "watts_existing_per_fixture",
+"value": 96,
+"valueType": "number",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports savings-based and watts-reduced incentive formulas."
+},
+{
+"inputKey": "watts_new_per_fixture",
+"value": 38,
+"valueType": "number",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows lighting calculators to compute synthetic demand and energy reduction."
+},
+{
+"inputKey": "annual_operating_hours",
+"value": 3600,
+"valueType": "number",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports annual kWh savings estimates for lighting scenarios."
+},
+{
+"inputKey": "project_total_cost_cents",
+"value": 13800000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows rebate caps based on project cost to be tested."
+},
+{
+"inputKey": "customer_override_required_for_quantity",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Explicitly marks quantity as a primary user-overridable driver for estimate accuracy."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "deterministic_estimate",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator should scale by 420 fixtures. Any result equivalent to a single-fixture estimate should be treated as a fixture failure."
+},
+"warnings": [
+"This profile is intended to catch quantity-scaling bugs.",
+"The estimate should visibly depend on user-overridden fixture count.",
+"Do not use a hidden unit_count=1 fallback when fixture_count or unit_count is present."
+]
+},
+{
+"templateId": "ev_charging_quantity_scaling_stress",
+"displayName": "EV charging quantity-scaling stress profile",
+"intendedCoverage": [
+"rebate_rate_table",
+"quantity_override",
+"eligibility_profile"
+],
+"applicableOpportunityIds": [],
+"applicableRetrofitFamilies": [
+"commercial_ev_charging"
+],
+"syntheticAnswers": [
+{
+"inputKey": "retrofit_family",
+"value": "commercial_ev_charging",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Provides an alternative quantity-scaling stress case for charger-port and station-count formulas."
+},
+{
+"inputKey": "charger_station_count",
+"value": 12,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests station-count scaling for EV charging opportunities."
+},
+{
+"inputKey": "charging_port_count",
+"value": 24,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests port-count scaling when incentives are awarded per port rather than per station."
+},
+{
+"inputKey": "unit_count",
+"value": 24,
+"valueType": "integer",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Ensures v2 generic quantity defaults align with charging ports rather than one project."
+},
+{
+"inputKey": "charger_level",
+"value": "level_2",
+"valueType": "enum",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Allows rate-table logic to distinguish Level 2 charging from DC fast charging."
+},
+{
+"inputKey": "public_access",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Supports eligibility branches for public or shared charging access."
+},
+{
+"inputKey": "project_total_cost_cents",
+"value": 31000000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Exercises installed-cost caps for EV charging incentive formulas."
+},
+{
+"inputKey": "make_ready_cost_cents",
+"value": 9500000,
+"valueType": "currency_cents",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "medium",
+"whyIncluded": "Tests whether make-ready costs are included, excluded, or capped separately."
+},
+{
+"inputKey": "customer_override_required_for_quantity",
+"value": true,
+"valueType": "boolean",
+"source": "synthetic_test_case",
+"defaultIsPlaceholder": true,
+"userOverrideAllowed": true,
+"confidenceImpactUntilConfirmed": "low",
+"whyIncluded": "Explicitly flags charger counts as a high-impact user override."
+}
+],
+"expectedCalculatorBehavior": {
+"shouldCalculate": true,
+"expectedStatus": "deterministic_estimate",
+"includeInUserFacingTotalDefault": false,
+"notes": "The calculator should support station-count and port-count formulas and should not collapse the project to a single charger."
+},
+"warnings": [
+"Clarify whether the relevant opportunity pays per station, per port, per connector, or as a percentage of cost.",
+"Make-ready costs may have different eligibility treatment than charger hardware.",
+"This profile is synthetic and should be used to detect quantity-scaling and cap-application errors."
+]
+}
+],
+"recommendedTestCaseAdditions": [
+{
+"testCaseIdeaId": "washington_solar_manufacturer_tax_abatement_case",
+"title": "Washington solar manufacturer tax abatement estimate path",
+"userType": "manufacturer",
+"state": "WA",
+"siteType": "industrial manufacturing facility",
+"retrofitFamily": "solar_manufacturing",
+"targetOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:381"
+],
+"profileTemplateIds": [
+"washington_solar_manufacturer_tax_abatement"
+],
+"whyThisCaseMatters": "Covers a tax-preference opportunity that should not behave like a standard solar installation rebate and requires sensitive business-tax inputs.",
+"minimumSyntheticInputs": [
+"state",
+"organization_type",
+"manufactures_solar_energy_equipment",
+"eligible_manufacturing_equipment_cost_cents",
+"annual_gross_receipts_cents",
+"state_b_and_o_tax_rate_percent",
+"estimated_taxable_manufacturing_activity_share_percent"
+],
+"expectedLimitations": [
+"Requires human review before production use.",
+"Gross receipts and tax classification must be confirmed.",
+"Should not be included in default user-facing cash total."
+]
+},
+{
+"testCaseIdeaId": "michigan_renaissance_zone_company_case",
+"title": "Michigan renewable energy renaissance zone tax preference case",
+"userType": "developer",
+"state": "MI",
+"siteType": "renewable energy development site",
+"retrofitFamily": "renewable_energy_development",
+"targetOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:3216"
+],
+"profileTemplateIds": [
+"michigan_renewable_energy_renaissance_zone_company"
+],
+"whyThisCaseMatters": "Exercises zone-based eligibility, property-tax valuation, and multi-year tax preference handling.",
+"minimumSyntheticInputs": [
+"state",
+"site_in_renaissance_zone",
+"renaissance_zone_certification_status",
+"organization_type",
+"renewable_energy_business_activity",
+"project_total_cost_cents",
+"local_real_property_tax_rate_percent",
+"assessed_real_property_value_cents"
+],
+"expectedLimitations": [
+"Zone certification must be verified.",
+"Assessed value and local tax rate are sensitive placeholders.",
+"Multi-year estimates should be separated from first-year incentives."
+]
+},
+{
+"testCaseIdeaId": "rhode_island_property_tax_valuation_case",
+"title": "Rhode Island renewable generation property-tax valuation case",
+"userType": "business",
+"state": "RI",
+"siteType": "commercial property with renewable generation",
+"retrofitFamily": "solar_pv",
+"targetOpportunityIds": [
+"SOURCE_DSIRE:dsire_program_id:22798"
+],
+"profileTemplateIds": [
+"rhode_island_renewable_generation_property_tax_valuation"
+],
+"whyThisCaseMatters": "Covers property-tax valuation logic and prevents the estimator from treating valuation preferences as direct rebates.",
+"minimumSyntheticInputs": [
+"state",
+"renewable_generation_system_present",
+"system_capacity_kw_dc",
+"system_fair_market_value_cents",
+"assessed_property_value_before_project_cents",
+"assessed_property_value_after_project_cents",
+"local_property_tax_rate_percent",
+"property_tax_assessor_confirmation_status"
+],
+"expectedLimitations": [
+"Needs confirmed property-tax profile.",
+"Local assessor treatment may vary.",
+"Should not be included in user-facing cash total by default."
+]
+},
+{
+"testCaseIdeaId": "school_tax_credit_display_case",
+"title": "School or public entity tax-credit display case",
+"userType": "school",
+"state": "CA",
+"siteType": "public school campus",
+"retrofitFamily": "solar_pv",
+"targetOpportunityIds": [],
+"profileTemplateIds": [
+"nonprofit_school_public_entity_low_tax_appetite"
+],
+"whyThisCaseMatters": "Ensures tax credits are displayed as tax-profile-dependent benefits rather than cash rebates when the entity has low or zero tax appetite.",
+"minimumSyntheticInputs": [
+"organization_type",
+"taxable_entity",
+"annual_federal_tax_liability_cents",
+"annual_state_tax_liability_cents",
+"direct_pay_or_transferability_interest",
+"project_total_cost_cents"
+],
+"expectedLimitations": [
+"Requires tax-profile review.",
+"Direct-pay or transferability treatment is not assumed.",
+"Tax-credit values should be visually separated from cash rebates."
+]
+},
+{
+"testCaseIdeaId": "lighting_quantity_override_case",
+"title": "Commercial lighting quantity override stress case",
+"userType": "business",
+"state": "CO",
+"siteType": "warehouse",
+"retrofitFamily": "commercial_lighting",
+"targetOpportunityIds": [],
+"profileTemplateIds": [
+"lighting_quantity_scaling_stress",
+"normal_commercial_retrofit_generic"
+],
+"whyThisCaseMatters": "Catches formulas that incorrectly calculate one fixture instead of hundreds of fixtures.",
+"minimumSyntheticInputs": [
+"fixture_count_existing",
+"fixture_count_new",
+"unit_count",
+"watts_existing_per_fixture",
+"watts_new_per_fixture",
+"annual_operating_hours",
+"project_total_cost_cents"
+],
+"expectedLimitations": [
+"Requires matching opportunity-specific rebate basis.",
+"Fixture wattage and operating hours are synthetic.",
+"Should fail validation if unit_count is ignored."
+]
+},
+{
+"testCaseIdeaId": "ev_charging_port_quantity_override_case",
+"title": "EV charging station and port quantity override case",
+"userType": "business",
+"state": "NY",
+"siteType": "multifamily parking facility",
+"retrofitFamily": "commercial_ev_charging",
+"targetOpportunityIds": [],
+"profileTemplateIds": [
+"ev_charging_quantity_scaling_stress",
+"normal_commercial_retrofit_generic"
+],
+"whyThisCaseMatters": "Tests whether EV charging formulas scale by station, port, connector, project cost, or make-ready cost.",
+"minimumSyntheticInputs": [
+"charger_station_count",
+"charging_port_count",
+"unit_count",
+"charger_level",
+"public_access",
+"project_total_cost_cents",
+"make_ready_cost_cents"
+],
+"expectedLimitations": [
+"Requires opportunity-specific definition of eligible unit.",
+"Make-ready eligibility may differ by program.",
+"Should not silently assume unit_count=1."
+]
+}
+],
+"questionCatalogBacklog": [
+{
+"inputKey": "project_total_cost_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "project_quote",
+"questionPrompt": "What is the estimated total installed project cost?",
+"helperText": "Use the full contractor quote or best available estimate, including equipment, labor, and other installed costs.",
+"answerType": "currency",
+"sensitiveField": false,
+"reason": "Needed for percentage-of-cost incentives, caps, and quote-readiness status."
+},
+{
+"inputKey": "eligible_project_cost_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "project_quote",
+"questionPrompt": "What portion of the project cost is eligible for this incentive?",
+"helperText": "Some programs exclude design, contingency, maintenance, non-energy scope, or unrelated construction costs.",
+"answerType": "currency",
+"sensitiveField": false,
+"reason": "Improves accuracy for incentives that apply only to eligible cost categories."
+},
+{
+"inputKey": "unit_count",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "How many eligible units are included in the project?",
+"helperText": "For example, fixtures, chargers, ports, heat pumps, meters, or other units depending on the project.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Prevents materially wrong estimates from defaulting to one unit."
+},
+{
+"inputKey": "contractor_quote_received",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "project_quote",
+"questionPrompt": "Have you received a contractor quote for this project?",
+"helperText": "A quote can improve estimate accuracy and help determine whether the project is ready for application or preapproval.",
+"answerType": "boolean",
+"sensitiveField": false,
+"reason": "Supports quote-dependent estimate confidence and application-readiness routing."
+},
+{
+"inputKey": "preapproval_required_acknowledged",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "Have you confirmed whether this incentive requires preapproval before purchase or installation?",
+"helperText": "Many programs require approval before work starts. Starting early can reduce or eliminate eligibility.",
+"answerType": "boolean",
+"sensitiveField": false,
+"reason": "Helps prevent ineligible estimates for programs with preapproval requirements."
+},
+{
+"inputKey": "organization_type",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "What type of organization is applying?",
+"helperText": "Examples include business, nonprofit, school, government, manufacturer, developer, agriculture, or industrial customer.",
+"answerType": "select",
+"sensitiveField": false,
+"reason": "Determines eligibility and whether tax benefits should be displayed differently from cash incentives."
+},
+{
+"inputKey": "taxable_entity",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "tax_profile",
+"questionPrompt": "Is the applicant generally a taxable entity for the relevant tax credit or tax preference?",
+"helperText": "This can affect whether a tax credit is directly usable. Skip this during first-pass intake unless a tax incentive is being estimated.",
+"answerType": "boolean",
+"sensitiveField": true,
+"reason": "Needed to distinguish tax-credit value from cash-equivalent value, especially for nonprofits, schools, and public entities."
+},
+{
+"inputKey": "annual_federal_tax_liability_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "tax_profile",
+"questionPrompt": "What is the applicant's estimated annual federal tax liability?",
+"helperText": "This is sensitive. It should be optional and used only for advanced tax-credit usability estimates.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "Tax-liability fields are sensitive and materially affect tax-credit usability."
+},
+{
+"inputKey": "annual_state_tax_liability_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "tax_profile",
+"questionPrompt": "What is the applicant's estimated annual state tax liability?",
+"helperText": "This is sensitive. It should be optional and used only for advanced state tax-credit or tax-preference estimates.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "State tax-liability fields are sensitive and determine whether tax benefits are likely usable."
+},
+{
+"inputKey": "direct_pay_or_transferability_interest",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "tax_profile",
+"questionPrompt": "Does the applicant want to evaluate direct pay, transferability, or another tax-credit monetization path?",
+"helperText": "This does not confirm eligibility. It helps route the estimate to the right tax-benefit explanation or review step.",
+"answerType": "select",
+"sensitiveField": true,
+"reason": "Needed for tax-credit display logic when the applicant may not directly use credits."
+},
+{
+"inputKey": "annual_gross_receipts_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "What are the applicant's estimated annual gross receipts from relevant business activity?",
+"helperText": "This is sensitive business information and should be requested only when needed for a tax preference or advanced estimate.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "Gross-receipts fields are sensitive and may affect manufacturer tax preference calculations."
+},
+{
+"inputKey": "state_b_and_o_tax_rate_percent",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "tax_profile",
+"questionPrompt": "What state business tax rate should be used for this estimate?",
+"helperText": "Use only when estimating a tax-rate preference. The actual tax classification should be confirmed by the applicant or advisor.",
+"answerType": "percent",
+"sensitiveField": true,
+"reason": "Local or state business-tax rate assumptions materially affect tax-preference estimates."
+},
+{
+"inputKey": "estimated_taxable_manufacturing_activity_share_percent",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "What share of the applicant's taxable activity is tied to eligible manufacturing?",
+"helperText": "Use an estimate only for test or preview purposes. Actual allocation may require tax or accounting review.",
+"answerType": "percent",
+"sensitiveField": true,
+"reason": "Needed for manufacturer-specific tax preference calculations with mixed eligible and ineligible activity."
+},
+{
+"inputKey": "manufactures_solar_energy_equipment",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "Does the applicant manufacture solar energy equipment?",
+"helperText": "This helps determine whether the project should be routed to manufacturer tax-preference logic rather than customer installation incentives.",
+"answerType": "boolean",
+"sensitiveField": false,
+"reason": "Core eligibility field for solar manufacturer tax-abatement test cases."
+},
+{
+"inputKey": "site_in_renaissance_zone",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "Is the project site located in a qualifying renaissance zone?",
+"helperText": "Location-based tax preferences usually require confirmation by address, parcel, or official zone documentation.",
+"answerType": "boolean",
+"sensitiveField": false,
+"reason": "Core eligibility field for zone-based tax preference estimates."
+},
+{
+"inputKey": "renaissance_zone_certification_status",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "admin_only",
+"questionPrompt": "What is the applicant's renaissance zone certification status?",
+"helperText": "Use confirmed documentation where available. Otherwise route to human review.",
+"answerType": "select",
+"sensitiveField": false,
+"reason": "Zone-based tax benefits should not produce firm estimates without certification confirmation."
+},
+{
+"inputKey": "renewable_energy_business_activity",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "organization_profile",
+"questionPrompt": "Which renewable energy business activity applies to this project?",
+"helperText": "Examples may include manufacturing, development, generation, storage, or related renewable energy business activity.",
+"answerType": "select",
+"sensitiveField": false,
+"reason": "Determines whether a renewable energy business fits opportunity-specific eligibility rules."
+},
+{
+"inputKey": "assessed_real_property_value_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What is the assessed real property value used for local property-tax purposes?",
+"helperText": "This is sensitive and should usually come from a property-tax bill, assessor record, or admin-confirmed source.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "Assessed-value fields are sensitive and are required for property-tax valuation or abatement estimates."
+},
+{
+"inputKey": "assessed_property_value_before_project_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What was the assessed property value before the renewable generation project?",
+"helperText": "Use only for property-tax valuation estimates. This value should be confirmed before showing a firm estimate.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "Needed to estimate property-tax valuation change while respecting assessed-value sensitivity."
+},
+{
+"inputKey": "assessed_property_value_after_project_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What is the assessed property value after including the renewable generation project?",
+"helperText": "Use only for property-tax valuation estimates and confirm through assessor or tax records where possible.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "Needed to compare valuation treatment and estimate property-tax impact."
+},
+{
+"inputKey": "local_property_tax_rate_percent",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What local property-tax rate should be used for the estimate?",
+"helperText": "This is sensitive and location-specific. Use a confirmed tax bill, assessor record, or admin-supplied rate for firm estimates.",
+"answerType": "percent",
+"sensitiveField": true,
+"reason": "Local-tax fields are sensitive and materially determine property-tax valuation benefits."
+},
+{
+"inputKey": "local_real_property_tax_rate_percent",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What local real-property tax rate applies to the project site?",
+"helperText": "Use only for advanced property-tax preference estimates and confirm before production use.",
+"answerType": "percent",
+"sensitiveField": true,
+"reason": "Local-tax-rate assumptions are sensitive and high-impact for zone and valuation incentives."
+},
+{
+"inputKey": "system_capacity_kw_dc",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "What is the renewable generation system capacity in kW DC?",
+"helperText": "Use the system design, quote, or interconnection application where available.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Supports renewable generation valuation and eligibility checks."
+},
+{
+"inputKey": "system_fair_market_value_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "property_tax_profile",
+"questionPrompt": "What is the fair market value of the renewable generation system?",
+"helperText": "This may differ from installed cost and should be confirmed for property-tax valuation estimates.",
+"answerType": "currency",
+"sensitiveField": true,
+"reason": "System value may affect property-tax valuation and should be treated as sensitive property-tax information."
+},
+{
+"inputKey": "property_tax_assessor_confirmation_status",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "admin_only",
+"questionPrompt": "Has the property-tax assessor treatment been confirmed?",
+"helperText": "Use this to determine whether the valuation estimate can move from placeholder to reviewed.",
+"answerType": "select",
+"sensitiveField": false,
+"reason": "Property-tax valuation estimates need assessor treatment confirmation before firm user-facing output."
+},
+{
+"inputKey": "fixture_count_existing",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "How many existing lighting fixtures will be replaced or upgraded?",
+"helperText": "This quantity can materially change the incentive estimate.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Required for lighting quantity scaling."
+},
+{
+"inputKey": "watts_existing_per_fixture",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "What is the wattage of each existing fixture?",
+"helperText": "Use a typical fixture wattage if exact fixture-level data is unavailable.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Supports savings-based lighting estimates."
+},
+{
+"inputKey": "watts_new_per_fixture",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "What is the wattage of each new fixture?",
+"helperText": "Use the product specification or contractor quote when available.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Supports savings-based lighting estimates."
+},
+{
+"inputKey": "annual_operating_hours",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "How many hours per year will this equipment operate?",
+"helperText": "Operating hours help estimate annual energy savings for lighting and equipment projects.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Improves savings-based estimates and helps test energy-reduction formulas."
+},
+{
+"inputKey": "charger_station_count",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "How many EV charging stations are included?",
+"helperText": "Some incentives pay per station while others pay per port or connector.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Required for EV charging quantity scaling."
+},
+{
+"inputKey": "charging_port_count",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "retrofit_details",
+"questionPrompt": "How many EV charging ports are included?",
+"helperText": "Port count may differ from station count and can materially change the incentive estimate.",
+"answerType": "number",
+"sensitiveField": false,
+"reason": "Prevents charger estimates from defaulting to one unit or one station when incentives are port-based."
+},
+{
+"inputKey": "make_ready_cost_cents",
+"shouldBecomeUserQuestion": true,
+"uiPlacement": "project_quote",
+"questionPrompt": "What is the estimated make-ready or electrical infrastructure cost?",
+"helperText": "Some EV charging incentives treat make-ready costs separately from charger hardware.",
+"answerType": "currency",
+"sensitiveField": false,
+"reason": "Needed to test EV charging incentive caps and eligible cost categories."
+}
+],
+"summary": {
+"templateCount": 7,
+"recommendedTestCaseAdditionCount": 6,
+"implementationNotes": [
+"The templates intentionally favor richer reusable profile defaults over patching existing public sample cases.",
+"All syntheticAnswers use source="synthetic_test_case", defaultIsPlaceholder=true, and userOverrideAllowed=true.",
+"The three requested tax-related opportunity IDs are covered by dedicated templates.",
+"Tax benefits, abatements, and property-tax valuation effects are excluded from user-facing totals by default.",
+"Sensitive tax-liability, gross-receipts, assessed-value, and local-tax fields are marked sensitive in the question catalog backlog.",
+"Quantity-scaling stress profiles are designed to expose incorrect unit_count=1 fallbacks."
+]
+}
+}
+

@@ -304,9 +304,110 @@ function calculateCalculationSpec({ pkg, effect, calculation, ctx, priorAwards }
     case "rate_table":
     case "tiered_rate_table":
       return calculateRateTableEffect({ pkg, effect, calculation, ctx });
+    case "expression":
+      return calculateExpressionEffect({ effect, calculation, ctx });
     default:
       return { amountCents: 0, missingInputs, trace: [`Unsupported v2 calculation method: ${calculation.method}`] };
   }
+}
+
+function calculateExpressionEffect({ effect, calculation, ctx }) {
+  const expressionId = String(calculation.expression_id || "").trim();
+
+  if (expressionId === "tax_exempt_liability") {
+    const gates = [
+      ["approved_rerz_designation", "Approved RERZ designation"],
+      ["qualified_company_operations", "Qualified company operations"],
+      ["company_current_on_state_and_local_taxes", "Company current on state and local taxes"]
+    ];
+    const failedGate = gates.find(([key]) => booleanAnswer(ctx, key) === false);
+    if (failedGate) {
+      return {
+        amountCents: 0,
+        missingInputs: [],
+        trace: [`${failedGate[1]} is not confirmed, so tax-exempt liability value is zero.`]
+      };
+    }
+
+    const eligibleTaxCents = [
+      "eligible_state_education_tax_cents",
+      "eligible_real_property_tax_cents",
+      "eligible_personal_property_tax_cents",
+      "eligible_local_income_tax_cents"
+    ].reduce((sum, key) => sum + (numberAnswer(ctx, key) || 0), 0);
+    const phaseoutMultiplier = normalizeFraction(numberAnswer(ctx, "phaseout_multiplier") ?? 1);
+    return {
+      amountCents: roundCents(eligibleTaxCents * phaseoutMultiplier),
+      missingInputs: [],
+      trace: [
+        `Eligible tax liability ${eligibleTaxCents} cents * phaseout multiplier ${phaseoutMultiplier}.`
+      ]
+    };
+  }
+
+  if (expressionId === "tax_rate_difference") {
+    if (booleanAnswer(ctx, "annual_tax_performance_report_filed") === false) {
+      return {
+        amountCents: 0,
+        missingInputs: [],
+        trace: ["Annual Tax Performance Report is not confirmed, so tax-rate preference value is zero."]
+      };
+    }
+
+    const taxBaseCents = firstNumberAnswer(ctx, [
+      "qualifying_tax_base_after_deductions_and_matc_cents",
+      "qualifying_taxable_gross_receipts",
+      "qualifying_taxable_gross_receipts_cents"
+    ]) || 0;
+    const ordinaryRate = normalizeTaxRate(
+      firstNumberAnswer(ctx, ["otherwise_applicable_b_and_o_rate_decimal", "otherwise_applicable_b_o_tax_rate"])
+    );
+    const preferentialRate = normalizeTaxRate(
+      firstNumberAnswer(ctx, ["preferential_solar_b_and_o_rate_decimal"]) ??
+        Number(calculation.preferential_solar_b_and_o_rate_decimal ?? 0.00275)
+    );
+    const rateDelta = Math.max(0, ordinaryRate - preferentialRate);
+    return {
+      amountCents: roundCents(taxBaseCents * rateDelta),
+      missingInputs: [],
+      trace: [
+        `Tax base ${taxBaseCents} cents * rate difference ${ordinaryRate} - ${preferentialRate} = ${rateDelta}.`
+      ]
+    };
+  }
+
+  if (expressionId === "property_tax_valuation_formula") {
+    const acKwCapacity = firstNumberAnswer(ctx, ["ac_kw_capacity", "system_kw", "system_capacity_kw_dc"]) || 0;
+    const tangiblePropertyApplicable = booleanAnswer(ctx, "tangible_property_applicable") === true;
+    const realPropertyApplicable = booleanAnswer(ctx, "real_property_applicable") === true;
+    const statutoryTaxCents =
+      (tangiblePropertyApplicable ? acKwCapacity * 500 : 0) +
+      (realPropertyApplicable ? acKwCapacity * 350 : 0);
+    const counterfactualTaxCents = firstNumberAnswer(ctx, [
+      "counterfactual_ordinary_annual_property_tax_cents",
+      "counterfactual_assessment_cents"
+    ]);
+    const amountCents = Number.isFinite(counterfactualTaxCents)
+      ? Math.max(0, Number(counterfactualTaxCents) - statutoryTaxCents)
+      : statutoryTaxCents;
+
+    return {
+      amountCents: roundCents(amountCents),
+      missingInputs: [],
+      trace: [
+        `Statutory renewable property tax value ${statutoryTaxCents} cents for ${acKwCapacity} AC kW.`,
+        Number.isFinite(counterfactualTaxCents)
+          ? `Counterfactual ordinary annual property tax ${counterfactualTaxCents} cents; gross annual difference ${amountCents} cents.`
+          : "No counterfactual ordinary annual property tax supplied; returning statutory tax value only."
+      ]
+    };
+  }
+
+  return {
+    amountCents: 0,
+    missingInputs: [],
+    trace: [`Unsupported v2 expression id: ${expressionId || "unknown"}`]
+  };
 }
 
 function missingRequiredInputsForEffect(effect, ctx) {
@@ -517,6 +618,45 @@ function answerForDimension(ctx, dimension) {
     if (hasAnswer(ctx.answers, key)) return answerValue(ctx.answers, key);
   }
   return null;
+}
+
+function firstNumberAnswer(ctx, keys) {
+  for (const key of keys || []) {
+    const value = numberAnswer(ctx, key);
+    if (Number.isFinite(value)) return value;
+  }
+  return null;
+}
+
+function numberAnswer(ctx, key) {
+  if (!hasAnswer(ctx.answers, key)) return null;
+  const value = Number(answerValue(ctx.answers, key));
+  return Number.isFinite(value) ? value : null;
+}
+
+function booleanAnswer(ctx, key) {
+  if (!hasAnswer(ctx.answers, key)) return null;
+  const value = answerValue(ctx.answers, key);
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value !== 0;
+  const normalized = String(value || "").trim().toLowerCase();
+  if (["true", "yes", "y", "approved", "confirmed", "filed"].includes(normalized)) return true;
+  if (["false", "no", "n", "not_approved", "not_confirmed", "not_filed"].includes(normalized)) return false;
+  return null;
+}
+
+function normalizeFraction(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 1;
+  if (number > 1) return number / 100;
+  return number;
+}
+
+function normalizeTaxRate(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  if (number > 1) return number / 100;
+  return number;
 }
 
 function normalizeDimensionValue(value) {

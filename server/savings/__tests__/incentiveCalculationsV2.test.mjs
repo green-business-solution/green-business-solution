@@ -209,6 +209,92 @@ describe("incentive calculation v2", () => {
     expect(result.totals.expectedOneTimeSavingsCents).toBe(20000);
     expect(result.effectResults[0].trace.join(" ")).toContain("selected conservative matched row");
   });
+
+  it("calculates tax-exempt liability expressions from confirmed eligible taxes", () => {
+    const result = calculateV2IncentivePackage(
+      expressionPackage({
+        expressionId: "tax_exempt_liability",
+        effectType: "tax_credit",
+        requiredInputs: [
+          "approved_rerz_designation",
+          "qualified_company_operations",
+          "company_current_on_state_and_local_taxes",
+          "phaseout_multiplier",
+          "eligible_state_education_tax_cents",
+          "eligible_real_property_tax_cents",
+          "eligible_personal_property_tax_cents",
+          "eligible_local_income_tax_cents"
+        ]
+      }),
+      baseCtx({
+        answers: {
+          approved_rerz_designation: { value: true },
+          qualified_company_operations: { value: true },
+          company_current_on_state_and_local_taxes: { value: true },
+          phaseout_multiplier: { value: 0.75 },
+          eligible_state_education_tax_cents: { value: 10000 },
+          eligible_real_property_tax_cents: { value: 20000 },
+          eligible_personal_property_tax_cents: { value: 30000 },
+          eligible_local_income_tax_cents: { value: 40000 }
+        }
+      })
+    );
+
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(75000);
+    expect(result.effectResults[0].trace.join(" ")).toContain("Eligible tax liability 100000 cents");
+  });
+
+  it("calculates tax-rate difference expressions using the source-backed preferential rate", () => {
+    const result = calculateV2IncentivePackage(
+      expressionPackage({
+        expressionId: "tax_rate_difference",
+        effectType: "tax_credit",
+        calculation: { preferential_solar_b_and_o_rate_decimal: 0.00275 },
+        requiredInputs: [
+          "annual_tax_performance_report_filed",
+          "qualifying_tax_base_after_deductions_and_matc_cents",
+          "otherwise_applicable_b_and_o_rate_decimal"
+        ]
+      }),
+      baseCtx({
+        answers: {
+          annual_tax_performance_report_filed: { value: true },
+          qualifying_tax_base_after_deductions_and_matc_cents: { value: 10000000 },
+          otherwise_applicable_b_and_o_rate_decimal: { value: 0.00484 }
+        }
+      })
+    );
+
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(20900);
+    expect(result.effectResults[0].trace.join(" ")).toContain("rate difference 0.00484 - 0.00275");
+  });
+
+  it("calculates property-tax valuation expressions as a recurring workflow amount", () => {
+    const result = calculateV2IncentivePackage(
+      expressionPackage({
+        expressionId: "property_tax_valuation_formula",
+        effectType: "recurring_savings",
+        timing: { cadence: "annual" },
+        requiredInputs: [
+          "ac_kw_capacity",
+          "tangible_property_applicable",
+          "real_property_applicable",
+          "counterfactual_ordinary_annual_property_tax_cents"
+        ]
+      }),
+      baseCtx({
+        answers: {
+          ac_kw_capacity: { value: 100 },
+          tangible_property_applicable: { value: true },
+          real_property_applicable: { value: true },
+          counterfactual_ordinary_annual_property_tax_cents: { value: 100000 }
+        }
+      })
+    );
+
+    expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(15000);
+    expect(result.effectResults[0].trace.join(" ")).toContain("Statutory renewable property tax value 85000 cents");
+  });
 });
 
 function consumersEnergyAirPurifierPackage() {
@@ -481,5 +567,53 @@ function rateTablePackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "ev_rate", source_type: "web_page", quote: "$0.10/kWh saved", evidence_confidence: 0.9 }],
     confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["rate_table"] }
+  };
+}
+
+function expressionPackage({ expressionId, effectType, timing = { cadence: "one_time" }, calculation = {}, requiredInputs = [] }) {
+  const effect = {
+    effect_id: `effect_${expressionId}`,
+    label: `${expressionId} expression`,
+    effect_type: effectType,
+    cash_flow_direction: "benefit",
+    timing,
+    calculation: {
+      method: "expression",
+      expression_id: expressionId,
+      ...calculation
+    },
+    limits: [],
+    caps: [],
+    required_inputs: requiredInputs.map((inputKey) => ({
+      input_key: inputKey,
+      label: inputKey,
+      value_type: "text",
+      required_for: [`effect_${expressionId}`],
+      source_precedence: ["user_profile"],
+      missing_severity: "blocks_calculation"
+    })),
+    evidence_refs: ["expression_source"],
+    confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["expression_test"] }
+  };
+
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: `opp_${expressionId}`,
+    program_name: `${expressionId} program`,
+    calculation_status: "calculable_with_missing_inputs",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["tax_or_special_workflow"],
+    geography: { country: "US", states: [], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [effect],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: effect.required_inputs,
+    assumptions: [],
+    source_evidence: [{ evidence_id: "expression_source", source_type: "web_page", quote: "Expression source", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["expression_test"] }
   };
 }

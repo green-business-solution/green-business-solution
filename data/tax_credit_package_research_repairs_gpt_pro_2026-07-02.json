@@ -1,0 +1,853 @@
+{
+  "schemaVersion": "retrofi_tax_credit_package_research_repairs_gpt_pro.v1",
+  "generatedAt": "2026-07-02T22:43:01.781Z",
+  "sourceWorkDir": "GPT Pro Work/tax-credit-and-form-input-repair-2026-07-02",
+  "sourceFiles": [
+    "output_001_tax_credit_package_repair.md"
+  ],
+  "repairCount": 3,
+  "counts": {
+    "classificationCounts": {
+      "tax_abatement": 1,
+      "tax_rate_preference": 1,
+      "property_tax_valuation": 1
+    },
+    "sourceConfidenceCounts": {
+      "high": 3
+    },
+    "displayStatusCounts": {
+      "needs_accountant_review": 2,
+      "needs_property_tax_profile": 1
+    },
+    "archiveRecommendedCount": 0,
+    "defaultUserFacingIncludedCount": 0
+  },
+  "validationWarnings": [],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
+      "programName": "Renewable Energy Renaissance Zones",
+      "availabilityStatus": "active",
+      "sourceConfidence": "high",
+      "taxBenefitClassification": "tax_abatement",
+      "cashValueClassification": "tax_exemption",
+      "recommendedRetrofitOrWorkflowTypes": [
+        "michigan_renewable_energy_renaissance_zone_designation",
+        "economic_development_special_tax_workflow",
+        "approved_company_operations_in_designated_zone"
+      ],
+      "shouldArchive": false,
+      "archiveReason": null,
+      "effects": [
+        {
+          "effectType": "tax_exemption",
+          "timing": "annual",
+          "valueModelKind": "tax_exempt_liability",
+          "formulaText": "Gross annual tax relief equals the sum of eligible state education tax, real property tax, personal property tax, and applicable local income tax otherwise due for approved renewable-energy company operations inside the approved Renewable Energy Renaissance Zone, multiplied by the approved phaseout multiplier. Exclude federal taxes, local bond obligations, school sinking fund taxes, special assessments, and Michigan sales or use tax.",
+          "formulaExpression": "gross_benefit_cents = (eligible_state_education_tax_cents + eligible_real_property_tax_cents + eligible_personal_property_tax_cents + eligible_local_income_tax_cents) * phaseout_multiplier",
+          "variables": [
+            {
+              "inputKey": "approved_rerz_designation",
+              "label": "Approved Renewable Energy Renaissance Zone designation",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "program_approval",
+              "uiPlacement": "admin_only",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Must be an approved State Administrative Board designation on Michigan Strategic Fund recommendation, not a general location eligibility flag."
+            },
+            {
+              "inputKey": "qualified_company_operations",
+              "label": "Qualified renewable-energy company operations in approved zone",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "program_approval",
+              "uiPlacement": "organization_profile",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Confirm the legal taxpayer and operations match the approved RERZ agreement."
+            },
+            {
+              "inputKey": "company_current_on_state_and_local_taxes",
+              "label": "Company is current on applicable state and local taxes",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "MEDC fact sheet requires the company to be current with all state and local taxes."
+            },
+            {
+              "inputKey": "approved_zone_term_years",
+              "label": "Approved zone term",
+              "valueType": "number",
+              "unit": "years",
+              "required": true,
+              "sourceStrategy": "program_approval",
+              "uiPlacement": "admin_only",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Use the term in the approved MSF/SAB documents; RERZ tax abatements may run up to 15 years."
+            },
+            {
+              "inputKey": "program_year",
+              "label": "Current year within approved zone term",
+              "valueType": "number",
+              "unit": "year_number",
+              "required": true,
+              "sourceStrategy": "derived",
+              "uiPlacement": "hidden_derived",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Derive from the approved effective date and tax year."
+            },
+            {
+              "inputKey": "phaseout_multiplier",
+              "label": "Approved tax-relief phaseout multiplier",
+              "valueType": "number",
+              "unit": "decimal",
+              "required": true,
+              "sourceStrategy": "program_approval",
+              "uiPlacement": "admin_only",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "MEDC describes phaseout in 25 percent increments during the final three years; use the approved agreement schedule when available."
+            },
+            {
+              "inputKey": "eligible_state_education_tax_cents",
+              "label": "Eligible Michigan state education tax otherwise due",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": true,
+              "sourceStrategy": "property_tax_bill",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Only include state education tax that is eligible under the approved RERZ agreement."
+            },
+            {
+              "inputKey": "eligible_real_property_tax_cents",
+              "label": "Eligible real property tax otherwise due",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": true,
+              "sourceStrategy": "property_tax_bill",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Exclude local bond obligations, school sinking fund taxes, and special assessments."
+            },
+            {
+              "inputKey": "eligible_personal_property_tax_cents",
+              "label": "Eligible personal property tax otherwise due",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": true,
+              "sourceStrategy": "property_tax_bill",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Only include personal property tax attributable to approved operations in the designated zone."
+            },
+            {
+              "inputKey": "eligible_local_income_tax_cents",
+              "label": "Eligible local income tax otherwise due",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Include only applicable local income tax eligible for RERZ relief."
+            }
+          ],
+          "capsAndLimits": {
+            "maxBenefitCents": null,
+            "minBenefitCents": null,
+            "maxPercent": null,
+            "phaseoutRules": "Benefits may run up to 15 years, with tax relief phased out in 25 percent increments over the final three years; use the specific MSF/SAB agreement when it provides the controlling schedule.",
+            "expirationDate": null,
+            "carryforward": "not_applicable",
+            "refundability": "not_applicable",
+            "transferability": "not_applicable",
+            "directPayAvailable": "not_applicable"
+          },
+          "filingAndApprovalRequirements": [
+            "Applicant must be a qualifying renewable-energy company under the RERZ workflow.",
+            "Application is routed through the county or distressed community and MEDC.",
+            "Designation requires Michigan Strategic Fund recommendation and State Administrative Board approval.",
+            "Approved company must enter an agreement with the Michigan Strategic Fund setting private investment, job creation, and other requirements.",
+            "Company must remain current on state and local taxes.",
+            "Final tax treatment should be reviewed against the approved agreement, property tax bills, local income tax filings, and tax-professional advice."
+          ],
+          "calculationExamples": [
+            {
+              "name": "Approved zone, non-phaseout year",
+              "inputs": {
+                "eligible_state_education_tax_cents": 1000000,
+                "eligible_real_property_tax_cents": 5000000,
+                "eligible_personal_property_tax_cents": 2500000,
+                "eligible_local_income_tax_cents": 1500000,
+                "phaseout_multiplier": 1
+              },
+              "grossEstimatedBenefitCents": 10000000,
+              "calculationTrace": [
+                "Add eligible taxes otherwise due: 1,000,000 + 5,000,000 + 2,500,000 + 1,500,000 = 10,000,000 cents.",
+                "Apply phaseout multiplier: 10,000,000 * 1.00 = 10,000,000 cents.",
+                "Display as gross estimated tax relief only after confirmed approval and tax-liability inputs."
+              ]
+            }
+          ],
+          "includedInUserFacingTotalDefault": false,
+          "displayRecommendation": {
+            "label": "Approved Renaissance Zone tax relief",
+            "caveat": "Only applies to approved renewable-energy company operations in a designated Michigan zone. This is tax abatement, not a retrofit rebate, and depends on actual eligible tax liabilities and approved program documents.",
+            "estimateStatus": "needs_accountant_review"
+          },
+          "sourceUrlsChecked": [
+            "https://www.michiganbusiness.org/globalassets/documents/reports/fact-sheets/renewableenergyrenzones.pdf",
+            "https://www.michiganbusiness.org/globalassets/documents/reports/legislative-reports/cy2023-renaissance-zone-annual-report.pdf",
+            "https://www.michiganbusiness.org/about-medc/michigan-strategic-fund/",
+            "https://www.michiganbusiness.org/globalassets/documents/msf-board/msf-board-packets/april-2025-msf-board-packet---final-web-upload.pdf",
+            "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-2688e"
+          ],
+          "evidenceText": "MEDC states RERZ facilities do not pay state education, personal and real property, and applicable local income taxes; sales/use tax and specified federal/local obligations remain due. MEDC says SAB approves on MSF recommendation, with MSF agreement, up to 15 years and a final-three-year 25 percent phaseout.",
+          "reasoningNotes": "Repair from tax_credit to tax_abatement/tax_exemption. This is an approved-company economic-development tax workflow, not a normal retrofit incentive. RetroFi should suppress it from standard customer project totals unless the project record represents an approved RERZ company workflow and tax/accounting inputs are present."
+        }
+      ],
+      "inputQuestionNotes": [
+        {
+          "inputKey": "approved_rerz_designation",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "Has the company already received an approved Michigan Renewable Energy Renaissance Zone designation for this facility or operation?",
+          "answerType": "boolean",
+          "options": [],
+          "helperText": "This benefit should not be estimated from location alone; it requires formal program approval.",
+          "sensitiveTaxField": false
+        },
+        {
+          "inputKey": "approved_zone_term_years",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What is the approved term of the Renewable Energy Renaissance Zone agreement?",
+          "answerType": "number",
+          "options": [],
+          "helperText": "Use the term shown in the approved MSF/SAB agreement.",
+          "sensitiveTaxField": false
+        },
+        {
+          "inputKey": "eligible_tax_liability_by_type",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What eligible state education, real property, personal property, and local income taxes would otherwise be due for the approved operations?",
+          "answerType": "textarea",
+          "options": [],
+          "helperText": "Use tax bills or tax-return workpapers. Exclude federal taxes, sales/use tax, local bond obligations, school sinking funds, and special assessments.",
+          "sensitiveTaxField": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.michiganbusiness.org/globalassets/documents/reports/fact-sheets/renewableenergyrenzones.pdf",
+        "https://www.michiganbusiness.org/globalassets/documents/reports/legislative-reports/cy2023-renaissance-zone-annual-report.pdf",
+        "https://www.michiganbusiness.org/about-medc/michigan-strategic-fund/",
+        "https://www.michiganbusiness.org/globalassets/documents/msf-board/msf-board-packets/april-2025-msf-board-packet---final-web-upload.pdf",
+        "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-2688e"
+      ],
+      "evidenceText": "MEDC describes RERZ as company-specific tax abatement for renewable-energy facilities, approved by the State Administrative Board on Michigan Strategic Fund recommendation, with excluded taxes and a possible term of up to 15 years.",
+      "reasoningNotes": "Keep active, but route only to special economic-development workflows. The monetary model is tax-liability offset/exemption from specified eligible taxes, not a transferable credit or direct-pay incentive.",
+      "sourceFile": "output_001_tax_credit_package_repair.md"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
+      "programName": "Tax Abatement for Solar Manufacturers",
+      "availabilityStatus": "active",
+      "sourceConfidence": "high",
+      "taxBenefitClassification": "tax_rate_preference",
+      "cashValueClassification": "tax_rate_preference",
+      "recommendedRetrofitOrWorkflowTypes": [
+        "washington_solar_energy_manufacturing_b_and_o_tax_workflow",
+        "solar_component_processing_for_hire",
+        "solar_energy_wholesale_sales_by_manufacturer"
+      ],
+      "shouldArchive": false,
+      "archiveReason": null,
+      "effects": [
+        {
+          "effectType": "tax_rate_preference",
+          "timing": "tax_filing",
+          "valueModelKind": "tax_rate_difference",
+          "formulaText": "Gross estimated B&O tax preference equals the qualifying Washington B&O tax measure after applicable deductions and multiple-activities tax credit adjustments multiplied by the positive difference between the otherwise applicable B&O tax rate and the preferential solar energy rate of 0.275 percent. Use the tax period's ordinary rate; standard manufacturing and wholesaling rates are 0.484 percent before January 1, 2027 and 0.5 percent on or after January 1, 2027 unless another classification applies.",
+          "formulaExpression": "gross_benefit_cents = max(0, qualifying_tax_base_after_deductions_and_matc_cents * (otherwise_applicable_b_and_o_rate_decimal - 0.00275))",
+          "variables": [
+            {
+              "inputKey": "qualifying_solar_b_and_o_classification",
+              "label": "Qualifying solar B&O activity classification",
+              "valueType": "enum",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "organization_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Allowed values should be limited to solar energy system/component manufacturing, processing for hire, or wholesale sales by the manufacturer."
+            },
+            {
+              "inputKey": "tax_period_start_date",
+              "label": "Tax period start date",
+              "valueType": "date",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Use the Washington excise tax return period."
+            },
+            {
+              "inputKey": "tax_period_end_date",
+              "label": "Tax period end date",
+              "valueType": "date",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Preference expires July 1, 2032; suppress or revalidate periods after that date."
+            },
+            {
+              "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+              "label": "Qualifying B&O tax base after deductions and MATC adjustments",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Use Washington tax-return workpapers. The measure may be value of products, gross income from processing for hire, or gross wholesale proceeds, depending on the activity."
+            },
+            {
+              "inputKey": "otherwise_applicable_b_and_o_rate_decimal",
+              "label": "Otherwise applicable Washington B&O tax rate",
+              "valueType": "number",
+              "unit": "decimal",
+              "required": true,
+              "sourceStrategy": "official_source",
+              "uiPlacement": "hidden_derived",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Default from current RCW/DOR rate table for the tax period; allow accountant override because other B&O classifications may apply."
+            },
+            {
+              "inputKey": "preferential_solar_b_and_o_rate_decimal",
+              "label": "Preferential solar B&O tax rate",
+              "valueType": "number",
+              "unit": "decimal",
+              "required": true,
+              "sourceStrategy": "official_source",
+              "uiPlacement": "hidden_derived",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "low",
+              "validationNotes": "Official preferential rate is 0.275 percent, expressed as 0.00275, through the stated expiration date."
+            },
+            {
+              "inputKey": "annual_tax_performance_report_filed",
+              "label": "Annual Tax Performance Report filed",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Washington requires businesses using the preference to file the Annual Tax Performance Report by May 31 following the year claimed."
+            },
+            {
+              "inputKey": "interstate_or_foreign_sales_deductions_cents",
+              "label": "Interstate or foreign sales deductions",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": false,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Use if deductions reduce the qualifying tax measure."
+            },
+            {
+              "inputKey": "multiple_activities_tax_credit_adjustments_cents",
+              "label": "Multiple-activities tax credit adjustments",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": false,
+              "sourceStrategy": "tax_return_or_accountant",
+              "uiPlacement": "tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Washington DOR notes MATC may apply to avoid duplicate B&O taxation."
+            }
+          ],
+          "capsAndLimits": {
+            "maxBenefitCents": null,
+            "minBenefitCents": null,
+            "maxPercent": null,
+            "phaseoutRules": null,
+            "expirationDate": "2032-07-01",
+            "carryforward": "not_applicable",
+            "refundability": "not_applicable",
+            "transferability": "not_applicable",
+            "directPayAvailable": "not_applicable"
+          },
+          "filingAndApprovalRequirements": [
+            "Taxpayer must be engaged in qualifying solar energy system or component manufacturing, processing for hire, or wholesale sales by the manufacturer.",
+            "Report qualifying activity under the preferential solar B&O classification on Washington excise tax filings.",
+            "Apply deductions and multiple-activities tax credit adjustments before estimating the rate-preference value.",
+            "File Washington's Annual Tax Performance Report by May 31 following the year the preference is claimed.",
+            "Have a tax professional confirm the ordinary B&O classification and rate for the tax period."
+          ],
+          "calculationExamples": [
+            {
+              "name": "Manufacturer with 2026 ordinary manufacturing comparator",
+              "inputs": {
+                "qualifying_tax_base_after_deductions_and_matc_cents": 100000000,
+                "otherwise_applicable_b_and_o_rate_decimal": 0.00484,
+                "preferential_solar_b_and_o_rate_decimal": 0.00275
+              },
+              "grossEstimatedBenefitCents": 209000,
+              "calculationTrace": [
+                "Rate difference: 0.00484 - 0.00275 = 0.00209.",
+                "Apply to qualifying tax base: 100,000,000 cents * 0.00209 = 209,000 cents.",
+                "Display as gross estimated B&O tax preference, subject to return data and annual report compliance."
+              ]
+            }
+          ],
+          "includedInUserFacingTotalDefault": false,
+          "displayRecommendation": {
+            "label": "Washington solar manufacturing B&O rate preference",
+            "caveat": "Applies to qualifying Washington solar manufacturers, processors for hire, and manufacturer wholesalers, not customers installing solar. Value depends on actual B&O tax base, deductions, MATC treatment, and required reporting.",
+            "estimateStatus": "needs_accountant_review"
+          },
+          "sourceUrlsChecked": [
+            "https://dor.wa.gov/education/industry-guides/manufacturing-guide/manufacturing-solar-energy-systems-and-components-solar-energy-systems",
+            "https://dor.wa.gov/open-business/apply-business-license/plan-taxes/business-and-occupation-bo-tax-classification-definitions",
+            "https://apps.leg.wa.gov/RCW/default.aspx?cite=82.04.294",
+            "https://app.leg.wa.gov/RCW/default.aspx?cite=82.32.534",
+            "https://app.leg.wa.gov/rcw/default.aspx?cite=82.04.240",
+            "https://app.leg.wa.gov/rcw/default.aspx?cite=82.04.270"
+          ],
+          "evidenceText": "Washington DOR and RCW 82.04.294 set a 0.275 percent B&O rate for qualifying solar manufacturing, processing for hire, and manufacturer wholesale sales. The preference expires July 1, 2032. Annual Tax Performance Report filing is required.",
+          "reasoningNotes": "Repair from tax_credit to tax_rate_preference. This is a Washington business tax classification/rate workflow for solar manufacturers and related activities, not a rooftop solar customer incentive. Keep it out of normal retrofit totals and require tax-return/accountant inputs."
+        }
+      ],
+      "inputQuestionNotes": [
+        {
+          "inputKey": "qualifying_solar_b_and_o_classification",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "Which qualifying Washington solar B&O activity applies?",
+          "answerType": "select",
+          "options": [
+            "Solar energy system or component manufacturing",
+            "Solar energy processing for hire",
+            "Wholesale sales by the solar manufacturer",
+            "None or not sure"
+          ],
+          "helperText": "This preference is for qualifying business activities, not a customer installation incentive.",
+          "sensitiveTaxField": false
+        },
+        {
+          "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What is the qualifying Washington B&O tax base after deductions and multiple-activities tax credit adjustments?",
+          "answerType": "currency",
+          "options": [],
+          "helperText": "Use Washington excise tax return workpapers or accountant-provided figures.",
+          "sensitiveTaxField": true
+        },
+        {
+          "inputKey": "annual_tax_performance_report_filed",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "Will the taxpayer file the required Washington Annual Tax Performance Report for the year the preference is claimed?",
+          "answerType": "boolean",
+          "options": [],
+          "helperText": "Washington requires this annual report for taxpayers claiming the preferential solar B&O rate.",
+          "sensitiveTaxField": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://dor.wa.gov/education/industry-guides/manufacturing-guide/manufacturing-solar-energy-systems-and-components-solar-energy-systems",
+        "https://dor.wa.gov/open-business/apply-business-license/plan-taxes/business-and-occupation-bo-tax-classification-definitions",
+        "https://apps.leg.wa.gov/RCW/default.aspx?cite=82.04.294",
+        "https://app.leg.wa.gov/RCW/default.aspx?cite=82.32.534",
+        "https://app.leg.wa.gov/rcw/default.aspx?cite=82.04.240",
+        "https://app.leg.wa.gov/rcw/default.aspx?cite=82.04.270"
+      ],
+      "evidenceText": "Official Washington sources classify qualifying solar manufacturing, processing for hire, and manufacturer wholesale sales at a 0.275 percent B&O rate through July 1, 2032, with Annual Tax Performance Report obligations.",
+      "reasoningNotes": "Active but narrow. Model only for Washington business-tax workflows with confirmed qualifying activity and tax base; never surface for homeowners, building owners, or ordinary solar adopters as an installation incentive.",
+      "sourceFile": "output_001_tax_credit_package_repair.md"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+      "programName": "Renewable Energy Tax Valuation",
+      "availabilityStatus": "active",
+      "sourceConfidence": "high",
+      "taxBenefitClassification": "property_tax_valuation",
+      "cashValueClassification": "process_value",
+      "recommendedRetrofitOrWorkflowTypes": [
+        "rhode_island_commercial_renewable_property_tax_workflow",
+        "commercial_solar_property_tax_profile",
+        "municipal_assessor_review"
+      ],
+      "shouldArchive": false,
+      "archiveReason": null,
+      "effects": [
+        {
+          "effectType": "property_tax_valuation",
+          "timing": "annual",
+          "valueModelKind": "property_tax_valuation_formula",
+          "formulaText": "For eligible Rhode Island renewable energy resources, annual municipal tax/valuation workflow is based on AC nameplate capacity: tangible property is taxed at 5.00 dollars per kW AC and real property is taxed at 3.50 dollars per kW AC where applicable. Residential systems and systems employed by a manufacturer have separate statutory exemptions; municipalities may also exempt systems by ordinance. Savings versus ordinary assessment requires a counterfactual tax bill or assessor determination.",
+          "formulaExpression": "annual_statutory_tax_cents = (tangible_property_applicable ? ac_kw_capacity * 500 : 0) + (real_property_applicable ? ac_kw_capacity * 350 : 0)",
+          "variables": [
+            {
+              "inputKey": "ac_kw_capacity",
+              "label": "Renewable energy system AC nameplate capacity",
+              "valueType": "number",
+              "unit": "kW AC",
+              "required": true,
+              "sourceStrategy": "quote_or_invoice",
+              "uiPlacement": "retrofit_details",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Use AC nameplate capacity, not DC capacity."
+            },
+            {
+              "inputKey": "renewable_resource_type",
+              "label": "Eligible renewable energy resource type",
+              "valueType": "enum",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "runtime_project_data",
+              "uiPlacement": "retrofit_details",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Confirm eligibility under Rhode Island renewable energy resource definitions."
+            },
+            {
+              "inputKey": "municipality",
+              "label": "Rhode Island municipality",
+              "valueType": "text",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "user_input",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Municipal treatment, exemptions, and assessor workflow may affect the result."
+            },
+            {
+              "inputKey": "commercial_tax_status",
+              "label": "Property tax status",
+              "valueType": "enum",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "property_tax_bill",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Distinguish commercial, residential, manufacturer-used, exempt, and unknown status."
+            },
+            {
+              "inputKey": "tangible_property_applicable",
+              "label": "Tangible property tax treatment applies",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Apply only when the municipal tangible property tax workflow applies and no exemption controls."
+            },
+            {
+              "inputKey": "real_property_applicable",
+              "label": "Real property renewable-resource tax treatment applies",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Apply only when current Rhode Island real-property renewable-resource treatment applies and no exemption controls."
+            },
+            {
+              "inputKey": "municipal_exemption_or_waiver_status",
+              "label": "Municipal exemption or waiver status",
+              "valueType": "enum",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Allowed values should include none, full_exemption, partial_exemption, net_metering_waiver, and unknown."
+            },
+            {
+              "inputKey": "residential_system_exemption",
+              "label": "Residential renewable system exemption applies",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Rhode Island law exempts residential renewable energy resources placed in service after December 31, 2015."
+            },
+            {
+              "inputKey": "manufacturer_system_exemption",
+              "label": "Manufacturer-used renewable system exemption applies",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Rhode Island law separately exempts renewable energy resources employed by a manufacturer."
+            },
+            {
+              "inputKey": "interconnection_agreement_date",
+              "label": "Interconnection agreement date",
+              "valueType": "date",
+              "unit": null,
+              "required": false,
+              "sourceStrategy": "program_approval",
+              "uiPlacement": "retrofit_details",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "medium",
+              "validationNotes": "Pre-2017 projects may be grandfathered into prior local tax arrangements."
+            },
+            {
+              "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+              "label": "Counterfactual ordinary annual property or tangible tax",
+              "valueType": "currency_cents",
+              "unit": "USD",
+              "required": false,
+              "sourceStrategy": "property_tax_bill",
+              "uiPlacement": "property_tax_profile",
+              "userOverrideAllowed": true,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Required only to estimate savings versus ordinary assessment. Without this, show statutory valuation/tax workflow only."
+            },
+            {
+              "inputKey": "local_assessor_confirmation",
+              "label": "Local assessor confirmed renewable tax treatment",
+              "valueType": "boolean",
+              "unit": null,
+              "required": true,
+              "sourceStrategy": "admin_review",
+              "uiPlacement": "admin_only",
+              "userOverrideAllowed": false,
+              "testCaseDefault": null,
+              "defaultIsSynthetic": false,
+              "confidenceImpactUntilConfirmed": "high",
+              "validationNotes": "Municipal assessor confirmation is recommended before displaying savings."
+            }
+          ],
+          "capsAndLimits": {
+            "maxBenefitCents": null,
+            "minBenefitCents": null,
+            "maxPercent": null,
+            "phaseoutRules": "No general phaseout identified; pre-2017 interconnection agreements and municipal exemptions or waivers may alter treatment.",
+            "expirationDate": null,
+            "carryforward": "not_applicable",
+            "refundability": "not_applicable",
+            "transferability": "not_applicable",
+            "directPayAvailable": "not_applicable"
+          },
+          "filingAndApprovalRequirements": [
+            "Confirm the system is an eligible renewable energy resource under Rhode Island law.",
+            "Confirm AC nameplate capacity with project documents.",
+            "Confirm residential, manufacturer, commercial, and exemption status.",
+            "Check municipal ordinance, waiver, or assessor treatment.",
+            "Use local property tax bills or assessor review before estimating savings versus ordinary assessment."
+          ],
+          "calculationExamples": [
+            {
+              "name": "Commercial system with both tangible and real property treatment applicable",
+              "inputs": {
+                "ac_kw_capacity": 2000,
+                "tangible_property_applicable": true,
+                "real_property_applicable": true
+              },
+              "grossEstimatedBenefitCents": null,
+              "calculationTrace": [
+                "Tangible property amount: 2,000 kW AC * 500 cents = 1,000,000 cents.",
+                "Real property amount: 2,000 kW AC * 350 cents = 700,000 cents.",
+                "Annual statutory tax amount: 1,700,000 cents. This is not a benefit estimate; savings require a counterfactual ordinary assessment."
+              ]
+            }
+          ],
+          "includedInUserFacingTotalDefault": false,
+          "displayRecommendation": {
+            "label": "Rhode Island renewable property-tax valuation workflow",
+            "caveat": "Shows statutory renewable property/tangible tax treatment, not guaranteed incentive cash. Positive savings require counterfactual assessment, property tax bill, municipal exemption status, and assessor or tax-professional review.",
+            "estimateStatus": "needs_property_tax_profile"
+          },
+          "sourceUrlsChecked": [
+            "https://rules.sos.ri.gov/regulations/part/300-00-00-2",
+            "https://webserver.rilegislature.gov/PublicLaws/law25/law25398.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-3.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-12.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE44/44-3/44-3-3.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE44/44-3/44-3-21.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-5.htm",
+            "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-2.htm"
+          ],
+          "evidenceText": "Current Rhode Island law and active OER rules set renewable-resource local tax treatment by AC nameplate capacity: 5 dollars per kW for tangible property and, after 2025 amendments, 3.50 dollars per kW for real property where applicable. Residential and manufacturer-used systems have separate exemptions.",
+          "reasoningNotes": "Repair as property_tax_valuation rather than recurring expense reduction by default. The statutory formula can calculate a tax amount or valuation workflow, but it cannot calculate a monetary benefit without a counterfactual ordinary assessment and local tax treatment."
+        }
+      ],
+      "inputQuestionNotes": [
+        {
+          "inputKey": "ac_kw_capacity",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What is the renewable energy system's AC nameplate capacity?",
+          "answerType": "number",
+          "options": [],
+          "helperText": "Use AC kW capacity, not DC kW capacity.",
+          "sensitiveTaxField": false
+        },
+        {
+          "inputKey": "commercial_tax_status",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What property-tax category applies to the Rhode Island renewable system?",
+          "answerType": "select",
+          "options": [
+            "Commercial",
+            "Residential",
+            "Manufacturer-used",
+            "Municipally exempt",
+            "Unknown"
+          ],
+          "helperText": "Residential and manufacturer-used systems may have separate statutory exemptions.",
+          "sensitiveTaxField": false
+        },
+        {
+          "inputKey": "municipal_exemption_or_waiver_status",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "Has the municipality or assessor granted an exemption, waiver, or other renewable-energy tax treatment?",
+          "answerType": "select",
+          "options": [
+            "No known exemption or waiver",
+            "Full exemption",
+            "Partial exemption",
+            "Net-metering-related waiver",
+            "Unknown"
+          ],
+          "helperText": "Municipal ordinances and assessor treatment can change the tax result.",
+          "sensitiveTaxField": true
+        },
+        {
+          "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+          "shouldBecomeUserQuestion": true,
+          "questionPrompt": "What would the annual property or tangible tax be without Rhode Island renewable-energy tax valuation treatment?",
+          "answerType": "currency",
+          "options": [],
+          "helperText": "This is needed only to estimate savings. Use an assessor estimate, tax bill, or tax-professional calculation.",
+          "sensitiveTaxField": true
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://rules.sos.ri.gov/regulations/part/300-00-00-2",
+        "https://webserver.rilegislature.gov/PublicLaws/law25/law25398.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-3.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-12.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-3/44-3-3.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-3/44-3-21.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-5.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-2.htm"
+      ],
+      "evidenceText": "Rhode Island sources describe a statutory local tax valuation/tax workflow for renewable energy resources, including AC-kW formulas, exemptions for residential and manufacturer-used systems, municipal exemption authority, and grandfathering considerations.",
+      "reasoningNotes": "Keep active and suppress from cash incentive totals. The system should present this as property-tax profile logic; show a monetary savings estimate only when a counterfactual ordinary assessment and local tax treatment have been verified.",
+      "sourceFile": "output_001_tax_credit_package_repair.md"
+    }
+  ],
+  "rawSummary": {
+    "repairedCount": 3,
+    "calculableTaxPackages": 2,
+    "specialWorkflowPackages": 3,
+    "archiveRecommendedCount": 0,
+    "implementationNotes": [
+      "Repair request source: ",
+      "Do not route any of these effects through grant or upfront-grant logic; all includedInUserFacingTotalDefault flags are false.",
+      "Michigan and Washington can be estimated only after tax-liability or tax-return inputs are confirmed; Rhode Island should show a statutory property-tax workflow, not a cash incentive, unless a counterfactual assessment is supplied.",
+      "Store tax benefits as first-class monetary or workflow effects separate from grants, and require tax-professional or assessor review where actual tax liability, B&O classification, or local property-tax treatment drives the result."
+    ]
+  }
+}

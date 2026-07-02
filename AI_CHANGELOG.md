@@ -29,6 +29,14 @@
 - Removed the hard shadow and brightness break between the How It Works hero and the first transformation scene.
 - Added a responsive tonal crossfade over the section boundary so the cloudy hero background flows into the journey without changing the later scroll-driven image states.
 
+## 2026-07-02 - Codex (GPT-5) tax form input repair intake
+
+- Imported and normalized the three GPT Pro tax/form-input outputs, including corrected malformed synthetic-source prose and swapped Michigan/Washington opportunity question-set mappings.
+- Applied the three repaired tax packages to v2 incentive calculation data as expression-based tax/process workflows while keeping them out of user-facing totals by default pending tax/accountant/assessor review.
+- Added v2 expression calculators and tests for tax-exempt liability, tax-rate preference savings, and local renewable property-tax valuation workflows.
+- Added synthetic test-case defaults for the new tax/profile/local assessor fields and kept tax runtime summaries explicit when human review is the suppressing reason.
+- Added a tax-estimate TODO to keep tax calculations locality-aware when local tax liability, municipal treatment, or assessor rules affect value.
+
 ## 2026-07-02 - Codex (GPT-5) tax and form input GPT Pro prompts
 
 - Added a new GPT Pro work folder for tax-credit package repair, structured question-catalog/form assembly repair, and synthetic test-case profile defaults.

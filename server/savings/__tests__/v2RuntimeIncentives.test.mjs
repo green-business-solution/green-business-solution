@@ -122,6 +122,29 @@ describe("v2 runtime incentive bridge", () => {
     expect(best.totalUpfrontSavingsCents).toBe(10000);
     expect(best.upfrontSavingsEntries[0].category).toBe("tax_credit");
   });
+
+  it("keeps repaired tax expressions out of runtime totals when tax review is required", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [humanReviewTaxExpressionPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: {
+          approved_rerz_designation: { value: true },
+          qualified_company_operations: { value: true },
+          company_current_on_state_and_local_taxes: { value: true },
+          phaseout_multiplier: { value: 1 },
+          eligible_state_education_tax_cents: { value: 10000 },
+          eligible_real_property_tax_cents: { value: 20000 },
+          eligible_personal_property_tax_cents: { value: 30000 },
+          eligible_local_income_tax_cents: { value: 40000 }
+        }
+      })
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("human_review_required");
+    expect(bridge.packageSummaries[0].effectSummaries[0].amountCents).toBe(100000);
+  });
 });
 
 function includedFixedPackage() {
@@ -353,5 +376,64 @@ function supportedTaxCreditPackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "tax_fixed", source_type: "web_page", quote: "$100 tax credit", evidence_confidence: 0.9 }],
     confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["fixed_tax_credit"] }
+  };
+}
+
+function humanReviewTaxExpressionPackage() {
+  const effect = {
+    effect_id: "effect_tax_expression",
+    label: "Tax expression requiring review",
+    effect_type: "tax_credit",
+    cash_flow_direction: "benefit",
+    timing: { cadence: "annual", source_timing: "annual" },
+    calculation: { method: "expression", expression_id: "tax_exempt_liability" },
+    limits: [],
+    caps: [],
+    required_inputs: [
+      "approved_rerz_designation",
+      "qualified_company_operations",
+      "company_current_on_state_and_local_taxes",
+      "phaseout_multiplier",
+      "eligible_state_education_tax_cents",
+      "eligible_real_property_tax_cents",
+      "eligible_personal_property_tax_cents",
+      "eligible_local_income_tax_cents"
+    ].map((inputKey) => ({
+      input_key: inputKey,
+      label: inputKey,
+      value_type: "text",
+      required_for: ["effect_tax_expression"],
+      source_precedence: ["tax_profile"],
+      missing_severity: "blocks_calculation"
+    })),
+    evidence_refs: ["tax_expression"],
+    confidence: { overall: 0.72, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_repair"] },
+    repair_metadata: {
+      included_in_user_facing_total_default: false,
+      cash_value_classification: "tax_exemption",
+      value_model_kind: "tax_exempt_liability",
+      human_review_required: true
+    }
+  };
+
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_v2_tax_expression_review",
+    program_name: "Tax Expression Review",
+    calculation_status: "calculable_with_missing_inputs",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["tax_or_special_workflow"],
+    geography: { country: "US", states: ["MI"], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [effect],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: effect.required_inputs,
+    assumptions: [],
+    source_evidence: [{ evidence_id: "tax_expression", source_type: "web_page", quote: "Tax expression", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_repair"] }
   };
 }

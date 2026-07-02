@@ -124,7 +124,9 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
   };
 
   const hasRuntimeEligibleEffect = effectSummaries.some((effect) => effect.runtimeEligibleForTotals);
-  const hasHumanReviewRequiredEffect = effectSummaries.some((effect) => effect.runtimeEligibleForTotals && effect.humanReviewRequired);
+  const hasHumanReviewRequiredEffect = effectSummaries.some(
+    (effect) => MONETARY_EFFECT_TYPES.has(effect.effectType) && effect.humanReviewRequired
+  );
   const hasSupportedEffectAmount = effectSummaries.some(
     (effect) => effect.runtimeEligibleForTotals && MONETARY_EFFECT_TYPES.has(effect.effectType) && Math.abs(effect.amountCents) > 0
   );
