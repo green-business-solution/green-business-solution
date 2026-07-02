@@ -496,7 +496,8 @@ function buildFixture({
       id: `ri_${sampleUserId}_${retrofitGroup.retrofitTypeId}`,
       retrofitTypeId,
       retrofitTypeSlug: template.engineSlug,
-      selectedOpportunityIds
+      selectedOpportunityIds,
+      allowSyntheticV2Defaults: true
     },
     billLines: deepMerge(commonBillLines, template.billLines || {}),
     userAnswers: toAnswerMap(template.userAnswers),

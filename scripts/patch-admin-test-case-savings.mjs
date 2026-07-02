@@ -6,8 +6,12 @@ const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");
 const incentiveRulesPath =
   process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(repoRoot, "data", "opportunity_incentive_rules.json");
+const incentiveCalculationPackagesPath =
+  process.env.OPPORTUNITY_INCENTIVE_CALCULATION_PACKAGES_PATH ||
+  path.join(repoRoot, "data", "opportunity_incentive_calculation_packages_v2.json");
 const source = JSON.parse(fs.readFileSync(testCasesPath, "utf8"));
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
+const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const calculationDate = (source.generatedAt || new Date().toISOString()).slice(0, 10);
 
 let calculatedCount = 0;
@@ -20,7 +24,8 @@ const testCases = (source.testCases || []).map((testCase) => {
       sampleUserId: testCase.sampleUserId,
       normalizedProfile: testCase.normalizedProfile,
       calculationDate,
-      opportunityIncentiveRules
+      opportunityIncentiveRules,
+      opportunityIncentiveCalculationPackages
     });
 
     if (savingsPreview.status === "calculated") calculatedCount += 1;
@@ -41,6 +46,7 @@ const testCases = (source.testCases || []).map((testCase) => {
 const output = {
   ...source,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
+  incentiveFormulaRateTableCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
   testCases
 };
 
@@ -51,6 +57,7 @@ console.log(`File: ${testCasesPath}`);
 console.log(`Calculated previews: ${calculatedCount}`);
 console.log(`Unsupported previews: ${unsupportedCount}`);
 console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
+console.log(`V2 calculation packages loaded: ${opportunityIncentiveCalculationPackages.length}`);
 
 function readOpportunityIncentiveRules(filePath) {
   if (!fs.existsSync(filePath)) return [];
@@ -59,4 +66,10 @@ function readOpportunityIncentiveRules(filePath) {
     .filter((rule) => rule?.opportunityId)
     .filter((rule) => rule.active !== false)
     .filter((rule) => rule.confidence !== "low");
+}
+
+function readOpportunityIncentiveCalculationPackages(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.packages || []).filter((pkg) => pkg?.opportunity_id);
 }

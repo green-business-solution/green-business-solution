@@ -193,6 +193,22 @@ describe("incentive calculation v2", () => {
     expect(result.totals.expectedGrantAmountCents).toBe(3000000);
     expect(result.effectResults[0].amountCents).toBe(3000000);
   });
+
+  it("calculates a conservative matched rate-table row from runtime inputs", () => {
+    const result = calculateV2IncentivePackage(
+      rateTablePackage(),
+      baseCtx({
+        answers: {
+          fuel_type: { value: "electric" },
+          project_type: { value: "retrofit" },
+          annual_kwh_savings: { value: 2000 }
+        }
+      })
+    );
+
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(20000);
+    expect(result.effectResults[0].trace.join(" ")).toContain("selected conservative matched row");
+  });
 });
 
 function consumersEnergyAirPurifierPackage() {
@@ -392,5 +408,78 @@ function expectedValueGrantPackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "ev_expected_grant", source_type: "web_page", quote: "30 awards from 300 applications", evidence_confidence: 0.9 }],
     confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["expected_value"] }
+  };
+}
+
+function rateTablePackage() {
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_rate_table",
+    program_name: "Rate Table Rebate",
+    calculation_status: "calculable_with_missing_inputs",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["led_lighting_retrofit"],
+    geography: { country: "US", states: ["NY"], counties: [], cities: [], utility_territory_required: true },
+    measure_catalogs: [],
+    rate_tables: [
+      {
+        table_id: "custom_rates",
+        name: "Custom Rates",
+        dimensions: ["fuel", "project_type"],
+        rows: [
+          { fuel: "electric", project_type: "retrofit", rateCents: 10, unit: "kWh_saved" },
+          { fuel: "electric", project_type: "new_construction", rateCents: 15, unit: "kWh_saved" },
+          { fuel: "natural_gas", project_type: "retrofit", rateCents: 200, unit: "therm_saved" }
+        ]
+      }
+    ],
+    effects: [
+      {
+        effect_id: "effect_rate_table",
+        label: "Custom kWh incentive",
+        effect_type: "one_time_savings",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "one_time" },
+        calculation: { method: "rate_table", rate_table_id: "custom_rates", lookup_inputs: ["fuel", "project_type"] },
+        limits: [],
+        caps: [],
+        required_inputs: [
+          {
+            input_key: "fuel_type",
+            label: "Fuel type",
+            value_type: "text",
+            required_for: ["effect_rate_table"],
+            source_precedence: ["user_profile"],
+            missing_severity: "blocks_calculation"
+          },
+          {
+            input_key: "project_type",
+            label: "Project type",
+            value_type: "text",
+            required_for: ["effect_rate_table"],
+            source_precedence: ["user_profile"],
+            missing_severity: "blocks_calculation"
+          },
+          {
+            input_key: "annual_kwh_savings",
+            label: "Annual kWh savings",
+            value_type: "number",
+            required_for: ["effect_rate_table"],
+            source_precedence: ["utility_data"],
+            missing_severity: "blocks_calculation"
+          }
+        ],
+        evidence_refs: ["ev_rate"],
+        confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["rate_table"] }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: [],
+    assumptions: [],
+    source_evidence: [{ evidence_id: "ev_rate", source_type: "web_page", quote: "$0.10/kWh saved", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["rate_table"] }
   };
 }

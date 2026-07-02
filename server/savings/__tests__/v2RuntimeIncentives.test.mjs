@@ -3,17 +3,19 @@ import { buildIncentiveScenarios, selectBestScenario } from "../stacking.mjs";
 import { buildV2RuntimeIncentiveBridge } from "../v2RuntimeIncentives.mjs";
 
 function ctx(overrides = {}) {
+  const { answers: answerOverrides = {}, ...rest } = overrides;
   return {
     answers: {
       project_cost_cents: { value: 100000 },
       smart_charger_confirmed: { value: true },
-      ...overrides.answers
+      ...answerOverrides
     },
     billLines: {},
     billLineDeltas: [],
     baseCostLedgerEntries: [{ id: "cost", kind: "upfront_cost", category: "equipment_cost", amountCents: 100000 }],
     baseRecurringSavingsEntries: [],
-    upfrontCostCents: 100000
+    upfrontCostCents: 100000,
+    ...rest
   };
 }
 
@@ -60,6 +62,65 @@ describe("v2 runtime incentive bridge", () => {
 
     expect(bridge.runtimeRules).toEqual([]);
     expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("legacy_rule_preferred");
+  });
+
+  it("uses a visible conservative unit-count placeholder for simple v2 per-unit effects", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [includedPerUnitPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({ answers: { unit_count: undefined } })
+    });
+
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(bridge.packageSummaries[0].defaultedInputs).toEqual([
+      expect.objectContaining({
+        inputKey: "unit_count",
+        canonicalInputKey: "unit_count",
+        source: "safe_placeholder_default",
+        defaultIsPlaceholder: true,
+        userOverrideAllowed: true
+      })
+    ]);
+    expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(5000);
+  });
+
+  it("uses synthetic admin test-case defaults for measure catalogs only when explicitly enabled", () => {
+    const withoutSynthetic = buildV2RuntimeIncentiveBridge({
+      packages: [includedMeasureCatalogPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({ answers: { measure_type: undefined, unit_count: undefined } })
+    });
+    const withSynthetic = buildV2RuntimeIncentiveBridge({
+      packages: [includedMeasureCatalogPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: { measure_type: undefined, unit_count: undefined },
+        allowSyntheticV2Defaults: true
+      })
+    });
+
+    expect(withoutSynthetic.packageSummaries[0].runtimeInclusionStatus).toBe("missing_inputs");
+    expect(withSynthetic.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(withSynthetic.runtimeRules[0].amountRule.amountCents).toBe(2500);
+  });
+
+  it("treats supported v2 tax credits as first-class runtime effects even when not grant totals", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [supportedTaxCreditPackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+    const scenarios = buildIncentiveScenarios({
+      incentiveRules: bridge.runtimeRules,
+      selectedOpportunityIds: ["opp_v2_tax"],
+      ...ctx()
+    });
+    const best = selectBestScenario(scenarios);
+
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(bridge.runtimeRules[0].incentiveType).toBe("tax_credit");
+    expect(best.totalUpfrontSavingsCents).toBe(10000);
+    expect(best.upfrontSavingsEntries[0].category).toBe("tax_credit");
   });
 });
 
@@ -120,5 +181,177 @@ function includedFixedPackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "ev_fixed", source_type: "web_page", quote: "$250 rebate", evidence_confidence: 0.9 }],
     confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["fixed_amount"] }
+  };
+}
+
+function includedPerUnitPackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_per_unit",
+    program_name: "V2 Per Unit Rebate",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_per_unit",
+        label: "Per-unit rebate",
+        calculation: {
+          method: "per_unit",
+          rate: { amount: { value: 50, currency: "USD" }, unit: "unit" },
+          quantity_input: "unit_count"
+        },
+        required_inputs: [
+          {
+            input_key: "unit_count",
+            label: "Unit count",
+            value_type: "number",
+            required_for: ["effect_per_unit"],
+            source_precedence: ["retrofit_quantity"],
+            missing_severity: "blocks_calculation"
+          }
+        ]
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "unit_count",
+        label: "Unit count",
+        value_type: "number",
+        required_for: ["effect_per_unit"],
+        source_precedence: ["retrofit_quantity"],
+        missing_severity: "blocks_calculation"
+      }
+    ]
+  };
+}
+
+function includedMeasureCatalogPackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_catalog",
+    program_name: "V2 Catalog Rebate",
+    measure_catalogs: [
+      {
+        catalog_id: "catalog_test",
+        name: "Catalog Test",
+        selection_input: "measure_type",
+        measures: [
+          {
+            measure_id: "smart_thermostat",
+            name: "Smart thermostat",
+            calculation: { method: "fixed_amount", amount: { value: 25, currency: "USD" } },
+            customer_filters: [],
+            equipment_filters: [],
+            limits: [],
+            required_inputs: [],
+            evidence_refs: [],
+            confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["test"] }
+          },
+          {
+            measure_id: "heat_pump",
+            name: "Heat pump",
+            calculation: { method: "fixed_amount", amount: { value: 500, currency: "USD" } },
+            customer_filters: [],
+            equipment_filters: [],
+            limits: [],
+            required_inputs: [],
+            evidence_refs: [],
+            confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["test"] }
+          }
+        ]
+      }
+    ],
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_catalog",
+        label: "Catalog rebate",
+        calculation: {
+          method: "measure_catalog",
+          measure_catalog_id: "catalog_test",
+          measure_selection_input: "measure_type"
+        },
+        required_inputs: [
+          {
+            input_key: "measure_type",
+            label: "Measure type",
+            value_type: "text",
+            required_for: ["effect_catalog"],
+            source_precedence: ["equipment_selection"],
+            missing_severity: "blocks_calculation"
+          },
+          {
+            input_key: "unit_count",
+            label: "Unit count",
+            value_type: "number",
+            required_for: ["effect_catalog"],
+            source_precedence: ["retrofit_quantity"],
+            missing_severity: "blocks_calculation"
+          }
+        ]
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "measure_type",
+        label: "Measure type",
+        value_type: "text",
+        required_for: ["effect_catalog"],
+        source_precedence: ["equipment_selection"],
+        missing_severity: "blocks_calculation"
+      },
+      {
+        input_key: "unit_count",
+        label: "Unit count",
+        value_type: "number",
+        required_for: ["effect_catalog"],
+        source_precedence: ["retrofit_quantity"],
+        missing_severity: "blocks_calculation"
+      }
+    ]
+  };
+}
+
+function supportedTaxCreditPackage() {
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_v2_tax",
+    program_name: "V2 Tax Credit",
+    calculation_status: "calculable",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["led_lighting_retrofit"],
+    geography: { country: "US", states: ["CA"], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [
+      {
+        effect_id: "effect_tax_credit",
+        label: "V2 tax credit",
+        effect_type: "tax_credit",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "one_time", source_timing: "tax_filing" },
+        calculation: { method: "fixed_amount", amount: { value: 100, currency: "USD" } },
+        limits: [],
+        caps: [],
+        required_inputs: [],
+        evidence_refs: ["tax_fixed"],
+        confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["fixed_tax_credit"] },
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "tax_credit",
+          value_model_kind: "tax_credit",
+          human_review_required: false
+        }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: [],
+    assumptions: [],
+    source_evidence: [{ evidence_id: "tax_fixed", source_type: "web_page", quote: "$100 tax credit", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.9, source_access: 0.9, availability: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["fixed_tax_credit"] }
   };
 }

@@ -646,6 +646,22 @@ type IncentiveCalculationPackageSummary = {
   includedInRuntimeTotals?: boolean;
   missingInputs?: Array<{ inputKey: string; effectId?: string | null; label?: string }>;
   requiredInputs?: string[];
+  resolvedInputs?: Array<{
+    inputKey: string;
+    canonicalInputKey?: string;
+    source?: string;
+    defaultIsPlaceholder?: boolean;
+    defaultConfidence?: string | null;
+    userOverrideAllowed?: boolean;
+  }>;
+  defaultedInputs?: Array<{
+    inputKey: string;
+    canonicalInputKey?: string;
+    source?: string;
+    defaultIsPlaceholder?: boolean;
+    defaultConfidence?: string | null;
+    userOverrideAllowed?: boolean;
+  }>;
   totals?: {
     expectedOneTimeSavingsCents?: number;
     expectedGrantAmountCents?: number;

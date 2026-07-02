@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) v2 incentive input runtime plumbing
+
+- Added canonical v2 incentive input resolution for derived project costs, eligible costs, quantity aliases, energy-savings aliases, conservative `unit_count = 1` placeholders, and admin-only synthetic test-case defaults from the GPT Pro input-resolution work.
+- Added simple v2 rate-table runtime calculation support and allowed source-supported v2 tax-credit effects to enter the runtime as tax incentives instead of grants when their calculation method is supported.
+- Regenerated static admin sample savings previews with v2 calculation packages loaded, while recording defaulted inputs so future UI fields can make placeholder assumptions user-editable.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit picker impact row
 
 - Removed the visible before-click `Select a retrofit to explore` heading and subtitle so the retrofit cards move closer to the upload banner.

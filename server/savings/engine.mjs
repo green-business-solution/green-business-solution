@@ -350,7 +350,10 @@ function finalizeCalculatedEstimate({
     billLineDeltas,
     baseCostLedgerEntries: costBreakdown,
     baseRecurringSavingsEntries,
-    upfrontCostCents
+    upfrontCostCents,
+    retrofitTypeId: retrofitInstance.retrofitTypeId || retrofitInstance.retrofitTypeSlug || null,
+    calculationDate,
+    allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
     packages: opportunityIncentiveCalculationPackages,

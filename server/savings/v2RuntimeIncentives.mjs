@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { calculateV2IncentivePackage, validateIncentiveCalculationPackageV2 } from "./incentiveCalculationsV2.mjs";
+import { buildV2ResolvedRuntimeContext } from "./v2InputResolution.mjs";
 
 const BLOCKED_PACKAGE_STATUSES = new Set([
   "source_inaccessible_repair_failure",
@@ -25,7 +26,7 @@ export function buildV2RuntimeIncentiveBridge({
   ctx = {}
 }) {
   const legacyOpportunityIds = new Set(existingLegacyRules.map((rule) => rule.opportunityId).filter(Boolean));
-  const augmentedCtx = augmentRuntimeContext(ctx);
+  const augmentedCtx = augmentRuntimeContext(buildV2ResolvedRuntimeContext(ctx, packages));
   const runtimeRules = [];
   const packageSummaries = [];
 
@@ -49,6 +50,7 @@ export function buildV2RuntimeIncentiveBridge({
     const summary = summarizePackageRuntimeStatus({
       pkg,
       result,
+      ctx: augmentedCtx,
       legacyRulePreferred: legacyOpportunityIds.has(pkg.opportunity_id)
     });
 
@@ -83,7 +85,7 @@ export function selectV2PackagesForRetrofitGroup(retrofitGroup, packages = []) {
   return packages.filter((pkg) => opportunityIds.has(pkg.opportunity_id));
 }
 
-function summarizePackageRuntimeStatus({ pkg, result, legacyRulePreferred }) {
+function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }) {
   const requiredInputs = requiredInputsForPackage(pkg);
   const missingInputs = dedupeMissingInputs(result.missingInputs || []);
   const effectSummaries = (pkg.effects || []).map((effect) => {
@@ -96,11 +98,14 @@ function summarizePackageRuntimeStatus({ pkg, result, legacyRulePreferred }) {
       valueModelKind: effect.repair_metadata?.value_model_kind || null,
       cashValueClassification: effect.repair_metadata?.cash_value_classification || null,
       includedInUserFacingTotalDefault: effect.repair_metadata?.included_in_user_facing_total_default === true,
+      runtimeEligibleForTotals: isRuntimeEffectEligibleForTotals(effect),
+      humanReviewRequired: effect.repair_metadata?.human_review_required === true,
       amountCents: effectResult?.amountCents || 0,
       annualizedAmountCents: effectResult?.annualizedAmountCents || 0,
       missingInputs: missingInputs.filter((input) => input.effectId === effect.effect_id)
     };
   });
+  const resolvedInputs = summarizeResolvedInputs(ctx.v2ResolvedInputs || [], requiredInputs);
 
   const summary = {
     opportunityId: pkg.opportunity_id,
@@ -112,9 +117,17 @@ function summarizePackageRuntimeStatus({ pkg, result, legacyRulePreferred }) {
     runtimeInclusionStatus: "not_evaluated",
     missingInputs,
     requiredInputs,
+    resolvedInputs,
+    defaultedInputs: resolvedInputs.filter((input) => input.defaultIsPlaceholder),
     totals: result.totals,
     effectSummaries
   };
+
+  const hasRuntimeEligibleEffect = effectSummaries.some((effect) => effect.runtimeEligibleForTotals);
+  const hasHumanReviewRequiredEffect = effectSummaries.some((effect) => effect.runtimeEligibleForTotals && effect.humanReviewRequired);
+  const hasSupportedEffectAmount = effectSummaries.some(
+    (effect) => effect.runtimeEligibleForTotals && MONETARY_EFFECT_TYPES.has(effect.effectType) && Math.abs(effect.amountCents) > 0
+  );
 
   if (legacyRulePreferred) {
     summary.runtimeInclusionStatus = "legacy_rule_preferred";
@@ -122,11 +135,13 @@ function summarizePackageRuntimeStatus({ pkg, result, legacyRulePreferred }) {
     summary.runtimeInclusionStatus = pkg.calculation_status;
   } else if (confidenceLabel(pkg.confidence?.overall) === "low") {
     summary.runtimeInclusionStatus = "low_confidence";
+  } else if (hasHumanReviewRequiredEffect) {
+    summary.runtimeInclusionStatus = "human_review_required";
   } else if (missingInputs.length > 0) {
     summary.runtimeInclusionStatus = "missing_inputs";
-  } else if (!effectSummaries.some((effect) => effect.includedInUserFacingTotalDefault)) {
+  } else if (!hasRuntimeEligibleEffect) {
     summary.runtimeInclusionStatus = "not_user_facing_default";
-  } else if (!effectSummaries.some((effect) => MONETARY_EFFECT_TYPES.has(effect.effectType) && Math.abs(effect.amountCents) > 0)) {
+  } else if (!hasSupportedEffectAmount) {
     summary.runtimeInclusionStatus = "no_supported_effect_amount";
   } else {
     summary.runtimeInclusionStatus = "included";
@@ -138,7 +153,7 @@ function summarizePackageRuntimeStatus({ pkg, result, legacyRulePreferred }) {
 function buildRuntimeRulesForPackage({ pkg, result }) {
   const rules = [];
   for (const effect of pkg.effects || []) {
-    if (effect.repair_metadata?.included_in_user_facing_total_default !== true) continue;
+    if (!isRuntimeEffectEligibleForTotals(effect)) continue;
     if (!MONETARY_EFFECT_TYPES.has(effect.effect_type)) continue;
     const effectResult = result.effectResults.find((item) => item.effectId === effect.effect_id);
     if (!effectResult || Math.abs(effectResult.amountCents) <= 0) continue;
@@ -175,6 +190,13 @@ function buildRuntimeRulesForPackage({ pkg, result }) {
     });
   }
   return rules;
+}
+
+function isRuntimeEffectEligibleForTotals(effect) {
+  if (effect.repair_metadata?.included_in_user_facing_total_default === true) return true;
+  if (effect.effect_type !== "tax_credit") return false;
+  if (effect.repair_metadata?.human_review_required === true) return false;
+  return effect.calculation?.method && effect.calculation.method !== "zero_when_not_applicable";
 }
 
 function runtimeIncentiveType(effect) {
@@ -237,6 +259,20 @@ function confidenceLabel(value) {
 
 function dedupeStrings(values = []) {
   return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))];
+}
+
+function summarizeResolvedInputs(resolvedInputs = [], requiredInputs = []) {
+  if (!requiredInputs.length) return [];
+  const requiredSet = new Set(requiredInputs);
+  const seen = new Set();
+  return resolvedInputs
+    .filter((input) => requiredSet.has(input.inputKey))
+    .filter((input) => {
+      if (seen.has(input.inputKey)) return false;
+      seen.add(input.inputKey);
+      return true;
+    })
+    .slice(0, 24);
 }
 
 function shortHash(value) {
