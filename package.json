@@ -45,6 +45,7 @@
     "matching:incentive-formula-work-packet": "node scripts/write-incentive-formula-rate-table-work-packet.mjs",
     "matching:incentive-formula-repairs:intake": "node scripts/intake-incentive-formula-rate-table-repairs.mjs",
     "matching:incentive-formula-repairs:apply": "node scripts/apply-incentive-formula-rate-table-repairs.mjs",
+    "matching:v2-estimate-gpt-pro:intake": "node scripts/intake-v2-estimate-gpt-pro-outputs.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },
