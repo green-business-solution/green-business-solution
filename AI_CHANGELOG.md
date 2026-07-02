@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview command workspace redesign
+
+- Simplified the admin-nav `/user-preview` Retrofit Recommendations page into a compact command layer with admin strip, recommendation readiness, filter toolbar, current-plan strip, horizontal retrofit rail, and active retrofit command center.
+- Moved secondary retrofit details behind workspace tabs for Overview, Financials, Scenarios, Opportunities, Requirements, and More while preserving scenario selection, opportunity grouping, operating savings, assumptions, financing, application prep, and add-to-plan behavior.
+- Updated focused preview tests to verify the new default Overview, hidden detail tabs, compact/readable hover states, and continued live/API-shaped data mapping without introducing production writes.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview workspace tab build fix
 
 - Preserved the updated Retrofit Recommendations workspace-tab rendering so the committed frontend build remains valid and matches the deployed UI bundle.
