@@ -6345,6 +6345,9 @@ function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: s
   const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
   const placeholderState = getPickerMetricPlaceholderState(kind, value);
   const isFallback = value === "?" || /needs|pending|not/i.test(value);
+  const tooltipText = placeholderState.tooltipTitle
+    ? `${placeholderState.tooltipTitle}. ${placeholderState.tooltipBody}`
+    : placeholderState.tooltipBody;
   return (
     <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}${placeholderState.className}`}>
       <span className="retrofit-picker-metric-label">
@@ -6352,8 +6355,9 @@ function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: s
         <span>{label}</span>
       </span>
       <strong
+        aria-label={tooltipText || undefined}
         className="retrofit-picker-metric-value"
-        title={placeholderState.tooltipTitle ? `${placeholderState.tooltipTitle}: ${placeholderState.tooltipBody}` : placeholderState.tooltipBody}
+        data-tooltip={tooltipText || undefined}
       >
         {value}
       </strong>

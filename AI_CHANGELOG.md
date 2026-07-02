@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) no-bill metric tooltip repair
+
+- Replaced native browser `title` fallback behavior on no-bill retrofit picker question marks with an explicit styled tooltip so the needed next step appears reliably on hover.
+- Added a third combined placeholder state for payback metrics that need both uploaded bills and retrofit-specific details, while preserving distinct bill-needed and question-needed colors.
+- Kept the before-click picker clean and covered the tooltip hook in focused retrofit preview tests.
+
 ## 2026-07-02 - Codex (GPT-5) v2 grant and incentive estimate bridge
 
 - Wired repaired v2 incentive calculation packages into the retrofit savings preview path while preserving conservative legacy-safe rules where they already exist to avoid double counting.

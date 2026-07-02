@@ -272,6 +272,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("?");
     expect(html).toContain("metric-placeholder--bill");
     expect(html).toContain("metric-placeholder--question");
+    expect(html).toContain("data-tooltip=");
     expect(html).toContain("Upload bills to estimate savings.");
     expect(html).toContain("Answer retrofit-specific questions or add a quote to estimate cost.");
     expect(html).toContain("Upload bills and answer retrofit-specific questions to estimate payback.");
@@ -521,6 +522,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("@media (max-width: 1099px)");
     expect(css).toContain("@media (max-width: 719px)");
     expect(css).toContain(".retrofit-picker-metric-label");
+    expect(css).toContain(".retrofit-picker-metric-value[data-tooltip]::after");
     expect(css).toContain(".metric-savings-icon");
     expect(css).toContain(".metric-cost-icon");
     expect(css).toContain(".metric-payback-icon");
