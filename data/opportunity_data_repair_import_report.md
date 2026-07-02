@@ -1,15 +1,19 @@
 # Opportunity Data Repair Import Report
 
-Generated: 2026-07-02T01:31:26.849Z
+Generated: 2026-07-02T03:16:48.367Z
 Batches: opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11, opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch15, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch16, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch17, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch18, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch19, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch20, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch21, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch23, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch24, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch25, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch26, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch27, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch28, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch31, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch32, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch33, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch35, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch36, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch37, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch38, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch40, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch41, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch42, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch43, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch44, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch46, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch47, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch48, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch50, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch52, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch53, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch54, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch55, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch56, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch57, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch58, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch59, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch60, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch61, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch62, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch63, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch64, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch65, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch66, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch67, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch68, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch70, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch71, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch72, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch73, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch74, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch75, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch76, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch77, opportunity_data_research_repairs_gpt_pro_2026-07-01_batch78, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch79, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch80, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch81, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch82, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch83, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch84, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch85, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch86, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch87, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch88, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch89, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch90, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch91, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch92, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch93, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch94, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch95, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch96, opportunity_data_research_repairs_gpt_pro_2026-07-02_batch97
 Repair files: data/opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch2.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch3.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch4.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch5.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch6.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch7.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch8.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch9.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch10.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch11.json, data/opportunity_data_research_repairs_gpt_pro_2026-06-30_batch12.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch13.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch14.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch15.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch16.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch17.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch18.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch19.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch20.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch21.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch22.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch23.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch24.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch25.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch26.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch27.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch28.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch29.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch30.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch31.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch32.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch33.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch34.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch35.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch36.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch37.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch38.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch39.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch40.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch41.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch42.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch43.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch44.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch45.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch46.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch47.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch48.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch49.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch50.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch51.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch52.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch53.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch54.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch55.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch56.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch57.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch58.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch59.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch60.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch61.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch62.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch63.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch64.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch65.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch66.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch67.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch68.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch69.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch70.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch71.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch72.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch73.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch74.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch75.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch76.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch77.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-01_batch78.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch79.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch80.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch81.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch82.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch83.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch84.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch85.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch86.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch87.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch88.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch89.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch90.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch91.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch92.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch93.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch94.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch95.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch96.json, data/opportunity_data_research_repairs_gpt_pro_2026-07-02_batch97.json
 Repairs supplied: 1560
 Unique repairs supplied: 1519
 Duplicate opportunity repairs overwritten by later files: 41
-Retrofit index edges patched: 6987
-Retrofit index unique opportunities patched: 1519
-Test case opportunity edges patched: 1770
-Test case top result edges patched: 445
+Retrofit index edges patched: 6762
+Retrofit index unavailable/source-inaccessible edges removed: 205
+Retrofit index unique opportunities patched: 1447
+Retrofit index unique unavailable/source-inaccessible opportunities removed: 70
+Test case opportunity edges patched: 1659
+Test case unavailable/source-inaccessible edges removed: 107
+Test case top result edges patched: 382
+Test case unavailable/source-inaccessible top results removed: 63
 
 ## Patched Opportunities
 
@@ -32,7 +36,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:115
 - SOURCE_DSIRE:dsire_program_id:1158
 - SOURCE_DSIRE:dsire_program_id:118
-- SOURCE_DSIRE:dsire_program_id:1185
 - SOURCE_DSIRE:dsire_program_id:1186
 - SOURCE_DSIRE:dsire_program_id:1188
 - SOURCE_DSIRE:dsire_program_id:119
@@ -75,8 +78,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:1463
 - SOURCE_DSIRE:dsire_program_id:1465
 - SOURCE_DSIRE:dsire_program_id:1467
-- SOURCE_DSIRE:dsire_program_id:147
-- SOURCE_DSIRE:dsire_program_id:148
 - SOURCE_DSIRE:dsire_program_id:1492
 - SOURCE_DSIRE:dsire_program_id:1510
 - SOURCE_DSIRE:dsire_program_id:1522
@@ -112,7 +113,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:1689
 - SOURCE_DSIRE:dsire_program_id:1692
 - SOURCE_DSIRE:dsire_program_id:1715
-- SOURCE_DSIRE:dsire_program_id:1716
 - SOURCE_DSIRE:dsire_program_id:1718
 - SOURCE_DSIRE:dsire_program_id:173
 - SOURCE_DSIRE:dsire_program_id:1748
@@ -139,7 +139,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:1866
 - SOURCE_DSIRE:dsire_program_id:1867
 - SOURCE_DSIRE:dsire_program_id:1882
-- SOURCE_DSIRE:dsire_program_id:1885
 - SOURCE_DSIRE:dsire_program_id:1889
 - SOURCE_DSIRE:dsire_program_id:1896
 - SOURCE_DSIRE:dsire_program_id:1897
@@ -169,7 +168,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:1949
 - SOURCE_DSIRE:dsire_program_id:1952
 - SOURCE_DSIRE:dsire_program_id:1958
-- SOURCE_DSIRE:dsire_program_id:1968
 - SOURCE_DSIRE:dsire_program_id:1970
 - SOURCE_DSIRE:dsire_program_id:1974
 - SOURCE_DSIRE:dsire_program_id:1990
@@ -243,13 +241,11 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2202
 - SOURCE_DSIRE:dsire_program_id:22037
 - SOURCE_DSIRE:dsire_program_id:22040
-- SOURCE_DSIRE:dsire_program_id:22041
 - SOURCE_DSIRE:dsire_program_id:22044
 - SOURCE_DSIRE:dsire_program_id:22045
 - SOURCE_DSIRE:dsire_program_id:22046
 - SOURCE_DSIRE:dsire_program_id:22048
 - SOURCE_DSIRE:dsire_program_id:2205
-- SOURCE_DSIRE:dsire_program_id:22050
 - SOURCE_DSIRE:dsire_program_id:22056
 - SOURCE_DSIRE:dsire_program_id:22057
 - SOURCE_DSIRE:dsire_program_id:22058
@@ -260,7 +256,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2207
 - SOURCE_DSIRE:dsire_program_id:22071
 - SOURCE_DSIRE:dsire_program_id:22072
-- SOURCE_DSIRE:dsire_program_id:22074
 - SOURCE_DSIRE:dsire_program_id:22079
 - SOURCE_DSIRE:dsire_program_id:2208
 - SOURCE_DSIRE:dsire_program_id:22080
@@ -296,12 +291,10 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22149
 - SOURCE_DSIRE:dsire_program_id:22150
 - SOURCE_DSIRE:dsire_program_id:22156
-- SOURCE_DSIRE:dsire_program_id:22158
 - SOURCE_DSIRE:dsire_program_id:22160
 - SOURCE_DSIRE:dsire_program_id:22163
 - SOURCE_DSIRE:dsire_program_id:22165
 - SOURCE_DSIRE:dsire_program_id:22166
-- SOURCE_DSIRE:dsire_program_id:22167
 - SOURCE_DSIRE:dsire_program_id:22172
 - SOURCE_DSIRE:dsire_program_id:22173
 - SOURCE_DSIRE:dsire_program_id:22174
@@ -318,22 +311,13 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22200
 - SOURCE_DSIRE:dsire_program_id:22206
 - SOURCE_DSIRE:dsire_program_id:2221
-- SOURCE_DSIRE:dsire_program_id:22210
 - SOURCE_DSIRE:dsire_program_id:22212
-- SOURCE_DSIRE:dsire_program_id:22215
 - SOURCE_DSIRE:dsire_program_id:2222
 - SOURCE_DSIRE:dsire_program_id:22221
 - SOURCE_DSIRE:dsire_program_id:22222
-- SOURCE_DSIRE:dsire_program_id:22224
-- SOURCE_DSIRE:dsire_program_id:22228
-- SOURCE_DSIRE:dsire_program_id:22229
-- SOURCE_DSIRE:dsire_program_id:22230
 - SOURCE_DSIRE:dsire_program_id:22232
 - SOURCE_DSIRE:dsire_program_id:22233
-- SOURCE_DSIRE:dsire_program_id:22241
-- SOURCE_DSIRE:dsire_program_id:22245
 - SOURCE_DSIRE:dsire_program_id:22250
-- SOURCE_DSIRE:dsire_program_id:22255
 - SOURCE_DSIRE:dsire_program_id:22256
 - SOURCE_DSIRE:dsire_program_id:22263
 - SOURCE_DSIRE:dsire_program_id:22264
@@ -349,19 +333,15 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22279
 - SOURCE_DSIRE:dsire_program_id:22280
 - SOURCE_DSIRE:dsire_program_id:22282
-- SOURCE_DSIRE:dsire_program_id:22283
 - SOURCE_DSIRE:dsire_program_id:22288
 - SOURCE_DSIRE:dsire_program_id:22289
 - SOURCE_DSIRE:dsire_program_id:22290
-- SOURCE_DSIRE:dsire_program_id:22295
-- SOURCE_DSIRE:dsire_program_id:22297
 - SOURCE_DSIRE:dsire_program_id:22298
 - SOURCE_DSIRE:dsire_program_id:22299
 - SOURCE_DSIRE:dsire_program_id:22300
 - SOURCE_DSIRE:dsire_program_id:22301
 - SOURCE_DSIRE:dsire_program_id:22303
 - SOURCE_DSIRE:dsire_program_id:22304
-- SOURCE_DSIRE:dsire_program_id:22305
 - SOURCE_DSIRE:dsire_program_id:22307
 - SOURCE_DSIRE:dsire_program_id:22308
 - SOURCE_DSIRE:dsire_program_id:22309
@@ -435,8 +415,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22454
 - SOURCE_DSIRE:dsire_program_id:22456
 - SOURCE_DSIRE:dsire_program_id:22472
-- SOURCE_DSIRE:dsire_program_id:22474
-- SOURCE_DSIRE:dsire_program_id:22475
 - SOURCE_DSIRE:dsire_program_id:22479
 - SOURCE_DSIRE:dsire_program_id:22481
 - SOURCE_DSIRE:dsire_program_id:22482
@@ -458,18 +436,14 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22526
 - SOURCE_DSIRE:dsire_program_id:22529
 - SOURCE_DSIRE:dsire_program_id:2253
-- SOURCE_DSIRE:dsire_program_id:22541
 - SOURCE_DSIRE:dsire_program_id:22542
-- SOURCE_DSIRE:dsire_program_id:22544
 - SOURCE_DSIRE:dsire_program_id:22545
 - SOURCE_DSIRE:dsire_program_id:22546
 - SOURCE_DSIRE:dsire_program_id:22547
 - SOURCE_DSIRE:dsire_program_id:22548
 - SOURCE_DSIRE:dsire_program_id:22549
-- SOURCE_DSIRE:dsire_program_id:22551
 - SOURCE_DSIRE:dsire_program_id:22552
 - SOURCE_DSIRE:dsire_program_id:22553
-- SOURCE_DSIRE:dsire_program_id:22555
 - SOURCE_DSIRE:dsire_program_id:22556
 - SOURCE_DSIRE:dsire_program_id:22558
 - SOURCE_DSIRE:dsire_program_id:2256
@@ -484,7 +458,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22569
 - SOURCE_DSIRE:dsire_program_id:22572
 - SOURCE_DSIRE:dsire_program_id:22576
-- SOURCE_DSIRE:dsire_program_id:22577
 - SOURCE_DSIRE:dsire_program_id:2258
 - SOURCE_DSIRE:dsire_program_id:22580
 - SOURCE_DSIRE:dsire_program_id:22584
@@ -497,12 +470,9 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22591
 - SOURCE_DSIRE:dsire_program_id:22595
 - SOURCE_DSIRE:dsire_program_id:22596
-- SOURCE_DSIRE:dsire_program_id:22597
 - SOURCE_DSIRE:dsire_program_id:2260
-- SOURCE_DSIRE:dsire_program_id:22602
 - SOURCE_DSIRE:dsire_program_id:22605
 - SOURCE_DSIRE:dsire_program_id:22606
-- SOURCE_DSIRE:dsire_program_id:22607
 - SOURCE_DSIRE:dsire_program_id:22608
 - SOURCE_DSIRE:dsire_program_id:22615
 - SOURCE_DSIRE:dsire_program_id:22616
@@ -517,8 +487,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22633
 - SOURCE_DSIRE:dsire_program_id:22635
 - SOURCE_DSIRE:dsire_program_id:22636
-- SOURCE_DSIRE:dsire_program_id:22637
-- SOURCE_DSIRE:dsire_program_id:22638
 - SOURCE_DSIRE:dsire_program_id:22639
 - SOURCE_DSIRE:dsire_program_id:2264
 - SOURCE_DSIRE:dsire_program_id:22640
@@ -530,14 +498,12 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22652
 - SOURCE_DSIRE:dsire_program_id:22653
 - SOURCE_DSIRE:dsire_program_id:22654
-- SOURCE_DSIRE:dsire_program_id:22655
 - SOURCE_DSIRE:dsire_program_id:22656
 - SOURCE_DSIRE:dsire_program_id:22658
 - SOURCE_DSIRE:dsire_program_id:22659
 - SOURCE_DSIRE:dsire_program_id:2266
 - SOURCE_DSIRE:dsire_program_id:22660
 - SOURCE_DSIRE:dsire_program_id:22661
-- SOURCE_DSIRE:dsire_program_id:22662
 - SOURCE_DSIRE:dsire_program_id:22665
 - SOURCE_DSIRE:dsire_program_id:22666
 - SOURCE_DSIRE:dsire_program_id:22669
@@ -589,7 +555,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:22761
 - SOURCE_DSIRE:dsire_program_id:22762
 - SOURCE_DSIRE:dsire_program_id:22763
-- SOURCE_DSIRE:dsire_program_id:22764
 - SOURCE_DSIRE:dsire_program_id:22766
 - SOURCE_DSIRE:dsire_program_id:22768
 - SOURCE_DSIRE:dsire_program_id:22770
@@ -609,7 +574,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2279
 - SOURCE_DSIRE:dsire_program_id:22790
 - SOURCE_DSIRE:dsire_program_id:22791
-- SOURCE_DSIRE:dsire_program_id:22793
 - SOURCE_DSIRE:dsire_program_id:22798
 - SOURCE_DSIRE:dsire_program_id:22799
 - SOURCE_DSIRE:dsire_program_id:2280
@@ -640,7 +604,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2325
 - SOURCE_DSIRE:dsire_program_id:234
 - SOURCE_DSIRE:dsire_program_id:2354
-- SOURCE_DSIRE:dsire_program_id:2359
 - SOURCE_DSIRE:dsire_program_id:2363
 - SOURCE_DSIRE:dsire_program_id:2364
 - SOURCE_DSIRE:dsire_program_id:2373
@@ -701,7 +664,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2554
 - SOURCE_DSIRE:dsire_program_id:2555
 - SOURCE_DSIRE:dsire_program_id:2567
-- SOURCE_DSIRE:dsire_program_id:2576
 - SOURCE_DSIRE:dsire_program_id:2582
 - SOURCE_DSIRE:dsire_program_id:2584
 - SOURCE_DSIRE:dsire_program_id:2585
@@ -733,7 +695,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2673
 - SOURCE_DSIRE:dsire_program_id:2674
 - SOURCE_DSIRE:dsire_program_id:2677
-- SOURCE_DSIRE:dsire_program_id:2678
 - SOURCE_DSIRE:dsire_program_id:2680
 - SOURCE_DSIRE:dsire_program_id:2688
 - SOURCE_DSIRE:dsire_program_id:2689
@@ -744,7 +705,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2702
 - SOURCE_DSIRE:dsire_program_id:2734
 - SOURCE_DSIRE:dsire_program_id:2735
-- SOURCE_DSIRE:dsire_program_id:2742
 - SOURCE_DSIRE:dsire_program_id:2745
 - SOURCE_DSIRE:dsire_program_id:2755
 - SOURCE_DSIRE:dsire_program_id:2766
@@ -770,7 +730,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:2905
 - SOURCE_DSIRE:dsire_program_id:2907
 - SOURCE_DSIRE:dsire_program_id:2908
-- SOURCE_DSIRE:dsire_program_id:2913
 - SOURCE_DSIRE:dsire_program_id:2925
 - SOURCE_DSIRE:dsire_program_id:2928
 - SOURCE_DSIRE:dsire_program_id:2932
@@ -789,7 +748,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:3025
 - SOURCE_DSIRE:dsire_program_id:3026
 - SOURCE_DSIRE:dsire_program_id:3029
-- SOURCE_DSIRE:dsire_program_id:3030
 - SOURCE_DSIRE:dsire_program_id:3036
 - SOURCE_DSIRE:dsire_program_id:3037
 - SOURCE_DSIRE:dsire_program_id:3060
@@ -925,7 +883,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:3535
 - SOURCE_DSIRE:dsire_program_id:3538
 - SOURCE_DSIRE:dsire_program_id:3543
-- SOURCE_DSIRE:dsire_program_id:355
 - SOURCE_DSIRE:dsire_program_id:3554
 - SOURCE_DSIRE:dsire_program_id:3557
 - SOURCE_DSIRE:dsire_program_id:3559
@@ -1012,12 +969,10 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:3841
 - SOURCE_DSIRE:dsire_program_id:3842
 - SOURCE_DSIRE:dsire_program_id:3853
-- SOURCE_DSIRE:dsire_program_id:3854
 - SOURCE_DSIRE:dsire_program_id:3861
 - SOURCE_DSIRE:dsire_program_id:3869
 - SOURCE_DSIRE:dsire_program_id:3870
 - SOURCE_DSIRE:dsire_program_id:3873
-- SOURCE_DSIRE:dsire_program_id:3876
 - SOURCE_DSIRE:dsire_program_id:3879
 - SOURCE_DSIRE:dsire_program_id:3880
 - SOURCE_DSIRE:dsire_program_id:389
@@ -1047,12 +1002,9 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:3979
 - SOURCE_DSIRE:dsire_program_id:3980
 - SOURCE_DSIRE:dsire_program_id:3985
-- SOURCE_DSIRE:dsire_program_id:3999
 - SOURCE_DSIRE:dsire_program_id:4026
-- SOURCE_DSIRE:dsire_program_id:4040
 - SOURCE_DSIRE:dsire_program_id:4048
 - SOURCE_DSIRE:dsire_program_id:4051
-- SOURCE_DSIRE:dsire_program_id:4052
 - SOURCE_DSIRE:dsire_program_id:4056
 - SOURCE_DSIRE:dsire_program_id:4067
 - SOURCE_DSIRE:dsire_program_id:4068
@@ -1128,7 +1080,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:4438
 - SOURCE_DSIRE:dsire_program_id:4448
 - SOURCE_DSIRE:dsire_program_id:4450
-- SOURCE_DSIRE:dsire_program_id:4452
 - SOURCE_DSIRE:dsire_program_id:4454
 - SOURCE_DSIRE:dsire_program_id:4471
 - SOURCE_DSIRE:dsire_program_id:4474
@@ -1147,18 +1098,15 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:4528
 - SOURCE_DSIRE:dsire_program_id:4532
 - SOURCE_DSIRE:dsire_program_id:4533
-- SOURCE_DSIRE:dsire_program_id:4535
 - SOURCE_DSIRE:dsire_program_id:4546
 - SOURCE_DSIRE:dsire_program_id:4547
 - SOURCE_DSIRE:dsire_program_id:4552
 - SOURCE_DSIRE:dsire_program_id:4554
-- SOURCE_DSIRE:dsire_program_id:4557
 - SOURCE_DSIRE:dsire_program_id:4558
 - SOURCE_DSIRE:dsire_program_id:4559
 - SOURCE_DSIRE:dsire_program_id:4561
 - SOURCE_DSIRE:dsire_program_id:4565
 - SOURCE_DSIRE:dsire_program_id:4569
-- SOURCE_DSIRE:dsire_program_id:4572
 - SOURCE_DSIRE:dsire_program_id:4575
 - SOURCE_DSIRE:dsire_program_id:4577
 - SOURCE_DSIRE:dsire_program_id:4581
@@ -1238,7 +1186,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:4919
 - SOURCE_DSIRE:dsire_program_id:4932
 - SOURCE_DSIRE:dsire_program_id:4946
-- SOURCE_DSIRE:dsire_program_id:4951
 - SOURCE_DSIRE:dsire_program_id:4952
 - SOURCE_DSIRE:dsire_program_id:496
 - SOURCE_DSIRE:dsire_program_id:4968
@@ -1247,8 +1194,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:4982
 - SOURCE_DSIRE:dsire_program_id:4989
 - SOURCE_DSIRE:dsire_program_id:50
-- SOURCE_DSIRE:dsire_program_id:5005
-- SOURCE_DSIRE:dsire_program_id:5007
 - SOURCE_DSIRE:dsire_program_id:5011
 - SOURCE_DSIRE:dsire_program_id:5015
 - SOURCE_DSIRE:dsire_program_id:5018
@@ -1324,10 +1269,8 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5368
 - SOURCE_DSIRE:dsire_program_id:5377
 - SOURCE_DSIRE:dsire_program_id:5381
-- SOURCE_DSIRE:dsire_program_id:5396
 - SOURCE_DSIRE:dsire_program_id:5398
 - SOURCE_DSIRE:dsire_program_id:5399
-- SOURCE_DSIRE:dsire_program_id:54
 - SOURCE_DSIRE:dsire_program_id:5402
 - SOURCE_DSIRE:dsire_program_id:5403
 - SOURCE_DSIRE:dsire_program_id:5406
@@ -1341,7 +1284,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5423
 - SOURCE_DSIRE:dsire_program_id:5424
 - SOURCE_DSIRE:dsire_program_id:5426
-- SOURCE_DSIRE:dsire_program_id:5427
 - SOURCE_DSIRE:dsire_program_id:5440
 - SOURCE_DSIRE:dsire_program_id:5442
 - SOURCE_DSIRE:dsire_program_id:5448
@@ -1362,7 +1304,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5539
 - SOURCE_DSIRE:dsire_program_id:5543
 - SOURCE_DSIRE:dsire_program_id:5546
-- SOURCE_DSIRE:dsire_program_id:5550
 - SOURCE_DSIRE:dsire_program_id:5558
 - SOURCE_DSIRE:dsire_program_id:5562
 - SOURCE_DSIRE:dsire_program_id:5564
@@ -1374,7 +1315,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5620
 - SOURCE_DSIRE:dsire_program_id:5622
 - SOURCE_DSIRE:dsire_program_id:5627
-- SOURCE_DSIRE:dsire_program_id:5650
 - SOURCE_DSIRE:dsire_program_id:5665
 - SOURCE_DSIRE:dsire_program_id:5682
 - SOURCE_DSIRE:dsire_program_id:5685
@@ -1416,7 +1356,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5780
 - SOURCE_DSIRE:dsire_program_id:5782
 - SOURCE_DSIRE:dsire_program_id:5785
-- SOURCE_DSIRE:dsire_program_id:5789
 - SOURCE_DSIRE:dsire_program_id:5791
 - SOURCE_DSIRE:dsire_program_id:5793
 - SOURCE_DSIRE:dsire_program_id:5796
@@ -1424,7 +1363,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5799
 - SOURCE_DSIRE:dsire_program_id:5807
 - SOURCE_DSIRE:dsire_program_id:5809
-- SOURCE_DSIRE:dsire_program_id:5811
 - SOURCE_DSIRE:dsire_program_id:5817
 - SOURCE_DSIRE:dsire_program_id:5819
 - SOURCE_DSIRE:dsire_program_id:5821
@@ -1433,7 +1371,6 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:5828
 - SOURCE_DSIRE:dsire_program_id:5831
 - SOURCE_DSIRE:dsire_program_id:5832
-- SOURCE_DSIRE:dsire_program_id:5836
 - SOURCE_DSIRE:dsire_program_id:5840
 - SOURCE_DSIRE:dsire_program_id:5851
 - SOURCE_DSIRE:dsire_program_id:5853
@@ -1461,10 +1398,8 @@ Test case top result edges patched: 445
 - SOURCE_DSIRE:dsire_program_id:658
 - SOURCE_DSIRE:dsire_program_id:666
 - SOURCE_DSIRE:dsire_program_id:676
-- SOURCE_DSIRE:dsire_program_id:678
 - SOURCE_DSIRE:dsire_program_id:679
 - SOURCE_DSIRE:dsire_program_id:682
-- SOURCE_DSIRE:dsire_program_id:709
 - SOURCE_DSIRE:dsire_program_id:727
 - SOURCE_DSIRE:dsire_program_id:734
 - SOURCE_DSIRE:dsire_program_id:740
@@ -1487,8 +1422,6 @@ Test case top result edges patched: 445
 - SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:hvac-optimization-program
 - SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:retrocommissioning-program
 - SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:ca-clean-fuel-reward
-- SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-program
-- SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:charge-ready-transport
 - SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate
 - SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:rule-29-ev-guide
 - SOURCE_SCE_BUSINESS:sce_source_section:f4ae5887bd3fcdc9:gogreen-business-energy-financing
@@ -1502,7 +1435,6 @@ Test case top result edges patched: 445
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_16456
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_19551
-- SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_22121
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_25406
 - SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_555

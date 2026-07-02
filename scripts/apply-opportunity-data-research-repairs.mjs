@@ -66,16 +66,30 @@ console.log(`Report: ${reportPath}`);
 
 function patchRetrofitIndex(index) {
   let edgeCount = 0;
+  let removedUnavailableEdgeCount = 0;
   const uniqueIds = new Set();
+  const removedUnavailableIds = new Set();
 
   for (const retrofit of index.retrofits || []) {
+    const kept = [];
     for (const opportunity of retrofit.opportunities || []) {
       const repair = repairsById.get(opportunity.opportunityId);
-      if (!repair) continue;
+      if (!repair) {
+        kept.push(opportunity);
+        continue;
+      }
+      if (shouldRemoveFromActiveFixtures(repair)) {
+        removedUnavailableEdgeCount += 1;
+        removedUnavailableIds.add(opportunity.opportunityId);
+        continue;
+      }
       Object.assign(opportunity, patchedOpportunityFields(opportunity, repair));
       edgeCount += 1;
       uniqueIds.add(opportunity.opportunityId);
+      kept.push(opportunity);
     }
+    retrofit.opportunities = kept;
+    retrofit.opportunityCount = kept.length;
   }
 
   for (const opportunity of index.upcomingOpportunities || []) {
@@ -86,9 +100,16 @@ function patchRetrofitIndex(index) {
     uniqueIds.add(opportunity.opportunityId);
   }
 
+  index.retrofits = (index.retrofits || []).filter((retrofit) => retrofit.opportunityCount > 0);
+  index.retrofitCount = index.retrofits.length;
+  index.opportunityCount = countUniqueOpportunities(index.retrofits);
+  index.archivedUnavailableOpportunityCount = countUniqueArchivedUnavailable(index, removedUnavailableIds);
+
   return {
     edgeCount,
+    removedUnavailableEdgeCount,
     uniqueOpportunityCount: uniqueIds.size,
+    removedUnavailableOpportunityCount: removedUnavailableIds.size,
     uniqueOpportunityIds: [...uniqueIds].sort()
   };
 }
@@ -96,40 +117,84 @@ function patchRetrofitIndex(index) {
 function patchTestCases(source) {
   let edgeCount = 0;
   let topResultCount = 0;
+  let removedUnavailableEdgeCount = 0;
+  let removedUnavailableTopResultCount = 0;
   const uniqueIds = new Set();
+  const removedUnavailableIds = new Set();
 
   for (const testCase of source.testCases || []) {
     for (const retrofit of testCase.retrofits || []) {
+      const kept = [];
       for (const opportunity of retrofit.opportunities || []) {
         const repair = repairsById.get(opportunity.opportunityId);
-        if (!repair) continue;
+        if (!repair) {
+          kept.push(opportunity);
+          continue;
+        }
+        if (shouldRemoveFromActiveFixtures(repair)) {
+          removedUnavailableEdgeCount += 1;
+          removedUnavailableIds.add(opportunity.opportunityId);
+          continue;
+        }
         Object.assign(opportunity, patchedOpportunityFields(opportunity, repair));
         edgeCount += 1;
         uniqueIds.add(opportunity.opportunityId);
+        kept.push(opportunity);
+      }
+      retrofit.opportunities = kept;
+      retrofit.opportunityCount = kept.length;
+      if (retrofit.savingsPreview) {
+        retrofit.savingsPreview.opportunityCount = kept.length;
       }
     }
+    testCase.retrofits = (testCase.retrofits || []).filter((retrofit) => retrofit.opportunityCount > 0);
 
+    const keptTopResults = [];
     for (const opportunity of testCase.topResults || []) {
       const repair = repairsById.get(opportunity.opportunityId);
-      if (!repair) continue;
+      if (!repair) {
+        keptTopResults.push(opportunity);
+        continue;
+      }
+      if (shouldRemoveFromActiveFixtures(repair)) {
+        removedUnavailableTopResultCount += 1;
+        removedUnavailableIds.add(opportunity.opportunityId);
+        continue;
+      }
       Object.assign(opportunity, patchedOpportunityFields(opportunity, repair));
       topResultCount += 1;
       uniqueIds.add(opportunity.opportunityId);
+      keptTopResults.push(opportunity);
     }
+    testCase.topResults = keptTopResults;
 
+    const keptUpcoming = [];
     for (const opportunity of testCase.upcomingOpportunities || []) {
       const repair = repairsById.get(opportunity.opportunityId);
-      if (!repair) continue;
+      if (!repair) {
+        keptUpcoming.push(opportunity);
+        continue;
+      }
+      if (shouldRemoveFromActiveFixtures(repair)) {
+        removedUnavailableEdgeCount += 1;
+        removedUnavailableIds.add(opportunity.opportunityId);
+        continue;
+      }
       Object.assign(opportunity, patchedOpportunityFields(opportunity, repair));
       edgeCount += 1;
       uniqueIds.add(opportunity.opportunityId);
+      keptUpcoming.push(opportunity);
     }
+    testCase.upcomingOpportunities = keptUpcoming;
   }
 
   return {
     edgeCount,
     topResultCount,
+    removedUnavailableEdgeCount,
+    removedUnavailableTopResultCount,
     uniqueOpportunityCount: uniqueIds.size,
+    removedUnavailableOpportunityCount: removedUnavailableIds.size,
     uniqueOpportunityIds: [...uniqueIds].sort()
   };
 }
@@ -142,9 +207,14 @@ function patchedOpportunityFields(opportunity, repair) {
     ...optionalField("applicationUrl", repair.applicationUrl),
     ...optionalField("state", repair.geography.states[0] || opportunity.state),
     availabilityStatus: publicAvailabilityStatus(repair.availabilityStatus, opportunity.availabilityStatus),
+    confidence: 1,
     dataRepairConfidence: confidenceNumber(repair.confidence),
     opportunityDataRepair: repair
   };
+}
+
+function shouldRemoveFromActiveFixtures(repair) {
+  return publicAvailabilityStatus(repair.availabilityStatus) === "unavailable";
 }
 
 function normalizeRepair(repair, repairsArtifact, repairsPath) {
@@ -184,10 +254,26 @@ function normalizeRepair(repair, repairsArtifact, repairsPath) {
 function publicAvailabilityStatus(status, fallback = "active") {
   if (status === "active") return "active";
   if (status === "rolling") return "rolling";
-  if (status === "unavailable" || status === "expired") return "unavailable";
+  if (status === "unavailable" || status === "expired" || status === "source_inaccessible") return "unavailable";
   if (status === "upcoming") return "upcoming";
   if (status === "temporarily_closed" || status === "unknown" || status === "source_inaccessible") return "uncertain";
   return fallback || "uncertain";
+}
+
+function countUniqueOpportunities(retrofits) {
+  const ids = new Set();
+  for (const retrofit of retrofits || []) {
+    for (const opportunity of retrofit.opportunities || []) {
+      ids.add(opportunity.opportunityId);
+    }
+  }
+  return ids.size;
+}
+
+function countUniqueArchivedUnavailable(index, removedUnavailableIds) {
+  const existing = Number(index.archivedUnavailableOpportunityCount);
+  if (Number.isFinite(existing)) return Math.max(existing, removedUnavailableIds.size);
+  return removedUnavailableIds.size;
 }
 
 function optionalField(key, value) {
@@ -224,9 +310,13 @@ function buildReport({ retrofitPatch, testCasePatch }) {
     `Unique repairs supplied: ${repairsById.size}`,
     `Duplicate opportunity repairs overwritten by later files: ${repairRows.length - repairsById.size}`,
     `Retrofit index edges patched: ${retrofitPatch.edgeCount}`,
+    `Retrofit index unavailable/source-inaccessible edges removed: ${retrofitPatch.removedUnavailableEdgeCount}`,
     `Retrofit index unique opportunities patched: ${retrofitPatch.uniqueOpportunityCount}`,
+    `Retrofit index unique unavailable/source-inaccessible opportunities removed: ${retrofitPatch.removedUnavailableOpportunityCount}`,
     `Test case opportunity edges patched: ${testCasePatch.edgeCount}`,
+    `Test case unavailable/source-inaccessible edges removed: ${testCasePatch.removedUnavailableEdgeCount}`,
     `Test case top result edges patched: ${testCasePatch.topResultCount}`,
+    `Test case unavailable/source-inaccessible top results removed: ${testCasePatch.removedUnavailableTopResultCount}`,
     "",
     "## Patched Opportunities",
     "",

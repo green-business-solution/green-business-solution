@@ -13,7 +13,7 @@ afterEach(async () => {
 });
 
 describe("apply-opportunity-data-research-repairs", () => {
-  it("lets later duplicate repairs win and maps expired repair status to unavailable", async () => {
+  it("lets later duplicate repairs win and removes expired repair status from active fixtures", async () => {
     const dir = await makeTmpDir();
     const retrofitIndexPath = path.join(dir, "retrofit_opportunity_index.json");
     const testCasesPath = path.join(dir, "sample_matching_test_cases.json");
@@ -63,15 +63,9 @@ describe("apply-opportunity-data-research-repairs", () => {
     );
 
     const patchedIndex = JSON.parse(await fs.readFile(retrofitIndexPath, "utf8"));
-    const patchedOpportunity = patchedIndex.retrofits[0].opportunities[0];
-    expect(patchedOpportunity.programType).toBe("Expired Program");
-    expect(patchedOpportunity.availabilityStatus).toBe("unavailable");
-    expect(patchedOpportunity.opportunityDataRepair).toMatchObject({
-      availabilityStatus: "expired",
-      batchId: "second",
-      opportunityId: "SOURCE_TEST:program:1"
-    });
+    expect(patchedIndex.retrofits).toEqual([]);
     expect(await fs.readFile(reportPath, "utf8")).toContain("Duplicate opportunity repairs overwritten by later files: 1");
+    expect(await fs.readFile(reportPath, "utf8")).toContain("Retrofit index unavailable/source-inaccessible edges removed: 1");
   });
 
   it("rejects invalid repair files before patching public fixtures", async () => {

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) deterministic match-confidence fixture repair
+
+- Updated opportunity-data repair application so repaired visible public fixture edges use deterministic `confidence: 1` for match confidence while preserving source confidence separately as `dataRepairConfidence`.
+- Removed unavailable, expired, and source-inaccessible repaired opportunities from active retrofit database/test-case rows instead of leaving them visible as low-confidence matches.
+- Reapplied all 97 opportunity-data repair batches to refresh `public/retrofit_opportunity_index.json` and `public/sample_matching_test_cases.json` with zero non-100% visible match-confidence rows.
+
 ## 2026-07-02 - Codex (GPT-5) application path finder
 
 - Added read-only `ApplicationPathFinder` source-page inspection for one opportunity source profile at a time, with bounded fetch timeout/response size, no crawling, no browser automation, and no DynamoDB writes.
