@@ -1538,3 +1538,4 @@
 - Kept the detailed retrofit workspace, financing/application prep, opportunity, assumptions, and add-to-plan flows behind the selected retrofit view and expanded focused tests for the picker layout and hover/readability rules.
 - Added complete customer-facing short names for all 92 retrofit taxonomy types in the user preview/results UI while preserving internal taxonomy IDs and source display names.
 - Added a GPT Pro work folder for v2 incentive input-resolution and grant probability repair prompts, including explicit user-overridable retrofit quantity defaults.
+- Added a product TODO to research environmental impact fines and model supportable avoided compliance penalties separately from incentives.
