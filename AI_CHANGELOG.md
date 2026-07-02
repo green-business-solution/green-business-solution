@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user-preview clean picker first view
+
+- Changed the admin-nav `/user-preview` Retrofit Recommendations flow so no retrofit is active on first load and the user first sees a clean retrofit picker instead of the full workspace.
+- Added the before-click estimate-accuracy banner, compact sort/search/view controls, 3-column retrofit card grid, and show-more behavior while keeping the full command-center workspace available after a retrofit card is selected.
+- Updated focused preview tests to verify the first view hides recommendation headers, badges, current plan, workspace tabs, scenarios, opportunities, financing, application prep, and other secondary sections until selection.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview command-center refinement
 
 - Refined the admin-nav `/user-preview` Retrofit Recommendations page into a tighter command-center and drill-down IA: active retrofit command cards, Overview opportunity preview, compact included summary, grouped Opportunities tab, worklist-style Requirements tab, and secondary More tab shortcuts.

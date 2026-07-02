@@ -195,7 +195,26 @@ describe("retrofit recommendations preview", () => {
     expect(String(preview.retrofits[0].tabSummary.primaryMetricValue || "")).not.toContain("-$");
   });
 
-  it("renders the admin-nav user preview structure", () => {
+  it("renders a clean before-click retrofit picker and hides the full workspace", () => {
+    const multiRetrofitPayload = {
+      ...liveShapedPayload,
+      summary: {
+        matchedRetrofitCount: 7,
+        matchedOpportunityCount: 1
+      },
+      retrofits: Array.from({ length: 7 }, (_, index) => ({
+        ...liveShapedPayload.retrofits[0],
+        retrofitTypeId: `led_lighting_${index + 1}`,
+        displayName: index === 0 ? "LED Lighting Upgrade" : `Retrofit Option ${index + 1}`,
+        savingsPreview: {
+          ...liveShapedPayload.retrofits[0].savingsPreview,
+          retrofitTypeId: `led_lighting_${index + 1}`,
+          retrofitDisplayName: index === 0 ? "LED Lighting Upgrade" : `Retrofit Option ${index + 1}`
+        },
+        opportunities: index === 0 ? liveShapedPayload.retrofits[0].opportunities : []
+      }))
+    } as any;
+
     const html = renderToStaticMarkup(
       <RetrofitRecommendationsPreview
         emptyMessage="No retrofit recommendations yet."
@@ -204,52 +223,47 @@ describe("retrofit recommendations preview", () => {
         intro="Review recommended retrofits, eligible opportunities, operating savings, and next steps based on the information provided."
         isLoading={false}
         loadingMessage="Loading live retrofit recommendations for this client..."
-        payload={liveShapedPayload}
+        payload={multiRetrofitPayload}
         title="Retrofit Recommendations"
       />
     );
 
-    expect(html).toContain("Retrofit Recommendations");
-    expect(html).toContain("Recommendation readiness");
-    expect(html).toContain("Top recommendation");
-    expect(html).toContain("Improve estimate accuracy by adding bills, quotes, or retrofit details.");
+    expect(html).toContain("Improve your estimate accuracy");
+    expect(html).toContain("Upload your bills and answer a few questions within the retrofit.");
     expect(html).toContain("Upload bills");
-    expect(html).toContain("Enter details");
-    expect(html).toContain("Add quote");
-    expect(html).toContain("Add tax/entity info");
-    expect(html).toContain("filter-toolbar");
-    expect(html).toContain(">Filter</button>");
-    expect(html).toContain("Current retrofit plan");
-    expect(html).toContain("Why one at a time?");
-    expect(html).toContain("Continue editing");
-    expect(html).not.toContain("Prepare applications</button>");
-    expect(html).toContain("current-plan-strip");
-    expect(html).not.toContain("retrofit-refinement-status");
-    expect(html).not.toContain("current-plan-next-step");
-    expect(html).not.toContain("retrofit-preview-header-meta");
-    expect(html).toContain("Top 1 shown first · 1 total");
-    expect(html).toContain("Add this retrofit to plan");
-    expect(html).toContain("Retrofit rail");
-    expect(html).not.toContain("Default: Low upfront");
-    expect(html).toContain("Decision summary");
-    expect(html).toContain("Financial snapshot");
-    expect(html).toContain("Opportunity bundle");
-    expect(html).toContain("Missing blockers");
-    expect(html).toContain("View all opportunities");
-    expect(html).toContain("Incentives included");
-    expect(html).toContain("Operating savings included");
-    expect(html).toContain("Pending values");
-    expect(html).toContain("Active retrofit workspace tabs");
-    expect(html).toContain("Overview");
-    expect(html).toContain("Financials");
-    expect(html).toContain("Scenarios");
-    expect(html).toContain("Opportunities");
-    expect(html).toContain("Requirements");
-    expect(html).toContain("More");
-    expect(html).toContain("aria-current=\"true\"");
-    expect(html).toContain("data-workspace-panel=\"overview\"");
+    expect(html).toContain("Select a retrofit to explore");
+    expect(html).toContain("Choose one retrofit to see opportunities, detailed metrics, and next steps.");
+    expect(html).toContain("Sort by");
+    expect(html).toContain("Search retrofits");
+    expect(html).toContain("Grid");
+    expect(html).toContain("Panel");
+    expect(html).toContain("LED Lighting Upgrade");
+    expect(html).toContain("Savings");
+    expect(html).toContain("Cost");
+    expect(html).toContain("Payback");
+    expect(html).toContain("Show more retrofits");
+    expect(html).toContain("retrofit-picker-grid");
+    expect(html).toContain("retrofit-picker-card");
+    expect(html).not.toContain("Retrofit Recommendations");
+    expect(html).not.toContain("Estimate basis:");
+    expect(html).not.toContain("Live/API backend recommendation data");
+    expect(html).not.toContain("Last updated:");
+    expect(html).not.toContain("Recommendation readiness");
+    expect(html).not.toContain("Top recommendation");
+    expect(html).not.toContain("Current retrofit plan");
+    expect(html).not.toContain("filter-toolbar");
+    expect(html).not.toContain("Retrofit rail");
+    expect(html).not.toContain("active-command-center");
+    expect(html).not.toContain("retrofit-workspace-tabs");
+    expect(html).not.toContain("Financial snapshot");
+    expect(html).not.toContain("Opportunity bundle");
+    expect(html).not.toContain("Missing blockers");
+    expect(html).not.toContain("View all opportunities");
+    expect(html).not.toContain("Incentives included");
+    expect(html).not.toContain("Operating savings included");
+    expect(html).not.toContain("Active retrofit workspace tabs");
+    expect(html).not.toContain("data-workspace-panel=\"overview\"");
     expect(html).not.toContain("Summary across selected retrofits");
-    expect(html).not.toContain("Opportunities: 1 selected / 1 found");
     expect(html).not.toContain("No major missing inputs flagged");
     expect(html).not.toContain("Scenario B: Best payback");
     expect(html).not.toContain("Scenario C: Highest total savings");
@@ -257,9 +271,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Scenario comparison for this retrofit");
     expect(html).not.toContain("Retrofit section navigation");
     expect(html).not.toContain("<h3>What is included in this estimate</h3>");
+    expect(html).not.toContain("<h3>Opportunities</h3>");
     expect(html).not.toContain("Selected retrofits");
     expect(html).not.toContain("Estimated blended payback");
-    expect(html).toContain("Sort");
     expect(html).not.toContain("<span>Estimated upfront project cost</span>");
     expect(html).not.toContain("<span>Upfront financial incentive</span>");
     expect(html).not.toContain("<span>Recurring Operational Savings</span>");
@@ -272,14 +286,16 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("<h3>Operating Savings</h3>");
     expect(html).not.toContain("<h3>Enter details</h3>");
     expect(html).not.toContain("<h3>Missing information</h3>");
-    expect(html).toContain("Explore financing");
-    expect(html).toContain("Next-best-action checklist");
+    expect(html).not.toContain("Explore financing");
+    expect(html).not.toContain("Next-best-action checklist");
+    expect(html).not.toContain("Enter details");
+    expect(html).not.toContain("Add quote");
+    expect(html).not.toContain("Add tax/entity info");
+    expect(html).not.toContain("Add this retrofit to plan");
     expect(html).not.toContain("Prepare application");
     expect(html).not.toContain("Open program source");
     expect(html).not.toContain("Included in current estimate");
     expect(html).not.toContain("View details");
-    expect(html.indexOf("active-command-center")).toBeLessThan(html.indexOf("retrofit-workspace-tabs"));
-    expect(html.indexOf("retrofit-workspace-tabs")).toBeLessThan(html.indexOf("overview-workspace-panel"));
     expect(html).not.toContain("aria-label=\"Confirm retrofit plan\"");
     expect(html).not.toContain("selected-scenario-grid");
     expect(html).not.toContain(">Goal:");
@@ -419,6 +435,8 @@ describe("retrofit recommendations preview", () => {
     const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
 
     expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
+    expect(css).toContain(".retrofit-preview-page .retrofit-picker-card:hover");
+    expect(css).toContain(".retrofit-preview-page .picker-view-button:hover");
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .workspace-tab:hover");
     expect(css).toContain(".retrofit-preview-page .command-summary-card:hover");
@@ -430,6 +448,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("background: var(--rf-bg)");
     expect(css).toContain("height: 104px");
     expect(css).toContain("scroll-margin-top: 92px");
+    expect(css).toContain(".estimate-accuracy-banner");
+    expect(css).toContain(".retrofit-picker-grid");
+    expect(css).toContain(".retrofit-picker-card");
     expect(css).toContain(".recommendation-readiness-strip");
     expect(css).toContain(".filter-toolbar-main");
     expect(css).toContain(".current-plan-strip");

@@ -5601,7 +5601,7 @@ export function RetrofitRecommendationsPreview({
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeRetrofitId, setActiveRetrofitId] = useState<string>(preview.retrofits[0]?.id || "");
+  const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
   const [confirmedAssumptionIds, setConfirmedAssumptionIds] = useState<Record<string, boolean>>({});
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
@@ -5615,16 +5615,19 @@ export function RetrofitRecommendationsPreview({
   const [pendingTabRetrofitId, setPendingTabRetrofitId] = useState<string | null>(null);
   const [planMessage, setPlanMessage] = useState<string | null>(null);
   const [lastAddedRetrofitId, setLastAddedRetrofitId] = useState<string | null>(null);
+  const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
+  const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
     setSelectedScenarioIds(initialScenarioIds);
-    setActiveRetrofitId(preview.retrofits[0]?.id || "");
+    setActiveRetrofitId("");
     setAddedRetrofitPlans({});
     setDirtyRetrofitIds({});
     setPendingTabRetrofitId(null);
     setPlanMessage(null);
     setLastAddedRetrofitId(null);
+    setPickerVisibleCount(6);
   }, [initialScenarioIds, initialSelectedOpportunityIds, preview.generatedAt, preview.intakeId, preview.profileId, preview.retrofits]);
 
   const displayedRetrofits = useMemo(() => {
@@ -5650,10 +5653,9 @@ export function RetrofitRecommendationsPreview({
       .sort((a, b) => comparePreviewRetrofits(a, b, sortBy));
   }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, searchQuery, sortBy]);
 
-  const activeRetrofit =
-    displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) ||
-    displayedRetrofits[0] ||
-    null;
+  const activeRetrofit = activeRetrofitId
+    ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
+    : null;
   const topRecommendationStatus = topRetrofit
     ? topRetrofit.metrics.effectiveCostAfterOneTimeBenefits != null
       ? `Net cost ${formatCents(topRetrofit.metrics.effectiveCostAfterOneTimeBenefits)}`
@@ -5676,10 +5678,10 @@ export function RetrofitRecommendationsPreview({
   const shownFirstCount = Math.min(5, totalMatchedRetrofits || displayedRetrofits.length);
 
   useEffect(() => {
-    if (activeRetrofit && activeRetrofit.id !== activeRetrofitId) {
-      setActiveRetrofitId(activeRetrofit.id);
+    if (activeRetrofitId && !displayedRetrofits.some((retrofit) => retrofit.id === activeRetrofitId)) {
+      setActiveRetrofitId("");
     }
-  }, [activeRetrofit, activeRetrofitId]);
+  }, [activeRetrofitId, displayedRetrofits]);
 
   useEffect(() => {
     if (typeof document === "undefined" || !activeRetrofitId) return;
@@ -5804,6 +5806,33 @@ export function RetrofitRecommendationsPreview({
 
   return (
     <section className="retrofit-preview-page" data-testid="retrofit-recommendations-preview">
+      {error ? <p className="error-message">{error}</p> : null}
+
+      {!activeRetrofit ? (
+        <RetrofitPickerView
+          displayedRetrofits={displayedRetrofits}
+          emptyMessage={emptyMessage}
+          isLoading={isLoading}
+          loadingMessage={loadingMessage}
+          onSearchChange={(value) => {
+            setSearchQuery(value);
+            setPickerVisibleCount(6);
+          }}
+          onSelectRetrofit={(retrofitId) => setActiveRetrofitId(retrofitId)}
+          onSetViewMode={setPickerViewMode}
+          onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
+          onSortChange={(value) => {
+            setSortBy(value);
+            setPickerVisibleCount(6);
+          }}
+          onUploadBills={handleUploadBills}
+          pickerViewMode={pickerViewMode}
+          pickerVisibleCount={pickerVisibleCount}
+          searchQuery={searchQuery}
+          sortBy={sortBy}
+        />
+      ) : (
+        <>
       <header className="retrofit-preview-header">
         <div>
           <div className="retrofit-preview-title-row">
@@ -5817,8 +5846,6 @@ export function RetrofitRecommendationsPreview({
           {payload?.generatedAt ? <span className="soft-badge">Last updated: {formatDate(payload.generatedAt)}</span> : null}
         </div>
       </header>
-
-      {error ? <p className="error-message">{error}</p> : null}
 
       <section className="recommendation-readiness-strip">
         <div className="readiness-summary">
@@ -6073,6 +6100,8 @@ export function RetrofitRecommendationsPreview({
           ))}
         </div>
       </section>
+        </>
+      )}
 
       {financingRetrofit ? (
         <FinancingPreviewDrawer retrofit={financingRetrofit} onClose={() => setFinancingRetrofit(null)} />
@@ -6088,6 +6117,188 @@ export function RetrofitRecommendationsPreview({
       ) : null}
     </section>
   );
+}
+
+function RetrofitPickerView({
+  displayedRetrofits,
+  emptyMessage,
+  isLoading,
+  loadingMessage,
+  onSearchChange,
+  onSelectRetrofit,
+  onSetViewMode,
+  onShowMore,
+  onSortChange,
+  onUploadBills,
+  pickerViewMode,
+  pickerVisibleCount,
+  searchQuery,
+  sortBy
+}: {
+  displayedRetrofits: RetrofitPreviewCard[];
+  emptyMessage: string;
+  isLoading: boolean;
+  loadingMessage: string;
+  onSearchChange: (value: string) => void;
+  onSelectRetrofit: (retrofitId: string) => void;
+  onSetViewMode: (mode: "grid" | "panel") => void;
+  onShowMore: () => void;
+  onSortChange: (value: string) => void;
+  onUploadBills: () => void;
+  pickerViewMode: "grid" | "panel";
+  pickerVisibleCount: number;
+  searchQuery: string;
+  sortBy: string;
+}) {
+  const visibleRetrofits = displayedRetrofits.slice(0, pickerVisibleCount);
+  const hasMoreRetrofits = displayedRetrofits.length > visibleRetrofits.length;
+
+  return (
+    <section className="retrofit-picker-shell" aria-label="Select a retrofit to explore">
+      <section className="estimate-accuracy-banner">
+        <div className="estimate-accuracy-icon" aria-hidden="true">
+          <span>UP</span>
+        </div>
+        <div>
+          <h1>Improve your estimate accuracy</h1>
+          <p>Upload your bills and answer a few questions within the retrofit.</p>
+        </div>
+        <button onClick={onUploadBills} type="button">Upload bills</button>
+      </section>
+
+      <div className="retrofit-picker-heading-row">
+        <div>
+          <h2>Select a retrofit to explore</h2>
+          <p>Choose one retrofit to see opportunities, detailed metrics, and next steps.</p>
+        </div>
+      </div>
+
+      <section className="retrofit-picker-controls" aria-label="Sort, search, and view controls">
+        <label className="picker-sort-control">
+          <span>Sort by</span>
+          <select onChange={(event) => onSortChange(event.target.value)} value={sortBy}>
+            <option value="recommended">Recommended</option>
+            <option value="total_savings">Total savings</option>
+            <option value="payback">Payback period</option>
+            <option value="monthly_savings">Monthly savings</option>
+            <option value="upfront_cost">Upfront cost</option>
+            <option value="percentage_profit">Percentage profit</option>
+            <option value="roi">ROI</option>
+          </select>
+        </label>
+        <label className="picker-search-control">
+          <span className="sr-only">Search retrofits</span>
+          <input onChange={(event) => onSearchChange(event.target.value)} placeholder="Search retrofits" value={searchQuery} />
+        </label>
+        <div className="picker-view-toggle" aria-label="View mode">
+          <button
+            aria-pressed={pickerViewMode === "grid"}
+            className={`picker-view-button${pickerViewMode === "grid" ? " is-active" : ""}`}
+            onClick={() => onSetViewMode("grid")}
+            type="button"
+          >
+            Grid
+          </button>
+          <button
+            aria-pressed={pickerViewMode === "panel"}
+            className={`picker-view-button${pickerViewMode === "panel" ? " is-active" : ""}`}
+            onClick={() => onSetViewMode("panel")}
+            type="button"
+          >
+            Panel
+          </button>
+        </div>
+      </section>
+
+      {isLoading ? (
+        <section className="retrofit-picker-empty">
+          <p>{loadingMessage}</p>
+        </section>
+      ) : visibleRetrofits.length ? (
+        <>
+          <section className={`retrofit-picker-grid${pickerViewMode === "panel" ? " is-panel" : ""}`}>
+            {visibleRetrofits.map((retrofit) => (
+              <button
+                className="retrofit-picker-card"
+                key={retrofit.id}
+                onClick={() => onSelectRetrofit(retrofit.id)}
+                type="button"
+              >
+                <div className="retrofit-picker-card-top">
+                  <div className="retrofit-picker-icon" aria-hidden="true">
+                    <span>{retrofitCategoryInitials(retrofit.category)}</span>
+                  </div>
+                  <div>
+                    <h3>{retrofit.name}</h3>
+                    <p>{retrofitPickerDescription(retrofit.description)}</p>
+                  </div>
+                  <span className="retrofit-picker-arrow" aria-hidden="true">&gt;</span>
+                </div>
+                <div className="retrofit-picker-card-metrics" aria-label={`${retrofit.name} summary metrics`}>
+                  <PickerMetric label="Savings" value={retrofitPickerSavings(retrofit)} />
+                  <PickerMetric label="Cost" value={retrofitPickerCost(retrofit)} />
+                  <PickerMetric label="Payback" value={retrofitPickerPayback(retrofit)} />
+                </div>
+              </button>
+            ))}
+          </section>
+          {hasMoreRetrofits ? (
+            <div className="retrofit-picker-more-row">
+              <button className="secondary-button" onClick={onShowMore} type="button">
+                Show more retrofits
+              </button>
+            </div>
+          ) : null}
+        </>
+      ) : (
+        <section className="retrofit-picker-empty">
+          <h3>No retrofit recommendations yet.</h3>
+          <p>{emptyMessage || "Complete the intake form or select a test profile to generate recommendations."}</p>
+        </section>
+      )}
+    </section>
+  );
+}
+
+function PickerMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="retrofit-picker-metric">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function retrofitCategoryInitials(category?: string) {
+  const words = (category || "Retrofit")
+    .replace(/&/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+  const initials = words.map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+  return initials || "RF";
+}
+
+function retrofitPickerDescription(description: string) {
+  return description.replace(/\.$/, ".").slice(0, 92);
+}
+
+function retrofitPickerSavings(retrofit: RetrofitPreviewCard) {
+  const annual = retrofit.metrics.recurringOperationalSavingsAnnual;
+  if (annual == null) return "Needs bill";
+  if (annual < 0) return "Net impact pending";
+  return `${formatCents(annual)} /yr`;
+}
+
+function retrofitPickerCost(retrofit: RetrofitPreviewCard) {
+  const cost =
+    retrofit.metrics.effectiveCostAfterOneTimeBenefits ??
+    retrofit.metrics.netCostBeforeTaxBenefits ??
+    retrofit.metrics.estimatedUpfrontProjectCost;
+  return cost == null ? "Needs quote" : formatCents(cost);
+}
+
+function retrofitPickerPayback(retrofit: RetrofitPreviewCard) {
+  return formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote");
 }
 
 function RetrofitPreviewCardView({
@@ -10031,11 +10242,23 @@ function applicationPathMethod(profile: ApplicationPathProfile): ApplicationMeth
 }
 
 function applicationPathPdfUrl(profile: ApplicationPathProfile) {
-  return profile.pdfUrl || profile.discoveredPdfUrl;
+  return profile.bestPdfUrl || profile.pdfUrl || profile.discoveredPdfUrl;
 }
 
 function applicationPathContactEmail(profile: ApplicationPathProfile) {
-  return profile.contactEmail || profile.discoveredContactEmail;
+  return profile.bestContactEmail || profile.contactEmail || profile.discoveredContactEmail;
+}
+
+function applicationPathBestApplicationUrl(profile: ApplicationPathProfile) {
+  return profile.bestApplicationUrl || profile.discoveredApplicationUrl;
+}
+
+function canExtractRequirementsFromPath(profile: ApplicationPathProfile) {
+  const method = applicationPathMethod(profile);
+  if (applicationPathBestApplicationUrl(profile) || applicationPathPdfUrl(profile)) return true;
+  if (method === "email" && applicationPathContactEmail(profile) && profile.methodStatus === "confirmed") return true;
+  if ((method === "contractor_submitted" || method === "tax_accountant_filing") && profile.methodStatus === "confirmed") return true;
+  return Boolean(profile.candidates?.some((candidate) => candidate.linkType === "application_instructions" && candidate.score >= 65));
 }
 
 function renderApplicationPathDiscovery({
