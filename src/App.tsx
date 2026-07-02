@@ -5195,6 +5195,17 @@ function buildRetrofitTabSummary(
     };
   }
   if (values.annualRecurringSavings != null) {
+    if (values.annualRecurringSavings < 0) {
+      return {
+        primaryMetricLabel: "Net impact",
+        primaryMetricValue: undefined,
+        fallback: retrofit.retrofitTypeId.includes("ev") || retrofit.retrofitTypeId.includes("charger")
+          ? "Needs fuel baseline"
+          : "Net impact pending",
+        selectedOpportunityCount: values.selectedOpportunityCount,
+        missingInfoCount: values.missingInfoCount
+      };
+    }
     return {
       primaryMetricLabel: "Annual savings",
       primaryMetricValue: formatCents(values.annualRecurringSavings),
@@ -9057,7 +9068,7 @@ function OpportunityDetailPanel({
 
 function DetailItem({ label, value }: { label: string; value: string }) {
   return (
-    <div>
+    <div className="detail-item">
       <span>{label}</span>
       <strong>{value}</strong>
     </div>

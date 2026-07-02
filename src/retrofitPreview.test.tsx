@@ -166,6 +166,34 @@ describe("retrofit recommendations preview", () => {
     expect(preview.retrofits[0].confidenceLabel).toBe("Medium");
   });
 
+  it("does not label negative recurring impact as annual savings in retrofit tabs", () => {
+    const negativeImpactPayload = {
+      ...liveShapedPayload,
+      retrofits: [
+        {
+          ...liveShapedPayload.retrofits[0],
+          retrofitTypeId: "ev_charger_installation",
+          displayName: "EV charger installation",
+          parentCategory: "transportation_electrification",
+          savingsPreview: {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            retrofitTypeId: "ev_charger_installation",
+            retrofitDisplayName: "EV charger installation",
+            annualSavingsCents: -432000,
+            monthlySavingsCents: -36000,
+            netAnnualRecurringSavingsCents: -432000,
+            netMonthlyRecurringSavingsCents: -36000
+          }
+        }
+      ]
+    } as any;
+    const preview = buildUserRetrofitPreviewResult(negativeImpactPayload);
+
+    expect(preview.retrofits[0].tabSummary.primaryMetricLabel).toBe("Net impact");
+    expect(preview.retrofits[0].tabSummary.fallback).toBe("Needs fuel baseline");
+    expect(String(preview.retrofits[0].tabSummary.primaryMetricValue || "")).not.toContain("-$");
+  });
+
   it("renders the admin-nav user preview structure", () => {
     const html = renderToStaticMarkup(
       <RetrofitRecommendationsPreview

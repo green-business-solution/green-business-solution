@@ -1337,3 +1337,4 @@
 - Moved scenario comparison into the active retrofit, added scoped accordion sections for financial breakdown, estimate inclusion, opportunities, operating savings, assumptions, details, and missing information, and kept opportunity/operating-savings separation.
 - Cleaned the customer-facing copy in the preview flow, added grouped expandable opportunity rows with direct source links, and updated the focused preview tests for the tabbed hierarchy.
 - Collapsed the admin test-profile controls, added an active-retrofit mini sub-navigation, compact section summaries, and an application-prep drawer so the preview reads as a guided workspace instead of a long data dump.
+- Fixed preview layout regressions where selected-scenario detail labels collided with long values, retrofit tabs were too tall, and negative recurring impacts could be labeled as annual savings.
