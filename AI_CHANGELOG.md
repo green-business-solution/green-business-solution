@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview command-center refinement
+
+- Refined the admin-nav `/user-preview` Retrofit Recommendations page into a tighter command-center and drill-down IA: active retrofit command cards, Overview opportunity preview, compact included summary, grouped Opportunities tab, worklist-style Requirements tab, and secondary More tab shortcuts.
+- Preserved live/backend recommendation data paths and existing local-only interaction state while keeping full scenario, opportunity, assumptions, operating savings, financing, and application-prep details behind workspace tabs/drawers.
+- Updated retrofit preview tests for the new Overview-first structure, compact rail/readiness/current-plan presentation, hidden detail tabs, and readable soft hover states.
+
 ## 2026-07-02 - Codex (GPT-5) application requirement extractor
 
 - Added read-only `ApplicationRequirementExtractor` for per-opportunity deterministic extraction of required fields, documents, rules, deadlines, steps, evidence, and notes from the best available application/source URL.

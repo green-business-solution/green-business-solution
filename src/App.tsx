@@ -5632,6 +5632,11 @@ export function RetrofitRecommendationsPreview({
       : topRetrofit.tabSummary.fallback || "Preliminary estimate"
     : "Not estimated yet";
   const topRecommendationMissing = topRetrofit?.missingInfo[0] || preview.missingInputs[0] || "Not enough information yet";
+  const readinessMissingItems = preview.missingInputs.length
+    ? preview.missingInputs
+    : topRetrofit?.missingInfo || [];
+  const readinessMissingPreview = readinessMissingItems.slice(0, 3);
+  const readinessMoreCount = Math.max(0, readinessMissingItems.length - readinessMissingPreview.length);
   const activeDraftName = activeRetrofit ? activeRetrofit.name : "None";
   const addedPlanCount = Object.keys(addedRetrofitPlans).length;
   const confirmedRetrofit = lastAddedRetrofitId
@@ -5803,7 +5808,12 @@ export function RetrofitRecommendationsPreview({
                 ? "Partial estimate"
                 : `${preview.estimateCompletenessPercent}%`}
           </strong>
-          <small>{preview.missingInputs.length ? `Missing: ${preview.missingInputs.slice(0, 4).join(", ")}` : `Top missing item: ${topRecommendationMissing}`}</small>
+          <small>
+            {readinessMissingPreview.length
+              ? `Missing: ${readinessMissingPreview.join(", ")}${readinessMoreCount ? ` +${readinessMoreCount} more` : ""}`
+              : `Top missing item: ${topRecommendationMissing}`}
+          </small>
+          {readinessMissingItems.length > 3 ? <button className="inline-link-button" onClick={handleEnterDetails} type="button">View all missing info</button> : null}
           {refinementMessage ? <small>{refinementMessage}</small> : null}
         </div>
         <div className="readiness-actions">
@@ -5896,7 +5906,7 @@ export function RetrofitRecommendationsPreview({
           <summary>Why one at a time?</summary>
           <p>Adding one retrofit can change energy baselines, payback, and eligibility assumptions for the others.</p>
         </details>
-        {planMessage ? <p className="preview-local-note">{planMessage}</p> : null}
+        {planMessage ? <p className="preview-local-note">{planMessage.split(".")[0]}.</p> : null}
         <div className="current-plan-actions">
           {addedPlanCount === 0 ? (
             <button
@@ -5960,7 +5970,7 @@ export function RetrofitRecommendationsPreview({
                   <div className="retrofit-tab-meta">
                     <span>{runtimeSelectedCount} opp</span>
                     <span>{retrofit.confidenceLabel || "Needs review"}</span>
-                    <span>Missing: {retrofit.tabSummary.missingInfoCount}</span>
+                    <span>{retrofit.tabSummary.missingInfoCount} missing</span>
                   </div>
                 </button>
               );
@@ -6120,15 +6130,22 @@ function RetrofitPreviewCardView({
     opportunity.eligibilityStatus === "needs review" ||
     opportunity.requiredInfo.includes("utility territory confirmation")
   );
+  const likelyNotEligibleOpportunities = unselectedOpportunities.filter((opportunity) =>
+    (opportunity.whyNotSelected || "").toLowerCase().includes("not eligible") ||
+    (opportunity.whyNotSelected || "").toLowerCase().includes("deadline")
+  );
   const availableUnselectedOpportunities = unselectedOpportunities.filter(
-    (opportunity) => !needsReviewOpportunities.some((needsReview) => needsReview.id === opportunity.id)
+    (opportunity) =>
+      !needsReviewOpportunities.some((needsReview) => needsReview.id === opportunity.id) &&
+      !likelyNotEligibleOpportunities.some((notEligible) => notEligible.id === opportunity.id)
   );
   const opportunityGroups = [
-    { key: "selected-included", title: "Selected and included in estimate", opportunities: selectedIncludedOpportunities },
-    { key: "selected-pending", title: "Selected but not included yet", opportunities: selectedPendingOpportunities },
-    { key: "available", title: "Available but not selected", opportunities: availableUnselectedOpportunities },
-    { key: "needs-review", title: "Needs review / source unavailable", opportunities: needsReviewOpportunities }
-  ].filter((group) => group.opportunities.length > 0);
+    { key: "selected-included", title: "Selected and included", opportunities: selectedIncludedOpportunities, defaultOpen: selectedIncludedOpportunities.length > 0 },
+    { key: "selected-pending", title: "Selected but pending", opportunities: selectedPendingOpportunities, defaultOpen: selectedPendingOpportunities.length > 0 },
+    { key: "available", title: "Available but not selected", opportunities: availableUnselectedOpportunities, defaultOpen: false },
+    { key: "needs-review", title: "Needs review", opportunities: needsReviewOpportunities, defaultOpen: needsReviewOpportunities.length > 0 },
+    { key: "likely-not-eligible", title: "Likely not eligible", opportunities: likelyNotEligibleOpportunities, defaultOpen: false }
+  ];
   const includedOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings != null || item.monthlySavings != null);
   const pendingOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings == null && item.monthlySavings == null);
   const displayedUpfrontFinancialIncentive = selectedIncludedOpportunities.length > 0
@@ -6237,6 +6254,31 @@ function RetrofitPreviewCardView({
     nextActions: `${retrofit.id}-actions`
   } as const;
   const assumptionsConfirmedCount = retrofit.editableAssumptions.filter((assumption) => confirmedAssumptionIds[assumption.id] || assumption.confirmed).length;
+  const pendingValueCount = selectedPendingOpportunities.length + pendingOperatingSavings.length;
+  const needsConfirmationCount = retrofit.opportunities.filter((opportunity) =>
+    opportunity.requiredInfo.includes("utility territory confirmation") ||
+    opportunity.eligibilityStatus === "unknown" ||
+    opportunity.eligibilityStatus === "needs review"
+  ).length;
+  const netCostSnapshot = formatMaybeCents(displayedNetCostBeforeTaxBenefits, retrofit.tabSummary.fallback || "Net cost pending");
+  const annualSavingsSnapshot =
+    retrofit.metrics.recurringOperationalSavingsAnnual == null
+      ? "Savings need bill"
+      : retrofit.metrics.recurringOperationalSavingsAnnual >= 0
+        ? `${formatCents(retrofit.metrics.recurringOperationalSavingsAnnual)}/year`
+        : "Net impact pending";
+  const paybackSnapshot = formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote");
+  const includedIncentiveSnapshot = formatMaybeCents(
+    displayedUpfrontFinancialIncentive,
+    selectedIncludedOpportunities.length ? "Value not estimated yet" : "None included"
+  );
+  const topBlocker = retrofit.missingInfo[0] ? capitalizeLabel(retrofit.missingInfo[0]) : "None";
+  const overviewOpportunityRows = [
+    ...selectedIncludedOpportunities,
+    ...selectedPendingOpportunities,
+    ...needsReviewOpportunities,
+    ...availableUnselectedOpportunities
+  ].filter((opportunity, index, list) => list.findIndex((item) => item.id === opportunity.id) === index).slice(0, 3);
   const financialSummary = retrofit.metrics.paybackPeriodYears != null
     ? `Preliminary payback ${formatPayback(retrofit.metrics.paybackPeriodYears)}`
     : retrofit.metrics.estimatedUpfrontProjectCost != null
@@ -6288,49 +6330,71 @@ function RetrofitPreviewCardView({
     }
   }
 
+  function handlePrimaryPlanAction() {
+    if (planState === "Added to plan") {
+      const nextOpportunity = selectedIncludedOpportunities[0] || selectedPendingOpportunities[0] || retrofit.opportunities[0];
+      if (nextOpportunity) setApplicationPrepOpportunity(nextOpportunity);
+      return;
+    }
+    if (!selectedScenario) {
+      openWorkspaceTab("scenarios");
+      return;
+    }
+    if (selectedCount === 0) {
+      openWorkspaceTab("opportunities");
+      return;
+    }
+    onAddToPlan();
+  }
+
   return (
     <article className="retrofit-preview-card retrofit-preview-card-active">
       <section className="active-command-center">
-        <div>
-          <div className="retrofit-card-title-line">
-            <span className="rank-pill">#{retrofit.rank}</span>
-            <h2>{retrofit.name}</h2>
-            <span className="soft-badge">{retrofit.category || "Retrofit"}</span>
-            <span className="soft-badge">Confidence: {retrofit.confidenceLabel || "Needs review"}</span>
-            <span className="soft-badge">Estimate basis: {estimateBasisLabel(retrofit.estimateBasis)}</span>
+        <div className="active-command-center-top">
+          <div>
+            <div className="retrofit-card-title-line">
+              <span className="rank-pill">#{retrofit.rank}</span>
+              <h2>{retrofit.name}</h2>
+              <span className="soft-badge">{retrofit.category || "Retrofit"}</span>
+              <span className="soft-badge">Confidence: {retrofit.confidenceLabel || "Needs review"}</span>
+              <span className="soft-badge">Estimate basis: {estimateBasisLabel(retrofit.estimateBasis)}</span>
+            </div>
+            <p>{retrofit.description}</p>
           </div>
-          <p>{retrofit.description}</p>
+          <div className="retrofit-card-actions">
+            <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
+            <button className="secondary-button" onClick={handleUploadBillShortcut} type="button">Upload bill</button>
+            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Enter details</button>
+            <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
+          </div>
         </div>
-        <div className="retrofit-card-actions">
-          <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
-          <button className="secondary-button" onClick={handleUploadBillShortcut} type="button">Upload bill</button>
-          <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Enter details</button>
-          <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
+        <div className="command-summary-grid" aria-label="Decision summary">
+          <button className="command-summary-card" onClick={() => openWorkspaceTab("financials")} type="button">
+            <span>Financial snapshot</span>
+            <strong>{netCostSnapshot}</strong>
+            <small>{annualSavingsSnapshot} · Payback {paybackSnapshot}</small>
+            <em>View financials</em>
+          </button>
+          <button className="command-summary-card" onClick={() => openWorkspaceTab("opportunities")} type="button">
+            <span>Opportunity bundle</span>
+            <strong>{selectedCount.toLocaleString()} selected / {retrofit.opportunities.length.toLocaleString()} found</strong>
+            <small>Included: {includedIncentiveSnapshot}</small>
+            <em>Review opportunities</em>
+          </button>
+          <button className="command-summary-card" onClick={() => openWorkspaceTab("requirements")} type="button">
+            <span>Missing blockers</span>
+            <strong>{retrofit.missingInfo.length.toLocaleString()} blockers</strong>
+            <small>{topBlocker}</small>
+            <em>Resolve</em>
+          </button>
+          <button className="command-summary-card" onClick={() => openWorkspaceTab("scenarios")} type="button">
+            <span>Scenario</span>
+            <strong>{selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Choose scenario"}</strong>
+            <small>{selectedScenarioOpportunityCount} selected opportunities</small>
+            <em>Change scenario</em>
+          </button>
         </div>
       </section>
-
-      <div className="command-summary-grid" aria-label="Decision summary">
-        <button className="command-summary-card" onClick={() => openWorkspaceTab("scenarios")} type="button">
-          <span>Scenario</span>
-          <strong>{selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Choose scenario"}</strong>
-          <small>Change</small>
-        </button>
-        <button className="command-summary-card" onClick={() => openWorkspaceTab("opportunities")} type="button">
-          <span>Opportunities</span>
-          <strong>{selectedCount.toLocaleString()} selected / {retrofit.opportunities.length.toLocaleString()} found</strong>
-          <small>Review</small>
-        </button>
-        <button className="command-summary-card" onClick={() => openWorkspaceTab("financials")} type="button">
-          <span>Estimate</span>
-          <strong>{formatMaybeCents(displayedNetCostBeforeTaxBenefits, retrofit.tabSummary.fallback || "Not estimated yet")}</strong>
-          <small>View financials</small>
-        </button>
-        <button className="command-summary-card" onClick={() => openWorkspaceTab("requirements")} type="button">
-          <span>Blockers</span>
-          <strong>{retrofit.missingInfo.length.toLocaleString()} missing</strong>
-          <small>Resolve</small>
-        </button>
-      </div>
 
       <nav aria-label="Active retrofit workspace tabs" className="retrofit-workspace-tabs">
         {workspaceTabs.map((item) => (
@@ -6352,39 +6416,86 @@ function RetrofitPreviewCardView({
           <div className="overview-panel-header">
             <div>
               <p className="eyebrow">Overview</p>
-              <h3>{retrofit.name} decision summary</h3>
+              <h3>{retrofit.name} command center</h3>
             </div>
             <span className="soft-badge">{planState}</span>
           </div>
-          <div className="overview-kpi-grid">
-            <PreviewMetric basis={retrofit.metrics.estimatedUpfrontProjectCost == null ? "Needs confirmed quote" : "Current estimate basis"} label="Estimated upfront project cost" value={formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
-            <PreviewMetric basis={displayedUpfrontFinancialIncentive == null ? "Needs selected eligible opportunity" : "Selected and included opportunities"} label="Upfront financial incentive" value={formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
-            <PreviewMetric basis="Internal recurring savings only" label="Recurring Operational Savings" value={formatMaybeRecurringSavings(retrofit)} />
-            <PreviewMetric basis={retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={formatPayback(retrofit.metrics.paybackPeriodYears)} />
-          </div>
-          <div className="overview-decision-grid">
+          <div className="overview-command-grid" aria-label="Overview decision modules">
             <article className="overview-card">
-              <span>Selected scenario</span>
-              <strong>{selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Choose scenario"}</strong>
-              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("scenarios")} type="button">Change</button>
+              <span>Financial snapshot</span>
+              <strong>{netCostSnapshot}</strong>
+              <small>{annualSavingsSnapshot} · Payback {paybackSnapshot}</small>
+              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("financials")} type="button">View financials</button>
             </article>
             <article className="overview-card">
-              <span>Included summary</span>
-              <strong>{selectedIncludedOpportunities.length} included · {selectedPendingOpportunities.length} pending</strong>
-              <small>{selectedIncludedOpportunities[0]?.name || selectedPendingOpportunities[0]?.name || "No included opportunities yet"}</small>
-              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("financials")} type="button">View included</button>
-            </article>
-            <article className="overview-card">
-              <span>Opportunities</span>
+              <span>Opportunity bundle</span>
               <strong>{selectedCount} selected / {retrofit.opportunities.length} found</strong>
-              <small>{opportunityGroups[0]?.title || "No external opportunities found yet"}</small>
-              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("opportunities")} type="button">Review</button>
+              <small>{selectedIncludedOpportunities.length} included · {selectedPendingOpportunities.length} pending</small>
+              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("opportunities")} type="button">Review opportunities</button>
             </article>
             <article className="overview-card">
-              <span>Top blockers</span>
-              <strong>{retrofit.missingInfo.length ? retrofit.missingInfo.slice(0, 3).map(capitalizeLabel).join(", ") : "None flagged"}</strong>
-              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("requirements")} type="button">Resolve</button>
+              <span>Missing blockers</span>
+              <strong>{retrofit.missingInfo.length} blocker{retrofit.missingInfo.length === 1 ? "" : "s"}</strong>
+              <small>{topBlocker}</small>
+              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("requirements")} type="button">Review blockers</button>
             </article>
+            <article className="overview-card">
+              <span>Scenario</span>
+              <strong>{selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Choose scenario"}</strong>
+              <small>{selectedScenarioOpportunityCount} selected opportunities</small>
+              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("scenarios")} type="button">Change scenario</button>
+            </article>
+          </div>
+          <section className="overview-included-strip" aria-label="Included right now">
+            <div>
+              <span>Incentives included</span>
+              <strong>{includedIncentiveSnapshot}</strong>
+            </div>
+            <div>
+              <span>Operating savings included</span>
+              <strong>{includedOperatingSavings.length ? formatMaybeRecurringSavings(retrofit) : "Needs bill"}</strong>
+            </div>
+            <div>
+              <span>Pending values</span>
+              <strong>{pendingValueCount} item{pendingValueCount === 1 ? "" : "s"}</strong>
+            </div>
+            <div>
+              <span>Blockers</span>
+              <strong>{retrofit.missingInfo.length}</strong>
+            </div>
+          </section>
+          <section className="overview-opportunity-preview">
+            <div className="overview-preview-header">
+              <div>
+                <h4>Opportunity bundle</h4>
+                <p>{retrofit.opportunities.length} found · {selectedCount} selected · {selectedIncludedOpportunities.length} included · {needsConfirmationCount} needs confirmation</p>
+              </div>
+              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("opportunities")} type="button">View all opportunities</button>
+            </div>
+            <div className="overview-opportunity-rows">
+              {overviewOpportunityRows.length ? (
+                overviewOpportunityRows.map((opportunity) => {
+                  const selected = Boolean(selectedOpportunityIds[opportunity.id]);
+                  const includedLabel = getOpportunityIncludedLabel(opportunity, selected);
+                  return (
+                    <article className="overview-opportunity-row" key={opportunity.id}>
+                      <div>
+                        <strong>{opportunity.name}</strong>
+                        <small>{selected ? opportunity.whySelected || "Selected for this scenario." : opportunity.whyNotSelected || "Not selected for this scenario."}</small>
+                      </div>
+                      <span className={selected ? "included-label" : "not-included-label"}>{includedLabel}</span>
+                    </article>
+                  );
+                })
+              ) : (
+                <p className="compact-empty">Opportunities: None found yet.</p>
+              )}
+            </div>
+          </section>
+          <div className="overview-action-row">
+            <button onClick={handlePrimaryPlanAction} type="button">{actionBarPrimary}</button>
+            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Review blockers</button>
+            <button className="secondary-button" onClick={() => openWorkspaceTab("opportunities")} type="button">View opportunities</button>
           </div>
         </section>
       ) : null}
@@ -6410,7 +6521,7 @@ function RetrofitPreviewCardView({
         </div>
         <div className="financial-tab-actions">
           <button className="secondary-button" onClick={() => setShowCalculationBreakdown((current) => !current)} type="button">
-            {showCalculationBreakdown ? "Hide calculation" : "View calculation"}
+            {showCalculationBreakdown ? "Hide calculation breakdown" : "View calculation breakdown"}
           </button>
         </div>
         {showCalculationBreakdown ? <div className="financial-breakdown-list">
@@ -6427,7 +6538,8 @@ function RetrofitPreviewCardView({
       </PreviewAccordionSection>
       ) : null}
 
-      <section className="retrofit-action-bar" aria-label="Confirm retrofit plan">
+      {activeWorkspaceTab !== "overview" || planState !== "Not selected" ? (
+      <section className="retrofit-action-bar sticky-add-plan-footer" aria-label="Confirm retrofit plan">
         <div>
           <strong>{selectedScenario?.name || "No scenario selected"}</strong>
           <p>
@@ -6437,22 +6549,7 @@ function RetrofitPreviewCardView({
         </div>
         <div className="retrofit-action-buttons">
           <button
-            onClick={() => {
-              if (planState === "Added to plan") {
-                const nextOpportunity = selectedIncludedOpportunities[0] || selectedPendingOpportunities[0] || retrofit.opportunities[0];
-                if (nextOpportunity) setApplicationPrepOpportunity(nextOpportunity);
-                return;
-              }
-              if (!selectedScenario) {
-                openWorkspaceTab("scenarios");
-                return;
-              }
-              if (selectedCount === 0) {
-                openWorkspaceTab("opportunities");
-                return;
-              }
-              onAddToPlan();
-            }}
+            onClick={handlePrimaryPlanAction}
             type="button"
           >
             {actionBarPrimary}
@@ -6462,6 +6559,7 @@ function RetrofitPreviewCardView({
           </button>
         </div>
       </section>
+      ) : null}
 
       {activeWorkspaceTab === "financials" ? (
       <PreviewAccordionSection
@@ -6647,29 +6745,39 @@ function RetrofitPreviewCardView({
         title="Opportunities"
       >
         <div className="opportunity-preview-list">
+          <div className="opportunities-summary-strip">
+            <DetailItem label="Found" value={`${retrofit.opportunities.length}`} />
+            <DetailItem label="Selected" value={`${selectedCount}`} />
+            <DetailItem label="Included" value={`${selectedIncludedOpportunities.length}`} />
+            <DetailItem label="Needs confirmation" value={`${needsConfirmationCount}`} />
+          </div>
           {retrofit.opportunities.length === 0 ? (
             <p className="empty-state">No external opportunities found yet for this retrofit.</p>
           ) : (
             opportunityGroups.map((group) => (
-              <section className="opportunity-group" key={group.key}>
-                <div className="opportunity-group-header">
+              <details className="opportunity-group" key={group.key} open={group.defaultOpen}>
+                <summary className="opportunity-group-header">
                   <h4>{group.title}</h4>
                   <span>{group.opportunities.length} · {opportunityGroupValueLabel(group.opportunities)}</span>
-                </div>
+                </summary>
                 <div className="opportunity-group-list">
-                  {group.opportunities.map((opportunity) => (
-                    <OpportunityPreviewRow
-                      expanded={Boolean(expandedOpportunityIds[opportunity.id])}
-                      key={opportunity.id}
-                      onPrepareApplication={() => setApplicationPrepOpportunity(opportunity)}
-                      onToggle={() => onToggleOpportunity(opportunity.id)}
-                      onToggleExpanded={() => setExpandedOpportunityIds((current) => ({ ...current, [opportunity.id]: !current[opportunity.id] }))}
-                      opportunity={opportunity}
-                      selected={Boolean(selectedOpportunityIds[opportunity.id])}
-                    />
-                  ))}
+                  {group.opportunities.length ? (
+                    group.opportunities.map((opportunity) => (
+                      <OpportunityPreviewRow
+                        expanded={Boolean(expandedOpportunityIds[opportunity.id])}
+                        key={opportunity.id}
+                        onPrepareApplication={() => setApplicationPrepOpportunity(opportunity)}
+                        onToggle={() => onToggleOpportunity(opportunity.id)}
+                        onToggleExpanded={() => setExpandedOpportunityIds((current) => ({ ...current, [opportunity.id]: !current[opportunity.id] }))}
+                        opportunity={opportunity}
+                        selected={Boolean(selectedOpportunityIds[opportunity.id])}
+                      />
+                    ))
+                  ) : (
+                    <p className="compact-empty">No items in this group.</p>
+                  )}
                 </div>
-              </section>
+              </details>
             ))
           )}
         </div>
@@ -6677,38 +6785,89 @@ function RetrofitPreviewCardView({
       ) : null}
 
       {activeWorkspaceTab === "requirements" ? (
-      <>
-      <PreviewAccordionSection
-        defaultOpen={openSections.missing}
-        onToggle={() => toggleSection("missing")}
-        sectionId={sectionIds.missing}
-        statusBadge={retrofit.missingInfo.length ? "Blockers" : "Ready"}
-        summary={missingSummary}
-        title="Missing information"
-      >
-        <section className="missing-info-list">
+      <section className="workspace-panel requirements-workspace-panel" data-workspace-panel="requirements">
+        <div className="overview-panel-header">
+          <div>
+            <p className="eyebrow">Requirements</p>
+            <h3>Missing info, assumptions, and details</h3>
+          </div>
+          <button className="secondary-button small-action-button" onClick={onConfirmAll} type="button">Confirm all estimates</button>
+        </div>
+        <div className="requirements-summary-strip">
+          <DetailItem label="Blockers" value={`${retrofit.missingInfo.length}`} />
+          <DetailItem label="Assumptions" value={`${retrofit.editableAssumptions.length}`} />
+          <DetailItem label="Unconfirmed" value={`${Math.max(0, retrofit.editableAssumptions.length - assumptionsConfirmedCount)}`} />
+          <DetailItem label="Questions" value={`${retrofit.detailQuestions.length}`} />
+        </div>
+        <section className="requirements-worklist">
+          <h4>Missing information</h4>
           {retrofit.missingInfo.length ? (
             retrofit.missingInfo.map((item) => {
               const details = missingInfoGuidance(item);
               return (
-                <article className="missing-info-item" key={item}>
+                <article className="requirements-row" key={item}>
                   <div>
-                    <h4>{capitalizeLabel(item)}</h4>
-                    <p>{details.reason}</p>
-                    <small>Affects: {details.affects}</small>
+                    <strong>{capitalizeLabel(item)}</strong>
+                    <small>{details.reason}</small>
                   </div>
-                  <button className="secondary-button" type="button">{details.action}</button>
+                  <span>Affects: {details.affects}</span>
+                  <button className="secondary-button small-action-button" type="button">{details.action}</button>
                 </article>
               );
             })
           ) : (
-            <p>No missing information flagged in the current estimate.</p>
+            <p className="compact-empty">Missing information: None flagged.</p>
           )}
-          <p>Next step: {retrofit.recommendedNextStep || "Review this retrofit with a contractor or vendor."}</p>
-          <p>Estimate will update when enough confirmed inputs are available.</p>
         </section>
-      </PreviewAccordionSection>
-      </>
+        <section className="requirements-worklist">
+          <h4>Assumptions to confirm</h4>
+          {retrofit.editableAssumptions.map((assumption) => {
+            const confirmed = confirmedAssumptionIds[assumption.id] || assumption.confirmed;
+            return (
+              <article className="requirements-row assumption-row" key={assumption.id}>
+                <label>
+                  <span>{assumption.label}</span>
+                  <input aria-label={assumption.label} defaultValue={String(assumption.value)} />
+                </label>
+                <span>{assumption.unit || "Unit pending"} · {assumption.sourceLabel || estimateSourceLabel(assumption.source)} · {assumption.confidenceLabel || "Needs review"}</span>
+                <span>Affects: {(assumption.affects || []).join(", ") || "Estimate completeness"}</span>
+                <div className="editable-estimate-actions">
+                  <button className="secondary-button small-action-button" onClick={() => onConfirmAssumption(assumption.id)} type="button">
+                    {confirmed ? "Confirmed for this preview" : "Confirm"}
+                  </button>
+                  <button className="secondary-button small-action-button" type="button">Edit</button>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+        <section className="requirements-worklist">
+          <h4>Questions to answer</h4>
+          {retrofit.detailQuestions.map((question) => (
+            <label className="requirements-row question-row" key={question.id}>
+              <div>
+                <strong>{question.question}</strong>
+                <small>{question.whyItMatters}</small>
+              </div>
+              <span>Affects: {(question.affects || []).join(", ") || "Estimate completeness"}</span>
+              {question.answerType === "select" ? (
+                <select onChange={(event) => onDetailAnswerChange(question.id, event.target.value)} value={detailAnswers[question.id] || ""}>
+                  <option value="">Select</option>
+                  {(question.options || []).map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  onChange={(event) => onDetailAnswerChange(question.id, event.target.value)}
+                  type={question.answerType === "number" ? "number" : "text"}
+                  value={detailAnswers[question.id] || ""}
+                />
+              )}
+            </label>
+          ))}
+        </section>
+      </section>
       ) : null}
 
       {activeWorkspaceTab === "more" ? (
@@ -6754,92 +6913,28 @@ function RetrofitPreviewCardView({
           })}
         </div>
       </PreviewAccordionSection>
-      </>
-      ) : null}
 
-      {activeWorkspaceTab === "requirements" ? (
-      <>
-      <PreviewAccordionSection
-        defaultOpen={openSections.assumptions}
-        onToggle={() => toggleSection("assumptions")}
-        sectionId={sectionIds.assumptions}
-        statusBadge={assumptionsConfirmedCount === retrofit.editableAssumptions.length ? "Confirmed" : "Review"}
-        subtitle="Review or confirm the assumptions used for this retrofit estimate."
-        summary={assumptionsSummary}
-        title="Estimate assumptions"
-      >
-        <section className="editable-estimates-panel">
-          <div className="section-title-row">
-            <div />
-            <button className="secondary-button" onClick={onConfirmAll} type="button">Confirm all estimates</button>
-          </div>
-          <div className="editable-estimate-grid">
-            {retrofit.editableAssumptions.map((assumption) => {
-              const confirmed = confirmedAssumptionIds[assumption.id] || assumption.confirmed;
-              return (
-                <label className="editable-estimate-box" key={assumption.id}>
-                  <span>{assumption.label}</span>
-                  <input aria-label={assumption.label} defaultValue={String(assumption.value)} />
-                  <div className="editable-estimate-meta">
-                    <small>{assumption.unit || "Unit pending"}</small>
-                    <span className="soft-badge">{assumption.sourceLabel || estimateSourceLabel(assumption.source)}</span>
-                    <span className="soft-badge">Confidence: {assumption.confidenceLabel || "Needs review"}</span>
-                    <small>Affects: {(assumption.affects || []).join(", ") || "Estimate completeness"}</small>
-                  </div>
-                  <div className="editable-estimate-actions">
-                    <button className="secondary-button" onClick={() => onConfirmAssumption(assumption.id)} type="button">
-                      {confirmed ? "Confirmed for this preview" : "Confirm"}
-                    </button>
-                    <button className="secondary-button" type="button">Edit</button>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-        </section>
-      </PreviewAccordionSection>
+      <section className="workspace-panel more-shortcut-panel">
+        <div>
+          <h3>Financing and application shortcuts</h3>
+          <p>Preview financing or prepare the next selected opportunity without leaving this retrofit workspace.</p>
+        </div>
+        <div className="retrofit-count-row">
+          <button className="secondary-button small-action-button" onClick={onExploreFinancing} type="button">Financing preview</button>
+          <button
+            className="secondary-button small-action-button"
+            onClick={() => {
+              const nextOpportunity = selectedIncludedOpportunities[0] || selectedPendingOpportunities[0] || retrofit.opportunities[0];
+              if (nextOpportunity) setApplicationPrepOpportunity(nextOpportunity);
+            }}
+            type="button"
+          >
+            Prepare application
+          </button>
+          <span>Impact/certification preview</span>
+        </div>
+      </section>
 
-      <PreviewAccordionSection
-        defaultOpen={openSections.details}
-        onToggle={() => toggleSection("details")}
-        sectionId={sectionIds.details}
-        statusBadge="Refine"
-        subtitle="Answer a few questions to improve this retrofit estimate."
-        summary={`${retrofit.detailQuestions.length} questions`}
-        title="Enter details"
-      >
-        <section className="retrofit-detail-questions">
-          <div className="detail-question-grid">
-            {retrofit.detailQuestions.map((question) => (
-              <label className="detail-question" key={question.id}>
-                <span>{question.question}</span>
-                <small>{question.whyItMatters}</small>
-                <small>Affects: {(question.affects || []).join(", ") || "Estimate completeness"}</small>
-                {question.answerType === "select" ? (
-                  <select onChange={(event) => onDetailAnswerChange(question.id, event.target.value)} value={detailAnswers[question.id] || ""}>
-                    <option value="">Select</option>
-                    {(question.options || []).map((option) => (
-                      <option key={option}>{option}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    onChange={(event) => onDetailAnswerChange(question.id, event.target.value)}
-                    type={question.answerType === "number" ? "number" : "text"}
-                    value={detailAnswers[question.id] || ""}
-                  />
-                )}
-                {detailAnswers[question.id] ? <small>Confirmed for this preview</small> : <small>Answer to improve this estimate</small>}
-              </label>
-            ))}
-          </div>
-        </section>
-      </PreviewAccordionSection>
-      </>
-      ) : null}
-
-      {activeWorkspaceTab === "more" ? (
-      <>
       <PreviewAccordionSection
         defaultOpen={openSections.why}
         onToggle={() => toggleSection("why")}
@@ -10751,6 +10846,7 @@ function scenarioBundleLogic(id: string) {
 }
 
 function opportunityGroupValueLabel(opportunities: RetrofitOpportunityPreview[]) {
+  if (opportunities.length === 0) return "0";
   const includedValues = opportunities
     .map((opportunity) => opportunity.estimatedValue)
     .filter((value): value is number => value != null && Number.isFinite(value));

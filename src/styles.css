@@ -2270,7 +2270,7 @@ dd {
   font-weight: 650;
 }
 
-.retrofit-preview-page button:not(.secondary-button):not(.retrofit-tab):not(.scenario-card):not(.retrofit-section-chip):not(.preview-accordion-trigger):not(.workspace-tab):not(.command-summary-card):not(.overview-card):hover {
+.retrofit-preview-page button:not(.secondary-button):not(.retrofit-tab):not(.scenario-card):not(.retrofit-section-chip):not(.preview-accordion-trigger):not(.workspace-tab):not(.command-summary-card):not(.overview-card):not(.inline-link-button):hover {
   background: #0d5f40;
   color: #ffffff;
 }
@@ -2282,9 +2282,11 @@ dd {
 .retrofit-preview-page .workspace-tab:hover,
 .retrofit-preview-page .command-summary-card:hover,
 .retrofit-preview-page .overview-card:hover,
+.retrofit-preview-page .overview-opportunity-row:hover,
 .retrofit-preview-page .opportunity-preview-row:hover,
 .retrofit-preview-page .next-action-item:hover,
-.retrofit-preview-page .preview-accordion-trigger:hover {
+.retrofit-preview-page .preview-accordion-trigger:hover,
+.retrofit-preview-page .inline-link-button:hover {
   background: var(--rf-bg);
   border-color: var(--rf-green-border);
   color: var(--rf-text);
@@ -2302,15 +2304,17 @@ dd {
 .retrofit-preview-page .workspace-tab:hover *,
 .retrofit-preview-page .command-summary-card:hover *,
 .retrofit-preview-page .overview-card:hover *,
+.retrofit-preview-page .overview-opportunity-row:hover *,
 .retrofit-preview-page .preview-accordion-trigger:hover * {
   color: inherit;
 }
 
 .retrofit-preview-header {
-  align-items: start;
+  align-items: center;
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, auto);
+  min-height: 90px;
 }
 
 .retrofit-preview-header p {
@@ -2324,6 +2328,26 @@ dd {
   flex-wrap: wrap;
   gap: 10px;
   margin: 4px 0 8px;
+}
+
+.retrofit-preview-status-cluster {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.inline-link-button {
+  background: transparent;
+  border: 0;
+  color: var(--rf-green);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 650;
+  justify-self: start;
+  line-height: 16px;
+  padding: 0;
 }
 
 .retrofit-preview-source-note,
@@ -2392,8 +2416,8 @@ dd {
   display: grid;
   gap: 16px;
   grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr) minmax(280px, auto);
-  min-height: 120px;
-  padding: 16px 18px;
+  min-height: 112px;
+  padding: 14px 16px;
 }
 
 .readiness-summary,
@@ -2415,7 +2439,7 @@ dd {
   background: #fbfdfb;
   border: 1px solid #e1e8e3;
   border-radius: 14px;
-  padding: 10px 12px;
+  padding: 9px 11px;
 }
 
 .readiness-status span {
@@ -2476,7 +2500,7 @@ dd {
 .current-plan-strip {
   align-items: center;
   grid-template-columns: minmax(170px, 0.8fr) minmax(0, 1.35fr) minmax(120px, auto) auto;
-  min-height: 58px;
+  min-height: 72px;
   padding: 10px 14px;
 }
 
@@ -2822,7 +2846,7 @@ dd {
 .retrofit-tab-bar {
   display: grid;
   gap: 12px;
-  grid-auto-columns: minmax(176px, 210px);
+  grid-auto-columns: minmax(170px, 200px);
   grid-auto-flow: column;
   overflow-x: auto;
   padding: 2px 8px 6px;
@@ -2839,7 +2863,7 @@ dd {
   color: #17211b;
   display: grid;
   gap: 4px;
-  height: 104px;
+  height: 98px;
   overflow: hidden;
   padding: 10px 12px;
   scroll-snap-align: start;
@@ -2973,12 +2997,19 @@ dd {
   border: 1px solid #e1e8e3;
   border-radius: 18px;
   display: grid;
-  gap: 16px;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, auto);
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr);
   padding: 18px;
 }
 
-.active-command-center > div:first-child {
+.active-command-center-top {
+  align-items: start;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, auto);
+}
+
+.active-command-center-top > div:first-child {
   display: grid;
   gap: 8px;
   min-width: 0;
@@ -2986,7 +3017,12 @@ dd {
 
 .active-command-center p {
   color: var(--rf-muted);
+  display: -webkit-box;
+  line-height: 20px;
   max-width: 720px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .command-summary-grid {
@@ -3034,6 +3070,15 @@ dd {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.command-summary-card em {
+  align-self: end;
+  color: var(--rf-green);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
 }
 
 .retrofit-workspace-tabs {
@@ -3091,14 +3136,109 @@ dd {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.overview-decision-grid {
+.overview-decision-grid,
+.overview-command-grid {
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .overview-card {
-  min-height: 112px;
+  min-height: 104px;
+}
+
+.overview-included-strip,
+.opportunities-summary-strip,
+.requirements-summary-strip {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.overview-included-strip > div,
+.opportunities-summary-strip .detail-item,
+.requirements-summary-strip .detail-item {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 13px;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 12px;
+}
+
+.overview-included-strip span {
+  color: var(--rf-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.overview-included-strip strong {
+  color: var(--rf-text);
+  font-size: 14px;
+  line-height: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.overview-opportunity-preview {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 16px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.overview-preview-header {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.overview-preview-header p {
+  color: var(--rf-muted);
+  margin-top: 2px;
+}
+
+.overview-opportunity-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.overview-opportunity-row {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e4ebe6;
+  border-radius: 12px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, auto);
+  padding: 9px 10px;
+}
+
+.overview-opportunity-row strong,
+.overview-opportunity-row small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.overview-opportunity-row small {
+  color: var(--rf-muted);
+  margin-top: 2px;
+}
+
+.overview-action-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .small-action-button {
@@ -3442,8 +3582,24 @@ dd {
   gap: 10px;
 }
 
+.opportunity-group[open] {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 14px;
+  padding: 10px;
+}
+
 .opportunity-group-header h4 {
   margin: 0;
+}
+
+.opportunity-group-header {
+  cursor: pointer;
+  list-style: none;
+}
+
+.opportunity-group-header::-webkit-details-marker {
+  display: none;
 }
 
 .opportunity-group-header span {
@@ -3657,6 +3813,11 @@ dd {
   z-index: 6;
 }
 
+.sticky-add-plan-footer {
+  bottom: 12px;
+  position: sticky;
+}
+
 .retrofit-action-bar p,
 .retrofit-action-bar small {
   color: #5f6e66;
@@ -3676,6 +3837,83 @@ dd {
   gap: 10px;
   grid-template-columns: auto minmax(0, 1fr);
   min-width: 0;
+}
+
+.requirements-workspace-panel {
+  gap: 14px;
+}
+
+.requirements-worklist {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 16px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.requirements-worklist h4 {
+  margin: 0 0 2px;
+}
+
+.requirements-row {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e4ebe6;
+  border-radius: 12px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 0.8fr) auto;
+  padding: 10px 12px;
+}
+
+.requirements-row > div,
+.requirements-row label {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.requirements-row strong,
+.requirements-row small,
+.requirements-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.requirements-row strong {
+  color: var(--rf-text);
+  white-space: nowrap;
+}
+
+.requirements-row small,
+.requirements-row span {
+  color: var(--rf-muted);
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.requirements-row input,
+.requirements-row select {
+  min-height: 36px;
+}
+
+.assumption-row {
+  grid-template-columns: minmax(170px, 0.75fr) minmax(150px, 0.75fr) minmax(180px, 1fr) auto;
+}
+
+.question-row {
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 0.7fr) minmax(180px, 0.55fr);
+}
+
+.more-shortcut-panel {
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.more-shortcut-panel p {
+  color: var(--rf-muted);
+  margin-top: 2px;
 }
 
 .opportunity-preview-main h4,
@@ -3909,8 +4147,18 @@ dd {
 
 @media (max-width: 1100px) {
   .recommendation-readiness-strip,
-  .active-command-center {
+  .retrofit-preview-header,
+  .active-command-center-top,
+  .more-shortcut-panel {
     grid-template-columns: 1fr;
+  }
+
+  .retrofit-preview-status-cluster,
+  .readiness-actions,
+  .readiness-actions > div,
+  .retrofit-card-actions {
+    justify-content: flex-start;
+    justify-items: start;
   }
 
   .filter-toolbar-main,
@@ -3934,33 +4182,46 @@ dd {
     grid-template-columns: 1fr;
   }
 
-  .current-plan-stats,
-  .decision-summary-strip,
-  .command-summary-grid,
-  .overview-kpi-grid,
-  .overview-decision-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+	  .current-plan-stats,
+	  .decision-summary-strip,
+	  .command-summary-grid,
+	  .overview-kpi-grid,
+	  .overview-decision-grid,
+	  .overview-command-grid,
+	  .overview-included-strip,
+	  .opportunities-summary-strip,
+	  .requirements-summary-strip {
+	    grid-template-columns: repeat(2, minmax(0, 1fr));
+	  }
 }
 
 @media (max-width: 760px) {
   .retrofit-metric-grid,
   .filter-toolbar-main,
   .filter-advanced-panel,
-  .command-summary-grid,
-  .overview-kpi-grid,
-  .overview-decision-grid,
-  .selected-scenario-rows,
-  .included-summary-strip,
-  .decision-summary-strip,
-  .included-estimate-row,
-  .detail-question-grid,
-  .editable-estimate-grid,
-  .opportunity-preview-details,
-  .operating-savings-item,
-  .financing-field-grid {
-    grid-template-columns: 1fr;
-  }
+	  .command-summary-grid,
+	  .overview-kpi-grid,
+	  .overview-decision-grid,
+	  .overview-command-grid,
+	  .overview-included-strip,
+	  .opportunities-summary-strip,
+	  .requirements-summary-strip,
+	  .selected-scenario-rows,
+	  .included-summary-strip,
+	  .decision-summary-strip,
+	  .included-estimate-row,
+	  .overview-preview-header,
+	  .overview-opportunity-row,
+	  .detail-question-grid,
+	  .editable-estimate-grid,
+	  .opportunity-preview-details,
+	  .operating-savings-item,
+	  .financing-field-grid,
+	  .requirements-row,
+	  .assumption-row,
+	  .question-row {
+	    grid-template-columns: 1fr;
+	  }
 
   .retrofit-card-top-row,
   .section-title-row,
