@@ -3152,14 +3152,14 @@ dd {
 }
 
 .sidebar-retrofit-list {
-  padding: 6px 0 10px;
+  padding: 4px 0 8px 10px;
 }
 
 .sidebar-retrofit-item {
   font-size: 14px;
   grid-template-columns: 24px minmax(0, 1fr);
   line-height: 18px;
-  min-height: 38px;
+  min-height: 34px;
   position: relative;
 }
 
@@ -3214,12 +3214,21 @@ dd {
 }
 
 .user-preview-sidebar-secondary {
-  margin-top: 4px;
+  margin-top: 2px;
   padding-top: 0;
 }
 
 .sidebar-secondary-item {
   grid-template-columns: 24px minmax(0, 1fr);
+  font-size: 13px;
+  min-height: 32px;
+  opacity: 0.96;
+  padding-left: 18px;
+}
+
+.sidebar-secondary-item .sidebar-label {
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .user-preview-sidebar-scrim {

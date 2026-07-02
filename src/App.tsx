@@ -7174,6 +7174,7 @@ function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
 }
 
 function SidebarRetrofitIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
+  // TODO: replace these temporary category-derived icons with a proper retrofit icon set.
   const Icon = iconForRetrofit(retrofit);
   return (
     <span className="sidebar-retrofit-icon" aria-hidden="true">

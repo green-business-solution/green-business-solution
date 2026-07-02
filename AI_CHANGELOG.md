@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) sidebar sub-tab spacing cleanup
+
+- Tightened the Retrofit sidebar sub-tabs so `Profile info` and `Dashboard` fit cleanly underneath the group.
+- Indented the secondary items slightly to make the sub-tab hierarchy clearer.
+- Added a TODO at the sidebar retrofit icon helper to replace the temporary icons with a better set later.
+
 ## 2026-07-02 - Codex (GPT-5) user preview collapsed retrofit nav
 
 - Collapsed the `/user-preview` sidebar Retrofits dropdown by default on first load.
