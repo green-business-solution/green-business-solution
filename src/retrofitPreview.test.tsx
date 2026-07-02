@@ -234,6 +234,10 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Select a retrofit to explore");
     expect(html).toContain("Choose one retrofit to see opportunities, detailed metrics, and next steps.");
     expect(html).toContain("Sort by");
+    expect(html).toContain("<option value=\"recommended\" selected=\"\">Recommended</option>");
+    expect(html).toContain("<option value=\"total_savings\">Savings</option>");
+    expect(html).toContain("<option value=\"payback\">Payback</option>");
+    expect(html).toContain("<option value=\"upfront_cost\">Cost</option>");
     expect(html).toContain("Search retrofits");
     expect(html).toContain("Grid");
     expect(html).toContain("Panel");
@@ -244,6 +248,11 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Show more retrofits");
     expect(html).toContain("retrofit-picker-grid");
     expect(html).toContain("retrofit-picker-card");
+    expect(html).toContain("retrofit-picker-icon");
+    expect(html).not.toContain("retrofit-picker-arrow");
+    expect(html).not.toContain("Total savings");
+    expect(html).not.toContain("Monthly savings");
+    expect(html).not.toContain("Percentage profit");
     expect(html).not.toContain("Retrofit Recommendations");
     expect(html).not.toContain("Estimate basis:");
     expect(html).not.toContain("Live/API backend recommendation data");
@@ -251,6 +260,10 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Recommendation readiness");
     expect(html).not.toContain("Top recommendation");
     expect(html).not.toContain("Current retrofit plan");
+    expect(html).not.toContain("1 opp");
+    expect(html).not.toContain("Confidence:");
+    expect(html).not.toContain("Missing:");
+    expect(html).not.toContain("Scenario A");
     expect(html).not.toContain("filter-toolbar");
     expect(html).not.toContain("Retrofit rail");
     expect(html).not.toContain("active-command-center");
@@ -335,6 +348,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Operating Savings");
     expect(source).toContain("Confirm all estimates");
     expect(source).toContain("Financing preview");
+    expect(source).toContain("Add quote");
+    expect(source).toContain("Add tax/entity info");
+    expect(source).toContain("Preview as customer");
+    expect(source).toContain("Exit customer preview");
+    expect(source).toContain("Back to all retrofits");
     expect(source).toContain("data-workspace-tab");
     expect(source).toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("{ key: \"more\", label: \"More\" }");
@@ -437,6 +455,10 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
     expect(css).toContain(".retrofit-preview-page .retrofit-picker-card:hover");
     expect(css).toContain(".retrofit-preview-page .picker-view-button:hover");
+    expect(css).toContain(".user-preview-admin-controls-button:hover");
+    expect(css).toContain(".user-preview-customer-mode-button:hover");
+    expect(css).toContain(".user-preview-toolbar.is-customer-preview");
+    expect(css).toContain(".customer-preview-strip");
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .workspace-tab:hover");
     expect(css).toContain(".retrofit-preview-page .command-summary-card:hover");
@@ -451,6 +473,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".estimate-accuracy-banner");
     expect(css).toContain(".retrofit-picker-grid");
     expect(css).toContain(".retrofit-picker-card");
+    expect(css).toContain(".retrofit-picker-card.is-selected");
+    expect(css).toContain(".retrofit-picker-grid.is-panel .retrofit-picker-card");
+    expect(css).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
     expect(css).toContain(".recommendation-readiness-strip");
     expect(css).toContain(".filter-toolbar-main");
     expect(css).toContain(".current-plan-strip");
@@ -464,8 +489,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".sticky-add-plan-footer");
     expect(css).toContain(".selected-scenario-rows");
     expect(css).toContain(".compact-detail-row");
-    expect(css).toContain("grid-template-columns: repeat(3, minmax(90px, 1fr))");
-    expect(css).not.toContain("height: 118px");
+    const pickerCardRule = css.match(/(?:^|\n)\.retrofit-picker-card\s*{([^}]*)}/)?.[1] || "";
+    expect(pickerCardRule).toContain("min-height: 214px;");
+    expect(pickerCardRule).not.toContain("\n  height: 118px;");
 
     const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
     expect(tabHoverRule).not.toContain("#0f573c");

@@ -1486,3 +1486,9 @@
 - Fixed preview layout regressions where selected-scenario detail labels collided with long values, retrofit tabs were too tall, and negative recurring impacts could be labeled as annual savings.
 - Added the one-retrofit-at-a-time current plan flow to the preview, including local add-to-plan state, recalculation-not-available messaging, guarded tab switching for unconfirmed selections, and a sticky active-retrofit action bar.
 - Tightened the Retrofit Recommendations preview for deployment readiness by removing dark-green hover/header states from non-CTA UI, moving the add-to-plan strip directly after Financials, making selected-scenario details compact rows, and adding solar/biomass-specific detail questions.
+
+# 2026-07-02
+
+- Changed the `/user-preview` pre-selection state into a clean retrofit picker with a compact admin bar, upload-only estimate banner, simplified sort/search/view controls, responsive 3/2/1 retrofit card grid, and hidden workspace details until a retrofit is selected.
+- Removed first-layer retrofit-card chevrons and internal metadata, added category icons, compact savings/cost/payback values, safe soft hover/selected states, and a customer-preview admin-bar collapse mode.
+- Kept the detailed retrofit workspace, financing/application prep, opportunity, assumptions, and add-to-plan flows behind the selected retrofit view and expanded focused tests for the picker layout and hover/readability rules.

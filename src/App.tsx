@@ -5739,6 +5739,13 @@ export function RetrofitRecommendationsPreview({
     activeTab?.scrollIntoView({ block: "nearest", inline: "center" });
   }, [activeRetrofitId]);
 
+  useEffect(() => {
+    if (typeof document === "undefined" || !activeRetrofitId) return;
+    window.requestAnimationFrame(() => {
+      document.querySelector(".retrofit-selected-workspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [activeRetrofitId]);
+
   function handleUploadBills() {
     if (typeof window !== "undefined") {
       window.open(pathForRoute("scan-energy-data"), "_blank", "noopener,noreferrer");
@@ -5858,300 +5865,99 @@ export function RetrofitRecommendationsPreview({
     <section className="retrofit-preview-page" data-testid="retrofit-recommendations-preview">
       {error ? <p className="error-message">{error}</p> : null}
 
-      {!activeRetrofit ? (
-        <RetrofitPickerView
-          displayedRetrofits={displayedRetrofits}
-          emptyMessage={emptyMessage}
-          isLoading={isLoading}
-          loadingMessage={loadingMessage}
-          onSearchChange={(value) => {
-            setSearchQuery(value);
-            setPickerVisibleCount(6);
-          }}
-          onSelectRetrofit={(retrofitId) => setActiveRetrofitId(retrofitId)}
-          onSetViewMode={setPickerViewMode}
-          onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
-          onSortChange={(value) => {
-            setSortBy(value);
-            setPickerVisibleCount(6);
-          }}
-          onUploadBills={handleUploadBills}
-          pickerViewMode={pickerViewMode}
-          pickerVisibleCount={pickerVisibleCount}
-          searchQuery={searchQuery}
-          sortBy={sortBy}
-        />
-      ) : (
+      <RetrofitPickerView
+        activeRetrofitId={activeRetrofit?.id || ""}
+        displayedRetrofits={displayedRetrofits}
+        emptyMessage={emptyMessage}
+        isLoading={isLoading}
+        loadingMessage={loadingMessage}
+        onCloseDetails={() => setActiveRetrofitId("")}
+        onSearchChange={(value) => {
+          setSearchQuery(value);
+          setPickerVisibleCount(6);
+        }}
+        onSelectRetrofit={handleRetrofitTabClick}
+        onSetViewMode={setPickerViewMode}
+        onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
+        onSortChange={(value) => {
+          setSortBy(value);
+          setPickerVisibleCount(6);
+        }}
+        onUploadBills={handleUploadBills}
+        pickerViewMode={pickerViewMode}
+        pickerVisibleCount={pickerVisibleCount}
+        searchQuery={searchQuery}
+        sortBy={sortBy}
+      />
+
+      {activeRetrofit ? (
         <>
-      <header className="retrofit-preview-header">
-        <div>
-          <div className="retrofit-preview-title-row">
-            <h1>{title}</h1>
-          </div>
-          <p>{intro || "Review recommended retrofits, incentives, savings, and next steps."}</p>
-        </div>
-        <div className="retrofit-preview-status-cluster">
-          <span className="soft-badge">Estimate basis: {estimateBasisLabel(preview.estimateBasis)}</span>
-          <span className="soft-badge">{preview.dataSourceLabel}</span>
-          {payload?.generatedAt ? <span className="soft-badge">Last updated: {formatDate(payload.generatedAt)}</span> : null}
-        </div>
-      </header>
-
-      <section className="recommendation-readiness-strip">
-        <div className="readiness-summary">
-          <p className="eyebrow">Recommendation readiness</p>
-          <h2>{preview.topRecommendation ? `Top recommendation: ${preview.topRecommendation.retrofitName}` : "No top recommendation yet"}</h2>
-          <p>{preview.topRecommendation?.reason || "Complete the intake form or select a test profile to generate recommendations."}</p>
-          <small>Current status: {topRecommendationStatus}</small>
-        </div>
-        <div className="readiness-status">
-          <span>Estimate readiness</span>
-          <strong>
-            {preview.estimateCompletenessPercent == null
-              ? "Not enough information yet"
-              : preview.estimateCompletenessPercent < 50
-                ? "Partial estimate"
-                : `${preview.estimateCompletenessPercent}%`}
-          </strong>
-          <small>
-            {readinessMissingPreview.length
-              ? `Missing: ${readinessMissingPreview.join(", ")}${readinessMoreCount ? ` +${readinessMoreCount} more` : ""}`
-              : `Top missing item: ${topRecommendationMissing}`}
-          </small>
-          {readinessMissingItems.length > 3 ? <button className="inline-link-button" onClick={handleEnterDetails} type="button">View all missing info</button> : null}
-          {refinementMessage ? <small>{refinementMessage}</small> : null}
-        </div>
-        <div className="readiness-actions">
-          <small>Improve estimate accuracy by adding bills, quotes, or retrofit details.</small>
-          <div>
-            <button onClick={handleUploadBills} type="button">Upload bills</button>
-            <button className="secondary-button" onClick={handleEnterDetails} type="button">Enter details</button>
-            <button className="secondary-button" onClick={() => setRefinementMessage("Add a quote to confirm project cost, incentive caps, payback, and ROI.")} type="button">Add quote</button>
-            <button className="secondary-button" onClick={() => setRefinementMessage("Add tax or entity information to validate one-time tax benefits.")} type="button">Add tax/entity info</button>
-          </div>
-        </div>
-      </section>
-
-      <section className="ranking-control-bar filter-toolbar" aria-label="Ranking controls">
-        <div className="filter-toolbar-main">
-          <label>
-            <span>Sort</span>
-            <select onChange={(event) => setSortBy(event.target.value)} value={sortBy}>
-              <option value="recommended">Recommended</option>
-              <option value="total_savings">Total savings</option>
-              <option value="payback">Payback period</option>
-              <option value="monthly_savings">Monthly savings</option>
-              <option value="upfront_cost">Upfront cost</option>
-              <option value="percentage_profit">Percentage profit</option>
-              <option value="roi">ROI</option>
-            </select>
-          </label>
-          <label>
-            <span>Search retrofits</span>
-            <input onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search retrofits" value={searchQuery} />
-          </label>
-          <button className="secondary-button" onClick={() => setFiltersOpen((current) => !current)} type="button">
-            {filtersOpen ? "Hide filters" : "Filter"}
-          </button>
-        </div>
-        <div className="filter-advanced-panel" hidden={!filtersOpen}>
-          <label>
-            <span>Estimate basis</span>
-            <select onChange={(event) => setBasisFilter(event.target.value)} value={basisFilter}>
-              <option value="all">All</option>
-              <option value="initial_form">Initial</option>
-              <option value="uploaded_bills">Bills uploaded</option>
-              <option value="confirmed_details">Confirmed details</option>
-            </select>
-          </label>
-          <label>
-            <span>Category</span>
-            <select onChange={(event) => setCategoryFilter(event.target.value)} value={categoryFilter}>
-              <option value="all">All</option>
-              {Array.from(new Map(preview.retrofits.map((retrofit) => [slugify(retrofit.category || ""), retrofit.category || "Retrofit"])).entries())
-                .filter(Boolean)
-                .map(([value, label]) => (
-                  <option key={value} value={value}>{label}</option>
-                ))}
-            </select>
-          </label>
-          <label>
-            <span>Confidence</span>
-            <select onChange={(event) => setConfidenceFilter(event.target.value)} value={confidenceFilter}>
-              <option value="all">All</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </label>
-          <label>
-            <span>Missing info</span>
-            <select onChange={(event) => setMissingInfoFilter(event.target.value)} value={missingInfoFilter}>
-              <option value="all">All</option>
-              <option value="needs_info">Needs info</option>
-              <option value="ready">Fewer blockers</option>
-            </select>
-          </label>
-        </div>
-        <p>Pre-ranked from initial information. Re-ranking updates when recalculation support is available.</p>
-      </section>
-
-      <section className="current-plan-panel current-plan-strip">
-        <div>
-          <p className="eyebrow">Current retrofit plan</p>
-          <strong>{addedPlanCount === 0 ? "No retrofit added yet" : `${addedPlanCount} retrofit${addedPlanCount === 1 ? "" : "s"} added`}</strong>
-          {confirmedRetrofitName ? <small>Last added: {confirmedRetrofitName}</small> : null}
-        </div>
-        <div className="current-plan-stats">
-          <DetailItem label="Active draft" value={activeDraftName} />
-          <DetailItem label="Recalculation" value={recalculationStatus} />
-          <DetailItem label="Next" value={addedPlanCount ? "Prepare applications or review next retrofit" : "Select scenario → add retrofit"} />
-        </div>
-        <details className="one-at-a-time-note">
-          <summary>Why one at a time?</summary>
-          <p>Adding one retrofit can change energy baselines, payback, and eligibility assumptions for the others.</p>
-        </details>
-        {planMessage ? <p className="preview-local-note">{planMessage.split(".")[0]}.</p> : null}
-        <div className="current-plan-actions">
-          {addedPlanCount === 0 ? (
-            <button
-              className="secondary-button"
-              disabled={!activeRetrofit}
-              onClick={() => document.querySelector(".retrofit-preview-card-active")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              type="button"
-            >
-              Continue editing
-            </button>
-          ) : (
-            <>
-              <button className="secondary-button" type="button">Prepare applications</button>
-              <button
-                className="secondary-button"
-                disabled={!activeRetrofit}
-                onClick={() => {
-                  const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit?.id);
-                  if (next) handleRetrofitTabClick(next.id);
-                }}
-                type="button"
-              >
-                Review next retrofit
-              </button>
-            </>
-          )}
-        </div>
-      </section>
-
-      {displayedRetrofits.length ? <p className="retrofit-rail-label">Top {shownFirstCount} shown first · {totalMatchedRetrofits} total</p> : null}
-
-      {displayedRetrofits.length ? (
-        <section className="retrofit-tab-shell" aria-label="Retrofit rail">
-          <div className="retrofit-tab-bar">
-            {displayedRetrofits.map((retrofit) => {
-              const runtimeSelectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
-              const tabState = addedRetrofitPlans[retrofit.id]
-                ? "Added"
-                : dirtyRetrofitIds[retrofit.id]
-                  ? "Draft"
-                  : addedPlanCount > 0 && retrofit.id !== lastAddedRetrofitId
-                    ? "Pending"
-                    : "";
-              return (
-                <button
-                  key={retrofit.id}
-                  type="button"
-                  className={`retrofit-tab${activeRetrofit?.id === retrofit.id ? " is-active" : ""}`}
-                  data-retrofit-tab-id={retrofit.id}
-                  onClick={() => handleRetrofitTabClick(retrofit.id)}
-                >
-                  <div className="retrofit-tab-top">
-                    <span className="rank-pill">#{retrofit.rank}</span>
-                    {tabState ? <span className={`plan-state-badge ${slugify(tabState)}`}>{tabState}</span> : null}
-                  </div>
-                  <strong className="retrofit-tab-title">{retrofit.name}</strong>
-                  <span className="retrofit-tab-category">{retrofit.category || "Retrofit"}</span>
-                  <span className="retrofit-tab-metric">
-                    {retrofit.tabSummary.primaryMetricLabel}: {retrofit.tabSummary.primaryMetricValue || retrofit.tabSummary.fallback || "Not estimated yet"}
-                  </span>
-                  <div className="retrofit-tab-meta">
-                    <span>{runtimeSelectedCount} opp</span>
-                    <span>{retrofit.confidenceLabel || "Needs review"}</span>
-                    <span>{retrofit.tabSummary.missingInfoCount} missing</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
-
-      {isLoading ? (
-        <section className="retrofit-preview-card">
-          <p className="empty-state">{loadingMessage}</p>
-        </section>
-      ) : preview.retrofits.length === 0 ? (
-        <section className="retrofit-preview-card">
-          <h2>No retrofit recommendations yet.</h2>
-          <p>{emptyMessage || "Complete the intake form or select a test profile to generate recommendations."}</p>
-        </section>
-      ) : activeRetrofit ? (
-        <div className="retrofit-preview-list">
-          <RetrofitPreviewCardView
-            confirmedAssumptionIds={confirmedAssumptionIds}
-            detailAnswers={detailAnswers}
-            key={activeRetrofit.id}
-            onConfirmAll={() => confirmAll(activeRetrofit)}
-            onConfirmAssumption={toggleAssumption}
-            onDetailAnswerChange={(questionId, value) => {
-              setDetailAnswers((current) => ({ ...current, [questionId]: value }));
-              markRetrofitDirty(activeRetrofit.id);
-            }}
-            onAddToPlan={() => addRetrofitToPlan(activeRetrofit)}
-            onExploreFinancing={() => setFinancingRetrofit(activeRetrofit)}
-            onReviewNextRetrofit={() => {
-              const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit.id);
-              if (next) handleRetrofitTabClick(next.id);
-            }}
-            onSelectScenario={(scenarioId) => selectScenario(activeRetrofit, scenarioId)}
-            onToggleOpportunity={toggleOpportunity}
-            planState={addedRetrofitPlans[activeRetrofit.id] ? "Added to plan" : dirtyRetrofitIds[activeRetrofit.id] ? "Draft selection" : "Not selected"}
-            retrofit={activeRetrofit}
-            selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
-            selectedOpportunityIds={selectedOpportunityIds}
-          />
-        </div>
-      ) : null}
-
-      <section className="next-actions-panel">
-        <div>
-          <h2>Next-best-action checklist</h2>
-          <p>Preview of what to apply for first, documents needed, contacts, upgrades to price out, and deadline checks.</p>
-        </div>
-        <div className="next-action-list">
-          {preview.nextActions.map((action) => (
-            <article className="next-action-item" key={action.id}>
+          <div className="retrofit-preview-list retrofit-selected-workspace">
+            <div className="selected-workspace-header">
               <div>
-                <span className={`priority-badge ${action.priority.toLowerCase()}`}>{action.priority}</span>
-                <h3>{action.text}</h3>
-                <p>
-                  {action.relatedRetrofitName ? `Related retrofit: ${action.relatedRetrofitName}` : "Related retrofit: General"}
-                  {action.relatedOpportunityName ? ` · Related opportunity: ${action.relatedOpportunityName}` : ""}
-                </p>
+                <span className="soft-badge">Selected retrofit</span>
+                <h2>{activeRetrofit.name}</h2>
               </div>
-              <select
-                aria-label={`Status for ${action.text}`}
-                onChange={(event) => setNextActionStatuses((current) => ({ ...current, [action.id]: event.target.value as NextBestAction["status"] }))}
-                value={nextActionStatuses[action.id] || action.status}
-              >
-                <option>Not started</option>
-                <option>In progress</option>
-                <option>Done</option>
-              </select>
-            </article>
-          ))}
-        </div>
-      </section>
+              <button className="secondary-button" onClick={() => setActiveRetrofitId("")} type="button">
+                Back to all retrofits
+              </button>
+            </div>
+            <RetrofitPreviewCardView
+              confirmedAssumptionIds={confirmedAssumptionIds}
+              detailAnswers={detailAnswers}
+              key={activeRetrofit.id}
+              onConfirmAll={() => confirmAll(activeRetrofit)}
+              onConfirmAssumption={toggleAssumption}
+              onDetailAnswerChange={(questionId, value) => {
+                setDetailAnswers((current) => ({ ...current, [questionId]: value }));
+                markRetrofitDirty(activeRetrofit.id);
+              }}
+              onAddToPlan={() => addRetrofitToPlan(activeRetrofit)}
+              onExploreFinancing={() => setFinancingRetrofit(activeRetrofit)}
+              onReviewNextRetrofit={() => {
+                const next = displayedRetrofits.find((retrofit) => retrofit.id !== activeRetrofit.id);
+                if (next) handleRetrofitTabClick(next.id);
+              }}
+              onSelectScenario={(scenarioId) => selectScenario(activeRetrofit, scenarioId)}
+              onToggleOpportunity={toggleOpportunity}
+              planState={addedRetrofitPlans[activeRetrofit.id] ? "Added to plan" : dirtyRetrofitIds[activeRetrofit.id] ? "Draft selection" : "Not selected"}
+              retrofit={activeRetrofit}
+              selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
+              selectedOpportunityIds={selectedOpportunityIds}
+            />
+          </div>
+
+          <section className="next-actions-panel">
+            <div>
+              <h2>Next-best-action checklist</h2>
+              <p>Preview of what to apply for first, documents needed, contacts, upgrades to price out, and deadline checks.</p>
+            </div>
+            <div className="next-action-list">
+              {preview.nextActions.map((action) => (
+                <article className="next-action-item" key={action.id}>
+                  <div>
+                    <span className={`priority-badge ${action.priority.toLowerCase()}`}>{action.priority}</span>
+                    <h3>{action.text}</h3>
+                    <p>
+                      {action.relatedRetrofitName ? `Related retrofit: ${action.relatedRetrofitName}` : "Related retrofit: General"}
+                      {action.relatedOpportunityName ? ` · Related opportunity: ${action.relatedOpportunityName}` : ""}
+                    </p>
+                  </div>
+                  <select
+                    aria-label={`Status for ${action.text}`}
+                    onChange={(event) => setNextActionStatuses((current) => ({ ...current, [action.id]: event.target.value as NextBestAction["status"] }))}
+                    value={nextActionStatuses[action.id] || action.status}
+                  >
+                    <option>Not started</option>
+                    <option>In progress</option>
+                    <option>Done</option>
+                  </select>
+                </article>
+              ))}
+            </div>
+          </section>
         </>
-      )}
+      ) : null}
 
       {financingRetrofit ? (
         <FinancingPreviewDrawer retrofit={financingRetrofit} onClose={() => setFinancingRetrofit(null)} />
@@ -6170,10 +5976,12 @@ export function RetrofitRecommendationsPreview({
 }
 
 function RetrofitPickerView({
+  activeRetrofitId,
   displayedRetrofits,
   emptyMessage,
   isLoading,
   loadingMessage,
+  onCloseDetails,
   onSearchChange,
   onSelectRetrofit,
   onSetViewMode,
@@ -6185,10 +5993,12 @@ function RetrofitPickerView({
   searchQuery,
   sortBy
 }: {
+  activeRetrofitId: string;
   displayedRetrofits: RetrofitPreviewCard[];
   emptyMessage: string;
   isLoading: boolean;
   loadingMessage: string;
+  onCloseDetails: () => void;
   onSearchChange: (value: string) => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onSetViewMode: (mode: "grid" | "panel") => void;
@@ -6228,12 +6038,9 @@ function RetrofitPickerView({
           <span>Sort by</span>
           <select onChange={(event) => onSortChange(event.target.value)} value={sortBy}>
             <option value="recommended">Recommended</option>
-            <option value="total_savings">Total savings</option>
-            <option value="payback">Payback period</option>
-            <option value="monthly_savings">Monthly savings</option>
-            <option value="upfront_cost">Upfront cost</option>
-            <option value="percentage_profit">Percentage profit</option>
-            <option value="roi">ROI</option>
+            <option value="total_savings">Savings</option>
+            <option value="payback">Payback</option>
+            <option value="upfront_cost">Cost</option>
           </select>
         </label>
         <label className="picker-search-control">
@@ -6269,20 +6076,18 @@ function RetrofitPickerView({
           <section className={`retrofit-picker-grid${pickerViewMode === "panel" ? " is-panel" : ""}`}>
             {visibleRetrofits.map((retrofit) => (
               <button
-                className="retrofit-picker-card"
+                className={`retrofit-picker-card${activeRetrofitId === retrofit.id ? " is-selected" : ""}`}
+                data-retrofit-tab-id={retrofit.id}
                 key={retrofit.id}
                 onClick={() => onSelectRetrofit(retrofit.id)}
                 type="button"
               >
                 <div className="retrofit-picker-card-top">
-                  <div className="retrofit-picker-icon" aria-hidden="true">
-                    <span>{retrofitCategoryInitials(retrofit.category)}</span>
-                  </div>
+                  <RetrofitPickerIcon retrofit={retrofit} />
                   <div>
                     <h3>{retrofit.name}</h3>
                     <p>{retrofitPickerDescription(retrofit.description)}</p>
                   </div>
-                  <span className="retrofit-picker-arrow" aria-hidden="true">&gt;</span>
                 </div>
                 <div className="retrofit-picker-card-metrics" aria-label={`${retrofit.name} summary metrics`}>
                   <PickerMetric label="Savings" value={retrofitPickerSavings(retrofit)} />
@@ -6296,6 +6101,13 @@ function RetrofitPickerView({
             <div className="retrofit-picker-more-row">
               <button className="secondary-button" onClick={onShowMore} type="button">
                 Show more retrofits
+              </button>
+            </div>
+          ) : null}
+          {activeRetrofitId ? (
+            <div className="retrofit-picker-more-row">
+              <button className="secondary-button" onClick={onCloseDetails} type="button">
+                Close details
               </button>
             </div>
           ) : null}
@@ -6319,13 +6131,27 @@ function PickerMetric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function retrofitCategoryInitials(category?: string) {
-  const words = (category || "Retrofit")
-    .replace(/&/g, " ")
-    .split(/\s+/)
-    .filter(Boolean);
-  const initials = words.map((word) => word[0]).join("").slice(0, 2).toUpperCase();
-  return initials || "RF";
+function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
+  const category = `${retrofit.category || ""} ${retrofit.name}`.toLowerCase();
+  const Icon =
+    category.includes("insulation") || category.includes("envelope")
+      ? HomeOutlineIcon
+      : category.includes("solar")
+        ? LeafOutlineIcon
+        : category.includes("water")
+          ? LeafOutlineIcon
+          : category.includes("ev") || category.includes("charger")
+            ? BuildingOutlineIcon
+            : category.includes("hvac") || category.includes("heat pump")
+              ? FactoryOutlineIcon
+              : category.includes("lighting") || category.includes("led")
+                ? LeafOutlineIcon
+                : BuildingOutlineIcon;
+  return (
+    <div className="retrofit-picker-icon" aria-hidden="true">
+      <Icon />
+    </div>
+  );
 }
 
 function retrofitPickerDescription(description: string) {
@@ -6336,7 +6162,7 @@ function retrofitPickerSavings(retrofit: RetrofitPreviewCard) {
   const annual = retrofit.metrics.recurringOperationalSavingsAnnual;
   if (annual == null) return "Needs bill";
   if (annual < 0) return "Net impact pending";
-  return `${formatCents(annual)} /yr`;
+  return `${formatCompactCents(annual)}/yr`;
 }
 
 function retrofitPickerCost(retrofit: RetrofitPreviewCard) {
@@ -6344,11 +6170,30 @@ function retrofitPickerCost(retrofit: RetrofitPreviewCard) {
     retrofit.metrics.effectiveCostAfterOneTimeBenefits ??
     retrofit.metrics.netCostBeforeTaxBenefits ??
     retrofit.metrics.estimatedUpfrontProjectCost;
-  return cost == null ? "Needs quote" : formatCents(cost);
+  return cost == null ? "Needs quote" : formatCompactCents(cost);
 }
 
 function retrofitPickerPayback(retrofit: RetrofitPreviewCard) {
   return formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote");
+}
+
+function formatCompactCents(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "Not calculated";
+  const amount = value / 100;
+  const absolute = Math.abs(amount);
+  if (absolute >= 1_000_000) {
+    const millions = amount / 1_000_000;
+    return `$${millions.toFixed(absolute >= 10_000_000 ? 0 : 1).replace(/\.0$/, "")}M`;
+  }
+  if (absolute >= 1_000) {
+    const thousands = amount / 1_000;
+    return `$${thousands.toFixed(absolute >= 10_000 ? 0 : 1).replace(/\.0$/, "")}k`;
+  }
+  return new Intl.NumberFormat("en-US", {
+    currency: "USD",
+    maximumFractionDigits: 0,
+    style: "currency"
+  }).format(amount);
 }
 
 function RetrofitPreviewCardView({
@@ -6654,6 +6499,8 @@ function RetrofitPreviewCardView({
             <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
             <button className="secondary-button" onClick={handleUploadBillShortcut} type="button">Upload bill</button>
             <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Enter details</button>
+            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Add quote</button>
+            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Add tax/entity info</button>
             <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
           </div>
         </div>
@@ -8435,6 +8282,7 @@ function AdminUserPreviewStandalonePage({
 }) {
   const [rows, setRows] = useState(initialRows);
   const [adminControlsOpen, setAdminControlsOpen] = useState(false);
+  const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
@@ -8529,29 +8377,53 @@ function AdminUserPreviewStandalonePage({
   }
 
   return (
-    <main className="user-preview-standalone-page">
-      <header className="user-preview-toolbar user-preview-toolbar-collapsed">
-        <button
-          aria-expanded={adminControlsOpen}
-          className="user-preview-admin-toggle"
-          onClick={() => setAdminControlsOpen((current) => !current)}
-          type="button"
-        >
-          <div className="brand-block">
-            <img alt="RetroFi" className="workspace-logo" src="/retrofi-logo.png" />
-            <div className="user-preview-admin-title">
-              <span>Admin preview</span>
-              <small>
-                {selectedOption ? `${selectedOption.clientName}${selectedOption.companyName ? ` · ${selectedOption.companyName}` : ""}` : "No test profile selected"}
-              </small>
+    <main className={`user-preview-standalone-page${customerPreviewMode ? " is-customer-preview" : ""}`}>
+      <header className={`user-preview-toolbar user-preview-toolbar-collapsed${customerPreviewMode ? " is-customer-preview" : ""}`}>
+        {customerPreviewMode ? (
+          <div className="customer-preview-strip">
+            <div>
+              <strong>Customer preview</strong>
+              <span>{selectedOption ? selectedOption.clientName : "No test profile selected"}</span>
             </div>
+            <button className="secondary-button" onClick={() => setCustomerPreviewMode(false)} type="button">
+              Exit customer preview
+            </button>
           </div>
-          <div>
-            <span className="soft-badge">Admin controls</span>
-            <span className="soft-badge">{adminControlsOpen ? "▾" : "▸"}</span>
-          </div>
-        </button>
-        {adminControlsOpen ? (
+        ) : (
+          <>
+            <div className="user-preview-admin-row">
+              <div className="brand-block user-preview-admin-summary">
+                <img alt="RetroFi" className="workspace-logo" src="/retrofi-logo.png" />
+                <div className="user-preview-admin-title">
+                  <span>Admin preview</span>
+                  <small>
+                    {selectedOption ? `${selectedOption.clientName}${selectedOption.companyName ? ` · ${selectedOption.companyName}` : ""}` : "No test profile selected"}
+                  </small>
+                </div>
+              </div>
+              <div className="user-preview-toolbar-buttons">
+                <button
+                  className="secondary-button user-preview-customer-mode-button"
+                  onClick={() => {
+                    setCustomerPreviewMode(true);
+                    setAdminControlsOpen(false);
+                  }}
+                  type="button"
+                >
+                  Preview as customer
+                </button>
+                <button
+                  aria-expanded={adminControlsOpen}
+                  className="secondary-button user-preview-admin-controls-button"
+                  onClick={() => setAdminControlsOpen((current) => !current)}
+                  type="button"
+                >
+                  Admin controls
+                  <span aria-hidden="true">{adminControlsOpen ? "v" : ">"}</span>
+                </button>
+              </div>
+            </div>
+            {adminControlsOpen ? (
           <div className="user-preview-actions user-preview-admin-panel">
             <label>
               <span>Preview test case</span>
@@ -8574,7 +8446,9 @@ function AdminUserPreviewStandalonePage({
               Sign out
             </button>
           </div>
-        ) : null}
+            ) : null}
+          </>
+        )}
       </header>
 
       {error ? <p className="error-message">{error}</p> : null}

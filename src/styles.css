@@ -854,16 +854,18 @@ textarea {
 }
 
 .user-preview-standalone-page {
+  background: #faf9f5;
   min-height: 100vh;
 }
 
 .user-preview-toolbar {
-  align-items: stretch;
+  align-items: center;
   background: #ffffff;
   border-bottom: 1px solid #dfe6e1;
   display: grid;
   gap: 8px;
-  padding: 8px 24px;
+  min-height: 52px;
+  padding: 6px 24px;
 }
 
 .user-preview-toolbar h1,
@@ -871,21 +873,53 @@ textarea {
   margin: 0;
 }
 
-.user-preview-admin-toggle {
+.user-preview-admin-row,
+.customer-preview-strip {
   align-items: center;
-  background: #ffffff;
-  border: 1px solid #dce5df;
-  border-radius: 14px;
   display: flex;
-  gap: 12px;
+  gap: 16px;
   justify-content: space-between;
-  min-height: 48px;
-  padding: 8px 12px;
-  text-align: left;
-  width: 100%;
+  min-width: 0;
 }
 
-.user-preview-admin-toggle .workspace-logo {
+.user-preview-admin-summary {
+  min-width: 0;
+}
+
+.user-preview-toolbar-buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.user-preview-admin-toggle,
+.user-preview-admin-controls-button,
+.user-preview-customer-mode-button,
+.customer-preview-strip .secondary-button {
+  background: #ffffff;
+  border: 1px solid #dce5df;
+  color: #071b12;
+  min-height: 34px;
+}
+
+.user-preview-admin-toggle:hover,
+.user-preview-admin-controls-button:hover,
+.user-preview-customer-mode-button:hover,
+.customer-preview-strip .secondary-button:hover {
+  background: #f3faf6;
+  border-color: #bbdccb;
+  color: #071b12;
+}
+
+.user-preview-admin-controls-button span {
+  color: inherit;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.user-preview-toolbar .workspace-logo {
   height: 28px;
   width: 28px;
 }
@@ -919,6 +953,25 @@ textarea {
   border: 1px solid #e0e8e3;
   border-radius: 16px;
   padding: 14px 16px;
+}
+
+.user-preview-toolbar.is-customer-preview {
+  min-height: 40px;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
+.customer-preview-strip strong {
+  color: #071b12;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.customer-preview-strip span {
+  color: #5f6f66;
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: 8px;
 }
 
 .user-preview-actions {
@@ -2269,8 +2322,8 @@ dd {
 
 .retrofit-preview-page {
   --rf-amber-soft: #fff7e6;
-  --rf-bg: #f7faf7;
-  --rf-border: #dde8e1;
+  --rf-bg: #faf9f5;
+  --rf-border: #e4e2da;
   --rf-card: #ffffff;
   --rf-gray-soft: #f4f6f5;
   --rf-green: #0f6b46;
@@ -2278,12 +2331,12 @@ dd {
   --rf-green-soft: #eaf5ef;
   --rf-muted: #5f6f66;
   --rf-red-soft: #fdecec;
-  --rf-text: #102019;
+  --rf-text: #071b12;
   display: grid;
-  gap: 24px;
+  gap: 20px;
   margin: 0 auto;
-  max-width: 1200px;
-  padding: 28px 32px 104px;
+  max-width: 1280px;
+  padding: 22px 32px 96px;
   width: 100%;
 }
 
@@ -2407,7 +2460,8 @@ dd {
 
 .retrofit-picker-shell {
   display: grid;
-  gap: 24px;
+  gap: 20px;
+  min-width: 0;
 }
 
 .estimate-accuracy-banner {
@@ -2416,9 +2470,9 @@ dd {
   border: 1px solid var(--rf-border);
   border-radius: 20px;
   display: grid;
-  gap: 28px;
+  gap: 24px;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 124px;
+  min-height: 118px;
   padding: 24px;
 }
 
@@ -2437,17 +2491,19 @@ dd {
 }
 
 .estimate-accuracy-banner h1 {
-  color: #0d1510;
-  font-size: 28px;
-  line-height: 34px;
+  color: #071b12;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 36px;
   margin-bottom: 8px;
 }
 
 .estimate-accuracy-banner p,
 .retrofit-picker-heading-row p {
   color: #43524a;
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 23px;
 }
 
 .estimate-accuracy-banner button {
@@ -2462,8 +2518,10 @@ dd {
 }
 
 .retrofit-picker-heading-row h2 {
-  color: #0d1510;
+  color: #071b12;
   font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0;
   line-height: 32px;
   margin-bottom: 6px;
 }
@@ -2471,8 +2529,9 @@ dd {
 .retrofit-picker-controls {
   align-items: center;
   display: grid;
-  gap: 16px;
-  grid-template-columns: minmax(180px, 250px) minmax(260px, 1fr) auto;
+  gap: 14px;
+  grid-template-columns: minmax(180px, 260px) minmax(260px, 1fr) auto;
+  margin-top: 2px;
 }
 
 .picker-sort-control,
@@ -2498,7 +2557,7 @@ dd {
   border: 1px solid var(--rf-border);
   border-radius: 10px;
   color: var(--rf-text);
-  min-height: 42px;
+  min-height: 40px;
   padding: 0 14px;
   width: 100%;
 }
@@ -2517,7 +2576,7 @@ dd {
   border: 0;
   border-right: 1px solid var(--rf-border);
   color: var(--rf-text);
-  min-height: 42px;
+  min-height: 40px;
   padding: 0 20px;
 }
 
@@ -2533,52 +2592,76 @@ dd {
 
 .retrofit-picker-grid {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
 }
 
 .retrofit-picker-grid.is-panel {
   grid-template-columns: 1fr;
 }
 
+.retrofit-picker-grid.is-panel .retrofit-picker-card {
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  min-height: 118px;
+}
+
+.retrofit-picker-grid.is-panel .retrofit-picker-card-metrics {
+  border-top: 0;
+  padding-top: 0;
+}
+
 .retrofit-picker-card {
   background: #ffffff;
   border: 1px solid var(--rf-border);
-  border-radius: 16px;
+  border-radius: 20px;
   color: var(--rf-text);
   cursor: pointer;
   display: grid;
   gap: 18px;
-  min-height: 166px;
-  padding: 16px;
+  min-height: 214px;
+  min-width: 0;
+  padding: 20px;
   text-align: left;
+}
+
+.retrofit-picker-card.is-selected {
+  background: var(--rf-green-soft);
+  border-color: var(--rf-green);
 }
 
 .retrofit-picker-card-top {
   align-items: start;
   display: grid;
-  gap: 14px;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-width: 0;
 }
 
 .retrofit-picker-icon {
   align-items: center;
   background: linear-gradient(135deg, #f3f8f3, #fbfaf3);
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--rf-green);
   display: inline-flex;
-  font-size: 14px;
-  font-weight: 800;
-  height: 56px;
+  height: 68px;
   justify-content: center;
-  width: 56px;
+  width: 68px;
+}
+
+.retrofit-picker-icon svg {
+  height: 36px;
+  width: 36px;
 }
 
 .retrofit-picker-card h3 {
-  color: #0d1510;
+  color: #071b12;
   display: -webkit-box;
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 27px;
   margin-bottom: 6px;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -2588,17 +2671,11 @@ dd {
 .retrofit-picker-card p {
   color: #44554c;
   display: -webkit-box;
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 15px;
+  line-height: 23px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-}
-
-.retrofit-picker-arrow {
-  color: #14221a;
-  font-size: 28px;
-  line-height: 32px;
 }
 
 .retrofit-picker-card-metrics {
@@ -2614,7 +2691,7 @@ dd {
   display: grid;
   gap: 4px;
   min-width: 0;
-  padding: 0 12px;
+  padding: 0 14px;
 }
 
 .retrofit-picker-metric:first-child {
@@ -2628,17 +2705,29 @@ dd {
 
 .retrofit-picker-metric span {
   color: #405149;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 17px;
+}
+
+.retrofit-picker-metric span::before {
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  content: "";
+  display: inline-block;
+  height: 11px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  width: 11px;
 }
 
 .retrofit-picker-metric strong {
-  color: #0d1510;
-  font-size: 17px;
-  line-height: 23px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: #071b12;
+  font-size: clamp(16px, 1.45vw, 21px);
+  font-weight: 800;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .retrofit-picker-metric:first-child strong {
@@ -2657,7 +2746,21 @@ dd {
 
 .retrofit-picker-more-row {
   display: flex;
+  gap: 10px;
   justify-content: center;
+}
+
+.selected-workspace-header {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.selected-workspace-header h2 {
+  color: #071b12;
+  font-size: 22px;
+  line-height: 28px;
 }
 
 .inline-link-button {
@@ -4494,6 +4597,10 @@ dd {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .retrofit-picker-grid.is-panel .retrofit-picker-card {
+    grid-template-columns: 1fr;
+  }
+
   .estimate-accuracy-banner {
     justify-items: start;
   }
@@ -4580,6 +4687,30 @@ dd {
 
   .picker-view-toggle {
     justify-self: stretch;
+  }
+
+  .retrofit-picker-card {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .retrofit-picker-card-top {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .retrofit-picker-icon {
+    height: 58px;
+    width: 58px;
+  }
+
+  .retrofit-picker-icon svg {
+    height: 30px;
+    width: 30px;
+  }
+
+  .retrofit-picker-card h3 {
+    font-size: 20px;
+    line-height: 25px;
   }
 
   .picker-view-toggle button {
