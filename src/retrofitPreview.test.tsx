@@ -261,7 +261,14 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Selected but not included yet");
     expect(html).toContain("View details");
     expect(html.indexOf("<h3>Financials</h3>")).toBeLessThan(html.indexOf("<h3>Why this is recommended</h3>"));
+    expect(html.indexOf("<h3>Financials</h3>")).toBeLessThan(html.indexOf("aria-label=\"Confirm retrofit plan\""));
+    expect(html.indexOf("aria-label=\"Confirm retrofit plan\"")).toBeLessThan(html.indexOf("<h3>What is included in this estimate</h3>"));
+    expect(html.indexOf("<h3>Opportunities</h3>")).toBeLessThan(html.indexOf("<h3>Missing information</h3>"));
+    expect(html.indexOf("<h3>Missing information</h3>")).toBeLessThan(html.indexOf("<h3>Operating Savings</h3>"));
     expect(html.indexOf("<h3>Missing information</h3>")).toBeLessThan(html.indexOf("<h3>Estimate assumptions</h3>"));
+    expect(html).toContain("selected-scenario-rows");
+    expect(html).not.toContain("selected-scenario-grid");
+    expect(html).not.toContain(">Goal:");
     expect(html).not.toContain("Premium insight");
     expect(html).not.toContain("Preview-only until a safe persistence API is available");
     expect(html).not.toContain("Backend savings preview is available");
@@ -341,6 +348,35 @@ describe("retrofit recommendations preview", () => {
     expect(retrofit.confidenceLabel).toBe("Needs review");
   });
 
+  it("uses retrofit-specific detail questions for solar and biomass categories", () => {
+    const categoryPayload = {
+      ...liveShapedPayload,
+      retrofits: [
+        {
+          ...liveShapedPayload.retrofits[0],
+          retrofitTypeId: "biomass_biogas_energy_system",
+          displayName: "Biomass/biogas energy system",
+          opportunities: []
+        },
+        {
+          ...liveShapedPayload.retrofits[0],
+          retrofitTypeId: "solar_renewable_electricity",
+          displayName: "Rooftop solar PV",
+          opportunities: []
+        }
+      ]
+    } as any;
+    const preview = buildUserRetrofitPreviewResult(categoryPayload);
+    const biomassQuestions = preview.retrofits[0].detailQuestions.map((question) => question.question);
+    const solarQuestions = preview.retrofits[1].detailQuestions.map((question) => question.question);
+
+    expect(biomassQuestions).toContain("What fuel or waste stream would the system use?");
+    expect(biomassQuestions).toContain("What quantity of feedstock is available per month?");
+    expect(solarQuestions).toContain("What roof or site area is available?");
+    expect(solarQuestions).toContain("Do you control the roof or site?");
+    expect(solarQuestions).not.toContain("What quantity or scope is being upgraded?");
+  });
+
   it("keeps preview hover and active states readable and visually distinct", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
@@ -349,11 +385,16 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-preview-page .retrofit-tab:hover");
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .retrofit-section-chip:hover");
+    expect(css).toContain(".retrofit-preview-page .preview-accordion-trigger:hover");
+    expect(css).toContain(".retrofit-preview-page .preview-accordion-trigger:hover *");
     expect(css).toContain(".retrofit-section-chip.is-active");
     expect(css).toContain(".retrofit-tab.is-active");
     expect(css).toContain("background: var(--rf-green-soft)");
     expect(css).toContain("background: var(--rf-bg)");
     expect(css).toContain("height: 118px");
+    expect(css).toContain("scroll-margin-top: 92px");
+    expect(css).toContain(".selected-scenario-rows");
+    expect(css).toContain(".compact-detail-row");
     expect(css).toContain("grid-template-columns: repeat(3, minmax(90px, 1fr))");
     expect(css).toContain(".retrofit-refinement-status");
     expect(css).toContain(".current-plan-next-step");

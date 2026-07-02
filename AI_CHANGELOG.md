@@ -1434,3 +1434,4 @@
 - Collapsed the admin test-profile controls, added an active-retrofit mini sub-navigation, compact section summaries, and an application-prep drawer so the preview reads as a guided workspace instead of a long data dump.
 - Fixed preview layout regressions where selected-scenario detail labels collided with long values, retrofit tabs were too tall, and negative recurring impacts could be labeled as annual savings.
 - Added the one-retrofit-at-a-time current plan flow to the preview, including local add-to-plan state, recalculation-not-available messaging, guarded tab switching for unconfirmed selections, and a sticky active-retrofit action bar.
+- Tightened the Retrofit Recommendations preview for deployment readiness by removing dark-green hover/header states from non-CTA UI, moving the add-to-plan strip directly after Financials, making selected-scenario details compact rows, and adding solar/biomass-specific detail questions.

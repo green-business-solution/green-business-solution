@@ -2131,7 +2131,7 @@ dd {
   font-weight: 650;
 }
 
-.retrofit-preview-page button:hover {
+.retrofit-preview-page button:not(.secondary-button):not(.retrofit-tab):not(.scenario-card):not(.retrofit-section-chip):not(.preview-accordion-trigger):hover {
   background: #0d5f40;
   color: #ffffff;
 }
@@ -2141,7 +2141,8 @@ dd {
 .retrofit-preview-page .scenario-card:hover,
 .retrofit-preview-page .retrofit-section-chip:hover,
 .retrofit-preview-page .opportunity-preview-row:hover,
-.retrofit-preview-page .next-action-item:hover {
+.retrofit-preview-page .next-action-item:hover,
+.retrofit-preview-page .preview-accordion-trigger:hover {
   background: var(--rf-bg);
   border-color: var(--rf-green-border);
   color: var(--rf-text);
@@ -2154,7 +2155,8 @@ dd {
 
 .retrofit-preview-page .retrofit-tab:hover *,
 .retrofit-preview-page .scenario-card:hover *,
-.retrofit-preview-page .retrofit-section-chip:hover {
+.retrofit-preview-page .retrofit-section-chip:hover,
+.retrofit-preview-page .preview-accordion-trigger:hover * {
   color: inherit;
 }
 
@@ -2346,10 +2348,11 @@ dd {
   border-radius: 16px;
   color: #15231b;
   display: grid;
-  gap: 8px;
+  gap: 6px;
   justify-content: stretch;
-  min-height: 160px;
-  padding: 16px;
+  min-height: 150px;
+  overflow: hidden;
+  padding: 12px;
   text-align: left;
   white-space: normal;
 }
@@ -2362,9 +2365,9 @@ dd {
 
 .scenario-card > span {
   display: -webkit-box;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 750;
-  line-height: 21px;
+  line-height: 19px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2374,7 +2377,7 @@ dd {
 .scenario-card small {
   color: #5f6d65;
   font-size: 12px;
-  line-height: 18px;
+  line-height: 16px;
   margin: 0;
   min-width: 0;
 }
@@ -2401,8 +2404,8 @@ dd {
 
 .scenario-metrics strong {
   color: #16231c;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2791,8 +2794,9 @@ dd {
   flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 8px;
+  z-index: 4;
 }
 
 .retrofit-section-chip {
@@ -2882,14 +2886,15 @@ dd {
   border: 1px solid #e1e8e3;
   border-radius: 16px;
   padding: 14px 16px;
-  scroll-margin-top: 24px;
+  scroll-margin-top: 92px;
 }
 
 .preview-accordion-trigger {
   background: transparent;
   border: 0;
+  border-radius: 12px;
   color: #132119;
-  padding: 0;
+  padding: 2px;
   text-align: left;
   width: 100%;
 }
@@ -3032,8 +3037,8 @@ dd {
 }
 
 .retrofit-scenario-grid .scenario-card {
-  min-height: 190px;
-  overflow: visible;
+  min-height: 170px;
+  overflow: hidden;
 }
 
 .scenario-opportunity-chip-row {
@@ -3068,17 +3073,35 @@ dd {
   font-weight: 750;
 }
 
-.selected-scenario-grid {
+.selected-scenario-rows {
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 8px;
 }
 
-.selected-scenario-grid .detail-item {
+.compact-detail-row {
+  align-items: start;
   background: #ffffff;
   border: 1px solid #e2e9e4;
   border-radius: 12px;
-  padding: 10px 12px;
+  display: grid;
+  gap: 8px 14px;
+  grid-template-columns: minmax(140px, 0.32fr) minmax(0, 1fr);
+  padding: 8px 10px;
+}
+
+.compact-detail-row span {
+  color: #647269;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 16px;
+}
+
+.compact-detail-row strong {
+  color: #18251d;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  overflow-wrap: anywhere;
 }
 
 .included-summary-strip {
@@ -3485,7 +3508,7 @@ dd {
 
 @media (max-width: 760px) {
   .retrofit-metric-grid,
-  .selected-scenario-grid,
+  .selected-scenario-rows,
   .included-summary-strip,
   .decision-summary-strip,
   .included-estimate-row,
@@ -3647,7 +3670,7 @@ dd {
   .section-title-row,
   .retrofit-metric-grid,
   .editable-estimate-grid,
-  .selected-scenario-grid,
+  .selected-scenario-rows,
   .opportunity-preview-details,
   .operating-savings-item,
   .detail-question-grid,
