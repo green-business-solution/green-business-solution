@@ -7235,6 +7235,32 @@ export function countScenarioSelectedOpportunities(
   return scenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]).length;
 }
 
+export function getSelectedOpportunitiesForScenario(
+  retrofit: RetrofitPreviewCard,
+  scenario: RetrofitScenarioPreview | undefined,
+  selectedOpportunityIds: Record<string, boolean> = {}
+) {
+  if (!scenario) return [];
+  return retrofit.opportunities.filter(
+    (opportunity) =>
+      scenario.selectedOpportunityIds.includes(opportunity.id) &&
+      selectedOpportunityIds[opportunity.id] !== false
+  );
+}
+
+export function getIncludedOpportunitiesForCurrentEstimate(
+  retrofit: RetrofitPreviewCard,
+  selectedScenario: RetrofitScenarioPreview | undefined,
+  selectedOpportunityIds: Record<string, boolean> = {}
+) {
+  const scenarioOpportunityIds = new Set(selectedScenario?.selectedOpportunityIds || []);
+  return retrofit.opportunities.filter((opportunity) => {
+    const isSelected = Boolean(selectedOpportunityIds[opportunity.id]);
+    const isInScenario = !selectedScenario || scenarioOpportunityIds.has(opportunity.id);
+    return isSelected && isInScenario && getOpportunityIncludedLabel(opportunity, isSelected) === "Included in current estimate";
+  });
+}
+
 export function getOpportunityIncludedLabel(opportunity: RetrofitOpportunityPreview, selected: boolean) {
   if (selected && opportunity.includedState === "Not included yet — needs more information") return opportunity.includedState;
   if (selected) return "Included in current estimate";

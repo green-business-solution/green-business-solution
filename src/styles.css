@@ -1967,7 +1967,7 @@ dd {
   gap: 24px;
   margin: 0 auto;
   max-width: 1200px;
-  padding: 28px 32px 64px;
+  padding: 28px 32px 104px;
   width: 100%;
 }
 
@@ -2245,6 +2245,7 @@ dd {
 .retrofit-preview-list {
   display: grid;
   gap: 16px;
+  scroll-margin-top: 220px;
 }
 
 .current-plan-panel {
@@ -2285,16 +2286,16 @@ dd {
   display: grid;
   gap: 10px;
   margin-inline: -4px;
-  padding: 6px 4px 8px;
+  padding: 8px 4px 10px;
   position: sticky;
-  top: 0;
+  top: 8px;
   z-index: 5;
 }
 
 .retrofit-tab-bar {
   display: grid;
-  gap: 10px;
-  grid-auto-columns: minmax(190px, 240px);
+  gap: 12px;
+  grid-auto-columns: minmax(190px, 230px);
   grid-auto-flow: column;
   overflow-x: auto;
   padding-bottom: 4px;
@@ -2307,9 +2308,11 @@ dd {
   border-radius: 16px;
   color: #17211b;
   display: grid;
-  gap: 6px;
+  gap: 7px;
+  max-height: 130px;
   min-height: 112px;
-  padding: 12px;
+  overflow: hidden;
+  padding: 14px;
   text-align: left;
 }
 
@@ -2332,14 +2335,15 @@ dd {
 
 .retrofit-tab-top {
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
-.retrofit-tab-top strong {
+.retrofit-tab-title {
   color: #102019;
   display: -webkit-box;
   font-size: 14px;
-  line-height: 19px;
+  font-weight: 760;
+  line-height: 18px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2371,6 +2375,17 @@ dd {
   justify-content: flex-start;
 }
 
+.plan-state-badge {
+  background: #eef5f0;
+  border: 1px solid #d7e6dc;
+  border-radius: 999px;
+  color: #2f6b4f;
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 16px;
+  padding: 2px 7px;
+}
+
 .retrofit-preview-card {
   padding: 20px;
 }
@@ -2378,6 +2393,8 @@ dd {
 .retrofit-preview-card-active {
   display: grid;
   gap: 14px;
+  padding-bottom: 132px;
+  scroll-margin-top: 220px;
 }
 
 .retrofit-card-top-row,
@@ -2442,11 +2459,15 @@ dd {
 }
 
 .retrofit-section-subnav {
+  background: rgba(247, 250, 247, 0.94);
+  border: 1px solid #e0e8e3;
+  border-radius: 16px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  padding: 8px;
   position: sticky;
-  top: 86px;
+  top: 154px;
   z-index: 4;
 }
 
@@ -2523,7 +2544,7 @@ dd {
   border: 1px solid #e1e8e3;
   border-radius: 16px;
   padding: 14px 16px;
-  scroll-margin-top: 156px;
+  scroll-margin-top: 248px;
 }
 
 .preview-accordion-trigger {
@@ -2662,7 +2683,9 @@ dd {
 }
 
 .retrofit-scenario-grid .scenario-card {
-  min-height: 148px;
+  max-height: 210px;
+  min-height: 170px;
+  overflow: hidden;
 }
 
 .scenario-opportunity-chip-row {
@@ -2676,13 +2699,118 @@ dd {
   border: 1px solid #dbe7df;
   border-radius: 999px;
   color: #496055;
+  max-width: 100%;
+  overflow: hidden;
   padding: 3px 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted-chip {
+  background: #f3f5f3;
+  color: #6a776f;
+}
+
+.scenario-select-state {
+  align-self: end;
+  color: #2c654b !important;
+  font-weight: 750;
 }
 
 .selected-scenario-grid {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(2, minmax(260px, 1fr));
+}
+
+.selected-scenario-grid .detail-item {
+  background: #ffffff;
+  border: 1px solid #e2e9e4;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.included-summary-strip {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.included-summary-strip .detail-item {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.included-truth-table {
+  display: grid;
+  gap: 12px;
+}
+
+.included-estimate-group {
+  background: #fbfdfb;
+  border: 1px solid #e1e8e3;
+  border-radius: 14px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.included-estimate-group-header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.included-estimate-group-header h4 {
+  margin: 0;
+}
+
+.included-estimate-group-header span {
+  background: #eef2ef;
+  border-radius: 999px;
+  color: #5a675f;
+  font-size: 12px;
+  font-weight: 750;
+  padding: 3px 8px;
+}
+
+.included-estimate-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.included-estimate-row {
+  align-items: start;
+  background: #ffffff;
+  border: 1px solid #e5ece7;
+  border-radius: 12px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(110px, auto) minmax(0, 1fr);
+  padding: 10px 12px;
+}
+
+.included-estimate-row small,
+.included-estimate-row p {
+  color: #647269;
+  font-size: 12px;
+  line-height: 17px;
+  margin: 0;
+}
+
+.included-estimate-row > span {
+  color: #16231c;
+  font-weight: 760;
+  text-align: right;
+}
+
+.compact-empty {
+  margin: 0;
+  min-height: 0;
+  padding: 4px 0;
 }
 
 .detail-item {
@@ -2749,6 +2877,12 @@ dd {
   justify-items: end;
 }
 
+.opportunity-preview-actions > strong {
+  color: #17241c;
+  font-size: 16px;
+  line-height: 20px;
+}
+
 .opportunity-preview-main small {
   color: #5f6e66;
   display: block;
@@ -2780,7 +2914,29 @@ dd {
 .financing-field-grid {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.opportunity-preview-details {
+  align-items: start;
+}
+
+.opportunity-detail-column {
+  background: #ffffff;
+  border: 1px solid #e3ebe5;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.opportunity-detail-column h5 {
+  color: #17241c;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0 0 8px;
+}
+
+.opportunity-impact-row {
+  grid-column: 1 / -1;
 }
 
 .opportunity-preview-details div,
@@ -2833,6 +2989,19 @@ dd {
 
 .detail-question-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-question small,
+.editable-estimate-meta small {
+  color: #647269;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.editable-estimate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .next-action-item {
@@ -2918,6 +3087,8 @@ dd {
 @media (max-width: 760px) {
   .retrofit-metric-grid,
   .selected-scenario-grid,
+  .included-summary-strip,
+  .included-estimate-row,
   .detail-question-grid,
   .editable-estimate-grid,
   .opportunity-preview-details,
