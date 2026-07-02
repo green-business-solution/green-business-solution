@@ -117,6 +117,11 @@
 ## 2026-07-02 - Codex (GPT-5) retrofit preview readability follow-up
 
 - Further tightened the Retrofit Recommendations active workspace after screenshot review by removing sticky mini-navigation overlap and shortening default scenario tab copy.
+## 2026-07-02 - Codex (GPT-5) how it works progress snapping
+
+- Changed the public `How It Works` journey progress to snap to the nearest stage instead of interpolating continuously between dots.
+- Updated the sticky transformation scene and progress fill to advance step-by-step so scroll positions lock to discrete stages more predictably.
+
 - Updated scenario cards so titles, opportunity chips, and metrics wrap/truncate cleanly instead of clipping hidden content.
 - Improved included-estimate truth-table wrapping so blocker names, actions, and reasons remain visually separated in dense rows.
 

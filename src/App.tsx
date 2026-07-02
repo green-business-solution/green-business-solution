@@ -2839,7 +2839,6 @@ function HowItWorksPage({
       return undefined;
     }
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
 
     const updateProgress = () => {
@@ -2847,7 +2846,7 @@ function HowItWorksPage({
       const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
       const normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
       const nextProgress = normalizedProgress * (stages.length - 1);
-      setJourneyProgress(reducedMotion.matches ? Math.round(nextProgress) : nextProgress);
+      setJourneyProgress(Math.round(nextProgress));
       animationFrame = 0;
     };
 
@@ -2860,12 +2859,10 @@ function HowItWorksPage({
     updateProgress();
     window.addEventListener("scroll", requestProgressUpdate, { passive: true });
     window.addEventListener("resize", requestProgressUpdate);
-    reducedMotion.addEventListener("change", requestProgressUpdate);
 
     return () => {
       window.removeEventListener("scroll", requestProgressUpdate);
       window.removeEventListener("resize", requestProgressUpdate);
-      reducedMotion.removeEventListener("change", requestProgressUpdate);
       window.cancelAnimationFrame(animationFrame);
     };
   }, [stages.length]);
@@ -2891,12 +2888,7 @@ function HowItWorksPage({
                 loading={index < 2 ? "eager" : "lazy"}
                 src={stage.image}
                 style={{
-                  opacity:
-                    journeyProgress >= index
-                      ? 1
-                      : journeyProgress > index - 1
-                        ? journeyProgress - (index - 1)
-                        : 0
+                  opacity: activeStageIndex >= index ? 1 : 0
                 }}
               />
             ))}
@@ -2913,7 +2905,7 @@ function HowItWorksPage({
               <p>{activeStage.copy}</p>
             </article>
             <div className="journey-progress" aria-hidden="true">
-              <span style={{ transform: `scaleX(${journeyProgress / (stages.length - 1)})` }} />
+              <span style={{ transform: `scaleX(${activeStageIndex / (stages.length - 1)})` }} />
               <div className="journey-progress-dots">
                 {stages.map((stage, index) => (
                   <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />
