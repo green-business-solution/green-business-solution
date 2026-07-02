@@ -2751,58 +2751,7 @@ dd {
   font-weight: 800;
   line-height: 1.15;
   overflow-wrap: anywhere;
-  position: relative;
   white-space: normal;
-}
-
-.retrofit-picker-metric-value[data-tooltip] {
-  cursor: help;
-  z-index: 4;
-}
-
-.retrofit-picker-metric-value[data-tooltip]::before,
-.retrofit-picker-metric-value[data-tooltip]::after {
-  left: 50%;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transform: translateX(-50%) translateY(4px);
-  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
-  visibility: hidden;
-  z-index: 50;
-}
-
-.retrofit-picker-metric-value[data-tooltip]::after {
-  background: #071b12;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  bottom: calc(100% + 10px);
-  box-shadow: 0 12px 30px rgba(7, 27, 18, 0.18);
-  color: #ffffff !important;
-  content: attr(data-tooltip);
-  font-size: 12px;
-  font-weight: 650;
-  line-height: 1.35;
-  max-width: min(260px, 72vw);
-  min-width: 190px;
-  padding: 9px 10px;
-  text-align: left;
-  white-space: normal;
-}
-
-.retrofit-picker-metric-value[data-tooltip]::before {
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid #071b12;
-  bottom: calc(100% + 4px);
-  content: "";
-}
-
-.retrofit-picker-metric-value[data-tooltip]:hover::before,
-.retrofit-picker-metric-value[data-tooltip]:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  visibility: visible;
 }
 
 .retrofit-picker-metric.is-savings .retrofit-picker-metric-value {

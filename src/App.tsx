@@ -6345,7 +6345,6 @@ function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: s
   const Icon = kind === "savings" ? MetricSavingsIcon : kind === "cost" ? MetricCostIcon : MetricPaybackIcon;
   const placeholderState = getPickerMetricPlaceholderState(kind, value);
   const isFallback = value === "?" || /needs|pending|not/i.test(value);
-  const tooltipText = placeholderState.tooltipBody;
   return (
     <div className={`retrofit-picker-metric is-${kind}${isFallback ? " is-fallback" : ""}${placeholderState.className}`}>
       <span className="retrofit-picker-metric-label">
@@ -6353,9 +6352,8 @@ function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: s
         <span>{label}</span>
       </span>
       <strong
-        aria-label={tooltipText || undefined}
+        aria-label={placeholderState.accessibleLabel || undefined}
         className="retrofit-picker-metric-value"
-        data-tooltip={tooltipText || undefined}
       >
         {value}
       </strong>
@@ -6365,26 +6363,23 @@ function PickerMetric({ kind, label, value }: { kind: PickerMetricKind; label: s
 
 function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) {
   if (value !== "?") {
-    return { className: "", tooltipBody: "", tooltipTitle: "" };
+    return { accessibleLabel: "", className: "" };
   }
   if (kind === "savings") {
     return {
       className: " metric-placeholder--bill",
-      tooltipTitle: "Upload bills",
-      tooltipBody: "Upload bills to estimate savings."
+      accessibleLabel: "Upload bills to estimate savings."
     };
   }
   if (kind === "cost") {
     return {
       className: " metric-placeholder--question",
-      tooltipTitle: "Answer retrofit-specific questions",
-      tooltipBody: "Answer retrofit-specific questions to estimate cost."
+      accessibleLabel: "Answer retrofit-specific questions to estimate cost."
     };
   }
   return {
     className: " metric-placeholder--both",
-    tooltipTitle: "Upload bills and answer retrofit-specific questions",
-    tooltipBody: "Upload bills and answer retrofit-specific questions to estimate payback."
+    accessibleLabel: "Upload bills and answer retrofit-specific questions to estimate payback."
   };
 }
 
