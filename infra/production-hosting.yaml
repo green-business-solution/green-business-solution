@@ -26,6 +26,20 @@ Parameters:
     NoEcho: true
     Default: ""
     Description: Optional Geocodio API key used only as an address-geography fallback when Census Geocoder does not match.
+  GeocodioDailyLimit:
+    Type: Number
+    Default: 2500
+    MinValue: 0
+    MaxValue: 2500
+    Description: Maximum Geocodio fallback lookups allowed per UTC day before fallback is disabled.
+  GeocodioQuotaAlertEmailTo:
+    Type: String
+    Default: neerkuchlous@gmail.com
+    Description: Email address notified when the Geocodio daily fallback quota is reached.
+  AlertEmailFrom:
+    Type: String
+    Default: neerkuchlous@gmail.com
+    Description: SES-verified sender address used for operational alert emails.
   GoogleRedirectUri:
     Type: String
     Default: https://retrofi.org/api/auth/google/callback
@@ -47,6 +61,9 @@ Parameters:
   EnergyDataTable:
     Type: String
     Default: gbs-energy-data
+  RuntimeStateTable:
+    Type: String
+    Default: gbs-runtime-state
   EnergyDataBucketName:
     Type: String
     Description: Existing S3 bucket used for uploaded utility/energy data.
@@ -107,6 +124,16 @@ Resources:
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${IntakeTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${EnergyDataTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${OpportunitiesTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RuntimeStateTable}
+        - PolicyName: OperationalEmailAlerts
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                Resource: "*"
         - PolicyName: EnergyDataBucketAccess
           PolicyDocument:
             Version: "2012-10-17"
@@ -134,10 +161,14 @@ Resources:
           GBS_INTAKE_TABLE: !Ref IntakeTable
           GBS_ENERGY_DATA_TABLE: !Ref EnergyDataTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
+          GBS_RUNTIME_STATE_TABLE: !Ref RuntimeStateTable
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
           GBS_GEOCODIO_API_KEY: !Ref GeocodioApiKey
+          GBS_GEOCODIO_DAILY_LIMIT: !Ref GeocodioDailyLimit
+          GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO: !Ref GeocodioQuotaAlertEmailTo
+          GBS_ALERT_EMAIL_FROM: !Ref AlertEmailFrom
           GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
           GBS_ADMIN_EMAILS: !Ref AdminEmails
       Handler: server/lambda.handler

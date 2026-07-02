@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) Geocodio quota guard
+
+- Added a DynamoDB-backed daily quota guard for Geocodio fallback lookups so the API stops calling Geocodio after 2,500 fallback reservations in a UTC day.
+- Added a best-effort SES email alert to `neerkuchlous@gmail.com` when the daily Geocodio fallback quota is reached.
+- Updated production deployment config to create/use a runtime state table and expose non-secret quota guard status in API health/diagnostics responses.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar hierarchy correction
 
 - Restored `Profile info` and `Dashboard` to the same visual weight as the other primary sidebar items.

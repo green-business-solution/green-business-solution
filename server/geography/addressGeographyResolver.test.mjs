@@ -47,6 +47,43 @@ describe("address geography resolver", () => {
     expect(result.censusBlockGeoid).toBe("110010062021000");
   });
 
+  it("skips Geocodio fallback when the quota guard blocks the reservation", async () => {
+    const fetchImpl = vi.fn().mockResolvedValueOnce(jsonResponse({ result: { addressMatches: [] } }));
+    const reserveGeocodioLookup = vi.fn(async () => ({
+      allowed: false,
+      reason: "quota_exhausted",
+      usageDate: "2026-07-02",
+      usageCount: 2500,
+      limit: 2500,
+      notes: ["Geocodio daily fallback quota of 2500 was already exhausted for 2026-07-02."]
+    }));
+
+    const result = await resolveAddressGeography("1600 Pennsylvania Ave NW, Washington, DC 20500", {
+      fetchImpl,
+      geocodioApiKey: "test-key",
+      reserveGeocodioLookup,
+      resolvedAt: "2026-07-02T00:00:00.000Z"
+    });
+
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+    expect(reserveGeocodioLookup).toHaveBeenCalledWith({
+      address: "1600 Pennsylvania Ave NW, Washington, DC 20500",
+      resolvedAt: "2026-07-02T00:00:00.000Z"
+    });
+    expect(result.status).toBe("unmatched");
+    expect(result.providerAttempts[1]).toEqual({
+      provider: "geocodio",
+      status: "skipped",
+      notes: ["Geocodio daily fallback quota of 2500 was already exhausted for 2026-07-02."],
+      quota: {
+        reason: "quota_exhausted",
+        usageDate: "2026-07-02",
+        usageCount: 2500,
+        limit: 2500
+      }
+    });
+  });
+
   it("does not fail intake callers when providers are unavailable", async () => {
     const fetchImpl = vi.fn(async () => {
       throw new Error("network unavailable");

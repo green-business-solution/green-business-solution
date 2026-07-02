@@ -8,9 +8,13 @@ HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z04402863EVV8FUF4EWUX}"
 REGION="${AWS_DEPLOY_REGION:-us-east-1}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
 ENERGY_DATA_TABLE="${GBS_ENERGY_DATA_TABLE:-gbs-energy-data}"
+RUNTIME_STATE_TABLE="${GBS_RUNTIME_STATE_TABLE:-gbs-runtime-state}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 GEOCODIO_API_KEY="${GBS_GEOCODIO_API_KEY:-${GEOCODIO_API_KEY:-}}"
+GEOCODIO_DAILY_LIMIT="${GBS_GEOCODIO_DAILY_LIMIT:-2500}"
+GEOCODIO_QUOTA_ALERT_EMAIL_TO="${GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO:-neerkuchlous@gmail.com}"
+ALERT_EMAIL_FROM="${GBS_ALERT_EMAIL_FROM:-${GBS_GEOCODIO_QUOTA_ALERT_EMAIL_FROM:-neerkuchlous@gmail.com}}"
 GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI:-https://${DOMAIN_NAME}/api/auth/google/callback}"
 ADMIN_EMAILS="${GBS_ADMIN_EMAILS:-neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -55,6 +59,38 @@ ensure_energy_data_table() {
     --billing-mode PAY_PER_REQUEST >/dev/null
 
   aws_data_region dynamodb wait table-exists --table-name "${ENERGY_DATA_TABLE}"
+}
+
+ensure_runtime_state_table() {
+  if aws_data_region dynamodb describe-table --table-name "${RUNTIME_STATE_TABLE}" >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "Creating DynamoDB table ${RUNTIME_STATE_TABLE} in ${DATA_REGION}..."
+  aws_data_region dynamodb create-table \
+    --table-name "${RUNTIME_STATE_TABLE}" \
+    --attribute-definitions \
+      AttributeName=stateScope,AttributeType=S \
+      AttributeName=stateKey,AttributeType=S \
+    --key-schema \
+      AttributeName=stateScope,KeyType=HASH \
+      AttributeName=stateKey,KeyType=RANGE \
+    --billing-mode PAY_PER_REQUEST >/dev/null
+
+  aws_data_region dynamodb wait table-exists --table-name "${RUNTIME_STATE_TABLE}"
+}
+
+ensure_alert_email_identity() {
+  if [ -z "${ALERT_EMAIL_FROM}" ]; then
+    return
+  fi
+
+  if aws_region sesv2 get-email-identity --email-identity "${ALERT_EMAIL_FROM}" >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "Creating SES email identity for ${ALERT_EMAIL_FROM}. Complete the verification email before quota alerts can be delivered."
+  aws_region sesv2 create-email-identity --email-identity "${ALERT_EMAIL_FROM}" >/dev/null
 }
 
 ensure_energy_data_bucket() {
@@ -151,6 +187,8 @@ fi
 aws_region s3 cp "${LAMBDA_ZIP}" "s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}"
 
 ensure_energy_data_table
+ensure_runtime_state_table
+ensure_alert_email_identity
 ensure_energy_data_bucket
 
 echo "Deploying CloudFormation stack ${STACK_NAME}..."
@@ -164,7 +202,11 @@ parameter_overrides=(
   "AdminEmails=${ADMIN_EMAILS}"
   "DataRegion=${DATA_REGION}"
   "EnergyDataTable=${ENERGY_DATA_TABLE}"
+  "RuntimeStateTable=${RUNTIME_STATE_TABLE}"
   "EnergyDataBucketName=${ENERGY_DATA_BUCKET}"
+  "GeocodioDailyLimit=${GEOCODIO_DAILY_LIMIT}"
+  "GeocodioQuotaAlertEmailTo=${GEOCODIO_QUOTA_ALERT_EMAIL_TO}"
+  "AlertEmailFrom=${ALERT_EMAIL_FROM}"
 )
 
 if [ -n "${GOOGLE_CLIENT_SECRET}" ]; then

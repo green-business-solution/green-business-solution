@@ -44,6 +44,39 @@ export async function resolveAddressGeography(address, options = {}) {
 
   const geocodioApiKey = options.geocodioApiKey || process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
   if (geocodioApiKey) {
+    if (typeof options.reserveGeocodioLookup === "function") {
+      const quota = await options.reserveGeocodioLookup({
+        address: normalizedAddress,
+        resolvedAt
+      });
+      if (!quota?.allowed) {
+        providerAttempts.push({
+          provider: "geocodio",
+          status: "skipped",
+          notes: quota?.notes || ["Geocodio fallback was skipped by the quota guard."],
+          quota: {
+            reason: quota?.reason || "quota_guard_blocked",
+            usageDate: quota?.usageDate || null,
+            usageCount: quota?.usageCount ?? null,
+            limit: quota?.limit ?? null
+          }
+        });
+        return {
+          ...baseResult({
+            status: "unmatched",
+            provider: null,
+            resolvedAt,
+            notes: [
+              "Census Geocoder did not return a usable address match.",
+              ...(quota?.notes || ["Geocodio fallback was skipped by the quota guard."])
+            ]
+          }),
+          normalizedAddress,
+          providerAttempts
+        };
+      }
+    }
+
     const geocodioResult = await resolveWithGeocodio(normalizedAddress, {
       fetchImpl,
       geocodioApiKey,

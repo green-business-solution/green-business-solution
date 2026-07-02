@@ -19,6 +19,7 @@ import { resolveOpportunityApplicationSource } from "./applicationSources/Applic
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
 import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
+import { GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT, reserveGeocodioLookup } from "./geography/geocodioUsageGuard.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -36,8 +37,17 @@ const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const energyDataTable = process.env.GBS_ENERGY_DATA_TABLE || "gbs-energy-data";
+const runtimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
+const geocodioDailyLimit = parseNonNegativeInteger(
+  process.env.GBS_GEOCODIO_DAILY_LIMIT,
+  GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT,
+  2500
+);
+const geocodioQuotaAlertEmailTo = process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO || "neerkuchlous@gmail.com";
+const geocodioQuotaAlertEmailFrom =
+  process.env.GBS_ALERT_EMAIL_FROM || process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_FROM || "neerkuchlous@gmail.com";
 const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
@@ -140,6 +150,15 @@ const retrofitRecommendationsPromiseCache = new Map();
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function parseNonNegativeInteger(value, fallback, max = Number.MAX_SAFE_INTEGER) {
+  const number = Number(value);
+  if (!Number.isInteger(number) || number < 0) {
+    return fallback;
+  }
+
+  return Math.min(number, max);
 }
 
 function cleanOptional(value) {
@@ -2451,7 +2470,17 @@ async function resolveSiteGeographyForIntake(input, now) {
   try {
     return await resolveAddressGeography(cleanText(input.siteAddress), {
       geocodioApiKey,
-      resolvedAt: now
+      resolvedAt: now,
+      reserveGeocodioLookup: () =>
+        reserveGeocodioLookup({
+          db,
+          tableName: runtimeStateTable,
+          now,
+          limit: geocodioDailyLimit,
+          alertEmailTo: geocodioQuotaAlertEmailTo,
+          alertEmailFrom: geocodioQuotaAlertEmailFrom,
+          appUrl: "https://retrofi.org"
+        })
     });
   } catch (error) {
     return {
@@ -2539,7 +2568,10 @@ app.get("/api/health", (_req, res) => {
     addressGeographyResolver: {
       primaryProvider: "census_geocoder",
       fallbackProvider: "geocodio",
-      geocodioFallbackConfigured: Boolean(geocodioApiKey)
+      geocodioFallbackConfigured: Boolean(geocodioApiKey),
+      geocodioDailyLimit,
+      geocodioQuotaGuardConfigured: Boolean(runtimeStateTable),
+      geocodioQuotaAlertEmailTo
     },
     googleClientConfigured: Boolean(googleClientId),
     googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
@@ -2572,7 +2604,10 @@ app.get("/api/diagnostics", async (_req, res) => {
       addressGeographyResolver: {
         primaryProvider: "census_geocoder",
         fallbackProvider: "geocodio",
-        geocodioFallbackConfigured: Boolean(geocodioApiKey)
+        geocodioFallbackConfigured: Boolean(geocodioApiKey),
+        geocodioDailyLimit,
+        geocodioQuotaGuardConfigured: Boolean(runtimeStateTable),
+        geocodioQuotaAlertEmailTo
       },
       googleClientConfigured: Boolean(googleClientId),
       googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
