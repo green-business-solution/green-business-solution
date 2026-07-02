@@ -36,6 +36,12 @@
 - Replaced the opportunity details toggle copy with a cleaner “View details” / “Details open” pattern instead of terse disclosure-only text.
 - Added focused preview tests for default scenario tab labeling, no contradictory missing-info copy, included-estimate summary labels, and utility-territory uncertainty preventing an opportunity from contributing to financial estimates.
 
+## 2026-07-02 - Codex (GPT-5) incentive formula repair intake 1-25
+
+- Added an intake/validation script for GPT Pro incentive formula and rate-table repair outputs that checks batch order/counts, normalizes markdown-contaminated URL fields, and writes a clean research artifact plus report.
+- Imported the first 25 completed GPT Pro outputs from `GPT Pro Work/incentive-formula-rate-table-repair-batches-1-50/`, covering 500 opportunity formula/workflow repair targets.
+- Preserved the richer research separately from the legacy simple-rule runtime file so the next estimator/import step can consume rate tables, measure catalogs, edge actions, tax credits, tariffs, and non-monetary workflow classifications safely.
+
 ## 2026-07-02 - Codex (GPT-5) incentive formula repair packet 1-50
 
 - Added a reusable GPT Pro work-packet generator for incentive formula, rate-table, measure-catalog, grant, tax-credit, recurring-effect, non-monetary workflow, and bad-edge repair.
