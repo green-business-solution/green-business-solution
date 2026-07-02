@@ -461,6 +461,66 @@ type AdminApplicationPathDiscoverResponse = {
   profile: ApplicationPathProfile;
 };
 
+type RequirementExtractionStatus = "requirements_extracted" | "partial" | "needs_review" | "source_unavailable" | "not_attempted";
+type RequirementValueStatus = boolean | "unknown";
+type ApplicationRequirementType =
+  | "field"
+  | "document"
+  | "eligibility"
+  | "preapproval"
+  | "contractor"
+  | "tax"
+  | "signature"
+  | "contact"
+  | "account_number"
+  | "quote"
+  | "bill"
+  | "other";
+
+type ApplicationRequirement = {
+  id: string;
+  label: string;
+  description?: string;
+  requirementType: ApplicationRequirementType;
+  required: boolean;
+  sourceUrl?: string;
+  evidenceSnippet?: string;
+  confidence: SourceConfidence;
+};
+
+type ApplicationRequirementEvidence = {
+  label: string;
+  sourceUrl?: string;
+  textSnippet?: string;
+};
+
+type ApplicationRequirementProfile = {
+  opportunityId: string;
+  opportunityName?: string;
+  sourceUrl?: string;
+  applicationUrl?: string;
+  programWebsiteUrl?: string;
+  applicationMethod: ApplicationMethod;
+  extractionStatus: RequirementExtractionStatus;
+  requiredFields: ApplicationRequirement[];
+  requiredDocuments: ApplicationRequirement[];
+  optionalFields: ApplicationRequirement[];
+  preApprovalRequired?: RequirementValueStatus;
+  contractorRequired?: RequirementValueStatus;
+  taxReviewRequired?: RequirementValueStatus;
+  deadline?: string;
+  estimatedTime?: string;
+  applicationSteps: string[];
+  evidence: ApplicationRequirementEvidence[];
+  notes: string[];
+  error?: string;
+};
+
+type AdminApplicationRequirementExtractResponse = {
+  generatedAt: string;
+  profile: ApplicationRequirementProfile;
+};
+
 type SampleMatchResult = {
   opportunityId: string;
   opportunityName: string;
@@ -9500,6 +9560,9 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
   const [pathProfiles, setPathProfiles] = useState<Record<string, ApplicationPathProfile>>({});
   const [pathLoading, setPathLoading] = useState<Record<string, boolean>>({});
   const [pathErrors, setPathErrors] = useState<Record<string, string>>({});
+  const [requirementProfiles, setRequirementProfiles] = useState<Record<string, ApplicationRequirementProfile>>({});
+  const [requirementLoading, setRequirementLoading] = useState<Record<string, boolean>>({});
+  const [requirementErrors, setRequirementErrors] = useState<Record<string, string>>({});
   const batchLimit = 100;
 
   async function loadSources(options?: { cursor?: string | null; append?: boolean }) {
@@ -9573,6 +9636,11 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
         ...current,
         [row.opportunityId]: response.profile
       }));
+      setRequirementProfiles((current) => {
+        const next = { ...current };
+        delete next[row.opportunityId];
+        return next;
+      });
     } catch (requestError) {
       setPathErrors((current) => ({
         ...current,
@@ -9580,6 +9648,42 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
       }));
     } finally {
       setPathLoading((current) => ({ ...current, [row.opportunityId]: false }));
+    }
+  }
+
+  async function extractRequirements(row: OpportunityApplicationSource, pathProfile: ApplicationPathProfile) {
+    if (!credential) {
+      setRequirementErrors((current) => ({
+        ...current,
+        [row.opportunityId]: "Sign in again to extract application requirements."
+      }));
+      return;
+    }
+
+    setRequirementLoading((current) => ({ ...current, [row.opportunityId]: true }));
+    setRequirementErrors((current) => {
+      const next = { ...current };
+      delete next[row.opportunityId];
+      return next;
+    });
+
+    try {
+      const response = await apiPost<AdminApplicationRequirementExtractResponse>("/api/admin/application-requirements/extract", {
+        ...adminAuthBody(credential),
+        sourceProfile: row,
+        pathProfile
+      });
+      setRequirementProfiles((current) => ({
+        ...current,
+        [row.opportunityId]: response.profile
+      }));
+    } catch (requestError) {
+      setRequirementErrors((current) => ({
+        ...current,
+        [row.opportunityId]: requestError instanceof Error ? requestError.message : "Could not extract application requirements."
+      }));
+    } finally {
+      setRequirementLoading((current) => ({ ...current, [row.opportunityId]: false }));
     }
   }
 
@@ -9740,7 +9844,11 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
                         profile: pathProfiles[row.opportunityId],
                         isLoading: Boolean(pathLoading[row.opportunityId]),
                         error: pathErrors[row.opportunityId],
-                        onDiscover: () => void discoverPath(row)
+                        requirementProfile: requirementProfiles[row.opportunityId],
+                        requirementLoading: Boolean(requirementLoading[row.opportunityId]),
+                        requirementError: requirementErrors[row.opportunityId],
+                        onDiscover: () => void discoverPath(row),
+                        onExtractRequirements: (pathProfile) => void extractRequirements(row, pathProfile)
                       })}
                     </td>
                     <td>
@@ -9812,13 +9920,21 @@ function renderApplicationPathDiscovery({
   profile,
   isLoading,
   error,
-  onDiscover
+  requirementProfile,
+  requirementLoading,
+  requirementError,
+  onDiscover,
+  onExtractRequirements
 }: {
   row: OpportunityApplicationSource;
   profile?: ApplicationPathProfile;
   isLoading: boolean;
   error?: string;
+  requirementProfile?: ApplicationRequirementProfile;
+  requirementLoading: boolean;
+  requirementError?: string;
   onDiscover: () => void;
+  onExtractRequirements: (pathProfile: ApplicationPathProfile) => void;
 }) {
   const canDiscover = Boolean(row.programSourceUrl || row.applicationUrl);
   const discoveryStatus = profile ? applicationPathDiscoveryStatus(profile) : undefined;
@@ -9885,6 +10001,18 @@ function renderApplicationPathDiscovery({
             ) : null}
           </dl>
           <small>{applicationPathResultSummary(profile)}</small>
+          <div className="application-requirement-discovery">
+            <button
+              className="secondary-button"
+              disabled={requirementLoading}
+              onClick={() => onExtractRequirements(profile)}
+              type="button"
+            >
+              {requirementLoading ? "Extracting..." : requirementProfile ? "Refresh requirements" : "Extract requirements"}
+            </button>
+            {requirementError ? <small className="application-path-error">{requirementError}</small> : null}
+            {requirementProfile ? renderApplicationRequirementPreview(requirementProfile) : null}
+          </div>
           {profile.evidence.length ? (
             <ul className="application-path-evidence">
               {profile.evidence.slice(0, 3).map((item, index) => (
@@ -9903,6 +10031,112 @@ function renderApplicationPathDiscovery({
           {profile.error ? <small className="application-path-error">{profile.error}</small> : null}
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function renderApplicationRequirementPreview(profile: ApplicationRequirementProfile) {
+  const rules = [
+    `Pre-approval: ${formatRequirementValue(profile.preApprovalRequired)}`,
+    `Contractor: ${formatRequirementValue(profile.contractorRequired)}`,
+    `Tax review: ${formatRequirementValue(profile.taxReviewRequired)}`
+  ];
+  return (
+    <div className="application-requirement-result">
+      <div className="application-path-pill-row">
+        <span className={`application-source-status-pill ${requirementStatusClassName(profile.extractionStatus)}`}>
+          {formatRequirementExtractionStatus(profile.extractionStatus)}
+        </span>
+        <span className="application-path-method">{formatApplicationMethodLabel(profile.applicationMethod)}</span>
+      </div>
+      <dl className="application-requirement-summary">
+        <div>
+          <dt>Source used</dt>
+          <dd>{profile.sourceUrl ? renderApplicationSourceLink(profile.sourceUrl) : "Source unavailable"}</dd>
+        </div>
+        <div>
+          <dt>Required fields</dt>
+          <dd>{profile.requiredFields.length}</dd>
+        </div>
+        <div>
+          <dt>Required documents</dt>
+          <dd>{profile.requiredDocuments.length}</dd>
+        </div>
+        <div>
+          <dt>Optional fields</dt>
+          <dd>{profile.optionalFields.length}</dd>
+        </div>
+        <div>
+          <dt>Deadline</dt>
+          <dd>{profile.deadline || "Not found"}</dd>
+        </div>
+        {profile.estimatedTime ? (
+          <div>
+            <dt>Estimated time</dt>
+            <dd>{profile.estimatedTime}</dd>
+          </div>
+        ) : null}
+      </dl>
+      <div className="application-requirement-rule-row">
+        {rules.map((rule) => (
+          <span key={rule}>{rule}</span>
+        ))}
+      </div>
+      {profile.applicationSteps.length ? (
+        <div className="application-requirement-section">
+          <strong>Application steps</strong>
+          <ol className="application-requirement-steps">
+            {profile.applicationSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      ) : null}
+      {renderRequirementList("Required fields", profile.requiredFields)}
+      {renderRequirementList("Required documents", profile.requiredDocuments)}
+      {renderRequirementList("Optional fields", profile.optionalFields)}
+      {profile.evidence.length ? (
+        <div className="application-requirement-section">
+          <strong>Evidence</strong>
+          <ul className="application-requirement-evidence">
+            {profile.evidence.slice(0, 5).map((item, index) => (
+              <li key={`${item.label}:${index}`}>
+                <span>{item.label}</span>
+                {item.textSnippet ? <small>{item.textSnippet}</small> : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {profile.notes.length ? (
+        <div className="application-requirement-section">
+          <strong>Notes</strong>
+          <ul className="application-requirement-evidence">
+            {profile.notes.slice(0, 3).map((note) => (
+              <li key={note}><small>{note}</small></li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {profile.error ? <small className="application-path-error">{profile.error}</small> : null}
+    </div>
+  );
+}
+
+function renderRequirementList(title: string, requirements: ApplicationRequirement[]) {
+  if (!requirements.length) return null;
+  return (
+    <div className="application-requirement-section">
+      <strong>{title}</strong>
+      <ul className="application-requirement-list">
+        {requirements.map((item) => (
+          <li key={item.id}>
+            <span>{item.label}</span>
+            <small>{formatRequirementTypeLabel(item.requirementType)} · {item.confidence}</small>
+            {item.evidenceSnippet ? <small>{item.evidenceSnippet}</small> : null}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -9974,6 +10208,25 @@ function formatApplicationPathStatusLabel(value: ApplicationPathStatus) {
   return "Needs review";
 }
 
+function formatRequirementExtractionStatus(value: RequirementExtractionStatus) {
+  if (value === "requirements_extracted") return "Requirements extracted";
+  if (value === "source_unavailable") return "Source unavailable";
+  if (value === "not_attempted") return "Not attempted";
+  if (value === "partial") return "Partial";
+  return "Needs review";
+}
+
+function formatRequirementValue(value: RequirementValueStatus | undefined) {
+  if (value === true) return "Yes";
+  if (value === false) return "No";
+  return "Unknown";
+}
+
+function formatRequirementTypeLabel(value: ApplicationRequirementType) {
+  if (value === "account_number") return "Account number";
+  return value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
 function formatApplicationMethodStatusLabel(value: ApplicationMethodStatus) {
   if (value === "confirmed") return "confirmed";
   if (value === "inferred") return "inferred";
@@ -9992,6 +10245,13 @@ function applicationPathStatusClassName(value: ApplicationPathStatus) {
   if (value === "unreadable") return "is-missing";
   if (value === "source_unreadable") return "is-missing";
   if (value === "program_website_only" || value === "source_only" || value === "program_source_only" || value === "contact_only" || value === "needs_review") return "is-review";
+  return "is-pending";
+}
+
+function requirementStatusClassName(value: RequirementExtractionStatus) {
+  if (value === "requirements_extracted") return "is-found";
+  if (value === "source_unavailable") return "is-missing";
+  if (value === "partial" || value === "needs_review") return "is-review";
   return "is-pending";
 }
 

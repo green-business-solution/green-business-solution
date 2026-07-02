@@ -1753,6 +1753,115 @@ dd {
   color: #223128;
 }
 
+.application-requirement-discovery {
+  border-top: 1px solid #e1e8e3;
+  display: grid;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.application-requirement-discovery .secondary-button {
+  width: fit-content;
+}
+
+.application-requirement-result {
+  background: #ffffff;
+  border: 1px solid #dce3dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.application-requirement-summary {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.application-requirement-summary div {
+  background: #f8fbf9;
+  border: 1px solid #e2e9e4;
+  border-radius: 6px;
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 8px;
+}
+
+.application-requirement-summary dt {
+  color: #62736a;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.application-requirement-summary dd {
+  color: #223128;
+  font-size: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.application-requirement-rule-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.application-requirement-rule-row span {
+  background: #f4f8f5;
+  border: 1px solid #dce3dd;
+  border-radius: 999px;
+  color: #4f5e56;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 8px;
+}
+
+.application-requirement-section {
+  display: grid;
+  gap: 6px;
+}
+
+.application-requirement-section > strong {
+  color: #223128;
+  font-size: 12px;
+}
+
+.application-requirement-list,
+.application-requirement-evidence,
+.application-requirement-steps {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.application-requirement-list li,
+.application-requirement-evidence li,
+.application-requirement-steps li {
+  color: #4f5e56;
+  line-height: 1.35;
+}
+
+.application-requirement-list li {
+  display: grid;
+  gap: 2px;
+}
+
+.application-requirement-list span,
+.application-requirement-evidence span {
+  color: #223128;
+  font-weight: 800;
+}
+
+.application-requirement-list small,
+.application-requirement-evidence small {
+  color: #62736a;
+}
+
 .opportunity-review-layout {
   align-items: start;
   display: grid;

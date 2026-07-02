@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application requirement extractor
+
+- Added read-only `ApplicationRequirementExtractor` for per-opportunity deterministic extraction of required fields, documents, rules, deadlines, steps, evidence, and notes from the best available application/source URL.
+- Added mocked extractor tests covering utility rebate, PDF-like application text, email, contractor-submitted, tax/accountant, deadline, vague-source, and unreadable-source cases.
+- Added a per-row admin “Extract requirements” action and requirement preview under `/admin/application-sources`, without DynamoDB writes, requirement-to-user-data mapping, packet generation, autofill, submission, or email sending.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit preview command workspace redesign
 
 - Simplified the admin-nav `/user-preview` Retrofit Recommendations page into a compact command layer with admin strip, recommendation readiness, filter toolbar, current-plan strip, horizontal retrofit rail, and active retrofit command center.

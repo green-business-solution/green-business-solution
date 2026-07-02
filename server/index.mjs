@@ -17,6 +17,7 @@ import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportun
 import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { findOpportunityApplicationPath } from "./applicationSources/ApplicationPathFinder.mjs";
+import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -3185,6 +3186,35 @@ app.post("/api/admin/application-paths/discover", async (req, res) => {
   } catch (error) {
     if (classifyError(error).status >= 500) {
       console.error("[admin/application-paths/discover] failed", error);
+    }
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-requirements/extract", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const sourceProfile = req.body?.sourceProfile || req.body?.applicationSource || null;
+    const pathProfile = req.body?.pathProfile || req.body?.applicationPath || null;
+    if (!sourceProfile || typeof sourceProfile !== "object") {
+      const error = new Error("Application source profile is required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const startedAt = Date.now();
+    const profile = await extractOpportunityApplicationRequirements({ sourceProfile, pathProfile });
+    console.log(
+      `[admin/application-requirements/extract] opportunityId=${profile.opportunityId || "unknown"} extractionStatus=${profile.extractionStatus} fields=${profile.requiredFields.length} documents=${profile.requiredDocuments.length} durationMs=${Date.now() - startedAt}`
+    );
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      profile
+    });
+  } catch (error) {
+    if (classifyError(error).status >= 500) {
+      console.error("[admin/application-requirements/extract] failed", error);
     }
     handleError(res, error);
   }
