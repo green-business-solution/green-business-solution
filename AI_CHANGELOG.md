@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) incentive formula repair packet 1-50
+
+- Added a reusable GPT Pro work-packet generator for incentive formula, rate-table, measure-catalog, grant, tax-credit, recurring-effect, non-monetary workflow, and bad-edge repair.
+- Created `GPT Pro Work/incentive-formula-rate-table-repair-batches-1-50/` with 50 prompt files, 50 blank output files, a README, and a target-batch index for 984 immediate repair targets.
+- Prioritized 515 active/rolling opportunities with existing simple incentive rules before 469 active/rolling reviewed no-rule opportunities that need richer calculation/workflow reclassification.
+
 ## 2026-07-01 - Codex (GPT-5) application source resolver audit
 
 - Added a read-only `ApplicationSourceResolver` for DSIRE opportunity records that classifies application source type, application method, extraction status, confidence, and related retrofit context without writing to DynamoDB.

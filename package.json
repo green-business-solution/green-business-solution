@@ -42,6 +42,7 @@
     "matching:test-case-utility-data": "node scripts/import-sample-test-case-utility-data.mjs",
     "matching:promote-test-users": "node scripts/promote-sample-test-cases-to-fake-users.mjs",
     "matching:test-case-savings": "node scripts/patch-admin-test-case-savings.mjs",
+    "matching:incentive-formula-work-packet": "node scripts/write-incentive-formula-rate-table-work-packet.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },
