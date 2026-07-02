@@ -2965,6 +2965,10 @@ dd {
   padding: 16px;
 }
 
+.overview-workspace-panel {
+  align-content: start;
+}
+
 .overview-panel-header {
   align-items: center;
   display: flex;
