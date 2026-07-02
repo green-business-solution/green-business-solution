@@ -6,6 +6,7 @@
 - Marked the final unrepaired Dixie Electric and Farmers Electric source-inaccessible failures as unavailable for product-visible archive/exclusion, while preserving their source-access evidence.
 - Promoted the MID business rebate, Chicago Green Permit, and Energy Trust Custom Renewable records to medium source confidence where official evidence supported active broad program status, and suppressed unsupported physical retrofit edges until proper measure/special-workflow modeling exists.
 - Reapplied all opportunity data repair batches, refreshed public matching fixtures, and regenerated both remaining repair queues to zero.
+- Production deploy note: the normal CloudFormation deploy path is currently blocked by `AWS::EarlyValidation::ResourceExistenceCheck` because the template wants to add `EnergyDataBucket` even though `gbs-retrofi-org-energy-data-448016109714` already exists outside the stack. This change was deployed directly by updating Lambda code from the uploaded artifact, syncing `dist/` to the frontend bucket, and invalidating CloudFront.
 
 ## 2026-07-02 - Codex (GPT-5) opportunity retention policy TODOs
 
