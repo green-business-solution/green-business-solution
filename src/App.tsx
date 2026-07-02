@@ -5822,7 +5822,7 @@ export function RetrofitRecommendationsPreview({
               const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === (selectedScenarioIds[retrofit.id] || retrofit.scenarios[0]?.id));
               const scenarioFooterLabel = tabState || dirtyRetrofitIds[retrofit.id]
                 ? formatScenarioTabLabel(selectedScenario?.name)
-                : `Default scenario: ${formatScenarioDefaultLabel(selectedScenario?.name)}`;
+                : `Default: ${formatScenarioDefaultLabel(selectedScenario?.name)}`;
               return (
                 <button
                   key={retrofit.id}

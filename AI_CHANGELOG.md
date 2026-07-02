@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit preview readability follow-up
+
+- Further tightened the Retrofit Recommendations active workspace after screenshot review by removing sticky mini-navigation overlap and shortening default scenario tab copy.
+- Updated scenario cards so titles, opportunity chips, and metrics wrap/truncate cleanly instead of clipping hidden content.
+- Improved included-estimate truth-table wrapping so blocker names, actions, and reasons remain visually separated in dense rows.
+
 ## 2026-07-02 - Codex (GPT-5) application source timeout fix
 
 - Reworked `GET /api/admin/application-sources` into a bounded, metadata-only paged read with default `limit=100`, explicit timing logs, and safe JSON failures instead of an unbounded full-table scan that could 504 in production.

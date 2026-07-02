@@ -217,7 +217,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Choose one retrofit at a time");
     expect(html).toContain("Add this retrofit to plan");
     expect(html).toContain("Retrofit tabs");
-    expect(html).toContain("Default scenario: Low upfront");
+    expect(html).toContain("Default: Low upfront");
     expect(html).not.toContain("Summary across selected retrofits");
     expect(html).not.toContain("No major missing inputs flagged");
     expect(html).toContain("Scenario A: Low upfront cost");
