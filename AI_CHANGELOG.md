@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) sidebar hierarchy correction
+
+- Restored `Profile info` and `Dashboard` to the same visual weight as the other primary sidebar items.
+- Shifted the expanded retrofit items further left and tightened them so they read as the smaller sub-tabs.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar sub-tab spacing cleanup
 
 - Tightened the Retrofit sidebar sub-tabs so `Profile info` and `Dashboard` fit cleanly underneath the group.
