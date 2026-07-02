@@ -19,6 +19,88 @@ function uniqueBy(items, keyFn) {
   return result;
 }
 
+const TARGETED_CLEANUP_EVIDENCE_PATTERN =
+  /\b(invalidinitialphone|invalidphone|phonenosdonotmatch|phone numbers do not match|unconfirmeduser|otpsentemail|one[- ]?time password|verify your email|verification email|captcha|zoho sign settings|support@zohoforms\.com|please enter a valid phone number|enter a phone number|sending email|newsletter sign up|sign up confirmation|choose which notifications|notification preferences?)\b/i;
+const PA_SOLAR_UNRELATED_PATTERN =
+  /\b(manufactured home|manufactured housing|modular\/industrialized housing|industrialized housing|local tax id|w2-r|w-2r|act 32|mediation guidelines|veterans resources|compliance resources|publications?\s*&\s*documents?|employer annual w2-r|manufactured home installer faq|newsletter sign up confirmation)\b/i;
+
+function normalizeWhitespace(value) {
+  return cleanText(value).replace(/\s+/g, " ");
+}
+
+function profileText(profile = {}) {
+  return normalizeWhitespace([
+    profile.opportunityName,
+    profile.programWebsiteUrl,
+    profile.applicationUrl,
+    profile.pdfUrl,
+    profile.contactEmail,
+    ...(profile.applicationArtifacts || []).map((artifact) => [artifact.label, artifact.url, artifact.email, artifact.sourceUrl].join(" "))
+  ].filter(Boolean).join(" "));
+}
+
+function isSolarForSchoolsProfile(profile = {}) {
+  return /\bsolar for schools|s4s\b/i.test(profileText(profile));
+}
+
+function hasEmbeddedMalformedAbsoluteUrl(value) {
+  const text = cleanText(value);
+  if (!text) return false;
+  if (/https?&#58;/i.test(text)) return true;
+  const matches = [...text.matchAll(/https?:\/\//gi)];
+  return matches.length > 1;
+}
+
+function targetedCleanupWarnings(profile = {}) {
+  const warnings = [];
+  const requirements = [
+    ...(profile.requiredFields || []),
+    ...(profile.requiredDocuments || []),
+    ...(profile.optionalFields || [])
+  ];
+
+  if (hasEmbeddedMalformedAbsoluteUrl(profile.applicationUrl)) {
+    warnings.push("Application URL appears malformed or contains an embedded absolute URL.");
+  }
+
+  const badRequirement = requirements.find((requirement) =>
+    TARGETED_CLEANUP_EVIDENCE_PATTERN.test([requirement.label, requirement.evidenceSnippet, requirement.sourceUrl].filter(Boolean).join(" "))
+  );
+  if (badRequirement) {
+    warnings.push(`Requirement "${badRequirement.label || badRequirement.id}" uses system, validation, newsletter, or vendor-support text as evidence.`);
+  }
+
+  const highValidationRequirement = requirements.find((requirement) =>
+    requirement.confidence === "High" &&
+    /\b(invalid|valid phone|valid email|verify your email|verification)\b/i.test(requirement.evidenceSnippet || "")
+  );
+  if (highValidationRequirement) {
+    warnings.push(`Requirement "${highValidationRequirement.label || highValidationRequirement.id}" is High confidence from validation text only.`);
+  }
+
+  const stepText = (profile.applicationSteps || []).join(" ");
+  if (TARGETED_CLEANUP_EVIDENCE_PATTERN.test(stepText)) {
+    warnings.push("Application steps include system, validation, newsletter, or vendor-support text.");
+  }
+
+  const artifactText = (profile.applicationArtifacts || [])
+    .map((artifact) => [artifact.type, artifact.label, artifact.url, artifact.email, artifact.evidenceSnippet, artifact.sourceUrl].join(" "))
+    .join(" ");
+  if (/\boffice@wmgld\.com\b/i.test(artifactText)) {
+    warnings.push("Wakefield profile still contains a generic office email artifact.");
+  }
+
+  if (isSolarForSchoolsProfile(profile)) {
+    const unrelatedRequirement = requirements.find((requirement) => PA_SOLAR_UNRELATED_PATTERN.test([requirement.label, requirement.evidenceSnippet, requirement.sourceUrl].filter(Boolean).join(" ")));
+    const unrelatedArtifact = (profile.applicationArtifacts || []).find((artifact) => PA_SOLAR_UNRELATED_PATTERN.test([artifact.label, artifact.url, artifact.evidenceSnippet].filter(Boolean).join(" ")));
+    if (unrelatedRequirement || unrelatedArtifact) {
+      warnings.push("Solar for Schools profile still contains unrelated DCED/manufactured-housing/local-tax/newsletter material.");
+    }
+  }
+
+  return warnings;
+}
+
 export function composeDraftApplicationProfile({
   opportunity = {},
   officialProgramWebsiteProfile = {},
@@ -142,12 +224,19 @@ export function assessApplicationProfileQuality(profile = {}, context = {}) {
     return { profileQuality: "needs_pdf_text_extraction", qualityWarnings: warnings };
   }
 
+  const cleanupWarnings = targetedCleanupWarnings(profile);
+  warnings.push(...cleanupWarnings);
+
   if (artifactDiagnostics.filteredArtifacts?.length) {
     warnings.push(`${artifactDiagnostics.filteredArtifacts.length} unrelated or low-confidence artifacts were filtered from the final profile.`);
   }
 
-  if (/\b(captcha|verification email|zoho sign settings|support@zohoforms\.com)\b/i.test(stepText)) {
+  if (TARGETED_CLEANUP_EVIDENCE_PATTERN.test(stepText)) {
     warnings.push("Application steps include system, CAPTCHA, validation, or vendor-support text.");
+  }
+
+  if (cleanupWarnings.length > 0) {
+    return { profileQuality: "needs_targeted_cleanup", qualityWarnings: warnings };
   }
 
   if (artifactCount > 0 && requirementCount === 0) {

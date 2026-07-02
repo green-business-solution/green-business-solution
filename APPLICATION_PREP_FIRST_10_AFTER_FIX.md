@@ -1,23 +1,24 @@
 # Application Prep First 10 After Fix
 
-Generated: 2026-07-02T23:15:03.312Z
+Generated: 2026-07-02T23:54:00.142Z
 
 ## Aggregate Counts
 
 - Program websites found: 10/10
 - Application artifacts found: 10/10
 - Primary application artifacts found: 8/10
-- Unrelated artifacts filtered: 19
+- Unrelated artifacts filtered: 26
 - Application URLs found: 6/10
 - PDFs/supporting docs found: 6/10
-- PDFs fetched: 9
-- PDFs text-extracted: 5
+- PDFs fetched: 10
+- PDFs text-extracted: 6
 - Contact emails found: 1/10
 - Useful requirements extracted: 7/10
 - Requirements ready for admin review: 6/10
 - Artifacts found but requirements missing: 0/10
 - Needs PDF text extraction: 0/10
 - Needs form field extraction: 0/10
+- Needs targeted cleanup: 0/10
 - Needs manual review: 1/10
 - Needs review: 1/10
 - JS/blocked: 1/10
@@ -70,18 +71,18 @@ Generated: 2026-07-02T23:15:03.312Z
 
 ### Extraction Sources
   - official_program_website: https://www.tmlp.com/182/Heat-Pump-Zero-Interest-Loan-Residential (fetched, 3 extracted)
-  - primary_application_url: https://forms.zohopublic.com/EnergyNE/form/TMLPRebateProgram/formperma/feQPamREDPEOKh3Fr9Swbj-xi55f70UgTwlwBnCXatc (fetched, 3 extracted)
-  - artifact: https://abodeem.jotform.com/223404751324852 (fetched, 7 extracted)
+  - primary_application_url: https://forms.zohopublic.com/EnergyNE/form/TMLPRebateProgram/formperma/feQPamREDPEOKh3Fr9Swbj-xi55f70UgTwlwBnCXatc (fetched, 2 extracted)
+  - artifact: https://abodeem.jotform.com/223404751324852 (fetched, 8 extracted)
   - artifact: https://online.tauntonfcu.com/apply/v2/get-started (fetched)
 
 ### Required Fields
   - Contact name (High) - Applicant name must be the TMLP customer of record (and where applicable, must also be person listed on the deed of the property).
-  - Daytime phone number (High) - "invalidinitialphone":"Enter a phone number that doesnt begin with + or ).",
-  - Email address (High) - "unconfirmeduser":"You haven't verified your email yet, click",
-  - Phone (High) - Please enter a valid phone number. Format: (000) 000-0000.
+  - Email address (High) - Email Sent
   - Proposed equipment (High) - Please provide a manual-J. Provide historical fuel usage if accurate numbers are available. Abode will verify proposed equipment meets whole-home criteria.
   - Contractor license (High) - Please contact RMLD to obtain the UAN. You will need the Electrician License number to complete this. Call 781-942-6598
-  - Name (High) - Contractor Name *
+  - Contractor name (High) - Contractor Name *
+  - Daytime phone number (High) - Contractor Phone *
+  - Name (High) - First Name
   - Property address (High) - Project address *
 
 ### Required Documents
@@ -315,7 +316,7 @@ Needs manual review before this can become an admin-reviewed ApplicationProfile.
   - None
 
 ### Extraction Sources
-  - official_program_website: https://www.efficiencymaine.com/c-pace/ (fetched, 3 extracted)
+  - official_program_website: https://www.efficiencymaine.com/c-pace/ (fetched, 4 extracted)
   - primary_application_url: https://effrt.efficiencymaine.com/eecp/Apps/OnlineApplication/GettingStarted.aspx?user=c620a47f-a0bc-46ab-9751-dffd4c0d08af&pid=238 (fetched)
   - primary_pdf: https://www.efficiencymaine.com/docs/C-PACE-Project-Application-Guide.pdf (failed, pdf_fetch_failed)
   - artifact_pdf: https://www.efficiencymaine.com/docs/C-PACE_Program_Guidelines_12-20-2023.pdf (fetched, pdf_text_extracted, 9 extracted)
@@ -327,21 +328,21 @@ Needs manual review before this can become an admin-reviewed ApplicationProfile.
 
 ### Required Documents
   - $1,000 application fee (High) - Pay a Fee of $1,000 – The applicant must pay a non-refundable application fee of $1,000. This must be submitted by completing the following C-PACE Application Payment Form.
-  - Proof of purchase (High) - Upon receipt of all required application documents identified in the Application Checklist (Article IV, section 7),
+  - Application Checklist documents (High) - Submit an application on the Efficiency Maine C-PACE Application Portal – The applicant will be required to fill in several project details and upload all application documents listed in the Application Checklist (Article IV, section 7) of the Program Guidelines.
   - SIR certification (High) - b. That an eligible Technical Reviewer has executed the required SIR Certification; and,
   - Mortgage lender consent (High) - c. This written consent (Mortgage Lender Consent to C-PACE Assessment – Appendix G) must be filed in
   - C-PACE Assessment Agreement (High) - A Notice of C-PACE Assessment Agreement (Appendix E) filed in the Registry of Deeds must include, at a minimum:
   - Title report (High) - c. List of Property Owners, Lienholders, and a Title Report – A complete listing of all Property Owners of
 
 ### Application Steps
-  - The Efficiency Maine Green Bank also developed a set of program guidelines to spell out the operational details of its C-PACE Program and provide additional detail.
   - Those seeking to submit an application for approval must follow the following process:
   - Submit an application on the Efficiency Maine C-PACE Application Portal – The applicant will be required to fill in several project details and upload all application documents ...
   - If the application is denied a second time, the applicant would need to submit a new application and pay an additional application fee.
-  - A municipality must also complete a C-PACE Municipality Participation Agreement with the Trust that establishes the Trust as the municipality’s C-PACE program administrator.
-  - Capital providers wishing to participate in the C-PACE Program must submit an application . When a capital provider is approved it is considered a “Registered Capital Provider.”...
-  - Click to choose which notifications to receive via email.
   - Upload Documents
+  - Review and Submit
+  - or entity licensed or authorized under applicable law to make loans of money and/or provide
+  - provide basic documentation confirming their identity as detailed on the application for capital provider
+  - Track 2 - Entities in category d in the list above must provide documentation detailed on the application
 
 ### Evidence
   - Apply link found: C-PACE Application Portal
@@ -385,7 +386,7 @@ Ready for admin review of extracted requirements and evidence.
 - PDF text status: pdf_text_extracted
 - Form field extraction: not_attempted
 - Grant extraction: not_attempted
-- Required fields: 4
+- Required fields: 3
 - Required documents: 2
 - Optional fields: 0
 - Validation: valid
@@ -410,13 +411,12 @@ Ready for admin review of extracted requirements and evidence.
   - None
 
 ### Extraction Sources
-  - official_program_website: https://www.forestgrove-or.gov/213/Net-Metering-Residential-Solar (fetched, 1 extracted)
+  - official_program_website: https://www.forestgrove-or.gov/213/Net-Metering-Residential-Solar (fetched)
   - primary_application_url: https://www.forestgrove-or.gov/DocumentCenter/View/245/Level-I-Interconnection-Application-PDF (fetched, pdf_text_extracted, 5 extracted)
   - artifact: https://www.forestgrove-or.gov/DocumentCenter/View/248/Solar-Interconnection-Checklist-PDF (fetched, pdf_text_unavailable)
   - artifact: https://www.forestgrove-or.gov/DocumentCenter/View/244/Interconnection-Incentive-Payment-Form-PDF (fetched, pdf_text_extracted)
 
 ### Required Fields
-  - Utility provider (High) - This immediate shutdown is required by the National Electric Code (NEC) and also by your local electric utility's regulations.
   - Phone (Medium) - Telephone (Daytime): (Evening):
   - Utility account number (Medium) - Account Number (existing FGLP customers):
   - Signature (Medium) - Signature:
@@ -431,16 +431,16 @@ Ready for admin review of extracted requirements and evidence.
   - Customer shall provide meter equipment and meter base per FGL&P requirements.
   - Upon confirmation of moving ahead with an installation, review the City of Forest Grove Light & Power Interconnection Standards and complete the Level 1 Interconnection Applicat...
   - Receive an email copy of this form.
-  - Email address
-  - Submit
   - Submit and Print
+  - Email Keith Hormann
+  - (If yes, attach manufacturer's cut sheet showing listing and label information from the
 
 ### Evidence
   - Utility portal/application link found: Level I Interconnection Application (PDF)
-  - Utility provider requirement found: This immediate shutdown is required by the National Electric Code (NEC) and also by your local electric utility's regulations.
   - Phone requirement found: Telephone (Daytime): (Evening):
   - Utility account number requirement found: Account Number (existing FGLP customers):
   - Signature requirement found: Signature:
+  - Equipment specification sheet requirement found: (If yes, attach manufacturer's cut sheet showing listing and label information from the
 
 ### Validation Warnings
   - None
@@ -564,7 +564,6 @@ Select the required utility/town/service territory before extracting final requi
   - aggregator_source fallback https://programs.dsireusa.org/system/program/detail/22494/wakefield-municipal-gas-and-light-department-solar-rebate-program (origin.sourceUrl)
 
 ### Artifacts
-  - email_submission: Envelope - office@wmgld.com
   - email_submission: solar@wmgld.com - solar@wmgld.com
   - email_submission: help@nextzero.org - help@nextzero.org
   - pdf: INTERCONNECTION APPLICATION Solar Net-Metering Installation - https://wmgld.com/wp-content/uploads/2025/07/2-NetMeteringPolicy-Solar-Application-NEW-2.pdf
@@ -578,6 +577,7 @@ Select the required utility/town/service territory before extracting final requi
   - New Residential Gasline Form: Site-wide utility form is unrelated to this solar/interconnection opportunity.
   - EFV Form: Site-wide utility form is unrelated to this solar/interconnection opportunity.
   - EFV Form: Site-wide utility form is unrelated to this solar/interconnection opportunity.
+  - Envelope: Generic office email is not an application contact.
 
 ### Extraction Sources
   - official_program_website: https://wmgld.com/residential/solar-rebate-form/ (fetched, 4 extracted)
@@ -590,10 +590,10 @@ Select the required utility/town/service territory before extracting final requi
   - Installation date (Medium) - 1. Proposed Installation Date:
 
 ### Required Documents
-  - Proof of purchase (High) - WMGLD’s Interconnection Application is reviewed and approved by WMGLD and sent back to the customer, typically within 10 business days of receipt of application and all required documents by WMGLD
   - One-line diagram (High) - Submit the following documents to WMGLD at solar@wmgld.com One-line diagram stamped by a Massachusetts Professional Engineer
   - Permission to Operate letter (High) - To finalize the rebate process, the customer must send the following documents to MMWEC ( help@nextzero.org ) for processing: WMGLD Permission to Operate Letter
   - Certificate of Completion (High) - After the installation is completed, the local Wiring Inspector must inspect and approve the installation; and sign the WMGLD Certificate of Completion . The customer must submit the Certificate of Completion to WMGLD.
+  - Required interconnection documents (High) - WMGLD’s Interconnection Application is reviewed and approved by WMGLD and sent back to the customer, typically within 10 business days of receipt of application and all required documents by WMGLD
   - Equipment specification sheet (High) - Panel Nameplate Data: (attach spec sheet)
   - Contractor license/certification (Medium) - 2. Installation Contractor: Contractor License No.:
 
@@ -611,14 +611,14 @@ Select the required utility/town/service territory before extracting final requi
   - PDF application link found: INTERCONNECTION APPLICATION Solar Net-Metering Installation
   - Pre-approval/reservation language found: MMWEC Project Completion Form (provided in the Rebate Reservation Notification email)
   - Deadline language found: It is important to note that this program is funded on an annual basis and as such is on a first-come first-serve basis while funds last.
-  - Proof of purchase requirement found: WMGLD’s Interconnection Application is reviewed and approved by WMGLD and sent back to the customer, typically within 10 business days of receipt of application and all required documents by WMGLD
   - One-line diagram requirement found: Submit the following documents to WMGLD at solar@wmgld.com One-line diagram stamped by a Massachusetts Professional Engineer
+  - Permission to Operate letter requirement found: To finalize the rebate process, the customer must send the following documents to MMWEC ( help@nextzero.org ) for processing: WMGLD Permission to Operate Letter
 
 ### Validation Warnings
   - None
 
 ### Quality Warnings
-  - 6 unrelated or low-confidence artifacts were filtered from the final profile.
+  - 7 unrelated or low-confidence artifacts were filtered from the final profile.
 
 ### Next Action
 
@@ -636,13 +636,13 @@ Ready for admin review of extracted requirements and evidence.
 - Official website used: https://energy.maryland.gov/business/Pages/Commercial-Solar.aspx
 - Website source: opportunity.websiteUrl
 - DSIRE/source URL: https://programs.dsireusa.org/system/program/detail/22764/commercial-solar-grant-program
-- Application URL: https://energy.maryland.gov/business/Pages/https&#58;//form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar
+- Application URL: https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar
 - PDF URL: https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20CSGP%20FOA%20v2%20%28Issued%2012.2.25%29.pdf
 - Contact email: Not found
 - Application method: grant_package
 - Primary method: grant_package
-- Secondary methods: online_form, pdf, pdf_guidelines
-- Application status: closed
+- Secondary methods: online_form, pdf, pdf_guidelines, email_submission
+- Application status: funding_exhausted
 - Path status: application_path_found
 - Requirement extraction status: requirements_extracted
 - Profile quality: closed_but_profile_extractable
@@ -664,9 +664,11 @@ Ready for admin review of extracted requirements and evidence.
 
 ### Artifacts
   - pdf: FY26 CSGP FOA v2 (Issued 12.2.25) - https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20CSGP%20FOA%20v2%20%28Issued%2012.2.25%29.pdf
-  - supporting_document: FY26 CCSP Project&#160;Budget Workbook - https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20CCSP%20Budget%20Workbook%20%281%29.xlsx
+  - supporting_document: FY26 CCSP Project Budget Workbook - https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20CCSP%20Budget%20Workbook%20%281%29.xlsx
   - pdf: FY26 Jotform Questions PDF - https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20Jotform%20Questions%20PDF.pdf
-  - online_form: >>> PLEASE NOTE&#160;THAT DUE TO THE FY26 FUNDING DEPLETION, THE APPLICATION PORTAL IS NOW CLOSED<<​ - https://energy.maryland.gov/business/Pages/https&#58;//form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar
+  - online_form: >>> PLEASE NOTE THAT DUE TO THE FY26 FUNDING DEPLETION, THE APPLICATION PORTAL IS NOW CLOSED<<​ - https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar
+  - email_submission: [email protected] ​ - commercial.solar@maryland.gov
+  - email_submission: ​ - commercialsolar.mea@maryland.gov
   - pdf: Tenant Synopsis Form - https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/Tenant%20Synopsis%20Form.pdf
   - program_website: Official program website - https://energy.maryland.gov/business/Pages/Commercial-Solar.aspx
 
@@ -675,28 +677,29 @@ Ready for admin review of extracted requirements and evidence.
 
 ### Extraction Sources
   - official_program_website: https://energy.maryland.gov/business/Pages/Commercial-Solar.aspx (fetched, 6 extracted)
-  - primary_application_url: https://energy.maryland.gov/business/Pages/https&#58;//form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar (failed)
+  - primary_application_url: https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar (fetched, 4 extracted)
   - primary_pdf: https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20CSGP%20FOA%20v2%20%28Issued%2012.2.25%29.pdf (failed, pdf_fetch_failed)
   - artifact_pdf: https://energy.maryland.gov/business/SiteAssets/Pages/Commercial-Solar/FY26%20Jotform%20Questions%20PDF.pdf (fetched, pdf_text_unavailable)
 
 ### Required Fields
-  - Project cost (High) - 90% of the Total Project Cost,&#160;
+  - Project cost (High) - 90% of the Total Project Cost,
 
 ### Required Documents
   - FOA (High) - ​ * The maximum grant award amount is $500,000 per property owner (and as further detailed in the FOA).​
-  - Project budget workbook (High) - FY26 CCSP Project&#160;Budget Workbook
+  - Project budget workbook (High) - FY26 CCSP Project Budget Workbook
   - Tenant synopsis form (High) - Tenant Synopsis Form
   - Jotform questions PDF (High) - FY26 Jotform Questions PDF
-  - AOI status evidence (High) - Area of Interest 1 - Equitable Solar Access for Organizations&#58; &#160;Grants for nonprofits, businesses and other organizations that are registered to operate in Maryland that have been designated as, or are actively in the process of being designated as...
+  - AOI status evidence (High) - Area of Interest 1 - Equitable Solar Access for Organizations: Grants for nonprofits, businesses and other organizations that are registered to operate in Maryland that have been designated as, or are actively in the process of being designated as, a non-pr...
 
 ### Application Steps
-  - [email&#160;protected] ​ ​ , or by calling MEA's main line at 410.537.4000.
+  - [email protected] ​ ​ , or by calling MEA's main line at 410.537.4000.
 
 ### Evidence
   - Application status hint from opportunity metadata: Application status hint: closed
-  - Apply link found: >>> PLEASE NOTE&#160;THAT DUE TO THE FY26 FUNDING DEPLETION, THE APPLICATION PORTAL IS NOW CLOSED<<​
+  - Funding exhausted/awarded language found: et Workbook Tenant Synopsis Form FY26 Jotform Questions PDF >>> PLEASE NOTE THAT DUE TO THE FY26 FUNDING DEPLETION, THE APPLICATION PORTAL IS NOW CLOSED<<​ Questions: Please contact Meg Cefail, Energy Program Manager, about any questions...
+  - Apply link found: >>> PLEASE NOTE THAT DUE TO THE FY26 FUNDING DEPLETION, THE APPLICATION PORTAL IS NOW CLOSED<<​
   - FOA grant/package requirement found: ​ * The maximum grant award amount is $500,000 per property owner (and as further detailed in the FOA).​
-  - Project budget workbook grant/package requirement found: FY26 CCSP Project&#160;Budget Workbook
+  - Project budget workbook grant/package requirement found: FY26 CCSP Project Budget Workbook
   - Tenant synopsis form grant/package requirement found: Tenant Synopsis Form
   - Jotform questions PDF grant/package requirement found: FY26 Jotform Questions PDF
 
@@ -713,6 +716,7 @@ Keep as closed/funding-exhausted reference profile; do not mark ready-to-apply.
 ### Notes
   - Opportunity metadata indicates application status: closed.
   - DSIRE used only as aggregator/source reference; official program website was inspected first.
+  - Application appears funding-exhausted or fully awarded.
   - A direct apply/application link was found on the program website.
   - Deterministic extraction found required fields, documents, or application rules with source evidence.
   - One or more PDF artifacts were fetched, but readable PDF text was unavailable.
@@ -736,8 +740,8 @@ Keep as closed/funding-exhausted reference profile; do not mark ready-to-apply.
 - PDF text status: pdf_text_extracted
 - Form field extraction: form_fields_extracted
 - Grant extraction: grant_requirements_extracted
-- Required fields: 9
-- Required documents: 4
+- Required fields: 4
+- Required documents: 5
 - Optional fields: 0
 - Validation: valid
 
@@ -750,65 +754,61 @@ Keep as closed/funding-exhausted reference profile; do not mark ready-to-apply.
   - aggregator_source fallback https://programs.dsireusa.org/system/program/detail/22790/solar-for-schools-grant-program-s4s (origin.sourceUrl)
 
 ### Artifacts
-  - application_portal: How to Apply - https://dced.pa.gov/how-to-apply/
   - application_portal: Enterprise eGrants System - https://grants.pa.gov/Login.aspx
   - supporting_document: Solar for Schools Preparation Checklist - https://dced.pa.gov/download/solar-for-schools-preparation-checklist/?wpdmdl=125181
   - program_website: Official program website - https://dced.pa.gov/programs/solar-for-schools-grant-program-s4s/
-  - supporting_document: Act 32 Mediation Guidelines - https://dced.pa.gov/download/act-32-of-2008-mediation-guidelines/?wpdmdl=56766
   - supporting_document: Guidelines - https://dced.pa.gov/download/solar-for-schools-grant-program-guidelines/?wpdmdl=125194
-  - supporting_document: Veterans Resources - https://dced.pa.gov/download/veterans-resources-fact-sheet-2018/?wpdmdl=83145
-  - supporting_document: Compliance Resources - https://dced.pa.gov/programs-funding/compliance-resources/
-  - supporting_document: Publications & Documents - https://dced.pa.gov/local-government/publications-and-documents/
-  - supporting_document: Employer Annual W2-R Form - https://dced.pa.gov/download/w2r-annual-reconciliation-earned-income-tax-pdf/?wpdmdl=57776
 
 ### Artifact Filtering Diagnostics
+  - Veterans Resources: Site-wide DCED material is unrelated to the program-specific application package.
+  - Compliance Resources: Site-wide DCED material is unrelated to the program-specific application package.
+  - How to Apply: Generic DCED how-to-apply material is not a program-specific application artifact.
+  - Publications & Documents: Site-wide DCED material is unrelated to the program-specific application package.
+  - Employer Annual W2-R Form: Site-wide DCED material is unrelated to the program-specific application package.
+  - Act 32 Mediation Guidelines: Site-wide DCED material is unrelated to the program-specific application package.
   - Application instructions: Generic navigation, billing, contact, privacy, or site-wide forms link is not application-specific.
 
 ### Extraction Sources
   - official_program_website: https://dced.pa.gov/programs/solar-for-schools-grant-program-s4s/ (fetched, 12 extracted)
   - primary_application_url: https://grants.pa.gov/Login.aspx (fetched, 3 extracted)
-  - artifact: https://dced.pa.gov/how-to-apply/ (fetched, 7 extracted)
-  - artifact: https://dced.pa.gov/download/solar-for-schools-preparation-checklist/?wpdmdl=125181 (fetched, pdf_text_extracted, 4 extracted)
+  - artifact: https://dced.pa.gov/download/solar-for-schools-preparation-checklist/?wpdmdl=125181 (fetched, pdf_text_extracted, 3 extracted)
+  - artifact: https://dced.pa.gov/download/solar-for-schools-grant-program-guidelines/?wpdmdl=125194 (fetched, pdf_text_extracted, 9 extracted)
 
 ### Required Fields
-  - Contact email (High) - Email Address * Required
-  - Email address (High) - Email Address * Required
-  - Contractor name (High) - Modular/Industrialized Housing Manufactured Housing Commercial Modular Buildings Manufactured Home Installer FAQ
-  - Tax ID (High) - Register Business for Local Tax ID Employer Quarterly Return Employer Annual W2-R Form
   - Project cost (High) - The lesser of $600,000 or 50% of project cost
   - Project site/facility (High) - Grant maximums for any entity that is not assigned an MV/PI AR will be based on the ratio of the school district where their project site is located.
   - MV/PI AR (High) - Applicant Market Value/Personal Income Aid Ratio (MV/PI AR)*
   - Region (High) - Funds Available by Region
-  - Utility provider (High) - c a.Provide a Letter of Support or documentation from the electric utility indicating the school has spoken with the electric utility.
 
 ### Required Documents
   - Application submission checklist (High) - Solar for Schools Preparation Checklist
-  - Program guidelines (High) - Act 32 Mediation Guidelines
-  - FAQ (High) - Manufactured Home Installer FAQ
+  - Program guidelines (High) - Guidelines https://dced.pa.gov/download/solar-for-schools-grant-program-guidelines/?wpdmdl=125194 Guidelines
   - Recent utility bill (High) - c b.Copy of the most recent electric bill for the meter specific to the proposed solar installation tie-in. If this meter is the
+  - GATA budget/agreement/conflict/risk materials (High) - Conflict of Interest Provision 1.
+  - NABCEP professional involvement (High) - Is certified by North American Board of Certified Energy Practitioners (NABCEP), International a.
 
 ### Application Steps
-  - How to Apply
-  - Email Address * Required
-  - Submit
-  - Newsletter Sign Up Confirmation * Required
-  - Email Address
-  - For technical assistance with an application, please contact the appropriate resource center listed below
-  - DCED customers: Please contact the DCED Customer Service Center. Representatives are available Monday through Friday, from 8:30 AM until 5:00 PM, at 800-379-7448. Email inquirie...
-  - Customers of all other agencies: Please contact the Enterprise eGrants Customer Service Center. Representatives are available Monday through Friday, from 7:00 AM until 6:00 PM, ...
+  - Authority to Apply/Submit Application
+  - c b.Provide a description of curriculum development and integration.
+  - c c.Optional: Upload supporting curriculum documents.
+  - main meter, please provide the most recent copy of the main meter bill.
+  - c a.Provide a Letter of Support or documentation from the electric utility indicating the school has spoken with the electric utility.
+  - c a.Provide a description of the roof age and condition.
+  - qualified provider who completed the Solar Facility Site Assessment to complete the Solar Energy
+  - and provide a contractual agreement between the grantee and the proceeding owner. The proceeding owner
 
 ### Evidence
   - Utility portal/application link found: Apply
   - Tax/accountant filing language found: Educational Improvement Tax Credit Program (EITC)
   - Email address form field found: Email Address * Required
-  - Contractor name form field found: Modular/Industrialized Housing Manufactured Housing Commercial Modular Buildings Manufactured Home Installer FAQ
-  - Tax ID form field found: Register Business for Local Tax ID Employer Quarterly Return Employer Annual W2-R Form
+  - Project cost form field found: The lesser of $600,000 or 50% of project cost
+  - Application submission checklist grant/package requirement found: Solar for Schools Preparation Checklist
 
 ### Validation Warnings
   - None
 
 ### Quality Warnings
-  - 1 unrelated or low-confidence artifacts were filtered from the final profile.
+  - 7 unrelated or low-confidence artifacts were filtered from the final profile.
 
 ### Next Action
 
@@ -839,7 +839,7 @@ Ready for admin review of extracted requirements and evidence.
 - PDF text status: not_attempted
 - Form field extraction: form_fields_extracted
 - Grant extraction: not_attempted
-- Required fields: 13
+- Required fields: 14
 - Required documents: 0
 - Optional fields: 9
 - Validation: valid
@@ -864,7 +864,7 @@ Ready for admin review of extracted requirements and evidence.
 
 ### Extraction Sources
   - official_program_website: https://vgsvt.com/savings/equipment-leases/ (fetched, 1 extracted)
-  - primary_application_url: https://vgsvt.com/savings/equipment-leases/interest-form/ (fetched, 22 extracted)
+  - primary_application_url: https://vgsvt.com/savings/equipment-leases/interest-form/ (fetched, 23 extracted)
 
 ### Required Fields
   - Email address (High) - Email Customer Care
@@ -878,6 +878,7 @@ Ready for admin review of extracted requirements and evidence.
   - Furnace in basement (High) - Is your furnace located in a basement? *
   - Dwelling type (High) - Dwelling Type *
   - How heard about program (High) - How did you hear about us? *
+  - Property address (High) - Contact Info Name * Please provide your first and last name. Property Address *
   - Products interested in (High) - Energy Information What products are you interested in? *
   - Currently working with electrician (High) - Are you currently working with an electrician? *
 

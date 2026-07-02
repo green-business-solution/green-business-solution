@@ -79,7 +79,27 @@ const SOLAR_UNRELATED_TERMS = [
   /\bnew residential gas/i
 ];
 
+const PA_SOLAR_UNRELATED_TERMS = [
+  /\bmanufactured home\b/i,
+  /\bmanufactured housing\b/i,
+  /\bmodular\/industrialized housing\b/i,
+  /\bindustrialized housing\b/i,
+  /\blocal tax id\b/i,
+  /\bw2-r\b/i,
+  /\bw-2r\b/i,
+  /\bact 32\b/i,
+  /\bmediation guidelines\b/i,
+  /\bveterans resources\b/i,
+  /\bgeneric compliance resources\b/i,
+  /\bcompliance resources\b/i,
+  /\bpublications?\s*&\s*documents?\b/i,
+  /\bdced publications?\b/i,
+  /\bnewsletter sign up\b/i,
+  /\bsign up confirmation\b/i
+];
+
 const VENDOR_SUPPORT_EMAIL_PATTERN = /\b(?:support|help)@(?:zohoforms|jotform)\.com\b/i;
+const GENERIC_OFFICE_EMAIL_PATTERN = /\boffice@wmgld\.com\b/i;
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -96,6 +116,16 @@ function textForArtifact(artifact = {}) {
     artifact.email,
     artifact.evidenceSnippet,
     artifact.sourceUrl,
+    artifact.reason
+  ].filter(Boolean).join(" "));
+}
+
+function directTextForArtifact(artifact = {}) {
+  return normalizeWhitespace([
+    artifact.label,
+    artifact.url,
+    artifact.email,
+    artifact.evidenceSnippet,
     artifact.reason
   ].filter(Boolean).join(" "));
 }
@@ -138,14 +168,31 @@ function topicRelevanceScore(text, opportunity = {}) {
 
 function ignoreReason(artifact = {}, opportunity = {}) {
   const text = textForArtifact(artifact);
+  const directText = directTextForArtifact(artifact);
   if (!text) return "Artifact has no usable label, URL, or email.";
   if (VENDOR_SUPPORT_EMAIL_PATTERN.test(text)) return "Vendor support email is not an application contact.";
+  if (GENERIC_OFFICE_EMAIL_PATTERN.test(text)) return "Generic office email is not an application contact.";
+  if (/dced\.pa\.gov\/how-to-apply\/?/i.test(text)) {
+    return "Generic DCED how-to-apply material is not a program-specific application artifact.";
+  }
+  if (/dced\.pa\.gov/i.test(text) && PA_SOLAR_UNRELATED_TERMS.some((pattern) => pattern.test(text))) {
+    return "Site-wide DCED material is unrelated to the program-specific application package.";
+  }
   if (GENERIC_IGNORE_TERMS.some((pattern) => pattern.test(text))) {
     return "Generic navigation, billing, contact, privacy, or site-wide forms link is not application-specific.";
   }
   const oppText = opportunityText(opportunity);
   if (/\bsolar|pv|photovoltaic|interconnection|net metering\b/i.test(oppText) && SOLAR_UNRELATED_TERMS.some((pattern) => pattern.test(text))) {
     return "Site-wide utility form is unrelated to this solar/interconnection opportunity.";
+  }
+  if (/\bwakefield\b/i.test(oppText) && GENERIC_OFFICE_EMAIL_PATTERN.test(text)) {
+    return "Generic office email is not the Wakefield solar application contact.";
+  }
+  if (/\bsolar for schools|s4s\b/i.test(oppText) && PA_SOLAR_UNRELATED_TERMS.some((pattern) => pattern.test(text))) {
+    return "Site-wide DCED material is unrelated to the Solar for Schools application package.";
+  }
+  if (/\bsolar for schools|s4s\b/i.test(oppText) && /(?:^|\s)how to apply(?:\s|$)|\/how-to-apply\/?/i.test(directText) && !/\bsolar[- ]for[- ]schools|s4s\b/i.test(directText)) {
+    return "Generic DCED how-to-apply material is not a Solar for Schools-specific application artifact.";
   }
   return "";
 }

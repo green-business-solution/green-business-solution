@@ -195,6 +195,29 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.evidence[0].label).toBe("Utility portal/application link found");
   });
 
+  it("normalizes encoded absolute application URLs instead of prefixing the source path", async () => {
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityName: "Maryland Commercial Solar",
+          programSourceUrl: "https://energy.maryland.gov/business/Pages/Commercial-Solar.aspx"
+        })
+      },
+      fixedOptions(
+        mockHtmlFetch(`
+          <html><body>
+            <p>Application portal is now closed.</p>
+            <a href="https&#58;//form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar">Jotform application portal</a>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.applicationUrl).toBe("https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar");
+    expect(result.bestApplicationUrl).toBe("https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar");
+    expect(result.applicationStatus).toBe("closed");
+  });
+
   it("follows a DSIRE official program website one hop to find an Apply Now link", async () => {
     const sourceUrl = "https://programs.dsireusa.org/system/program/detail/123/example-program";
     const programWebsiteUrl = "https://program.example.com/business";

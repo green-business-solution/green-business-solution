@@ -23,7 +23,30 @@ function decodeHtmlEntities(value) {
     .replace(/&apos;/gi, "'")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
-    .replace(/&nbsp;/gi, " ");
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 16));
+      } catch {
+        return "";
+      }
+    })
+    .replace(/&#(\d+);/g, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 10));
+      } catch {
+        return "";
+      }
+    });
+}
+
+function normalizeEmbeddedAbsoluteUrl(value) {
+  const text = decodeHtmlEntities(value);
+  const protocolMatches = [...text.matchAll(/https?:\/\//gi)];
+  if (protocolMatches.length > 1) {
+    return text.slice(protocolMatches[protocolMatches.length - 1].index);
+  }
+  return text;
 }
 
 function stripHtml(value) {
@@ -47,13 +70,13 @@ function isHttpUrl(value) {
 }
 
 function resolveUrl(href, baseUrl) {
-  const text = decodeHtmlEntities(href);
+  const text = normalizeEmbeddedAbsoluteUrl(href);
   if (!text || text.startsWith("#")) return "";
   if (/^mailto:/i.test(text)) return text;
 
   try {
     const resolved = baseUrl ? new URL(text, baseUrl) : new URL(text);
-    return ["http:", "https:"].includes(resolved.protocol) ? resolved.href : "";
+    return ["http:", "https:"].includes(resolved.protocol) ? normalizeEmbeddedAbsoluteUrl(resolved.href) : "";
   } catch {
     return "";
   }

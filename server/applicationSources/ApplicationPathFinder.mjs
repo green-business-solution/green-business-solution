@@ -97,7 +97,7 @@ const UTILITY_PATTERN =
 const EMAIL_APPLICATION_PATTERN =
   /\b(email|send|submit|contact).{0,120}\b(application|form|rebate|request|documents?|to apply)\b|\b(application|form|rebate|request|documents?|to apply).{0,120}\b(email|send|submit|contact)\b/i;
 const CLOSED_OR_EXHAUSTED_PATTERN =
-  /\b(closed for applications?|applications? closed|funding exhausted|fully subscribed|no longer accepting|not accepting applications|funds? (?:are )?exhausted|100% of funding)\b/i;
+  /\b(closed for applications?|applications? closed|application portal.{0,40}closed|portal.{0,40}closed|funding exhausted|fully subscribed|no longer accepting|not accepting applications|funds? (?:are )?exhausted|100% of funding)\b/i;
 const USER_SELECTION_PATTERN =
   /\b(select|choose|find|enter).{0,80}\b(town|community|municipal light plant|utility|service territory|zip code|municipality)\b|\bmunicipal light plant selection\b/i;
 
@@ -170,7 +170,30 @@ function decodeHtmlEntities(value) {
     .replace(/&apos;/gi, "'")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
-    .replace(/&nbsp;/gi, " ");
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 16));
+      } catch {
+        return "";
+      }
+    })
+    .replace(/&#(\d+);/g, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 10));
+      } catch {
+        return "";
+      }
+    });
+}
+
+function normalizeEmbeddedAbsoluteUrl(value) {
+  const text = decodeHtmlEntities(value);
+  const protocolMatches = [...text.matchAll(/https?:\/\//gi)];
+  if (protocolMatches.length > 1) {
+    return text.slice(protocolMatches[protocolMatches.length - 1].index);
+  }
+  return text;
 }
 
 function stripHtml(value) {
@@ -183,14 +206,14 @@ function extractTitle(html) {
 }
 
 function resolveUrl(href, baseUrl) {
-  const text = decodeHtmlEntities(href);
+  const text = normalizeEmbeddedAbsoluteUrl(href);
   if (!text || text.startsWith("#")) return "";
   if (/^mailto:/i.test(text)) return text;
 
   try {
     const resolved = new URL(text, baseUrl);
     if (resolved.protocol === "http:" || resolved.protocol === "https:") {
-      return resolved.href;
+      return normalizeEmbeddedAbsoluteUrl(resolved.href);
     }
   } catch {
     // Ignore malformed links.

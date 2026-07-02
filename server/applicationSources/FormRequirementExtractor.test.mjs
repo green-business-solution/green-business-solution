@@ -66,4 +66,23 @@ describe("FormRequirementExtractor", () => {
     ]));
     expect(JSON.stringify(result)).not.toMatch(/captcha|zoho sign|support@zohoforms/i);
   });
+
+  it("ignores Zoho validation JSON and verification labels", () => {
+    const result = extractFormRequirementsFromHtml(
+      `
+        <form>
+          <label>Contractor Name *</label>
+          <label>Project Address *</label>
+          <span class="zf-labelName">invalidinitialphone":"Enter a phone number that doesnt begin with + or )."</span>
+          <span class="zf-labelName">unconfirmeduser":"You haven't verified your email yet, click</span>
+          <label>Verification email</label>
+          <label>support@zohoforms.com</label>
+        </form>
+      `,
+      { sourceUrl: "https://forms.zohopublic.com/apply" }
+    );
+
+    expect(result.requiredFields.map((item) => item.id)).toEqual(expect.arrayContaining(["contractor_name", "property_address"]));
+    expect(JSON.stringify(result)).not.toMatch(/invalidinitialphone|unconfirmeduser|verification email|support@zohoforms/i);
+  });
 });

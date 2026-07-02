@@ -46,4 +46,36 @@ describe("ApplicationArtifactRanker", () => {
     expect(ranked.artifacts.map((item) => item.label)).toContain("NEVI NOFO");
     expect(ranked.artifacts.map((item) => item.label)).not.toContain("Forms & Reports");
   });
+
+  it("filters Wakefield generic office email while keeping solar application contacts", () => {
+    const ranked = rankApplicationArtifacts({
+      opportunity: { canonicalTitle: "Wakefield Residential Solar Rebate" },
+      artifacts: [
+        { type: "email_submission", label: "Envelope", email: "office@wmgld.com" },
+        { type: "email_submission", label: "Solar documents", email: "solar@wmgld.com", evidenceSnippet: "Email interconnection documents to solar@wmgld.com." }
+      ]
+    });
+
+    expect(ranked.artifacts.map((item) => item.email)).toContain("solar@wmgld.com");
+    expect(ranked.artifacts.map((item) => item.email)).not.toContain("office@wmgld.com");
+    expect(ranked.diagnostics.filteredArtifacts.some((item) => /office@wmgld/i.test(item.email || ""))).toBe(true);
+  });
+
+  it("filters PA Solar for Schools unrelated DCED site-wide artifacts", () => {
+    const ranked = rankApplicationArtifacts({
+      opportunity: { canonicalTitle: "PA Solar for Schools Grant Program (S4S)" },
+      artifacts: [
+        { type: "application_portal", label: "Apply", url: "https://grants.pa.gov/Login.aspx" },
+        { type: "supporting_document", label: "Act 32 Mediation Guidelines", url: "https://dced.pa.gov/download/act-32-of-2008-mediation-guidelines/" },
+        { type: "supporting_document", label: "Manufactured Home Installer FAQ", url: "https://dced.pa.gov/download/manufactured-home-installer-faq/" },
+        { type: "supporting_document", label: "Solar for Schools Preparation Checklist", url: "https://dced.pa.gov/download/solar-for-schools-preparation-checklist.pdf" }
+      ]
+    });
+
+    const labels = ranked.artifacts.map((item) => item.label);
+    expect(labels).toContain("Apply");
+    expect(labels).toContain("Solar for Schools Preparation Checklist");
+    expect(labels).not.toContain("Act 32 Mediation Guidelines");
+    expect(labels).not.toContain("Manufactured Home Installer FAQ");
+  });
 });

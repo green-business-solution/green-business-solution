@@ -260,7 +260,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("<option value=\"total_savings\">Savings</option>");
     expect(html).toContain("<option value=\"payback\">Payback</option>");
     expect(html).toContain("<option value=\"upfront_cost\">Cost</option>");
-    expect(html).toContain("Search retrofits");
+    expect(html).not.toContain("Search retrofits");
     expect(html).toContain("aria-label=\"Grid view\"");
     expect(html).toContain("aria-label=\"Panel view\"");
     expect(html).toContain("picker-view-icon");

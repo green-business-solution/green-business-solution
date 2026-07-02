@@ -6424,7 +6424,6 @@ export function RetrofitRecommendationsPreview({
   const [confidenceFilter, setConfidenceFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
   const [confirmedAssumptionIds, setConfirmedAssumptionIds] = useState<Record<string, boolean>>({});
@@ -6468,15 +6467,10 @@ export function RetrofitRecommendationsPreview({
         }
         if (missingInfoFilter === "needs_info" && retrofit.missingInfo.length === 0) return false;
         if (missingInfoFilter === "ready" && retrofit.missingInfo.length > 0) return false;
-        const search = searchQuery.trim().toLowerCase();
-        if (!search) return true;
-        return (
-          retrofit.name.toLowerCase().includes(search) ||
-          retrofit.opportunities.some((opportunity) => opportunity.name.toLowerCase().includes(search))
-        );
+        return true;
       })
       .sort((a, b) => comparePreviewRetrofits(a, b, sortBy));
-  }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, searchQuery, sortBy]);
+  }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, sortBy]);
 
   const activeRetrofit = activeRetrofitId
     ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
@@ -6738,10 +6732,6 @@ export function RetrofitRecommendationsPreview({
               loadingMessage={loadingMessage}
               hideBillData={shouldMaskBillDerivedMetrics}
               onCloseDetails={() => setActiveRetrofitId("")}
-              onSearchChange={(value) => {
-                setSearchQuery(value);
-                setPickerVisibleCount(6);
-              }}
               onSelectRetrofit={handleRetrofitTabClick}
               onSetViewMode={setPickerViewMode}
               onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
@@ -6753,7 +6743,6 @@ export function RetrofitRecommendationsPreview({
               onUploadBills={handleUploadBills}
               pickerViewMode={pickerViewMode}
               pickerVisibleCount={pickerVisibleCount}
-              searchQuery={searchQuery}
               sortBy={sortBy}
             />
           )}
@@ -6848,7 +6837,6 @@ function RetrofitPickerView({
   loadingMessage,
   hideBillData,
   onCloseDetails,
-  onSearchChange,
   onSelectRetrofit,
   onSetViewMode,
   onShowMore,
@@ -6857,7 +6845,6 @@ function RetrofitPickerView({
   onUploadBills,
   pickerViewMode,
   pickerVisibleCount,
-  searchQuery,
   sortBy
 }: {
   activeRetrofitId: string;
@@ -6867,7 +6854,6 @@ function RetrofitPickerView({
   loadingMessage: string;
   hideBillData: boolean;
   onCloseDetails: () => void;
-  onSearchChange: (value: string) => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onSetViewMode: (mode: "grid" | "panel") => void;
   onShowMore: () => void;
@@ -6876,7 +6862,6 @@ function RetrofitPickerView({
   onUploadBills: () => void;
   pickerViewMode: "grid" | "panel";
   pickerVisibleCount: number;
-  searchQuery: string;
   sortBy: string;
 }) {
   const collapsedRetrofitCount = 6;
@@ -6908,7 +6893,7 @@ function RetrofitPickerView({
         <button onClick={onUploadBills} type="button">Upload bills</button>
       </section>
 
-      <section className="retrofit-picker-controls" aria-label="Sort, search, and view controls">
+      <section className="retrofit-picker-controls" aria-label="Sort and view controls">
         <label className="picker-sort-control">
           <span>Sort by</span>
           <select onChange={(event) => onSortChange(event.target.value)} value={sortBy}>
@@ -6917,10 +6902,6 @@ function RetrofitPickerView({
             <option value="payback">Payback</option>
             <option value="upfront_cost">Cost</option>
           </select>
-        </label>
-        <label className="picker-search-control">
-          <span className="sr-only">Search retrofits</span>
-          <input onChange={(event) => onSearchChange(event.target.value)} placeholder="Search retrofits" value={searchQuery} />
         </label>
         <div className="picker-view-toggle" aria-label="View mode">
           <button

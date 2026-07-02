@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) application prep quality gate cleanup
+
+- Tightened ApplicationPrepEngine artifact ranking, URL normalization, form evidence filtering, requirement extraction, and profile quality gates to keep validation strings, generic DCED resources, generic Wakefield office email, malformed Jotform URLs, fake utility-provider fields, and generic proof-of-purchase labels out of final profiles.
+- Regenerated `APPLICATION_PREP_FIRST_10_AFTER_FIX.json` and `.md` with targeted-cleanup counts, cleaner artifacts, normalized Maryland Jotform URL, and stricter final ApplicationProfile evidence.
+- Removed the before-click `/user-preview` retrofit search control so the picker only shows Sort and Grid/Panel controls.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar row spacing normalization
 
 - Equalized the vertical gap between `Retrofits` and `Profile info` so it matches the gap between `Profile info` and `Dashboard`.

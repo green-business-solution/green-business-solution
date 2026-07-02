@@ -353,6 +353,79 @@ describe("extractOpportunityApplicationRequirements", () => {
     expect(result.evidence.map((item) => item.textSnippet || "").join(" ")).not.toMatch(/\{\{/);
   });
 
+  it("does not use Zoho validation or verification strings as field evidence", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({ discoveredApplicationUrl: "https://forms.zohopublic.com/apply" })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h2>Application Requirements</h2>
+            <script>
+              {"invalidinitialphone":"Enter a phone number that doesnt begin with + or ).","unconfirmeduser":"You haven't verified your email yet, click"}
+            </script>
+            <p>Applicants must provide project address and contractor name.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    const evidence = JSON.stringify(result);
+    expect(evidence).not.toMatch(/invalidinitialphone|unconfirmeduser|verified your email/i);
+    expect(result.requiredFields.map((item) => item.id)).toEqual(expect.arrayContaining(["site_service_address", "contractor_name"]));
+    expect(result.requiredFields.map((item) => item.id)).not.toContain("phone");
+    expect(result.requiredFields.map((item) => item.id)).not.toContain("contact_email");
+  });
+
+  it("does not create a utility provider field from generic utility regulation text", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile(),
+        pathProfile: makePathProfile({ discoveredApplicationUrl: "https://example.com/interconnection.pdf", applicationMethod: "pdf" })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          Level I Interconnection Application
+          Applicants must provide contact name, phone, service address, utility account number, and authorized signature.
+          This immediate shutdown is required by the National Electric Code (NEC) and also by your local electric utility's regulations.
+          `,
+          { contentType: "application/pdf" }
+        )
+      )
+    );
+
+    expect(result.requiredFields.map((item) => item.id)).toEqual(expect.arrayContaining(["contact_name", "phone", "site_service_address", "utility_account_number", "signature"]));
+    expect(result.requiredFields.map((item) => item.id)).not.toContain("utility_provider");
+  });
+
+  it("labels application checklist document evidence instead of generic proof of purchase", async () => {
+    const result = await extractOpportunityApplicationRequirements(
+      {
+        sourceProfile: makeSourceProfile({ opportunityName: "Efficiency Maine C-PACE" }),
+        pathProfile: makePathProfile({
+          discoveredApplicationUrl: "https://portal.example.com/cpace",
+          programWebsiteUrl: "https://example.com/c-pace/",
+          applicationMethod: "online_portal"
+        })
+      },
+      fixedOptions(
+        mockTextFetch(`
+          <html><body>
+            <h2>Application Requirements</h2>
+            <p>Upon receipt of all required application documents identified in the Application Checklist, the program will review the application.</p>
+            <p>Applicants must provide business legal name, project cost, and contact email.</p>
+          </body></html>
+        `)
+      )
+    );
+
+    expect(result.requiredDocuments.map((item) => item.id)).toContain("application_checklist_documents");
+    expect(result.requiredDocuments.map((item) => item.label)).toContain("Application Checklist documents");
+    expect(result.requiredDocuments.map((item) => item.id)).not.toContain("proof_of_purchase");
+  });
+
   it("returns needs_review for a vague readable source", async () => {
     const result = await extractOpportunityApplicationRequirements(
       { sourceProfile: makeSourceProfile(), pathProfile: makePathProfile({ discoveredApplicationUrl: undefined, programWebsiteUrl: "https://example.com/program" }) },

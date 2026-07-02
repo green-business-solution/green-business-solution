@@ -51,7 +51,13 @@ const DEADLINE_PATTERN =
 const STEP_PATTERN =
   /\b(apply|complete|download|submit|email|contact|upload|attach|provide|confirm eligibility|review eligibility|reserve|pre[- ]?approval|sign|send)\b/i;
 const SYSTEM_STEP_PATTERN =
-  /\b(captcha|verification email|email link to|please enter a valid email address to configure zoho sign settings|support@zohoforms\.com|done|cancel|retry)\b/i;
+  /\b(captcha|invalidinitialphone|invalidphone|phonenosdonotmatch|phone numbers do not match|unconfirmeduser|otpsentemail|one[- ]?time password|verification email|verify your email|email link to|please enter a valid email address to configure zoho sign settings|zoho sign settings|support@zohoforms\.com|please enter a valid phone number|enter a phone number|sending email|done|cancel|retry)\b/i;
+const NEWSLETTER_SIGNUP_PATTERN =
+  /\b(newsletter|newsletter sign up|sign up confirmation|subscribe|notification preferences?|choose which notifications|email preferences)\b/i;
+const NON_APPLICANT_STEP_PATTERN =
+  /\b(click to choose which notifications|municipality must also complete|capital providers wishing to participate|capital provider wishes to participate|developed a set of program guidelines|green bank also developed|availability of c-pace financing|they provide information about the|technical assistance with an application|customer service center|overview of how to apply|keystone login|primary school contact|curriculum development contact|email address\s*\*?\s*required)\b/i;
+const PA_SOLAR_UNRELATED_PATTERN =
+  /\b(manufactured home|manufactured housing|modular\/industrialized housing|industrialized housing|local tax id|w2-r|w-2r|act 32|mediation guidelines|veterans resources|compliance resources|publications?\s*&\s*documents?|employer annual w2-r|manufactured home installer faq|newsletter sign up confirmation|dc ed publications|dced publications)\b/i;
 const APPLICATION_SPECIFIC_SECTION_PATTERN =
   /\b(how to apply|application requirements?|required documents?|documents needed|before you apply|required information|application instructions?|application form|submit application|apply online|rebate application|pre[- ]?approval application|applicants? must provide|submit the following|upload (?:the )?(?:following )?(?:documents?|forms?))\b/i;
 const DEADLINE_VALUE_PATTERN =
@@ -64,7 +70,7 @@ const FIELD_DEFINITIONS = [
   { id: "contact_email", label: "Contact email", requirementType: "field", patterns: [/\bcontact email\b/i, /\bemail address\b/i, /\bapplicant email\b/i] },
   { id: "phone", label: "Phone", requirementType: "field", patterns: [/\bphone\b/i, /\btelephone\b/i] },
   { id: "site_service_address", label: "Site/service address", requirementType: "field", patterns: [/\bsite address\b/i, /\bservice address\b/i, /\binstallation address\b/i, /\bproject address\b/i, /\bfacility address\b/i] },
-  { id: "utility_provider", label: "Utility provider", requirementType: "field", patterns: [/\butility provider\b/i, /\belectric utility\b/i, /\bgas utility\b/i] },
+  { id: "utility_provider", label: "Utility provider", requirementType: "field", patterns: [/\butility provider\s*[:?*]/i, /\belectric provider\s*[:?*]/i, /\bservice provider\s*[:?*]/i] },
   { id: "utility_account_number", label: "Utility account number", requirementType: "account_number", patterns: [/\butility account number\b/i, /\bcustomer account number\b/i, /\baccount number\b/i, /\bservice account\b/i] },
   { id: "tax_entity_type", label: "Tax/entity type", requirementType: "field", patterns: [/\btax entity type\b/i, /\bentity type\b/i, /\btaxpayer identification\b/i, /\btax id\b/i, /\bein\b/i] },
   { id: "project_type", label: "Project type", requirementType: "field", patterns: [/\bproject type\b/i, /\bmeasure type\b/i, /\bequipment type\b/i] },
@@ -92,7 +98,7 @@ const DOCUMENT_DEFINITIONS = [
   { id: "equipment_spec_sheet", label: "Equipment specification sheet", requirementType: "document", patterns: [/\bequipment specification sheet\b/i, /\bspec sheet\b/i, /\bmanufacturer specification\b/i, /\bcut sheet\b/i] },
   { id: "contractor_license_certification", label: "Contractor license/certification", requirementType: "contractor", patterns: [/\bcontractor license\b/i, /\bcontractor certification\b/i, /\btrade ally certification\b/i] },
   { id: "photos", label: "Photos", requirementType: "document", patterns: [/\bphotos?\b/i, /\bphotographs?\b/i, /\bpictures?\b/i] },
-  { id: "proof_of_purchase", label: "Proof of purchase", requirementType: "document", patterns: [/\bproof of purchase\b/i, /\bpurchase receipt\b/i, /\breceipt\b/i] },
+  { id: "proof_of_purchase", label: "Proof of purchase", requirementType: "document", patterns: [/\bproof of purchase\b/i, /\bpurchase receipt\b/i] },
   { id: "tax_forms", label: "Tax forms", requirementType: "tax", patterns: [/\btax forms?\b/i, /\bform 3468\b/i, /\bform 5695\b/i, /\btax return\b/i] },
   { id: "energy_audit", label: "Energy audit", requirementType: "document", patterns: [/\benergy audit\b/i, /\baudit report\b/i] },
   { id: "preapproval_form", label: "Pre-approval form", requirementType: "preapproval", patterns: [/\bpre[- ]?approval form\b/i, /\bpreapproval form\b/i, /\breservation form\b/i] }
@@ -108,6 +114,8 @@ const DOCUMENT_DEFINITIONS = [
   ,{ id: "participant_agreement", label: "Signed participant agreement", requirementType: "document", patterns: [/\bsigned participant agreement\b/i, /\bparticipant agreement\b/i] }
   ,{ id: "permission_to_operate", label: "Permission to Operate letter", requirementType: "document", patterns: [/\bpermission to operate\b/i, /\bpto letter\b/i] }
   ,{ id: "certificate_of_completion", label: "Certificate of Completion", requirementType: "document", patterns: [/\bcertificate of completion\b/i] }
+  ,{ id: "application_checklist_documents", label: "Application Checklist documents", requirementType: "checklist", patterns: [/\ball required application documents\b/i, /\brequired application documents\b/i, /\bapplication checklist\b/i] }
+  ,{ id: "required_interconnection_documents", label: "Required interconnection documents", requirementType: "document", patterns: [/\binterconnection application\b.{0,120}\brequired documents\b/i, /\breceipt of application and all required documents\b/i, /\brequired interconnection documents\b/i] }
 ];
 
 function cleanText(value) {
@@ -135,7 +143,21 @@ function decodeHtmlEntities(value) {
     .replace(/&apos;/gi, "'")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
-    .replace(/&nbsp;/gi, " ");
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 16));
+      } catch {
+        return "";
+      }
+    })
+    .replace(/&#(\d+);/g, (_, code) => {
+      try {
+        return String.fromCodePoint(Number.parseInt(code, 10));
+      } catch {
+        return "";
+      }
+    });
 }
 
 function stripHtml(value) {
@@ -153,6 +175,79 @@ function htmlToReadableText(value) {
 function safeSnippet(value, maxLength = 280) {
   const text = sanitizeSnippet(stripHtml(value), maxLength);
   return text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
+}
+
+function sourceTextForProfile(profile = {}) {
+  return normalizeWhitespace([
+    profile.opportunityName,
+    profile.programWebsiteUrl,
+    profile.sourceUrl,
+    profile.applicationUrl,
+    ...(profile.applicationArtifacts || []).map((artifact) => [artifact.label, artifact.url, artifact.email, artifact.sourceUrl].join(" "))
+  ].filter(Boolean).join(" "));
+}
+
+function isSolarForSchoolsProfile(profile = {}) {
+  return /\bsolar for schools|s4s\b/i.test(sourceTextForProfile(profile));
+}
+
+function requirementText(requirement = {}) {
+  return normalizeWhitespace([
+    requirement.id,
+    requirement.label,
+    requirement.description,
+    requirement.sourceUrl,
+    requirement.evidenceSnippet
+  ].filter(Boolean).join(" "));
+}
+
+function isUnreliableEvidenceText(value) {
+  const text = normalizeWhitespace(value);
+  if (!text) return true;
+  if (isBoilerplateSourceText(text)) return true;
+  if (SYSTEM_STEP_PATTERN.test(text)) return true;
+  if (NEWSLETTER_SIGNUP_PATTERN.test(text)) return true;
+  if (/^\s*(done|submit|cancel|retry|next|previous|back|continue|reset|close)\s*$/i.test(text)) return true;
+  return false;
+}
+
+function shouldDropRequirement(requirement, profile = {}) {
+  const text = requirementText(requirement);
+  if (isUnreliableEvidenceText(text)) return true;
+  if (isSolarForSchoolsProfile(profile) && PA_SOLAR_UNRELATED_PATTERN.test(text)) return true;
+  if (isSolarForSchoolsProfile(profile) && /^(contact_)?email(_address)?$/i.test(requirement?.id || "") && /\b(email address\s*\*?\s*required|keystone login|technical assistance|customer service center)\b/i.test(requirement?.evidenceSnippet || "")) {
+    return true;
+  }
+  if (requirement?.id === "utility_provider" && !/\b(?:utility provider|electric provider|service provider)\s*[:?*]/i.test(requirement?.evidenceSnippet || "")) {
+    return true;
+  }
+  return false;
+}
+
+function normalizeRequirement(requirement = {}, profile = {}) {
+  const text = requirementText(requirement);
+  if (requirement.id === "proof_of_purchase" && !/\bproof of purchase|purchase receipt\b/i.test(text)) {
+    if (/\bwmgld\b|\binterconnection\b/i.test(text)) {
+      return {
+        ...requirement,
+        id: "required_interconnection_documents",
+        label: "Required interconnection documents",
+        requirementType: "document"
+      };
+    }
+    if (/\bapplication checklist|required application documents|all required application documents\b/i.test(text)) {
+      return {
+        ...requirement,
+        id: "application_checklist_documents",
+        label: "Application Checklist documents",
+        requirementType: "checklist"
+      };
+    }
+  }
+  if (isSolarForSchoolsProfile(profile) && PA_SOLAR_UNRELATED_PATTERN.test(text)) {
+    return { ...requirement, confidence: "Needs review" };
+  }
+  return requirement;
 }
 
 function firstHttpUrl(...values) {
@@ -435,11 +530,19 @@ function finalizeProfile(profile) {
   if (!["open", "closed", "funding_exhausted", "future_round_expected", "source_unreadable_or_js_required", "needs_user_selection", "needs_review", "unknown"].includes(profile.applicationStatus)) {
     profile.applicationStatus = "unknown";
   }
-  profile.requiredFields = dedupeRequirements(profile.requiredFields);
-  profile.requiredDocuments = dedupeRequirements(profile.requiredDocuments);
-  profile.optionalFields = dedupeRequirements(profile.optionalFields);
-  profile.applicationSteps = uniqueValues(profile.applicationSteps.map((item) => safeSnippet(item, 180))).slice(0, 8);
-  profile.evidence = profile.evidence.filter((item) => item?.label).slice(0, 12);
+  profile.requiredFields = dedupeRequirements(profile.requiredFields.map((item) => normalizeRequirement(item, profile)).filter((item) => !shouldDropRequirement(item, profile)));
+  profile.requiredDocuments = dedupeRequirements(profile.requiredDocuments.map((item) => normalizeRequirement(item, profile)).filter((item) => !shouldDropRequirement(item, profile)));
+  profile.optionalFields = dedupeRequirements(profile.optionalFields.map((item) => normalizeRequirement(item, profile)).filter((item) => !shouldDropRequirement(item, profile)));
+  profile.applicationSteps = uniqueValues(
+    profile.applicationSteps
+      .map((item) => safeSnippet(item, 180))
+      .filter((item) => !isUnreliableEvidenceText(item) && !(isSolarForSchoolsProfile(profile) && PA_SOLAR_UNRELATED_PATTERN.test(item)))
+  ).slice(0, 8);
+  profile.evidence = profile.evidence
+    .filter((item) => item?.label)
+    .filter((item) => !isUnreliableEvidenceText([item.label, item.textSnippet, item.sourceUrl].filter(Boolean).join(" ")))
+    .filter((item) => !(isSolarForSchoolsProfile(profile) && PA_SOLAR_UNRELATED_PATTERN.test([item.label, item.textSnippet, item.sourceUrl].filter(Boolean).join(" "))))
+    .slice(0, 12);
   profile.notes = uniqueValues(profile.notes.map(cleanText)).filter(Boolean);
   return profile;
 }
@@ -500,6 +603,7 @@ function isSourceOnlyPath(pathProfile) {
 
 function hasRequiredContext(unit, fetched, applicationSpecificSectionFound) {
   if (isBoilerplateSourceText(unit)) return false;
+  if (isUnreliableEvidenceText(unit)) return false;
   if (REQUIRED_CONTEXT_PATTERN.test(unit) && (applicationSpecificSectionFound || APPLICATION_SPECIFIC_SECTION_PATTERN.test(unit))) return true;
   if (fetched.isPdf && /[:?]\s*$/.test(unit)) return true;
   if (applicationSpecificSectionFound && FORM_FIELD_PATTERN.test(unit) && /[:?]\s*$/.test(unit)) return true;
@@ -529,7 +633,7 @@ function extractRequirementsFromDefinitions({ definitions, units, fetched, sourc
   const optional = [];
 
   for (const definition of definitions) {
-    const matchingUnits = units.filter((unit) => definitionMatchesUnit(definition, unit));
+    const matchingUnits = units.filter((unit) => !isUnreliableEvidenceText(unit) && definitionMatchesUnit(definition, unit));
     const optionalUnit = matchingUnits.find((unit) => OPTIONAL_CONTEXT_PATTERN.test(unit));
     const requiredUnit =
       matchingUnits.find((unit) => hasRequiredContext(unit, fetched, applicationSpecificSectionFound) && !OPTIONAL_CONTEXT_PATTERN.test(unit)) ||
@@ -605,7 +709,10 @@ function extractApplicationSteps(units) {
   const steps = [];
   for (const unit of units) {
     if (isBoilerplateSourceText(unit)) continue;
+    if (isUnreliableEvidenceText(unit)) continue;
     if (SYSTEM_STEP_PATTERN.test(unit)) continue;
+    if (NON_APPLICANT_STEP_PATTERN.test(unit)) continue;
+    if (/^(how to apply:?|email address|submit|contact)$/i.test(unit)) continue;
     const numbered = unit.match(/^(?:step\s*)?\d+[\).:-]?\s+(.+)/i);
     if (numbered && STEP_PATTERN.test(numbered[1])) {
       steps.push(safeSnippet(numbered[1], 180));

@@ -82,6 +82,7 @@ function aggregate(results) {
     artifactsFoundRequirementsMissing: qualityCount("artifacts_found_requirements_missing"),
     needsPdfTextExtraction: qualityCount("needs_pdf_text_extraction"),
     needsFormFieldExtraction: qualityCount("needs_form_field_extraction"),
+    needsTargetedCleanup: qualityCount("needs_targeted_cleanup"),
     needsManualReview: qualityCount("needs_manual_review"),
     needsReview: results.filter((item) => ["needs_review", "not_attempted", "source_unavailable"].includes(item.applicationRequirementProfile?.extractionStatus)).length,
     jsBlocked: results.filter((item) => item.applicationPathProfile?.applicationStatus === "source_unreadable_or_js_required" || item.applicationRequirementProfile?.extractionStatus === "source_unreadable_or_js_required").length,
@@ -100,6 +101,7 @@ function nextAction(item) {
   if (quality === "requirements_ready_for_admin_review") return "Ready for admin review of extracted requirements and evidence.";
   if (quality === "needs_pdf_text_extraction") return "Review PDF extraction diagnostics or manually inspect the primary PDF artifacts.";
   if (quality === "needs_form_field_extraction") return "Review the application form page and improve form field parsing if fields are hidden in scripts.";
+  if (quality === "needs_targeted_cleanup") return "Review the targeted cleanup warnings before treating this as ready for admin review.";
   if (quality === "source_unreadable_or_js_required") return "Open the official source manually; server-side discovery could not read the page.";
   if (quality === "needs_user_selection") return "Select the required utility/town/service territory before extracting final requirements.";
   if (quality === "closed_but_profile_extractable") return "Keep as closed/funding-exhausted reference profile; do not mark ready-to-apply.";
@@ -129,6 +131,7 @@ function markdownReport(results, counts) {
     `- Artifacts found but requirements missing: ${counts.artifactsFoundRequirementsMissing}/10`,
     `- Needs PDF text extraction: ${counts.needsPdfTextExtraction}/10`,
     `- Needs form field extraction: ${counts.needsFormFieldExtraction}/10`,
+    `- Needs targeted cleanup: ${counts.needsTargetedCleanup}/10`,
     `- Needs manual review: ${counts.needsManualReview}/10`,
     `- Needs review: ${counts.needsReview}/10`,
     `- JS/blocked: ${counts.jsBlocked}/10`,

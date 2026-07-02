@@ -4,14 +4,25 @@ const SYSTEM_LABEL_PATTERNS = [
   /^\s*(done|submit|cancel|retry|next|previous|back|continue|reset|close)\s*$/i,
   /\bcaptcha\b/i,
   /\brecaptcha\b/i,
+  /\binvalidinitialphone\b/i,
+  /\binvalidphone\b/i,
+  /\bphonenosdonotmatch\b/i,
+  /\bphone numbers do not match\b/i,
+  /\bunconfirmeduser\b/i,
+  /\botpsentemail\b/i,
+  /\bone[- ]?time password\b/i,
+  /^\s*sending email\s*$/i,
   /\bverification email\b/i,
+  /\bverify your email\b/i,
   /\bemail link to\b/i,
   /\bplease enter a valid email address to configure zoho sign settings\b/i,
+  /\bzoho sign settings\b/i,
   /\benter a valid email address\b/i,
+  /\bplease enter a valid phone number\b/i,
   /\benter a valid phone number\b/i,
+  /\benter a phone number\b/i,
   /\bverify your email address\b/i,
   /\bentervalidmail\b/i,
-  /\binvalidphone\b/i,
   /\bif\s*\(/i,
   /\bfunction\s*\(/i,
   /\bindexOf\s*\(/i,
@@ -21,7 +32,9 @@ const SYSTEM_LABEL_PATTERNS = [
   /\bprivacy policy\b/i,
   /\bterms of service\b/i,
   /\bnewsletter\b/i,
-  /\bsign up\b/i
+  /\bsign up\b/i,
+  /\bnotification preferences?\b/i,
+  /\bchoose which notifications\b/i
 ];
 
 const FIELD_DEFINITIONS = [
@@ -136,7 +149,9 @@ function extractLabelCandidates(htmlOrText) {
 }
 
 function definitionForLabel(label) {
-  return FIELD_DEFINITIONS.find((definition) => definition.patterns.some((pattern) => pattern.test(label)));
+  return FIELD_DEFINITIONS
+    .filter((definition) => definition.patterns.some((pattern) => pattern.test(label)))
+    .sort((a, b) => b.label.length - a.label.length)[0];
 }
 
 function requirementFromLabel(definition, label, sourceUrl, required) {

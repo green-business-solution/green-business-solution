@@ -132,4 +132,65 @@ describe("ApplicationProfile", () => {
 
     expect(quality.profileQuality).toBe("closed_but_profile_extractable");
   });
+
+  it("marks schema-valid profiles with validation evidence as needing targeted cleanup", () => {
+    const quality = assessApplicationProfileQuality({
+      opportunityId: "opp_validation_quality",
+      opportunityName: "TMLP Heat Pump and Zero-Interest Loan",
+      applicationStatus: "open",
+      applicationUrl: "https://forms.zohopublic.com/apply",
+      requiredFields: [
+        {
+          id: "phone",
+          label: "Phone",
+          sourceUrl: "https://forms.zohopublic.com/apply",
+          evidenceSnippet: '"invalidinitialphone":"Enter a phone number that doesnt begin with + or )."',
+          required: true,
+          confidence: "High"
+        },
+        {
+          id: "site_service_address",
+          label: "Site/service address",
+          sourceUrl: "https://forms.zohopublic.com/apply",
+          evidenceSnippet: "Applicants must provide project address.",
+          required: true,
+          confidence: "High"
+        },
+        {
+          id: "contractor_name",
+          label: "Contractor name",
+          sourceUrl: "https://forms.zohopublic.com/apply",
+          evidenceSnippet: "Applicants must provide contractor name.",
+          required: true,
+          confidence: "High"
+        }
+      ],
+      requiredDocuments: [],
+      optionalFields: [],
+      applicationArtifacts: [{ type: "online_form", label: "Application form", url: "https://forms.zohopublic.com/apply" }]
+    });
+
+    expect(quality.profileQuality).toBe("needs_targeted_cleanup");
+    expect(quality.qualityWarnings.join(" ")).toMatch(/validation/i);
+  });
+
+  it("marks malformed application URLs as needing targeted cleanup", () => {
+    const quality = assessApplicationProfileQuality({
+      opportunityId: "opp_malformed_url",
+      opportunityName: "Maryland Commercial Solar",
+      applicationStatus: "open",
+      applicationUrl: "https://energy.maryland.gov/business/Pages/https&#58;//form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar",
+      requiredFields: [
+        { id: "contact_email", label: "Contact email", sourceUrl: "https://example.com", evidenceSnippet: "Applicants must provide contact email.", required: true },
+        { id: "project_cost", label: "Project cost", sourceUrl: "https://example.com", evidenceSnippet: "Applicants must provide project cost.", required: true },
+        { id: "project_type", label: "Project type", sourceUrl: "https://example.com", evidenceSnippet: "Applicants must provide project type.", required: true }
+      ],
+      requiredDocuments: [],
+      optionalFields: [],
+      applicationArtifacts: [{ type: "online_form", label: "Jotform", url: "https://form.jotform.com/marylandenergy/FY26-commercial-and-canopy-solar" }]
+    });
+
+    expect(quality.profileQuality).toBe("needs_targeted_cleanup");
+    expect(quality.qualityWarnings.join(" ")).toMatch(/malformed/i);
+  });
 });
