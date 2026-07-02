@@ -69,8 +69,8 @@ Additional questions should be generated only when they unblock many otherwise-p
   `Other / Not sure`, which correctly produces utility unknowns.
 - DSIRE `parameterSets` are partially normalized into offers, but source semantics still need manual
   spot checks to prevent residential/commercial leakage.
-- This first pass uses deterministic extraction from existing fields and text. It does not geocode,
-  call utility service-territory polygons, or use a Census API yet.
+- Intake records now use Census Geocoder, with optional Geocodio fallback, to resolve address
+  geography for new submissions. Matching still does not call utility service-territory polygons yet.
 - `data/sample_matching_report.md` is not a human-reviewed ground-truth set. It is an audit artifact
   showing where to inspect and improve extraction.
 

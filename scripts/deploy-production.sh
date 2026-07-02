@@ -10,6 +10,7 @@ DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
 ENERGY_DATA_TABLE="${GBS_ENERGY_DATA_TABLE:-gbs-energy-data}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
+GEOCODIO_API_KEY="${GBS_GEOCODIO_API_KEY:-${GEOCODIO_API_KEY:-}}"
 GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI:-https://${DOMAIN_NAME}/api/auth/google/callback}"
 ADMIN_EMAILS="${GBS_ADMIN_EMAILS:-neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -170,6 +171,12 @@ if [ -n "${GOOGLE_CLIENT_SECRET}" ]; then
   parameter_overrides+=("GoogleClientSecret=${GOOGLE_CLIENT_SECRET}")
 else
   echo "GOOGLE_CLIENT_SECRET not set; reusing the existing CloudFormation parameter value."
+fi
+
+if [ -n "${GEOCODIO_API_KEY}" ]; then
+  parameter_overrides+=("GeocodioApiKey=${GEOCODIO_API_KEY}")
+else
+  echo "GEOCODIO_API_KEY not set; deploying with Geocodio fallback disabled unless an existing parameter value is present."
 fi
 
 aws_region cloudformation deploy \

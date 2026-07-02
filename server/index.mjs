@@ -18,6 +18,7 @@ import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mj
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
 import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
+import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
@@ -36,6 +37,7 @@ const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const energyDataTable = process.env.GBS_ENERGY_DATA_TABLE || "gbs-energy-data";
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
+const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
@@ -797,7 +799,7 @@ function normalizeIntakeRecord(item) {
   };
 }
 
-function createIntakeRecord(userId, input, now, energyDataUploadSession) {
+function createIntakeRecord(userId, input, now, energyDataUploadSession, siteGeography = null) {
   const contactName = cleanText(input.contactName || input.fullName);
   const submissionId = `intake_${userId}`;
 
@@ -821,13 +823,15 @@ function createIntakeRecord(userId, input, now, energyDataUploadSession) {
     },
     site: {
       address: cleanText(input.siteAddress),
+      geography: siteGeography,
       electricUtilityProvider: cleanText(input.electricUtilityProvider),
       gasUtilityProvider: cleanOptional(input.gasUtilityProvider),
       ownershipStatus: cleanText(input.ownershipStatus),
       buildingType: cleanText(input.buildingType),
       squareFootage: cleanText(input.squareFootage),
       numberOfUnits: cleanOptional(input.numberOfUnits),
-      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"]
+      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
+      derivedFieldsStatus: siteGeography?.status === "matched" ? "partially_resolved" : "needs_resolution"
     },
     sustainability: {
       goals: cleanText(input.sustainabilityGoals),
@@ -2308,6 +2312,7 @@ async function createClientUser(input) {
   const now = new Date().toISOString();
   const uploadSession = createEnergyDataUploadSession(now);
   const isFakeUser = input?.isFakeUser === true;
+  const siteGeography = await resolveSiteGeographyForIntake(input, now);
 
   if (existing) {
     if (existing.role !== "client") {
@@ -2319,7 +2324,7 @@ async function createClientUser(input) {
       throw createDuplicateEmailError(email);
     }
 
-    const intake = createIntakeRecord(existing.userId, input, now, uploadSession.record);
+    const intake = createIntakeRecord(existing.userId, input, now, uploadSession.record, siteGeography);
     const user = {
       ...existing,
       fullName: intake.contact.fullName || intake.business.companyName,
@@ -2386,7 +2391,7 @@ async function createClientUser(input) {
   }
 
   const userId = createAccountUserId(email);
-  const intake = createIntakeRecord(userId, input, now, uploadSession.record);
+  const intake = createIntakeRecord(userId, input, now, uploadSession.record, siteGeography);
   const user = {
     userId,
     role: "client",
@@ -2439,6 +2444,36 @@ async function createClientUser(input) {
       throw createDuplicateEmailError(email);
     }
     throw error;
+  }
+}
+
+async function resolveSiteGeographyForIntake(input, now) {
+  try {
+    return await resolveAddressGeography(cleanText(input.siteAddress), {
+      geocodioApiKey,
+      resolvedAt: now
+    });
+  } catch (error) {
+    return {
+      schemaVersion: "address-geography-v1",
+      status: "failed",
+      provider: null,
+      resolvedAt: now,
+      matchedAddress: null,
+      coordinates: null,
+      country: null,
+      stateCode: null,
+      stateFips: null,
+      countyFips: null,
+      countyName: null,
+      placeGeoid: null,
+      placeName: null,
+      censusTractGeoid: null,
+      censusBlockGeoid: null,
+      zip5: null,
+      rawProvider: {},
+      notes: [`Address geography resolution failed before provider response: ${String(error?.message || error).slice(0, 180)}`]
+    };
   }
 }
 
@@ -2501,6 +2536,11 @@ app.get("/api/health", (_req, res) => {
     energyDataTable,
     opportunitiesTable,
     energyDataBucket: energyDataBucket || null,
+    addressGeographyResolver: {
+      primaryProvider: "census_geocoder",
+      fallbackProvider: "geocodio",
+      geocodioFallbackConfigured: Boolean(geocodioApiKey)
+    },
     googleClientConfigured: Boolean(googleClientId),
     googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
     googleRedirectUri: googleRedirectUri || null,
@@ -2529,6 +2569,11 @@ app.get("/api/diagnostics", async (_req, res) => {
       energyDataTable,
       opportunitiesTable,
       energyDataBucket: energyDataBucket || null,
+      addressGeographyResolver: {
+        primaryProvider: "census_geocoder",
+        fallbackProvider: "geocodio",
+        geocodioFallbackConfigured: Boolean(geocodioApiKey)
+      },
       googleClientConfigured: Boolean(googleClientId),
       googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
       googleRedirectUri: googleRedirectUri || null,

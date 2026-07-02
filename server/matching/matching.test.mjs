@@ -21,6 +21,48 @@ describe("matching pipeline", () => {
     expect(canonicalUtilityId("Concord Municipal Light Plant")).toBe("UTIL_CONCORD_MLP");
   });
 
+  it("uses resolved address geography when it is stored on the intake site", () => {
+    const user = normalizeUserProfile({
+      site: {
+        address: "1 Dr Carlton B Goodlett Pl, San Francisco, CA 94102",
+        geography: {
+          status: "matched",
+          provider: "census_geocoder",
+          matchedAddress: "1 DR CARLTON B GOODLETT PL, SAN FRANCISCO, CA, 94102",
+          coordinates: { lat: 37.7793, lng: -122.4193 },
+          stateCode: "CA",
+          countyFips: "06075",
+          countyName: "San Francisco County",
+          placeGeoid: "0667000",
+          placeName: "San Francisco city",
+          censusTractGeoid: "060750124021",
+          censusBlockGeoid: "060750124021001",
+          zip5: "94102"
+        },
+        electricUtilityProvider: "PG&E",
+        ownershipStatus: "Own",
+        buildingType: "Office",
+        squareFootage: "12000"
+      },
+      business: {
+        organizationType: "Business"
+      }
+    });
+
+    expect(user.site.geo).toMatchObject({
+      stateCode: "CA",
+      zip5: "94102",
+      countyFips: "06075",
+      placeGeoid: "0667000",
+      censusTractGeoid: "060750124021",
+      resolutionStatus: "matched",
+      resolutionProvider: "census_geocoder"
+    });
+    expect(user.site.addressStructured.matched).toBe("1 DR CARLTON B GOODLETT PL, SAN FRANCISCO, CA, 94102");
+    expect(user.completeness.hasCounty).toBe(true);
+    expect(user.completeness.hasCensusTract).toBe(true);
+  });
+
   it("matches an SDG&E EV charging user to an SDG&E EV charging opportunity", () => {
     const user = normalizeUserProfile({
       organizationType: "Agricultural Operation",

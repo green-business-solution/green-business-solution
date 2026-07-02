@@ -54,7 +54,9 @@ Representative fields:
 
 Current intake form fields include:
 
-- Site address, later used to derive state, county, city, ZIP, and utility territory
+- Site address, used by the server geography resolver to derive state, county, city/place, ZIP,
+  Census tract/block, coordinates, and later utility/tax territory context. Census Geocoder is the
+  primary provider, with optional Geocodio fallback when configured.
 - Electric utility provider: `PG&E`, `SCE`, `SDG&E`, `SVP`, or `Other`
 - Organization type: `Business`, `Nonprofit`, `Government`, `School`, or `Hospital`
 - Ownership status: `Own`, `Lease`, or `Manage`

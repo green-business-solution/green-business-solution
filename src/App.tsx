@@ -145,6 +145,24 @@ type IntakeRecord = {
   };
   site?: {
     address: string;
+    geography?: {
+      schemaVersion?: string;
+      status?: string;
+      provider?: string | null;
+      matchedAddress?: string | null;
+      coordinates?: { lat: number; lng: number } | null;
+      country?: string | null;
+      stateCode?: string | null;
+      stateFips?: string | null;
+      countyFips?: string | null;
+      countyName?: string | null;
+      placeGeoid?: string | null;
+      placeName?: string | null;
+      censusTractGeoid?: string | null;
+      censusBlockGeoid?: string | null;
+      zip5?: string | null;
+      notes?: string[];
+    } | null;
     electricUtilityProvider: string;
     gasUtilityProvider?: string | null;
     ownershipStatus: string;
@@ -152,6 +170,7 @@ type IntakeRecord = {
     squareFootage: string;
     numberOfUnits?: string | null;
     derivedFieldsPlanned?: string[];
+    derivedFieldsStatus?: string;
   };
   sustainability: {
     goals: string;

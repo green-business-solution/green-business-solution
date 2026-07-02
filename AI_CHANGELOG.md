@@ -64,6 +64,13 @@
 - Removed the hard shadow and brightness break between the How It Works hero and the first transformation scene.
 - Added a responsive tonal crossfade over the section boundary so the cloudy hero background flows into the journey without changing the later scroll-driven image states.
 
+## 2026-07-02 - Codex (GPT-5) address geography resolver
+
+- Added a server-side address geography resolver that uses Census Geocoder first and optional Geocodio fallback when `GEOCODIO_API_KEY` or `GBS_GEOCODIO_API_KEY` is configured.
+- Stored resolved geography on new intake site records, including matched address, coordinates, state, county FIPS, place GEOID, Census tract/block, provider, status, and provider attempts.
+- Updated matching normalization to use stored resolved geography for downstream matching and tax-rule selection instead of only parsing state/ZIP from address text.
+- Exposed resolver provider configuration in API health/diagnostics responses and added optional production deployment support for the Geocodio API key.
+
 ## 2026-07-02 - Codex (GPT-5) tax form input repair intake
 
 - Imported and normalized the three GPT Pro tax/form-input outputs, including corrected malformed synthetic-source prose and swapped Michigan/Washington opportunity question-set mappings.

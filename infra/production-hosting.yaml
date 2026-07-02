@@ -21,6 +21,11 @@ Parameters:
     Type: String
     NoEcho: true
     Description: Google OAuth web client secret used only by the API Lambda for authorization-code exchange.
+  GeocodioApiKey:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: Optional Geocodio API key used only as an address-geography fallback when Census Geocoder does not match.
   GoogleRedirectUri:
     Type: String
     Default: https://retrofi.org/api/auth/google/callback
@@ -132,6 +137,7 @@ Resources:
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
+          GBS_GEOCODIO_API_KEY: !Ref GeocodioApiKey
           GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
           GBS_ADMIN_EMAILS: !Ref AdminEmails
       Handler: server/lambda.handler

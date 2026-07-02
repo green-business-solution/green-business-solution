@@ -21,9 +21,10 @@ export function normalizeUserProfile(intake) {
   const buildingType = site.buildingType || source.buildingType || "";
   const electricUtilityProvider = site.electricUtilityProvider || source.electricUtilityProvider || "";
   const squareFootageRaw = site.squareFootage || source.squareFootage || "";
+  const resolvedGeography = site.geography || source.siteGeography || source.geography || {};
 
-  const stateCode = extractStateCode(siteAddress) || extractStateCode(business.headquarters);
-  const zip5 = extractZip5(siteAddress);
+  const stateCode = resolvedGeography.stateCode || extractStateCode(siteAddress) || extractStateCode(business.headquarters);
+  const zip5 = resolvedGeography.zip5 || extractZip5(siteAddress);
   const utilityId = canonicalUtilityId(electricUtilityProvider);
   const squareFootage = parseNumber(squareFootageRaw);
 
@@ -39,15 +40,22 @@ export function normalizeUserProfile(intake) {
     site: {
       addressStructured: {
         raw: siteAddress,
+        matched: resolvedGeography.matchedAddress || null,
         stateCode,
         zip5
       },
       geo: {
         stateCode,
         zip5,
-        countyFips: null,
-        placeGeoid: null,
-        censusTractGeoid: null,
+        countyFips: resolvedGeography.countyFips || null,
+        countyName: resolvedGeography.countyName || null,
+        placeGeoid: resolvedGeography.placeGeoid || null,
+        placeName: resolvedGeography.placeName || null,
+        censusTractGeoid: resolvedGeography.censusTractGeoid || null,
+        censusBlockGeoid: resolvedGeography.censusBlockGeoid || null,
+        coordinates: resolvedGeography.coordinates || null,
+        resolutionStatus: resolvedGeography.status || "not_resolved",
+        resolutionProvider: resolvedGeography.provider || null,
         designations: []
       },
       utility: {
@@ -79,6 +87,9 @@ export function normalizeUserProfile(intake) {
     completeness: {
       hasState: Boolean(stateCode),
       hasZip: Boolean(zip5),
+      hasCounty: Boolean(resolvedGeography.countyFips),
+      hasPlace: Boolean(resolvedGeography.placeGeoid || resolvedGeography.placeName),
+      hasCensusTract: Boolean(resolvedGeography.censusTractGeoid),
       hasUtility: Boolean(utilityId),
       hasOrganizationType: Boolean(organizationType),
       hasBuildingType: Boolean(buildingType),
