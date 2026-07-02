@@ -1,11 +1,13 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
+  CUSTOMER_RETROFIT_UI_NAMES,
   RetrofitRecommendationsPreview,
   buildUserRetrofitPreviewResult,
   confirmAllEstimateState,
   confirmSingleEstimateState,
   countScenarioSelectedOpportunities,
+  customerRetrofitUiName,
   getScenarioSelectedOpportunityCount,
   getOpportunityIncludedLabel
 } from "./App";
@@ -150,14 +152,14 @@ describe("retrofit recommendations preview", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
 
     expect(preview.dataSourceLabel).toBe("Live/API backend recommendation data");
-    expect(preview.topRecommendation?.retrofitName).toBe("LED Lighting Upgrade");
+    expect(preview.topRecommendation?.retrofitName).toBe("LED Lighting");
     expect(preview.retrofits[0].scenarios.map((scenario) => scenario.name)).toEqual([
       "Scenario A: Low upfront cost",
       "Scenario B: Best payback",
       "Scenario C: Highest total savings",
       "Scenario D: Certification-focused"
     ]);
-    expect(preview.retrofits[0].name).toBe("LED Lighting Upgrade");
+    expect(preview.retrofits[0].name).toBe("LED Lighting");
     expect(preview.retrofits[0].metrics.estimatedUpfrontProjectCost).toBe(1200000);
     expect(preview.retrofits[0].metrics.upfrontFinancialIncentive).toBe(300000);
     expect(preview.retrofits[0].opportunities[0].name).toBe("Utility LED Rebate");
@@ -165,6 +167,22 @@ describe("retrofit recommendations preview", () => {
     expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
     expect(preview.estimateCompletenessPercent).toBeLessThanOrEqual(65);
     expect(preview.retrofits[0].confidenceLabel).toBe("Medium");
+  });
+
+  it("defines short customer UI names for every taxonomy retrofit type", async () => {
+    const taxonomyModulePath = "../server/matching/retrofitTaxonomy.mjs";
+    const { RETROFIT_TYPES } = await import(taxonomyModulePath);
+    const taxonomyIds = (RETROFIT_TYPES as Array<{ retrofitTypeId: string }>)
+      .map((retrofit) => retrofit.retrofitTypeId)
+      .sort();
+    const mappedIds = Object.keys(CUSTOMER_RETROFIT_UI_NAMES).sort();
+
+    expect(mappedIds).toEqual(taxonomyIds);
+    expect(customerRetrofitUiName({ retrofitTypeId: "insulation_upgrade", displayName: "Insulation upgrade" })).toBe("Insulation");
+    expect(customerRetrofitUiName({ retrofitTypeId: "high_efficiency_hvac_replacement", displayName: "High-efficiency HVAC replacement" })).toBe("High-efficiency HVAC");
+    expect(customerRetrofitUiName({ retrofitTypeId: "engineering_feasibility_study", displayName: "Engineering feasibility study" })).toBe("Feasibility study");
+    expect(customerRetrofitUiName({ retrofitTypeId: "custom_led", displayName: "LED Lighting Upgrade" })).toBe("LED Lighting");
+    expect(Object.values(CUSTOMER_RETROFIT_UI_NAMES).filter((name) => /\b(retrofit|upgrade|replacement|installation|system)\b$/i.test(name))).toEqual([]);
   });
 
   it("does not label negative recurring impact as annual savings in retrofit tabs", () => {
@@ -241,7 +259,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Search retrofits");
     expect(html).toContain("Grid");
     expect(html).toContain("Panel");
-    expect(html).toContain("LED Lighting Upgrade");
+    expect(html).toContain("LED Lighting");
+    expect(html).not.toContain("LED Lighting Upgrade");
     expect(html).toContain("Savings");
     expect(html).toContain("Cost");
     expect(html).toContain("Payback");

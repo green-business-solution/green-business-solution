@@ -4821,7 +4821,7 @@ function CustomerRetrofitCard({ retrofit }: { retrofit: SampleRetrofitGroup }) {
       <div className="customer-retrofit-card-header">
         <div>
           <p className="eyebrow">{customerRetrofitCategoryLabel(retrofit)}</p>
-          <h2>{retrofit.displayName}</h2>
+          <h2>{customerRetrofitUiName(retrofit)}</h2>
           <p>{customerRetrofitDescription(retrofit)}</p>
         </div>
         <div className="customer-retrofit-count-pill">
@@ -5097,6 +5097,128 @@ const SCENARIO_NAMES = {
   certification: "Scenario D: Certification-focused"
 } as const;
 
+export const CUSTOMER_RETROFIT_UI_NAMES: Record<string, string> = {
+  led_lighting_retrofit: "LED lighting",
+  lighting_controls_retrofit: "Lighting controls",
+  exterior_site_lighting_retrofit: "Exterior lighting",
+
+  high_efficiency_hvac_replacement: "High-efficiency HVAC",
+  heat_pump_hvac_retrofit: "Heat pump HVAC",
+  smart_thermostat_zoning_retrofit: "Smart thermostat & zoning",
+  hvac_controls_retrofit: "HVAC controls",
+  energy_recovery_ventilation_retrofit: "Energy recovery ventilation",
+  high_efficiency_furnace_retrofit: "High-efficiency furnace",
+  high_efficiency_boiler_retrofit: "High-efficiency boiler",
+  boiler_controls_burner_retrofit: "Boiler controls & burner",
+  duct_sealing_and_insulation: "Duct sealing & insulation",
+  ground_source_geothermal_heat_pump: "Geothermal heat pump",
+
+  heat_pump_water_heater: "Heat pump water heater",
+  high_efficiency_gas_water_heater: "High-efficiency gas water heater",
+  solar_water_heating_system: "Solar water heating",
+  water_heating_controls_recirculation: "Water-heating controls",
+
+  high_efficiency_refrigeration_equipment: "High-efficiency refrigeration",
+  walk_in_cooler_freezer_upgrade: "Walk-in cooler/freezer",
+  refrigeration_controls_retrofit: "Refrigeration controls",
+  refrigeration_ec_motor_retrofit: "Refrigeration EC motors",
+  anti_sweat_heater_controls: "Anti-sweat controls",
+  door_gasket_strip_curtain_night_cover: "Door gaskets & night covers",
+  efficient_ice_machine: "Efficient ice machine",
+
+  insulation_upgrade: "Insulation",
+  air_sealing_weatherization: "Air sealing & weatherization",
+  window_replacement: "Windows",
+  exterior_door_replacement: "Exterior doors",
+  cool_roof_reflective_roof: "Cool roof",
+  window_film_shading_retrofit: "Window film & shading",
+
+  building_automation_system: "Building automation",
+  energy_management_system: "Energy management",
+  submetering_energy_monitoring: "Submetering & energy monitoring",
+  automated_demand_response_controls: "Automated demand response",
+
+  rooftop_solar_pv: "Rooftop solar",
+  ground_mounted_solar_pv: "Ground-mounted solar",
+  solar_carport: "Solar carport",
+  community_solar_subscription: "Community solar",
+  small_wind_turbine: "Small wind",
+  fuel_cell_system: "Fuel cell",
+  combined_heat_and_power_system: "Combined heat and power",
+  biomass_biogas_energy_system: "Biomass & biogas",
+
+  battery_storage_system: "Battery storage",
+  solar_plus_storage_system: "Solar + storage",
+  thermal_energy_storage: "Thermal storage",
+  microgrid_system: "Microgrid",
+  resilience_backup_power_system: "Backup power",
+
+  ev_charger_installation: "EV chargers",
+  level_2_ev_charger_installation: "Level 2 EV chargers",
+  dc_fast_charger_installation: "DC fast chargers",
+  fleet_charging_infrastructure: "Fleet charging",
+  ev_make_ready_electrical_upgrade: "EV make-ready electrical",
+  electric_vehicle_purchase: "Electric vehicles",
+  electric_forklift_material_handling: "Electric forklifts & material handling",
+  fleet_telematics_charging_management: "Fleet telematics & charging management",
+
+  low_flow_fixture_retrofit: "Low-flow fixtures",
+  high_efficiency_toilet_urinal: "High-efficiency toilets & urinals",
+  smart_irrigation_controller: "Smart irrigation",
+  efficient_irrigation_retrofit: "Drip irrigation",
+  leak_detection_system: "Leak detection",
+  high_efficiency_laundry_equipment: "High-efficiency laundry",
+  cooling_tower_controls_optimization: "Cooling tower controls",
+
+  high_efficiency_commercial_dishwasher: "High-efficiency dishwasher",
+  high_efficiency_fryer: "High-efficiency fryer",
+  high_efficiency_oven: "High-efficiency oven",
+  high_efficiency_steamer: "High-efficiency steamer",
+  induction_cooking_equipment: "Induction cooking",
+  demand_controlled_kitchen_ventilation: "Demand-controlled kitchen ventilation",
+
+  high_efficiency_motor_replacement: "High-efficiency motors",
+  variable_frequency_drive_retrofit: "Variable frequency drives",
+  efficient_pump_replacement: "Efficient pumps",
+  efficient_fan_blower_replacement: "Efficient fans & blowers",
+  pump_fan_controls_retrofit: "Pump/fan controls",
+
+  efficient_air_compressor: "Efficient air compressor",
+  compressed_air_leak_repair: "Compressed air leak repair",
+  compressed_air_controls: "Compressed air controls",
+  waste_heat_recovery: "Waste heat recovery",
+  industrial_heat_pump: "Industrial heat pump",
+  process_electrification_equipment: "Process electrification",
+  steam_trap_replacement: "Steam traps",
+
+  efficient_ventilation_system: "Efficient ventilation",
+  air_filtration_system: "Air filtration",
+  demand_controlled_ventilation: "Demand-controlled ventilation",
+
+  energy_audit: "Energy audit",
+  water_audit: "Water audit",
+  retro_commissioning_study: "Retro-commissioning",
+  engineering_feasibility_study: "Feasibility study",
+  solar_feasibility_study: "Solar feasibility",
+  ev_charging_site_assessment: "EV charging site assessment",
+
+  energy_star_certification: "ENERGY STAR certification",
+  leed_certification: "LEED certification",
+  building_benchmarking_compliance: "Benchmarking compliance"
+};
+
+export function customerRetrofitUiName(retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "displayName">) {
+  return CUSTOMER_RETROFIT_UI_NAMES[retrofit.retrofitTypeId] || shortenRetrofitUiName(retrofit.displayName);
+}
+
+function shortenRetrofitUiName(displayName: string) {
+  return displayName
+    .replace(/\s+(retrofit|upgrade|replacement|installation|system)$/i, "")
+    .replace(/\s+equipment$/i, "")
+    .replace(/\s+study$/i, " study")
+    .trim();
+}
+
 export function buildUserRetrofitPreviewResult(
   payload: PortalRetrofitRecommendationsResponse | null
 ): UserRetrofitPreviewResult {
@@ -5178,7 +5300,7 @@ function buildRetrofitPreviewCard(
   return {
     id: retrofit.retrofitTypeId,
     rank: index + 1,
-    name: retrofit.displayName,
+    name: customerRetrofitUiName(retrofit),
     category: customerRetrofitCategoryLabel(retrofit),
     description: customerRetrofitDescription(retrofit),
     whyRecommended: whyRetrofitRecommended(retrofit),
@@ -8713,7 +8835,7 @@ function SpecialPlanningRetrofitsPanel({
         {retrofits.map((retrofit) => (
           <section className="special-retrofit-item" key={retrofit.retrofitTypeId}>
             <div>
-              <h4>{retrofit.displayName}</h4>
+              <h4>{customerRetrofitUiName(retrofit)}</h4>
               <p>{planningRetrofitExplanation(retrofit.retrofitTypeId)}</p>
             </div>
             <strong>{retrofit.opportunityCount.toLocaleString()} opportunities</strong>

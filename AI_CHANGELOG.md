@@ -1492,3 +1492,4 @@
 - Changed the `/user-preview` pre-selection state into a clean retrofit picker with a compact admin bar, upload-only estimate banner, simplified sort/search/view controls, responsive 3/2/1 retrofit card grid, and hidden workspace details until a retrofit is selected.
 - Removed first-layer retrofit-card chevrons and internal metadata, added category icons, compact savings/cost/payback values, safe soft hover/selected states, and a customer-preview admin-bar collapse mode.
 - Kept the detailed retrofit workspace, financing/application prep, opportunity, assumptions, and add-to-plan flows behind the selected retrofit view and expanded focused tests for the picker layout and hover/readability rules.
+- Added complete customer-facing short names for all 92 retrofit taxonomy types in the user preview/results UI while preserving internal taxonomy IDs and source display names.
