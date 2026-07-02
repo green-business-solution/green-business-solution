@@ -424,6 +424,7 @@ type ApplicationPathProfile = {
   opportunityId: string;
   opportunityName?: string;
   programSourceUrl?: string;
+  programWebsiteUrl?: string;
   discoveredApplicationUrl?: string;
   discoveredPdfUrl?: string;
   discoveredContactEmail?: string;
@@ -9521,6 +9522,14 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
       (!methodFilter || row.applicationMethod === methodFilter)
     );
   });
+  const discoveredPathProfiles = Object.values(pathProfiles);
+  const pathDiscoverySummary = {
+    applicationPathsFound: discoveredPathProfiles.filter((profile) => profile.pathStatus === "application_path_found").length,
+    programWebsitesFound: discoveredPathProfiles.filter((profile) => Boolean(profile.programWebsiteUrl)).length,
+    sourceOnly: discoveredPathProfiles.filter((profile) => profile.pathStatus === "program_source_only").length,
+    unreadable: discoveredPathProfiles.filter((profile) => profile.pathStatus === "source_unreadable").length,
+    needsReview: discoveredPathProfiles.filter((profile) => profile.pathStatus === "needs_review" || profile.pathStatus === "not_attempted").length
+  };
 
   return (
     <section className="admin-section">
@@ -9552,6 +9561,14 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
       <div className="review-count-row">
         <strong>{filteredRows.length} shown</strong>
         <span>{payload?.generatedAt ? `Generated ${formatProgramDate(payload.generatedAt)}` : "Source resolver audit"}</span>
+      </div>
+
+      <div className="application-path-summary" aria-label="Application path discovery summary">
+        <span><strong>{pathDiscoverySummary.applicationPathsFound}</strong> application paths found</span>
+        <span><strong>{pathDiscoverySummary.programWebsitesFound}</strong> program websites found</span>
+        <span><strong>{pathDiscoverySummary.sourceOnly}</strong> source only</span>
+        <span><strong>{pathDiscoverySummary.unreadable}</strong> unreadable</span>
+        <span><strong>{pathDiscoverySummary.needsReview}</strong> needs review</span>
       </div>
 
       {payload?.note ? <p className="muted-message">{payload.note}</p> : null}
@@ -9708,6 +9725,18 @@ function renderApplicationPathDiscovery({
           </div>
           {profile.sourceTitle ? <small>{profile.sourceTitle}</small> : null}
           <dl className="application-path-links">
+            {profile.programSourceUrl ? (
+              <div>
+                <dt>Program source</dt>
+                <dd>{renderApplicationSourceLink(profile.programSourceUrl)}</dd>
+              </div>
+            ) : null}
+            {profile.programWebsiteUrl ? (
+              <div>
+                <dt>Program website</dt>
+                <dd>{renderApplicationSourceLink(profile.programWebsiteUrl)}</dd>
+              </div>
+            ) : null}
             {profile.discoveredApplicationUrl ? (
               <div>
                 <dt>Application</dt>
@@ -9727,6 +9756,7 @@ function renderApplicationPathDiscovery({
               </div>
             ) : null}
           </dl>
+          <small>{applicationPathResultSummary(profile)}</small>
           {profile.evidence.length ? (
             <ul className="application-path-evidence">
               {profile.evidence.slice(0, 3).map((item, index) => (
@@ -9739,11 +9769,26 @@ function renderApplicationPathDiscovery({
             </ul>
           ) : null}
           {profile.error ? <small className="application-path-error">{profile.error}</small> : null}
-          {!profile.evidence.length && profile.notes.length ? <small>{profile.notes[0]}</small> : null}
         </div>
       ) : null}
     </div>
   );
+}
+
+function applicationPathResultSummary(profile: ApplicationPathProfile) {
+  if (profile.discoveredApplicationUrl || profile.discoveredPdfUrl || profile.discoveredContactEmail) {
+    return "Application path found.";
+  }
+  if (profile.programWebsiteUrl) {
+    return "Program website found, application URL not found.";
+  }
+  if (profile.pathStatus === "source_unreadable") {
+    return "Source unreadable.";
+  }
+  if (profile.pathStatus === "program_source_only") {
+    return "Source only. Application URL not found.";
+  }
+  return profile.notes[0] || "Needs review.";
 }
 
 function truncateLinkLabel(value: string, maxLength = 44) {

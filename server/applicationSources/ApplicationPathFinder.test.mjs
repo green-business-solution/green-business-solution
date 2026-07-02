@@ -161,6 +161,41 @@ describe("findOpportunityApplicationPath", () => {
     expect(result.evidence[0].label).toBe("Utility portal/application link found");
   });
 
+  it("finds an official program website on a DSIRE aggregator page without treating it as an application URL", async () => {
+    const result = await findOpportunityApplicationPath(
+      {
+        sourceProfile: makeSourceProfile({
+          opportunityId: "opp_dsire",
+          opportunityName: "DSIRE rebate",
+          programSourceUrl: "https://programs.dsireusa.org/system/program/detail/123/example-program",
+          sourceType: "webpage",
+          applicationMethod: "unknown"
+        })
+      },
+      fixedOptions(
+        mockHtmlFetch(`
+          <html>
+            <head><title>DSIRE - Example Program</title></head>
+            <body>
+              <h1>Example Program</h1>
+              <a href="https://utility.example.com/business/rebate-portal">Program Website</a>
+              <p>This DSIRE page summarizes eligibility and incentive amounts.</p>
+            </body>
+          </html>
+        `)
+      )
+    );
+
+    expect(result.programWebsiteUrl).toBe("https://utility.example.com/business/rebate-portal");
+    expect(result.discoveredApplicationUrl).toBeUndefined();
+    expect(result.discoveredPdfUrl).toBeUndefined();
+    expect(result.confirmedApplicationMethod).toBe("unknown");
+    expect(result.methodStatus).toBe("unknown");
+    expect(result.pathStatus).toBe("program_source_only");
+    expect(result.evidence.some((item) => item.label === "Official program website link found")).toBe(true);
+    expect(result.notes.join(" ")).toMatch(/program website found, application url not found/i);
+  });
+
   it("returns program_source_only for readable pages with no application path", async () => {
     const result = await findOpportunityApplicationPath(
       { sourceProfile: makeSourceProfile() },

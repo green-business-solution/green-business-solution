@@ -22,12 +22,17 @@ const DEFAULT_TIMEOUT_MS = 10_000;
 const DEFAULT_MAX_RESPONSE_BYTES = 500_000;
 const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 const PDF_URL_PATTERN = /\.pdf(?:$|[?#])/i;
+const PDF_APPLICATION_URL_PATTERN = /(application|app|form|rebate|claim|incentive|reservation|pre-approval|preapproval)/i;
 const PDF_LINK_TEXT_PATTERN =
   /\b(application form|rebate form|application pdf|program application|download application|application packet)\b/i;
 const APPLY_LINK_TEXT_PATTERN =
   /\b(apply|apply now|apply online|application|submit|portal|rebate application|incentive application|enroll|get started|request rebate|reservation|pre-approval|preapproval)\b/i;
 const APPLY_LINK_URL_PATTERN =
-  /(apply|application|submit|portal|enroll|get-started|reservation|pre-approval|preapproval|rebate)/i;
+  /(apply|application|submit|portal|enroll|get-started|request-rebate|reservation|pre-approval|preapproval|customerapplication|formstack|salesforce-sites|my\.site\.com)/i;
+const PROGRAM_WEBSITE_LINK_TEXT_PATTERN =
+  /\b(program website|program web site|program url|official website|official program website|provider website|administrator website|website|program page|program homepage|learn more|more information|details)\b/i;
+const AGGREGATOR_PATTERN =
+  /\b(dsire|database of state incentives|programs\.dsireusa\.org|incentive database|rebate finder|program finder|source database|program summary)\b/i;
 const CONTRACTOR_PATTERN =
   /\b(contractor must submit|installer must submit|trade ally|participating contractor|approved contractor|participating installer|approved installer|contractor application|contractor submitted|submitted by (?:a )?(?:participating )?(?:contractor|installer)|through a participating contractor)\b/i;
 const TAX_PATTERN =
@@ -83,6 +88,10 @@ function isHttpUrl(value) {
 
 function isPdfUrl(value) {
   return PDF_URL_PATTERN.test(cleanText(value));
+}
+
+function isApplicationPdfLink(anchor) {
+  return isPdfUrl(anchor?.url) && (PDF_LINK_TEXT_PATTERN.test(anchor?.text || "") || PDF_APPLICATION_URL_PATTERN.test(anchor?.url || ""));
 }
 
 function extractEmail(value) {
@@ -271,6 +280,49 @@ function isUtilityContext(sourceProfile, opportunity, pageText, sourceUrl) {
   );
 }
 
+function hostnameForUrl(value) {
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function isSameHostname(a, b) {
+  const hostA = hostnameForUrl(a);
+  const hostB = hostnameForUrl(b);
+  return Boolean(hostA && hostB && hostA === hostB);
+}
+
+function isAggregatorContext(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle) {
+  const sourceText = [
+    sourceProfile?.programSourceUrl,
+    sourceProfile?.sourceName,
+    sourceProfile?.opportunityName,
+    sourceProfile?.notes?.join?.(" "),
+    opportunity?.sourceName,
+    opportunity?.sourceKey,
+    sourceTitle,
+    sourceUrl,
+    pageText
+  ].join(" ");
+  return AGGREGATOR_PATTERN.test(sourceText);
+}
+
+function findProgramWebsiteLink(anchors, sourceUrl, isAggregator) {
+  const candidates = anchors.filter((anchor) => {
+    if (!isHttpUrl(anchor.url)) return false;
+    if (isPdfUrl(anchor.url)) return false;
+    if (isAggregator && isSameHostname(anchor.url, sourceUrl)) return false;
+    if (isAggregator) {
+      return PROGRAM_WEBSITE_LINK_TEXT_PATTERN.test(anchor.text);
+    }
+    return /\b(program website|program web site|official website|official program website|provider website|administrator website|program homepage)\b/i.test(anchor.text);
+  });
+
+  return candidates[0] || null;
+}
+
 function buildBaseProfile(input) {
   const sourceProfile = sourceProfileFromInput(input);
   const opportunity = input?.opportunity || {};
@@ -278,6 +330,7 @@ function buildBaseProfile(input) {
     opportunityId: String(sourceProfile?.opportunityId || opportunity?.opportunityId || ""),
     opportunityName: cleanOptional(sourceProfile?.opportunityName || opportunity?.canonicalTitle || opportunity?.normalizedTitle),
     programSourceUrl: cleanOptional(firstHttpUrl(sourceProfile?.programSourceUrl, opportunity?.sourceUrl, opportunity?.websiteUrl)),
+    programWebsiteUrl: undefined,
     discoveredApplicationUrl: undefined,
     discoveredPdfUrl: undefined,
     discoveredContactEmail: undefined,
@@ -359,14 +412,30 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
   const pageText = normalizeWhitespace(stripHtml(html));
   const anchors = extractAnchors(html, sourceUrl);
   const utilityContext = isUtilityContext(sourceProfile, opportunity, pageText, sourceUrl);
-  const pdfLink = anchors.find((anchor) => isHttpUrl(anchor.url) && (isPdfUrl(anchor.url) || PDF_LINK_TEXT_PATTERN.test(anchor.text)));
-  const applyLink = anchors.find((anchor) => isHttpUrl(anchor.url) && (APPLY_LINK_TEXT_PATTERN.test(anchor.text) || APPLY_LINK_URL_PATTERN.test(anchor.url)));
+  const isAggregator = isAggregatorContext(sourceProfile, opportunity, pageText, sourceUrl, sourceTitle);
+  const programWebsiteLink = findProgramWebsiteLink(anchors, sourceUrl, isAggregator);
+  const pdfLink = anchors.find((anchor) => isHttpUrl(anchor.url) && isApplicationPdfLink(anchor));
+  const applyLink = anchors.find(
+    (anchor) =>
+      isHttpUrl(anchor.url) &&
+      (APPLY_LINK_TEXT_PATTERN.test(anchor.text) || (APPLY_LINK_URL_PATTERN.test(anchor.url) && !PROGRAM_WEBSITE_LINK_TEXT_PATTERN.test(anchor.text)))
+  );
   const contractorSnippet = snippetForPattern(pageText, CONTRACTOR_PATTERN);
   const taxSnippet = snippetForPattern(pageText, TAX_PATTERN);
   const emailResult = findEmailEvidence(anchors, pageText);
   const hasEmailApplicationLanguage = EMAIL_APPLICATION_PATTERN.test(pageText);
 
   profile.sourceTitle = sourceTitle;
+
+  if (programWebsiteLink) {
+    profile.programWebsiteUrl = programWebsiteLink.url;
+    profile.evidence.push({
+      label: isAggregator ? "Official program website link found" : "Program website link found",
+      textSnippet: safeSnippet(programWebsiteLink.text || programWebsiteLink.url),
+      url: programWebsiteLink.url
+    });
+    profile.notes.push("Program website was found separately from the source page.");
+  }
 
   if (pdfLink) {
     profile.discoveredPdfUrl = pdfLink.url;
@@ -460,7 +529,11 @@ function findApplicationPathInPage({ profile, sourceProfile, opportunity, source
     profile.pathStatus = "contact_only";
     profile.evidence.push(emailResult.evidence);
   }
-  profile.notes.push("Source page was readable, but no direct application path was found.");
+  profile.notes.push(
+    profile.programWebsiteUrl
+      ? "Program website found, application URL not found."
+      : "Source page was readable, but no direct application path was found."
+  );
 }
 
 function safeErrorMessage(error) {
