@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "savings-calculation-methods-v1",
+  "generatedAt": "2026-06-29T21:44:03.282Z",
+  "methods": [
+    {
+      "model_id": "electric_usage_reduction",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "electric_general",
+      "savings_rate_low": 0.05,
+      "savings_rate_typical": 0.1,
+      "savings_rate_high": 0.18,
+      "notes": [
+        "Uses annual kWh and average electric cost with a benchmark reduction range."
+      ]
+    },
+    {
+      "model_id": "hvac_electric_efficiency",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "hvac_electric",
+      "savings_rate_low": 0.08,
+      "savings_rate_typical": 0.14,
+      "savings_rate_high": 0.22,
+      "notes": [
+        "Assumes HVAC upgrades reduce a meaningful share of electric usage."
+      ]
+    },
+    {
+      "model_id": "gas_usage_reduction",
+      "calculator_family": "gas_reduction_percent",
+      "benchmark_key": "gas_efficiency",
+      "savings_rate_low": 0.06,
+      "savings_rate_typical": 0.12,
+      "savings_rate_high": 0.2,
+      "notes": [
+        "Uses annual therms and average gas cost with a benchmark reduction range."
+      ]
+    },
+    {
+      "model_id": "gas_to_electric_replacement",
+      "calculator_family": "gas_to_electric_shift",
+      "benchmark_key": "gas_to_electric",
+      "gas_reduction_low": 0.18,
+      "gas_reduction_typical": 0.28,
+      "gas_reduction_high": 0.4,
+      "electric_addition_multiplier_low": 0.22,
+      "electric_addition_multiplier_typical": 0.3,
+      "electric_addition_multiplier_high": 0.38,
+      "notes": [
+        "Models avoided gas cost minus added electric cost."
+      ]
+    },
+    {
+      "model_id": "water_sewer_reduction",
+      "calculator_family": "water_reduction_percent",
+      "benchmark_key": "water_efficiency",
+      "savings_rate_low": 0.05,
+      "savings_rate_typical": 0.12,
+      "savings_rate_high": 0.2,
+      "notes": [
+        "Uses annual water use and annual water cost when available."
+      ]
+    },
+    {
+      "model_id": "solar_electric_offset",
+      "calculator_family": "solar_offset_percent",
+      "benchmark_key": "solar_pv",
+      "offset_low": 0.18,
+      "offset_typical": 0.32,
+      "offset_high": 0.5,
+      "export_credit_fraction_low": 0.02,
+      "export_credit_fraction_typical": 0.05,
+      "export_credit_fraction_high": 0.08,
+      "notes": [
+        "Models onsite electric offset plus a small export-credit tail."
+      ]
+    },
+    {
+      "model_id": "ev_charging_site_load",
+      "calculator_family": "managed_load_percent",
+      "benchmark_key": "ev_load_management",
+      "savings_rate_low": 0.01,
+      "savings_rate_typical": 0.03,
+      "savings_rate_high": 0.06,
+      "notes": [
+        "Treats smart charging and load management as avoided electric cost."
+      ]
+    },
+    {
+      "model_id": "refrigeration_electric_efficiency",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "refrigeration",
+      "savings_rate_low": 0.08,
+      "savings_rate_typical": 0.14,
+      "savings_rate_high": 0.22,
+      "notes": [
+        "Applies benchmark savings to annual electric use."
+      ]
+    },
+    {
+      "model_id": "motor_vfd_efficiency",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "motor_vfd",
+      "savings_rate_low": 0.07,
+      "savings_rate_typical": 0.13,
+      "savings_rate_high": 0.2,
+      "notes": [
+        "Applies motor/VFD benchmark savings to annual electric use."
+      ]
+    },
+    {
+      "model_id": "controls_building_automation",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "controls",
+      "savings_rate_low": 0.04,
+      "savings_rate_typical": 0.09,
+      "savings_rate_high": 0.15,
+      "notes": [
+        "Assumes controls reduce avoidable electric waste."
+      ]
+    },
+    {
+      "model_id": "commercial_kitchen_equipment_efficiency",
+      "calculator_family": "electric_reduction_percent",
+      "benchmark_key": "commercial_kitchen",
+      "savings_rate_low": 0.06,
+      "savings_rate_typical": 0.11,
+      "savings_rate_high": 0.18,
+      "notes": [
+        "Applies kitchen-equipment benchmark savings to annual electric use."
+      ]
+    },
+    {
+      "model_id": "financing_cash_flow",
+      "calculator_family": "financing_only",
+      "benchmark_key": "financing",
+      "notes": [
+        "No operating savings are assumed in the financing-only calculator."
+      ]
+    },
+    {
+      "model_id": "tax_benefit_project_cost_reduction",
+      "calculator_family": "incentive_only",
+      "benchmark_key": "tax_benefit",
+      "default_percent_low": 0.1,
+      "default_percent_typical": 0.2,
+      "default_percent_high": 0.3,
+      "notes": [
+        "Uses normalized tax-benefit incentive data when available, otherwise falls back to conservative benchmark percentages."
+      ]
+    },
+    {
+      "model_id": "grant_funding",
+      "calculator_family": "incentive_only",
+      "benchmark_key": "grant_funding",
+      "default_percent_low": 0.05,
+      "default_percent_typical": 0.12,
+      "default_percent_high": 0.2,
+      "notes": [
+        "Uses normalized grant data when available, otherwise falls back to conservative benchmark percentages."
+      ]
+    },
+    {
+      "model_id": "project_cost_reduction_only",
+      "calculator_family": "incentive_only",
+      "benchmark_key": "rebate_only",
+      "default_percent_low": 0.05,
+      "default_percent_typical": 0.1,
+      "default_percent_high": 0.18,
+      "notes": [
+        "Uses normalized rebate-only data when available, otherwise falls back to conservative benchmark percentages."
+      ]
+    }
+  ]
+}
