@@ -11,6 +11,7 @@
 - Added a read-only `ApplicationSourceResolver` for DSIRE opportunity records that classifies application source type, application method, extraction status, confidence, and related retrofit context without writing to DynamoDB.
 - Added an admin-only `/api/admin/application-sources` endpoint plus an authenticated `/admin/application-sources` audit view so RetroFi can review source/program URLs, application URLs, email-only flows, confidence, and resolver notes across visible opportunities.
 - Added resolver coverage for PDF, utility portal, tax/accountant filing, email, online portal, contractor-submitted, ambiguous webpage, and missing-source cases, and fixed the local frontend build blockers needed to run the repo’s required smoke checks.
+- Production deploy note: the normal CloudFormation deploy path is still blocked by `AWS::EarlyValidation::ResourceExistenceCheck`, so this release was pushed live by updating the `gbs-retrofi-api` Lambda package directly, syncing the frontend bucket, and invalidating CloudFront.
 
 ## 2026-07-02 - Codex (GPT-5) final source-confidence repair follow-up
 

@@ -4780,7 +4780,7 @@ type RetrofitOpportunityPreview = {
   description: string;
   type: string;
   timing: "upfront" | "recurring" | "both" | "tax_time" | "reimbursement" | "unknown";
-  eligibilityStatus: "confirmed" | "likely" | "unknown";
+  eligibilityStatus: "confirmed" | "likely" | "unknown" | "needs review";
   requiredInfo: string[];
   applicationProcess?: string;
   difficulty?: "easy" | "medium" | "hard" | "unknown";
@@ -5018,11 +5018,25 @@ function buildRetrofitPreviewCard(
 
 function buildOpportunityPreview(
   opportunity: SampleMatchResult,
-  preview: SampleSavingsPreview | null
+  preview: SampleSavingsPreview | null,
+  payload: PortalRetrofitRecommendationsResponse | null
 ): RetrofitOpportunityPreview {
   const includedOpportunityIds = new Set(preview?.selectedIncentiveScenario?.opportunityIds || []);
   const isIncluded = includedOpportunityIds.has(opportunity.opportunityId);
   const programType = normalizeOpportunityType(opportunity.sourceSummary?.programType);
+  const needsUtilityConfirmation = opportunityNeedsUtilityTerritoryConfirmation(opportunity, payload);
+  const sourceMissing = !(opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl);
+  const needsMoreInfo = opportunity.unresolvedRequirements.length > 0 || needsUtilityConfirmation || sourceMissing;
+  const eligibilityStatus = needsUtilityConfirmation || sourceMissing
+    ? "needs review"
+    : opportunityEligibilityStatus(opportunity.eligibilityStatus);
+  const requiredInfo = [
+    ...(needsUtilityConfirmation ? ["utility territory confirmation"] : []),
+    ...(opportunity.unresolvedRequirements.length
+      ? opportunity.unresolvedRequirements.slice(0, 4)
+      : ["bills", "retrofit-specific information", "quote", "tax/entity information"])
+  ];
+  const includedState = includedStateFromOpportunity(isIncluded, needsMoreInfo);
   return {
     id: sampleOpportunityKey(opportunity),
     retrofitId: preview?.retrofitTypeId || "",
@@ -5033,10 +5047,8 @@ function buildOpportunityPreview(
       "External program or benefit connected to this retrofit.",
     type: programType,
     timing: opportunityTiming(programType),
-    eligibilityStatus: opportunityEligibilityStatus(opportunity.eligibilityStatus),
-    requiredInfo: opportunity.unresolvedRequirements.length
-      ? opportunity.unresolvedRequirements.slice(0, 4)
-      : ["bills", "retrofit-specific information", "quote", "tax/entity information"],
+    eligibilityStatus,
+    requiredInfo: [...new Set(requiredInfo)].slice(0, 5),
     applicationProcess: opportunityApplicationProcess(opportunity),
     difficulty: opportunity.blockers.length > 0 ? "hard" : opportunity.unresolvedRequirements.length > 2 ? "medium" : "unknown",
     length: opportunityLengthLabel(opportunity),
@@ -5045,14 +5057,26 @@ function buildOpportunityPreview(
     environmentalImpactContribution: environmentalImpactLabel(programType),
     certificationBoost: certificationBoostLabel(programType),
     sourceUrl: opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl || null,
-    estimatedValue: preview?.upfrontSavingsCents ?? null,
+    estimatedValue: includedState === "Included in current estimate" ? preview?.upfrontSavingsCents ?? null : null,
     valueRule: opportunity.matchedReasons[0] || undefined,
-    includedState: includedStateFromOpportunity(isIncluded, opportunity.unresolvedRequirements.length > 0),
+    includedState,
     selected: isIncluded,
-    whySelected: isIncluded ? "Selected for the current scenario based on available eligibility and estimate fit." : undefined,
+    whySelected: isIncluded
+      ? includedState === "Included in current estimate"
+        ? `Selected because it reduces upfront cost${preview?.upfrontSavingsCents ? ` by an estimated ${formatCents(preview.upfrontSavingsCents)}` : ""}.`
+        : needsUtilityConfirmation
+          ? "Needs utility territory confirmation before this can be included."
+          : sourceMissing
+            ? "Needs source review before this can be included."
+            : `Not included yet — needs ${opportunity.unresolvedRequirements.slice(0, 2).join(" and ")}.`
+      : undefined,
     whyNotSelected: !isIncluded
-      ? opportunity.unresolvedRequirements.length
-        ? `Not included yet — needs ${opportunity.unresolvedRequirements.slice(0, 2).join(" and ")}.`
+      ? needsUtilityConfirmation
+        ? "Needs review because utility territory is unclear."
+        : sourceMissing
+          ? "Needs source review before selection."
+        : opportunity.unresolvedRequirements.length
+          ? `Not selected because ${opportunity.unresolvedRequirements.slice(0, 2).join(" and ")} is missing.`
         : "Not selected for this scenario."
       : undefined
   };
@@ -5075,6 +5099,8 @@ function buildEditableAssumptions(retrofit: SampleRetrofitGroup): EditableEstima
       unit: assumptionUnit(String(assumption.label)),
       source: "industry_standard" as const,
       sourceLabel: "Based on uploaded bills and industry assumptions",
+      confidenceLabel: "Medium" as const,
+      affects: assumptionAffects(String(assumption.label)),
       confirmed: false
     }));
 
@@ -5088,13 +5114,78 @@ function buildEditableAssumptions(retrofit: SampleRetrofitGroup): EditableEstima
     unit: assumptionUnit(label),
     source: "industry_standard",
     sourceLabel: "Industry estimate",
+    confidenceLabel: "Low",
+    affects: assumptionAffects(label),
     confirmed: false
   }));
 }
 
-function buildOperatingSavingsPreview(retrofit: SampleRetrofitGroup): OperatingSavingsPreview[] {
+function buildOperatingSavingsPreview(
+  retrofit: SampleRetrofitGroup,
+  payload: PortalRetrofitRecommendationsResponse | null
+): OperatingSavingsPreview[] {
   const preview = retrofit.savingsPreview || null;
   const savingsEntries = preview?.status === "calculated" ? preview.savingsBreakdown || [] : [];
+  const isEvCharging = retrofit.retrofitTypeId.includes("ev") || retrofit.retrofitTypeId.includes("charger");
+  const hasNegativeSavings =
+    (preview?.netAnnualRecurringSavingsCents ?? preview?.annualSavingsCents ?? 0) < 0 ||
+    savingsEntries.some((entry) => entry.amountCents < 0);
+  if (isEvCharging && hasNegativeSavings) {
+    return [
+      {
+        id: `${retrofit.retrofitTypeId}:operating-cost:added-electricity`,
+        retrofitId: retrofit.retrofitTypeId,
+        name: "Added electricity cost",
+        annualSavings: preview?.netAnnualRecurringSavingsCents ?? preview?.annualSavingsCents ?? null,
+        monthlySavings: preview?.netMonthlyRecurringSavingsCents ?? preview?.monthlySavingsCents ?? null,
+        includedIn: "Recurring Operational Savings",
+        eligibilityStatus: "unknown",
+        requiredInfo: ["electric bill", "charger count", "expected utilization"],
+        confidenceLabel: "Needs review",
+        assumptions: ["Added electricity cost is not treated as operating savings."],
+        customerFacingBasis: "Needs utilization estimate"
+      },
+      {
+        id: `${retrofit.retrofitTypeId}:operating-savings:fuel-displacement`,
+        retrofitId: retrofit.retrofitTypeId,
+        name: "Fuel displacement",
+        annualSavings: null,
+        monthlySavings: null,
+        includedIn: "Recurring Operational Savings",
+        eligibilityStatus: "unknown",
+        requiredInfo: ["fuel baseline", "fleet or transportation usage"],
+        confidenceLabel: "Needs review",
+        assumptions: ["Fuel savings require a transportation or fuel baseline."],
+        customerFacingBasis: "Needs fuel baseline"
+      },
+      {
+        id: `${retrofit.retrofitTypeId}:operating-savings:charging-revenue`,
+        retrofitId: retrofit.retrofitTypeId,
+        name: "Charging revenue",
+        annualSavings: null,
+        monthlySavings: null,
+        includedIn: "Recurring Operational Savings",
+        eligibilityStatus: "unknown",
+        requiredInfo: ["expected utilization", "charging price"],
+        confidenceLabel: "Needs review",
+        assumptions: ["Revenue impact requires utilization and pricing inputs."],
+        customerFacingBasis: "Needs utilization/pricing"
+      },
+      {
+        id: `${retrofit.retrofitTypeId}:operating-savings:net-impact`,
+        retrofitId: retrofit.retrofitTypeId,
+        name: "Net recurring operational impact",
+        annualSavings: null,
+        monthlySavings: null,
+        includedIn: "Recurring Operational Savings",
+        eligibilityStatus: "unknown",
+        requiredInfo: ["fuel baseline", "expected utilization", "electric bill"],
+        confidenceLabel: "Needs review",
+        assumptions: ["Net impact is not estimated until cost, fuel displacement, and utilization inputs are confirmed."],
+        customerFacingBasis: "Not estimated yet"
+      }
+    ];
+  }
   if (savingsEntries.length === 0) {
     return [
       {
@@ -5106,7 +5197,7 @@ function buildOperatingSavingsPreview(retrofit: SampleRetrofitGroup): OperatingS
         includedIn: "Recurring Operational Savings",
         eligibilityStatus: "unknown",
         requiredInfo: ["electric bill", "fixture details", "operating hours"],
-        confidenceLabel: confidenceLabelFromRetrofit(retrofit, retrofitConfidencePercent(retrofit)),
+        confidenceLabel: confidenceLabelFromRetrofit(retrofit, retrofitConfidencePercent(retrofit), missingInfoForRetrofit(retrofit, preview, payload), payload),
         assumptions: ["Operating savings not estimated yet. Upload a utility bill or answer retrofit-specific questions."],
         customerFacingBasis: "Needs bill"
       }
@@ -5125,7 +5216,7 @@ function buildOperatingSavingsPreview(retrofit: SampleRetrofitGroup): OperatingS
       eligibilityStatus: "likely",
       requiredInfo: ["uploaded bills", "confirmed retrofit details"],
       confidencePercent: retrofitConfidencePercent(retrofit),
-      confidenceLabel: confidenceLabelFromRetrofit(retrofit, retrofitConfidencePercent(retrofit)),
+      confidenceLabel: confidenceLabelFromRetrofit(retrofit, retrofitConfidencePercent(retrofit), missingInfoForRetrofit(retrofit, preview, payload), payload),
       assumptions: ["Based on uploaded bills and industry assumptions."],
       customerFacingBasis: "Based on uploaded bills and industry assumptions"
     };
@@ -5888,32 +5979,33 @@ function RetrofitPreviewCardView({
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
-  const selectedScenarioOpportunityIds = selectedScenario?.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]) || [];
+  const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
+  const selectedScenarioOpportunityIds = selectedScenarioOpportunities.map((opportunity) => opportunity.id);
   const deselectedScenarioOpportunityIds = [
     ...(selectedScenario?.deselectedOpportunityIds || []),
-    ...((selectedScenario?.selectedOpportunityIds || []).filter((id) => !selectedOpportunityIds[id]))
+    ...((selectedScenario?.selectedOpportunityIds || []).filter((id) => selectedOpportunityIds[id] === false))
   ];
-  const selectedScenarioOpportunities = retrofit.opportunities.filter((opportunity) => selectedScenarioOpportunityIds.includes(opportunity.id));
   const deselectedScenarioOpportunities = retrofit.opportunities.filter((opportunity) => deselectedScenarioOpportunityIds.includes(opportunity.id));
-  const selectedIncludedOpportunities = retrofit.opportunities.filter((opportunity) => {
-    const selected = Boolean(selectedOpportunityIds[opportunity.id]);
-    return selected && getOpportunityIncludedLabel(opportunity, selected) === "Included in current estimate";
-  });
-  const selectedPendingOpportunities = retrofit.opportunities.filter((opportunity) => {
-    const selected = Boolean(selectedOpportunityIds[opportunity.id]);
+  const selectedIncludedOpportunities = getIncludedOpportunitiesForCurrentEstimate(retrofit, selectedScenario, selectedOpportunityIds);
+  const selectedPendingOpportunities = selectedScenarioOpportunities.filter((opportunity) => {
+    const selected = selectedOpportunityIds[opportunity.id] !== false;
     return selected && getOpportunityIncludedLabel(opportunity, selected) !== "Included in current estimate";
   });
   const unselectedOpportunities = retrofit.opportunities.filter((opportunity) => !selectedOpportunityIds[opportunity.id]);
-  const needsReviewOpportunities = retrofit.opportunities.filter((opportunity) => !opportunity.sourceUrl || opportunity.eligibilityStatus === "unknown");
+  const needsReviewOpportunities = unselectedOpportunities.filter((opportunity) =>
+    !opportunity.sourceUrl ||
+    opportunity.eligibilityStatus === "unknown" ||
+    opportunity.eligibilityStatus === "needs review" ||
+    opportunity.requiredInfo.includes("utility territory confirmation")
+  );
+  const availableUnselectedOpportunities = unselectedOpportunities.filter(
+    (opportunity) => !needsReviewOpportunities.some((needsReview) => needsReview.id === opportunity.id)
+  );
   const opportunityGroups = [
     { key: "selected-included", title: "Selected and included in estimate", opportunities: selectedIncludedOpportunities },
     { key: "selected-pending", title: "Selected but not included yet", opportunities: selectedPendingOpportunities },
-    { key: "available", title: "Available but not selected", opportunities: unselectedOpportunities },
-    {
-      key: "needs-review",
-      title: "Needs review / source unavailable",
-      opportunities: needsReviewOpportunities.filter((opportunity, index, array) => array.findIndex((item) => item.id === opportunity.id) === index)
-    }
+    { key: "available", title: "Available but not selected", opportunities: availableUnselectedOpportunities },
+    { key: "needs-review", title: "Needs review / source unavailable", opportunities: needsReviewOpportunities }
   ].filter((group) => group.opportunities.length > 0);
   const includedOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings != null || item.monthlySavings != null);
   const pendingOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings == null && item.monthlySavings == null);
@@ -5921,9 +6013,9 @@ function RetrofitPreviewCardView({
     ? retrofit.metrics.upfrontFinancialIncentive
     : null;
   const displayedNetCostBeforeTaxBenefits =
-    retrofit.metrics.estimatedUpfrontProjectCost != null && displayedUpfrontFinancialIncentive != null
-      ? Math.max(0, retrofit.metrics.estimatedUpfrontProjectCost - displayedUpfrontFinancialIncentive)
-      : retrofit.metrics.netCostBeforeTaxBenefits;
+    retrofit.metrics.estimatedUpfrontProjectCost != null
+      ? Math.max(0, retrofit.metrics.estimatedUpfrontProjectCost - (displayedUpfrontFinancialIncentive || 0))
+      : null;
   const financialBreakdown = [
     {
       id: "project-cost",
@@ -5934,8 +6026,8 @@ function RetrofitPreviewCardView({
     {
       id: "incentives",
       label: "Less selected upfront rebates or grants",
-      value: formatMaybeCents(displayedUpfrontFinancialIncentive, "Needs selected opportunity"),
-      basis: displayedUpfrontFinancialIncentive != null ? "Based on selected and included opportunities" : "Select or validate opportunities"
+      value: formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives"),
+      basis: displayedUpfrontFinancialIncentive != null ? "Based on selected and included opportunities" : "Selected opportunities need validation before they affect this estimate"
     },
     {
       id: "net-cost",
@@ -6836,7 +6928,11 @@ function estimateBasisFromPayload(payload: PortalRetrofitRecommendationsResponse
   return "initial_form";
 }
 
-function estimateCompletenessFromPayload(payload: PortalRetrofitRecommendationsResponse | null, retrofits: RetrofitPreviewCard[]) {
+function estimateCompletenessFromPayload(
+  payload: PortalRetrofitRecommendationsResponse | null,
+  retrofits: RetrofitPreviewCard[],
+  missingInputs: string[]
+) {
   if (!payload?.intake) return undefined;
   const hasBill = payload.intake.uploadedUtilityFiles.length > 0 || payload.intake.utilityExtractedValues.length > 0;
   let score = 20;
@@ -6847,17 +6943,22 @@ function estimateCompletenessFromPayload(payload: PortalRetrofitRecommendationsR
   if (payload.intake.utilityExtractedValues.length > 0) score += 15;
   if (retrofits.some((retrofit) => retrofit.metrics.estimatedUpfrontProjectCost != null)) score += 5;
   if (!hasBill) return Math.min(40, score);
-  if (retrofits.some((retrofit) => retrofit.missingInfo.length > 0)) {
+  if (
+    missingInputs.some((item) =>
+      ["project quote", "fixture count", "retrofit quantity", "tax/entity information", "insulation area", "fuel baseline", "expected utilization"].includes(item)
+    )
+  ) {
     return Math.min(65, score);
   }
   return Math.min(85, score);
 }
 
-function estimateMissingInputs(payload: PortalRetrofitRecommendationsResponse | null) {
+function estimateMissingInputs(payload: PortalRetrofitRecommendationsResponse | null, topRetrofit?: RetrofitPreviewCard) {
   const missing: string[] = [];
   if (!payload?.intake?.uploadedUtilityFiles?.length) missing.push("electric bill");
   if (!payload?.intake?.site?.squareFootage) missing.push("square footage");
-  missing.push("project quote", "fixture count", "tax/entity information");
+  if (topRetrofit?.missingInfo.length) missing.push(...topRetrofit.missingInfo);
+  if (!topRetrofit) missing.push("project quote", "retrofit quantity", "tax/entity information");
   return [...new Set(missing)].slice(0, 5);
 }
 
@@ -6876,11 +6977,23 @@ function retrofitConfidencePercent(retrofit: SampleRetrofitGroup) {
   return Math.round((total / opportunities.length) * 100);
 }
 
-function confidenceLabelFromRetrofit(retrofit: SampleRetrofitGroup, percent?: number) {
+function confidenceLabelFromRetrofit(
+  retrofit: SampleRetrofitGroup,
+  percent?: number,
+  missingInfo: string[] = missingInfoForRetrofit(retrofit, retrofit.savingsPreview || null, null),
+  payload: PortalRetrofitRecommendationsResponse | null = null
+) {
   if (retrofit.opportunities.length === 0) return "Needs review" as const;
   if (retrofit.savingsPreview?.status === "blocked" || retrofit.savingsPreview?.status === "unsupported") return "Needs review" as const;
+  const sourceMissing = retrofit.opportunities.some((opportunity) => !(opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl));
+  const utilityUnclear = retrofit.opportunities.some((opportunity) => opportunityNeedsUtilityTerritoryConfirmation(opportunity, payload));
+  const hasMajorBlockers = missingInfo.some((item) =>
+    ["project quote", "fixture count", "retrofit quantity", "tax/entity information", "utility territory confirmation", "fuel baseline", "expected utilization"].includes(item)
+  );
+  if (sourceMissing || utilityUnclear) return "Needs review" as const;
   if (percent == null) return retrofit.savingsPreview?.status === "calculated" ? "Medium" as const : "Low" as const;
-  if (percent >= 80) return "High" as const;
+  if (hasMajorBlockers) return percent >= 55 ? "Medium" as const : "Low" as const;
+  if (percent >= 85 && retrofit.savingsPreview?.status === "calculated") return "High" as const;
   if (percent >= 55) return "Medium" as const;
   if (percent >= 30) return "Low" as const;
   return "Needs review" as const;
@@ -6949,7 +7062,9 @@ function assumptionsForRetrofit(retrofitTypeId: string) {
 function withRetrofitId(retrofitId: string, questions: Omit<RetrofitDetailQuestion, "retrofitId">[]): RetrofitDetailQuestion[] {
   return questions.map((question) => ({
     ...question,
-    retrofitId
+    retrofitId,
+    whyItMatters: question.whyItMatters || detailQuestionGuidance(question.question).reason,
+    affects: question.affects || detailQuestionGuidance(question.question).affects
   }));
 }
 
@@ -7049,6 +7164,46 @@ function opportunityEligibilityStatus(status: string): RetrofitOpportunityPrevie
   return "unknown";
 }
 
+function opportunityNeedsUtilityTerritoryConfirmation(
+  opportunity: SampleMatchResult,
+  payload: PortalRetrofitRecommendationsResponse | null
+) {
+  const sourceText = [
+    opportunity.sourceSummary?.administrator,
+    opportunity.sourceSummary?.sourceName,
+    opportunity.sourceSummary?.state
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  if (!sourceText) return true;
+  const profileTerms = [
+    payload?.intake?.site?.electricUtilityProvider,
+    payload?.intake?.site?.gasUtilityProvider,
+    payload?.intake?.business?.headquarters,
+    payload?.intake?.site?.address
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  const specificUtilityTerms = [
+    "richland",
+    "seattle city light",
+    "tacoma",
+    "snohomish",
+    "pse",
+    "puget sound energy",
+    "pg&e",
+    "pacific gas",
+    "ladwp",
+    "con edison",
+    "duke energy"
+  ];
+  const hasSpecificUtilityTerm = specificUtilityTerms.some((term) => sourceText.includes(term));
+  if (!hasSpecificUtilityTerm) return false;
+  return !specificUtilityTerms.some((term) => sourceText.includes(term) && profileTerms.includes(term));
+}
+
 function normalizeOpportunityType(programType?: string | null) {
   const value = (programType || "").toLowerCase();
   if (value.includes("tax")) return "tax incentive";
@@ -7070,16 +7225,35 @@ function estimateTaxBenefits(retrofit: SampleRetrofitGroup, preview: SampleSavin
   return preview.possibleGrantMoneyCents ?? null;
 }
 
-function missingInfoForRetrofit(retrofit: SampleRetrofitGroup, preview: SampleSavingsPreview | null) {
+function missingInfoForRetrofit(
+  retrofit: SampleRetrofitGroup,
+  preview: SampleSavingsPreview | null,
+  payload: PortalRetrofitRecommendationsResponse | null
+) {
   const missing: string[] = [];
   if (preview?.status !== "calculated") missing.push("electric bill");
   if (!retrofit.opportunities.length) missing.push("selected opportunity");
   if (retrofit.opportunities.some((opportunity) => opportunity.unresolvedRequirements.includes("project quote"))) missing.push("project quote");
-  if (retrofit.retrofitTypeId.includes("led") || retrofit.retrofitTypeId.includes("lighting")) missing.push("fixture count");
+  if (retrofit.opportunities.some((opportunity) => opportunityNeedsUtilityTerritoryConfirmation(opportunity, payload))) {
+    missing.push("utility territory confirmation");
+  }
+  if (retrofit.retrofitTypeId.includes("led") || retrofit.retrofitTypeId.includes("lighting")) {
+    missing.push("fixture count", "operating hours");
+  } else if (retrofit.retrofitTypeId.includes("insulation") || retrofit.retrofitTypeId.includes("envelope")) {
+    missing.push("insulation area", "current R-value", "target R-value");
+  } else if (retrofit.retrofitTypeId.includes("ev") || retrofit.retrofitTypeId.includes("charger")) {
+    missing.push("charger count", "charger level", "expected utilization", "fuel baseline");
+  } else if (retrofit.retrofitTypeId.includes("solar")) {
+    missing.push("annual kWh usage", "roof area", "project quote");
+  } else if (retrofit.retrofitTypeId.includes("hvac")) {
+    missing.push("equipment age", "current fuel type", "project quote");
+  } else if (retrofit.retrofitTypeId.includes("water")) {
+    missing.push("fixture count", "water bill");
+  }
   if (retrofit.opportunities.some((opportunity) => normalizeOpportunityType(opportunity.sourceSummary?.programType).includes("tax"))) {
     missing.push("tax/entity information");
   }
-  return [...new Set(missing)];
+  return [...new Set(missing)].slice(0, 6);
 }
 
 function assumptionUnit(label: string) {
@@ -7233,7 +7407,14 @@ export function countScenarioSelectedOpportunities(
   scenario: RetrofitScenarioPreview,
   selectedOpportunityIds: Record<string, boolean>
 ) {
-  return scenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]).length;
+  return scenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id] !== false).length;
+}
+
+export function getScenarioSelectedOpportunityCount(
+  scenario: RetrofitScenarioPreview,
+  selectedOpportunityIds: Record<string, boolean> = {}
+) {
+  return countScenarioSelectedOpportunities(scenario, selectedOpportunityIds);
 }
 
 export function getSelectedOpportunitiesForScenario(
@@ -7263,8 +7444,12 @@ export function getIncludedOpportunitiesForCurrentEstimate(
 }
 
 export function getOpportunityIncludedLabel(opportunity: RetrofitOpportunityPreview, selected: boolean) {
-  if (selected && opportunity.includedState === "Not included yet — needs more information") return opportunity.includedState;
-  if (selected) return "Included in current estimate";
+  if (selected) {
+    if (opportunity.includedState === "Included in current estimate") return "Included in current estimate";
+    if (opportunity.includedState === "Possible additional value") return "Possible additional value";
+    if (opportunity.includedState === "Not included in current estimate") return "Not included in current estimate";
+    return "Not included yet — needs more information";
+  }
   if (opportunity.includedState === "Included in current estimate") return "Not included in current estimate";
   return opportunity.includedState;
 }
