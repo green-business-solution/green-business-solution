@@ -2522,7 +2522,7 @@ app.get("/api/diagnostics", async (_req, res) => {
 
     res.json({
       ok: true,
-      region,
+      region: dataRegion,
       profile,
       usersTable,
       intakeTable,

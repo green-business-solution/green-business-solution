@@ -1556,3 +1556,4 @@
 - Added a GPT Pro work folder for v2 incentive input-resolution and grant probability repair prompts, including explicit user-overridable retrofit quantity defaults.
 - Added a product TODO to research environmental impact fines and model supportable avoided compliance penalties separately from incentives.
 - Imported GPT Pro v2 estimate input-resolution and grant probability outputs, applied 54 grant repair metadata updates to v2 incentive packages, and added a reusable intake script/report.
+- Fixed the production diagnostics route to report `dataRegion` instead of referencing an undefined `region` variable.
