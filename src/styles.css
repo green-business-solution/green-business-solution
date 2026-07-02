@@ -2452,6 +2452,17 @@ dd {
   display: none;
 }
 
+.user-preview-inline-menu-button {
+  background: #ffffff;
+  border: 1px solid var(--rf-border);
+  color: var(--rf-text);
+  gap: 8px;
+  justify-self: start;
+  min-height: 38px;
+  padding: 0 12px;
+  width: auto;
+}
+
 .user-preview-sidebar {
   background: rgba(255, 255, 255, 0.92);
   border-right: 1px solid var(--rf-border);
@@ -2527,11 +2538,13 @@ dd {
 
 .sidebar-section-trigger svg:last-child {
   height: 16px;
+  transform: rotate(-90deg);
+  transition: transform 140ms ease;
   width: 16px;
 }
 
 .sidebar-section-trigger[aria-expanded="true"] svg:last-child {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .sidebar-retrofit-list {
@@ -2598,7 +2611,8 @@ dd {
 
 .user-preview-sidebar-secondary {
   border-top: 1px solid var(--rf-border);
-  padding-top: 16px;
+  margin-top: 4px;
+  padding-top: 10px;
 }
 
 .sidebar-secondary-item {
@@ -5317,6 +5331,10 @@ dd {
 
   .user-preview-mobile-menu-button {
     display: inline-flex;
+  }
+
+  .user-preview-inline-menu-button {
+    width: auto;
   }
 
   .user-preview-topbar {

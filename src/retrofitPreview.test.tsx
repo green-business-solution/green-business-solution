@@ -273,9 +273,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Retrofits");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
-    expect(html).toContain("Customer preview bar");
-    expect(html).toContain("Test Client");
-    expect(html).toContain("Test Business");
+    expect(html).not.toContain("Customer preview bar");
+    expect(html).not.toContain("Retrofit preview</span>");
     expect(html).toContain("LED Lighting");
     expect(html).not.toContain("LED Lighting Upgrade");
     expect(html).toContain("Replace existing lights with high-efficiency LEDs.");
@@ -422,7 +421,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Exit customer preview");
     expect(source).toContain("Back to all retrofits");
     expect(source).toContain("function UserPreviewSidebar");
-    expect(source).toContain("function UserPreviewTopBar");
+    expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("onSelectRetrofit(retrofit.id)");
     expect(source).toContain("setMobileSidebarOpen(false)");
     expect(source).toContain("sidebar-retrofit-item");

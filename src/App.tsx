@@ -6638,8 +6638,11 @@ export function RetrofitRecommendationsPreview({
         retrofits={displayedRetrofits}
       />
       <main className="user-preview-main">
-        <UserPreviewTopBar onOpenMobileSidebar={() => setMobileSidebarOpen(true)} payload={payload} preview={preview} />
         <section className="retrofit-preview-page">
+          <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
+            <ViewPanelIcon />
+            <span>Retrofits</span>
+          </button>
           {error ? <p className="error-message">{error}</p> : null}
 
           <RetrofitPickerView
@@ -6757,51 +6760,6 @@ export function RetrofitRecommendationsPreview({
   );
 }
 
-function UserPreviewTopBar({
-  onOpenMobileSidebar,
-  payload,
-  preview
-}: {
-  onOpenMobileSidebar: () => void;
-  payload: PortalRetrofitRecommendationsResponse | null;
-  preview: UserRetrofitPreviewResult;
-}) {
-  const customerName = preview.customerName || payload?.user?.fullName || payload?.intake?.contact.fullName || "Sample User";
-  const customerContext = payload?.intake?.business.companyName || payload?.user?.companyName || payload?.intake?.business.headquarters || "Retrofit preview";
-  const initials = initialsForName(customerName);
-  return (
-    <header className="user-preview-topbar" aria-label="Customer preview bar">
-      <button className="user-preview-mobile-menu-button" onClick={onOpenMobileSidebar} type="button">
-        <ViewPanelIcon />
-        <span className="sr-only">Open retrofit navigation</span>
-      </button>
-      <div className="user-preview-topbar-spacer" />
-      <button className="user-preview-help-button" type="button" aria-label="Help">
-        ?
-      </button>
-      <div className="user-preview-profile-summary">
-        <strong>{customerName}</strong>
-        <span>{customerContext}</span>
-      </div>
-      <div className="user-preview-avatar" aria-hidden="true">
-        {initials}
-      </div>
-      <button className="user-preview-profile-menu-button" type="button" aria-label="Open profile menu">
-        <ChevronDownIcon />
-      </button>
-    </header>
-  );
-}
-
-function initialsForName(name: string) {
-  const parts = name
-    .replace(/@.*/, "")
-    .split(/\s+|[._-]+/)
-    .map((part) => part.trim())
-    .filter(Boolean);
-  return parts.slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "U";
-}
-
 function UserPreviewSidebar({
   activeRetrofitId,
   collapsed,
@@ -6855,16 +6813,16 @@ function UserPreviewSidebar({
               ))}
             </div>
           ) : null}
-        </nav>
-        <nav className="user-preview-sidebar-secondary" aria-label="Profile navigation">
-          <button className="sidebar-secondary-item" type="button">
-            <ProfileInfoIcon />
-            <span className="sidebar-label">Profile info</span>
-          </button>
-          <button className="sidebar-secondary-item" type="button">
-            <DashboardIcon />
-            <span className="sidebar-label">Dashboard</span>
-          </button>
+          <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
+            <button className="sidebar-secondary-item" type="button">
+              <ProfileInfoIcon />
+              <span className="sidebar-label">Profile info</span>
+            </button>
+            <button className="sidebar-secondary-item" type="button">
+              <DashboardIcon />
+              <span className="sidebar-label">Dashboard</span>
+            </button>
+          </div>
         </nav>
         <button className="user-preview-sidebar-collapse" onClick={onToggleCollapsed} type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
           <DoubleChevronIcon />

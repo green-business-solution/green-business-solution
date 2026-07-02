@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user preview sidebar cleanup
+
+- Removed the extra customer-style top bar from the `/user-preview` retrofit picker shell so the page starts directly with the estimate banner.
+- Fixed the Retrofits sidebar chevron so expanded points down and collapsed points right.
+- Moved Profile info and Dashboard directly under the expanded Retrofits navigation list while preserving sidebar retrofit selection behavior.
+
 ## 2026-07-02 - Codex (GPT-5) user preview app shell
 
 - Added a modern RetroFi left sidebar shell to the `/user-preview` retrofit picker, with generated retrofit navigation, active state, collapse behavior, and mobile drawer support.
