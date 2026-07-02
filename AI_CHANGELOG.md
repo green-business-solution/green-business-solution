@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) sidebar row spacing normalization
+
+- Equalized the vertical gap between `Retrofits` and `Profile info` so it matches the gap between `Profile info` and `Dashboard`.
+- Kept the primary sidebar rows at the same size and tone.
+
 ## 2026-07-02 - Codex (GPT-5) Geocodio quota guard
 
 - Added a DynamoDB-backed daily quota guard for Geocodio fallback lookups so the API stops calling Geocodio after 2,500 fallback reservations in a UTC day.

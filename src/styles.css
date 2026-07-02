@@ -2448,7 +2448,7 @@ dd {
 }
 
 .sidebar-retrofit-list {
-  padding: 2px 0 6px 2px;
+  padding: 2px 0 4px 2px;
 }
 
 .sidebar-retrofit-item {
@@ -2513,7 +2513,7 @@ dd {
 .user-preview-sidebar-secondary {
   display: grid;
   gap: 2px;
-  margin-top: 6px;
+  margin-top: 4px;
   padding-top: 0;
 }
 
@@ -2733,18 +2733,15 @@ dd {
   align-items: center;
   display: grid;
   gap: 10px;
-  grid-template-columns: minmax(180px, 260px) minmax(260px, 1fr) auto;
+  grid-template-columns: minmax(180px, 260px) auto;
+  justify-content: space-between;
   margin-top: 0;
 }
 
-.picker-sort-control,
-.picker-search-control {
+.picker-sort-control {
   align-items: center;
   display: grid;
   gap: 10px;
-}
-
-.picker-sort-control {
   grid-template-columns: auto minmax(0, 1fr);
 }
 
@@ -2754,8 +2751,7 @@ dd {
   white-space: nowrap;
 }
 
-.picker-sort-control select,
-.picker-search-control input {
+.picker-sort-control select {
   background: #ffffff;
   border: 1px solid var(--rf-border);
   border-radius: 10px;
