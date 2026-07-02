@@ -272,6 +272,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("?");
     expect(html).toContain("metric-placeholder--bill");
     expect(html).toContain("metric-placeholder--question");
+    expect(html).toContain("Upload bills to estimate savings.");
+    expect(html).toContain("Answer retrofit-specific questions or add a quote to estimate cost.");
+    expect(html).toContain("Upload bills and answer retrofit-specific questions to estimate payback.");
     expect(html).toContain("metric-savings-icon");
     expect(html).toContain("metric-cost-icon");
     expect(html).toContain("metric-payback-icon");
@@ -387,6 +390,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Add tax/entity info");
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
+    expect(source).toContain("Show less retrofits");
     expect(source).toContain("Exit customer preview");
     expect(source).toContain("Back to all retrofits");
     expect(source).toContain("data-workspace-tab");

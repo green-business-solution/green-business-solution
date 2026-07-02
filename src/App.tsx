@@ -6011,6 +6011,7 @@ export function RetrofitRecommendationsPreview({
         onSelectRetrofit={handleRetrofitTabClick}
         onSetViewMode={setPickerViewMode}
         onShowMore={() => setPickerVisibleCount((current) => Math.min(current + 6, displayedRetrofits.length))}
+        onShowLess={() => setPickerVisibleCount(6)}
         onSortChange={(value) => {
           setSortBy(value);
           setPickerVisibleCount(6);
@@ -6120,6 +6121,7 @@ function RetrofitPickerView({
   onSelectRetrofit,
   onSetViewMode,
   onShowMore,
+  onShowLess,
   onSortChange,
   onUploadBills,
   pickerViewMode,
@@ -6138,6 +6140,7 @@ function RetrofitPickerView({
   onSelectRetrofit: (retrofitId: string) => void;
   onSetViewMode: (mode: "grid" | "panel") => void;
   onShowMore: () => void;
+  onShowLess: () => void;
   onSortChange: (value: string) => void;
   onUploadBills: () => void;
   pickerViewMode: "grid" | "panel";
@@ -6145,12 +6148,25 @@ function RetrofitPickerView({
   searchQuery: string;
   sortBy: string;
 }) {
+  const collapsedRetrofitCount = 6;
   const visibleRetrofits = displayedRetrofits.slice(0, pickerVisibleCount);
   const hasMoreRetrofits = displayedRetrofits.length > visibleRetrofits.length;
+  const hasCollapsedRetrofits = pickerVisibleCount > collapsedRetrofitCount && displayedRetrofits.length > collapsedRetrofitCount;
+  const moreRetrofitsLabel = hasMoreRetrofits ? "Show more retrofits" : hasCollapsedRetrofits ? "Show less retrofits" : "";
+
+  function handleMoreRetrofitsClick() {
+    if (hasMoreRetrofits) {
+      onShowMore();
+      return;
+    }
+    if (hasCollapsedRetrofits) {
+      onShowLess();
+    }
+  }
 
   return (
     <section className="retrofit-picker-shell" aria-label="Select a retrofit to explore">
-              <section className="estimate-accuracy-banner">
+      <section className="estimate-accuracy-banner">
         <div className="estimate-accuracy-icon" aria-hidden="true">
           <UploadCloudIcon />
         </div>
@@ -6234,15 +6250,14 @@ function RetrofitPickerView({
           </section>
           {hasMoreRetrofits ? (
             <div className="retrofit-picker-more-row">
-              <button className="secondary-button" onClick={onShowMore} type="button">
-                Show more retrofits
+              <button className="secondary-button" onClick={handleMoreRetrofitsClick} type="button">
+                {moreRetrofitsLabel}
               </button>
             </div>
-          ) : null}
-          {activeRetrofitId ? (
+          ) : hasCollapsedRetrofits ? (
             <div className="retrofit-picker-more-row">
-              <button className="secondary-button" onClick={onCloseDetails} type="button">
-                Close details
+              <button className="secondary-button" onClick={handleMoreRetrofitsClick} type="button">
+                {moreRetrofitsLabel}
               </button>
             </div>
           ) : null}
@@ -6288,18 +6303,18 @@ function getPickerMetricTooltip(kind: PickerMetricKind, value: string) {
   }
   if (kind === "savings") {
     return {
-      title: "What’s needed",
+      title: "Upload bills",
       body: "Upload bills to estimate savings."
     };
   }
   if (kind === "cost") {
     return {
-      title: "What’s needed",
+      title: "Answer retrofit-specific questions",
       body: "Answer retrofit-specific questions or add a quote to estimate cost."
     };
   }
   return {
-    title: "What’s needed",
+    title: "Upload bills and answer retrofit-specific questions",
     body: "Upload bills and answer retrofit-specific questions to estimate payback."
   };
 }
