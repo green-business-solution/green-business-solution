@@ -191,6 +191,7 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Scenario C: Highest total savings");
     expect(html).toContain("Scenario D: Certification-focused");
     expect(html).toContain("Scenario comparison for this retrofit");
+    expect(html).toContain("Retrofit section navigation");
     expect(html).toContain("What is included in this estimate");
     expect(html).not.toContain("Selected retrofits");
     expect(html).not.toContain("Estimated blended payback");
@@ -201,13 +202,15 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Payback Period");
     expect(html).toContain("Tax benefits");
     expect(html).toContain("ROI");
+    expect(html).toContain("Financials");
     expect(html).toContain("Why this is recommended");
     expect(html).toContain("Estimate assumptions");
     expect(html).toContain("Opportunities");
     expect(html).toContain("Operating Savings");
     expect(html).toContain("Enter details");
-    expect(html).toContain("Missing information and next step");
+    expect(html).toContain("Missing information");
     expect(html).toContain("Explore financing");
+    expect(html).toContain("Prepare application");
     expect(html).toContain("Next-best-action checklist");
     expect(html).toContain("Open program source");
     expect(html).toContain("Included in current estimate");

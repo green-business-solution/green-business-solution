@@ -858,18 +858,37 @@ textarea {
 }
 
 .user-preview-toolbar {
-  align-items: center;
+  align-items: stretch;
   background: #ffffff;
   border-bottom: 1px solid #dfe6e1;
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
+  display: grid;
+  gap: 12px;
   padding: 18px 32px;
 }
 
 .user-preview-toolbar h1,
 .user-preview-toolbar p {
   margin: 0;
+}
+
+.user-preview-admin-toggle {
+  align-items: center;
+  background: #f8faf8;
+  border: 1px solid #dce5df;
+  border-radius: 16px;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 14px 16px;
+  text-align: left;
+  width: 100%;
+}
+
+.user-preview-admin-panel {
+  background: #fbfdfb;
+  border: 1px solid #e0e8e3;
+  border-radius: 16px;
+  padding: 14px 16px;
 }
 
 .user-preview-actions {
@@ -2110,7 +2129,7 @@ dd {
   display: grid;
   gap: 10px;
   position: sticky;
-  top: 16px;
+  top: 12px;
   z-index: 5;
 }
 
@@ -2235,8 +2254,16 @@ dd {
 .editable-estimate-meta span,
 .opportunity-preview-row p,
 .operating-savings-item p,
-.retrofit-detail-questions p {
+.retrofit-detail-questions p,
+.retrofit-preview-badge-row {
   color: #5f6e66;
+}
+
+.retrofit-preview-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .retrofit-badge-row,
@@ -2250,6 +2277,23 @@ dd {
 
 .retrofit-badge-row {
   margin-top: 10px;
+}
+
+.retrofit-section-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  position: sticky;
+  top: 86px;
+  z-index: 4;
+}
+
+.retrofit-section-chip {
+  background: #f5f8f6;
+  border: 1px solid #dce5df;
+  border-radius: 999px;
+  color: #32443a;
+  padding: 7px 12px;
 }
 
 .why-recommended {
@@ -2330,6 +2374,18 @@ dd {
 
 .preview-accordion-trigger h3 {
   margin: 0 0 4px;
+}
+
+.preview-accordion-indicators {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.preview-accordion-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .preview-accordion-trigger span {
@@ -2453,6 +2509,12 @@ dd {
   display: grid;
   gap: 8px;
   justify-items: end;
+}
+
+.opportunity-preview-main small {
+  color: #5f6e66;
+  display: block;
+  margin-top: 8px;
 }
 
 .selection-toggle {
