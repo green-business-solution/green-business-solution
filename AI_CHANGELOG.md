@@ -4,6 +4,7 @@
 
 - Replaced native browser `title` fallback behavior on no-bill retrofit picker question marks with an explicit styled tooltip so the needed next step appears reliably on hover.
 - Added a third combined placeholder state for payback metrics that need both uploaded bills and retrofit-specific details, while preserving distinct bill-needed and question-needed colors.
+- Restricted placeholder tooltip copy to the three allowed next-step categories: upload bills, answer retrofit-specific questions, or both.
 - Kept the before-click picker clean and covered the tooltip hook in focused retrofit preview tests.
 
 ## 2026-07-02 - Codex (GPT-5) v2 grant and incentive estimate bridge

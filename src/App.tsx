@@ -6380,7 +6380,7 @@ function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) 
     return {
       className: " metric-placeholder--question",
       tooltipTitle: "Answer retrofit-specific questions",
-      tooltipBody: "Answer retrofit-specific questions or add a quote to estimate cost."
+      tooltipBody: "Answer retrofit-specific questions to estimate cost."
     };
   }
   return {
