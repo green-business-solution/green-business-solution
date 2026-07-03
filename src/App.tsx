@@ -763,6 +763,43 @@ type AdminApplicationProfileImportResponse = {
   note?: string | null;
 };
 
+type CustomerApplicationProfileRequirement = ApplicationRequirement & {
+  audience?: "customer_facing" | "admin_only" | "contractor_or_installer" | "suspicious" | string;
+};
+
+type CustomerApplicationProfile = {
+  opportunityId: string;
+  programName: string;
+  applicationMethod: string;
+  applicationStatus: string;
+  officialProgramWebsite?: string;
+  programSourceUrl?: string;
+  applicationUrl?: string;
+  pdfUrl?: string;
+  contactEmail?: string;
+  applicationArtifacts: ApplicationArtifact[];
+  requiredFields: CustomerApplicationProfileRequirement[];
+  optionalFields: CustomerApplicationProfileRequirement[];
+  requiredDocuments: CustomerApplicationProfileRequirement[];
+  applicationSteps: string[];
+  eligibilityRequirements: CustomerApplicationProfileRequirement[];
+  deadlinesOrFundingStatus: string[];
+  fees: CustomerApplicationProfileRequirement[];
+  evidence: ApplicationRequirementEvidence[];
+  reviewedAt?: string;
+  sourceLinks: Array<{ label: string; url: string }>;
+};
+
+type CustomerApplicationProfileResponse = {
+  generatedAt: string;
+  opportunityId: string;
+  status: "customer_ready" | "reference_only" | "unavailable";
+  customerReady: boolean;
+  referenceOnly: boolean;
+  profile: CustomerApplicationProfile | null;
+  notice?: string | null;
+};
+
 type SampleMatchResult = {
   opportunityId: string;
   opportunityName: string;
@@ -5323,6 +5360,7 @@ function CustomerRetrofitEstimatesPanel({
 
   return (
       <RetrofitRecommendationsPreview
+        credential={credential}
         emptyMessage={emptyMessage}
         error={error}
         eyebrow={eyebrow}
@@ -6726,6 +6764,7 @@ function buildNextBestActions(retrofits: RetrofitPreviewCard[], missingInputs: s
 }
 
 export function RetrofitRecommendationsPreview({
+  credential = null,
   emptyMessage,
   error,
   eyebrow,
@@ -6736,6 +6775,7 @@ export function RetrofitRecommendationsPreview({
   payload,
   title
 }: {
+  credential?: AuthCredential | null;
   emptyMessage: string;
   error: string | null;
   eyebrow: string;
@@ -7084,6 +7124,7 @@ export function RetrofitRecommendationsPreview({
                   onSelectScenario={(scenarioId) => selectScenario(activeRetrofit, scenarioId)}
                   onToggleOpportunity={toggleOpportunity}
                   planState={addedRetrofitPlans[activeRetrofit.id] ? "Added to plan" : dirtyRetrofitIds[activeRetrofit.id] ? "Draft selection" : "Not selected"}
+                  credential={credential}
                   retrofit={activeRetrofit}
                   selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
                   selectedOpportunityIds={selectedOpportunityIds}
@@ -7344,39 +7385,41 @@ function ProcessOnboardingModal({
       >
         <h2 className="sr-only" id="process-onboarding-title">The Process</h2>
         <div aria-hidden="true" className="process-editor-content">
-          <h2 className="process-editor-title">
-            <ProcessAccentText text={title} accent="The Process" />
-            <TypewriterCaret show={shouldAnimateText && activeLineId === "title"} />
-          </h2>
-          <div className="process-step-list">
-            <ProcessStep
-              active={shouldAnimateText && activeLineId === "step1"}
-              accent="Upload"
-              number="1"
-              text={step1}
-            />
-            <ProcessStep
-              active={shouldAnimateText && activeLineId === "step2"}
-              accent="Choose"
-              number="2"
-              text={step2}
-            />
-            <ProcessStep
-              active={shouldAnimateText && activeLineId === "step3"}
-              accent="Get"
-              number="3"
-              text={step3}
-            />
+          <div className="process-editor-body">
+            <h2 className="process-editor-title">
+              <ProcessAccentText text={title} accent="The Process" />
+              <TypewriterCaret show={shouldAnimateText && activeLineId === "title"} />
+            </h2>
+            <div className="process-step-list">
+              <ProcessStep
+                active={shouldAnimateText && activeLineId === "step1"}
+                accent="Upload"
+                number="1"
+                text={step1}
+              />
+              <ProcessStep
+                active={shouldAnimateText && activeLineId === "step2"}
+                accent="Choose"
+                number="2"
+                text={step2}
+              />
+              <ProcessStep
+                active={shouldAnimateText && activeLineId === "step3"}
+                accent="Get"
+                number="3"
+                text={step3}
+              />
+            </div>
+            <div className="process-note">
+              <ProcessAccentText text={note} accent="Note:" />
+              <TypewriterCaret show={shouldAnimateText && activeLineId === "note"} />
+            </div>
           </div>
-          <div className="process-note">
-            <ProcessAccentText text={note} accent="Note:" />
-            <TypewriterCaret show={shouldAnimateText && activeLineId === "note"} />
+          <div className="process-modal-footer">
+            <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
+              Next
+            </button>
           </div>
-        </div>
-        <div className="process-modal-footer">
-          <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
-            Next
-          </button>
         </div>
       </section>
       {flightStyle ? (
@@ -7991,6 +8034,7 @@ function formatCompactCents(value: number | null | undefined) {
 
 function RetrofitPreviewCardView({
   confirmedAssumptionIds,
+  credential,
   detailAnswers,
   onAddToPlan,
   onConfirmAll,
@@ -8007,6 +8051,7 @@ function RetrofitPreviewCardView({
   selectedOpportunityIds
 }: {
   confirmedAssumptionIds: Record<string, boolean>;
+  credential?: AuthCredential | null;
   detailAnswers: Record<string, string>;
   onAddToPlan: () => void;
   onConfirmAll: () => void;
@@ -8039,6 +8084,8 @@ function RetrofitPreviewCardView({
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(false);
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
+  const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
+  const [applicationPrepLoading, setApplicationPrepLoading] = useState<Record<string, boolean>>({});
   const billDataLocked = hideBillData;
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
@@ -8242,11 +8289,18 @@ function RetrofitPreviewCardView({
   const selectedScenarioOpportunityCount = selectedScenario
     ? selectedScenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]).length
     : selectedCount;
+  const opportunityIdsKey = retrofit.opportunities.map((opportunity) => opportunity.id).join("|");
+  const readyApplicationPrepOpportunity =
+    selectedIncludedOpportunities.find((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "customer_ready") ||
+    selectedPendingOpportunities.find((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "customer_ready") ||
+    retrofit.opportunities.find((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "customer_ready") ||
+    null;
+  const hasReferenceOnlyApplicationProfile = retrofit.opportunities.some((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "reference_only");
   const actionBarPrimary =
     billDataLocked
       ? "Upload bills"
       : planState === "Added to plan"
-      ? "Continue to application prep"
+      ? readyApplicationPrepOpportunity ? "Continue to application prep" : "Application prep not available yet"
       : !selectedScenario
         ? "Select a scenario"
         : selectedCount === 0
@@ -8258,10 +8312,56 @@ function RetrofitPreviewCardView({
     billDataLocked
       ? "Upload bills to unlock savings, payback, and detailed retrofit recommendations."
       : planState === "Added to plan"
-      ? "This retrofit is in your current plan."
+      ? readyApplicationPrepOpportunity ? "This retrofit is in your current plan." : "This retrofit is in your current plan; application prep is not available yet."
       : retrofit.missingInfo.length
         ? "You can refine this after uploading a bill or quote."
         : "Ready to add this retrofit to your plan.";
+
+  useEffect(() => {
+    let isMounted = true;
+    const opportunities = retrofit.opportunities;
+    if (!credential || opportunities.length === 0) {
+      setApplicationPrepProfiles({});
+      setApplicationPrepLoading({});
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setApplicationPrepLoading(Object.fromEntries(opportunities.map((opportunity) => [opportunity.id, true])));
+    void Promise.all(
+      opportunities.map(async (opportunity) => {
+        try {
+          const response = await apiGet<CustomerApplicationProfileResponse>(
+            `/api/application-profiles/approved?opportunityId=${encodeURIComponent(opportunity.id)}`,
+            { headers: adminAuthHeaders(credential) }
+          );
+          return [opportunity.id, response] as const;
+        } catch {
+          return [
+            opportunity.id,
+            {
+              generatedAt: new Date().toISOString(),
+              opportunityId: opportunity.id,
+              status: "unavailable",
+              customerReady: false,
+              referenceOnly: false,
+              profile: null,
+              notice: "Application prep not available yet."
+            } satisfies CustomerApplicationProfileResponse
+          ] as const;
+        }
+      })
+    ).then((entries) => {
+      if (!isMounted) return;
+      setApplicationPrepProfiles(Object.fromEntries(entries));
+      setApplicationPrepLoading({});
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, opportunityIdsKey, retrofit.opportunities]);
 
   function openWorkspaceTab(tab: typeof workspaceTabs[number]["key"]) {
     setActiveWorkspaceTab(tab);
@@ -8284,8 +8384,7 @@ function RetrofitPreviewCardView({
 
   function handlePrimaryPlanAction() {
     if (planState === "Added to plan") {
-      const nextOpportunity = selectedIncludedOpportunities[0] || selectedPendingOpportunities[0] || retrofit.opportunities[0];
-      if (nextOpportunity) setApplicationPrepOpportunity(nextOpportunity);
+      if (readyApplicationPrepOpportunity) setApplicationPrepOpportunity(readyApplicationPrepOpportunity);
       return;
     }
     if (!selectedScenario) {
@@ -8447,7 +8546,7 @@ function RetrofitPreviewCardView({
             </div>
           </section>
           <div className="overview-action-row">
-            <button onClick={handlePrimaryPlanAction} type="button">{actionBarPrimary}</button>
+            <button disabled={planState === "Added to plan" && !readyApplicationPrepOpportunity} onClick={handlePrimaryPlanAction} type="button">{actionBarPrimary}</button>
             <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Review blockers</button>
             <button className="secondary-button" onClick={() => openWorkspaceTab("opportunities")} type="button">View opportunities</button>
           </div>
@@ -8503,6 +8602,7 @@ function RetrofitPreviewCardView({
         </div>
         <div className="retrofit-action-buttons">
           <button
+            disabled={planState === "Added to plan" && !readyApplicationPrepOpportunity}
             onClick={handlePrimaryPlanAction}
             type="button"
           >
@@ -8833,6 +8933,8 @@ function RetrofitPreviewCardView({
                   {group.opportunities.length ? (
                     group.opportunities.map((opportunity) => (
                       <OpportunityPreviewRow
+                        applicationPrepLoading={Boolean(applicationPrepLoading[opportunity.id])}
+                        applicationPrepStatus={applicationPrepProfiles[opportunity.id]}
                         expanded={Boolean(expandedOpportunityIds[opportunity.id])}
                         key={opportunity.id}
                         onPrepareApplication={() => setApplicationPrepOpportunity(opportunity)}
@@ -9004,13 +9106,14 @@ function RetrofitPreviewCardView({
           <button
             className="secondary-button small-action-button"
             onClick={() => {
-              const nextOpportunity = selectedIncludedOpportunities[0] || selectedPendingOpportunities[0] || retrofit.opportunities[0];
-              if (nextOpportunity) setApplicationPrepOpportunity(nextOpportunity);
+              if (readyApplicationPrepOpportunity) setApplicationPrepOpportunity(readyApplicationPrepOpportunity);
             }}
+            disabled={!readyApplicationPrepOpportunity}
             type="button"
           >
-            Prepare application
+            {readyApplicationPrepOpportunity ? "Prepare application" : "Application prep not available yet"}
           </button>
+          {hasReferenceOnlyApplicationProfile ? <span>This program appears closed or funding-exhausted.</span> : null}
           <span>Impact/certification preview</span>
         </div>
       </section>
@@ -9051,13 +9154,20 @@ function RetrofitPreviewCardView({
       ) : null}
 
       {applicationPrepOpportunity ? (
-        <ApplicationPrepDrawer opportunity={applicationPrepOpportunity} onClose={() => setApplicationPrepOpportunity(null)} retrofitName={retrofit.name} />
+        <ApplicationPrepDrawer
+          opportunity={applicationPrepOpportunity}
+          onClose={() => setApplicationPrepOpportunity(null)}
+          profile={applicationPrepProfiles[applicationPrepOpportunity.id]?.profile || null}
+          retrofitName={retrofit.name}
+        />
       ) : null}
     </article>
   );
 }
 
 function OpportunityPreviewRow({
+  applicationPrepLoading,
+  applicationPrepStatus,
   expanded,
   environmentalImpact,
   onPrepareApplication,
@@ -9066,6 +9176,8 @@ function OpportunityPreviewRow({
   opportunity,
   selected
 }: {
+  applicationPrepLoading?: boolean;
+  applicationPrepStatus?: CustomerApplicationProfileResponse;
   expanded: boolean;
   environmentalImpact: RetrofitEnvironmentalImpact;
   onPrepareApplication: () => void;
@@ -9090,6 +9202,8 @@ function OpportunityPreviewRow({
             : opportunityHasAnyUrl(opportunity)
               ? "Value not estimated yet"
               : "Needs source review";
+  const applicationPrepReady = applicationPrepStatus?.status === "customer_ready" && Boolean(applicationPrepStatus.profile);
+  const applicationPrepReferenceOnly = applicationPrepStatus?.status === "reference_only";
   return (
     <article className="opportunity-preview-row">
       <div className="opportunity-preview-header">
@@ -9113,7 +9227,15 @@ function OpportunityPreviewRow({
         <div className="opportunity-preview-actions">
           <strong>{estimatedValueLabel}</strong>
           {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : <span>Source unavailable</span>}
-          <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
+          {applicationPrepLoading ? (
+            <span className="application-prep-availability">Checking application prep...</span>
+          ) : applicationPrepReady ? (
+            <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
+          ) : applicationPrepReferenceOnly ? (
+            <span className="application-prep-reference-notice">This program appears closed or funding-exhausted.</span>
+          ) : (
+            <span className="application-prep-availability">Application prep not available yet.</span>
+          )}
           <button className="secondary-button" onClick={onToggleExpanded} type="button">{expanded ? "Details open ▾" : "View details"}</button>
         </div>
       </div>
@@ -9215,64 +9337,209 @@ function PreviewAccordionSection({
 function ApplicationPrepDrawer({
   onClose,
   opportunity,
+  profile,
   retrofitName
 }: {
   onClose: () => void;
   opportunity: RetrofitOpportunityPreview;
+  profile: CustomerApplicationProfile | null;
   retrofitName: string;
 }) {
-  const requirementsExtracted = opportunity.requiredInfo.some((item) => !["bills", "retrofit-specific information", "quote", "tax/entity information"].includes(item));
-  const autofillReadiness = opportunity.requiredInfo.length === 0
-    ? "Ready"
-    : requirementsExtracted
-      ? "Partially ready"
-      : opportunityHasAnyUrl(opportunity)
-        ? "Needs review"
-        : "Not ready";
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+  const sourceLinks = profile?.sourceLinks || [];
+  const applicationLinks = [
+    profile?.applicationUrl ? { label: "Application link", url: profile.applicationUrl } : null,
+    profile?.pdfUrl ? { label: "PDF/form", url: profile.pdfUrl } : null,
+    ...((profile?.applicationArtifacts || [])
+      .filter((artifact) => artifact.url)
+      .map((artifact) => ({ label: artifact.label, url: artifact.url as string })))
+  ].filter((item): item is { label: string; url: string } => Boolean(item));
+  const uniqueApplicationLinks = applicationLinks.filter((item, index, list) => list.findIndex((candidate) => candidate.url === item.url) === index);
+
+  async function copyChecklist() {
+    if (!profile || typeof navigator === "undefined" || !navigator.clipboard) {
+      setCopyMessage("Copy is not available in this browser.");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(applicationPrepChecklistText(profile));
+      setCopyMessage("Checklist copied.");
+    } catch {
+      setCopyMessage("Could not copy checklist.");
+    }
+  }
+
   return (
     <div className="modal-backdrop retrofit-financing-backdrop" onClick={onClose}>
-      <aside className="retrofit-financing-drawer" onClick={(event) => event.stopPropagation()}>
+      <aside className="retrofit-financing-drawer application-prep-drawer" onClick={(event) => event.stopPropagation()}>
         <button aria-label="Close application prep" className="modal-close-button" onClick={onClose} type="button">Close</button>
         <p className="eyebrow">Prepare application</p>
-        <h2>{opportunity.name}</h2>
-        <p>Prepare supporting information for this opportunity. This is not auto-submit and nothing is sent without approval.</p>
-        {!requirementsExtracted ? (
-          <p className="compact-empty">Requirements not extracted yet. Open program source to verify requirements.</p>
+        <h2>{profile?.programName || opportunity.name}</h2>
+        <p>Reviewed by RetroFi. Use this as an application checklist before opening the official source.</p>
+        {!profile ? <p className="compact-empty">Application prep is not available yet.</p> : null}
+        {profile ? (
+          <>
+            <div className="application-prep-status-grid">
+              <DetailItem label="Related retrofit" value={retrofitName} />
+              <DetailItem label="Application method" value={formatApplicationMethodLabel(profile.applicationMethod as ApplicationMethod)} />
+              <DetailItem label="Status" value={formatApplicationStatusLabel(profile.applicationStatus as ApplicationStatus)} />
+              <DetailItem label="Reviewed" value={profile.reviewedAt ? formatProgramDate(profile.reviewedAt) : "Reviewed by RetroFi"} />
+            </div>
+
+            <section className="application-prep-section">
+              <h3>Application source</h3>
+              <div className="application-prep-link-list">
+                {sourceLinks.map((link) => (
+                  <a className="secondary-button link-button" href={link.url} key={`${link.label}:${link.url}`} rel="noreferrer" target="_blank">
+                    {link.label}
+                  </a>
+                ))}
+                {uniqueApplicationLinks.map((link) => (
+                  <a className="secondary-button link-button" href={link.url} key={`${link.label}:${link.url}`} rel="noreferrer" target="_blank">
+                    {link.label}
+                  </a>
+                ))}
+                {profile.contactEmail ? <span className="application-prep-contact">Contact email: {profile.contactEmail}</span> : null}
+              </div>
+            </section>
+
+            <section className="application-prep-section">
+              <h3>Checklist</h3>
+              <ApplicationPrepRequirementList items={profile.requiredFields} title="Required fields" />
+              <ApplicationPrepRequirementList items={profile.requiredDocuments} title="Required documents" />
+              <ApplicationPrepRequirementList emptyMessage="No optional fields were identified in the reviewed profile." items={profile.optionalFields} title="Optional fields" />
+              <ApplicationPrepRequirementList emptyMessage="No separate eligibility items were identified." items={profile.eligibilityRequirements} title="Eligibility notes" />
+              <ApplicationPrepRequirementList emptyMessage="No separate fee was identified." items={profile.fees} title="Fees" />
+              {profile.deadlinesOrFundingStatus.length ? (
+                <div className="application-prep-subsection">
+                  <h4>Deadlines / funding notes</h4>
+                  <ul>
+                    {profile.deadlinesOrFundingStatus.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+              ) : null}
+            </section>
+
+            <section className="application-prep-section">
+              <h3>Steps</h3>
+              {profile.applicationSteps.length ? (
+                <ol className="application-prep-steps">
+                  {profile.applicationSteps.map((step, index) => <li key={`${index}:${step}`}>{step}</li>)}
+                </ol>
+              ) : (
+                <p className="compact-empty">No ordered steps were identified in the reviewed profile.</p>
+              )}
+            </section>
+
+            <section className="application-prep-section application-prep-placeholder">
+              <h3>Missing info</h3>
+              <p>User data mapping coming next.</p>
+            </section>
+
+            {profile.evidence.length ? (
+              <details className="application-prep-section application-prep-evidence">
+                <summary>Source evidence</summary>
+                <ul>
+                  {profile.evidence.map((item, index) => (
+                    <li key={`${item.label || "evidence"}:${index}`}>
+                      <strong>{item.label || "Evidence"}</strong>
+                      {item.textSnippet ? <span>{item.textSnippet}</span> : null}
+                      {item.sourceUrl ? <a href={item.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : null}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : null}
+
+            <div className="retrofit-badge-row application-prep-actions">
+              {profile.officialProgramWebsite ? <a className="secondary-button link-button" href={profile.officialProgramWebsite} rel="noreferrer" target="_blank">Open official source</a> : null}
+              {profile.programSourceUrl ? <a className="secondary-button link-button" href={profile.programSourceUrl} rel="noreferrer" target="_blank">Open program source</a> : null}
+              {profile.applicationUrl ? <a className="secondary-button link-button" href={profile.applicationUrl} rel="noreferrer" target="_blank">Open application link</a> : null}
+              {profile.pdfUrl ? <a className="secondary-button link-button" href={profile.pdfUrl} rel="noreferrer" target="_blank">Open PDF/form</a> : null}
+              <button className="secondary-button" onClick={() => void copyChecklist()} type="button">Copy checklist</button>
+              <button className="secondary-button" onClick={onClose} type="button">Close</button>
+            </div>
+            {copyMessage ? <p className="muted-message">{copyMessage}</p> : null}
+            <p className="application-prep-disclaimer">RetroFi helps prepare your application checklist. No application is submitted automatically.</p>
+          </>
         ) : null}
-        <div className="financing-field-grid">
-          <DetailItem label="Related retrofit" value={retrofitName} />
-          <DetailItem label="Selected/included state" value={opportunity.includedState} />
-          <DetailItem label="Program/source URL" value={opportunity.sourceUrl ? "Source available" : "Source unavailable"} />
-          <DetailItem label="Program website URL" value={opportunity.programWebsiteUrl ? "Program website available" : "Program website not found yet"} />
-          <DetailItem label="Application URL" value={opportunity.applicationUrl ? "Application available" : "Application URL not found yet"} />
-          <DetailItem label="PDF URL" value={opportunity.pdfUrl ? "PDF available" : "PDF URL not found yet"} />
-          <DetailItem label="Contact email" value={opportunity.contactEmail || "Contact email not found yet"} />
-          <DetailItem label="Application method" value={capitalizeLabel(opportunity.applicationMethod)} />
-          <DetailItem label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
-          <DetailItem label="Required fields" value={opportunity.requiredInfo.length ? opportunity.requiredInfo.join(", ") : "Requirements not extracted yet"} />
-          <DetailItem label="Required documents" value={applicationRequiredDocuments(opportunity)} />
-          <DetailItem label="Optional fields" value="Additional contact, utility, and project details may still be needed." />
-          <DetailItem label="Pre-approval required" value={opportunity.timing === "upfront" || opportunity.applicationMethod === "contractor-submitted" ? "Possible" : "Unknown"} />
-          <DetailItem label="Deadline" value={opportunity.deadline || "Source unavailable"} />
-          <DetailItem label="Estimated time" value={opportunity.length || "Needs source review"} />
-          <DetailItem label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
-          <DetailItem label="RetroFi can help fill it" value={autofillReadiness === "Ready" || autofillReadiness === "Partially ready" ? "Yes, after review" : "Needs review first"} />
-          <DetailItem label="Autofill readiness" value={autofillReadiness} />
-          <DetailItem label="Missing information" value={opportunity.requiredInfo.length ? opportunity.requiredInfo.join(", ") : "None flagged"} />
-          <DetailItem label="Generated packet preview" value={opportunity.requiredInfo.length ? "Packet preview can be prepared after required fields are confirmed." : "Requirements not extracted yet. Open program source to verify requirements."} />
-        </div>
-        <div className="retrofit-badge-row">
-          {opportunity.applicationUrl ? <a className="secondary-button link-button" href={opportunity.applicationUrl} rel="noreferrer" target="_blank">Open application</a> : null}
-          {opportunity.sourceUrl ? <a className="secondary-button link-button" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open program source</a> : null}
-          {opportunity.programWebsiteUrl ? <a className="secondary-button link-button" href={opportunity.programWebsiteUrl} rel="noreferrer" target="_blank">Open program website</a> : null}
-          {opportunity.pdfUrl ? <a className="secondary-button link-button" href={opportunity.pdfUrl} rel="noreferrer" target="_blank">Open PDF</a> : null}
-          {opportunity.contactEmail ? <a className="secondary-button link-button" href={`mailto:${opportunity.contactEmail}`}>Contact by email</a> : null}
-          <button className="secondary-button" type="button">Copy answers</button>
-          <button className="secondary-button" type="button">Save packet</button>
-        </div>
       </aside>
     </div>
   );
+}
+
+function ApplicationPrepRequirementList({
+  emptyMessage = "No items were identified in the reviewed profile.",
+  items,
+  title
+}: {
+  emptyMessage?: string;
+  items: CustomerApplicationProfileRequirement[];
+  title: string;
+}) {
+  return (
+    <div className="application-prep-subsection">
+      <h4>{title}</h4>
+      {items.length ? (
+        <ul className="application-prep-requirement-list">
+          {items.map((item) => (
+            <li key={`${title}:${item.id}:${item.label}`}>
+              <div>
+                <strong>{customerRequirementLabel(item)}</strong>
+                {item.description ? <p>{item.description}</p> : null}
+                <small>{item.confidence} confidence{item.audience && item.audience !== "customer_facing" ? ` · ${capitalizeLabel(item.audience.replaceAll("_", " "))}` : ""}</small>
+              </div>
+              {item.evidenceSnippet ? (
+                <details>
+                  <summary>Why we ask for this</summary>
+                  <p>{item.evidenceSnippet}</p>
+                  {item.sourceUrl ? <a href={item.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : null}
+                </details>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="compact-empty">{emptyMessage}</p>
+      )}
+    </div>
+  );
+}
+
+function customerRequirementLabel(item: CustomerApplicationProfileRequirement) {
+  if (item.requirementType === "bill") return `Needs bill: ${item.label}`;
+  if (item.requirementType === "quote") return `Needs quote: ${item.label}`;
+  if (item.requirementType === "contractor") return `Needs contractor info: ${item.label}`;
+  if (item.requirementType === "tax") return `Needs tax/accountant review: ${item.label}`;
+  return item.label;
+}
+
+function applicationPrepChecklistText(profile: CustomerApplicationProfile) {
+  const lines = [
+    profile.programName,
+    `Application method: ${formatApplicationMethodLabel(profile.applicationMethod as ApplicationMethod)}`,
+    "",
+    "Required fields:",
+    ...listForClipboard(profile.requiredFields),
+    "",
+    "Required documents:",
+    ...listForClipboard(profile.requiredDocuments),
+    "",
+    "Application steps:",
+    ...profile.applicationSteps.map((step, index) => `${index + 1}. ${step}`),
+    "",
+    "Source links:",
+    ...profile.sourceLinks.map((link) => `- ${link.label}: ${link.url}`)
+  ];
+  if (profile.applicationUrl) lines.push(`- Application link: ${profile.applicationUrl}`);
+  if (profile.pdfUrl) lines.push(`- PDF/form: ${profile.pdfUrl}`);
+  if (profile.contactEmail) lines.push(`- Contact email: ${profile.contactEmail}`);
+  lines.push("", "RetroFi helps prepare your application checklist. No application is submitted automatically.");
+  return lines.join("\n");
+}
+
+function listForClipboard(items: CustomerApplicationProfileRequirement[]) {
+  return items.length ? items.map((item) => `- ${item.label}`) : ["- None identified"];
 }
 
 function UnconfirmedRetrofitModal({

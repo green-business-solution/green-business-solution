@@ -429,18 +429,18 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Impact supported");
     expect(source).toContain("opportunityImpactSupportedLabel(environmentalImpact)");
     expect(source).toContain("maskEnvironmentalImpactForNoBillData");
-    expect(source).toContain("Program/source URL");
-    expect(source).toContain("Program website URL");
-    expect(source).toContain("Application URL");
-    expect(source).toContain("PDF URL");
+    expect(source).toContain("Application source");
+    expect(source).toContain("Open official source");
+    expect(source).toContain("Application link");
+    expect(source).toContain("PDF/form");
     expect(source).toContain("Contact email");
     expect(source).toContain("Application URL not found yet");
     expect(source).toContain("Open program website");
     expect(source).toContain("Open PDF");
-    expect(source).toContain("Contact by email");
-    expect(source).toContain("RetroFi can help fill it");
-    expect(source).toContain("Autofill readiness");
-    expect(source).toContain("nothing is sent without approval");
+    expect(source).toContain("Contact email:");
+    expect(source).toContain("Reviewed by RetroFi");
+    expect(source).toContain("Copy checklist");
+    expect(source).toContain("No application is submitted automatically");
     expect(source).toContain("applicationRequiredDocuments");
     expect(source).toContain("opportunityAffectsMetric");
     expect(source).toContain("eligibleCostBasis");
@@ -530,6 +530,30 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("selectedProfile?.profileId === profile.profileId ? \"is-selected\" : undefined");
     expect(css).toContain(".application-source-table tbody tr.is-selected");
     expect(css).toContain(".application-profile-detail:focus");
+  });
+
+  it("gates customer Prepare Application V1 on approved sanitized ApplicationProfiles", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(source).toContain("/api/application-profiles/approved?opportunityId=");
+    expect(source).toContain("status === \"customer_ready\"");
+    expect(source).toContain("status === \"reference_only\"");
+    expect(source).toContain("Application prep not available yet.");
+    expect(source).toContain("This program appears closed or funding-exhausted.");
+    expect(source).toContain("Reviewed by RetroFi");
+    expect(source).toContain("User data mapping coming next.");
+    expect(source).toContain("No application is submitted automatically.");
+    expect(source).toContain("navigator.clipboard.writeText(applicationPrepChecklistText(profile))");
+    expect(source).toContain("Copy checklist");
+    expect(source).not.toContain("Save packet");
+    expect(source).not.toContain("Copy answers");
+    expect(source).not.toContain("Autofill readiness");
+    expect(source).not.toContain("Generated packet preview");
+    expect(css).toContain(".application-prep-drawer");
+    expect(css).toContain(".application-prep-reference-notice");
   });
 
   it("builds honest environmental impact fallbacks without fake values", () => {
@@ -684,7 +708,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("font-size: clamp(30px, 2.2vw, 34px)");
     expect(css).toContain("font-weight: 500");
     expect(css).toContain(".code-accent");
-    expect(css).toContain("font-size: clamp(22px, 1.45vw, 24px)");
+    expect(css).toContain("font-size: clamp(16px, 1.05vw, 18px)");
     expect(css).toContain(".process-modal-footer");
     expect(css).toContain(".process-next-button");
     expect(css).toContain("justify-content: flex-end");
