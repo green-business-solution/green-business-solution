@@ -84,6 +84,19 @@ export function normalizeUserProfile(intake) {
       hasEmail: Boolean(contact.email || source.email),
       hasPhone: Boolean(contact.phone || source.phone)
     },
+    tax: {
+      siteTaxProfile: source.siteTaxProfile || null,
+      uploadedTaxFiles: Array.isArray(source.uploadedTaxFiles) ? source.uploadedTaxFiles : [],
+      taxProfileFacts: Array.isArray(source.taxProfileFacts) ? source.taxProfileFacts : [],
+      taxExtractedValues: Array.isArray(source.taxExtractedValues) ? source.taxExtractedValues : [],
+      taxOpportunitySpecificInputs: Array.isArray(source.taxOpportunitySpecificInputs)
+        ? source.taxOpportunitySpecificInputs
+        : [],
+      taxMissingOrReviewInputs: Array.isArray(source.taxMissingOrReviewInputs) ? source.taxMissingOrReviewInputs : [],
+      syntheticTaxDataNotice: source.syntheticTaxDataNotice || null,
+      taxDataSchemaVersion: source.taxDataSchemaVersion || null,
+      taxDataSourceArtifact: source.taxDataSourceArtifact || null
+    },
     completeness: {
       hasState: Boolean(stateCode),
       hasZip: Boolean(zip5),

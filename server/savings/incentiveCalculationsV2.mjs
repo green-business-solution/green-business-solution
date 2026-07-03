@@ -206,11 +206,14 @@ export function calculateV2IncentivePackage(pkg, ctx = {}, priorAwards = []) {
 
 function calculateEffect({ pkg, effect, ctx, priorAwards }) {
   const calculation = effect.calculation;
-  const missingInputs = missingRequiredInputsForEffect(effect, ctx);
+  const disqualified = zeroWhenTaxGateDisqualified(effect, ctx);
+  const missingInputs = disqualified ? [] : missingRequiredInputsForEffect(effect, ctx);
   const trace = [];
   let rawAmountCents = 0;
 
-  if (missingInputs.length > 0) {
+  if (disqualified) {
+    trace.push(disqualified.trace);
+  } else if (missingInputs.length > 0) {
     trace.push(`Missing required inputs for ${effect.effect_id}: ${missingInputs.map((input) => input.inputKey).join(", ")}.`);
   } else if (calculation.method === "measure_catalog") {
     const result = calculateMeasureCatalogEffect({ pkg, effect, ctx });
@@ -249,6 +252,45 @@ function calculateEffect({ pkg, effect, ctx, priorAwards }) {
     grantEstimate,
     trace
   };
+}
+
+function zeroWhenTaxGateDisqualified(effect, ctx) {
+  const expressionId = String(effect.calculation?.expression_id || "").trim();
+
+  if (expressionId === "tax_exempt_liability") {
+    const gates = [
+      ["approved_rerz_designation", "Approved RERZ designation"],
+      ["qualified_company_operations", "Qualified company operations"],
+      ["parcel_or_facility_within_approved_zone_boundary", "Facility inside approved zone boundary"],
+      ["company_current_on_state_and_local_taxes", "Company current on state and local taxes"]
+    ];
+    const failedGate = gates.find(([key]) => hasAnswer(ctx.answers, key) && booleanAnswer(ctx, key) === false);
+    if (failedGate) {
+      return { trace: `${failedGate[1]} is not confirmed, so tax-exempt liability value is zero.` };
+    }
+  }
+
+  if (expressionId === "tax_rate_difference") {
+    const gates = [
+      ["annual_tax_performance_report_filed", "Annual Tax Performance Report"],
+      ["has_washington_business_excise_tax_return", "Washington business excise tax return"]
+    ];
+    const failedGate = gates.find(([key]) => hasAnswer(ctx.answers, key) && booleanAnswer(ctx, key) === false);
+    if (failedGate) {
+      return { trace: `${failedGate[1]} is not confirmed, so tax-rate preference value is zero.` };
+    }
+
+    const taxBase = firstNumberAnswer(ctx, [
+      "qualifying_tax_base_after_deductions_and_matc_cents",
+      "qualifying_taxable_gross_receipts",
+      "qualifying_taxable_gross_receipts_cents"
+    ]);
+    if (taxBase === 0) {
+      return { trace: "Qualifying tax base is zero, so tax-rate preference value is zero." };
+    }
+  }
+
+  return null;
 }
 
 function calculateCalculationSpec({ pkg, effect, calculation, ctx, priorAwards }) {

@@ -55,6 +55,7 @@ export function buildRetrofitGroupsFromEligibleResults({
         retrofitGroup: group,
         sampleUserId: subjectId,
         normalizedProfile,
+        taxContext: normalizedProfile?.tax || null,
         calculationDate,
         opportunityIncentiveRules: opportunityRules,
         opportunityIncentiveCalculationPackages: opportunityPackages,

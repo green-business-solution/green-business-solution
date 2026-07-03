@@ -342,6 +342,90 @@ describe("incentive calculation v2", () => {
     expect(result.missingInputs).toEqual([]);
     expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(15000);
   });
+
+  it("resolves tax profile and opportunity-specific inputs into v2 tax calculations", () => {
+    const pkg = expressionPackage({
+      expressionId: "tax_exempt_liability",
+      effectType: "tax_exemption",
+      requiredInputs: [
+        "approved_rerz_designation",
+        "qualified_company_operations",
+        "company_current_on_state_and_local_taxes",
+        "phaseout_multiplier",
+        "eligible_state_education_tax_cents",
+        "eligible_real_property_tax_cents",
+        "eligible_personal_property_tax_cents",
+        "eligible_local_income_tax_cents"
+      ]
+    });
+    pkg.opportunity_id = "SOURCE_DSIRE:dsire_program_id:3216";
+
+    const ctx = buildV2ResolvedRuntimeContext(
+      baseCtx({
+        taxProfileFacts: [
+          { inputKey: "company_current_on_state_and_local_taxes", value: true, sourceStrategy: "accountant_review" },
+          { inputKey: "eligible_state_education_tax_cents", value: 1000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_real_property_tax_cents", value: 2000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_personal_property_tax_cents", value: 3000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_local_income_tax_cents", value: 4000, sourceStrategy: "synthetic_tax_document" }
+        ],
+        taxOpportunitySpecificInputs: [
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:3216",
+            inputKey: "approved_rerz_designation",
+            value: true,
+            sourceStrategy: "synthetic_tax_document"
+          },
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:3216",
+            inputKey: "qualified_company_operations",
+            value: true,
+            sourceStrategy: "synthetic_tax_document"
+          },
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:3216",
+            inputKey: "phaseout_multiplier",
+            value: 0.75,
+            sourceStrategy: "synthetic_tax_document"
+          }
+        ]
+      }),
+      [pkg]
+    );
+    const result = calculateV2IncentivePackage(pkg, ctx);
+
+    expect(ctx.answers.approved_rerz_designation.source).toBe("tax_opportunity_input");
+    expect(ctx.answers.eligible_real_property_tax_cents.source).toBe("tax_profile_fact");
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(7500);
+  });
+
+  it("short-circuits disqualified tax workflows to zero before requiring downstream tax documents", () => {
+    const result = calculateV2IncentivePackage(
+      expressionPackage({
+        expressionId: "tax_exempt_liability",
+        effectType: "tax_exemption",
+        requiredInputs: [
+          "approved_rerz_designation",
+          "qualified_company_operations",
+          "parcel_or_facility_within_approved_zone_boundary",
+          "approved_zone_legal_description_and_maps",
+          "eligible_real_property_tax_cents"
+        ]
+      }),
+      baseCtx({
+        answers: {
+          approved_rerz_designation: { value: true },
+          qualified_company_operations: { value: true },
+          parcel_or_facility_within_approved_zone_boundary: { value: false }
+        }
+      })
+    );
+
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(0);
+    expect(result.effectResults[0].trace.join(" ")).toContain("Facility inside approved zone boundary is not confirmed");
+  });
 });
 
 function consumersEnergyAirPurifierPackage() {

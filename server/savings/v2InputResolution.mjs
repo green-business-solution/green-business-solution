@@ -175,7 +175,7 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
 
   const add = (key, value, source, options = {}) => {
     if (!key || hasAnswer(answers, key) || value === undefined || value === null || value === "") return false;
-    answers[key] = {
+    const answer = {
       value,
       source,
       canonicalInputKey: options.canonicalInputKey || key,
@@ -183,14 +183,35 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
       defaultConfidence: options.defaultConfidence || null,
       userOverrideAllowed: options.userOverrideAllowed !== false
     };
-    resolvedInputs.push({
+    addOptional(answer, "sourceFileId", options.sourceFileId);
+    addOptional(answer, "sourceStrategy", options.sourceStrategy);
+    addOptional(answer, "taxOpportunityId", options.taxOpportunityId);
+    addOptional(answer, "estimateStatusIfUsed", options.estimateStatusIfUsed);
+    addOptional(
+      answer,
+      "includeInUserFacingTotalBeforeConfirmation",
+      options.includeInUserFacingTotalBeforeConfirmation
+    );
+    answers[key] = answer;
+
+    const resolved = {
       inputKey: key,
       canonicalInputKey: answers[key].canonicalInputKey,
       source,
       defaultIsPlaceholder: answers[key].defaultIsPlaceholder,
       defaultConfidence: answers[key].defaultConfidence,
       userOverrideAllowed: answers[key].userOverrideAllowed
-    });
+    };
+    addOptional(resolved, "sourceFileId", answers[key].sourceFileId);
+    addOptional(resolved, "sourceStrategy", answers[key].sourceStrategy);
+    addOptional(resolved, "taxOpportunityId", answers[key].taxOpportunityId);
+    addOptional(resolved, "estimateStatusIfUsed", answers[key].estimateStatusIfUsed);
+    addOptional(
+      resolved,
+      "includeInUserFacingTotalBeforeConfirmation",
+      answers[key].includeInUserFacingTotalBeforeConfirmation
+    );
+    resolvedInputs.push(resolved);
     return true;
   };
 
@@ -199,6 +220,7 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
   addEnergyAliases({ ctx, answers, add });
   addOperationalAliases({ ctx, answers, add });
   addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs });
+  addTaxProfileInputs({ ctx, packages, add });
   addMeasureSelections({ ctx, packages, answers, add });
   addSyntheticTestCaseDefaults({ ctx, packages, answers, add });
 
@@ -320,6 +342,70 @@ function addSyntheticTestCaseDefaults({ ctx, packages, answers, add }) {
   }
 }
 
+function addTaxProfileInputs({ ctx, packages, add }) {
+  const taxContext = ctx.taxContext || ctx.tax || {};
+  const packageOpportunityIds = new Set((packages || []).map((pkg) => pkg?.opportunity_id).filter(Boolean));
+
+  for (const row of taxOpportunitySpecificRows(ctx, taxContext, packageOpportunityIds)) {
+    addTaxInput(row, "tax_opportunity_input", add);
+  }
+
+  for (const row of [...arrayOf(ctx.taxProfileFacts), ...arrayOf(taxContext.taxProfileFacts)]) {
+    addTaxInput(row, "tax_profile_fact", add);
+  }
+
+  for (const row of [...arrayOf(ctx.taxExtractedValues), ...arrayOf(taxContext.taxExtractedValues)]) {
+    const inputKey = row.inputKey || row.input_key || row.fieldId || row.field_id;
+    addTaxInput({ ...row, inputKey }, "tax_extracted_value", add);
+  }
+}
+
+function taxOpportunitySpecificRows(ctx, taxContext, packageOpportunityIds) {
+  const rows = [...arrayOf(ctx.taxOpportunitySpecificInputs), ...arrayOf(taxContext.taxOpportunitySpecificInputs)];
+  if (!packageOpportunityIds.size) return rows;
+  return rows.filter((row) => {
+    const opportunityId = row?.opportunityId || row?.opportunity_id;
+    return !opportunityId || packageOpportunityIds.has(opportunityId);
+  });
+}
+
+function addTaxInput(row, source, add) {
+  const inputKey = row?.inputKey || row?.input_key || row?.fieldId || row?.field_id;
+  if (!inputKey || row.value === undefined || row.value === null || row.value === "") return;
+  const canonicalInputKey = canonicalInputKeyFor(inputKey);
+  const metadata = {
+    canonicalInputKey,
+    defaultIsPlaceholder: Boolean(row.defaultIsSynthetic),
+    defaultConfidence: row.confidenceImpactUntilConfirmed || row.confidence || null,
+    userOverrideAllowed: row.userOverrideAllowed !== false,
+    sourceFileId: row.sourceFileId || row.fileId || null,
+    sourceStrategy: row.sourceStrategy || row.sourceType || source,
+    taxOpportunityId: row.opportunityId || row.opportunity_id || null,
+    estimateStatusIfUsed: row.estimateStatusIfUsed || null,
+    includeInUserFacingTotalBeforeConfirmation: row.includeInUserFacingTotalBeforeConfirmation ?? null
+  };
+
+  add(inputKey, row.value, source, metadata);
+  if (canonicalInputKey !== inputKey) {
+    add(canonicalInputKey, row.value, source, metadata);
+  }
+
+  for (const alias of taxInputAliases(inputKey)) {
+    add(alias, row.value, source, metadata);
+  }
+}
+
+function taxInputAliases(inputKey) {
+  switch (canonicalInputKeyFor(inputKey)) {
+    case "ac_nameplate_capacity_kw":
+      return ["ac_kw_capacity", "system_kw"];
+    case "annual_property_tax_due_cents":
+      return ["counterfactual_ordinary_annual_property_tax_cents"];
+    default:
+      return [];
+  }
+}
+
 function addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs }) {
   const taxGeography = buildTaxGeographyInputAnswers({
     geography: ctx.geography || ctx.taxGeography || {},
@@ -418,6 +504,15 @@ function tokensFor(value) {
 }
 
 function canonicalInputKeyFor(key) {
+  const normalized = normalizeKey(key);
+  if (normalized === "ackwcapacity" || normalized === "acnameplatecapacitykw") return "ac_nameplate_capacity_kw";
+  if (
+    normalized === "annualpropertytaxduecents" ||
+    normalized === "annualpropertytaxcents" ||
+    normalized === "annualrealpropertytaxduecents"
+  ) {
+    return "annual_property_tax_due_cents";
+  }
   if (COST_ALIASES.includes(key)) return key.includes("eligible") ? "eligible_project_cost_cents" : "project_cost_cents";
   if (UNIT_COUNT_ALIASES.includes(key)) return "unit_count";
   if (PORT_COUNT_ALIASES.includes(key)) return "port_count";
@@ -426,6 +521,14 @@ function canonicalInputKeyFor(key) {
   if (KWH_ALIASES.includes(key)) return "annual_kwh_savings";
   if (THERM_ALIASES.includes(key)) return "annual_therm_savings";
   return key;
+}
+
+function normalizeKey(key) {
+  return String(key || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function addOptional(target, key, value) {
+  if (value !== undefined && value !== null) target[key] = value;
 }
 
 function firstFiniteAnswer(answers, keys) {
@@ -441,6 +544,10 @@ function finiteNumber(value) {
   if (value === undefined || value === null || value === "") return null;
   const number = Number(value);
   return Number.isFinite(number) ? number : null;
+}
+
+function arrayOf(value) {
+  return Array.isArray(value) ? value : [];
 }
 
 function sumCostCategory(entries = [], category) {

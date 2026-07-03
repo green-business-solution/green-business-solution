@@ -121,6 +121,61 @@ describe("admin test-case savings previews", () => {
     expect(preview.selectedIncentiveScenario.recurringSavingsEntries).toHaveLength(1);
   });
 
+  it("passes tax context into matched v2 tax package summaries without adding review-gated money to totals", () => {
+    const preview = buildAdminTestCaseSavingsPreview({
+      sampleUserId: "sample_tax_context",
+      calculationDate: "2026-06-27",
+      normalizedProfile: {
+        site: {
+          geo: {
+            stateCode: "MI",
+            countyFips: "26081"
+          }
+        }
+      },
+      taxContext: {
+        taxProfileFacts: [
+          { inputKey: "company_current_on_state_and_local_taxes", value: true, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_state_education_tax_cents", value: 1000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_real_property_tax_cents", value: 2000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_personal_property_tax_cents", value: 3000, sourceStrategy: "synthetic_tax_document" },
+          { inputKey: "eligible_local_income_tax_cents", value: 4000, sourceStrategy: "synthetic_tax_document" }
+        ],
+        taxOpportunitySpecificInputs: [
+          { opportunityId: "opp_tax_context", inputKey: "approved_rerz_designation", value: true },
+          { opportunityId: "opp_tax_context", inputKey: "qualified_company_operations", value: true },
+          { opportunityId: "opp_tax_context", inputKey: "phaseout_multiplier", value: 0.75 }
+        ]
+      },
+      retrofitGroup: {
+        retrofitTypeId: "led_lighting_retrofit",
+        displayName: "LED lighting retrofit",
+        opportunityCount: 1,
+        opportunities: [{ opportunityId: "opp_tax_context" }]
+      },
+      opportunityIncentiveCalculationPackages: [taxContextExpressionPackage()]
+    });
+
+    const [summary] = preview.incentiveCalculationPackageSummaries;
+    expect(summary).toMatchObject({
+      opportunityId: "opp_tax_context",
+      runtimeInclusionStatus: "human_review_required",
+      missingInputs: []
+    });
+    expect(summary.effectSummaries[0]).toMatchObject({
+      effectType: "tax_exemption",
+      amountCents: 7500,
+      humanReviewRequired: true
+    });
+    expect(summary.resolvedInputs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ inputKey: "approved_rerz_designation", source: "tax_opportunity_input" }),
+        expect.objectContaining({ inputKey: "eligible_real_property_tax_cents", source: "tax_profile_fact" })
+      ])
+    );
+    expect(preview.oneTimeSavingsCents).toBe(0);
+  });
+
   it("keeps service-only matched items unsupported until modeled savings are available", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       sampleUserId: "sample_audit",
@@ -142,3 +197,64 @@ describe("admin test-case savings previews", () => {
     });
   });
 });
+
+function taxContextExpressionPackage() {
+  const requiredInputs = [
+    "approved_rerz_designation",
+    "qualified_company_operations",
+    "company_current_on_state_and_local_taxes",
+    "phaseout_multiplier",
+    "eligible_state_education_tax_cents",
+    "eligible_real_property_tax_cents",
+    "eligible_personal_property_tax_cents",
+    "eligible_local_income_tax_cents"
+  ].map((inputKey) => ({
+    input_key: inputKey,
+    label: inputKey,
+    value_type: "text",
+    required_for: ["effect_tax_context"],
+    source_precedence: ["tax_profile"],
+    missing_severity: "blocks_calculation"
+  }));
+
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_tax_context",
+    program_name: "Tax Context Expression",
+    calculation_status: "calculable_with_missing_inputs",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["led_lighting_retrofit"],
+    geography: { country: "US", states: ["MI"], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [
+      {
+        effect_id: "effect_tax_context",
+        label: "Tax expression requiring review",
+        effect_type: "tax_exemption",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "annual", source_timing: "annual" },
+        calculation: { method: "expression", expression_id: "tax_exempt_liability" },
+        limits: [],
+        caps: [],
+        required_inputs: requiredInputs,
+        evidence_refs: ["tax_context"],
+        confidence: { overall: 0.72, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_test"] },
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "tax_exemption",
+          value_model_kind: "tax_exempt_liability",
+          human_review_required: true
+        }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: requiredInputs,
+    assumptions: [],
+    source_evidence: [{ evidence_id: "tax_context", source_type: "web_page", quote: "Tax expression", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_test"] }
+  };
+}

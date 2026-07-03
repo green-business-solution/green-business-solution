@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) tax context runtime wiring
+
+- Routed sample/profile tax context into v2 incentive package calculations so tax profile facts, extracted tax values, and opportunity-specific tax inputs can satisfy repaired tax package requirements.
+- Added conservative tax expression gates so disqualified tax workflows resolve to zero without requiring downstream tax documents, while review-gated tax effects remain excluded from user-facing totals.
+- Refreshed admin sample savings previews with tax geography/context inputs and added focused regression coverage for tax resolver, tax expression, and admin preview paths.
+- Added a separate Codex research-shell prompt packet for the broader nationwide local tax dataset sweep after confirming the prior sweep only covered source catalogs and the three current v2 tax packages.
+
 ## 2026-07-03 - Codex (GPT-5) tax rule research sweep
 
 - Added a research-only Tax Research Codex Sweep packet for the three current v2 tax calculation packages.

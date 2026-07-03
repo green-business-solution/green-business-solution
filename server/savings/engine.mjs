@@ -342,7 +342,12 @@ function finalizeCalculatedEstimate({
   opportunityIncentiveCalculationPackages = [],
   selectedOpportunityIds = [],
   stackingRules = [],
-  taxGeographyRules = []
+  taxGeographyRules = [],
+  taxContext = null,
+  taxProfileFacts = [],
+  taxExtractedValues = [],
+  taxOpportunitySpecificInputs = [],
+  siteTaxProfile = null
 }) {
   const upfrontCostCents = aggregateUpfrontCost(costBreakdown);
   const selectedRequestedOpportunityIds = retrofitInstance.selectedOpportunityIds || selectedOpportunityIds || [];
@@ -357,6 +362,11 @@ function finalizeCalculatedEstimate({
     calculationDate,
     geography,
     taxGeographyRules,
+    taxContext,
+    taxProfileFacts,
+    taxExtractedValues,
+    taxOpportunitySpecificInputs,
+    siteTaxProfile,
     allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
@@ -1152,7 +1162,12 @@ function calculateModeledRetrofitSavingsEstimate({
     opportunityIncentiveCalculationPackages: fixture.opportunityIncentiveCalculationPackages || [],
     selectedOpportunityIds: retrofitInstance.selectedOpportunityIds || fixture.selectedOpportunityIds || [],
     stackingRules: fixture.stackingRules || [],
-    taxGeographyRules: fixture.taxGeographyRules || []
+    taxGeographyRules: fixture.taxGeographyRules || [],
+    taxContext: fixture.taxContext || null,
+    taxProfileFacts: fixture.taxProfileFacts || [],
+    taxExtractedValues: fixture.taxExtractedValues || [],
+    taxOpportunitySpecificInputs: fixture.taxOpportunitySpecificInputs || [],
+    siteTaxProfile: fixture.siteTaxProfile || null
   });
 }
 
@@ -1391,6 +1406,11 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     calculationDate,
     geography,
     taxGeographyRules: fixture.taxGeographyRules || [],
+    taxContext: fixture.taxContext || null,
+    taxProfileFacts: fixture.taxProfileFacts || [],
+    taxExtractedValues: fixture.taxExtractedValues || [],
+    taxOpportunitySpecificInputs: fixture.taxOpportunitySpecificInputs || [],
+    siteTaxProfile: fixture.siteTaxProfile || null,
     allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
