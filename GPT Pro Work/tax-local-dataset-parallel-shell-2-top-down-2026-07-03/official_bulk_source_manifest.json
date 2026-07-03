@@ -1,0 +1,1268 @@
+{
+  "schemaVersion": "retrofi_official_bulk_source_manifest.v1",
+  "generatedAt": "2026-07-03",
+  "source": "codex_shell_2_top_down",
+  "scope": "Official statewide, federal, and multi-state source families suitable for imports or adapters; not a complete local tax database.",
+  "sourceFamilies": [
+    {
+      "sourceFamilyId": "bulk_01_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Streamlined Sales Tax member states"
+      ],
+      "officialOwner": "Streamlined Sales Tax Governing Board",
+      "officialSourceName": "Streamlined Sales Tax Rate and Boundary Files",
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "state rate files",
+        "state boundary files",
+        "format varies by state"
+      ],
+      "updateFrequency": "As posted by member states; update page lists effective update dates.",
+      "effectiveDateHandling": "Use each member-state rate file, boundary file, and update posting date; do not assume a uniform national effective date.",
+      "addressOrGeographyJoinKeys": [
+        "state",
+        "address",
+        "ZIP5",
+        "ZIP+4",
+        "tax code",
+        "state/local jurisdiction code"
+      ],
+      "runtimeUse": "Evidence: the official SST page says each member state provides a rate file and boundary file, and the boundary file maps an address to tax codes while the rate file supplies rates by tax code; the update page publishes dated file updates. ([Default][1])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_02_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "California"
+      ],
+      "officialOwner": "California Department of Tax and Fee Administration",
+      "officialSourceName": "City and County Sales and Use Tax Rate Information",
+      "sourceUrls": [
+        "https://cdtfa.ca.gov/taxes-and-fees/sales-use-tax-rates.htm",
+        "https://maps.cdtfa.ca.gov/",
+        "https://cdtfa.ca.gov/taxes-and-fees/archive-rates.htm"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "XLSX",
+        "XLS",
+        "lookup tool",
+        "archived rate files"
+      ],
+      "updateFrequency": "Quarterly or as CDTFA posts new effective-date files.",
+      "effectiveDateHandling": "Use CDTFA current effective-date files for current estimates and archived rate files for historic transaction dates.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "city",
+        "county",
+        "district",
+        "ZIP"
+      ],
+      "runtimeUse": "Evidence: CDTFA provides downloadable files for California city and county tax rates, an address lookup, and archived historic rate files with state/local/county/district components. ([CDTFA][2])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_03_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Texas"
+      ],
+      "officialOwner": "Texas Comptroller of Public Accounts",
+      "officialSourceName": "Local Sales and Use Tax Rates and EDI Sales Tax Rate Files",
+      "sourceUrls": [
+        "https://comptroller.texas.gov/taxes/sales/city.php",
+        "https://comptroller.texas.gov/taxes/file-pay/edi/sales-tax-rates.php",
+        "https://comptroller.texas.gov/transparency/local/allocations/sales-tax/cities-by-county.php"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "XLSX",
+        "EDI rate files",
+        "PDF",
+        "open-data download"
+      ],
+      "updateFrequency": "Current and historical files as posted by the Comptroller.",
+      "effectiveDateHandling": "Use the current or historical Comptroller file matching the transaction date; local rate changes must be tied to reported effective periods.",
+      "addressOrGeographyJoinKeys": [
+        "city",
+        "county",
+        "local taxing unit",
+        "special purpose district",
+        "transit authority",
+        "tax code"
+      ],
+      "runtimeUse": "Evidence: Texas publishes downloadable city-rate XLSX files, current and historical EDI sales-tax rate files, and local allocation/open data with rate-change history. ([Texas Comptroller][3])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_04_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Washington"
+      ],
+      "officialOwner": "Washington State Department of Revenue",
+      "officialSourceName": "Sales Tax Rate Lookup URL Interface",
+      "sourceUrls": [
+        "https://dor.wa.gov/wa-sales-tax-rate-lookup-url-interface",
+        "https://webgis.dor.wa.gov/taxratelookup/salestax.aspx",
+        "https://dor.wa.gov/taxes-rates/retail-sales-tax/sales-and-use-tax-tools"
+      ],
+      "accessMethod": "API",
+      "machineReadable": true,
+      "formats": [
+        "URL query response",
+        "lookup response"
+      ],
+      "updateFrequency": "DOR-maintained live lookup/API; validate cache refresh cadence against API terms.",
+      "effectiveDateHandling": "Use the DOR lookup/API for current address-based rates; do not backcast unless DOR provides a historic rate endpoint or file for the period.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "city",
+        "ZIP",
+        "latitude",
+        "longitude"
+      ],
+      "runtimeUse": "Evidence: Washington DOR describes a URL interface for direct address-based sales-tax lookup integration and a lookup tool that supports address, city, ZIP, map, and latitude/longitude inputs. ([Washington Department of Revenue][4])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_05_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Colorado"
+      ],
+      "officialOwner": "Colorado Department of Revenue",
+      "officialSourceName": "Sales and Use Tax System GIS Database and API",
+      "sourceUrls": [
+        "https://tax.colorado.gov/GIS-info",
+        "https://tax.colorado.gov/GIS-API",
+        "https://tax.colorado.gov/SUTS-FAQ",
+        "https://tax.colorado.gov/SUTS-info"
+      ],
+      "accessMethod": "API",
+      "machineReadable": true,
+      "formats": [
+        "GIS API response",
+        "web lookup"
+      ],
+      "updateFrequency": "State-maintained SUTS/GIS data; API access requires SUTS setup.",
+      "effectiveDateHandling": "Use GIS/SUTS current rate calculation for address-specific rates; maintain transaction-date snapshots for auditability.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "map location",
+        "state",
+        "county",
+        "municipality",
+        "special district"
+      ],
+      "runtimeUse": "Evidence: Colorado DOR says its GIS supports individual address or map-location lookup and includes state, county, municipal, and special-district sales-tax information; the SUTS FAQ describes an API for retrieving sales-tax rate calculations from the GIS database. ([Colorado Department of Revenue][5])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_06_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Ohio"
+      ],
+      "officialOwner": "Ohio Department of Taxation",
+      "officialSourceName": "The Finder Sales Tax Lookup, Rate Tables, and GIS Boundary Data",
+      "sourceUrls": [
+        "https://tax.ohio.gov/business/sales-and-use-tax",
+        "https://thefinder.tax.ohio.gov/streamlinesalestaxweb/default.aspx",
+        "https://thefinder.tax.ohio.gov/streamlinesalestaxweb/Download/SSTPRateTableInstructions.aspx"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "rate table",
+        "GIS boundary data",
+        "lookup tool"
+      ],
+      "updateFrequency": "As posted by Ohio Department of Taxation.",
+      "effectiveDateHandling": "Use the rate-table effective period and matching GIS boundary version; do not rely on ZIP-only matching if address or latitude/longitude is available.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "ZIP",
+        "latitude",
+        "longitude",
+        "county",
+        "taxing jurisdiction"
+      ],
+      "runtimeUse": "Evidence: Ohio’s sales/use tax page links to downloadable tax rates and GIS boundary data, and The Finder supports lookup by address, ZIP, and latitude/longitude. ([Ohio Department of Taxation][6])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_07_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Illinois"
+      ],
+      "officialOwner": "Illinois Department of Revenue",
+      "officialSourceName": "Sales Tax Machine-Readable Files and Tax Rate Finder",
+      "sourceUrls": [
+        "https://tax.illinois.gov/research/taxrates.html",
+        "https://tax.illinois.gov/research/taxrates/sales-tax-rate-machine-readable-files.html",
+        "https://tax.illinois.gov/research/taxinformation/sales/rot.html"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "machine-readable rate files",
+        "layout guides",
+        "lookup tool"
+      ],
+      "updateFrequency": "Local Illinois sales-tax rate changes generally occur January 1 and July 1; use official files as posted.",
+      "effectiveDateHandling": "Load jurisdiction-wide machine-readable files by effective period and retain prior versions for historic transactions.",
+      "addressOrGeographyJoinKeys": [
+        "jurisdiction",
+        "business location",
+        "destination",
+        "local tax code"
+      ],
+      "runtimeUse": "Evidence: Illinois DOR publishes a Tax Rate Finder, property-tax tables, and downloadable sales-tax machine-readable files with file-format/layout guides. ([Illinois Department of Revenue][7])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_08_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Florida"
+      ],
+      "officialOwner": "Florida Department of Revenue",
+      "officialSourceName": "Discretionary Sales Surtax Rates and DR-15DSS",
+      "sourceUrls": [
+        "https://floridarevenue.com/taxes/taxesfees/Pages/discretionary.aspx",
+        "https://pointmatch.floridarevenue.com/General/DiscretionarySalesSurtaxRates.aspx",
+        "https://floridarevenue.com/Pages/forms_index.aspx",
+        "https://floridarevenue.com/taxes/taxesfees/Pages/sales_tax.aspx"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": true,
+      "formats": [
+        "HTML table",
+        "downloadable table where available",
+        "PDF form"
+      ],
+      "updateFrequency": "DR-15DSS is updated yearly in November for the following calendar year; PointMatch displays current jurisdiction information.",
+      "effectiveDateHandling": "Use calendar-year DR-15DSS or current PointMatch data; retain prior annual files for historic transactions.",
+      "addressOrGeographyJoinKeys": [
+        "county",
+        "jurisdiction",
+        "delivery county"
+      ],
+      "runtimeUse": "Evidence: Florida DOR identifies county discretionary surtax rates, says DR-15DSS is updated yearly in November, and provides a PointMatch table for current discretionary surtax information for all jurisdictions. ([Florida Department of Revenue][8])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_09_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "New York"
+      ],
+      "officialOwner": "New York State Department of Taxation and Finance",
+      "officialSourceName": "Sales Tax Rate Publications",
+      "sourceUrls": [
+        "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/sales_tax_rate_publications.htm",
+        "https://www.tax.ny.gov/bus/st/rates.htm",
+        "https://www.tax.ny.gov/pubs_and_bulls/publications/sales/st_pubs_and_bulls_by_number.htm"
+      ],
+      "accessMethod": "PDF",
+      "machineReadable": false,
+      "formats": [
+        "PDF",
+        "HTML index"
+      ],
+      "updateFrequency": "As rate publications and local-rate-change notices are posted.",
+      "effectiveDateHandling": "Use Pub 718 current rates and Pub 718-A enactment/effective/expiration dates; manual QA required for local-option addenda.",
+      "addressOrGeographyJoinKeys": [
+        "county",
+        "city",
+        "school district where applicable",
+        "locality code"
+      ],
+      "runtimeUse": "Evidence: New York provides combined state/local sales-tax rate publications, Pub 718 current rates/codes, Pub 718-A effective/expiration dates, and local-option publications such as 718-F and 718-PPA. ([NY Taxation and Finance][9])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_10_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Arizona"
+      ],
+      "officialOwner": "Arizona Department of Revenue",
+      "officialSourceName": "Transaction Privilege Tax Rate Table and Address Lookup",
+      "sourceUrls": [
+        "https://azdor.gov/business/transaction-privilege-tax/tax-rate-table",
+        "https://www.aztaxes.gov/Home/Address/",
+        "https://azdor.gov/news-center/latest-press-releases/tpt-newsletters/tpt-updates/archive/202508"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "CSV",
+        "lookup response"
+      ],
+      "updateFrequency": "Monthly or as TPT updates are posted; confirm CSV publication cadence.",
+      "effectiveDateHandling": "Use the rate table for the relevant month and business classification; preserve state/county/city/reservation components.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "ZIP",
+        "jurisdiction",
+        "business classification",
+        "business code"
+      ],
+      "runtimeUse": "Evidence: ADOR provides a TPT rate table by location, an AZTaxes address lookup for exact jurisdiction/rate, and downloadable CSV rate information for business classifications in TPT updates. ([Arizona Department of Revenue][10])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_11_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Kansas"
+      ],
+      "officialOwner": "Kansas Department of Revenue",
+      "officialSourceName": "Sales Tax Rate Lookup and 5-Digit ZIP Excel Table",
+      "sourceUrls": [
+        "https://www.ksrevenue.gov/atrladdress.html",
+        "https://www.ksrevenue.gov/5digitzip.html"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "Excel",
+        "lookup response"
+      ],
+      "updateFrequency": "As KDOR posts rate-table updates.",
+      "effectiveDateHandling": "Use the official address lookup for precise current rates; use the Excel table as a bulk import with effective-period versioning.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "city",
+        "ZIP",
+        "jurisdiction code"
+      ],
+      "runtimeUse": "Evidence: Kansas DOR provides an official address lookup and an Excel download by city/ZIP with rates and jurisdiction codes. ([Kansas Department of Revenue][11])",
+      "importPriority": "medium",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_12_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Louisiana"
+      ],
+      "officialOwner": "Louisiana Uniform Local Sales Tax Board and Louisiana Department of Revenue",
+      "officialSourceName": "Louisiana Uniform Local Sales Tax Board Lookup and Louisiana Department of Revenue State Sales Tax Sources",
+      "sourceUrls": [
+        "https://lulstb.com/",
+        "https://lataonline.org/",
+        "https://revenue.louisiana.gov/businesses/sales-taxes/general-sales-use-tax/"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "formats": [
+        "lookup response",
+        "bulk lookup output where authorized",
+        "PDF/HTML state-rate source"
+      ],
+      "updateFrequency": "Lookup-tool data as maintained by the local board; LDR state sources as posted.",
+      "effectiveDateHandling": "Use the official lookup for current address/location determinations; verify whether bulk lookup supports historic dates before use for past transactions.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "geocode",
+        "parish",
+        "local collector",
+        "jurisdiction"
+      ],
+      "runtimeUse": "Evidence: the Louisiana local sales-tax board/LATA pages identify free tax-rate lookup and bulk lookup tools, while LDR separately publishes state sales/use tax materials. ([Louisiana Uniform Local Sales Tax Board][12])",
+      "importPriority": "high",
+      "sourceConfidence": "medium",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_13_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Georgia"
+      ],
+      "officialOwner": "Georgia Department of Revenue",
+      "officialSourceName": "Sales Tax Rates, Current, Historical, and Upcoming",
+      "sourceUrls": [
+        "https://dor.georgia.gov/taxes/sales-use-tax/sales-tax-rates-current-historical-and-upcoming",
+        "https://dor.georgia.gov/sales-tax-rates-general",
+        "https://dor.georgia.gov/historical-sales-tax-chart"
+      ],
+      "accessMethod": "PDF",
+      "machineReadable": false,
+      "formats": [
+        "PDF",
+        "HTML index"
+      ],
+      "updateFrequency": "Quarterly and as upcoming/historic rate charts are posted.",
+      "effectiveDateHandling": "Use the chart matching the sale date; manual extraction/QA needed before production import.",
+      "addressOrGeographyJoinKeys": [
+        "county",
+        "jurisdiction",
+        "local tax type"
+      ],
+      "runtimeUse": "Evidence: Georgia DOR publishes current, historical, and upcoming sales-tax rates, including quarterly general rate charts and historical charts. ([Department of Revenue][13])",
+      "importPriority": "medium",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_14_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Tennessee"
+      ],
+      "officialOwner": "Tennessee Department of Revenue",
+      "officialSourceName": "Streamlined Sales Tax Rate and Boundary Data",
+      "sourceUrls": [
+        "https://www.tn.gov/revenue/taxes/sales-and-use-tax/streamlined-sales-tax.html"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "sales tax rate tables",
+        "boundary database"
+      ],
+      "updateFrequency": "As Tennessee posts updated rate tables and boundary databases.",
+      "effectiveDateHandling": "Use the state-posted effective date for rate tables and boundary database versions.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "boundary code",
+        "jurisdiction",
+        "ZIP"
+      ],
+      "runtimeUse": "Evidence: Tennessee DOR links to sales-tax rate tables and a boundary database with stated effective dates. ([Tennessee State Government][14])",
+      "importPriority": "medium",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_15_sales_use_tax",
+      "taxDomain": "sales_use_tax",
+      "jurisdictionsCovered": [
+        "Minnesota"
+      ],
+      "officialOwner": "Minnesota Department of Revenue",
+      "officialSourceName": "Streamlined Sales and Use Tax Rates and Boundaries",
+      "sourceUrls": [
+        "https://www.revenue.state.mn.us/streamlined-sales-and-use-tax"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "rates data",
+        "boundaries data"
+      ],
+      "updateFrequency": "Updated quarterly according to Minnesota Revenue.",
+      "effectiveDateHandling": "Import quarterly rates and boundaries as separate versions; use the version effective on the transaction date.",
+      "addressOrGeographyJoinKeys": [
+        "address",
+        "ZIP",
+        "jurisdiction code",
+        "boundary code"
+      ],
+      "runtimeUse": "Evidence: Minnesota Revenue says SST rates and boundaries data are updated quarterly and are available for download. ([Minnesota Department of Revenue][15])",
+      "importPriority": "medium",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_16_special_district_boundary",
+      "taxDomain": "special_district_boundary",
+      "jurisdictionsCovered": [
+        "United States"
+      ],
+      "officialOwner": "U.S. Census Bureau",
+      "officialSourceName": "TIGER/Line Shapefiles and Boundary Files",
+      "sourceUrls": [
+        "https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html",
+        "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+        "https://www.census.gov/programs-surveys/sdrp/updates/school-district-boundaries.html"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "Shapefile",
+        "File geodatabase",
+        "GeoPackage",
+        "KML"
+      ],
+      "updateFrequency": "Annual or as Census releases new vintages.",
+      "effectiveDateHandling": "Use the boundary vintage date; Census legal-boundary files do not by themselves encode tax-rate effective dates.",
+      "addressOrGeographyJoinKeys": [
+        "GEOID",
+        "state FIPS",
+        "county FIPS",
+        "place FIPS",
+        "school district code",
+        "geometry"
+      ],
+      "runtimeUse": "Evidence: Census publishes TIGER/Line legal-boundary files, cartographic boundary files in multiple GIS formats, and school district boundaries released through TIGER/Line. ([Census.gov][16])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_17_parcel_boundary",
+      "taxDomain": "parcel_boundary",
+      "jurisdictionsCovered": [
+        "Florida"
+      ],
+      "officialOwner": "Florida Department of Revenue and Florida Geographic Information Office",
+      "officialSourceName": "Property Tax Oversight Data Portal, Assessment Roll, and Statewide Parcels",
+      "sourceUrls": [
+        "https://floridarevenue.com/property/Pages/DataPortal.aspx",
+        "https://floridarevenue.com/property/Pages/DataPortal_RequestAssessmentRollGISData.aspx",
+        "https://www.floridagio.gov/datasets/FGIO%3A%3Aflorida-statewide-parcels/about",
+        "https://floridarevenue.com/property/Pages/DataPortal_DataBook.aspx",
+        "https://floridarevenue.com/property/Pages/LocalOfficials.aspx"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "tax roll files",
+        "GIS data",
+        "statewide parcel layer",
+        "data book"
+      ],
+      "updateFrequency": "Annual assessment rolls and data books; GIS parcel layer as maintained by state/county contributors.",
+      "effectiveDateHandling": "Use tax-roll year, January 1 assessment date, and county appraiser/collector effective periods; do not mix roll years.",
+      "addressOrGeographyJoinKeys": [
+        "parcel ID",
+        "county",
+        "property address",
+        "tax roll year",
+        "GIS geometry"
+      ],
+      "runtimeUse": "Evidence: Florida DOR provides a property-tax data portal, statewide parcel/GIS request path, and valuation/millage/tax data book; the statewide parcels layer is compiled from each of Florida’s 67 county property appraisers. ([Florida Department of Revenue][17])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_18_property_tax",
+      "taxDomain": "property_tax",
+      "jurisdictionsCovered": [
+        "Texas"
+      ],
+      "officialOwner": "Texas Comptroller of Public Accounts",
+      "officialSourceName": "Property Tax Rates and Levies",
+      "sourceUrls": [
+        "https://comptroller.texas.gov/taxes/property-tax/rates/"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "XLSX"
+      ],
+      "updateFrequency": "Annual or as reported by taxing units to the Comptroller.",
+      "effectiveDateHandling": "Use the tax year and taxing-unit reporting year; do not infer parcel tax without appraisal district value and exemption data.",
+      "addressOrGeographyJoinKeys": [
+        "taxing unit",
+        "school district",
+        "city",
+        "county",
+        "special district",
+        "tax year"
+      ],
+      "runtimeUse": "Evidence: Texas Comptroller publishes XLSX files for school, city, county, and special-district property tax rates and levies reported by taxing units. ([Texas Comptroller][18])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_19_property_tax",
+      "taxDomain": "property_tax",
+      "jurisdictionsCovered": [
+        "New York"
+      ],
+      "officialOwner": "New York State Department of Taxation and Finance, Office of Real Property Tax Services, New York State GIS Program Office, and Office of the State Comptroller",
+      "officialSourceName": "ORPTS Municipal Data Portal, Real Property Tax Rates and Levy Data, and Statewide Parcel Resources",
+      "sourceUrls": [
+        "https://www.tax.ny.gov/pit/property/munidataportal.htm",
+        "https://catalog.data.gov/dataset/real-property-tax-rates-levy-data-by-municipality-beginning-2004",
+        "https://gis.ny.gov/parcels"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "open data",
+        "GIS service",
+        "download"
+      ],
+      "updateFrequency": "Annual for tax-rate/levy files; parcel resources as state GIS updates.",
+      "effectiveDateHandling": "Use levy/tax-rate fiscal year, assessment-roll date, equalization rate date, and parcel data vintage separately.",
+      "addressOrGeographyJoinKeys": [
+        "SWIS code",
+        "municipality",
+        "school district segment",
+        "parcel centroid",
+        "tax map parcel identifier"
+      ],
+      "runtimeUse": "Evidence: NY ORPTS provides municipal property profiles with equalization rates and roll dates; Data.gov lists annual real-property tax-rate and levy data by municipality; NY GIS publishes tax-parcel centroid and state-owned parcel GIS data. ([NY Taxation and Finance][19])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_20_parcel_boundary",
+      "taxDomain": "parcel_boundary",
+      "jurisdictionsCovered": [
+        "Massachusetts"
+      ],
+      "officialOwner": "MassGIS",
+      "officialSourceName": "MassGIS Property Tax Parcels",
+      "sourceUrls": [
+        "https://www.mass.gov/info-details/massgis-data-property-tax-parcels",
+        "https://gis.data.mass.gov/",
+        "https://geo-massdot.opendata.arcgis.com/maps/b5f19318e90841d4bcf15e97b55851b7"
+      ],
+      "accessMethod": "GIS_service",
+      "machineReadable": true,
+      "formats": [
+        "Shapefile",
+        "File geodatabase",
+        "ArcGIS feature service"
+      ],
+      "updateFrequency": "As municipalities and MassGIS publish updates.",
+      "effectiveDateHandling": "Use the parcel layer vintage and municipal assessor fiscal year; do not assume parcel geometry and assessed-value tables have identical effective dates.",
+      "addressOrGeographyJoinKeys": [
+        "municipality",
+        "map/lot",
+        "local parcel identifier",
+        "site address",
+        "geometry"
+      ],
+      "runtimeUse": "Evidence: MassGIS describes standardized assessor parcel mapping with land lot boundaries and downloadable city/town data; the ArcGIS item states the boundaries and database information come from community assessors. ([Massachusetts Government][20])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_21_parcel_boundary",
+      "taxDomain": "parcel_boundary",
+      "jurisdictionsCovered": [
+        "Wisconsin"
+      ],
+      "officialOwner": "Wisconsin State Cartographer's Office",
+      "officialSourceName": "Statewide Parcel Map Initiative",
+      "sourceUrls": [
+        "https://www.sco.wisc.edu/parcels/data/"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "File geodatabase",
+        "Shapefile"
+      ],
+      "updateFrequency": "Versioned statewide releases.",
+      "effectiveDateHandling": "Use release version and county source vintage; parcel geometry is not a property-tax bill or exemption determination.",
+      "addressOrGeographyJoinKeys": [
+        "parcel ID",
+        "county",
+        "site address",
+        "municipality",
+        "geometry"
+      ],
+      "runtimeUse": "Evidence: the Wisconsin parcel program publishes a statewide parcel dataset, individual county datasets, and downloadable geodatabase/shapefile formats. ([State Cartographer's Office][21])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_22_parcel_boundary",
+      "taxDomain": "parcel_boundary",
+      "jurisdictionsCovered": [
+        "Washington"
+      ],
+      "officialOwner": "Washington State Geospatial Program and Washington Department of Revenue",
+      "officialSourceName": "Current Parcels and County Assessor/Treasurer Index",
+      "sourceUrls": [
+        "https://geo.wa.gov/maps/2b603a599a0842a3b2284c04c8927f35",
+        "https://dor.wa.gov/taxes-rates/property-tax/county-assessor-and-treasurer-websites",
+        "https://dor.wa.gov/about/statistics-reports/property-tax-statistics"
+      ],
+      "accessMethod": "GIS_service",
+      "machineReadable": true,
+      "formats": [
+        "GDB",
+        "ArcGIS feature layer",
+        "web directory"
+      ],
+      "updateFrequency": "Statewide parcel layer as updated; local assessor/treasurer data as each county updates.",
+      "effectiveDateHandling": "Use parcel layer update date, county assessment year, and tax-year levy/bill dates separately.",
+      "addressOrGeographyJoinKeys": [
+        "parcel number",
+        "county",
+        "site address",
+        "geometry",
+        "taxing district"
+      ],
+      "runtimeUse": "Evidence: Washington GeoPortal provides statewide tax-parcel data with direct geodatabase download; DOR states property tax is administered locally and provides county assessor/treasurer links, while DOR also publishes property-tax statistics. ([Washington Geospatial Open Data Portal][22])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_23_parcel_boundary",
+      "taxDomain": "parcel_boundary",
+      "jurisdictionsCovered": [
+        "North Carolina"
+      ],
+      "officialOwner": "NC OneMap",
+      "officialSourceName": "NC Parcels",
+      "sourceUrls": [
+        "https://www.nconemap.gov/pages/parcels"
+      ],
+      "accessMethod": "GIS_service",
+      "machineReadable": true,
+      "formats": [
+        "standardized parcel dataset",
+        "GIS service"
+      ],
+      "updateFrequency": "As NC OneMap standardizes and republishes county/EBCI parcel data.",
+      "effectiveDateHandling": "Use dataset vintage and county source date; tax bills, exemptions, and appraised values require county validation.",
+      "addressOrGeographyJoinKeys": [
+        "parcel ID",
+        "county",
+        "address",
+        "geometry"
+      ],
+      "runtimeUse": "Evidence: NC OneMap says its parcels transformer standardizes parcel data from all 100 counties and the Eastern Band of Cherokee Indians. ([NC OneMap][23])",
+      "importPriority": "medium",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_24_property_tax",
+      "taxDomain": "property_tax",
+      "jurisdictionsCovered": [
+        "Cook County, Illinois"
+      ],
+      "officialOwner": "Cook County Assessor's Office",
+      "officialSourceName": "Cook County Assessor Community Data and Assessed Values",
+      "sourceUrls": [
+        "https://www.cookcountyassessoril.gov/community-data",
+        "https://datacatalog.cookcountyil.gov/Property-Taxation/Assessor-Assessed-Values/uzyt-m557",
+        "https://www.cookcountyassessoril.gov/news/cook-county-assessor-publishes-20-years-historic-assessment-data"
+      ],
+      "accessMethod": "API",
+      "machineReadable": true,
+      "formats": [
+        "Socrata API",
+        "CSV",
+        "JSON",
+        "data catalog export"
+      ],
+      "updateFrequency": "As Assessor/data catalog publishes assessment updates.",
+      "effectiveDateHandling": "Use assessment year, reassessment cycle, and parcel PIN; tax bills require Treasurer/Clerk rate and collection data.",
+      "addressOrGeographyJoinKeys": [
+        "PIN",
+        "property address",
+        "township",
+        "assessment year"
+      ],
+      "runtimeUse": "Evidence: Cook County Assessor publishes community data and assessed-value datasets; the county data catalog covers land, building, and total assessed values for parcels, and the assessor announced 20 years of historic assessment data. ([Cook County Assessor's Office][24])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_25_property_tax",
+      "taxDomain": "property_tax",
+      "jurisdictionsCovered": [
+        "New York City"
+      ],
+      "officialOwner": "New York City Department of Finance",
+      "officialSourceName": "NYC Department of Finance Property Tax, Rates, All Property Data, and ACRIS",
+      "sourceUrls": [
+        "https://www.nyc.gov/site/finance/taxes/property.page",
+        "https://www.nyc.gov/site/finance/property/property-tax-rates.page",
+        "https://www.nyc.gov/assets/finance/jump/nycproperty.html",
+        "https://www.nyc.gov/site/finance/property/acris.page"
+      ],
+      "accessMethod": "download",
+      "machineReadable": true,
+      "formats": [
+        "download files",
+        "lookup pages",
+        "ACRIS records"
+      ],
+      "updateFrequency": "Annual tax-year rates and assessment notices; ACRIS as records are filed.",
+      "effectiveDateHandling": "Use NYC tax year, tax class, BBL, assessment roll status, and filed-record date separately.",
+      "addressOrGeographyJoinKeys": [
+        "BBL",
+        "borough",
+        "block",
+        "lot",
+        "address",
+        "tax class"
+      ],
+      "runtimeUse": "Evidence: NYC DOF publishes property-tax information, tax-year property rates, all-property data downloads, and ACRIS records searchable by BBL/address and document data. ([NYC.gov][25])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_26_assessor_boundary",
+      "taxDomain": "assessor_boundary",
+      "jurisdictionsCovered": [
+        "United States county-by-county gap"
+      ],
+      "officialOwner": "County and local property tax officials",
+      "officialSourceName": "County Assessor, Treasurer, Collector, Auditor, and Clerk Sources",
+      "sourceUrls": [],
+      "accessMethod": "unknown",
+      "machineReadable": false,
+      "formats": [
+        "lookup tool",
+        "PDF",
+        "CSV where locally available",
+        "GIS service where locally available"
+      ],
+      "updateFrequency": "Varies by county and tax year.",
+      "effectiveDateHandling": "Use the county assessment date, levy date, tax-bill date, delinquency date, and exemption filing year exactly as published by the local official.",
+      "addressOrGeographyJoinKeys": [
+        "parcel ID",
+        "tax account number",
+        "owner name where legally usable",
+        "site address",
+        "taxing district",
+        "millage code"
+      ],
+      "runtimeUse": "Safest user-facing behavior: when a parcel-specific assessor/treasurer source is not imported, show a geography-derived estimate only and ask for a tax bill, parcel number, or county lookup confirmation before presenting a precise liability.",
+      "importPriority": "high",
+      "sourceConfidence": "medium",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_27_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "Texas"
+      ],
+      "officialOwner": "Texas Comptroller of Public Accounts",
+      "officialSourceName": "Franchise Tax Rates, Thresholds, and Forms",
+      "sourceUrls": [
+        "https://comptroller.texas.gov/taxes/franchise/",
+        "https://comptroller.texas.gov/taxes/franchise/forms/2026-franchise.php",
+        "https://comptroller.texas.gov/taxes/publications/98-806.php"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "PDF/forms"
+      ],
+      "updateFrequency": "Annual report year/forms as posted.",
+      "effectiveDateHandling": "Use report year and accounting-year rules from official forms/instructions.",
+      "addressOrGeographyJoinKeys": [
+        "Texas nexus",
+        "entity type",
+        "report year",
+        "NAICS/activity where applicable"
+      ],
+      "runtimeUse": "Evidence: Texas Comptroller publishes franchise-tax rate/threshold pages, report-year forms, and an official overview. ([Texas Comptroller][26])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_28_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "Ohio"
+      ],
+      "officialOwner": "Ohio Department of Taxation",
+      "officialSourceName": "Commercial Activity Tax",
+      "sourceUrls": [
+        "https://tax.ohio.gov/business/commercial-activity-tax"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "forms/instructions"
+      ],
+      "updateFrequency": "As Ohio posts tax-year updates.",
+      "effectiveDateHandling": "Use tax period and calendar-year statutory changes; do not apply rates without taxable gross receipts facts.",
+      "addressOrGeographyJoinKeys": [
+        "Ohio sitused gross receipts",
+        "filing period",
+        "taxpayer account"
+      ],
+      "runtimeUse": "Evidence: Ohio Taxation maintains the Commercial Activity Tax page and describes current statutory changes including post-2024 updates. ([Ohio Department of Taxation][27])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_29_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "Washington"
+      ],
+      "officialOwner": "Washington State Department of Revenue",
+      "officialSourceName": "Business and Occupation Tax Classifications and Rates",
+      "sourceUrls": [
+        "https://dor.wa.gov/taxes-rates/business-occupation-tax",
+        "https://dor.wa.gov/open-business/apply-business-license/plan-taxes/business-and-occupation-bo-tax-classification-definitions",
+        "https://dor.wa.gov/forms-publications/publications-subject/special-notices/service-and-other-activities-rate-changes"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "special notices"
+      ],
+      "updateFrequency": "As DOR updates classifications, rates, and special notices.",
+      "effectiveDateHandling": "Use activity classification, tax period, and any special-notice effective date.",
+      "addressOrGeographyJoinKeys": [
+        "Washington nexus",
+        "business activity classification",
+        "gross receipts",
+        "tax period"
+      ],
+      "runtimeUse": "Evidence: Washington DOR says B&O is a gross-receipts tax with more than 50 classifications, provides classification definitions/rates, and posts effective-date notices for rate changes. ([Washington Department of Revenue][28])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_30_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "Oregon"
+      ],
+      "officialOwner": "Oregon Department of Revenue",
+      "officialSourceName": "Corporate Activity Tax and Corporation Excise/Income Tax",
+      "sourceUrls": [
+        "https://www.oregon.gov/dor/programs/businesses/pages/corporate-activity-tax.aspx",
+        "https://www.oregon.gov/dor/programs/businesses/pages/corp-requirements.aspx",
+        "https://www.oregon.gov/dor/forms/pages/default.aspx"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "forms",
+        "instructions"
+      ],
+      "updateFrequency": "Tax-year forms and program pages as posted.",
+      "effectiveDateHandling": "Use tax year, filing period, and official form instructions.",
+      "addressOrGeographyJoinKeys": [
+        "Oregon commercial activity",
+        "Oregon nexus",
+        "tax year",
+        "entity type"
+      ],
+      "runtimeUse": "Evidence: Oregon DOR maintains Corporate Activity Tax, corporate excise/income requirements, and official form pages. ([Oregon][29])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_31_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "New York"
+      ],
+      "officialOwner": "New York State Department of Taxation and Finance",
+      "officialSourceName": "Corporation Tax Article 9-A and CT-3 Instructions",
+      "sourceUrls": [
+        "https://www.tax.ny.gov/bus/ct/ctidx.htm",
+        "https://www.tax.ny.gov/bus/ct/article9a.htm",
+        "https://www.tax.ny.gov/forms/current-forms/ct/ct3i.htm"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "form instructions"
+      ],
+      "updateFrequency": "Tax-year forms and instructions as posted.",
+      "effectiveDateHandling": "Use tax year, Article 9-A basis, and CT-3 instruction year.",
+      "addressOrGeographyJoinKeys": [
+        "New York nexus",
+        "tax year",
+        "corporation type",
+        "income base",
+        "capital base",
+        "fixed-dollar minimum tier"
+      ],
+      "runtimeUse": "Evidence: New York Taxation publishes corporation tax and Article 9-A pages; CT-3 instructions describe multiple bases and tax-rate schedules by taxpayer category. ([NY Taxation and Finance][32])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_32_state_business_tax",
+      "taxDomain": "state_business_tax",
+      "jurisdictionsCovered": [
+        "California"
+      ],
+      "officialOwner": "California Franchise Tax Board",
+      "officialSourceName": "Corporation and S Corporation Tax Forms and Rates",
+      "sourceUrls": [
+        "https://www.ftb.ca.gov/file/business/types/corporations/c-corporations.html",
+        "https://www.ftb.ca.gov/file/business/types/corporations/s-corporations.html",
+        "https://www.ftb.ca.gov/forms/search/"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "forms",
+        "instructions"
+      ],
+      "updateFrequency": "Tax-year forms and FTB pages as posted.",
+      "effectiveDateHandling": "Use tax year, entity type, and official form/instruction year.",
+      "addressOrGeographyJoinKeys": [
+        "California nexus",
+        "entity type",
+        "tax year",
+        "business income"
+      ],
+      "runtimeUse": "Evidence: California FTB publishes corporation and S corporation pages and a searchable official forms database by tax year and taxpayer/form type. ([State of California Franchise Tax Board][33])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_33_local_business_tax",
+      "taxDomain": "local_business_tax",
+      "jurisdictionsCovered": [
+        "Seattle, Washington"
+      ],
+      "officialOwner": "City of Seattle Department of Finance and Administrative Services",
+      "officialSourceName": "Seattle Business and Occupation Tax",
+      "sourceUrls": [
+        "https://www.seattle.gov/city-finance/business-taxes-and-licenses/business-taxes",
+        "https://www.seattle.gov/city-finance/business-taxes-and-licenses/business-taxes/seattle-shield-business-and-occupation-%28bando%29-tax-changes"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "online filing guidance"
+      ],
+      "updateFrequency": "As city tax pages and filing guidance are updated.",
+      "effectiveDateHandling": "Use city tax year and effective dates for threshold/rate changes.",
+      "addressOrGeographyJoinKeys": [
+        "Seattle business location",
+        "business activity",
+        "gross receipts",
+        "tax year"
+      ],
+      "runtimeUse": "Evidence: Seattle publishes business-tax guidance, filing/reporting pages, and Seattle Shield B&O threshold/rule changes effective for 2026. ([Seattle.gov][34])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_34_local_business_tax",
+      "taxDomain": "local_business_tax",
+      "jurisdictionsCovered": [
+        "San Francisco, California"
+      ],
+      "officialOwner": "San Francisco Office of the Treasurer and Tax Collector",
+      "officialSourceName": "Gross Receipts Tax and Proposition M Business Tax Reform",
+      "sourceUrls": [
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51593"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "municipal code"
+      ],
+      "updateFrequency": "Tax-year city pages and municipal-code updates as posted.",
+      "effectiveDateHandling": "Use tax year, business activity category, and Proposition M transition rules.",
+      "addressOrGeographyJoinKeys": [
+        "San Francisco business activity",
+        "gross receipts",
+        "tax year",
+        "NAICS/activity category"
+      ],
+      "runtimeUse": "Evidence: San Francisco publishes gross-receipts tax tables for 2025 and 2026, Proposition M business-tax reform information, and municipal-code rate provisions. ([Treasurer & Tax Collector][35])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    },
+    {
+      "sourceFamilyId": "bulk_35_local_business_tax",
+      "taxDomain": "local_business_tax",
+      "jurisdictionsCovered": [
+        "Philadelphia, Pennsylvania"
+      ],
+      "officialOwner": "City of Philadelphia Department of Revenue",
+      "officialSourceName": "Business Income and Receipts Tax",
+      "sourceUrls": [
+        "https://www.phila.gov/services/payments-assistance-taxes/taxes/business-taxes/business-taxes-by-type/business-income-receipts-tax-birt/"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "formats": [
+        "HTML",
+        "forms/guidance"
+      ],
+      "updateFrequency": "As Philadelphia updates tax-year pages and forms.",
+      "effectiveDateHandling": "Use tax year and BIRT rate component effective dates.",
+      "addressOrGeographyJoinKeys": [
+        "Philadelphia business activity",
+        "gross receipts",
+        "net income",
+        "tax year"
+      ],
+      "runtimeUse": "Evidence: Philadelphia publishes its BIRT page with rate components and business-tax filing guidance. ([City of Philadelphia][36])",
+      "importPriority": "high",
+      "sourceConfidence": "high",
+      "limitations": [
+        "Coverage and schema must be validated against the current official file before production import.",
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+      ]
+    }
+  ],
+  "nonBulkNotes": [
+    "State business tax sources are generally official forms, statutes, and instructions rather than bulk calculation datasets.",
+    "Property tax coverage remains fragmented even where statewide parcel or millage data exists.",
+    "Local business taxes need bottom-up research except where a statewide collector/source covers multiple municipalities."
+  ]
+}
