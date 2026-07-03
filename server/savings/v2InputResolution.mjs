@@ -1,4 +1,5 @@
 import { answerValue, hasAnswer } from "./labor.mjs";
+import { buildTaxGeographyInputAnswers } from "./tax.mjs";
 
 const COST_ALIASES = [
   "project_cost",
@@ -185,6 +186,7 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
   addQuantityAliases({ ctx, answers, add });
   addEnergyAliases({ ctx, answers, add });
   addOperationalAliases({ ctx, answers, add });
+  addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs });
   addMeasureSelections({ ctx, packages, answers, add });
   addSyntheticTestCaseDefaults({ ctx, packages, answers, add });
 
@@ -302,6 +304,28 @@ function addSyntheticTestCaseDefaults({ ctx, packages, answers, add }) {
         defaultIsPlaceholder: true,
         defaultConfidence: "low"
       });
+    }
+  }
+}
+
+function addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs }) {
+  const taxGeography = buildTaxGeographyInputAnswers({
+    geography: ctx.geography || ctx.taxGeography || {},
+    rules: ctx.taxGeographyRules || [],
+    calculationDate: ctx.calculationDate,
+    packages
+  });
+
+  for (const [key, answer] of Object.entries(taxGeography.answers || {})) {
+    add(key, answer.value, answer.source, {
+      canonicalInputKey: answer.canonicalInputKey || key,
+      defaultIsPlaceholder: false,
+      defaultConfidence: answer.defaultConfidence || null,
+      userOverrideAllowed: answer.userOverrideAllowed !== false
+    });
+    const resolved = resolvedInputs.find((input) => input.inputKey === key);
+    if (resolved && answer.taxGeographyRuleId) {
+      resolved.taxGeographyRuleId = answer.taxGeographyRuleId;
     }
   }
 }

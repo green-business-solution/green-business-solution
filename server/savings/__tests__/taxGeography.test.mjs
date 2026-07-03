@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { calculateSalesTaxFromRule, selectGeographicTaxRule } from "../tax.mjs";
+import {
+  buildTaxGeographyInputAnswers,
+  calculateSalesTaxFromRule,
+  normalizeTaxGeography,
+  selectGeographicTaxRule,
+  selectTaxGeographyRules
+} from "../tax.mjs";
 
 describe("tax geography rules", () => {
   it("calculates equipment-only and labor-taxable sales tax from a rule", () => {
@@ -101,5 +107,109 @@ describe("tax geography rules", () => {
         calculationDate: "2026-07-02"
       }).id
     ).toBe("tax_sales_v2");
+  });
+
+  it("normalizes Census or Geocodio site geography for tax matching", () => {
+    expect(
+      normalizeTaxGeography({
+        country: "US",
+        stateCode: "ri",
+        stateFips: "44",
+        countyFips: "44007",
+        countyName: "Providence County",
+        placeGeoid: "4459000",
+        placeName: "Providence city",
+        censusTractGeoid: "44007000100",
+        zip5: "02903",
+        coordinates: { lat: 41.824, lng: -71.4128 }
+      })
+    ).toMatchObject({
+      country: "US",
+      state: "RI",
+      countyFips: "44007",
+      placeGeoid: "4459000",
+      municipality: "Providence city",
+      postalCode: "02903"
+    });
+  });
+
+  it("selects tax geography rules by normalized geography and opportunity", () => {
+    const rules = [
+      {
+        id: "ri_property_tax",
+        version: 1,
+        active: true,
+        taxType: "property_tax",
+        geography: { country: "US", state: "RI" },
+        opportunityIds: ["opp_ri"],
+        effectiveStartDate: "2026-01-01"
+      },
+      {
+        id: "wa_bo_tax",
+        version: 1,
+        active: true,
+        taxType: "business_and_occupation_tax",
+        geography: { country: "US", state: "WA" },
+        opportunityIds: ["opp_wa"],
+        effectiveStartDate: "2026-01-01"
+      }
+    ];
+
+    const selected = selectTaxGeographyRules({
+      rules,
+      geography: { country: "US", stateCode: "RI", placeName: "Providence city" },
+      opportunityId: "opp_ri",
+      calculationDate: "2026-07-02"
+    });
+
+    expect(selected.map((rule) => rule.id)).toEqual(["ri_property_tax"]);
+  });
+
+  it("builds tax geography input answers from resolved site geography and matched rules", () => {
+    const rules = [
+      {
+        id: "wa_bo_tax_rate",
+        version: 1,
+        active: true,
+        taxType: "business_and_occupation_tax",
+        geography: { country: "US", state: "WA" },
+        opportunityIds: ["opp_wa"],
+        effectiveStartDate: "2026-01-01",
+        sourceConfidence: "medium",
+        derivedInputs: [
+          {
+            inputKey: "preferential_solar_b_and_o_rate_decimal",
+            value: 0.00275,
+            source: "reviewed_tax_geography_rule",
+            userOverrideAllowed: false
+          }
+        ]
+      }
+    ];
+
+    const result = buildTaxGeographyInputAnswers({
+      geography: {
+        country: "US",
+        stateCode: "WA",
+        countyFips: "53033",
+        placeGeoid: "5363000",
+        placeName: "Seattle city",
+        zip5: "98104"
+      },
+      rules,
+      packages: [{ opportunity_id: "opp_wa" }],
+      calculationDate: "2026-07-02"
+    });
+
+    expect(result.answers).toMatchObject({
+      site_state_code: { value: "WA", source: "address_geography" },
+      municipality: { value: "Seattle city", source: "address_geography" },
+      preferential_solar_b_and_o_rate_decimal: {
+        value: 0.00275,
+        source: "reviewed_tax_geography_rule",
+        taxGeographyRuleId: "wa_bo_tax_rate"
+      }
+    });
+    expect(result.matchedRules.map((rule) => rule.id)).toEqual(["wa_bo_tax_rate"]);
   });
 });

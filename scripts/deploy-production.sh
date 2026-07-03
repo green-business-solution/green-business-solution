@@ -165,6 +165,7 @@ copy_data_file data/savings_models.json
 copy_data_file data/opportunity_savings_mapping.json
 copy_data_file data/opportunity_incentive_rules.json
 copy_data_file data/opportunity_incentive_calculation_packages_v2.json
+copy_data_file data/tax_geography_rules.json
 copy_data_file data/calculation_requirements.json optional
 copy_data_file data/project_cost_benchmarks.json optional
 copy_data_file data/savings_calculation_methods.json optional

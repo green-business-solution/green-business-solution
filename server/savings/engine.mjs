@@ -337,10 +337,12 @@ function finalizeCalculatedEstimate({
   baseRecurringSavingsEntries,
   billLineDeltas,
   traceSteps,
+  geography = {},
   opportunityIncentiveRules = [],
   opportunityIncentiveCalculationPackages = [],
   selectedOpportunityIds = [],
-  stackingRules = []
+  stackingRules = [],
+  taxGeographyRules = []
 }) {
   const upfrontCostCents = aggregateUpfrontCost(costBreakdown);
   const selectedRequestedOpportunityIds = retrofitInstance.selectedOpportunityIds || selectedOpportunityIds || [];
@@ -353,6 +355,8 @@ function finalizeCalculatedEstimate({
     upfrontCostCents,
     retrofitTypeId: retrofitInstance.retrofitTypeId || retrofitInstance.retrofitTypeSlug || null,
     calculationDate,
+    geography,
+    taxGeographyRules,
     allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
@@ -1143,10 +1147,12 @@ function calculateModeledRetrofitSavingsEstimate({
     baseRecurringSavingsEntries: result.recurringSavingsEntries,
     billLineDeltas: result.billLineDeltas,
     traceSteps,
+    geography,
     opportunityIncentiveRules: fixture.opportunityIncentiveRules || [],
     opportunityIncentiveCalculationPackages: fixture.opportunityIncentiveCalculationPackages || [],
     selectedOpportunityIds: retrofitInstance.selectedOpportunityIds || fixture.selectedOpportunityIds || [],
-    stackingRules: fixture.stackingRules || []
+    stackingRules: fixture.stackingRules || [],
+    taxGeographyRules: fixture.taxGeographyRules || []
   });
 }
 
@@ -1380,7 +1386,12 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     billLineDeltas,
     baseCostLedgerEntries: costBreakdown,
     baseRecurringSavingsEntries,
-    upfrontCostCents
+    upfrontCostCents,
+    retrofitTypeId: retrofitInstance.retrofitTypeId || retrofitInstance.retrofitTypeSlug || null,
+    calculationDate,
+    geography,
+    taxGeographyRules: fixture.taxGeographyRules || [],
+    allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
     packages: opportunityIncentiveCalculationPackages,

@@ -386,7 +386,8 @@ export function buildAdminTestCaseSavingsPreview({
   normalizedProfile,
   calculationDate,
   opportunityIncentiveRules = [],
-  opportunityIncentiveCalculationPackages = []
+  opportunityIncentiveCalculationPackages = [],
+  taxGeographyRules = []
 }) {
   const template = retrofitTemplates[retrofitGroup?.retrofitTypeId];
   if (!template) {
@@ -396,19 +397,18 @@ export function buildAdminTestCaseSavingsPreview({
     return unsupportedPreview({ retrofitGroup, sampleUserId, reason });
   }
 
-  const state = normalizedProfile?.site?.geo?.stateCode || normalizedProfile?.site?.addressStructured?.stateCode || "CA";
-  const countyFips = normalizedProfile?.site?.geo?.countyFips || "00000";
+  const geography = savingsGeographyFromProfile(normalizedProfile);
   const selectedIncentiveRules = selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiveRules);
   const selectedIncentivePackages = selectV2PackagesForRetrofitGroup(retrofitGroup, opportunityIncentiveCalculationPackages);
   const fixture = buildFixture({
     template,
     retrofitGroup,
     sampleUserId,
-    state,
-    countyFips,
+    geography,
     calculationDate,
     opportunityIncentiveRules: selectedIncentiveRules,
-    opportunityIncentiveCalculationPackages: selectedIncentivePackages
+    opportunityIncentiveCalculationPackages: selectedIncentivePackages,
+    taxGeographyRules
   });
   const estimate = calculateRetrofitSavingsEstimate(fixture);
   const incentiveAssumption =
@@ -470,11 +470,11 @@ function buildFixture({
   template,
   retrofitGroup,
   sampleUserId,
-  state,
-  countyFips,
+  geography,
   calculationDate,
   opportunityIncentiveRules = [],
-  opportunityIncentiveCalculationPackages = []
+  opportunityIncentiveCalculationPackages = [],
+  taxGeographyRules = []
 }) {
   const retrofitTypeId = template.retrofitTypeId || `rt_${template.engineSlug}`;
   const selectedOpportunityIds = [
@@ -487,11 +487,7 @@ function buildFixture({
     projectId: `admin_test_${sampleUserId}`,
     businessId: `admin_test_${sampleUserId}`,
     calculationDate,
-    geography: {
-      country: "US",
-      state,
-      countyFips
-    },
+    geography,
     retrofitInstance: {
       id: `ri_${sampleUserId}_${retrofitGroup.retrofitTypeId}`,
       retrofitTypeId,
@@ -504,8 +500,9 @@ function buildFixture({
     equipmentAnswerKeys: template.equipmentAnswerKeys,
     laborRequired: template.laborRequired !== false,
     laborUnitAnswerKey: template.laborUnitAnswerKey,
-    laborCostRules: template.laborRequired === false ? [] : [buildLaborRule({ template, retrofitTypeId, state, countyFips })],
-    geographicTaxRules: [buildTaxRule({ template, state, countyFips })],
+    laborCostRules: template.laborRequired === false ? [] : [buildLaborRule({ template, retrofitTypeId, geography })],
+    geographicTaxRules: [buildTaxRule({ template, geography })],
+    taxGeographyRules,
     opportunityIncentiveRules,
     opportunityIncentiveCalculationPackages,
     stackingRules: []
@@ -526,12 +523,12 @@ function selectIncentiveRulesForRetrofitGroup(retrofitGroup, opportunityIncentiv
   return retrofitGroup.opportunities.flatMap((opportunity) => rulesByOpportunityId.get(opportunity.opportunityId) || []);
 }
 
-function buildLaborRule({ template, retrofitTypeId, state, countyFips }) {
+function buildLaborRule({ template, retrofitTypeId, geography }) {
   return {
     id: `admin_test_labor_${retrofitTypeId}_v1`,
     version: 1,
     retrofitTypeId,
-    geography: { country: "US", state, countyFips },
+    geography,
     unitAnswerKey: template.laborUnitAnswerKey || "unit_count",
     fixedCostCents: template.laborRule?.fixedCostCents || 0,
     perUnitCostCents: template.laborRule?.perUnitCostCents || 0,
@@ -543,11 +540,11 @@ function buildLaborRule({ template, retrofitTypeId, state, countyFips }) {
   };
 }
 
-function buildTaxRule({ template, state, countyFips }) {
+function buildTaxRule({ template, geography }) {
   return {
     id: "admin_test_sales_tax_fixture_v1",
     version: 1,
-    geography: { country: "US", state, countyFips },
+    geography,
     taxType: "sales_tax",
     appliesToCategories: ["equipment_cost", "installation_labor"],
     ratePercent: template.taxRate ?? 0.08,
@@ -555,6 +552,24 @@ function buildTaxRule({ template, state, countyFips }) {
     laborTaxable: false,
     effectiveStartDate: "2026-01-01",
     active: true
+  };
+}
+
+function savingsGeographyFromProfile(normalizedProfile) {
+  const geo = normalizedProfile?.site?.geo || {};
+  return {
+    country: "US",
+    state: geo.stateCode || normalizedProfile?.site?.addressStructured?.stateCode || "CA",
+    stateFips: geo.stateFips || null,
+    countyFips: geo.countyFips || "00000",
+    countyName: geo.countyName || null,
+    placeGeoid: geo.placeGeoid || null,
+    placeName: geo.placeName || null,
+    city: geo.placeName || null,
+    censusTractGeoid: geo.censusTractGeoid || null,
+    censusBlockGeoid: geo.censusBlockGeoid || null,
+    postalCode: geo.zip5 || normalizedProfile?.site?.addressStructured?.zip5 || null,
+    coordinates: geo.coordinates || null
   };
 }
 

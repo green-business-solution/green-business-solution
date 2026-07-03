@@ -5,6 +5,7 @@ import {
   convertLegacyIncentiveRuleToV2,
   validateIncentiveCalculationPackageV2
 } from "../incentiveCalculationsV2.mjs";
+import { buildV2ResolvedRuntimeContext } from "../v2InputResolution.mjs";
 
 function baseCtx(overrides = {}) {
   const { answers: answerOverrides = {}, ...rest } = overrides;
@@ -294,6 +295,48 @@ describe("incentive calculation v2", () => {
 
     expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(15000);
     expect(result.effectResults[0].trace.join(" ")).toContain("Statutory renewable property tax value 85000 cents");
+  });
+
+  it("resolves tax geography inputs from site geography before v2 tax package calculation", () => {
+    const pkg = expressionPackage({
+      expressionId: "property_tax_valuation_formula",
+      effectType: "recurring_savings",
+      timing: { cadence: "annual" },
+      requiredInputs: [
+        "ac_kw_capacity",
+        "municipality",
+        "tangible_property_applicable",
+        "real_property_applicable",
+        "counterfactual_ordinary_annual_property_tax_cents"
+      ]
+    });
+    const ctx = buildV2ResolvedRuntimeContext(
+      baseCtx({
+        geography: {
+          country: "US",
+          stateCode: "RI",
+          countyFips: "44007",
+          placeGeoid: "4459000",
+          placeName: "Providence city"
+        },
+        answers: {
+          ac_kw_capacity: { value: 100 },
+          tangible_property_applicable: { value: true },
+          real_property_applicable: { value: true },
+          counterfactual_ordinary_annual_property_tax_cents: { value: 100000 }
+        }
+      }),
+      [pkg]
+    );
+    const result = calculateV2IncentivePackage(pkg, ctx);
+
+    expect(ctx.answers.municipality).toMatchObject({
+      value: "Providence city",
+      source: "address_geography",
+      defaultIsPlaceholder: false
+    });
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(15000);
   });
 });
 

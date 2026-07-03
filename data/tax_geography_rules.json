@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "tax-geography-rules-v1",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
+  "description": "Authoritative or reviewed geography-scoped tax facts used to turn resolved site geography into tax-estimate inputs. This file is intentionally conservative: do not add local rates or assessor rules without source-backed evidence and effective dates.",
+  "updatePolicy": {
+    "cadence": "scheduled_recurring_refresh",
+    "recommendedFrequency": "monthly",
+    "notes": [
+      "TODO: Refresh this database on a scheduled job similar to opportunity collection.",
+      "Refresh state tax agency data, local-option tax tables, assessor/treasurer datasets, and program-specific tax rules before relying on them for user-facing estimates.",
+      "Expire or mark rules stale when source pages, rates, effective dates, local adoptions, or filing rules change."
+    ]
+  },
+  "rules": [
+    {
+      "id": "tax_geo_wa_solar_manufacturing_bo_preferential_rate_2026_v1",
+      "version": 1,
+      "active": true,
+      "taxType": "business_and_occupation_tax",
+      "ruleKind": "state_tax_rate_preference",
+      "geography": {
+        "country": "US",
+        "state": "WA"
+      },
+      "opportunityIds": [
+        "SOURCE_DSIRE:dsire_program_id:381"
+      ],
+      "effectiveStartDate": "2026-01-01",
+      "effectiveEndDate": null,
+      "sourceConfidence": "medium",
+      "derivedInputs": [
+        {
+          "inputKey": "preferential_solar_b_and_o_rate_decimal",
+          "value": 0.00275,
+          "source": "reviewed_tax_geography_rule",
+          "userOverrideAllowed": false
+        }
+      ],
+      "requiresUserOrProfessionalInputs": [
+        "qualifying_solar_b_and_o_classification",
+        "tax_period_start_date",
+        "tax_period_end_date",
+        "qualifying_tax_base_after_deductions_and_matc_cents",
+        "otherwise_applicable_b_and_o_rate_decimal",
+        "annual_tax_performance_report_filed",
+        "interstate_or_foreign_sales_deductions_cents",
+        "multiple_activities_tax_credit_adjustments_cents"
+      ],
+      "sourceUrls": [
+        "https://dor.wa.gov/open-business/apply-business-license/plan-taxes/business-and-occupation-bo-tax-classification-definitions"
+      ],
+      "evidenceText": "GPT Pro tax repair identified a source-backed Washington solar energy B&O preferential rate of 0.275 percent for qualifying solar energy system or component manufacturing, processing for hire, or wholesale activity.",
+      "refreshNotes": "Verify current Washington DOR preferential rate, expiration, ordinary classification rates, and Annual Tax Performance Report requirements before including in user-facing totals."
+    },
+    {
+      "id": "tax_geo_ri_renewable_property_tax_local_assessor_workflow_v1",
+      "version": 1,
+      "active": true,
+      "taxType": "property_tax",
+      "ruleKind": "local_assessor_workflow",
+      "geography": {
+        "country": "US",
+        "state": "RI"
+      },
+      "opportunityIds": [
+        "SOURCE_DSIRE:dsire_program_id:22798"
+      ],
+      "effectiveStartDate": "2026-01-01",
+      "effectiveEndDate": null,
+      "sourceConfidence": "medium",
+      "derivedInputs": [],
+      "requiresUserOrProfessionalInputs": [
+        "ac_kw_capacity",
+        "renewable_resource_type",
+        "municipality",
+        "commercial_tax_status",
+        "tangible_property_applicable",
+        "real_property_applicable",
+        "municipal_exemption_or_waiver_status",
+        "residential_system_exemption",
+        "manufacturer_system_exemption",
+        "interconnection_agreement_date",
+        "counterfactual_ordinary_annual_property_tax_cents",
+        "local_assessor_confirmation"
+      ],
+      "sourceUrls": [],
+      "evidenceText": "GPT Pro tax repair classified this as a local assessor property-tax valuation workflow that depends on municipality, counterfactual ordinary annual property tax, applicable property class, and assessor confirmation.",
+      "refreshNotes": "Research Rhode Island municipal adoption, assessor workflow, ordinary tax-rate data, and renewable valuation treatment by municipality before calculating customer-specific property-tax savings."
+    },
+    {
+      "id": "tax_geo_mi_rerz_tax_exemption_workflow_v1",
+      "version": 1,
+      "active": true,
+      "taxType": "property_income_tax_exemption",
+      "ruleKind": "approved_zone_tax_exemption_workflow",
+      "geography": {
+        "country": "US",
+        "state": "MI"
+      },
+      "opportunityIds": [
+        "SOURCE_DSIRE:dsire_program_id:3216"
+      ],
+      "effectiveStartDate": "2026-01-01",
+      "effectiveEndDate": null,
+      "sourceConfidence": "medium",
+      "derivedInputs": [],
+      "requiresUserOrProfessionalInputs": [
+        "approved_rerz_designation",
+        "qualified_company_operations",
+        "company_current_on_state_and_local_taxes",
+        "approved_zone_term_years",
+        "program_year",
+        "phaseout_multiplier",
+        "eligible_state_education_tax_cents",
+        "eligible_real_property_tax_cents",
+        "eligible_personal_property_tax_cents",
+        "eligible_local_income_tax_cents"
+      ],
+      "sourceUrls": [],
+      "evidenceText": "GPT Pro tax repair classified Renewable Energy Renaissance Zones as an approved-company economic-development tax-exemption workflow covering specified state education, real property, personal property, and applicable local income taxes.",
+      "refreshNotes": "Research approved Renaissance Zone boundaries, company approval status, phaseout schedule, excluded taxes, and local income-tax treatment before estimating user-facing value."
+    }
+  ]
+}

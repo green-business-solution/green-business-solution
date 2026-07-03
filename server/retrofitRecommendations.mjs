@@ -15,8 +15,10 @@ const incentiveCalculationPackagesPath = path.resolve(
   "data",
   "opportunity_incentive_calculation_packages_v2.json"
 );
+const taxGeographyRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_geography_rules.json");
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
 const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
+const taxGeographyRules = readTaxGeographyRules(taxGeographyRulesPath);
 
 export function buildRetrofitGroupsFromEligibleResults({
   calculationDate,
@@ -55,7 +57,8 @@ export function buildRetrofitGroupsFromEligibleResults({
         normalizedProfile,
         calculationDate,
         opportunityIncentiveRules: opportunityRules,
-        opportunityIncentiveCalculationPackages: opportunityPackages
+        opportunityIncentiveCalculationPackages: opportunityPackages,
+        taxGeographyRules
       }),
       typicalComponents: RETROFIT_TYPES_BY_ID[group.retrofitTypeId]?.typicalComponents || []
     }))
@@ -134,4 +137,10 @@ function readOpportunityIncentiveCalculationPackages(filePath) {
   if (!fs.existsSync(filePath)) return [];
   const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
   return (source.packages || []).filter((pkg) => pkg?.opportunity_id);
+}
+
+function readTaxGeographyRules(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.rules || []).filter((rule) => rule?.id && rule.active !== false);
 }
