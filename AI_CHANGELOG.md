@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) Shell 4 import-readiness completion audit
+
+- Audited the Shell 4 tax source registry, schema, backlog, and validation report after the import-readiness repair.
+- Added a final completion audit with validation commands, current counts, scope confirmation, and remaining blockers.
+
 ## 2026-07-03 - Codex (GPT-5) targeted local tax gap research
 
 - Added shell-5 targeted local tax gap research records for the requested RI, MI, WA, CA, and county property-tax adapter blockers.
