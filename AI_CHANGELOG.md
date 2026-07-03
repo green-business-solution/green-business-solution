@@ -18,6 +18,12 @@
 - Updated `/user-preview` to render the lightweight shell first, then hydrate the full recommendation payload in the background while preserving the selected retrofit workspace.
 - Added focused frontend and backend coverage for progressive shell loading and detailed-payload hydration wiring.
 
+## 2026-07-03 - Codex (GPT-5) homepage scanner text reveal
+
+- Reworked the homepage planet scan hero so the existing scanner erases the initial left-side message and reveals the final RetroFi value message on the right.
+- Added scroll-progress CSS variables for text erasure, reveal, and a restrained shimmer trail while preserving the existing planet clip-path scan.
+- Updated responsive and reduced-motion behavior so the hero remains readable across desktop, tablet, and mobile.
+
 ## 2026-07-03 - Codex (GPT-5) process preview modal responsive spacing
 
 - Enlarged and respaced the post-form Process onboarding modal title and typed step layout to better match the supplied reference.

@@ -2986,8 +2986,6 @@ function AboutHubCard({
 
 function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const scanCopyStateRef = useRef<"before" | "after">("before");
-  const [scanCopyState, setScanCopyState] = useState<"before" | "after">("before");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -3001,8 +2999,9 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
         section?.style.setProperty("--planet-scan-position", "100%");
         section?.style.setProperty("--planet-scan-ray-opacity", "0");
         section?.style.setProperty("--planet-scan-hint-opacity", "0");
-        scanCopyStateRef.current = "after";
-        setScanCopyState("after");
+        section?.style.setProperty("--planet-scan-erase", "1");
+        section?.style.setProperty("--planet-scan-reveal", "1");
+        section?.style.setProperty("--planet-scan-magic-opacity", "0");
         return;
       }
 
@@ -3014,16 +3013,16 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
       const rawProgress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
       const easedProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
       const edgeFade = Math.min(1, rawProgress * 10, (1 - rawProgress) * 10);
-      const nextCopyState = easedProgress >= 0.6 ? "after" : "before";
+      const eraseProgress = Math.min(1, Math.max(0, (easedProgress - 0.08) / 0.34));
+      const revealProgress = Math.min(1, Math.max(0, (easedProgress - 0.54) / 0.3));
+      const magicOpacity = Math.min(1, edgeFade, Math.max(0, (easedProgress - 0.06) / 0.12), Math.max(0, (0.96 - easedProgress) / 0.18));
 
       section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
       section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
       section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
-
-      if (scanCopyStateRef.current !== nextCopyState) {
-        scanCopyStateRef.current = nextCopyState;
-        setScanCopyState(nextCopyState);
-      }
+      section.style.setProperty("--planet-scan-erase", String(eraseProgress));
+      section.style.setProperty("--planet-scan-reveal", String(revealProgress));
+      section.style.setProperty("--planet-scan-magic-opacity", String(magicOpacity));
     };
 
     const scheduleScanUpdate = () => {
@@ -3045,41 +3044,8 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
     };
   }, []);
 
-  const scanFeatures = [
-    ["We scan", "Programs, utilities, and governments."],
-    ["We match", "Incentives and upgrades for your business."],
-    ["We value", "Savings, payback, and next steps."],
-    ["We transform", "Opportunity into measurable impact."]
-  ];
-  const activeCopy =
-    scanCopyState === "before"
-      ? {
-          eyebrow: "RetroFi scan",
-          headline: "Find the money behind your next retrofit.",
-          supporting:
-            "Billions in sustainability incentives go unused because they are hard to find, compare, qualify for, and claim.",
-          emphasis: "The money exists. Getting it is the hard part.",
-          secondaryCta: "See how it works"
-        }
-      : {
-          eyebrow: "RetroFi results",
-          headline: "Save time. Save money. Upgrade smarter.",
-          supporting:
-            "RetroFi matches your business with the best retrofit opportunities, estimates incentives and savings, and shows what to do next.",
-          emphasis: "Lower costs. Stronger assets. Measurable impact.",
-          secondaryCta: "Explore opportunities"
-        };
-
   const handleSecondaryAction = () => {
-    if (scanCopyState === "before") {
-      navigate("how-it-works");
-      return;
-    }
-
-    document.getElementById("home-opportunities")?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
-    });
+    navigate("how-it-works");
   };
 
   return (
@@ -3105,39 +3071,40 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
             />
           </div>
           <span className="planet-scan-ray" />
+          <div aria-hidden="true" className="planet-scan-magic-trail">
+            {Array.from({ length: 7 }, (_, index) => (
+              <span key={index} />
+            ))}
+          </div>
         </div>
 
         <div aria-hidden="true" className="planet-scan-shade" />
 
         <div className="planet-scan-content">
           <div className="planet-scan-copy">
-            <div className="planet-scan-message" key={scanCopyState}>
-              <p className="planet-scan-eyebrow">{activeCopy.eyebrow}</p>
-              <h1 id="planet-scan-heading">{activeCopy.headline}</h1>
-              <p className="planet-scan-subhead">{activeCopy.supporting}</p>
-              <p className="planet-scan-emphasis">{activeCopy.emphasis}</p>
-            </div>
-            <div className="planet-scan-actions">
-              <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
-                Start free scan
-              </button>
-              <button className="planet-scan-secondary" onClick={handleSecondaryAction} type="button">
-                {activeCopy.secondaryCta}
-              </button>
+            <div className="planet-scan-message planet-scan-message-before">
+              <p className="planet-scan-eyebrow">RetroFi scan</p>
+              <h1 id="planet-scan-heading">Find the money behind your next retrofit.</h1>
+              <p className="planet-scan-subhead">
+                Billions in retrofit incentives exist while building owners lose billions to operating expenses.
+              </p>
             </div>
           </div>
 
-          <ol aria-label="What RetroFi does" className="planet-scan-features">
-            {scanFeatures.map(([title, copy], index) => (
-              <li key={title}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <strong>{title}</strong>
-                  <p>{copy}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="planet-scan-result-copy">
+            <p className="planet-scan-eyebrow">RetroFi results</p>
+            <h2>RetroFi helps businesses find, compare, and claim retrofit incentives.</h2>
+            <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
+          </div>
+
+          <div className="planet-scan-actions">
+            <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
+              Start free scan
+            </button>
+            <button className="planet-scan-secondary" onClick={handleSecondaryAction} type="button">
+              See how it works
+            </button>
+          </div>
         </div>
 
         <div aria-hidden="true" className="planet-scan-scroll-cue">
