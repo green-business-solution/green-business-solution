@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { apiGet, apiPost } from "./api";
+import { apiGet, apiPatch, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -653,6 +653,94 @@ type ApplicationRequirementProfile = {
 type AdminApplicationRequirementExtractResponse = {
   generatedAt: string;
   profile: ApplicationRequirementProfile;
+};
+
+type ApplicationProfileReviewStatus =
+  | "ai_extracted"
+  | "needs_review"
+  | "needs_targeted_cleanup"
+  | "admin_reviewed"
+  | "rejected"
+  | "archived";
+
+type ApplicationProfileRecord = {
+  profileId: string;
+  opportunityId: string;
+  opportunityName?: string;
+  retrofitId?: string;
+  retrofitName?: string;
+  programSourceUrl?: string;
+  programWebsiteUrl?: string;
+  programWebsiteSource?: string;
+  applicationUrl?: string;
+  pdfUrl?: string;
+  contactEmail?: string;
+  applicationMethod: ApplicationMethod;
+  primaryMethod?: ApplicationMethod | string;
+  secondaryMethods?: string[];
+  applicationStatus: ApplicationStatus;
+  profileQuality: string;
+  reviewStatus: ApplicationProfileReviewStatus;
+  applicationArtifacts?: ApplicationArtifact[];
+  primaryApplicationArtifacts?: ApplicationArtifact[];
+  requiredFields?: ApplicationRequirement[];
+  requiredDocuments?: ApplicationRequirement[];
+  optionalFields?: ApplicationRequirement[];
+  applicationSteps?: string[];
+  evidence?: ApplicationRequirementEvidence[];
+  sourceChain?: ApplicationSourceChainItem[];
+  artifactDiagnostics?: Record<string, unknown>;
+  extractionDiagnostics?: Record<string, unknown>;
+  diagnostics?: Record<string, unknown>;
+  qualityWarnings?: string[];
+  adminNotes?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  requiredFieldCount?: number;
+  requiredDocumentCount?: number;
+  optionalFieldCount?: number;
+  primaryArtifactCount?: number;
+  qualityWarningCount?: number;
+  approvedAsReferenceOnly?: boolean;
+  notes?: string[];
+};
+
+type AdminApplicationProfilesResponse = {
+  generatedAt: string;
+  total: number;
+  limit?: number;
+  nextCursor?: string | null;
+  note?: string | null;
+  profiles: ApplicationProfileRecord[];
+};
+
+type AdminApplicationProfileDetailResponse = {
+  generatedAt: string;
+  profile: ApplicationProfileRecord;
+  customerReady?: boolean;
+};
+
+type ApplicationProfileApprovalValidation = {
+  allowed: boolean;
+  errors: string[];
+  warnings: string[];
+};
+
+type AdminApplicationProfileMutationResponse = {
+  generatedAt: string;
+  profile: ApplicationProfileRecord;
+  customerReady?: boolean;
+  approvalValidation?: ApplicationProfileApprovalValidation;
+};
+
+type AdminApplicationProfileImportResponse = {
+  generatedAt: string;
+  imported: ApplicationProfileRecord[];
+  skipped: Array<{ profileId: string; opportunityId: string; reason: string }>;
+  sourceGeneratedAt?: string;
+  aggregateCounts?: Record<string, unknown>;
 };
 
 type SampleMatchResult = {
@@ -9299,6 +9387,7 @@ function AdminClientPortalPreviewPage({
 
 const ADMIN_OPPORTUNITIES_TAB = "Opportunities";
 const ADMIN_APPLICATION_SOURCES_TAB = "Application Sources";
+const ADMIN_APPLICATION_PROFILES_TAB = "Application Profiles";
 const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
@@ -9321,6 +9410,7 @@ const billFieldDictionaryById = new Map(billFieldDictionaryEntries.map((field) =
 function adminSectionKey(tab: string) {
   if (tab === ADMIN_OPPORTUNITIES_TAB) return "database:opportunities";
   if (tab === ADMIN_APPLICATION_SOURCES_TAB) return "application-sources";
+  if (tab === ADMIN_APPLICATION_PROFILES_TAB) return "application-profiles";
   if (tab === ADMIN_RETROFITS_TAB) return "database:retrofits";
   if (tab === ADMIN_TEST_CASES_TAB) return "test-cases";
   return tab === "Users" ? "users" : `table:${tab}`;
@@ -9348,6 +9438,7 @@ function AdminDashboard({
     ADMIN_USER_PREVIEW_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
+    ADMIN_APPLICATION_PROFILES_TAB,
     ...dataTables
       .filter((table) => table.name !== OPPORTUNITIES_TABLE_NAME && !ADMIN_HIDDEN_DATA_TABLE_NAMES.has(table.name))
       .map((table) => table.name),
@@ -9402,6 +9493,7 @@ function AdminDashboard({
     if (
       tab === ADMIN_TEST_CASES_TAB ||
       tab === ADMIN_APPLICATION_SOURCES_TAB ||
+      tab === ADMIN_APPLICATION_PROFILES_TAB ||
       tab === ADMIN_OPPORTUNITIES_TAB ||
       tab === ADMIN_RETROFITS_TAB
     ) {
@@ -9409,7 +9501,7 @@ function AdminDashboard({
       return;
     }
 
-    if (tab === ADMIN_APPLICATION_SOURCES_TAB) {
+    if (tab === ADMIN_APPLICATION_SOURCES_TAB || tab === ADMIN_APPLICATION_PROFILES_TAB) {
       markSectionLoaded(sectionKey);
       return;
     }
@@ -9472,6 +9564,7 @@ function AdminDashboard({
       activeTab !== "Users" &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_APPLICATION_SOURCES_TAB &&
+      activeTab !== ADMIN_APPLICATION_PROFILES_TAB &&
       activeTab !== ADMIN_OPPORTUNITIES_TAB &&
       activeTab !== ADMIN_RETROFITS_TAB &&
       !isVisibleDataTable
@@ -9493,7 +9586,12 @@ function AdminDashboard({
       window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
       return;
     }
-    const nextPath = item === ADMIN_APPLICATION_SOURCES_TAB ? pathForRoute("admin-application-sources") : pathForRoute("admin");
+    const nextPath =
+      item === ADMIN_APPLICATION_SOURCES_TAB
+        ? pathForRoute("admin-application-sources")
+        : item === ADMIN_APPLICATION_PROFILES_TAB
+          ? pathForRoute("admin-application-profiles")
+          : pathForRoute("admin");
     if (window.location.pathname !== nextPath) {
       window.history.pushState({}, "", nextPath);
     }
@@ -9514,6 +9612,8 @@ function AdminDashboard({
         <AdminUsersPanel isLoading={isCurrentSectionLoading} onRefresh={() => void refreshDashboard()} rows={rows} />
       ) : activeTab === ADMIN_APPLICATION_SOURCES_TAB ? (
         <AdminApplicationSourcesPanel credential={credential} />
+      ) : activeTab === ADMIN_APPLICATION_PROFILES_TAB ? (
+        <AdminApplicationProfilesPanel credential={credential} />
       ) : activeTab === ADMIN_TEST_CASES_TAB ? (
         <AdminTestCasesPanel />
       ) : activeTab === ADMIN_OPPORTUNITIES_TAB ? (
@@ -11097,6 +11197,494 @@ function AdminDataPanel({
   );
 }
 
+function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredential | null }) {
+  const [payload, setPayload] = useState<AdminApplicationProfilesResponse | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<ApplicationProfileRecord | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isImporting, setIsImporting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [reviewStatusFilter, setReviewStatusFilter] = useState("");
+  const [qualityFilter, setQualityFilter] = useState("");
+  const [opportunityIdInput, setOpportunityIdInput] = useState("");
+  const [adminNote, setAdminNote] = useState("");
+  const [approveAsReferenceOnly, setApproveAsReferenceOnly] = useState(false);
+  const [editor, setEditor] = useState({
+    applicationMethod: "unknown",
+    applicationStatus: "unknown",
+    profileQuality: "needs_manual_review",
+    requiredFields: "[]",
+    requiredDocuments: "[]",
+    optionalFields: "[]",
+    applicationSteps: "[]",
+    applicationArtifacts: "[]",
+    primaryApplicationArtifacts: "[]"
+  });
+
+  async function loadProfiles() {
+    if (!credential) {
+      setError("Sign in again to load ApplicationProfiles.");
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams({ limit: "100" });
+      if (reviewStatusFilter) params.set("reviewStatus", reviewStatusFilter);
+      if (qualityFilter) params.set("profileQuality", qualityFilter);
+      const response = await apiGet<AdminApplicationProfilesResponse>(`/api/admin/application-profiles?${params.toString()}`, {
+        headers: adminAuthHeaders(credential)
+      });
+      setPayload(response);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load ApplicationProfiles.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function setProfileForReview(profile: ApplicationProfileRecord) {
+    setSelectedProfile(profile);
+    setAdminNote(profile.adminNotes || "");
+    setApproveAsReferenceOnly(profile.approvedAsReferenceOnly || ["closed", "funding_exhausted"].includes(profile.applicationStatus || ""));
+    setEditor({
+      applicationMethod: profile.applicationMethod || "unknown",
+      applicationStatus: profile.applicationStatus || "unknown",
+      profileQuality: profile.profileQuality || "needs_manual_review",
+      requiredFields: JSON.stringify(profile.requiredFields || [], null, 2),
+      requiredDocuments: JSON.stringify(profile.requiredDocuments || [], null, 2),
+      optionalFields: JSON.stringify(profile.optionalFields || [], null, 2),
+      applicationSteps: JSON.stringify(profile.applicationSteps || [], null, 2),
+      applicationArtifacts: JSON.stringify(profile.applicationArtifacts || [], null, 2),
+      primaryApplicationArtifacts: JSON.stringify(profile.primaryApplicationArtifacts || [], null, 2)
+    });
+  }
+
+  async function viewProfile(profileId: string) {
+    if (!credential) return;
+    setError(null);
+    try {
+      const response = await apiGet<AdminApplicationProfileDetailResponse>(`/api/admin/application-profiles/${encodeURIComponent(profileId)}`, {
+        headers: adminAuthHeaders(credential)
+      });
+      setProfileForReview(response.profile);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load ApplicationProfile detail.");
+    }
+  }
+
+  async function importFirstTenProfiles() {
+    if (!credential) {
+      setError("Sign in again to import profiles.");
+      return;
+    }
+    setIsImporting(true);
+    setError(null);
+    try {
+      await apiPost<AdminApplicationProfileImportResponse>("/api/admin/application-profiles/import-first10", adminAuthBody(credential));
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not import first-10 profiles.");
+    } finally {
+      setIsImporting(false);
+    }
+  }
+
+  async function generateDraftProfile() {
+    if (!credential) {
+      setError("Sign in again to generate a draft profile.");
+      return;
+    }
+    const opportunityId = opportunityIdInput.trim();
+    if (!opportunityId) {
+      setError("Enter an opportunity ID before generating a draft.");
+      return;
+    }
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>("/api/admin/application-profiles/generate-draft", {
+        ...adminAuthBody(credential),
+        opportunityId
+      });
+      await loadProfiles();
+      setProfileForReview(response.profile);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not generate draft profile.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  function parseEditorArray(field: keyof typeof editor) {
+    const parsed = JSON.parse(editor[field]);
+    if (!Array.isArray(parsed)) {
+      throw new Error(`${field} must be a JSON array.`);
+    }
+    return parsed;
+  }
+
+  async function saveProfileEdits() {
+    if (!credential || !selectedProfile) return;
+    setIsSaving(true);
+    setError(null);
+    try {
+      const profilePatch = {
+        applicationMethod: editor.applicationMethod,
+        applicationStatus: editor.applicationStatus,
+        profileQuality: editor.profileQuality,
+        adminNotes: adminNote,
+        requiredFields: parseEditorArray("requiredFields"),
+        requiredDocuments: parseEditorArray("requiredDocuments"),
+        optionalFields: parseEditorArray("optionalFields"),
+        applicationSteps: parseEditorArray("applicationSteps"),
+        applicationArtifacts: parseEditorArray("applicationArtifacts"),
+        primaryApplicationArtifacts: parseEditorArray("primaryApplicationArtifacts")
+      };
+      const response = await apiPatch<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(selectedProfile.profileId)}`,
+        {
+          ...adminAuthBody(credential),
+          profilePatch
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not save profile edits.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function approveSelectedProfile() {
+    if (!credential || !selectedProfile) return;
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(selectedProfile.profileId)}/approve`,
+        {
+          ...adminAuthBody(credential),
+          adminNote,
+          confirmation: true,
+          approveAsReferenceOnly
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Approval was blocked.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function approveProfileFromList(profile: ApplicationProfileRecord) {
+    if (!credential) return;
+    const confirmed = window.confirm(`Approve ${profile.opportunityName || profile.opportunityId} for future customer application prep?`);
+    if (!confirmed) return;
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(profile.profileId)}/approve`,
+        {
+          ...adminAuthBody(credential),
+          adminNote: "Approved from ApplicationProfiles list after admin confirmation.",
+          confirmation: true,
+          approveAsReferenceOnly: ["closed", "funding_exhausted"].includes(profile.applicationStatus || "")
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Approval was blocked.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function rejectSelectedProfile() {
+    if (!credential || !selectedProfile) return;
+    const reason = adminNote.trim();
+    if (!reason) {
+      setError("Enter an admin note/rejection reason before rejecting.");
+      return;
+    }
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(selectedProfile.profileId)}/reject`,
+        {
+          ...adminAuthBody(credential),
+          reason
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not reject profile.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function rejectProfileFromList(profile: ApplicationProfileRecord) {
+    if (!credential) return;
+    const reason = window.prompt(`Reject ${profile.opportunityName || profile.opportunityId}. Enter a reason:`);
+    if (!reason?.trim()) return;
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(profile.profileId)}/reject`,
+        {
+          ...adminAuthBody(credential),
+          reason
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not reject profile.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function archiveSelectedProfile() {
+    if (!credential || !selectedProfile) return;
+    setIsSaving(true);
+    setError(null);
+    try {
+      const response = await apiPost<AdminApplicationProfileMutationResponse>(
+        `/api/admin/application-profiles/${encodeURIComponent(selectedProfile.profileId)}/archive`,
+        {
+          ...adminAuthBody(credential),
+          adminNote: adminNote || "Archived from admin ApplicationProfile review."
+        }
+      );
+      setProfileForReview(response.profile);
+      await loadProfiles();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not archive profile.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  useEffect(() => {
+    void loadProfiles();
+  }, [credential, reviewStatusFilter, qualityFilter]);
+
+  const rows = payload?.profiles || [];
+  const reviewStatuses = uniqueSorted(rows.map((row) => row.reviewStatus));
+  const qualityOptions = uniqueSorted(rows.map((row) => row.profileQuality));
+
+  return (
+    <section className="admin-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Application profile registry</p>
+          <h2>{payload?.total ?? rows.length} draft ApplicationProfiles</h2>
+          <p>AI-extracted profiles remain drafts until an admin approves them.</p>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={() => void loadProfiles()} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      <div className="review-filters application-source-filters">
+        <ReviewSelect label="Review status" onChange={setReviewStatusFilter} options={reviewStatuses} value={reviewStatusFilter} />
+        <ReviewSelect label="Profile quality" onChange={setQualityFilter} options={qualityOptions} value={qualityFilter} />
+        <label className="field">
+          <span>Generate draft by opportunity ID</span>
+          <input
+            onChange={(event) => setOpportunityIdInput(event.target.value)}
+            placeholder="SOURCE_DSIRE:..."
+            type="text"
+            value={opportunityIdInput}
+          />
+        </label>
+        <button className="secondary-button" disabled={isSaving} onClick={() => void generateDraftProfile()} type="button">
+          {isSaving ? "Working..." : "Generate draft"}
+        </button>
+        <button className="secondary-button" disabled={isImporting} onClick={() => void importFirstTenProfiles()} type="button">
+          {isImporting ? "Importing..." : "Import first 10"}
+        </button>
+      </div>
+
+      {payload?.note ? <p className="muted-message">{payload.note}</p> : null}
+      {error ? <p className="error-message">{error}</p> : null}
+
+      <section className="application-source-table-shell">
+        {isLoading && rows.length === 0 ? (
+          <p className="empty-state">Loading ApplicationProfiles...</p>
+        ) : rows.length === 0 ? (
+          <p className="empty-state">No ApplicationProfiles are saved yet.</p>
+        ) : (
+          <div className="application-source-table-wrap">
+            <table className="application-source-table application-profile-table">
+              <thead>
+                <tr>
+                  <th>Opportunity</th>
+                  <th>Method</th>
+                  <th>Application status</th>
+                  <th>Profile quality</th>
+                  <th>Review status</th>
+                  <th>Fields</th>
+                  <th>Documents</th>
+                  <th>Primary artifacts</th>
+                  <th>Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((profile) => (
+                  <tr key={profile.profileId}>
+                    <td>
+                      <div className="application-source-cell">
+                        <strong>{profile.opportunityName || profile.opportunityId}</strong>
+                        <small>{profile.opportunityId}</small>
+                      </div>
+                    </td>
+                    <td>{formatApplicationMethodLabel(profile.primaryMethod as ApplicationMethod || profile.applicationMethod)}</td>
+                    <td>{formatApplicationStatusLabel(profile.applicationStatus)}</td>
+                    <td>{formatProfileQualityLabel(profile.profileQuality)}</td>
+                    <td>
+                      <span className={`application-source-status-pill ${profileReviewStatusClassName(profile.reviewStatus)}`}>
+                        {formatProfileReviewStatus(profile.reviewStatus)}
+                      </span>
+                    </td>
+                    <td>{profile.requiredFieldCount ?? profile.requiredFields?.length ?? 0}</td>
+                    <td>{profile.requiredDocumentCount ?? profile.requiredDocuments?.length ?? 0}</td>
+                    <td>{profile.primaryArtifactCount ?? profile.primaryApplicationArtifacts?.length ?? 0}</td>
+                    <td>{profile.updatedAt ? formatProgramDate(profile.updatedAt) : "Unknown"}</td>
+                    <td>
+                      <div className="application-source-actions">
+                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId)} type="button">View</button>
+                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId)} type="button">Edit</button>
+                        <button className="secondary-button" disabled={isSaving} onClick={() => void approveProfileFromList(profile)} type="button">Approve</button>
+                        <button className="secondary-button" disabled={isSaving} onClick={() => void rejectProfileFromList(profile)} type="button">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {selectedProfile ? (
+        <section className="application-profile-detail">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Draft — needs admin review</p>
+              <h2>{selectedProfile.opportunityName || selectedProfile.opportunityId}</h2>
+              <p>Approve only after the extracted requirements and evidence are reviewed.</p>
+            </div>
+            <button className="secondary-button" onClick={() => setSelectedProfile(null)} type="button">
+              Close
+            </button>
+          </div>
+
+          <dl className="application-profile-summary">
+            <div><dt>Official website</dt><dd>{selectedProfile.programWebsiteUrl ? renderApplicationSourceLink(selectedProfile.programWebsiteUrl) : "Not found"}</dd></div>
+            <div><dt>Application URL</dt><dd>{selectedProfile.applicationUrl ? renderApplicationSourceLink(selectedProfile.applicationUrl) : "Not found"}</dd></div>
+            <div><dt>PDF URL</dt><dd>{selectedProfile.pdfUrl ? renderApplicationSourceLink(selectedProfile.pdfUrl) : "Not found"}</dd></div>
+            <div><dt>Contact email</dt><dd>{selectedProfile.contactEmail || "Not found"}</dd></div>
+            <div><dt>Review status</dt><dd>{formatProfileReviewStatus(selectedProfile.reviewStatus)}</dd></div>
+            <div><dt>Profile quality</dt><dd>{formatProfileQualityLabel(selectedProfile.profileQuality)}</dd></div>
+          </dl>
+
+          <div className="application-profile-actions">
+            <label className="field">
+              <span>Admin notes / approval or rejection reason</span>
+              <textarea onChange={(event) => setAdminNote(event.target.value)} rows={4} value={adminNote} />
+            </label>
+            <label className="checkbox-row">
+              <input
+                checked={approveAsReferenceOnly}
+                onChange={(event) => setApproveAsReferenceOnly(event.target.checked)}
+                type="checkbox"
+              />
+              Approve closed/funding-exhausted profile as reference only
+            </label>
+            <div className="button-row">
+              <button className="primary-button" disabled={isSaving} onClick={() => void approveSelectedProfile()} type="button">
+                Approve for future customer application prep
+              </button>
+              <button className="secondary-button" disabled={isSaving} onClick={() => void rejectSelectedProfile()} type="button">
+                Reject
+              </button>
+              <button className="secondary-button" disabled={isSaving} onClick={() => void archiveSelectedProfile()} type="button">
+                Archive
+              </button>
+            </div>
+          </div>
+
+          <div className="application-requirement-section">
+            <strong>Primary application artifacts</strong>
+            {renderProfileArtifactList(selectedProfile.primaryApplicationArtifacts || [])}
+          </div>
+          <div className="application-requirement-section">
+            <strong>Source chain</strong>
+            {renderProfileSourceChain(selectedProfile.sourceChain || [])}
+          </div>
+          {renderRequirementList("Required fields", selectedProfile.requiredFields || [])}
+          {renderRequirementList("Required documents", selectedProfile.requiredDocuments || [])}
+          {renderRequirementList("Optional fields", selectedProfile.optionalFields || [])}
+          {selectedProfile.applicationSteps?.length ? (
+            <div className="application-requirement-section">
+              <strong>Application steps</strong>
+              <ol className="application-requirement-steps">
+                {selectedProfile.applicationSteps.map((step) => <li key={step}>{step}</li>)}
+              </ol>
+            </div>
+          ) : null}
+          {selectedProfile.qualityWarnings?.length ? (
+            <div className="application-requirement-section">
+              <strong>Quality warnings</strong>
+              <ul className="application-requirement-evidence">
+                {selectedProfile.qualityWarnings.map((warning) => <li key={warning}><small>{warning}</small></li>)}
+              </ul>
+            </div>
+          ) : null}
+          <details className="application-profile-diagnostics">
+            <summary>Filtered artifact diagnostics</summary>
+            <pre>{JSON.stringify(selectedProfile.artifactDiagnostics || {}, null, 2)}</pre>
+          </details>
+          <details className="application-profile-diagnostics">
+            <summary>Extraction diagnostics</summary>
+            <pre>{JSON.stringify(selectedProfile.extractionDiagnostics || selectedProfile.diagnostics || {}, null, 2)}</pre>
+          </details>
+          <details className="application-profile-editor">
+            <summary>Edit extracted profile fields</summary>
+            <div className="application-profile-editor-grid">
+              <label className="field"><span>Application method</span><input value={editor.applicationMethod} onChange={(event) => setEditor((current) => ({ ...current, applicationMethod: event.target.value }))} /></label>
+              <label className="field"><span>Application status</span><input value={editor.applicationStatus} onChange={(event) => setEditor((current) => ({ ...current, applicationStatus: event.target.value }))} /></label>
+              <label className="field"><span>Profile quality</span><input value={editor.profileQuality} onChange={(event) => setEditor((current) => ({ ...current, profileQuality: event.target.value }))} /></label>
+              <label className="field"><span>Required fields JSON</span><textarea rows={8} value={editor.requiredFields} onChange={(event) => setEditor((current) => ({ ...current, requiredFields: event.target.value }))} /></label>
+              <label className="field"><span>Required documents JSON</span><textarea rows={8} value={editor.requiredDocuments} onChange={(event) => setEditor((current) => ({ ...current, requiredDocuments: event.target.value }))} /></label>
+              <label className="field"><span>Optional fields JSON</span><textarea rows={8} value={editor.optionalFields} onChange={(event) => setEditor((current) => ({ ...current, optionalFields: event.target.value }))} /></label>
+              <label className="field"><span>Application steps JSON</span><textarea rows={6} value={editor.applicationSteps} onChange={(event) => setEditor((current) => ({ ...current, applicationSteps: event.target.value }))} /></label>
+              <label className="field"><span>Artifacts JSON</span><textarea rows={6} value={editor.applicationArtifacts} onChange={(event) => setEditor((current) => ({ ...current, applicationArtifacts: event.target.value }))} /></label>
+              <label className="field"><span>Primary artifacts JSON</span><textarea rows={6} value={editor.primaryApplicationArtifacts} onChange={(event) => setEditor((current) => ({ ...current, primaryApplicationArtifacts: event.target.value }))} /></label>
+            </div>
+            <button className="secondary-button" disabled={isSaving} onClick={() => void saveProfileEdits()} type="button">
+              {isSaving ? "Saving..." : "Save edits"}
+            </button>
+          </details>
+        </section>
+      ) : null}
+    </section>
+  );
+}
+
 function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredential | null }) {
   const [payload, setPayload] = useState<AdminApplicationSourcesResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -11872,6 +12460,37 @@ function renderRequirementList(title: string, requirements: ApplicationRequireme
   );
 }
 
+function renderProfileArtifactList(artifacts: ApplicationArtifact[]) {
+  if (!artifacts.length) return <p className="muted-message">No primary application artifacts retained.</p>;
+  return (
+    <ul className="application-link-candidates">
+      {artifacts.map((artifact, index) => (
+        <li key={`${artifact.type}:${artifact.url || artifact.email || index}`}>
+          <span>{artifact.type.replaceAll("_", " ")} · {artifact.confidence || "Needs review"}</span>
+          {artifact.url ? renderApplicationSourceLink(artifact.url) : artifact.email ? <small>{artifact.email}</small> : null}
+          {artifact.evidenceSnippet ? <small>{artifact.evidenceSnippet}</small> : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function renderProfileSourceChain(sourceChain: ApplicationSourceChainItem[]) {
+  if (!sourceChain.length) return <p className="muted-message">No source chain captured.</p>;
+  return (
+    <ul className="application-link-candidates">
+      {sourceChain.map((item, index) => (
+        <li key={`${item.role}:${item.url || item.email || index}`}>
+          <span>{item.role.replaceAll("_", " ")} · {item.status || "candidate"}</span>
+          {item.url ? renderApplicationSourceLink(item.url) : item.email ? <small>{item.email}</small> : null}
+          {item.sourceField ? <small>{item.sourceField}</small> : null}
+          {item.reason ? <small>{item.reason}</small> : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function applicationPathResultSummary(profile: ApplicationPathProfile) {
   const discoveryStatus = applicationPathDiscoveryStatus(profile);
   const hasEmailPath = applicationPathMethod(profile) === "email" && Boolean(applicationPathContactEmail(profile));
@@ -12013,6 +12632,21 @@ function formatApplicationStatusLabel(value?: ApplicationStatus) {
   return "Unknown";
 }
 
+function formatProfileReviewStatus(value?: ApplicationProfileReviewStatus) {
+  if (value === "ai_extracted") return "AI extracted";
+  if (value === "needs_review") return "Needs review";
+  if (value === "needs_targeted_cleanup") return "Needs targeted cleanup";
+  if (value === "admin_reviewed") return "Admin reviewed";
+  if (value === "rejected") return "Rejected";
+  if (value === "archived") return "Archived";
+  return "Unknown";
+}
+
+function formatProfileQualityLabel(value?: string) {
+  const text = value || "unknown";
+  return text.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
 function formatApplicationMethodStatusLabel(value: ApplicationMethodStatus) {
   if (value === "confirmed") return "confirmed";
   if (value === "inferred") return "inferred";
@@ -12039,6 +12673,13 @@ function requirementStatusClassName(value: RequirementExtractionStatus) {
   if (value === "requirements_extracted") return "is-found";
   if (value === "source_unavailable" || value === "source_unreadable_or_js_required") return "is-missing";
   if (value === "partial" || value === "needs_review" || value === "needs_user_selection") return "is-review";
+  return "is-pending";
+}
+
+function profileReviewStatusClassName(value?: ApplicationProfileReviewStatus) {
+  if (value === "admin_reviewed") return "is-found";
+  if (value === "rejected" || value === "archived") return "is-missing";
+  if (value === "needs_review" || value === "needs_targeted_cleanup") return "is-review";
   return "is-pending";
 }
 
@@ -12947,7 +13588,7 @@ export function App() {
     setSignInMessage(null);
     navigate(
       payload.dashboard === "admin"
-        ? route === "testcases" || route === "user-preview" || route === "admin-application-sources"
+        ? route === "testcases" || route === "user-preview" || route === "admin-application-sources" || route === "admin-application-profiles"
           ? route
           : "admin"
         : "portal"
@@ -13100,7 +13741,7 @@ export function App() {
     );
   }
 
-  if (effectiveRoute === "portal" || effectiveRoute === "admin" || effectiveRoute === "admin-application-sources") {
+  if (effectiveRoute === "portal" || effectiveRoute === "admin" || effectiveRoute === "admin-application-sources" || effectiveRoute === "admin-application-profiles") {
     if (!authPayload) {
       return (
         <SignInPage
@@ -13116,7 +13757,13 @@ export function App() {
       return (
         <AdminDashboard
           credential={authCredential}
-          initialTab={effectiveRoute === "admin-application-sources" ? ADMIN_APPLICATION_SOURCES_TAB : "Users"}
+          initialTab={
+            effectiveRoute === "admin-application-sources"
+              ? ADMIN_APPLICATION_SOURCES_TAB
+              : effectiveRoute === "admin-application-profiles"
+                ? ADMIN_APPLICATION_PROFILES_TAB
+                : "Users"
+          }
           onSignOut={signOut}
           payload={authPayload.adminDashboard}
         />

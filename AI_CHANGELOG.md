@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) ApplicationProfile registry admin workflow
+
+- Added an admin-only ApplicationProfile registry backed by the existing runtime-state table, including draft generation from the ApplicationPrepEngine pipeline, first-10 audit import, profile list/detail, edit, approve, reject, and archive APIs.
+- Added approval validation so AI-extracted profiles cannot become future customer-prep eligible until an admin explicitly approves clean evidence-backed profiles; blocked source-unreadable, user-selection, manual-review, targeted-cleanup, malformed, junk-evidence, and unsafe closed-program approvals.
+- Added `/admin/application-profiles` with draft review labeling, source chain, primary artifacts, requirement evidence, diagnostics, quality warnings, admin notes, JSON edit controls, and approve/reject/archive actions.
+
 ## 2026-07-02 - Codex (GPT-5) tax geography model groundwork
 
 - Added a conservative `tax_geography_rules` seed artifact with recurring-refresh policy notes and seed rules for the three repaired tax-related v2 packages.

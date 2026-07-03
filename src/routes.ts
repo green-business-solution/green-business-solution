@@ -16,6 +16,7 @@ export type Route =
   | "user-preview"
   | "admin"
   | "admin-application-sources"
+  | "admin-application-profiles"
   | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
@@ -43,6 +44,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/portal-preview") return "portal-preview";
   if (pathname === "/user-preview") return "user-preview";
   if (pathname === "/admin/application-sources") return "admin-application-sources";
+  if (pathname === "/admin/application-profiles") return "admin-application-profiles";
   if (pathname === "/admin") return "admin";
   if (pathname === "/testcases") return "testcases";
   return "home";
@@ -55,6 +57,7 @@ export function pathForRoute(route: Route) {
   if (route === "about-trust") return "/about/trust";
   if (route === "about-contact") return "/about/contact";
   if (route === "admin-application-sources") return "/admin/application-sources";
+  if (route === "admin-application-profiles") return "/admin/application-profiles";
   if (route === "scan-results") return "/scan/results";
   if (route === "scan-energy-data") return "/scan/energy-data";
   return `/${route}`;

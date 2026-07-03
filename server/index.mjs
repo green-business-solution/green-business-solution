@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import fs from "node:fs/promises";
 import express from "express";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -16,8 +17,26 @@ import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchPr
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
+import { resolveOfficialProgramWebsite } from "./applicationSources/OfficialProgramWebsiteResolver.mjs";
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
 import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
+import { composeDraftApplicationProfile, validateApplicationProfile } from "./applicationSources/ApplicationProfile.mjs";
+import {
+  appendAdminNote,
+  applicationProfileIdForOpportunity,
+  applicationProfileStateKey,
+  applyApplicationProfileAdminPatch,
+  compactApplicationProfileRecord,
+  extractDraftProfilesFromFirstTenAudit,
+  isApplicationProfileRegistryItem,
+  normalizeApplicationProfileForRegistry,
+  profileCanBeRegenerated,
+  publicApplicationProfileRecord
+} from "./applicationSources/ApplicationProfileRegistry.mjs";
+import {
+  isApplicationProfileCustomerReady,
+  validateApplicationProfileApproval
+} from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
 import { GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT, reserveGeocodioLookup } from "./geography/geocodioUsageGuard.mjs";
 import {
@@ -2263,6 +2282,194 @@ async function buildAdminApplicationSourcesBatch({ cursor, limit }) {
   };
 }
 
+async function findOpportunityForApplicationProfile(opportunityId) {
+  const cleanOpportunityId = cleanText(opportunityId);
+  if (!cleanOpportunityId) {
+    const error = new Error("opportunityId is required.");
+    error.status = 400;
+    throw error;
+  }
+
+  const opportunities = await getCachedOpportunities();
+  const opportunity = opportunities.find((record) => String(record?.opportunityId || "") === cleanOpportunityId);
+  if (!opportunity || !isVisibleOpportunity(opportunity)) {
+    const error = new Error("Opportunity was not found.");
+    error.status = 404;
+    throw error;
+  }
+  return opportunity;
+}
+
+async function listApplicationProfileRecords({ cursor, limit, reviewStatus, profileQuality, opportunityId }) {
+  const startedAt = Date.now();
+  const profiles = [];
+  let ExclusiveStartKey = cursor;
+  let scanCalls = 0;
+
+  do {
+    const result = await db.send(
+      new ScanCommand({
+        TableName: runtimeStateTable,
+        ExclusiveStartKey,
+        Limit: Math.min(Math.max(limit, 25), 250)
+      })
+    );
+    scanCalls += 1;
+    for (const item of result.Items || []) {
+      if (!isApplicationProfileRegistryItem(item)) continue;
+      const profile = publicApplicationProfileRecord(item);
+      if (reviewStatus && profile.reviewStatus !== reviewStatus) continue;
+      if (profileQuality && profile.profileQuality !== profileQuality) continue;
+      if (opportunityId && profile.opportunityId !== opportunityId) continue;
+      profiles.push(profile);
+      if (profiles.length >= limit) break;
+    }
+    ExclusiveStartKey = result.LastEvaluatedKey;
+  } while (ExclusiveStartKey && profiles.length < limit);
+
+  profiles.sort((a, b) => String(b.updatedAt || b.createdAt || "").localeCompare(String(a.updatedAt || a.createdAt || "")));
+
+  return {
+    profiles,
+    scanCalls,
+    nextCursor: encodeScanCursor(ExclusiveStartKey),
+    durationMs: Date.now() - startedAt
+  };
+}
+
+async function getApplicationProfileRecord(profileId) {
+  const cleanProfileId = cleanText(profileId);
+  if (!cleanProfileId) {
+    const error = new Error("profileId is required.");
+    error.status = 400;
+    throw error;
+  }
+
+  const result = await db.send(
+    new GetCommand({
+      TableName: runtimeStateTable,
+      Key: applicationProfileStateKey(cleanProfileId)
+    })
+  );
+
+  if (!result.Item || !isApplicationProfileRegistryItem(result.Item)) {
+    const error = new Error("Application profile was not found.");
+    error.status = 404;
+    throw error;
+  }
+
+  return publicApplicationProfileRecord(result.Item);
+}
+
+async function putApplicationProfileRecord(profile) {
+  await db.send(
+    new PutCommand({
+      TableName: runtimeStateTable,
+      Item: profile
+    })
+  );
+  return publicApplicationProfileRecord(profile);
+}
+
+async function saveGeneratedApplicationProfileDraft(profile) {
+  const profileId = applicationProfileIdForOpportunity(profile?.opportunityId);
+  if (!profileId) {
+    const error = new Error("Generated profile is missing opportunityId.");
+    error.status = 500;
+    throw error;
+  }
+
+  const existing = await db.send(
+    new GetCommand({
+      TableName: runtimeStateTable,
+      Key: applicationProfileStateKey(profileId)
+    })
+  );
+  if (existing.Item && !profileCanBeRegenerated(existing.Item)) {
+    const error = new Error("An admin-reviewed, rejected, or archived profile already exists for this opportunity.");
+    error.status = 409;
+    throw error;
+  }
+
+  const normalized = normalizeApplicationProfileForRegistry(profile, { statusMode: "draft" });
+  return putApplicationProfileRecord(normalized);
+}
+
+async function generateApplicationProfileDraftForOpportunity(opportunityId) {
+  const opportunity = await findOpportunityForApplicationProfile(opportunityId);
+  const applicationSourceProfile = resolveOpportunityApplicationSource(opportunity);
+  const officialProgramWebsiteProfile = resolveOfficialProgramWebsite(opportunity);
+  const applicationPathProfile = await discoverOpportunityApplicationLinks({
+    opportunity,
+    sourceProfile: applicationSourceProfile
+  });
+  const applicationRequirementProfile = await extractOpportunityApplicationRequirements({
+    opportunity,
+    sourceProfile: applicationSourceProfile,
+    pathProfile: applicationPathProfile
+  });
+  const draftApplicationProfile = composeDraftApplicationProfile({
+    opportunity,
+    officialProgramWebsiteProfile,
+    applicationPathProfile,
+    applicationRequirementProfile
+  });
+  const validation = validateApplicationProfile(draftApplicationProfile, {
+    extractionStatus: applicationRequirementProfile.extractionStatus,
+    createdAutomatically: true
+  });
+  const profile = await saveGeneratedApplicationProfileDraft(draftApplicationProfile);
+  return {
+    profile,
+    validation,
+    applicationSourceProfile,
+    officialProgramWebsiteProfile,
+    applicationPathProfile,
+    applicationRequirementProfile
+  };
+}
+
+async function importFirstTenApplicationProfiles() {
+  const auditPath = new URL("../APPLICATION_PREP_FIRST_10_AFTER_FIX.json", import.meta.url);
+  let audit;
+  try {
+    audit = JSON.parse(await fs.readFile(auditPath, "utf8"));
+  } catch (error) {
+    const wrapped = new Error("First-10 ApplicationPrepEngine audit output was not found. Run npm run application-prep:first10 first.");
+    wrapped.status = error?.code === "ENOENT" ? 404 : 500;
+    throw wrapped;
+  }
+
+  const drafts = extractDraftProfilesFromFirstTenAudit(audit);
+  const imported = [];
+  const skipped = [];
+
+  for (const draft of drafts) {
+    const existing = await db.send(
+      new GetCommand({
+        TableName: runtimeStateTable,
+        Key: applicationProfileStateKey(draft.profileId)
+      })
+    );
+    if (existing.Item && !profileCanBeRegenerated(existing.Item)) {
+      skipped.push({
+        profileId: draft.profileId,
+        opportunityId: draft.opportunityId,
+        reason: `Existing profile is ${existing.Item.reviewStatus}.`
+      });
+      continue;
+    }
+    imported.push(await putApplicationProfileRecord(draft));
+  }
+
+  return {
+    imported,
+    skipped,
+    sourceGeneratedAt: audit.generatedAt,
+    aggregateCounts: audit.aggregateCounts || {}
+  };
+}
+
 async function buildAdminTableSnapshot(tableName) {
   const cleanTableName = cleanText(tableName);
 
@@ -3296,6 +3503,236 @@ app.post("/api/admin/application-requirements/extract", async (req, res) => {
     if (classifyError(error).status >= 500) {
       console.error("[admin/application-requirements/extract] failed", error);
     }
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/application-profiles", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const limit = parsePositiveInteger(req.query.limit, 100, 250);
+    const cursor = decodeScanCursor(req.query.cursor);
+    const reviewStatus = cleanText(req.query.reviewStatus);
+    const profileQuality = cleanText(req.query.profileQuality);
+    const opportunityId = cleanText(req.query.opportunityId);
+    const startedAt = Date.now();
+
+    const result = await listApplicationProfileRecords({
+      cursor,
+      limit,
+      reviewStatus,
+      profileQuality,
+      opportunityId
+    });
+
+    console.log(
+      `[admin/application-profiles] profiles=${result.profiles.length} scanCalls=${result.scanCalls} durationMs=${Date.now() - startedAt}`
+    );
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      total: result.profiles.length,
+      limit,
+      nextCursor: result.nextCursor,
+      note:
+        result.profiles.length === 0
+          ? "No draft ApplicationProfiles are saved yet. Generate a draft or import the first-10 audit profiles."
+          : null,
+      profiles: result.profiles.map(compactApplicationProfileRecord)
+    });
+  } catch (error) {
+    if (classifyError(error).status >= 500) {
+      console.error("[admin/application-profiles] failed", error);
+    }
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/application-profiles/:profileId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const profile = await getApplicationProfileRecord(req.params.profileId);
+    res.json({
+      generatedAt: new Date().toISOString(),
+      profile,
+      customerReady: isApplicationProfileCustomerReady(profile)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/generate-draft", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const opportunityId = cleanText(req.body?.opportunityId);
+    if (!opportunityId) {
+      const error = new Error("opportunityId is required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const startedAt = Date.now();
+    const result = await generateApplicationProfileDraftForOpportunity(opportunityId);
+    console.log(
+      `[admin/application-profiles/generate-draft] opportunityId=${opportunityId} profileId=${result.profile.profileId} reviewStatus=${result.profile.reviewStatus} quality=${result.profile.profileQuality} durationMs=${Date.now() - startedAt}`
+    );
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      ...result
+    });
+  } catch (error) {
+    if (classifyError(error).status >= 500) {
+      console.error("[admin/application-profiles/generate-draft] failed", error);
+    }
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/import-first10", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const startedAt = Date.now();
+    const result = await importFirstTenApplicationProfiles();
+    console.log(
+      `[admin/application-profiles/import-first10] imported=${result.imported.length} skipped=${result.skipped.length} durationMs=${Date.now() - startedAt}`
+    );
+    res.json({
+      generatedAt: new Date().toISOString(),
+      imported: result.imported.map(compactApplicationProfileRecord),
+      skipped: result.skipped,
+      sourceGeneratedAt: result.sourceGeneratedAt,
+      aggregateCounts: result.aggregateCounts
+    });
+  } catch (error) {
+    if (classifyError(error).status >= 500) {
+      console.error("[admin/application-profiles/import-first10] failed", error);
+    }
+    handleError(res, error);
+  }
+});
+
+app.patch("/api/admin/application-profiles/:profileId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    if (!profileCanBeRegenerated(existing)) {
+      const error = new Error("Reviewed, rejected, or archived profiles cannot be edited as drafts.");
+      error.status = 409;
+      throw error;
+    }
+    const patched = applyApplicationProfileAdminPatch(existing, req.body?.profilePatch || req.body || {});
+    const profile = await putApplicationProfileRecord(patched);
+    res.json({
+      generatedAt: new Date().toISOString(),
+      profile
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/:profileId/approve", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const validation = validateApplicationProfileApproval(existing, {
+      adminNote: req.body?.adminNote,
+      confirmation: req.body?.confirmation,
+      approveAsReferenceOnly: req.body?.approveAsReferenceOnly
+    });
+    if (!validation.allowed) {
+      res.status(400).json({
+        error: "ApplicationProfile approval is blocked.",
+        approvalValidation: validation
+      });
+      return;
+    }
+
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "admin_reviewed",
+          adminNotes: appendAdminNote(existing.adminNotes, req.body?.adminNote || "Admin explicitly approved this ApplicationProfile."),
+          reviewedBy: admin.email || admin.userId || "admin",
+          reviewedAt: now,
+          approvedAsReferenceOnly: req.body?.approveAsReferenceOnly === true
+        },
+        { now, reviewStatus: "admin_reviewed" }
+      )
+    );
+
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: isApplicationProfileCustomerReady(profile),
+      approvalValidation: validation
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/:profileId/reject", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const reason = cleanText(req.body?.reason || req.body?.adminNote);
+    if (!reason) {
+      const error = new Error("Rejection reason is required.");
+      error.status = 400;
+      throw error;
+    }
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "rejected",
+          rejectionReason: reason,
+          rejectedBy: admin.email || admin.userId || "admin",
+          rejectedAt: now,
+          adminNotes: appendAdminNote(existing.adminNotes, `Rejected: ${reason}`)
+        },
+        { now, reviewStatus: "rejected" }
+      )
+    );
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: false
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/:profileId/archive", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "archived",
+          archivedBy: admin.email || admin.userId || "admin",
+          archivedAt: now,
+          adminNotes: appendAdminNote(existing.adminNotes, req.body?.adminNote || "Archived by admin.")
+        },
+        { now, reviewStatus: "archived" }
+      )
+    );
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: false
+    });
+  } catch (error) {
     handleError(res, error);
   }
 });
