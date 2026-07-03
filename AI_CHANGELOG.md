@@ -1817,3 +1817,4 @@
 - Added a product TODO to research environmental impact fines and model supportable avoided compliance penalties separately from incentives.
 - Imported GPT Pro v2 estimate input-resolution and grant probability outputs, applied 54 grant repair metadata updates to v2 incentive packages, and added a reusable intake script/report.
 - Fixed the production diagnostics route to report `dataRegion` instead of referencing an undefined `region` variable.
+- Completed selected-retrofit workspace details without changing the all-retrofits picker: separated opportunity source/program/application links, expanded application prep fields, added no-bill environmental masking, richer opportunity details, question save actions, and fuller add-to-plan snapshots.

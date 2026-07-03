@@ -5513,6 +5513,14 @@ type RetrofitOpportunityPreview = {
   eligibilityStatus: "confirmed" | "likely" | "unknown" | "needs review";
   requiredInfo: string[];
   applicationProcess?: string;
+  applicationMethod:
+    | "online portal"
+    | "PDF"
+    | "email"
+    | "contractor-submitted"
+    | "utility portal"
+    | "tax/accountant filing"
+    | "unknown";
   difficulty?: "easy" | "medium" | "hard" | "unknown";
   length?: string;
   helpAvailable?: string;
@@ -5520,8 +5528,14 @@ type RetrofitOpportunityPreview = {
   environmentalImpactContribution?: string;
   certificationBoost?: string;
   sourceUrl?: string | null;
+  programWebsiteUrl?: string | null;
+  applicationUrl?: string | null;
+  pdfUrl?: string | null;
+  contactEmail?: string | null;
   estimatedValue?: number | null;
   valueRule?: string;
+  valueCap?: string;
+  eligibleCostBasis?: string;
   includedState:
     | "Included in current estimate"
     | "Not included in current estimate"
@@ -5530,6 +5544,23 @@ type RetrofitOpportunityPreview = {
   selected: boolean;
   whySelected?: string;
   whyNotSelected?: string;
+};
+
+type AddedRetrofitPlanSnapshot = {
+  scenarioId: string;
+  opportunityIds: string[];
+  includedOpportunityIds: string[];
+  pendingOpportunityIds: string[];
+  financialSnapshot: {
+    netCostBeforeTaxBenefits?: number | null;
+    upfrontFinancialIncentive?: number | null;
+    recurringOperationalSavingsAnnual?: number | null;
+    paybackPeriodYears?: number | null;
+  };
+  missingInfo: string[];
+  nextStep: string;
+  recalculationStatus: "Recalculation pending" | "Recalculation not available yet" | "Updated after selected retrofit";
+  addedAt: string;
 };
 
 type OperatingSavingsPreview = {
@@ -5947,6 +5978,27 @@ export function buildRetrofitEnvironmentalImpactPreview(
   };
 }
 
+function maskEnvironmentalImpactForNoBillData(impact: RetrofitEnvironmentalImpact): RetrofitEnvironmentalImpact {
+  return {
+    ...impact,
+    overall: {
+      ...impact.overall,
+      displayValue: "?",
+      fallback: "Needs bills",
+      confidence: "Needs data",
+      subtext: "Upload bills to unlock bill-dependent environmental impact estimates.",
+      basis: ["Needs bills", "Needs retrofit-specific details"]
+    },
+    resources: impact.resources.map((resource) => ({
+      ...resource,
+      displayValue: resource.displayValue === "Not evaluated yet" ? "Not evaluated yet" : "Needs bills",
+      confidence: "Needs data",
+      basis: resource.basis || "Needs bills"
+    })),
+    missingInfo: [...new Set(["Upload bills", "Answer retrofit-specific questions", ...impact.missingInfo])].slice(0, 6)
+  };
+}
+
 function environmentalResourceFallbackRows(
   retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">
 ): RetrofitEnvironmentalImpact["resources"] {
@@ -6151,15 +6203,22 @@ function buildOpportunityPreview(
     eligibilityStatus,
     requiredInfo: [...new Set(requiredInfo)].slice(0, 5),
     applicationProcess: opportunityApplicationProcess(opportunity),
+    applicationMethod: opportunityApplicationMethod(opportunity, programType),
     difficulty: opportunity.blockers.length > 0 ? "hard" : opportunity.unresolvedRequirements.length > 2 ? "medium" : "unknown",
     length: opportunityLengthLabel(opportunity),
     helpAvailable: "Full application help available in next step",
     deadline: "Source unavailable",
     environmentalImpactContribution: environmentalImpactLabel(programType),
     certificationBoost: certificationBoostLabel(programType),
-    sourceUrl: opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl || null,
+    sourceUrl: opportunity.sourceUrl || null,
+    programWebsiteUrl: opportunity.websiteUrl || null,
+    applicationUrl: opportunity.applicationUrl || null,
+    pdfUrl: null,
+    contactEmail: null,
     estimatedValue: includedState === "Included in current estimate" ? packageEstimatedValue ?? preview?.upfrontSavingsCents ?? null : null,
     valueRule: incentivePackageValueRule(incentivePackage) || opportunity.matchedReasons[0] || undefined,
+    valueCap: incentivePackageValueCap(incentivePackage),
+    eligibleCostBasis: incentivePackageEligibleCostBasis(incentivePackage),
     includedState,
     selected: isIncluded,
     whySelected: isIncluded
@@ -6215,6 +6274,79 @@ function incentivePackageValueRule(summary?: IncentiveCalculationPackageSummary)
   if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Amount depends on a custom quote or program review.";
   if (summary.runtimeInclusionStatus === "not_user_facing_default") return "Not included in totals by default under conservative estimate rules.";
   return null;
+}
+
+function incentivePackageValueCap(summary?: IncentiveCalculationPackageSummary) {
+  const totals = (summary?.totals || {}) as Record<string, unknown>;
+  const cap = totals.maxBenefitCents || totals.maximumBenefitCents || totals.capCents;
+  return typeof cap === "number" && Number.isFinite(cap) ? formatCents(cap) : "Needs source review";
+}
+
+function incentivePackageEligibleCostBasis(summary?: IncentiveCalculationPackageSummary) {
+  if (!summary) return "Needs project scope, quantity, or quote";
+  if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Project quote or contractor estimate";
+  if (summary.includedInRuntimeTotals) return "Eligible project cost from current estimate";
+  if (summary.runtimeInclusionStatus === "missing_inputs") return "Needs project scope, quantity, or quote";
+  return "Needs source review";
+}
+
+function opportunityApplicationMethod(
+  opportunity: SampleMatchResult,
+  programType: string
+): RetrofitOpportunityPreview["applicationMethod"] {
+  const sourceText = [
+    opportunity.applicationUrl,
+    opportunity.websiteUrl,
+    opportunity.sourceUrl,
+    opportunity.sourceSummary?.programType,
+    opportunity.sourceSummary?.sourceName,
+    opportunity.sourceSummary?.administrator
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  if (programType.includes("tax")) return "tax/accountant filing";
+  if (sourceText.includes(".pdf")) return "PDF";
+  if (sourceText.includes("contractor")) return "contractor-submitted";
+  if (sourceText.includes("utility") || sourceText.includes("rebate")) return "utility portal";
+  if (sourceText.includes("mailto:") || sourceText.includes("email")) return "email";
+  if (opportunity.applicationUrl) return "online portal";
+  return "unknown";
+}
+
+function opportunityHasAnyUrl(opportunity: RetrofitOpportunityPreview) {
+  return Boolean(opportunity.sourceUrl || opportunity.programWebsiteUrl || opportunity.applicationUrl || opportunity.pdfUrl);
+}
+
+function opportunityAffectsMetric(
+  opportunity: RetrofitOpportunityPreview,
+  selected: boolean,
+  includedLabel: RetrofitOpportunityPreview["includedState"]
+) {
+  if (!selected) return "None right now";
+  if (includedLabel === "Included in current estimate") {
+    if (opportunity.type.includes("tax")) return "Tax benefits";
+    if (opportunity.type.includes("financing")) return "Financing";
+    if (opportunity.type.includes("certification")) return "Certification boost";
+    return "Upfront financial incentive";
+  }
+  if (opportunity.type.includes("certification")) return "Certification boost, pending review";
+  if (opportunity.type.includes("financing")) return "Financing, pending review";
+  return "Possible financial value, pending inputs";
+}
+
+function applicationRequiredDocuments(opportunity: RetrofitOpportunityPreview) {
+  const docs = new Set<string>();
+  for (const item of opportunity.requiredInfo) {
+    const normalized = item.toLowerCase();
+    if (normalized.includes("bill") || normalized.includes("utility")) docs.add("Utility bill");
+    if (normalized.includes("quote") || normalized.includes("cost")) docs.add("Contractor quote");
+    if (normalized.includes("tax") || normalized.includes("entity")) docs.add("Tax/entity documentation");
+    if (normalized.includes("territory")) docs.add("Utility territory confirmation");
+    if (normalized.includes("permit")) docs.add("Permit or interconnection documentation");
+  }
+  if (docs.size === 0) return "Requirements not extracted yet";
+  return [...docs].join(", ");
 }
 
 function includedOpportunityIdsForRetrofit(retrofit: SampleRetrofitGroup) {
@@ -6601,7 +6733,7 @@ export function RetrofitRecommendationsPreview({
   const [financingRetrofit, setFinancingRetrofit] = useState<RetrofitPreviewCard | null>(null);
   const [refinementMessage, setRefinementMessage] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [addedRetrofitPlans, setAddedRetrofitPlans] = useState<Record<string, { scenarioId: string; opportunityIds: string[]; addedAt: string }>>({});
+  const [addedRetrofitPlans, setAddedRetrofitPlans] = useState<Record<string, AddedRetrofitPlanSnapshot>>({});
   const [dirtyRetrofitIds, setDirtyRetrofitIds] = useState<Record<string, boolean>>({});
   const [pendingTabRetrofitId, setPendingTabRetrofitId] = useState<string | null>(null);
   const [planMessage, setPlanMessage] = useState<string | null>(null);
@@ -6752,11 +6884,25 @@ export function RetrofitRecommendationsPreview({
   function addRetrofitToPlan(retrofit: RetrofitPreviewCard, nextRetrofitId?: string) {
     const scenarioId = selectedScenarioIds[retrofit.id] || retrofit.scenarios[0]?.id || "";
     const opportunityIds = selectedOpportunityIdsForRetrofit(retrofit);
+    const scenario = retrofit.scenarios.find((item) => item.id === scenarioId);
+    const includedOpportunityIds = getIncludedOpportunitiesForCurrentEstimate(retrofit, scenario, selectedOpportunityIds).map((opportunity) => opportunity.id);
+    const pendingOpportunityIds = opportunityIds.filter((id) => !includedOpportunityIds.includes(id));
     setAddedRetrofitPlans((current) => ({
       ...current,
       [retrofit.id]: {
         scenarioId,
         opportunityIds,
+        includedOpportunityIds,
+        pendingOpportunityIds,
+        financialSnapshot: {
+          netCostBeforeTaxBenefits: retrofit.metrics.netCostBeforeTaxBenefits ?? null,
+          upfrontFinancialIncentive: retrofit.metrics.upfrontFinancialIncentive ?? null,
+          recurringOperationalSavingsAnnual: retrofit.metrics.recurringOperationalSavingsAnnual ?? null,
+          paybackPeriodYears: retrofit.metrics.paybackPeriodYears ?? null
+        },
+        missingInfo: retrofit.missingInfo,
+        nextStep: retrofit.recommendedNextStep || "Prepare applications or review the next retrofit.",
+        recalculationStatus: "Recalculation not available yet",
         addedAt: new Date().toISOString()
       }
     }));
@@ -7557,6 +7703,9 @@ function RetrofitPreviewCardView({
   const includedOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings != null || item.monthlySavings != null);
   const pendingOperatingSavings = retrofit.operatingSavings.filter((item) => item.annualSavings == null && item.monthlySavings == null);
   const environmentalImpact = retrofit.environmentalImpact;
+  const displayedEnvironmentalImpact = billDataLocked
+    ? maskEnvironmentalImpactForNoBillData(environmentalImpact)
+    : environmentalImpact;
   const displayedUpfrontFinancialIncentive = selectedIncludedOpportunities.length > 0
     ? billDataLocked
       ? null
@@ -7709,7 +7858,7 @@ function RetrofitPreviewCardView({
   const includedSummary = `${selectedIncludedOpportunities.length} included · ${selectedPendingOpportunities.length} pending`;
   const scenarioSummary = `${retrofit.scenarios.length} options · ${selectedScenario?.name || "Scenario A"}`;
   const opportunitySummary = `${retrofit.opportunities.length} found · ${selectedCount} selected`;
-  const environmentalSummary = `${environmentalImpact.overall.displayValue} · ${environmentalImpact.overall.confidence}`;
+  const environmentalSummary = `${displayedEnvironmentalImpact.overall.displayValue} · ${displayedEnvironmentalImpact.overall.confidence}`;
   const savingsSummary = includedOperatingSavings.length ? `${includedOperatingSavings.length} estimate${includedOperatingSavings.length > 1 ? "s" : ""}` : "Needs bill";
   const assumptionsSummary = `${retrofit.editableAssumptions.length} inputs · ${Math.max(0, retrofit.editableAssumptions.length - assumptionsConfirmedCount)} unconfirmed`;
   const missingSummary = retrofit.missingInfo.length ? `${retrofit.missingInfo.length} blocker${retrofit.missingInfo.length > 1 ? "s" : ""}` : "Ready for review";
@@ -8079,22 +8228,22 @@ function RetrofitPreviewCardView({
         </div>
         <div className="environmental-impact-top-grid">
           <article className="environmental-impact-card primary-impact-card">
-            <span>{environmentalImpact.overall.label}</span>
-            <strong className={environmentalImpact.overall.displayValue === "?" ? "impact-value is-placeholder" : "impact-value"}>
-              {environmentalImpact.overall.displayValue}
+            <span>{displayedEnvironmentalImpact.overall.label}</span>
+            <strong className={displayedEnvironmentalImpact.overall.displayValue === "?" ? "impact-value is-placeholder" : "impact-value"}>
+              {displayedEnvironmentalImpact.overall.displayValue}
             </strong>
-            <small>{environmentalImpact.overall.displayValue === "?" ? environmentalImpact.overall.fallback : environmentalImpact.overall.unit}</small>
-            <p>{environmentalImpact.overall.subtext}</p>
+            <small>{displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback : displayedEnvironmentalImpact.overall.unit}</small>
+            <p>{displayedEnvironmentalImpact.overall.subtext}</p>
           </article>
           <article className="environmental-impact-card">
             <span>Impact confidence</span>
-            <strong>{environmentalImpact.overall.confidence}</strong>
-            <small>{environmentalImpact.overall.confidence === "Needs data" ? "Bills and retrofit inputs needed" : "Based on available impact inputs"}</small>
+            <strong>{displayedEnvironmentalImpact.overall.confidence}</strong>
+            <small>{displayedEnvironmentalImpact.overall.confidence === "Needs data" ? "Bills and retrofit inputs needed" : "Based on available impact inputs"}</small>
           </article>
           <article className="environmental-impact-card">
             <span>Top missing input</span>
-            <strong>{environmentalImpact.missingInfo[0] || "Not evaluated yet"}</strong>
-            <small>{environmentalImpact.missingInfo.length > 1 ? `+${environmentalImpact.missingInfo.length - 1} more` : "Impact inputs"}</small>
+            <strong>{displayedEnvironmentalImpact.missingInfo[0] || "Not evaluated yet"}</strong>
+            <small>{displayedEnvironmentalImpact.missingInfo.length > 1 ? `+${displayedEnvironmentalImpact.missingInfo.length - 1} more` : "Impact inputs"}</small>
           </article>
         </div>
 
@@ -8106,7 +8255,7 @@ function RetrofitPreviewCardView({
             </div>
           </div>
           <div className="environmental-resource-list">
-            {environmentalImpact.resources.map((resource) => (
+            {displayedEnvironmentalImpact.resources.map((resource) => (
               <article className="environmental-resource-row" key={`${resource.label}:${resource.unit}`}>
                 <div>
                   <strong>{resource.label}</strong>
@@ -8124,7 +8273,7 @@ function RetrofitPreviewCardView({
           <section className="environmental-impact-section">
             <h4>Impact basis</h4>
             <div className="impact-basis-list">
-              {environmentalImpact.overall.basis.map((basis) => (
+              {displayedEnvironmentalImpact.overall.basis.map((basis) => (
                 <span key={basis}>{basis}</span>
               ))}
             </div>
@@ -8133,7 +8282,7 @@ function RetrofitPreviewCardView({
           <section className="environmental-impact-section">
             <h4>Confidence / missing inputs</h4>
             <div className="impact-basis-list">
-              {environmentalImpact.missingInfo.map((item) => (
+              {displayedEnvironmentalImpact.missingInfo.map((item) => (
                 <span key={item}>{item}</span>
               ))}
             </div>
@@ -8148,7 +8297,7 @@ function RetrofitPreviewCardView({
             </div>
           </div>
           <div className="certification-contribution-grid">
-            {environmentalImpact.certificationContribution.map((item) => (
+            {displayedEnvironmentalImpact.certificationContribution.map((item) => (
               <article className="certification-contribution-card" key={item.program}>
                 <span>{item.program}</span>
                 <strong>{item.status}</strong>
@@ -8170,7 +8319,7 @@ function RetrofitPreviewCardView({
               <article className="environmental-resource-row" key={`impact-supported:${opportunity.id}`}>
                 <div>
                   <strong>{opportunity.name}</strong>
-                  <small>{opportunityImpactSupportedLabel(environmentalImpact)}</small>
+                  <small>{opportunityImpactSupportedLabel(displayedEnvironmentalImpact)}</small>
                 </div>
                 <span className={selectedOpportunityIds[opportunity.id] ? "included-label" : "not-included-label"}>
                   {selectedOpportunityIds[opportunity.id] ? "Selected" : "Not selected"}
@@ -8313,7 +8462,7 @@ function RetrofitPreviewCardView({
                         onPrepareApplication={() => setApplicationPrepOpportunity(opportunity)}
                         onToggle={() => onToggleOpportunity(opportunity.id)}
                         onToggleExpanded={() => setExpandedOpportunityIds((current) => ({ ...current, [opportunity.id]: !current[opportunity.id] }))}
-                        environmentalImpact={environmentalImpact}
+                        environmentalImpact={displayedEnvironmentalImpact}
                         opportunity={opportunity}
                         selected={Boolean(selectedOpportunityIds[opportunity.id])}
                       />
@@ -8409,6 +8558,16 @@ function RetrofitPreviewCardView({
                   value={detailAnswers[question.id] || ""}
                 />
               )}
+              <button
+                className="secondary-button small-action-button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onDetailAnswerChange(question.id, detailAnswers[question.id] || "");
+                }}
+                type="button"
+              >
+                Save for preview
+              </button>
             </label>
           ))}
         </section>
@@ -8552,7 +8711,7 @@ function OpportunityPreviewRow({
           ? "Needs quote"
           : opportunity.requiredInfo.includes("utility territory confirmation")
             ? "Needs utility confirmation"
-            : opportunity.sourceUrl
+            : opportunityHasAnyUrl(opportunity)
               ? "Value not estimated yet"
               : "Needs source review";
   return (
@@ -8577,7 +8736,7 @@ function OpportunityPreviewRow({
         </div>
         <div className="opportunity-preview-actions">
           <strong>{estimatedValueLabel}</strong>
-          {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open program source</a> : <span>Source unavailable</span>}
+          {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : <span>Source unavailable</span>}
           <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
           <button className="secondary-button" onClick={onToggleExpanded} type="button">{expanded ? "Details open ▾" : "View details"}</button>
         </div>
@@ -8587,21 +8746,30 @@ function OpportunityPreviewRow({
           <div className="opportunity-preview-details">
             <div className="opportunity-detail-column">
               <h5>Value</h5>
+              <DetailItem label="Description" value={opportunity.description} />
+              <DetailItem label="Type" value={capitalizeLabel(opportunity.type)} />
+              <DetailItem label="Timing" value={capitalizeLabel(opportunity.timing)} />
+              <DetailItem label="Eligibility" value={capitalizeLabel(opportunity.eligibilityStatus)} />
               <DetailItem label="Estimated value" value={estimatedValueLabel} />
               <DetailItem label="Formula/rule" value={opportunity.valueRule || "Requirements not extracted yet"} />
-              <DetailItem label="Cap" value="Needs source review" />
-              <DetailItem label="Eligible cost basis" value="Needs source review" />
-              <DetailItem label="Affects metric" value={selected && includedLabel === "Included in current estimate" ? "Upfront financial incentive" : "Not included in current estimate"} />
+              <DetailItem label="Cap" value={opportunity.valueCap || "Needs source review"} />
+              <DetailItem label="Eligible cost basis" value={opportunity.eligibleCostBasis || "Needs source review"} />
+              <DetailItem label="Affects metric" value={opportunityAffectsMetric(opportunity, selected, includedLabel)} />
               <DetailItem label="Included state" value={includedLabel} />
+              <DetailItem label="Why selected/not selected" value={selectionReason} />
             </div>
             <div className="opportunity-detail-column">
               <h5>Application</h5>
+              <DetailItem label="Application method" value={capitalizeLabel(opportunity.applicationMethod)} />
               <DetailItem label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
-              <DetailItem label="Requires" value={opportunity.requiredInfo.join(", ")} />
+              <DetailItem label="Required information" value={opportunity.requiredInfo.join(", ")} />
               <DetailItem label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
               <DetailItem label="Length" value={opportunity.length || "Source unavailable"} />
               <DetailItem label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
               <DetailItem label="Deadline" value={opportunity.deadline || "Source unavailable"} />
+              <DetailItem label="Program website" value={opportunity.programWebsiteUrl ? "Open program website" : "Program website not found yet"} />
+              <DetailItem label="Application link" value={opportunity.applicationUrl ? "Open application" : "Application URL not found yet"} />
+              <DetailItem label="PDF" value={opportunity.pdfUrl ? "Open PDF" : "PDF URL not found yet"} />
             </div>
             <div className="opportunity-detail-column opportunity-impact-row">
               <h5>Impact</h5>
@@ -8609,8 +8777,16 @@ function OpportunityPreviewRow({
               <DetailItem label="Impact note" value={opportunity.environmentalImpactContribution || "Source unavailable"} />
               <DetailItem label="Certification boost" value={opportunity.certificationBoost || "Source unavailable"} />
               <DetailItem label="Selected state" value={selectionReason} />
-              <DetailItem label="Source" value={opportunity.sourceUrl ? "Open program source" : "Source unavailable"} />
+              <DetailItem label="Source" value={opportunity.sourceUrl ? "Open source" : "Source unavailable"} />
+              <DetailItem label="Contact email" value={opportunity.contactEmail || "Contact email not found yet"} />
             </div>
+          </div>
+          <div className="retrofit-badge-row opportunity-link-row">
+            {opportunity.sourceUrl ? <a className="secondary-button link-button" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : <span>Source unavailable</span>}
+            {opportunity.programWebsiteUrl ? <a className="secondary-button link-button" href={opportunity.programWebsiteUrl} rel="noreferrer" target="_blank">Open program website</a> : <span>Program website not found yet</span>}
+            {opportunity.applicationUrl ? <a className="secondary-button link-button" href={opportunity.applicationUrl} rel="noreferrer" target="_blank">Open application</a> : <span>Application URL not found yet</span>}
+            {opportunity.pdfUrl ? <a className="secondary-button link-button" href={opportunity.pdfUrl} rel="noreferrer" target="_blank">Open PDF</a> : null}
+            {opportunity.contactEmail ? <a className="secondary-button link-button" href={`mailto:${opportunity.contactEmail}`}>Contact by email</a> : null}
           </div>
           <div className="opportunity-preview-footer">
             <small>{opportunity.valueRule ? "Estimate will update when enough confirmed inputs are available." : "Value not estimated yet. Requirements need source review."}</small>
@@ -8669,33 +8845,52 @@ function ApplicationPrepDrawer({
   opportunity: RetrofitOpportunityPreview;
   retrofitName: string;
 }) {
+  const requirementsExtracted = opportunity.requiredInfo.some((item) => !["bills", "retrofit-specific information", "quote", "tax/entity information"].includes(item));
+  const autofillReadiness = opportunity.requiredInfo.length === 0
+    ? "Ready"
+    : requirementsExtracted
+      ? "Partially ready"
+      : opportunityHasAnyUrl(opportunity)
+        ? "Needs review"
+        : "Not ready";
   return (
     <div className="modal-backdrop retrofit-financing-backdrop" onClick={onClose}>
       <aside className="retrofit-financing-drawer" onClick={(event) => event.stopPropagation()}>
         <button aria-label="Close application prep" className="modal-close-button" onClick={onClose} type="button">Close</button>
         <p className="eyebrow">Prepare application</p>
         <h2>{opportunity.name}</h2>
-        <p>Prepare supporting information for this opportunity. This is not auto-submit.</p>
+        <p>Prepare supporting information for this opportunity. This is not auto-submit and nothing is sent without approval.</p>
+        {!requirementsExtracted ? (
+          <p className="compact-empty">Requirements not extracted yet. Open program source to verify requirements.</p>
+        ) : null}
         <div className="financing-field-grid">
           <DetailItem label="Related retrofit" value={retrofitName} />
           <DetailItem label="Selected/included state" value={opportunity.includedState} />
-          <DetailItem label="Application method" value={opportunity.applicationProcess || "Unknown"} />
-          <DetailItem label="Application URL/source" value={opportunity.sourceUrl ? "Open program source" : "Source unavailable"} />
-          <DetailItem label="Source" value={opportunity.sourceUrl ? "Open program source" : "Source unavailable"} />
+          <DetailItem label="Program/source URL" value={opportunity.sourceUrl ? "Source available" : "Source unavailable"} />
+          <DetailItem label="Program website URL" value={opportunity.programWebsiteUrl ? "Program website available" : "Program website not found yet"} />
+          <DetailItem label="Application URL" value={opportunity.applicationUrl ? "Application available" : "Application URL not found yet"} />
+          <DetailItem label="PDF URL" value={opportunity.pdfUrl ? "PDF available" : "PDF URL not found yet"} />
+          <DetailItem label="Contact email" value={opportunity.contactEmail || "Contact email not found yet"} />
+          <DetailItem label="Application method" value={capitalizeLabel(opportunity.applicationMethod)} />
+          <DetailItem label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
           <DetailItem label="Required fields" value={opportunity.requiredInfo.length ? opportunity.requiredInfo.join(", ") : "Requirements not extracted yet"} />
-          <DetailItem label="Required documents" value={opportunity.requiredInfo.join(", ")} />
+          <DetailItem label="Required documents" value={applicationRequiredDocuments(opportunity)} />
           <DetailItem label="Optional fields" value="Additional contact, utility, and project details may still be needed." />
-          <DetailItem label="Pre-approval required" value={opportunity.timing === "upfront" ? "Possible" : "Needs review"} />
+          <DetailItem label="Pre-approval required" value={opportunity.timing === "upfront" || opportunity.applicationMethod === "contractor-submitted" ? "Possible" : "Unknown"} />
           <DetailItem label="Deadline" value={opportunity.deadline || "Source unavailable"} />
           <DetailItem label="Estimated time" value={opportunity.length || "Needs source review"} />
           <DetailItem label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
-          <DetailItem label="Autofill readiness" value="Application prep only" />
-          <DetailItem label="Missing information" value={opportunity.requiredInfo.join(", ")} />
+          <DetailItem label="RetroFi can help fill it" value={autofillReadiness === "Ready" || autofillReadiness === "Partially ready" ? "Yes, after review" : "Needs review first"} />
+          <DetailItem label="Autofill readiness" value={autofillReadiness} />
+          <DetailItem label="Missing information" value={opportunity.requiredInfo.length ? opportunity.requiredInfo.join(", ") : "None flagged"} />
           <DetailItem label="Generated packet preview" value={opportunity.requiredInfo.length ? "Packet preview can be prepared after required fields are confirmed." : "Requirements not extracted yet. Open program source to verify requirements."} />
         </div>
         <div className="retrofit-badge-row">
-          {opportunity.sourceUrl ? <a className="secondary-button link-button" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open application</a> : null}
+          {opportunity.applicationUrl ? <a className="secondary-button link-button" href={opportunity.applicationUrl} rel="noreferrer" target="_blank">Open application</a> : null}
           {opportunity.sourceUrl ? <a className="secondary-button link-button" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open program source</a> : null}
+          {opportunity.programWebsiteUrl ? <a className="secondary-button link-button" href={opportunity.programWebsiteUrl} rel="noreferrer" target="_blank">Open program website</a> : null}
+          {opportunity.pdfUrl ? <a className="secondary-button link-button" href={opportunity.pdfUrl} rel="noreferrer" target="_blank">Open PDF</a> : null}
+          {opportunity.contactEmail ? <a className="secondary-button link-button" href={`mailto:${opportunity.contactEmail}`}>Contact by email</a> : null}
           <button className="secondary-button" type="button">Copy answers</button>
           <button className="secondary-button" type="button">Save packet</button>
         </div>
