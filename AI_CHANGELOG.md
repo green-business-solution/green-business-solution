@@ -5,6 +5,11 @@
 - Removed the selected-workspace `Back to all retrofits` button from `/user-preview`.
 - Made the primary `Retrofits` sidebar row return to the full retrofit picker when a retrofit is selected.
 
+## 2026-07-02 - Codex (GPT-5) tax document workflow TODOs
+
+- Added product TODOs to seed realistic synthetic tax documents into test cases and later build tax document ingestion plus tax form assembly.
+- Clarified that future tax document extraction should preserve source confidence and require user/admin confirmation before tax estimates are trusted.
+
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile first-10 production import
 
 - Reworked `/api/admin/application-profiles/import-first10` to generate draft ApplicationProfiles from production SOURCE_DSIRE opportunity data instead of reading a local audit JSON file that is unavailable in Lambda.
