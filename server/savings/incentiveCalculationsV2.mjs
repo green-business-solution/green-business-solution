@@ -564,6 +564,7 @@ function calculateMeasureBaseAmount(measure, ctx) {
   const calculation = measure.calculation || {};
   if (calculation.method === "fixed_amount") return moneyToCents(calculation.amount);
   if (calculation.method === "per_unit") return rateToCents(calculation.rate);
+  if (calculation.method === "zero_when_not_applicable") return sourceRowAmountCents(calculation.source_row);
   if (calculation.method === "percent_of_cost") {
     return percentOfCents(Number(answerValue(ctx.answers, calculation.cost_input || "project_cost_cents") || 0), calculation.percent || 0);
   }
@@ -734,11 +735,13 @@ function measureFiltersSatisfied(measure, ctx) {
 }
 
 function applyMeasureLimits(quantity, measure) {
+  const sourceRowMaxUnits = Number(measure.calculation?.source_row?.maxUnits);
+  const withSourceRowLimit = Number.isFinite(sourceRowMaxUnits) ? Math.min(quantity, sourceRowMaxUnits) : quantity;
   return (measure.limits || []).reduce((current, limit) => {
     if (Number.isFinite(limit.max_count)) return Math.min(current, Number(limit.max_count));
     if (Number.isFinite(limit.max_units)) return Math.min(current, Number(limit.max_units));
     return current;
-  }, quantity);
+  }, withSourceRowLimit);
 }
 
 function resolveV2Basis(effect, ctx, priorAwards = []) {
@@ -958,6 +961,27 @@ function moneyToCents(money = {}) {
 
 function rateToCents(rate = {}) {
   return moneyToCents(rate.amount);
+}
+
+function sourceRowAmountCents(sourceRow = {}) {
+  if (!sourceRow || typeof sourceRow !== "object") return Number.NaN;
+  const amountKeys = [
+    "amountCents",
+    "amountCentsPerUnit",
+    "amountCentsPerEligibleChargerOrPort",
+    "amountCentsPerStation",
+    "maxAmountCentsPerCharger",
+    "maxAwardCents",
+    "rebateCents",
+    "rateCents"
+  ];
+
+  for (const key of amountKeys) {
+    const amount = Number(sourceRow[key]);
+    if (Number.isFinite(amount) && amount > 0) return amount;
+  }
+
+  return Number.NaN;
 }
 
 function confidenceNumber(value) {

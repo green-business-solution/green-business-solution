@@ -105,7 +105,25 @@ function selectCalculationModel(models, ctx) {
   if (!classValue && models.length === 1 && !(models[0].appliesToClasses || []).length) return models[0];
   if (!classValue) return null;
 
-  return models.find((model) => (model.appliesToClasses || []).map(normalizeClass).includes(classValue)) || null;
+  const classCandidates = equivalentClassValues(classValue);
+  return (
+    models.find((model) => {
+      const modelClasses = (model.appliesToClasses || []).map(normalizeClass);
+      return classCandidates.some((candidate) => modelClasses.includes(candidate));
+    }) || null
+  );
+}
+
+function equivalentClassValues(classValue) {
+  const normalized = normalizeClass(classValue);
+  const aliases = {
+    restaurant: ["restaurant", "food_service", "service", "general_business"],
+    restaurant_foodservice: ["restaurant_foodservice", "restaurant", "food_service", "service", "general_business"],
+    warehouse_logistics: ["warehouse_logistics", "warehouse", "warehousing", "storage", "general_business"],
+    distribution: ["distribution", "warehouse", "warehousing", "storage", "general_business"],
+    hospitality_lodging: ["hospitality_lodging", "hotel", "lodging", "rental_accommodations", "general_business"]
+  };
+  return aliases[normalized] || [normalized];
 }
 
 function missingInputsForModel(model, ctx) {
@@ -370,8 +388,10 @@ function geographyScore(ruleGeography = {}, geography = {}) {
 
   if (ruleCountries.length && geography.country && !ruleCountries.includes(geography.country)) return -1;
   if (ruleStates.length && (!geography.state || !ruleStates.includes(geography.state))) return -1;
-  if (ruleCountyFips.length && (!geography.countyFips || !ruleCountyFips.includes(geography.countyFips))) return -1;
-  if (ruleCities.length && !hasCityOverlap(ruleCities, cityValues(geography))) return -1;
+  const cityMatches = ruleCities.length ? hasCityOverlap(ruleCities, cityValues(geography)) : false;
+  if (ruleCountyFips.length && geography.countyFips && !ruleCountyFips.includes(geography.countyFips)) return -1;
+  if (ruleCountyFips.length && !geography.countyFips && !cityMatches) return -1;
+  if (ruleCities.length && !cityMatches) return -1;
 
   let score = 0;
   if (ruleCountries.length) score += 1;

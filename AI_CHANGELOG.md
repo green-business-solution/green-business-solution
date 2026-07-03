@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) grant and tax estimate coverage pass
+
+- Added a repeatable 50-test-case grant/tax coverage report that classifies matched v2 package outcomes, missing expected-value evidence, unmatched tax packages, and local-tax workflow status.
+- Fixed admin test-case v2 input resolution to preserve the original retrofit id, consume GPT Pro retrofit-scoped grant inputs, resolve charger count aliases, and select repaired measure-catalog rows from source-row amount fields.
+- Improved local tax workflow coverage by allowing city/state matches before county FIPS resolution and by adding class fallback behavior for restaurant/warehouse-style test fixtures.
+
 ## 2026-07-03 - Codex (GPT-5) post-form Process modal isolation
 
 - Moved the post-form Process onboarding modal outside the retrofit preview section to prevent preview heading/body typography from leaking into the modal.

@@ -497,6 +497,7 @@ function buildFixture({
     retrofitInstance: {
       id: `ri_${sampleUserId}_${retrofitGroup.retrofitTypeId}`,
       retrofitTypeId,
+      sourceRetrofitTypeId: retrofitGroup.retrofitTypeId,
       retrofitTypeSlug: template.engineSlug,
       selectedOpportunityIds,
       allowSyntheticV2Defaults: true

@@ -40,7 +40,16 @@ const UNIT_COUNT_ALIASES = [
   "installation_count"
 ];
 
-const PORT_COUNT_ALIASES = ["charger_count", "port_count", "portcount", "level_2_port_count", "eligible_port_count", "number_of_ports"];
+const PORT_COUNT_ALIASES = [
+  "charger_count",
+  "charger_port_count",
+  "charger_station_count",
+  "port_count",
+  "portcount",
+  "level_2_port_count",
+  "eligible_port_count",
+  "number_of_ports"
+];
 const FIXTURE_COUNT_ALIASES = ["fixture_count", "lamp_count", "bulb_count", "lighting_quantity", "lighting_fixture_count"];
 const THERMOSTAT_COUNT_ALIASES = ["thermostat_count", "smart_thermostat_count"];
 const TON_ALIASES = ["tons", "tonnage", "cooling_tons", "equipment_tons"];
@@ -268,7 +277,7 @@ function addCostAliases({ ctx, answers, add }) {
 function addGrantProfileInputs({ ctx, packages, add }) {
   const grantContext = ctx.grantContext || ctx.grant || {};
   const packageOpportunityIds = new Set((packages || []).map((pkg) => pkg?.opportunity_id).filter(Boolean));
-  const currentRetrofitTypeId = ctx.retrofitTypeId || ctx.retrofitTypeSlug || null;
+  const currentRetrofitTypeId = ctx.sourceRetrofitTypeId || ctx.retrofitTypeId || ctx.retrofitTypeSlug || null;
 
   for (const row of grantOpportunitySpecificRows(ctx, grantContext, packageOpportunityIds)) {
     for (const fact of arrayOf(row.inputFacts)) {
@@ -373,7 +382,8 @@ function addEnergyAliases({ ctx, answers, add }) {
   add("annual_mcf_saved", annualThermSavings ? annualThermSavings / 10 : undefined, "derived_bill_delta", { canonicalInputKey: "annual_mcf_savings" });
   add("demand_reduction_kw", demandReductionKw, "derived_bill_delta", { canonicalInputKey: "demand_reduction_kw" });
   add("peak_kw_reduction", demandReductionKw, "derived_bill_delta", { canonicalInputKey: "demand_reduction_kw" });
-  for (const key of KW_ALIASES) add(key, systemKw ?? defaultKwForRetrofit(ctx.retrofitTypeId), systemKw ? "derived_runtime" : "safe_placeholder_default", { canonicalInputKey: key === "charger_power_kw" ? "charger_power_kw" : "system_kw", defaultIsPlaceholder: !systemKw, defaultConfidence: !systemKw ? "low" : null });
+  const retrofitTypeId = ctx.sourceRetrofitTypeId || ctx.retrofitTypeId;
+  for (const key of KW_ALIASES) add(key, systemKw ?? defaultKwForRetrofit(retrofitTypeId), systemKw ? "derived_runtime" : "safe_placeholder_default", { canonicalInputKey: key === "charger_power_kw" ? "charger_power_kw" : "system_kw", defaultIsPlaceholder: !systemKw, defaultConfidence: !systemKw ? "low" : null });
 }
 
 function addOperationalAliases({ ctx, answers, add }) {
@@ -395,7 +405,11 @@ function addMeasureSelections({ ctx, packages, answers, add }) {
       const selectionInput = effect.calculation.measure_selection_input || catalog.selection_input || "selected_measures";
       if (hasAnswer(answers, selectionInput)) continue;
 
-      const selectedMeasure = selectMeasure(catalog.measures || [], ctx.retrofitTypeId, Boolean(ctx.allowSyntheticV2Defaults));
+      const selectedMeasure = selectMeasure(
+        catalog.measures || [],
+        ctx.sourceRetrofitTypeId || ctx.retrofitTypeId,
+        Boolean(ctx.allowSyntheticV2Defaults)
+      );
       if (!selectedMeasure) continue;
       const quantity = firstFiniteAnswer(answers, UNIT_COUNT_ALIASES) ?? 1;
       add(selectionInput, [{ measure_id: selectedMeasure.measure_id, quantity }], ctx.allowSyntheticV2Defaults ? "synthetic_test_case_measure_selection" : "derived_retrofit_measure_match", {
@@ -527,10 +541,10 @@ function syntheticDefaultForInput(key, valueType, ctx) {
   if (/date/.test(key)) return "2026-07-02";
   if (/cost|price|invoice|receipt|basis|taxcents|liability/.test(key)) return finiteNumber(ctx.upfrontCostCents) ?? 100000;
   if (/count|quantity|number|units|ports|chargers|doors|systems|vehicles/.test(key)) return 1;
-  if (/tons|tonnage/.test(key)) return syntheticTonsForRetrofit(ctx.retrofitTypeId);
+  if (/tons|tonnage/.test(key)) return syntheticTonsForRetrofit(ctx.sourceRetrofitTypeId || ctx.retrofitTypeId);
   if (/kwh/.test(key)) return annualDeltaAbs(ctx.billLineDeltas, "annual_kwh_delta") || 1000;
   if (/therm|mcf/.test(key)) return annualDeltaAbs(ctx.billLineDeltas, "annual_therms_delta") || 100;
-  if (/kw/.test(key)) return defaultKwForRetrofit(ctx.retrofitTypeId);
+  if (/kw/.test(key)) return defaultKwForRetrofit(ctx.sourceRetrofitTypeId || ctx.retrofitTypeId);
   if (/percent|rate/.test(key)) return 0.1;
   if (/approved|qualif|eligible|confirm|enroll|status|account|proof|report/.test(key)) return true;
   if (valueType === "number" || valueType === "integer") return 1;
@@ -559,19 +573,42 @@ function selectMeasure(measures, retrofitTypeId, allowSynthetic) {
 
 function measureHasCalculableValue(measure) {
   const calculation = measure.calculation || {};
-  return calculation.method !== "zero_when_not_applicable" && Number.isFinite(measureAmountCents(measure));
+  return Number.isFinite(measureAmountCents(measure));
 }
 
 function measureAmountCents(measure) {
   const calculation = measure.calculation || {};
   if (calculation.method === "fixed_amount") return moneyToCents(calculation.amount);
   if (calculation.method === "per_unit") return moneyToCents(calculation.rate?.amount);
-  if (calculation.method === "percent_of_cost") return Number.POSITIVE_INFINITY;
-  return Number.POSITIVE_INFINITY;
+  if (calculation.method === "zero_when_not_applicable") return sourceRowAmountCents(calculation.source_row);
+  if (calculation.method === "percent_of_cost") return Number.MAX_SAFE_INTEGER;
+  return Number.MAX_SAFE_INTEGER;
+}
+
+function sourceRowAmountCents(sourceRow = {}) {
+  if (!sourceRow || typeof sourceRow !== "object") return Number.NaN;
+  const amountKeys = [
+    "amountCents",
+    "amountCentsPerUnit",
+    "amountCentsPerEligibleChargerOrPort",
+    "amountCentsPerStation",
+    "maxAmountCentsPerCharger",
+    "maxAwardCents",
+    "rebateCents",
+    "rateCents"
+  ];
+
+  for (const key of amountKeys) {
+    const amount = Number(sourceRow[key]);
+    if (Number.isFinite(amount) && amount > 0) return amount;
+  }
+
+  return Number.NaN;
 }
 
 function scoreMeasure(measure, retrofitTokens) {
-  const text = tokensFor(`${measure.measure_id || ""} ${measure.name || ""} ${measure.source_row?.measure || ""}`);
+  const sourceRow = measure.calculation?.source_row || measure.source_row || {};
+  const text = tokensFor(`${measure.measure_id || ""} ${measure.name || ""} ${sourceRow.measure || ""} ${sourceRow.category || ""} ${sourceRow.siteType || ""} ${sourceRow.tier || ""}`);
   return retrofitTokens.reduce((score, token) => score + (text.includes(token) ? 1 : 0), 0);
 }
 

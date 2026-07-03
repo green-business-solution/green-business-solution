@@ -36,6 +36,20 @@ describe("local tax workflows", () => {
     expect(selected.map((item) => item.id)).toContain("local_tax_ca_burbank_business_license_v1");
   });
 
+  it("selects city-scoped workflows when county FIPS is not yet resolved", () => {
+    const selected = selectLocalTaxWorkflows({
+      workflows,
+      geography: {
+        country: "US",
+        stateCode: "CA",
+        placeName: "Pasadena"
+      },
+      taxDomain: "local_business_tax"
+    });
+
+    expect(selected.map((item) => item.id)).toContain("local_tax_ca_pasadena_business_license_v1");
+  });
+
   it("calculates Burbank business-license rows only as internal confirmed-input values", () => {
     const result = calculateLocalTaxWorkflow(
       workflow("local_tax_ca_burbank_business_license_v1"),
@@ -124,6 +138,20 @@ describe("local tax workflows", () => {
 
     expect(result.status).toBe("calculated");
     expect(result.amountCents).toBe(16500);
+    expect(result.includedInUserFacingTotal).toBe(false);
+  });
+
+  it("falls back restaurant-like classes to general San Diego business certificate rows", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("local_tax_ca_san_diego_business_tax_certificate_v1"),
+      ctx({
+        local_business_tax_class: "restaurant",
+        employee_count: 20
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBeGreaterThan(0);
     expect(result.includedInUserFacingTotal).toBe(false);
   });
 

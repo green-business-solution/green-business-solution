@@ -104,6 +104,21 @@ describe("v2 runtime incentive bridge", () => {
     expect(withSynthetic.runtimeRules[0].amountRule.amountCents).toBe(2500);
   });
 
+  it("uses source-row amount fields for repaired measure catalog rows", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [sourceRowMeasureCatalogPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: { measure_type: undefined, unit_count: undefined },
+        allowSyntheticV2Defaults: true,
+        sourceRetrofitTypeId: "level_2_ev_charger_installation"
+      })
+    });
+
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(400000);
+  });
+
   it("treats supported v2 tax credits as first-class runtime effects even when not grant totals", () => {
     const bridge = buildV2RuntimeIncentiveBridge({
       packages: [supportedTaxCreditPackage()],
@@ -329,6 +344,74 @@ function includedMeasureCatalogPackage() {
         label: "Unit count",
         value_type: "number",
         required_for: ["effect_catalog"],
+        source_precedence: ["retrofit_quantity"],
+        missing_severity: "blocks_calculation"
+      }
+    ]
+  };
+}
+
+function sourceRowMeasureCatalogPackage() {
+  const pkg = includedMeasureCatalogPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_source_row_catalog",
+    measure_catalogs: [
+      {
+        catalog_id: "catalog_source_row",
+        name: "Source Row Catalog",
+        selection_input: "charger_and_site_category",
+        measures: [
+          {
+            measure_id: "smart_networked_level_2",
+            name: "Smart networked Level 2",
+            calculation: {
+              method: "zero_when_not_applicable",
+              reason: "Measure row requires custom interpretation.",
+              source_row: {
+                category: "smart_networked_level_2",
+                amountCentsPerEligibleChargerOrPort: 400000,
+                maxUnits: 2
+              }
+            },
+            customer_filters: [],
+            equipment_filters: [],
+            limits: [],
+            required_inputs: [],
+            evidence_refs: [],
+            confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["test"] }
+          }
+        ]
+      }
+    ],
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_source_row_catalog",
+        label: "Source row catalog rebate",
+        calculation: {
+          method: "measure_catalog",
+          measure_catalog_id: "catalog_source_row",
+          measure_selection_input: "charger_and_site_category"
+        },
+        required_inputs: [
+          {
+            input_key: "charger_count",
+            label: "Charger count",
+            value_type: "number",
+            required_for: ["effect_source_row_catalog"],
+            source_precedence: ["retrofit_quantity"],
+            missing_severity: "blocks_calculation"
+          }
+        ]
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "charger_count",
+        label: "Charger count",
+        value_type: "number",
+        required_for: ["effect_source_row_catalog"],
         source_precedence: ["retrofit_quantity"],
         missing_severity: "blocks_calculation"
       }
