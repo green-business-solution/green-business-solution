@@ -677,9 +677,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".process-editor-content");
     expect(css).toContain(".process-editor-title");
     expect(css).toContain("font-size: clamp(48px, 3.7vw, 60px)");
-    expect(css).toContain("margin: 0 0 92px");
+    expect(css).toContain("margin: -10px 0 92px");
     expect(css).toContain(".process-number");
-    expect(css).toContain("font-size: clamp(34px, 2.45vw, 40px)");
+    expect(css).toContain("font-size: clamp(40px, 2.85vw, 46px)");
     expect(css).toContain("font-weight: 700");
     expect(css).toContain(".code-accent");
     expect(css).toContain("font-size: clamp(15px, 1.05vw, 17px)");
