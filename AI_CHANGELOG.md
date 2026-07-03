@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) scenario verification GPT Pro packet
+
+- Added a scenario-verification GPT Pro work packet with one prompt and one blank output file for each of the 50 sample test cases.
+- Added a reusable generator script that compacts test-case profile, retrofit, matched opportunity, v2 package, selected scenario, and alternative scenario data for combination-only verification.
+
 ## 2026-07-03 - Codex (GPT-5) shell 3 bottom-up local tax source research
 
 - Added shell-3 locality-specific tax research artifacts for prioritized sample geographies, covering county property tax sources, local business tax workflows, adapter notes, and GPT Pro follow-up prompts.
