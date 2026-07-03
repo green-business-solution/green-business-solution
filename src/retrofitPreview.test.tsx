@@ -425,8 +425,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Hide bill data");
     expect(source).toContain("Show less retrofits");
     expect(source).toContain("Exit customer preview");
-    expect(source).toContain("Back to all retrofits");
+    expect(source).not.toContain("Back to all retrofits");
     expect(source).toContain("function UserPreviewSidebar");
+    expect(source).toContain("onShowAllRetrofits={() =>");
+    expect(source).toContain("if (activeRetrofitId) {");
+    expect(source).toContain("onShowAllRetrofits();");
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
     expect(source).toContain("Dashboard");

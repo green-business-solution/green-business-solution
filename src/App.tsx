@@ -6813,6 +6813,10 @@ export function RetrofitRecommendationsPreview({
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
         onSelectRetrofit={handleSidebarRetrofitSelect}
+        onShowAllRetrofits={() => {
+          setActiveRetrofitId("");
+          setMobileSidebarOpen(false);
+        }}
         retrofits={displayedRetrofits}
       />
       <main className="user-preview-main">
@@ -6831,9 +6835,6 @@ export function RetrofitRecommendationsPreview({
                     <span className="soft-badge">Selected retrofit</span>
                     <h2>{activeRetrofit.name}</h2>
                   </div>
-                  <button className="secondary-button" onClick={() => setActiveRetrofitId("")} type="button">
-                    Back to all retrofits
-                  </button>
                 </div>
                 <RetrofitPreviewCardView
                   confirmedAssumptionIds={confirmedAssumptionIds}
@@ -6938,12 +6939,14 @@ function UserPreviewSidebar({
   mobileOpen,
   onCloseMobile,
   onSelectRetrofit,
+  onShowAllRetrofits,
   retrofits
 }: {
   activeRetrofitId: string;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
+  onShowAllRetrofits: () => void;
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
@@ -6959,7 +6962,13 @@ function UserPreviewSidebar({
           <button
             aria-expanded={retrofitsOpen}
             className="sidebar-nav-row sidebar-section-trigger"
-            onClick={() => setRetrofitsOpen((current) => !current)}
+            onClick={() => {
+              if (activeRetrofitId) {
+                onShowAllRetrofits();
+                return;
+              }
+              setRetrofitsOpen((current) => !current);
+            }}
             type="button"
           >
             <HomeOutlineIcon />

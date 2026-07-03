@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) sidebar retrofit return navigation
+
+- Removed the selected-workspace `Back to all retrofits` button from `/user-preview`.
+- Made the primary `Retrofits` sidebar row return to the full retrofit picker when a retrofit is selected.
+
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile first-10 production import
 
 - Reworked `/api/admin/application-profiles/import-first10` to generate draft ApplicationProfiles from production SOURCE_DSIRE opportunity data instead of reading a local audit JSON file that is unavailable in Lambda.
