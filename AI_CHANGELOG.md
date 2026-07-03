@@ -6,6 +6,11 @@
 - Wired resolved site geography into v2 input resolution so Census/Geocodio fields can provide jurisdiction inputs such as state, county, place, municipality, tract, block, and source-backed tax-rule values.
 - Added tax geography model documentation, product TODO coverage for scheduled tax data refresh, and a GPT Pro research packet for locality-specific tax gaps.
 
+## 2026-07-02 - Codex (GPT-5) sidebar primary row standardization
+
+- Added a shared primary sidebar row class for `Retrofits`, `Profile info`, and `Dashboard`.
+- Removed secondary-row typography overrides so the three sidebar items render as true peers.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar row parity pass
 
 - Made `Profile info` and `Dashboard` use the same row height as the Retrofit items.

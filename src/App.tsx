@@ -6790,7 +6790,7 @@ function UserPreviewSidebar({
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
           <button
             aria-expanded={retrofitsOpen}
-            className="sidebar-section-trigger"
+            className="sidebar-nav-row sidebar-section-trigger"
             onClick={() => setRetrofitsOpen((current) => !current)}
             type="button"
           >
@@ -6814,11 +6814,11 @@ function UserPreviewSidebar({
             </div>
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
-            <button className="sidebar-secondary-item" type="button">
+            <button className="sidebar-nav-row sidebar-secondary-item" type="button">
               <ProfileInfoIcon />
               <span className="sidebar-label">Profile info</span>
             </button>
-            <button className="sidebar-secondary-item" type="button">
+            <button className="sidebar-nav-row sidebar-secondary-item" type="button">
               <DashboardIcon />
               <span className="sidebar-label">Dashboard</span>
             </button>

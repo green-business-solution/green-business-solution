@@ -2414,7 +2414,7 @@ dd {
   padding: 0 0 16px;
 }
 
-.sidebar-section-trigger,
+.sidebar-nav-row,
 .sidebar-retrofit-item,
 .sidebar-secondary-item {
   align-items: center;
@@ -2431,9 +2431,11 @@ dd {
   width: 100%;
 }
 
-.sidebar-section-trigger {
+.sidebar-nav-row {
   color: #13231a;
+  font-size: 16px;
   font-weight: 750;
+  line-height: 20px;
 }
 
 .sidebar-section-trigger svg:last-child {
@@ -2513,22 +2515,16 @@ dd {
 .user-preview-sidebar-secondary {
   display: grid;
   gap: 4px;
-  margin-top: 2px;
+  margin-top: 0;
   padding-top: 0;
 }
 
 .sidebar-secondary-item {
-  grid-template-columns: 24px minmax(0, 1fr);
-  font-size: 14px;
-  line-height: 18px;
-  min-height: 42px;
-  opacity: 1;
-  padding-left: 10px;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
 }
 
 .sidebar-secondary-item .sidebar-label {
-  font-size: 14px;
-  font-weight: 700;
+  font: inherit;
 }
 
 .user-preview-sidebar-scrim {
