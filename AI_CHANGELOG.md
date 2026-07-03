@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) homepage planet scan hero
+
+- Replaced the static homepage hero with a full-bleed, scroll-driven scanner that reveals the sustainable planet over the polluted starting state.
+- Added responsive DOM-based headline, CTA, and RetroFi value copy while preserving the rest of the homepage and all existing routes.
+- Normalized and optimized the supplied no-text planet images for aligned clipping, eager loading, and reduced-motion support.
+
 ## 2026-07-03 - Codex (GPT-5) Shell 5 local gap completion audit
 
 - Completed the Shell 5 local tax gap research handoff with official-source updates for Quincy public utility/business licensing, Rhode Island all-39 municipal renewable inventory, Detroit/Wayne RERZ bounds, and Burbank/Pasadena/Anaheim numeric business-tax rows.

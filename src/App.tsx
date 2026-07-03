@@ -2979,6 +2979,131 @@ function AboutHubCard({
   );
 }
 
+function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame = 0;
+
+    const updateScan = () => {
+      animationFrame = 0;
+
+      if (reducedMotionQuery.matches) {
+        section?.style.setProperty("--planet-scan-position", "100%");
+        section?.style.setProperty("--planet-scan-ray-opacity", "0");
+        section?.style.setProperty("--planet-scan-hint-opacity", "0");
+        return;
+      }
+
+      if (!section) {
+        return;
+      }
+
+      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const rawProgress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
+      const easedProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+      const edgeFade = Math.min(1, rawProgress * 10, (1 - rawProgress) * 10);
+
+      section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
+      section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
+      section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
+    };
+
+    const scheduleScanUpdate = () => {
+      if (!animationFrame) {
+        animationFrame = window.requestAnimationFrame(updateScan);
+      }
+    };
+
+    updateScan();
+    window.addEventListener("scroll", scheduleScanUpdate, { passive: true });
+    window.addEventListener("resize", scheduleScanUpdate);
+    reducedMotionQuery.addEventListener("change", scheduleScanUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", scheduleScanUpdate);
+      window.removeEventListener("resize", scheduleScanUpdate);
+      reducedMotionQuery.removeEventListener("change", scheduleScanUpdate);
+    };
+  }, []);
+
+  const scanFeatures = [
+    ["We scan", "Programs, utilities, and governments."],
+    ["We match", "Incentives and upgrades for your business."],
+    ["We value", "Savings, payback, and next steps."],
+    ["We transform", "Opportunity into measurable impact."]
+  ];
+
+  return (
+    <section aria-labelledby="planet-scan-heading" className="planet-scan-section" ref={sectionRef}>
+      <div className="planet-scan-sticky">
+        <div aria-hidden="true" className="planet-scan-visual">
+          <img
+            alt=""
+            className="planet-scan-image planet-scan-image-before"
+            decoding="async"
+            fetchPriority="high"
+            loading="eager"
+            src="/home/planet-before.jpg"
+          />
+          <div className="planet-scan-after-reveal">
+            <img
+              alt=""
+              className="planet-scan-image planet-scan-image-after"
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+              src="/home/planet-after.jpg"
+            />
+          </div>
+          <span className="planet-scan-ray" />
+        </div>
+
+        <div aria-hidden="true" className="planet-scan-shade" />
+
+        <div className="planet-scan-content">
+          <div className="planet-scan-copy">
+            <p className="planet-scan-eyebrow">RetroFi opportunity scan</p>
+            <h1 id="planet-scan-heading">Find the money behind your next retrofit.</h1>
+            <p className="planet-scan-subhead">
+              RetroFi scans your business for rebates, grants, tax incentives, financing, and efficiency upgrades, then shows
+              what is worth doing first.
+            </p>
+            <div className="planet-scan-actions">
+              <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
+                Start free scan
+              </button>
+              <button className="planet-scan-secondary" onClick={() => navigate("how-it-works")} type="button">
+                See how it works
+              </button>
+            </div>
+          </div>
+
+          <ol aria-label="What RetroFi does" className="planet-scan-features">
+            {scanFeatures.map(([title, copy], index) => (
+              <li key={title}>
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <p>{copy}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div aria-hidden="true" className="planet-scan-scroll-cue">
+          <span />
+          Scroll to scan
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomePage({
   navigate,
   publicAuth
@@ -2988,19 +3113,7 @@ function HomePage({
 }) {
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth} showFooter>
-      <section className="hero-panel">
-        <div className="hero-copy">
-          <p className="hero-eyebrow">Sustainable. Profitable. Practical.</p>
-          <h1>Maximize the value of every upgrade.</h1>
-          <p className="hero-subheadline">
-            RetroFi delivers your personalized retrofit implementation plan with funding opportunities, savings estimates, and
-            prioritized next steps from start to finish.
-          </p>
-          <div className="hero-actions">
-            <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
-          </div>
-        </div>
-      </section>
+      <PlanetScanHero navigate={navigate} />
 
       <section className="split-section problem-section">
         <div>
