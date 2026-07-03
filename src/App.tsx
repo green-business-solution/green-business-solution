@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiGet, apiPatch, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -7187,17 +7187,30 @@ function usePrefersReducedMotion() {
 
 function useTypewriterSequence(
   lines: ReadonlyArray<{ id: string; text: string }>,
-  { enabled, characterDelayMs = 18, linePauseMs = 120 }: { enabled: boolean; characterDelayMs?: number; linePauseMs?: number }
+  {
+    enabled,
+    characterDelayMs = 20,
+    getCharacterDelayMs,
+    linePauseMs = 120
+  }: {
+    enabled: boolean;
+    characterDelayMs?: number;
+    getCharacterDelayMs?: (line: { id: string; text: string }) => number;
+    linePauseMs?: number;
+  }
 ) {
   const [displayedLines, setDisplayedLines] = useState<Record<string, string>>(() =>
     Object.fromEntries(lines.map((line) => [line.id, enabled ? "" : line.text]))
   );
   const [isComplete, setIsComplete] = useState(!enabled);
+  const completeNow = useCallback(() => {
+    setDisplayedLines(Object.fromEntries(lines.map((line) => [line.id, line.text])));
+    setIsComplete(true);
+  }, [lines]);
 
   useEffect(() => {
     if (!enabled) {
-      setDisplayedLines(Object.fromEntries(lines.map((line) => [line.id, line.text])));
-      setIsComplete(true);
+      completeNow();
       return;
     }
 
@@ -7218,7 +7231,10 @@ function useTypewriterSequence(
         [line.id]: line.text.slice(0, characterIndex)
       }));
       if (characterIndex <= line.text.length) {
-        timeoutId = window.setTimeout(() => typeLine(lineIndex, characterIndex + 1), characterDelayMs);
+        timeoutId = window.setTimeout(
+          () => typeLine(lineIndex, characterIndex + 1),
+          getCharacterDelayMs?.(line) ?? characterDelayMs
+        );
         return;
       }
       timeoutId = window.setTimeout(() => typeLine(lineIndex + 1, 0), linePauseMs);
@@ -7230,9 +7246,9 @@ function useTypewriterSequence(
       cancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [characterDelayMs, enabled, linePauseMs, lines]);
+  }, [characterDelayMs, completeNow, enabled, getCharacterDelayMs, linePauseMs, lines]);
 
-  return { displayedLines, isComplete };
+  return { completeNow, displayedLines, isComplete };
 }
 
 function ProcessOnboardingModal({
@@ -7246,7 +7262,13 @@ function ProcessOnboardingModal({
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const shouldAnimateText = animateText && !prefersReducedMotion;
-  const { displayedLines, isComplete } = useTypewriterSequence(PROCESS_ONBOARDING_LINES, { enabled: shouldAnimateText });
+  const getProcessTypingDelay = useCallback((line: { id: string; text: string }) => (
+    line.id.startsWith("step") ? 34 : 20
+  ), []);
+  const { completeNow, displayedLines, isComplete } = useTypewriterSequence(PROCESS_ONBOARDING_LINES, {
+    enabled: shouldAnimateText,
+    getCharacterDelayMs: getProcessTypingDelay
+  });
   const [flightStyle, setFlightStyle] = useState<CSSProperties | null>(null);
   const [flightActive, setFlightActive] = useState(false);
 
@@ -7266,6 +7288,15 @@ function ProcessOnboardingModal({
   });
 
   function completeOnboarding() {
+    if (shouldAnimateText && !isComplete) {
+      completeNow();
+      window.setTimeout(startFlightToNav, 30);
+      return;
+    }
+    startFlightToNav();
+  }
+
+  function startFlightToNav() {
     if (prefersReducedMotion) {
       onClose();
       return;
@@ -7297,6 +7328,7 @@ function ProcessOnboardingModal({
   const step2 = displayedLines.step2 || "";
   const step3 = displayedLines.step3 || "";
   const note = displayedLines.note || "";
+  const activeLineId = PROCESS_ONBOARDING_LINES.find((line) => displayedLines[line.id] !== line.text)?.id;
 
   return (
     <div className="process-onboarding-backdrop" data-testid="process-onboarding-modal">
@@ -7311,22 +7343,41 @@ function ProcessOnboardingModal({
         role="dialog"
       >
         <h2 className="sr-only" id="process-onboarding-title">The Process</h2>
-        <div aria-hidden="true">
-          <h2>{title}<TypewriterCaret show={shouldAnimateText && !isComplete && title.length < PROCESS_ONBOARDING_LINES[0].text.length} /></h2>
+        <div aria-hidden="true" className="process-editor-content">
+          <h2 className="process-editor-title">
+            <ProcessAccentText text={title} accent="The Process" />
+            <TypewriterCaret show={shouldAnimateText && activeLineId === "title"} />
+          </h2>
           <div className="process-step-list">
-            <ProcessStep number="1" text={step1.replace(/^Step 1:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step1)} />
-            <ProcessStep number="2" text={step2.replace(/^Step 2:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step2)} />
-            <ProcessStep number="3" text={step3.replace(/^Step 3:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step3)} />
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step1"}
+              accent="Upload"
+              number="1"
+              text={step1.replace(/^Step 1:\s*/, "")}
+            />
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step2"}
+              accent="Choose"
+              number="2"
+              text={step2.replace(/^Step 2:\s*/, "")}
+            />
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step3"}
+              accent="Get"
+              number="3"
+              text={step3.replace(/^Step 3:\s*/, "")}
+            />
           </div>
           <div className="process-note">
-            <strong>{note.startsWith("Note:") ? "Note:" : ""}</strong>
-            <span>{note.replace(/^Note:\s*/, "")}</span>
-            <TypewriterCaret show={shouldAnimateText && !isComplete && Boolean(note)} />
+            <ProcessAccentText text={note} accent="Note:" />
+            <TypewriterCaret show={shouldAnimateText && activeLineId === "note"} />
           </div>
         </div>
-        <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
-          Next
-        </button>
+        <div className="process-modal-footer">
+          <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
+            Next
+          </button>
+        </div>
       </section>
       {flightStyle ? (
         <section
@@ -7334,11 +7385,13 @@ function ProcessOnboardingModal({
           className={`process-onboarding-flight${flightActive ? " is-active" : ""}`}
           style={flightStyle}
         >
-          <h2>The Process</h2>
+          <div className="process-editor-content">
+          <h2 className="process-editor-title"><ProcessAccentText text="The Process" accent="The Process" /></h2>
           <div className="process-step-list">
-            <ProcessStep number="1" text="Upload your bills" />
-            <ProcessStep number="2" text="Choose a retrofit and answer a few questions" />
-            <ProcessStep number="3" text="Get your opportunities, metrics, and next steps" />
+            <ProcessStep number="1" text="Upload your bills" accent="Upload" />
+            <ProcessStep number="2" text="Choose a retrofit and answer a few questions" accent="Choose" />
+            <ProcessStep number="3" text="Get your opportunities, metrics, and next steps" accent="Get" />
+          </div>
           </div>
         </section>
       ) : null}
@@ -7350,11 +7403,28 @@ function TypewriterCaret({ show }: { show: boolean }) {
   return show ? <span className="typewriter-caret" aria-hidden="true" /> : null;
 }
 
-function ProcessStep({ active = false, number, text }: { active?: boolean; number: string; text: string }) {
+function ProcessAccentText({ accent, text }: { accent: string; text: string }) {
+  if (!text) return null;
+  const accentIndex = text.indexOf(accent);
+  if (accentIndex === -1 && accent.startsWith(text)) return <span className="code-accent">{text}</span>;
+  if (accentIndex === -1) return <span>{text}</span>;
+  const before = text.slice(0, accentIndex);
+  const highlighted = text.slice(accentIndex, accentIndex + accent.length);
+  const after = text.slice(accentIndex + accent.length);
+  return (
+    <>
+      {before}
+      <span className="code-accent">{highlighted}</span>
+      {after}
+    </>
+  );
+}
+
+function ProcessStep({ accent, active = false, number, text }: { accent: string; active?: boolean; number: string; text: string }) {
   return (
     <div className={`process-step-row${active ? " is-active" : ""}`}>
-      <span>{number}</span>
-      <p>{text || "\u00a0"}</p>
+      <span className="process-number">{number}.</span>
+      <p>{text ? <ProcessAccentText text={text} accent={accent} /> : "\u00a0"}{active ? <TypewriterCaret show /> : null}</p>
     </div>
   );
 }
