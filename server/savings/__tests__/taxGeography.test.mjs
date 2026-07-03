@@ -133,6 +133,28 @@ describe("tax geography rules", () => {
     });
   });
 
+  it("normalizes researched geography arrays for tax matching", () => {
+    expect(
+      normalizeTaxGeography({
+        country: "US",
+        states: ["ri"],
+        stateFips: ["44"],
+        countyFips: [],
+        placeGeoids: [],
+        municipalities: ["Providence"]
+      })
+    ).toMatchObject({
+      country: "US",
+      state: "RI",
+      states: ["RI"],
+      stateFips: "44",
+      stateFipsList: ["44"],
+      countyFips: null,
+      placeGeoid: null,
+      municipality: "Providence"
+    });
+  });
+
   it("selects tax geography rules by normalized geography and opportunity", () => {
     const rules = [
       {
@@ -163,6 +185,29 @@ describe("tax geography rules", () => {
     });
 
     expect(selected.map((rule) => rule.id)).toEqual(["ri_property_tax"]);
+  });
+
+  it("does not match state-scoped tax geography rules before state geography resolves", () => {
+    const rules = [
+      {
+        id: "wa_bo_tax",
+        version: 1,
+        active: true,
+        taxType: "business_and_occupation_tax",
+        geography: { country: "US", state: "WA" },
+        opportunityIds: ["opp_wa"],
+        effectiveStartDate: "2026-01-01"
+      }
+    ];
+
+    expect(
+      selectTaxGeographyRules({
+        rules,
+        geography: { country: "US" },
+        opportunityId: "opp_wa",
+        calculationDate: "2026-07-02"
+      })
+    ).toEqual([]);
   });
 
   it("builds tax geography input answers from resolved site geography and matched rules", () => {
@@ -211,5 +256,72 @@ describe("tax geography rules", () => {
       }
     });
     expect(result.matchedRules.map((rule) => rule.id)).toEqual(["wa_bo_tax_rate"]);
+  });
+
+  it("matches researched array geography and adds server-derivable workflow inputs", () => {
+    const rules = [
+      {
+        id: "ri_property_tax",
+        version: 2,
+        active: true,
+        taxType: "property_tax",
+        geography: { country: "US", states: ["RI"], stateFips: ["44"] },
+        opportunityIds: ["opp_ri"],
+        effectiveStartDate: "2025-07-02",
+        sourceConfidence: "high",
+        serverDerivableInputs: [
+          {
+            inputKey: "municipal_assessor_jurisdiction",
+            sourceGeographyField: "coordinates"
+          },
+          {
+            inputKey: "place_name",
+            sourceGeographyField: "placeName"
+          }
+        ],
+        derivedInputs: [
+          {
+            inputKey: "ri_tangible_renewable_tax_rate_per_kw_ac",
+            value: 5,
+            source: "official_source",
+            userOverrideAllowed: false
+          }
+        ]
+      }
+    ];
+
+    const result = buildTaxGeographyInputAnswers({
+      geography: {
+        country: "US",
+        stateCode: "RI",
+        stateFips: "44",
+        placeGeoid: "4459000",
+        placeName: "Providence city",
+        coordinates: { lat: 41.824, lng: -71.4128 }
+      },
+      rules,
+      packages: [{ opportunity_id: "opp_ri" }],
+      calculationDate: "2026-07-02"
+    });
+
+    expect(result.matchedRules.map((rule) => rule.id)).toEqual(["ri_property_tax"]);
+    expect(result.answers).toMatchObject({
+      state_fips: { value: "44", source: "address_geography" },
+      municipal_assessor_jurisdiction: {
+        value: { lat: 41.824, lng: -71.4128 },
+        source: "address_geography",
+        taxGeographyRuleId: "ri_property_tax"
+      },
+      place_name: {
+        value: "Providence city",
+        source: "address_geography",
+        taxGeographyRuleId: "ri_property_tax"
+      },
+      ri_tangible_renewable_tax_rate_per_kw_ac: {
+        value: 5,
+        source: "official_source",
+        taxGeographyRuleId: "ri_property_tax"
+      }
+    });
   });
 });

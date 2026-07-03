@@ -14,28 +14,40 @@ function isEffective(rule, calculationDate) {
 function geographyScore(ruleGeography = {}, geography = {}) {
   const normalizedRuleGeography = normalizeTaxGeography(ruleGeography);
   const normalizedGeography = normalizeTaxGeography(geography);
-  if (normalizedRuleGeography.country && normalizedGeography.country && normalizedRuleGeography.country !== normalizedGeography.country) return -1;
-  if (normalizedRuleGeography.state && normalizedGeography.state && normalizedRuleGeography.state !== normalizedGeography.state) return -1;
-  if (normalizedRuleGeography.countyFips && normalizedGeography.countyFips && normalizedRuleGeography.countyFips !== normalizedGeography.countyFips) return -1;
-  if (normalizedRuleGeography.placeGeoid && normalizedGeography.placeGeoid && normalizedRuleGeography.placeGeoid !== normalizedGeography.placeGeoid) return -1;
-  if (normalizedRuleGeography.city && normalizedGeography.city && normalizeText(normalizedRuleGeography.city) !== normalizeText(normalizedGeography.city)) return -1;
+  const ruleCountries = listWithSingle(normalizedRuleGeography, "countries", "country");
+  const ruleStates = listWithSingle(normalizedRuleGeography, "states", "state");
+  const ruleCountyFips = listWithSingle(normalizedRuleGeography, "countyFipsList", "countyFips");
+  const rulePlaceGeoids = listWithSingle(normalizedRuleGeography, "placeGeoids", "placeGeoid");
+  const ruleCities = listWithSingle(normalizedRuleGeography, "cities", "city").concat(normalizedRuleGeography.municipalities || []);
+  const ruleSpecialDistrictIds = normalizedRuleGeography.specialDistrictIds || [];
+
+  if (ruleCountries.length && normalizedGeography.country && !ruleCountries.includes(normalizedGeography.country)) return -1;
+  if (ruleStates.length && !normalizedGeography.state) return -1;
+  if (ruleStates.length && normalizedGeography.state && !ruleStates.includes(normalizedGeography.state)) return -1;
+  if (ruleCountyFips.length && !normalizedGeography.countyFips) return -1;
+  if (ruleCountyFips.length && normalizedGeography.countyFips && !ruleCountyFips.includes(normalizedGeography.countyFips)) return -1;
+  if (rulePlaceGeoids.length && !normalizedGeography.placeGeoid) return -1;
+  if (rulePlaceGeoids.length && normalizedGeography.placeGeoid && !rulePlaceGeoids.includes(normalizedGeography.placeGeoid)) return -1;
+  if (ruleCities.length && !cityValues(normalizedGeography).length) return -1;
+  if (ruleCities.length && cityValues(normalizedGeography).length && !hasTextOverlap(ruleCities, cityValues(normalizedGeography))) return -1;
+  if (normalizedRuleGeography.postalCode && !normalizedGeography.postalCode) return -1;
   if (normalizedRuleGeography.postalCode && normalizedGeography.postalCode && normalizedRuleGeography.postalCode !== normalizedGeography.postalCode) return -1;
   if (
-    normalizedRuleGeography.specialDistrictId &&
-    Array.isArray(normalizedGeography.specialDistrictIds) &&
-    !normalizedGeography.specialDistrictIds.includes(normalizedRuleGeography.specialDistrictId)
+    ruleSpecialDistrictIds.length &&
+    (!Array.isArray(normalizedGeography.specialDistrictIds) ||
+      !ruleSpecialDistrictIds.some((districtId) => normalizedGeography.specialDistrictIds.includes(districtId)))
   ) {
     return -1;
   }
 
   let score = 0;
-  if (normalizedRuleGeography.country) score += 1;
-  if (normalizedRuleGeography.state) score += 2;
-  if (normalizedRuleGeography.countyFips) score += 4;
-  if (normalizedRuleGeography.placeGeoid) score += 8;
-  if (normalizedRuleGeography.city) score += 8;
+  if (ruleCountries.length) score += 1;
+  if (ruleStates.length) score += 2;
+  if (ruleCountyFips.length) score += 4;
+  if (rulePlaceGeoids.length) score += 8;
+  if (ruleCities.length) score += 8;
   if (normalizedRuleGeography.postalCode) score += 16;
-  if (normalizedRuleGeography.specialDistrictId) score += 32;
+  if (ruleSpecialDistrictIds.length) score += 32;
   return score;
 }
 
@@ -78,29 +90,45 @@ export function calculateSalesTaxFromRule({ rule, equipmentCostCents = 0, laborC
 }
 
 export function normalizeTaxGeography(geography = {}) {
-  const state = cleanUpper(geography.state || geography.stateCode || geography.state_code);
+  const countries = normalizeList(geography.countries || geography.countryCodes || geography.country_codes, cleanUpper);
+  const states = normalizeList(geography.states || geography.stateCodes || geography.state_codes, cleanUpper);
+  const stateFipsList = normalizeList(geography.stateFipsList || geography.stateFipses || geography.stateFips || geography.state_fips);
+  const countyFipsList = normalizeList(geography.countyFipsList || geography.countyFipses || geography.countyFips || geography.county_fips);
+  const cities = normalizeList(geography.cities, cleanOptional);
+  const municipalities = normalizeList(geography.municipalities, cleanOptional);
+  const placeGeoids = normalizeList(geography.placeGeoids || geography.place_geoids || geography.placeGeoid || geography.place_geoid);
+  const state = cleanUpper(geography.state || geography.stateCode || geography.state_code) || states[0] || null;
   const city = cleanOptional(
     geography.city ||
       geography.placeName ||
       geography.place_name ||
       geography.municipality ||
       geography.locality
-  );
+  ) || cities[0] || municipalities[0] || null;
   return {
-    country: cleanUpper(geography.country || "US"),
+    country: cleanUpper(geography.country) || countries[0] || "US",
+    countries,
     state,
-    stateFips: cleanOptional(geography.stateFips || geography.state_fips),
-    countyFips: cleanOptional(geography.countyFips || geography.county_fips),
+    states: uniqueList(state ? [state, ...states] : states),
+    stateFips: stateFipsList[0] || null,
+    stateFipsList,
+    countyFips: countyFipsList[0] || null,
+    countyFipsList,
     countyName: cleanOptional(geography.countyName || geography.county_name),
     city,
-    municipality: cleanOptional(geography.municipality || city),
-    placeGeoid: cleanOptional(geography.placeGeoid || geography.place_geoid),
+    cities: uniqueList(city ? [city, ...cities] : cities),
+    municipality: cleanOptional(geography.municipality) || municipalities[0] || city,
+    municipalities: uniqueList(municipalities),
+    placeGeoid: placeGeoids[0] || null,
+    placeGeoids,
     placeName: cleanOptional(geography.placeName || geography.place_name || city),
     censusTractGeoid: cleanOptional(geography.censusTractGeoid || geography.census_tract_geoid),
     censusBlockGeoid: cleanOptional(geography.censusBlockGeoid || geography.census_block_geoid),
     postalCode: cleanOptional(geography.postalCode || geography.zip5 || geography.zip || geography.postal_code),
     coordinates: normalizeCoordinates(geography.coordinates),
-    specialDistrictIds: Array.isArray(geography.specialDistrictIds) ? geography.specialDistrictIds.map(cleanOptional).filter(Boolean) : []
+    specialDistrictIds: uniqueList(
+      normalizeList(geography.specialDistrictIds || geography.specialDistricts || geography.special_district_ids || geography.specialDistrictId)
+    )
   };
 }
 
@@ -148,6 +176,7 @@ export function buildTaxGeographyInputAnswers({ geography = {}, rules = [], calc
   add("site_state_code", normalizedGeography.state, "address_geography", { userOverrideAllowed: false });
   add("state_code", normalizedGeography.state, "address_geography", { canonicalInputKey: "site_state_code", userOverrideAllowed: false });
   add("site_state_fips", normalizedGeography.stateFips, "address_geography", { userOverrideAllowed: false });
+  add("state_fips", normalizedGeography.stateFips, "address_geography", { canonicalInputKey: "site_state_fips", userOverrideAllowed: false });
   add("site_county_fips", normalizedGeography.countyFips, "address_geography", { userOverrideAllowed: false });
   add("county_fips", normalizedGeography.countyFips, "address_geography", { canonicalInputKey: "site_county_fips", userOverrideAllowed: false });
   add("site_county_name", normalizedGeography.countyName, "address_geography", { userOverrideAllowed: false });
@@ -167,6 +196,14 @@ export function buildTaxGeographyInputAnswers({ geography = {}, rules = [], calc
     });
 
   for (const rule of matchedRules) {
+    for (const input of rule.serverDerivableInputs || []) {
+      add(input.inputKey, geographyFieldValue(normalizedGeography, input.sourceGeographyField), "address_geography", {
+        taxGeographyRuleId: rule.id,
+        userOverrideAllowed: false,
+        defaultConfidence: rule.sourceConfidence || null
+      });
+    }
+
     for (const input of rule.derivedInputs || []) {
       add(input.inputKey, input.value, input.source || "tax_geography_rule", {
         taxGeographyRuleId: rule.id,
@@ -184,6 +221,43 @@ export function buildTaxGeographyInputAnswers({ geography = {}, rules = [], calc
   };
 }
 
+function geographyFieldValue(geography, sourceField) {
+  switch (normalizeKey(sourceField)) {
+    case "country":
+    case "countrycode":
+      return geography.country;
+    case "state":
+    case "statecode":
+      return geography.state;
+    case "statefips":
+      return geography.stateFips;
+    case "countyfips":
+      return geography.countyFips;
+    case "countyname":
+      return geography.countyName;
+    case "city":
+      return geography.city;
+    case "municipality":
+      return geography.municipality;
+    case "placegeoid":
+      return geography.placeGeoid;
+    case "placename":
+      return geography.placeName;
+    case "postalcode":
+    case "zip":
+    case "zip5":
+      return geography.postalCode;
+    case "censustractgeoid":
+      return geography.censusTractGeoid;
+    case "censusblockgeoid":
+      return geography.censusBlockGeoid;
+    case "coordinates":
+      return geography.coordinates;
+    default:
+      return null;
+  }
+}
+
 function normalizeCoordinates(coordinates) {
   const lat = Number(coordinates?.lat);
   const lng = Number(coordinates?.lng);
@@ -198,6 +272,32 @@ function cleanOptional(value) {
 function cleanUpper(value) {
   const text = cleanOptional(value);
   return text ? text.toUpperCase() : null;
+}
+
+function normalizeList(value, cleaner = cleanOptional) {
+  const values = Array.isArray(value) ? value : [value];
+  return uniqueList(values.map((item) => cleaner(item)).filter(Boolean));
+}
+
+function uniqueList(values) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
+function listWithSingle(value, pluralKey, singleKey) {
+  return uniqueList([value?.[singleKey], ...(Array.isArray(value?.[pluralKey]) ? value[pluralKey] : [])].filter(Boolean));
+}
+
+function cityValues(value) {
+  return uniqueList([value.city, value.municipality, value.placeName, ...(value.cities || []), ...(value.municipalities || [])].filter(Boolean));
+}
+
+function hasTextOverlap(a, b) {
+  const normalized = new Set((a || []).map(normalizeText).filter(Boolean));
+  return (b || []).some((value) => normalized.has(normalizeText(value)));
+}
+
+function normalizeKey(value) {
+  return String(value || "").replace(/[\s_-]/g, "").toLowerCase();
 }
 
 function normalizeText(value) {

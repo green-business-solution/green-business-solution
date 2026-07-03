@@ -9,6 +9,7 @@ RetroFi uses address-resolved geography as the join key for locality-aware tax e
 3. Savings previews pass that geography into the v2 incentive runtime.
 4. `server/savings/tax.mjs` normalizes geography and matches rules from `data/tax_geography_rules.json`.
 5. Matched rules can add source-backed v2 inputs, such as preferential tax rates, while address geography can add jurisdiction facts such as `municipality`, `site_county_fips`, and `place_geoid`.
+6. Rules can also declare `serverDerivableInputs` for workflow routing facts, such as `state_fips`, `place_name`, or an assessor-jurisdiction coordinate candidate. These are still not proof of tax eligibility unless the rule says so.
 
 ## Data File
 
@@ -26,6 +27,7 @@ Rule shape:
   "geography": {
     "country": "US",
     "state": "RI",
+    "stateFips": "44",
     "countyFips": "44007",
     "placeGeoid": "4459000"
   },
@@ -38,15 +40,39 @@ Rule shape:
       "inputKey": "preferential_rate_decimal",
       "value": 0.00275,
       "source": "reviewed_tax_geography_rule",
-      "userOverrideAllowed": false
+      "userOverrideAllowed": false,
+      "confidence": "high"
     }
   ],
-  "requiresUserOrProfessionalInputs": [],
+  "requiredUserInputs": [
+    {
+      "inputKey": "local_assessor_confirmation",
+      "label": "Local assessor confirmed renewable tax treatment",
+      "sourceStrategy": "assessor_confirmation",
+      "uiPlacement": "admin_only"
+    }
+  ],
+  "requiresUserOrProfessionalInputs": ["local_assessor_confirmation"],
+  "serverDerivableInputs": [
+    {
+      "inputKey": "place_name",
+      "sourceGeographyField": "placeName"
+    }
+  ],
+  "calculationImpact": {
+    "canCalculateWithGeographyOnly": false,
+    "recommendedEstimateStatus": "needs_assessor_review"
+  },
+  "humanReviewRequired": true,
   "sourceUrls": [],
   "evidenceText": "",
   "refreshNotes": ""
 }
 ```
+
+Geography can use singular fields (`state`, `countyFips`, `placeGeoid`) or researched array fields (`states`, `countyFips`, `placeGeoids`). The runtime normalizes both forms before matching.
+
+`derivedInputs` should only contain source-backed facts that the server can safely provide without user-specific tax records. Keep compatibility aliases when an existing v2 package already expects a legacy key.
 
 ## Inclusion Policy
 

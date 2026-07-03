@@ -11,6 +11,12 @@
 - Added approval validation so AI-extracted profiles cannot become future customer-prep eligible until an admin explicitly approves clean evidence-backed profiles; blocked source-unreadable, user-selection, manual-review, targeted-cleanup, malformed, junk-evidence, and unsafe closed-program approvals.
 - Added `/admin/application-profiles` with draft review labeling, source chain, primary artifacts, requirement evidence, diagnostics, quality warnings, admin notes, JSON edit controls, and approve/reject/archive actions.
 
+## 2026-07-02 - Codex (GPT-5) tax geography research intake
+
+- Ingested GPT Pro's tax-geography research output for the Washington B&O, Rhode Island renewable property-tax, and Michigan Renewable Energy Renaissance Zone workflows.
+- Repaired `tax_geography_rules` with source-backed tax facts, structured user/accountant/assessor input requirements, locality notes, and review-gated calculation statuses.
+- Extended tax geography matching to support researched array geography, server-derivable workflow inputs, and stricter state-scoped matching before deriving tax facts.
+
 ## 2026-07-02 - Codex (GPT-5) tax geography model groundwork
 
 - Added a conservative `tax_geography_rules` seed artifact with recurring-refresh policy notes and seed rules for the three repaired tax-related v2 packages.
