@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) tax rule research sweep
+
+- Added a research-only Tax Research Codex Sweep packet for the three current v2 tax calculation packages.
+- Structured source-backed formulas, runtime input needs, conservative missing-input defaults, locality dataset needs, and GPT Pro follow-up prompts for WA B&O, RI renewable property-tax valuation, and MI RERZ workflows.
+- Summarized official tax dataset sources and implementation recommendations for the future tax input resolver.
+
 ## 2026-07-03 - Codex (GPT-5) tax input workflow TODO clarification
 
 - Clarified that the tax input resolver is a provenance-aware input translation layer separate from the tax calculation formulas.
