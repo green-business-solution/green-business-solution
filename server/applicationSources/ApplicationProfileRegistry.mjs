@@ -76,6 +76,21 @@ export function publicApplicationProfileRecord(item = {}) {
   return profile;
 }
 
+export function stripUndefinedApplicationProfileValues(value) {
+  if (value === undefined) return undefined;
+  if (Array.isArray(value)) {
+    return value.map((item) => stripUndefinedApplicationProfileValues(item)).filter((item) => item !== undefined);
+  }
+  if (value && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype) {
+    return Object.fromEntries(
+      Object.entries(value)
+        .map(([key, item]) => [key, stripUndefinedApplicationProfileValues(item)])
+        .filter(([, item]) => item !== undefined)
+    );
+  }
+  return value;
+}
+
 export function compactApplicationProfileRecord(profile = {}) {
   return {
     profileId: profile.profileId,

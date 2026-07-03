@@ -4,7 +4,8 @@ import {
   applyApplicationProfileAdminPatch,
   extractDraftProfilesFromFirstTenAudit,
   importApplicationProfilesFromOpportunities,
-  normalizeApplicationProfileForRegistry
+  normalizeApplicationProfileForRegistry,
+  stripUndefinedApplicationProfileValues
 } from "./ApplicationProfileRegistry.mjs";
 import {
   isApplicationProfileCustomerReady,
@@ -106,6 +107,38 @@ describe("ApplicationProfileRegistry", () => {
     expect(patched.applicationStatus).toBe("needs_review");
     expect(patched.adminNotes).toBe("Admin corrected status.");
     expect(patched.requiredFields).toEqual([]);
+  });
+
+  it("strips undefined values before DynamoDB registry writes", () => {
+    const cleaned = stripUndefinedApplicationProfileValues({
+      profileId: "profile_1",
+      opportunityName: undefined,
+      requiredFields: [
+        {
+          id: "phone",
+          label: "Phone",
+          sourceUrl: undefined
+        },
+        undefined
+      ],
+      diagnostics: {
+        reason: undefined,
+        extractionAllowed: false
+      }
+    });
+
+    expect(cleaned).toEqual({
+      profileId: "profile_1",
+      requiredFields: [
+        {
+          id: "phone",
+          label: "Phone"
+        }
+      ],
+      diagnostics: {
+        extractionAllowed: false
+      }
+    });
   });
 
   it("generates first-10 imports from opportunity records without a local audit artifact", async () => {

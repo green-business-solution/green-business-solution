@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) ApplicationProfile import runtime fix
+
+- Fixed `/api/admin/application-profiles/import-first10` so production imports no longer pass null DynamoDB scan cursors.
+- Sanitized ApplicationProfile registry writes to remove undefined optional fields before DynamoDB persistence.
+- Added a registry regression test for undefined-value cleanup during ApplicationProfile saves.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar retrofit return navigation
 
 - Removed the selected-workspace `Back to all retrofits` button from `/user-preview`.

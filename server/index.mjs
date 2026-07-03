@@ -30,7 +30,8 @@ import {
   isApplicationProfileRegistryItem,
   normalizeApplicationProfileForRegistry,
   profileCanBeRegenerated,
-  publicApplicationProfileRecord
+  publicApplicationProfileRecord,
+  stripUndefinedApplicationProfileValues
 } from "./applicationSources/ApplicationProfileRegistry.mjs";
 import {
   isApplicationProfileCustomerReady,
@@ -1073,7 +1074,11 @@ async function scanAll(TableName) {
   let ExclusiveStartKey;
 
   do {
-    const result = await db.send(new ScanCommand({ TableName, ExclusiveStartKey }));
+    const scanInput = { TableName };
+    if (ExclusiveStartKey) {
+      scanInput.ExclusiveStartKey = ExclusiveStartKey;
+    }
+    const result = await db.send(new ScanCommand(scanInput));
     items.push(...(result.Items || []));
     ExclusiveStartKey = result.LastEvaluatedKey;
   } while (ExclusiveStartKey);
@@ -2155,12 +2160,15 @@ async function loadDatabasePrograms({ includeDetail = false } = {}) {
 }
 
 async function loadDatabaseProgramBatch({ cursor, limit }) {
+  const scanInput = {
+    TableName: opportunitiesTable,
+    Limit: limit
+  };
+  if (cursor) {
+    scanInput.ExclusiveStartKey = cursor;
+  }
   const result = await db.send(
-    new ScanCommand({
-      TableName: opportunitiesTable,
-      ExclusiveStartKey: cursor,
-      Limit: limit
-    })
+    new ScanCommand(scanInput)
   );
   const records = result.Items || [];
   const programs = records
@@ -2231,12 +2239,15 @@ async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
   let scanCalls = 0;
 
   do {
+    const scanInput = {
+      TableName: opportunitiesTable,
+      Limit: pageLimit
+    };
+    if (ExclusiveStartKey) {
+      scanInput.ExclusiveStartKey = ExclusiveStartKey;
+    }
     const result = await db.send(
-      new ScanCommand({
-        TableName: opportunitiesTable,
-        ExclusiveStartKey,
-        Limit: pageLimit
-      })
+      new ScanCommand(scanInput)
     );
     const items = result.Items || [];
     scannedCount += items.length;
@@ -2306,12 +2317,15 @@ async function listApplicationProfileRecords({ cursor, limit, reviewStatus, prof
   let scanCalls = 0;
 
   do {
+    const scanInput = {
+      TableName: runtimeStateTable,
+      Limit: Math.min(Math.max(limit, 25), 250)
+    };
+    if (ExclusiveStartKey) {
+      scanInput.ExclusiveStartKey = ExclusiveStartKey;
+    }
     const result = await db.send(
-      new ScanCommand({
-        TableName: runtimeStateTable,
-        ExclusiveStartKey,
-        Limit: Math.min(Math.max(limit, 25), 250)
-      })
+      new ScanCommand(scanInput)
     );
     scanCalls += 1;
     for (const item of result.Items || []) {
@@ -2361,13 +2375,14 @@ async function getApplicationProfileRecord(profileId) {
 }
 
 async function putApplicationProfileRecord(profile) {
+  const item = stripUndefinedApplicationProfileValues(profile);
   await db.send(
     new PutCommand({
       TableName: runtimeStateTable,
-      Item: profile
+      Item: item
     })
   );
-  return publicApplicationProfileRecord(profile);
+  return publicApplicationProfileRecord(item);
 }
 
 async function saveGeneratedApplicationProfileDraft(profile) {
@@ -2439,7 +2454,6 @@ async function generateApplicationProfileDraftForOpportunity(opportunityId) {
 
 async function importFirstTenApplicationProfiles() {
   const loaded = await loadAdminApplicationSourceOpportunityBatch({
-    cursor: null,
     limit: applicationSourceBatchLimit
   });
 
