@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) grant estimation package repair import
+
+- Audited the 37 GPT Pro grant-estimation outputs, moved the duplicate Michigan and VW outputs into `redundant_outputs`, shifted the misnumbered outputs back into their correct prompt slots, and left the missing Wisconsin NEVI output as an explicit placeholder.
+- Added a repeatable grant-estimation package repair importer that validates prompt/output opportunity IDs, tolerates markdown footnotes after JSON, normalizes GPT Pro effect/input/rate-table patches, and records a durable intake report.
+- Imported 36 valid grant package repairs into the v2 incentive calculation packages while keeping every repaired effect excluded from user-facing totals by default pending missing inputs, probability evidence, funding checks, or human review.
+
 ## 2026-07-03 - Codex (GPT-5) scanner-synchronized homepage copy
 
 - Tied the homepage hero copy to the existing planet scanner progress, switching from the incentive problem to the completed RetroFi value message at 60% reveal.
