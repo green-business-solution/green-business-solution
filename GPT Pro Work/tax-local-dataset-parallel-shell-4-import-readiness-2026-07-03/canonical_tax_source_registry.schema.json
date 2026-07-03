@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://retrofi.local/schemas/canonical_tax_source_registry.schema.json",
+  "title": "Canonical Tax Source Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "sourceArtifacts",
+    "sources"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "sourceArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "completenessWarning": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRecord"
+      }
+    }
+  },
+  "$defs": {
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "taxDomain",
+        "jurisdiction",
+        "officialOwner",
+        "sourceName",
+        "sourceUrls",
+        "accessMethod",
+        "machineReadable",
+        "importReadiness",
+        "effectiveDateHandling",
+        "updateFrequency",
+        "joinKeys",
+        "runtimeUse",
+        "requiredUserOrAccountantInputs",
+        "requiredParcelOrBillInputs",
+        "calculationSupported",
+        "sourceConfidence",
+        "evidenceText",
+        "limitations",
+        "refreshNotes"
+      ],
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taxDomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jurisdiction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "country",
+            "state",
+            "countyFips",
+            "countyName",
+            "placeName",
+            "placeGeoid",
+            "specialDistrict"
+          ],
+          "properties": {
+            "country": {
+              "type": "string"
+            },
+            "state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "countyFips": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "countyName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "placeName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "placeGeoid": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "specialDistrict": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "officialOwner": {
+          "type": "string"
+        },
+        "sourceName": {
+          "type": "string"
+        },
+        "sourceUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "accessMethod": {
+          "enum": [
+            "download",
+            "api",
+            "lookup_tool",
+            "html_table",
+            "pdf",
+            "manual",
+            "unknown"
+          ]
+        },
+        "originalAccessMethod": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "machineReadable": {
+          "type": "boolean"
+        },
+        "importReadiness": {
+          "enum": [
+            "ready_for_import",
+            "needs_adapter",
+            "lookup_only",
+            "manual_review",
+            "gap"
+          ]
+        },
+        "effectiveDateHandling": {
+          "type": "string"
+        },
+        "updateFrequency": {
+          "type": "string"
+        },
+        "joinKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "runtimeUse": {
+          "type": "string"
+        },
+        "requiredUserOrAccountantInputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredParcelOrBillInputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "calculationSupported": {
+          "enum": [
+            "address_only",
+            "address_plus_project_inputs",
+            "tax_document_required",
+            "accountant_input_required",
+            "assessor_confirmation_required",
+            "not_supported"
+          ]
+        },
+        "sourceConfidence": {
+          "type": "string"
+        },
+        "evidenceText": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "refreshNotes": {
+          "type": "string"
+        },
+        "sourceArtifact": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
