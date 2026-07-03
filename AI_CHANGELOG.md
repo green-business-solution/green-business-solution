@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) retrofit sub-tab scale adjustment
+
+- Reduced the expanded retrofit sub-tab row height, font size, and icon size.
+- Shifted the retrofit sub-tabs slightly left so they read separately from the primary sidebar rows.
+
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile registry admin workflow
 
 - Added an admin-only ApplicationProfile registry backed by the existing runtime-state table, including draft generation from the ApplicationPrepEngine pipeline, first-10 audit import, profile list/detail, edit, approve, reject, and archive APIs.
