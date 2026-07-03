@@ -2565,7 +2565,7 @@ dd {
 }
 
 .sidebar-retrofit-list {
-  padding: 2px 0 2px 0;
+  padding: 2px 0 2px 22px;
 }
 
 .sidebar-retrofit-item {
@@ -2575,7 +2575,7 @@ dd {
   line-height: 17px;
   min-height: 30px;
   position: relative;
-  padding-left: 4px;
+  padding-left: 6px;
 }
 
 .sidebar-retrofit-item::before {
