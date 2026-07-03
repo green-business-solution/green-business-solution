@@ -7324,9 +7324,9 @@ function ProcessOnboardingModal({
   }
 
   const title = displayedLines.title || "";
-  const step1 = displayedLines.step1 || "";
-  const step2 = displayedLines.step2 || "";
-  const step3 = displayedLines.step3 || "";
+  const step1 = visibleProcessStepText(displayedLines.step1 || "", "Step 1: ");
+  const step2 = visibleProcessStepText(displayedLines.step2 || "", "Step 2: ");
+  const step3 = visibleProcessStepText(displayedLines.step3 || "", "Step 3: ");
   const note = displayedLines.note || "";
   const activeLineId = PROCESS_ONBOARDING_LINES.find((line) => displayedLines[line.id] !== line.text)?.id;
 
@@ -7353,19 +7353,19 @@ function ProcessOnboardingModal({
               active={shouldAnimateText && activeLineId === "step1"}
               accent="Upload"
               number="1"
-              text={step1.replace(/^Step 1:\s*/, "")}
+              text={step1}
             />
             <ProcessStep
               active={shouldAnimateText && activeLineId === "step2"}
               accent="Choose"
               number="2"
-              text={step2.replace(/^Step 2:\s*/, "")}
+              text={step2}
             />
             <ProcessStep
               active={shouldAnimateText && activeLineId === "step3"}
               accent="Get"
               number="3"
-              text={step3.replace(/^Step 3:\s*/, "")}
+              text={step3}
             />
           </div>
           <div className="process-note">
@@ -7401,6 +7401,13 @@ function ProcessOnboardingModal({
 
 function TypewriterCaret({ show }: { show: boolean }) {
   return show ? <span className="typewriter-caret" aria-hidden="true" /> : null;
+}
+
+function visibleProcessStepText(text: string, prefix: string) {
+  if (!text) return "";
+  if (prefix.startsWith(text)) return "";
+  if (text.startsWith(prefix)) return text.slice(prefix.length);
+  return text;
 }
 
 function ProcessAccentText({ accent, text }: { accent: string; text: string }) {

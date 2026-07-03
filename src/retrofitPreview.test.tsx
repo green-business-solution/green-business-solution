@@ -488,6 +488,8 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("process-number");
     expect(source).toContain("code-accent");
     expect(source).toContain("ProcessAccentText");
+    expect(source).toContain("visibleProcessStepText");
+    expect(source).toContain("if (prefix.startsWith(text)) return \"\"");
     expect(source).toContain("getProcessTypingDelay");
     expect(source).toContain("line.id.startsWith(\"step\") ? 34 : 20");
     expect(source).not.toContain("onboarding.md");

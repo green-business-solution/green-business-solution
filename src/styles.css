@@ -2766,12 +2766,12 @@ dd {
   max-height: calc(100vh - 96px);
   max-width: calc(100vw - 64px);
   overflow: hidden;
-  padding: 52px 56px 44px;
-  width: min(1040px, calc(100vw - 64px));
+  padding: 64px 66px 52px;
+  width: min(1160px, calc(100vw - 64px));
 }
 
 .process-onboarding-modal {
-  min-height: 500px;
+  min-height: 560px;
   position: relative;
 }
 
@@ -2785,11 +2785,11 @@ dd {
 
 .process-editor-title {
   color: #4ea1ff;
-  font-size: clamp(36px, 3vw, 44px);
+  font-size: clamp(42px, 3.35vw, 54px);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.15;
-  margin: 0 0 42px;
+  margin: 0 0 68px;
 }
 
 .process-step-list {
@@ -2806,14 +2806,14 @@ dd {
 
 .process-number {
   color: #aeb8c6;
-  font-size: clamp(24px, 2vw, 30px);
+  font-size: clamp(30px, 2.35vw, 38px);
   font-weight: 500;
   line-height: 1.35;
 }
 
 .process-step-row p {
   color: #d7dee8;
-  font-size: clamp(24px, 2vw, 30px);
+  font-size: clamp(30px, 2.35vw, 38px);
   font-weight: 600;
   line-height: 1.35;
   margin: 0;

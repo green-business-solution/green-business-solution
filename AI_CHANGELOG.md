@@ -1834,3 +1834,4 @@
 - Added the `/user-preview` Process onboarding modal with typewriter text, reduced-motion support, shrink-to-Instructions animation, local/session seen-state handling, and a left-nav Instructions item for reopening the guide.
 - Added an admin `Post Form Preview` nav item that opens `/user-preview?postFormPreview=1` and forces the same post-intake onboarding modal for review without filling out the form.
 - Restyled the Process onboarding modal as a dark VS Code-inspired editor panel with blue syntax accents, slower step-line typewriter timing, and a bottom-right blue Next button while preserving the shrink-to-Instructions behavior.
+- Enlarged the Process onboarding editor panel and primary lines, increased spacing after the title, and prevented partial `Step 1/2/3` prefixes from flashing during the typewriter animation.
