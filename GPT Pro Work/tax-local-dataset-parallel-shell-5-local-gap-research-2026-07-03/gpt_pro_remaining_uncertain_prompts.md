@@ -2,45 +2,44 @@
 
 Date: 2026-07-03
 
-Use official government/tax/assessor/treasurer sources only. Do not use vendor tax databases, blogs, or summaries as final authority.
+Use official government/tax/assessor/treasurer sources only. Do not use vendor tax databases, blogs, or secondary summaries as final authority.
 
-## 1. Quincy, WA Local Business Tax Status
+## 1. Quincy, WA General Non-Utility B&O Confirmation
 
-Find exact official City of Quincy evidence for whether Quincy, WA imposes a local B&O, gross-receipts, occupation, or local business-license tax for 2026.
+Shell 5 found official Quincy code evidence for business licensing and public utility business tax, but no affirmative official statement proving whether Quincy has or lacks a separate general non-utility local B&O/gross-receipts tax.
 
-Return only these fields:
+Return only:
 
-- official source URL and owner;
-- municipal code section or finance page title;
-- whether local B&O/gross-receipts tax exists;
+- official City of Quincy source URL and owner;
+- municipal code, ordinance, finance page, or direct city confirmation;
+- whether a separate non-utility local B&O/gross-receipts/occupation tax exists;
 - if yes: classifications, rates, thresholds, due dates, filing portal/forms, deductions/credits;
-- if no: official source text proving no city local B&O/gross-receipts/business tax beyond ordinary licensing;
-- required user inputs for calculation;
-- whether address alone can flag applicability;
-- confidence and exact short evidence quote.
+- if no: exact official text or city response proving no separate non-utility local B&O/gross-receipts/business tax beyond ordinary licensing and QMC 3.28 public utility tax;
+- whether address alone can route applicability;
+- exact short evidence quote.
 
-## 2. Rhode Island Municipal Renewable Tax Table
+## 2. Rhode Island Direct Municipal Ordinance Verification
 
-Build a municipality-by-municipality official-source table for Rhode Island renewable energy property/tangible tax treatment relevant to `SOURCE_DSIRE:dsire_program_id:22798`.
+Shell 5 added the official Rhode Island Office of Energy Resources 2025 municipal solar ordinance inventory for all 39 municipalities. Before runtime import, verify the linked municipal code/source rows directly.
 
 Return one row per city/town with:
 
 - municipality;
-- official source URL and owner;
+- direct municipal official source URL and owner;
 - ordinance/code/resolution/assessor page section;
-- treatment: state formula only, local waiver, exemption, contractual exemption, no official source found, or other;
-- whether $5.00/kW AC tangible formula is adopted/referenced;
-- whether $3.50/kW AC real-property treatment is referenced;
+- treatment: state formula only, local waiver, exemption, stabilization, contractual exemption, no official source found, or other;
+- whether `$5.00/kW AC` tangible formula is adopted/referenced;
+- whether `$3.50/kW AC` real-property treatment is referenced;
 - application deadline or assessor form requirement;
 - whether assessor confirmation is required;
-- unresolved facts;
+- any conflict with the OER 2025 inventory;
 - exact short evidence quote.
 
-If a municipality lacks official evidence, mark `no_official_source_found` rather than inferring.
+If a municipality lacks direct municipal evidence, mark `no_direct_municipal_source_found` rather than inferring.
 
 ## 3. Detroit/Wayne RERZ Approved Project Documents
 
-For `SOURCE_DSIRE:dsire_program_id:3216`, find official project-specific documents for Detroit/Wayne sample relevance, including Factory ZERO only if official RERZ evidence exists.
+Shell 5 found official general Renaissance Zone evidence, official annual reports, and non-Detroit Renewable Energy Renaissance Zone evidence, but no official Detroit/Wayne project-specific DSIRE 3216 RERZ package.
 
 Return only source-backed fields:
 
@@ -56,64 +55,13 @@ Return only source-backed fields:
 - whether public data alone can calculate a sample property;
 - exact missing documents/facts blocking calculation.
 
-If no official project-specific Detroit/Wayne RERZ document exists, say so explicitly and identify the searched official owners.
+If no official project-specific Detroit/Wayne RERZ document exists, say so explicitly and identify the official owners searched.
 
-## 4. Pasadena Current Numeric Business License Tax Schedule
+## 4. Property Tax Adapter Commercial/Bulk Terms For Tax Bill Data
 
-Extract current official Pasadena business license tax numeric rates for sample-relevant classes.
+Shell 5 bounded the county/local adapter records using official sources. Before production import, confirm explicit commercial/bulk terms for parcel, assessment, and tax-bill line-item data.
 
-Return:
-
-- source URL and owner;
-- fiscal year/effective date;
-- classes: retail, restaurant/food, warehouse/distribution, hotel/lodging, office/professional, manufacturing, nonprofit, commercial property owner/rental, cannabis if applicable;
-- flat amount;
-- per-employee amount;
-- gross-receipts, unit, room, square-foot, or BID formula if applicable;
-- SB-1186/state accessibility fee treatment;
-- renewal/due date;
-- late fee/penalty if formulaic;
-- required user inputs;
-- exact short evidence quote per class.
-
-## 5. Anaheim Non-Services Business License Tax Classes
-
-Extract current official Anaheim Title 3 business license tax formulas beyond services.
-
-Return:
-
-- source URL and owner;
-- code section;
-- classes: retail, restaurant/food, warehouse/distribution/storage, hotel/lodging, office/professional, manufacturing, contractor, regulated permits if sample-relevant;
-- flat amount;
-- per-employee amount;
-- gross-receipts, unit, room, square-foot, or other basis;
-- processing/SB-1186/state accessibility fee treatment;
-- required user inputs;
-- exact short evidence quote per class.
-
-## 6. Burbank FY 2025-26 Article VII Numeric Rate Rows
-
-Extract official City of Burbank FY 2025-26 Article VII Schedule of Business Taxes into machine-readable rows.
-
-Return:
-
-- source URL and owner;
-- page/section;
-- class/category;
-- formula basis: flat, employee, gross receipts, business volume, unit, room, square footage, per job, other;
-- numeric rate;
-- minimum/maximum;
-- state accessibility fee treatment;
-- registration/zoning review fees if mandatory;
-- required user inputs;
-- exact short evidence quote per row.
-
-## 7. Property Tax Adapter Commercial/Bulk Terms For Tax Bill Data
-
-For Los Angeles County CA, San Diego County CA, Orange County CA, King County WA, Wayne/Detroit MI, Washtenaw/Ann Arbor MI, Grant County WA, and Snohomish County WA, confirm official terms for production use of parcel, assessment, and tax-bill line-item data.
-
-Return one row per county/local unit with:
+Return one row per county/local unit for Los Angeles County CA, San Diego County CA, Orange County CA, King County WA, Wayne/Detroit MI, Washtenaw/Ann Arbor MI, Grant County WA, and Snohomish County WA:
 
 - official source URL and owner;
 - parcel geometry access: bulk import, public API, lookup-only, manual, or terms unclear;

@@ -32,10 +32,15 @@
           "title": "East Greenwich Code, Article XV Exemption for Renewable Energy Systems",
           "url": "https://ecode360.com/32395981",
           "owner": "Town of East Greenwich"
+        },
+        {
+          "title": "Inventory of Municipal Solar Ordinances Updated 2025 (Includes ESS)",
+          "url": "https://energy.ri.gov/sites/g/files/xkgbur741/files/2025-07/Inventory%20of%20Municipal%20Solar%20Ordinances%20Updated%202025%20%28Includes%20ESS%29_0.pdf",
+          "owner": "Rhode Island Office of Energy Resources"
         }
       ],
-      "sourceConfidence": "high_for_state_formula_medium_for_municipal_table",
-      "evidenceText": "State law says cities and towns tax covered renewable energy resources and associated equipment at $5.00 per AC kW for tangible property, and real property on which renewable resources are located at $3.50 per AC kW. OER rules require all municipal ordinances/resolutions assessing commercial renewable tangible tax to apply the $5.00/kW formula, allow municipal waiver ordinances for some non-revenue systems, and require interconnection/program documents. East Greenwich is an example of an official municipal code adopting an exemption workflow and the OER formula.",
+      "sourceConfidence": "high_for_state_formula_high_for_2025_oer_municipal_inventory_medium_for_project_tax_treatment",
+      "evidenceText": "State law says cities and towns tax covered renewable energy resources and associated equipment at $5.00 per AC kW for tangible property, and real property on which renewable resources are located at $3.50 per AC kW. OER rules require municipal ordinances/resolutions assessing commercial renewable tangible tax to apply the $5.00/kW formula and allow municipal waiver ordinances for some non-revenue systems. The Rhode Island Office of Energy Resources 2025 municipal solar ordinance inventory provides a municipality-by-municipality official inventory with an Adopted Tax Ordinance? column across all 39 cities/towns; it identifies tax ordinances or none-found statuses but does not replace assessor confirmation for a specific project.",
       "calculationStatus": "assessor_or_accountant_review_required",
       "formulaOrRateSummary": "Statutory charge can be calculated as applicable_tangible_component = AC kW * $5.00 and applicable_real_property_component = AC kW * $3.50, but components must not be applied without tax-classification and assessor confirmation. Residential and manufacturer-employed renewable equipment may be exempt. Savings require counterfactual ordinary property/tangible tax minus assessor-confirmed statutory charge.",
       "requiredInputs": [
@@ -61,12 +66,247 @@
       "userOverrideNeeded": true,
       "includeInUserFacingTotalDefault": false,
       "limitations": [
-        "No complete current official statewide municipal waiver/adoption table was found.",
-        "All Rhode Island municipalities can likely be tabled only by municipality-by-municipality official code, assessor, or council-document research, not from one statewide source identified here.",
-        "Municipal code evidence is not enough for a user-facing dollar savings result because current assessor treatment, project classification, real/tangible applicability, pre-2017 interconnection status, and tax-bill lines remain property-specific.",
-        "East Greenwich proves that municipal official sources exist, not that all 39 municipalities have the same treatment."
+        "The 2025 OER inventory is an official statewide municipal ordinance inventory, but it is not an assessor ruling or tax bill for a specific project.",
+        "Municipal code/source links still need direct row-by-row verification before importing deterministic municipality-specific tax outcomes into runtime.",
+        "User-facing dollar savings still require current assessor treatment, project classification, real/tangible applicability, pre-2017 interconnection status, and tax-bill lines."
       ],
-      "nextAction": "Build a municipality-level official-source table for all Rhode Island cities/towns and keep this workflow suppressed from user-facing totals until assessor confirmation and counterfactual tax are supplied."
+      "nextAction": "Use the OER 2025 inventory as the official municipality routing checklist; verify each linked municipal ordinance before runtime import and keep assessor/tax-bill gating for calculations.",
+      "municipalRenewableTaxInventory2025": [
+        {
+          "municipality": "Barrington",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 169, Article VII",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Bristol",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Chapter 27, Article II",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Burrillville",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 25, Article II, sec. 25-42",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Central Falls",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Charlestown",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Coventry",
+          "treatment": "commercial_offset_exemption_addressed_not_blanket_exempt",
+          "officialInventoryEvidence": "Chapter 217-26: renewable energy systems meant solely to offset electricity bills are exempt from taxation",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Cranston",
+          "treatment": "local_waiver_or_exemption_for_limited_systems",
+          "officialInventoryEvidence": "Chapter 3.16.060: waiver for systems not selling excess power",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Cumberland",
+          "treatment": "partial_exemption_or_threshold_exemption",
+          "officialInventoryEvidence": "Chapter 36-7 and 36-8: systems under 250 kW exempt",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "East Greenwich",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 227, Article XV",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "East Providence",
+          "treatment": "partial_exemption_minor_taxable_major",
+          "officialInventoryEvidence": "Sec. 16-98: minor systems exempt, major systems fully taxable",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Exeter",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 42, Article XI",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Foster",
+          "treatment": "state_formula_or_state_law_referenced",
+          "officialInventoryEvidence": "Chapter 34-54(5) mentions R.I. Gen. Laws 44-3-21",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Glocester",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "sec. 247-43",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Hopkinton",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "sec. 19-90",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Jamestown",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Johnston",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Lincoln",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 228, Article XI",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Little Compton",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Middletown",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Narragansett",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Newport",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "New Shoreham",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "North Kingstown",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 19, Article II, Sec. 19-41",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "North Providence",
+          "treatment": "conditional_exemption_or_stabilization_by_council",
+          "officialInventoryEvidence": "Ch. 32, Article I, Sec. 32-1: exemption or stabilization may be granted after town council determination",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "North Smithfield",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Chapter 301, Article VII",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Pawtucket",
+          "treatment": "non_solar_specific_possible_tax_treatment",
+          "officialInventoryEvidence": "Ch. 363, Article XII may apply to improvements to multi-unit dwellings",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Portsmouth",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Providence",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Richmond",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Chapter 3.55.040",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Scituate",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Smithfield",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Article 5.11.3",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "South Kingstown",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Sec. 17-70",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Tiverton",
+          "treatment": "no_official_tax_ordinance_found_in_oer_inventory",
+          "officialInventoryEvidence": "OER inventory lists None found",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Warren",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Sec. 7-122",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Warwick",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Sec. 74-52",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "West Greenwich",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Sec. 29 and 30",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "West Warwick",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Article V, Sec. 18-54",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Westerly",
+          "treatment": "adopted_tax_ordinance",
+          "officialInventoryEvidence": "Ch. 229, Article IV",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        },
+        {
+          "municipality": "Woonsocket",
+          "treatment": "adopted_tax_process_or_ordinance",
+          "officialInventoryEvidence": "Sec. 2-76 process",
+          "source": "Rhode Island Office of Energy Resources Inventory of Municipal Solar Ordinances Updated 2025"
+        }
+      ]
     },
     {
       "targetId": "program_mi_rerz_detroit_wayne_dsire_3216",
@@ -97,10 +337,20 @@
           "title": "MCL 125.2688a",
           "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=MCL-125-2688A",
           "owner": "Michigan Legislature"
+        },
+        {
+          "title": "Michigan Renaissance Zone Act CY 2023 Report",
+          "url": "https://www.michiganbusiness.org/globalassets/documents/reports/legislative-reports/cy2023-renaissance-zone-annual-report.pdf",
+          "owner": "Michigan Economic Development Corporation"
+        },
+        {
+          "title": "Michigan State Administrative Board March 15, 2022 Minutes",
+          "url": "https://www.michigan.gov/dtmb/-/media/Project/Websites/dtmb/Law-and-Policies/SAB/2022/minutes/20220315-SAB-minutes.pdf",
+          "owner": "Michigan Department of Technology, Management & Budget / State Administrative Board"
         }
       ],
       "sourceConfidence": "medium",
-      "evidenceText": "Detroit says Renaissance Zones are a City/Wayne/State effort and include waiver of city income and utility users taxes, most city property taxes, county property taxes, and state income/single-business tax for qualified participants physically located in a sub-zone and not delinquent. State/MEDC annual reports describe most state and local taxes, including real and personal property tax, as abated for specified years. Treasury city schedules require a qualified Renaissance Zone deduction and disqualify delinquent taxpayers. Treasury ESA guidance handles special millages and Renaissance Zone treatment for qualified personal property.",
+      "evidenceText": "Detroit says Renaissance Zones are a City/Wayne/State effort and include waiver of city income and utility users taxes, most city property taxes, county property taxes, and state income/single-business tax for qualified participants physically located in a sub-zone and not delinquent. State/MEDC annual reports describe most state and local taxes, including real and personal property tax, as abated for specified years. Official annual-report search results identify active Renewable Energy Renaissance Zone evidence outside Detroit/Wayne, including Verso Quinnesec in Breitung Township/Dickinson County in 2022, and Detroit/Wayne examples such as Lynch Rd./Detroit Chassis as geographic/company subzones rather than DSIRE 3216 RERZ project-specific evidence. No official source found in this pass ties Factory ZERO or another Detroit/Wayne property to an approved DSIRE 3216 Renewable Energy Renaissance Zone package.",
       "calculationStatus": "assessor_or_accountant_review_required",
       "formulaOrRateSummary": "Workflow only until approved-zone/company documents and actual eligible tax lines are supplied. A deterministic benefit can be calculated only from eligible otherwise-due tax lines multiplied by the approved benefit-share multiplier: 1.00 in full exemption years, then 0.75, 0.50, and 0.25 during the three-year phaseout, then 0 after expiration/revocation. Do not treat ESA acquisition-cost multipliers as the benefit multiplier.",
       "requiredInputs": [
@@ -130,10 +380,18 @@
       "limitations": [
         "Detroit/Wayne sample properties cannot be calculated from public address/parcel lookup alone.",
         "No official public document found here proves a sample Detroit/Wayne property is in a specific approved Renewable Energy Renaissance Zone for DSIRE 3216.",
-        "Factory ZERO or Detroit-Wayne sample calculations need project-specific MSF/SAB designation, local-unit approval, legal description/parcel inclusion, and actual abated tax-line documents.",
-        "The Detroit city page covers general Renaissance Zones and sub-zones, not a complete Renewable Energy Renaissance Zone company-specific calculation package."
+        "Official annual reports found Detroit/Wayne geographic/company subzones and non-Detroit Renewable Energy Renaissance Zone examples, but not a Detroit/Wayne RERZ package.",
+        "Factory ZERO or Detroit-Wayne sample calculations need project-specific MSF/SAB designation, local-unit approval, legal description/parcel inclusion, and actual abated tax-line documents."
       ],
-      "nextAction": "Obtain approved-zone/company documents and tax bills/returns before any user-facing estimate; keep as document/accountant workflow."
+      "nextAction": "Obtain approved-zone/company documents and tax bills/returns before any user-facing estimate; keep as document/accountant workflow.",
+      "projectSpecificEvidenceStatus": "no_official_detroit_wayne_rerz_project_document_found",
+      "officialOwnersSearched": [
+        "City of Detroit Assessor",
+        "Michigan Department of Treasury",
+        "Michigan Economic Development Corporation / Michigan Strategic Fund",
+        "Michigan State Administrative Board / DTMB",
+        "State of Michigan annual Renaissance Zone reports"
+      ]
     },
     {
       "targetId": "wa_everett_local_bo_status",
@@ -195,8 +453,18 @@
       "jurisdiction": "Quincy, Washington",
       "officialSources": [
         {
-          "title": "City of Quincy official website search",
-          "url": "https://quincywashington.us/",
+          "title": "Quincy Municipal Code Title 5 Business Licenses and Regulations",
+          "url": "https://www.codepublishing.com/WA/Quincy/html/Quincy05/Quincy05.html",
+          "owner": "City of Quincy"
+        },
+        {
+          "title": "Quincy Municipal Code Chapter 5.06 Business License",
+          "url": "https://www.codepublishing.com/WA/Quincy/html/Quincy05/Quincy0506.html",
+          "owner": "City of Quincy"
+        },
+        {
+          "title": "Quincy Municipal Code Chapter 3.28 Public Utility Business Tax",
+          "url": "https://www.codepublishing.com/WA/Quincy/html/Quincy03/Quincy0328.html",
           "owner": "City of Quincy"
         },
         {
@@ -205,15 +473,17 @@
           "owner": "Washington Department of Revenue"
         }
       ],
-      "sourceConfidence": "low",
-      "evidenceText": "Washington DOR explains the state B&O tax and notes that local B&O is separate from state administration. This pass did not find an official Quincy city page, code section, rate table, FileLocal page, or finance page proving a current Quincy local B&O/gross-receipts tax or proving no such tax.",
+      "sourceConfidence": "medium_for_business_license_and_public_utility_tax_low_for_general_bo_nonexistence",
+      "evidenceText": "Quincy Municipal Code Title 5 contains Business License, Itinerant Vendors, Special Events, Taxicabs, Yard Sales, Alcoholic Beverage Control, Admissions, Dance Permits, and Pawnbrokers chapters. QMC 5.06.020 requires a business license for engaging in business, with a de minimis exemption in QMC 5.06.025 for businesses at or below $4,000 beginning January 1, 2026 when they do not maintain a place of business in the City. QMC 3.28 imposes a Public Utility Business Tax on defined public utility businesses, at 6% for telephone/light/power/gas, 4% for domestic sewerage/refuse/water, and 1% for industrial sewer/reuse water distribution. No official Quincy source found here affirmatively states that there is no general local B&O/gross-receipts tax beyond licensing and public utility tax, so absence of a general B&O chapter is not treated as final proof of nonexistence.",
       "calculationStatus": "source_inaccessible",
-      "formulaOrRateSummary": "Not proven from official city sources. State B&O may apply, but this target is local Quincy B&O/business tax status.",
+      "formulaOrRateSummary": "Officially supported: business-license workflow under QMC 5.06 and public utility business tax under QMC 3.28. Public utility tax = gross income from the defined public utility business in Quincy multiplied by the QMC 3.28.040 rate: telephone 6%, light/power 6% with monthly billing cap language, gas 6%, domestic sewerage 4%, refuse 4%, water 4%, industrial sewer 1%, reuse water distribution 1%. General local B&O/gross-receipts tax for non-utility business remains unproven either way from the searched official sources.",
       "requiredInputs": [
-        "official Quincy ordinance or finance page proving local B&O applicability or non-applicability",
-        "if applicable: business classification",
-        "if applicable: gross receipts attributable to Quincy",
-        "if applicable: deductions, thresholds, filing account, and due dates"
+        "official Quincy business license endorsement/account status",
+        "whether activity is a QMC 3.28 public utility business",
+        "gross income from utility business in Quincy if QMC 3.28 applies",
+        "monthly/quarterly remittance period",
+        "deductions/excepted income under QMC 3.28.060",
+        "for non-utility businesses: official city confirmation if a separate local B&O/gross-receipts tax applies"
       ],
       "serverDerivableInputs": [
         "address in Quincy city limits",
@@ -223,11 +493,11 @@
       "userOverrideNeeded": true,
       "includeInUserFacingTotalDefault": false,
       "limitations": [
-        "No official evidence found here supports claiming Quincy has a local B&O tax.",
-        "No official evidence found here supports claiming Quincy lacks a local B&O tax.",
-        "Do not infer from absence in search results or from non-government lists."
+        "Official code proves a business-license requirement and public utility business tax.",
+        "Official code table of contents searched did not reveal a general local B&O/gross-receipts chapter, but no official no-tax confirmation was found.",
+        "Do not include non-utility Quincy local B&O in runtime totals without direct city confirmation."
       ],
-      "nextAction": "GPT Pro or human should retrieve Quincy municipal code/finance confirmation and exact local business tax/license schedule, if any."
+      "nextAction": "For runtime, implement Quincy only as a business-license/public-utility-tax routing note unless City Finance confirms no separate general B&O/gross-receipts tax or publishes a current schedule."
     },
     {
       "targetId": "ca_burbank_business_license_tax",
@@ -250,10 +520,10 @@
           "owner": "City of Burbank"
         }
       ],
-      "sourceConfidence": "high_for_workflow_medium_for_complete_rates",
-      "evidenceText": "Burbank says its business tax is not generally a gross receipts tax, with exceptions, and that the common method is a basic tax plus per-employee fee paid annually. The city says rental businesses use residential units or commercial square footage, laundry uses annual business volume, vending/coin-operated machines use flat tax plus gross receipts, hotels/motels pay per room, and most non-home-occupation businesses pay a $4.00 state accessibility fee.",
+      "sourceConfidence": "high_for_extracted_sample_relevant_rates_medium_for_full_all_classes",
+      "evidenceText": "Burbank FY 2025-26 proposed citywide fee schedule Article VII lists Business Tax Registration Fee $49.94, State Accessibility Fee $4.00, Zoning Review $75.48, and current business tax rates effective January 1, 2025. Manufacturing/wholesaling/retailing uses $127.40 basic per business location annually plus $7.60 per employee annually. Business services/personal services/motion picture/recreation/entertainment uses $127.40 plus $11.90 per employee. Professions and related occupations uses $127.40 plus $15.45 per employee. Unclassified uses $127.40 plus $11.90 per employee. Special schedules include contractors $1.00 per $1,000 valuation capped at $530, laundry annual tiers from $127.40 to $1,273.80, residential rentals $12.70/unit or hotels/motels $25.50/unit, commercial rentals $127.40 for first 5,000 sq ft plus $2.55 per additional 100 sq ft or fraction, and vending/coin-operated $127.40 minimum plus 1% gross receipts over $5,000.",
       "calculationStatus": "calculable_with_user_inputs",
-      "formulaOrRateSummary": "Formula depends on class: most businesses use flat tax plus employee levy; rental/commercial landlord uses unit or commercial square footage; laundry uses annual volume; vending/coin-operated uses flat plus gross receipts; hotels/motels use room count. Current numeric schedule is in the adopted fee schedule and needs class extraction before an adapter should calculate.",
+      "formulaOrRateSummary": "Sample-relevant numeric rows extracted: manufacturing/wholesale/retail = $127.40 + $7.60 per employee; business/personal services/motion picture/recreation/entertainment = $127.40 + $11.90 per employee; professions/related = $127.40 + $15.45 per employee; unclassified = $127.40 + $11.90 per employee; contractors = $1.00 per $1,000 valuation, $530 max; laundry tiers <$50k $127.40, $50,001-$100k $254.60, $100,001-$200k $509.70, $200,001-$300k $759.10, >=$300,001 $1,273.80; residential rentals apartments/bungalows 3+ units $12.70/unit, hotels/motels $25.50/unit; commercial rentals $127.40 first 5,000 sq ft + $2.55 per additional 100 sq ft/fraction; vending/coin-operated $127.40 minimum + 1% gross receipts over $5,000. Add registration/accessibility/zoning fees only when applicable.",
       "requiredInputs": [
         "Burbank physical location or business activity",
         "business tax category/class",
@@ -274,11 +544,10 @@
       "userOverrideNeeded": true,
       "includeInUserFacingTotalDefault": false,
       "limitations": [
-        "Address alone can flag Burbank applicability but cannot identify the tax category or employee/square-foot/room/gross-receipt inputs.",
-        "The fee schedule is official but not normalized here into every class/rate row.",
-        "Show as workflow until the numeric rate table is extracted and user inputs are present."
+        "Address alone can flag Burbank applicability but cannot identify tax category or employee/square-foot/room/gross-receipt inputs.",
+        "The extracted rows cover sample-relevant categories; less common regulatory/simple/moderate/complex license categories remain workflow rows unless separately normalized."
       ],
-      "nextAction": "Extract Article VII of the FY 2025-26 fee schedule into class/rate rows before deterministic estimates."
+      "nextAction": "Runtime can implement sample-relevant Burbank rows only when the user supplies class and tax base inputs; keep uncommon classes suppressed until normalized."
     },
     {
       "targetId": "ca_pasadena_business_license_tax",
@@ -301,10 +570,10 @@
           "owner": "City of Pasadena"
         }
       ],
-      "sourceConfidence": "medium",
-      "evidenceText": "Pasadena says most business license tax is computed from a flat rate plus employee count and that rates for a specific classification require the Business License Section. It requires an annual business license tax for businesses operating in city limits, separate licenses for branches and separate activities, and a South Lake BID fee formula for businesses in that district.",
+      "sourceConfidence": "high_for_current_fy2026_schedule_rows",
+      "evidenceText": "Pasadena FY 2026 Schedule of Taxes, Fees, and Charges lists current business-license tax rows: maximum tax $79,967.03; general business license tax $209.23 plus $41.52 for each employee in excess of one; take-out service $417.08 plus $83.11 for each employee in excess of one; professional first professional $555.69, additional professional $277.12, non-professional employee $41.52; service business $209.23 plus $41.52 for each employee in excess of one; retail and wholesale delivery $280.11 per year; contracting annual taxes by class; rental accommodations hotel/roominghouse first three accommodations $205.77 plus $22.20 each additional accommodation.",
       "calculationStatus": "calculable_with_user_inputs",
-      "formulaOrRateSummary": "Usually flat rate plus employees by classification; exceptions include commercial building/rental, BID assessments, cannabis, and special permit categories. Numeric class rates are not fully exposed on the page and should be extracted from the current schedule/code or confirmed by the city.",
+      "formulaOrRateSummary": "Sample-relevant FY2026 rows: general business = $209.23 + $41.52 per employee over one; service = $209.23 + $41.52 per employee over one; take-out/restaurant-like = $417.08 + $83.11 per employee over one; professional/office = $555.69 first professional + $277.12 each additional professional + $41.52 non-professional employee; retail/wholesale delivery = $280.11 per year; contractors = general engineering $1,674.59, general building $1,116.82, specialty/other trades $837.99, six-month license 60%, three-month 30%; rental accommodations/hotel = $205.77 for first three accommodations + $22.20 each additional accommodation. Maximum business license tax $79,967.03.",
       "requiredInputs": [
         "Pasadena business location/activity",
         "business license classification",
@@ -324,11 +593,10 @@
       "userOverrideNeeded": true,
       "includeInUserFacingTotalDefault": false,
       "limitations": [
-        "Address alone can route to Pasadena but cannot determine classification, employee count, separate activity treatment, or BID formula inputs.",
-        "The city page directs users to staff for specific classification rates, so the rate table remains incomplete from public HTML alone.",
-        "Should be shown as a document/account workflow until a complete official schedule is normalized."
+        "Address alone can route to Pasadena but cannot determine classification, employee count, accommodation count, contractor class, or BID/additional permit treatment.",
+        "The FY2026 schedule provides numeric rows, but runtime should still require class/user inputs and suppress BID/account-specific charges unless confirmed."
       ],
-      "nextAction": "Get the current classification-rate table from Pasadena's adopted schedule/code or city staff and normalize it."
+      "nextAction": "Runtime can implement the extracted FY2026 base rows gated on business classification and user-supplied tax base inputs."
     },
     {
       "targetId": "ca_anaheim_business_license_tax",
@@ -351,10 +619,10 @@
           "owner": "City of Anaheim"
         }
       ],
-      "sourceConfidence": "medium",
-      "evidenceText": "Anaheim requires a business license for businesses conducting business in the city, including non-city businesses conducting business there. Code section 3.16.010 sets services license tax at $68 flat plus $10 per employee based on average employees. Applications include NAICS/SIC, tax, processing, penalty, interest, and permit fields.",
+      "sourceConfidence": "high_for_title_3_sample_relevant_rows",
+      "evidenceText": "Anaheim Title 3 imposes license taxes on specified businesses. Chapter 3.08 gross-receipts rows set manufacturing/wholesaling, retailing, and miscellaneous at $40 if annual gross receipts are under $100,000; otherwise $0.095 per $1,000 gross receipts or $60, whichever is greater. Dwelling/hotel/motel/transient occupancy and recreation/entertainment are $40 under $100,000; otherwise $0.19 per $1,000 gross receipts or $60, whichever is greater. Chapter 3.12 professions taxes the first practicing professional principal at $135, each additional professional principal at $150, salaried/contract professional employee at $75, and other employees at $10. Chapter 3.16 services is $68 plus $10 per average employee. Chapter 3.24 contractors is $125/year for general or engineering contractors and $100/year for subcontractors/specialty contractors. Chapter 3.28 nonresidential rental, including warehousing/storage, is $0.015 per square foot of gross rental space.",
       "calculationStatus": "calculable_with_user_inputs",
-      "formulaOrRateSummary": "For service businesses: annual tax = $68 + $10 * average employee count. Other business classes and regulated permits require additional code schedule extraction before deterministic calculation.",
+      "formulaOrRateSummary": "Sample-relevant rows: manufacturing/wholesale/retail/miscellaneous = gross receipts < $100,000: $40; otherwise max($60, $0.095 per $1,000 gross receipts). Hotel/lodging and recreation/entertainment = gross receipts < $100,000: $40; otherwise max($60, $0.19 per $1,000 gross receipts). Professional = $135 first professional principal + $150 additional professional principal + $75 salaried/contract professional employee + $10 other employee. Services = $68 + $10 per average employee. Contractors = $125 general/engineering or $100 subcontractor/specialty. Nonresidential rental/warehouse/storage = $0.015 per gross rental square foot.",
       "requiredInputs": [
         "Anaheim business location or activity",
         "business class/NAICS/SIC",
@@ -372,11 +640,10 @@
       "userOverrideNeeded": true,
       "includeInUserFacingTotalDefault": false,
       "limitations": [
-        "Address alone can flag Anaheim applicability but not business class or employee count.",
-        "Only the services class was confirmed to a numeric formula in this pass.",
-        "Other Anaheim classes should remain workflow records until code chapters are normalized."
+        "Address alone can flag Anaheim applicability but not business class, gross receipts, employee count, professional principal count, contractor class, or square footage.",
+        "Regulated miscellaneous activities beyond sample-relevant classes remain workflow rows unless separately normalized."
       ],
-      "nextAction": "Normalize all Anaheim Title 3 license-tax chapters, beginning with sample-relevant retail, restaurant, hotel, manufacturing, warehouse, and office classes."
+      "nextAction": "Runtime can implement extracted Title 3 sample-relevant rows with class and tax-base gates; keep other regulated permits suppressed until separately normalized."
     },
     {
       "targetId": "ca_vernon_business_license_and_special_parcel_tax",
