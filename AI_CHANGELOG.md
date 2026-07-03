@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) targeted local tax gap research
+
+- Added shell-5 targeted local tax gap research records for the requested RI, MI, WA, CA, and county property-tax adapter blockers.
+- Classified each target as calculable, user-input gated, tax-bill gated, workflow-only, or unresolved, with official-source evidence and remaining GPT Pro prompts.
+
 ## 2026-07-03 - Codex (GPT-5) scenario verification GPT Pro packet
 
 - Added a scenario-verification GPT Pro work packet with one prompt and one blank output file for each of the 50 sample test cases.
