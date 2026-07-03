@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) sidebar row parity pass
+
+- Made `Profile info` and `Dashboard` use the same row height as the Retrofit items.
+- Reduced the gap above `Profile info` so the sidebar rhythm is consistent across the full list.
+
 ## 2026-07-02 - Codex (GPT-5) application prep quality gate cleanup
 
 - Tightened ApplicationPrepEngine artifact ranking, URL normalization, form evidence filtering, requirement extraction, and profile quality gates to keep validation strings, generic DCED resources, generic Wakefield office email, malformed Jotform URLs, fake utility-provider fields, and generic proof-of-purchase labels out of final profiles.
