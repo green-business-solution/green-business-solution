@@ -11,6 +11,12 @@
 - Added responsive DOM-based headline, CTA, and RetroFi value copy while preserving the rest of the homepage and all existing routes.
 - Normalized and optimized the supplied no-text planet images for aligned clipping, eager loading, and reduced-motion support.
 
+## 2026-07-03 - Codex (GPT-5) GPT Pro tax remaining-gap import
+
+- Validated and imported the first six GPT Pro remaining tax-gap outputs for Quincy, Everett, Rhode Island municipal renewable property tax, Detroit/Wayne RERZ, county property-tax adapter terms, and California local business-tax edge classes.
+- Repaired local tax workflow data with source-backed Quincy non-utility no-tax-found status, Everett ordinary B&O class rates, gated RI/MI review metadata, production-safe versus tax-bill-gated property adapter fields, and refreshed California business-tax rate rows.
+- Extended local tax workflow calculations for Everett thresholded B&O, simple unit/percentage rows, keyed flat fees, and San Diego rental-unit tiers, with focused regression coverage.
+
 ## 2026-07-03 - Codex (GPT-5) Shell 5 local gap completion audit
 
 - Completed the Shell 5 local tax gap research handoff with official-source updates for Quincy public utility/business licensing, Rhode Island all-39 municipal renewable inventory, Detroit/Wayne RERZ bounds, and Burbank/Pasadena/Anaheim numeric business-tax rows.

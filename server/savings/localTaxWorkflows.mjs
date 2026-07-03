@@ -121,17 +121,17 @@ function calculateModel(model, ctx) {
       const employeeCount = numberAnswer(ctx, model.employeeInput);
       const countedEmployees = Math.max(0, employeeCount - Number(model.employeeOffset || 0));
       const amountCents = Number(model.baseCents || 0) + countedEmployees * Number(model.perEmployeeCents || 0);
-      return {
-        amountCents,
-        trace: [`Base ${model.baseCents || 0} + ${countedEmployees} employees * ${model.perEmployeeCents || 0} cents.`]
-      };
+      return applyModelCap(amountCents, model, [
+        `Base ${model.baseCents || 0} + ${countedEmployees} employees * ${model.perEmployeeCents || 0} cents.`
+      ]);
     }
 
     case "valuation_per_thousand": {
       const valuationCents = numberAnswer(ctx, model.valuationInput);
       const valuationDollars = valuationCents / 100;
       const amountCents = Math.ceil(valuationDollars / 1000) * Number(model.centsPerThousandDollars || 0);
-      return applyModelCap(amountCents, model, [`${valuationDollars} valuation dollars per $1,000.`]);
+      const minimumApplied = applyModelMinimum(amountCents, model, [`${valuationDollars} valuation dollars per $1,000.`]);
+      return applyModelCap(minimumApplied.amountCents, model, minimumApplied.trace);
     }
 
     case "base_plus_sqft_over_threshold": {
@@ -166,6 +166,37 @@ function calculateModel(model, ctx) {
       return applyModelMinimum(amountCents, model, [`Gross receipts ${grossReceiptsCents} cents * rate ${rate}.`]);
     }
 
+    case "everett_bo_ordinary_rate": {
+      const grossReceiptsCents = numberAnswer(ctx, model.grossReceiptsInput);
+      const deductionsCents = model.deductionsInput ? numberAnswer(ctx, model.deductionsInput) : 0;
+      const taxableReceiptsCents = Math.max(0, grossReceiptsCents - deductionsCents);
+      const filingFrequency = normalizeClass(firstAnswer(ctx, [model.filingFrequencyInput]));
+      const thresholdCents =
+        filingFrequency === "quarterly"
+          ? Number(model.quarterlyNoTaxThresholdCents)
+          : filingFrequency === "annual"
+            ? Number(model.annualNoTaxThresholdCents)
+            : null;
+
+      if (Number.isFinite(thresholdCents) && taxableReceiptsCents <= thresholdCents) {
+        return {
+          amountCents: 0,
+          trace: [
+            `Everett taxable B&O receipts ${taxableReceiptsCents} cents are at or below ${filingFrequency} no-tax threshold ${thresholdCents} cents.`
+          ]
+        };
+      }
+
+      const rate = Number(model.rateDecimal || 0);
+      return {
+        amountCents: taxableReceiptsCents * rate,
+        trace: [
+          `Everett taxable B&O receipts ${taxableReceiptsCents} cents * ordinary B&O rate ${rate}.`,
+          filingFrequency === "monthly" ? "Monthly no-tax threshold was not source-confirmed, so no threshold was applied." : `Filing frequency: ${filingFrequency}.`
+        ]
+      };
+    }
+
     case "class_rate_table": {
       const classValue = normalizeClass(firstAnswer(ctx, [model.classInput, "local_business_tax_class"]));
       const rate = model.ratesByClass?.[classValue];
@@ -173,6 +204,72 @@ function calculateModel(model, ctx) {
       return {
         amountCents: grossReceiptsCents * Number(rate || 0),
         trace: [`Gross income ${grossReceiptsCents} cents * class rate ${rate || 0} for ${classValue}.`]
+      };
+    }
+
+    case "conditional_fixed_amount": {
+      const conditionApplies = model.conditionInput ? booleanAnswer(ctx, model.conditionInput) === true : true;
+      const amountCents = conditionApplies ? Number(model.amountCents || 0) : 0;
+      return {
+        amountCents,
+        trace: [`Conditional fixed amount ${model.amountCents || 0} cents; condition applies: ${conditionApplies}.`]
+      };
+    }
+
+    case "fixed_amount_by_key": {
+      const selectedKey = normalizeClass(firstAnswer(ctx, [model.selectorInput]));
+      const amountCents = Number(model.amountCentsByKey?.[selectedKey] || 0);
+      return {
+        amountCents,
+        trace: [`Selected ${selectedKey || "unknown"} fixed amount ${amountCents} cents.`]
+      };
+    }
+
+    case "unit_rate": {
+      const units = numberAnswer(ctx, model.unitInput);
+      if (Number.isFinite(model.minimumUnitsForTax) && units < Number(model.minimumUnitsForTax)) {
+        return {
+          amountCents: 0,
+          trace: [`${units} units below taxable minimum ${model.minimumUnitsForTax}; tax is zero.`]
+        };
+      }
+      return applyModelMinimum(units * Number(model.centsPerUnit || 0), model, [
+        `${units} units * ${model.centsPerUnit || 0} cents.`
+      ]);
+    }
+
+    case "percentage_rate": {
+      const conditionApplies = model.conditionInput ? booleanAnswer(ctx, model.conditionInput) === true : true;
+      const amountBaseCents = numberAnswer(ctx, model.amountInput);
+      const rate = Number(model.rateDecimal || 0);
+      return {
+        amountCents: conditionApplies ? amountBaseCents * rate : 0,
+        trace: [`${amountBaseCents} cents * rate ${rate}; condition applies: ${conditionApplies}.`]
+      };
+    }
+
+    case "percentage_rate_by_key": {
+      const conditionApplies = model.conditionInput ? booleanAnswer(ctx, model.conditionInput) === true : true;
+      const selectedKey = normalizeClass(firstAnswer(ctx, [model.selectorInput]));
+      const amountBaseCents = numberAnswer(ctx, model.amountInput);
+      const rate = Number(model.ratesByKey?.[selectedKey] || 0);
+      return {
+        amountCents: conditionApplies ? amountBaseCents * rate : 0,
+        trace: [`${amountBaseCents} cents * keyed rate ${rate} for ${selectedKey || "unknown"}; condition applies: ${conditionApplies}.`]
+      };
+    }
+
+    case "percentage_rate_with_unit_threshold": {
+      const conditionApplies = model.conditionInput ? booleanAnswer(ctx, model.conditionInput) === true : true;
+      const units = numberAnswer(ctx, model.unitInput);
+      const amountBaseCents = numberAnswer(ctx, model.amountInput);
+      const thresholdMet = units >= Number(model.minimumUnitsForTax || 0);
+      const rate = Number(model.rateDecimal || 0);
+      return {
+        amountCents: conditionApplies && thresholdMet ? amountBaseCents * rate : 0,
+        trace: [
+          `${amountBaseCents} cents * rate ${rate}; condition applies: ${conditionApplies}; units ${units} meet threshold ${model.minimumUnitsForTax || 0}: ${thresholdMet}.`
+        ]
       };
     }
 
@@ -185,10 +282,9 @@ function calculateModel(model, ctx) {
         Math.max(0, principals - 1) * Number(model.additionalProfessionalCents || 0) +
         professionalEmployees * Number(model.professionalEmployeeCents || 0) +
         nonProfessionalEmployees * Number(model.nonProfessionalEmployeeCents || 0);
-      return {
-        amountCents,
-        trace: [`Professional formula with ${principals} principals, ${professionalEmployees} professional employees, ${nonProfessionalEmployees} other employees.`]
-      };
+      return applyModelCap(amountCents, model, [
+        `Professional formula with ${principals} principals, ${professionalEmployees} professional employees, ${nonProfessionalEmployees} other employees.`
+      ]);
     }
 
     case "square_foot_rate": {
@@ -216,6 +312,31 @@ function calculateModel(model, ctx) {
       return {
         amountCents: base + sb1186Fee + minimumWageFee,
         trace: [`San Diego base ${base} cents + SB-1186 ${sb1186Fee} cents + minimum-wage fee ${minimumWageFee} cents.`]
+      };
+    }
+
+    case "rental_unit_tier": {
+      const rentalType = normalizeClass(firstAnswer(ctx, [model.rentalTypeInput]));
+      const units = numberAnswer(ctx, model.unitInput);
+      const parcelCount = Math.max(1, numberAnswer(ctx, model.parcelCountInput));
+      const tier = (model.tiers || []).find((candidate) => {
+        const types = (candidate.rentalTypes || []).map(normalizeClass);
+        const maxUnits = candidate.maxUnits === null || candidate.maxUnits === undefined ? Number.POSITIVE_INFINITY : Number(candidate.maxUnits);
+        return types.includes(rentalType) && units >= Number(candidate.minUnits || 0) && units <= maxUnits;
+      });
+
+      if (!tier) {
+        return {
+          amountCents: 0,
+          trace: [`No rental unit tier matched ${rentalType || "unknown"} with ${units} units.`]
+        };
+      }
+
+      return {
+        amountCents: Number(tier.baseFeePerParcelCents || 0) * parcelCount + Number(tier.perUnitCents || 0) * units,
+        trace: [
+          `${parcelCount} parcels * ${tier.baseFeePerParcelCents || 0} cents + ${units} units * ${tier.perUnitCents || 0} cents for ${rentalType}.`
+        ]
       };
     }
 

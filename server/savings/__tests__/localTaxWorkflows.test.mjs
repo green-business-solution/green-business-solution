@@ -46,7 +46,7 @@ describe("local tax workflows", () => {
     );
 
     expect(result.status).toBe("calculated");
-    expect(result.amountCents).toBe(20340);
+    expect(result.amountCents).toBe(20870);
     expect(result.includedInUserFacingTotal).toBe(false);
     expect(result.trace.join(" ")).toContain("internal-only");
   });
@@ -64,7 +64,7 @@ describe("local tax workflows", () => {
     expect(missingGross.missingInputs.map((input) => input.inputKey)).toEqual(["gross_receipts_cents"]);
   });
 
-  it("applies source-backed public utility class rates for Quincy while leaving non-utility gaps unresolved", () => {
+  it("applies source-backed public utility class rates for Quincy while excluding non-utility classes", () => {
     const calculated = calculateLocalTaxWorkflow(
       workflow("local_tax_wa_quincy_public_utility_v1"),
       ctx({
@@ -83,6 +83,48 @@ describe("local tax workflows", () => {
     expect(calculated.amountCents).toBe(1000000);
     expect(calculated.includedInUserFacingTotal).toBe(false);
     expect(nonUtility.status).toBe("missing_inputs");
+  });
+
+  it("applies repaired source-backed Everett B&O rates and no-tax thresholds", () => {
+    const belowQuarterlyThreshold = calculateLocalTaxWorkflow(
+      workflow("local_tax_wa_everett_bo_v1"),
+      ctx({
+        local_business_tax_class: "retailing",
+        gross_receipts_cents: 400000,
+        filing_frequency: "quarterly"
+      })
+    );
+    const aboveQuarterlyThreshold = calculateLocalTaxWorkflow(
+      workflow("local_tax_wa_everett_bo_v1"),
+      ctx({
+        local_business_tax_class: "retailing",
+        gross_receipts_cents: 1000000,
+        deductions_cents: 200000,
+        filing_frequency: "quarterly"
+      })
+    );
+
+    expect(belowQuarterlyThreshold.status).toBe("calculated");
+    expect(belowQuarterlyThreshold.amountCents).toBe(0);
+    expect(aboveQuarterlyThreshold.status).toBe("calculated");
+    expect(aboveQuarterlyThreshold.amountCents).toBe(800);
+    expect(aboveQuarterlyThreshold.includedInUserFacingTotal).toBe(false);
+  });
+
+  it("calculates repaired San Diego rental-unit tax tiers as internal confirmed-input values", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("local_tax_ca_san_diego_business_tax_certificate_v1"),
+      ctx({
+        local_business_tax_class: "rental_unit_business_tax",
+        rental_type: "apartment",
+        rental_unit_count: 12,
+        parcel_count: 1
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(16500);
+    expect(result.includedInUserFacingTotal).toBe(false);
   });
 
   it("keeps county property-tax adapters as tax-bill gated workflows", () => {
