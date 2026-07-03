@@ -37,6 +37,7 @@ import {
   isApplicationProfileCustomerReady,
   validateApplicationProfileApproval
 } from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
+import { buildCustomerApplicationProfileResponse } from "./applicationSources/ApplicationProfileCustomerView.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
 import { GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT, reserveGeocodioLookup } from "./geography/geocodioUsageGuard.mjs";
 import {
@@ -3357,6 +3358,37 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
 
     const intake = await getIntake(user.userId);
     res.json(await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date() }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/application-profiles/approved", async (req, res) => {
+  try {
+    await requireAuthenticatedUserFromRequest(req);
+    const opportunityId = cleanText(req.query.opportunityId);
+    if (!opportunityId) {
+      const error = new Error("opportunityId is required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const profileId = applicationProfileIdForOpportunity(opportunityId);
+    const result = await db.send(
+      new GetCommand({
+        TableName: runtimeStateTable,
+        Key: applicationProfileStateKey(profileId)
+      })
+    );
+    const profile = result.Item && isApplicationProfileRegistryItem(result.Item)
+      ? publicApplicationProfileRecord(result.Item)
+      : null;
+
+    res.json({
+      generatedAt: new Date().toISOString(),
+      opportunityId,
+      ...buildCustomerApplicationProfileResponse(profile)
+    });
   } catch (error) {
     handleError(res, error);
   }

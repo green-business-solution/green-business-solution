@@ -1888,3 +1888,4 @@
 - Added a GPT Pro remaining-gap research packet for Quincy non-utility B&O, Everett B&O rates, Rhode Island municipal renewable ordinances, Detroit/Wayne RERZ evidence, property-tax adapter terms, and California local business-tax edge classes.
 - Expanded the product TODOs to explicitly cover regulatory penalties and carbon-credit/environmental-market modeling.
 - Added a GPT Pro grant-estimation repair work packet with one source/formula research prompt for each grant-like v2 package and one realistic project-profile enrichment prompt for each sample test case.
+- Added a customer-safe approved ApplicationProfile view and `/api/application-profiles/approved` endpoint so the existing Prepare Application drawer only receives sanitized, admin-reviewed, non-reference-only profiles.
