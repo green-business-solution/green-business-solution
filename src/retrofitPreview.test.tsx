@@ -702,13 +702,14 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("radial-gradient(circle at 30% 20%, rgba(38, 97, 150, 0.1), transparent 34%),");
     expect(css).toContain(".process-editor-content");
     expect(css).toContain(".process-editor-title");
-    expect(css).toContain("font-size: 34px");
-    expect(css).toContain("margin: 0 0 56px");
+    expect(css).toContain("font-size: clamp(40px, 3vw, 54px)");
+    expect(css).toContain("margin: 0 0 clamp(68px, 8vh, 92px)");
     expect(css).toContain(".process-number");
-    expect(css).toContain("font-size: 34px");
+    expect(css).toContain("font-size: clamp(34px, 2.6vw, 44px)");
     expect(css).toContain("font-weight: 500");
     expect(css).toContain(".code-accent");
-    expect(css).toContain("font-size: 24px");
+    expect(css).toContain("font-size: clamp(19px, 1.75vw, 28px)");
+    expect(css).toContain("overflow-wrap: break-word");
     expect(css).toContain(".process-modal-footer");
     expect(css).toContain(".process-next-button");
     expect(css).toContain("justify-content: flex-end");

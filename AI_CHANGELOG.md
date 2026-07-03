@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) process preview modal responsive spacing
+
+- Enlarged and respaced the post-form Process onboarding modal title and typed step layout to better match the supplied reference.
+- Reworked the modal to use 10% horizontal insets with viewport-aware sizing so the note wraps inside the panel instead of overflowing off-screen.
+- Updated the focused preview CSS regression checks for the new responsive modal scale.
+
 ## 2026-07-03 - Codex (GPT-5) final grant estimation package repair
 
 - Imported the final Wisconsin NEVI GPT Pro grant-estimation output, bringing the grant package repair intake to all 37 expected outputs with zero missing, broken, duplicated, or mismatched files.
