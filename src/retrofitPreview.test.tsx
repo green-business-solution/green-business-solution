@@ -283,7 +283,11 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("sidebar-retrofit-item");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
+    expect(html).toContain("Instructions");
+    expect(html.indexOf("Dashboard")).toBeLessThan(html.indexOf("Instructions"));
+    expect(html).toContain("data-instructions-nav-item=\"true\"");
     expect(html).toContain("Collapse retrofit navigation");
+    expect(html).not.toContain("The Process");
     expect(html).not.toContain("Customer preview bar");
     expect(html).not.toContain("Retrofit preview</span>");
     expect(html).not.toContain("Collapse sidebar");
@@ -466,6 +470,22 @@ describe("retrofit recommendations preview", () => {
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
     expect(source).toContain("Dashboard");
+    expect(source).toContain("Instructions");
+    expect(source).toContain("ProcessOnboardingModal");
+    expect(source).toContain("useTypewriterSequence");
+    expect(source).toContain("retrofi.instructionsOnboardingSeen");
+    expect(source).toContain("retrofi.intakeJustCompleted");
+    expect(source).toContain("Step 1: Upload your bills");
+    expect(source).toContain("Step 2: Choose a retrofit and answer a few questions");
+    expect(source).toContain("Step 3: Get your opportunities, metrics, and next steps");
+    expect(source).toContain("Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.");
+    expect(source).toContain("data-instructions-nav-item");
+    expect(source).toContain("role=\"dialog\"");
+    expect(source).toContain("aria-modal=\"true\"");
+    expect(source).toContain("prefers-reduced-motion");
+    expect(source).toContain("process-onboarding-flight");
+    expect(source).toContain("sidebar-instructions-item");
+    expect(source).toContain("safeStorageSet(\"session\", INTAKE_JUST_COMPLETED_KEY, \"true\")");
     expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
     expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
     expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
@@ -479,6 +499,23 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("data-workspace-panel=\"environmental\"");
     expect(source).toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("{ key: \"more\", label: \"More\" }");
+  });
+
+  it("opens admin ApplicationProfile details visibly from the list actions", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(source).toContain("profileDetailRef");
+    expect(source).toContain("scrollIntoView({ behavior: \"smooth\", block: \"start\" })");
+    expect(source).toContain("focus({ preventScroll: true })");
+    expect(source).toContain("viewProfile(profile.profileId, \"view\")");
+    expect(source).toContain("viewProfile(profile.profileId, \"edit\")");
+    expect(source).toContain("open={profileDetailMode === \"edit\"}");
+    expect(source).toContain("selectedProfile?.profileId === profile.profileId ? \"is-selected\" : undefined");
+    expect(css).toContain(".application-source-table tbody tr.is-selected");
+    expect(css).toContain(".application-profile-detail:focus");
   });
 
   it("builds honest environmental impact fallbacks without fake values", () => {
@@ -620,6 +657,13 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".sidebar-retrofit-item.is-active");
     expect(css).toContain(".user-preview-shell.is-sidebar-collapsed");
     expect(css).toContain(".user-preview-sidebar-collapse");
+    expect(css).toContain(".process-onboarding-modal");
+    expect(css).toContain(".process-onboarding-flight");
+    expect(css).toContain(".process-next-button");
+    expect(css).toContain(".typewriter-caret");
+    expect(css).toContain(".sidebar-instructions-item.is-pulsing");
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(css).toContain("@keyframes instructions-nav-pulse");
     expect(css).not.toContain("border-top: 1px solid var(--rf-border);\n  margin-top: 4px;\n  padding-top: 0;");
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");

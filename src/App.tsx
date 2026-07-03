@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { apiGet, apiPatch, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -5055,6 +5055,7 @@ function IntakePage({
       });
       clearStoredIntakeFormDraft();
       storeEnergyDataUploadSession(payload.uploadSession);
+      safeStorageSet("session", INTAKE_JUST_COMPLETED_KEY, "true");
       navigate("scan-results");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Submission failed.");
@@ -5695,6 +5696,50 @@ const SCENARIO_NAMES = {
   highestSavings: "Scenario C: Highest total savings",
   certification: "Scenario D: Certification-focused"
 } as const;
+
+const INSTRUCTIONS_ONBOARDING_SEEN_KEY = "retrofi.instructionsOnboardingSeen";
+const INTAKE_JUST_COMPLETED_KEY = "retrofi.intakeJustCompleted";
+
+const PROCESS_ONBOARDING_LINES = [
+  { id: "title", text: "The Process" },
+  { id: "step1", text: "Step 1: Upload your bills" },
+  { id: "step2", text: "Step 2: Choose a retrofit and answer a few questions" },
+  { id: "step3", text: "Step 3: Get your opportunities, metrics, and next steps" },
+  {
+    id: "note",
+    text: "Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use."
+  }
+] as const;
+
+function safeStorageGet(kind: "local" | "session", key: string) {
+  if (typeof window === "undefined") return null;
+  try {
+    const storage = kind === "local" ? window.localStorage : window.sessionStorage;
+    return storage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeStorageSet(kind: "local" | "session", key: string, value: string) {
+  if (typeof window === "undefined") return;
+  try {
+    const storage = kind === "local" ? window.localStorage : window.sessionStorage;
+    storage.setItem(key, value);
+  } catch {
+    // Local/session storage can be unavailable in private modes; React state still lets the user continue.
+  }
+}
+
+function safeStorageRemove(kind: "local" | "session", key: string) {
+  if (typeof window === "undefined") return;
+  try {
+    const storage = kind === "local" ? window.localStorage : window.sessionStorage;
+    storage.removeItem(key);
+  } catch {
+    // Ignore storage failures so onboarding never blocks recommendations.
+  }
+}
 
 export const CUSTOMER_RETROFIT_UI_NAMES: Record<string, string> = {
   led_lighting_retrofit: "LED lighting",
@@ -6742,6 +6787,9 @@ export function RetrofitRecommendationsPreview({
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
+  const [instructionsOpenedFromNav, setInstructionsOpenedFromNav] = useState(false);
+  const [instructionsPulse, setInstructionsPulse] = useState(false);
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
@@ -6754,6 +6802,17 @@ export function RetrofitRecommendationsPreview({
     setLastAddedRetrofitId(null);
     setPickerVisibleCount(6);
   }, [initialScenarioIds, initialSelectedOpportunityIds, preview.generatedAt, preview.intakeId, preview.profileId, preview.retrofits]);
+
+  useEffect(() => {
+    const intakeJustCompleted = safeStorageGet("session", INTAKE_JUST_COMPLETED_KEY) === "true";
+    const instructionsSeen = safeStorageGet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY) === "true";
+    if (intakeJustCompleted && !instructionsSeen) {
+      setInstructionsOpenedFromNav(false);
+      setShowInstructionsModal(true);
+    } else if (intakeJustCompleted && instructionsSeen) {
+      safeStorageRemove("session", INTAKE_JUST_COMPLETED_KEY);
+    }
+  }, []);
 
   const displayedRetrofits = useMemo(() => {
     return preview.retrofits
@@ -6950,6 +7009,22 @@ export function RetrofitRecommendationsPreview({
     setMobileSidebarOpen(false);
   }
 
+  function openInstructionsFromNav() {
+    setInstructionsOpenedFromNav(true);
+    setShowInstructionsModal(true);
+    setMobileSidebarOpen(false);
+  }
+
+  function handleInstructionsDismiss() {
+    safeStorageSet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY, "true");
+    safeStorageRemove("session", INTAKE_JUST_COMPLETED_KEY);
+    setShowInstructionsModal(false);
+    setInstructionsPulse(true);
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => setInstructionsPulse(false), 1100);
+    }
+  }
+
   return (
     <div
       className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
@@ -6960,12 +7035,14 @@ export function RetrofitRecommendationsPreview({
         collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
+        onOpenInstructions={openInstructionsFromNav}
         onSelectRetrofit={handleSidebarRetrofitSelect}
         onShowAllRetrofits={() => {
           setActiveRetrofitId("");
           setMobileSidebarOpen(false);
         }}
         onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
+        instructionsPulse={instructionsPulse}
         retrofits={displayedRetrofits}
       />
       <main className="user-preview-main">
@@ -7077,8 +7154,204 @@ export function RetrofitRecommendationsPreview({
               retrofitName={activeRetrofit.name}
             />
           ) : null}
+
+          {showInstructionsModal ? (
+            <ProcessOnboardingModal
+              animateText={!instructionsOpenedFromNav}
+              onClose={handleInstructionsDismiss}
+            />
+          ) : null}
         </section>
       </main>
+    </div>
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    mediaQuery.addEventListener?.("change", handleChange);
+    return () => mediaQuery.removeEventListener?.("change", handleChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function useTypewriterSequence(
+  lines: ReadonlyArray<{ id: string; text: string }>,
+  { enabled, characterDelayMs = 18, linePauseMs = 120 }: { enabled: boolean; characterDelayMs?: number; linePauseMs?: number }
+) {
+  const [displayedLines, setDisplayedLines] = useState<Record<string, string>>(() =>
+    Object.fromEntries(lines.map((line) => [line.id, enabled ? "" : line.text]))
+  );
+  const [isComplete, setIsComplete] = useState(!enabled);
+
+  useEffect(() => {
+    if (!enabled) {
+      setDisplayedLines(Object.fromEntries(lines.map((line) => [line.id, line.text])));
+      setIsComplete(true);
+      return;
+    }
+
+    let cancelled = false;
+    let timeoutId = 0;
+    setDisplayedLines(Object.fromEntries(lines.map((line) => [line.id, ""])));
+    setIsComplete(false);
+
+    function typeLine(lineIndex: number, characterIndex: number) {
+      if (cancelled) return;
+      if (lineIndex >= lines.length) {
+        setIsComplete(true);
+        return;
+      }
+      const line = lines[lineIndex];
+      setDisplayedLines((current) => ({
+        ...current,
+        [line.id]: line.text.slice(0, characterIndex)
+      }));
+      if (characterIndex <= line.text.length) {
+        timeoutId = window.setTimeout(() => typeLine(lineIndex, characterIndex + 1), characterDelayMs);
+        return;
+      }
+      timeoutId = window.setTimeout(() => typeLine(lineIndex + 1, 0), linePauseMs);
+    }
+
+    timeoutId = window.setTimeout(() => typeLine(0, 0), 120);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [characterDelayMs, enabled, linePauseMs, lines]);
+
+  return { displayedLines, isComplete };
+}
+
+function ProcessOnboardingModal({
+  animateText,
+  onClose
+}: {
+  animateText: boolean;
+  onClose: () => void;
+}) {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldAnimateText = animateText && !prefersReducedMotion;
+  const { displayedLines, isComplete } = useTypewriterSequence(PROCESS_ONBOARDING_LINES, { enabled: shouldAnimateText });
+  const [flightStyle, setFlightStyle] = useState<CSSProperties | null>(null);
+  const [flightActive, setFlightActive] = useState(false);
+
+  useEffect(() => {
+    nextButtonRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        completeOnboarding();
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  });
+
+  function completeOnboarding() {
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+
+    const modalRect = modalRef.current?.getBoundingClientRect();
+    const targetRect = document.querySelector<HTMLElement>("[data-instructions-nav-item='true']")?.getBoundingClientRect();
+    if (!modalRect || !targetRect) {
+      onClose();
+      return;
+    }
+
+    const scale = Math.max(0.16, Math.min(0.24, targetRect.width / modalRect.width));
+    setFlightStyle({
+      "--process-flight-left": `${modalRect.left}px`,
+      "--process-flight-top": `${modalRect.top}px`,
+      "--process-flight-width": `${modalRect.width}px`,
+      "--process-flight-height": `${modalRect.height}px`,
+      "--process-flight-x": `${targetRect.left + targetRect.width / 2 - (modalRect.left + modalRect.width / 2)}px`,
+      "--process-flight-y": `${targetRect.top + targetRect.height / 2 - (modalRect.top + modalRect.height / 2)}px`,
+      "--process-flight-scale": String(scale)
+    } as CSSProperties);
+    window.requestAnimationFrame(() => setFlightActive(true));
+    window.setTimeout(onClose, 820);
+  }
+
+  const title = displayedLines.title || "";
+  const step1 = displayedLines.step1 || "";
+  const step2 = displayedLines.step2 || "";
+  const step3 = displayedLines.step3 || "";
+  const note = displayedLines.note || "";
+
+  return (
+    <div className="process-onboarding-backdrop" data-testid="process-onboarding-modal">
+      <div className="sr-only" aria-live="off">
+        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and next steps. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
+      </div>
+      <section
+        aria-labelledby="process-onboarding-title"
+        aria-modal="true"
+        className={`process-onboarding-modal${flightStyle ? " is-original-hidden" : ""}`}
+        ref={modalRef}
+        role="dialog"
+      >
+        <h2 className="sr-only" id="process-onboarding-title">The Process</h2>
+        <div aria-hidden="true">
+          <h2>{title}<TypewriterCaret show={shouldAnimateText && !isComplete && title.length < PROCESS_ONBOARDING_LINES[0].text.length} /></h2>
+          <div className="process-step-list">
+            <ProcessStep number="1" text={step1.replace(/^Step 1:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step1)} />
+            <ProcessStep number="2" text={step2.replace(/^Step 2:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step2)} />
+            <ProcessStep number="3" text={step3.replace(/^Step 3:\s*/, "")} active={shouldAnimateText && !isComplete && Boolean(step3)} />
+          </div>
+          <div className="process-note">
+            <strong>{note.startsWith("Note:") ? "Note:" : ""}</strong>
+            <span>{note.replace(/^Note:\s*/, "")}</span>
+            <TypewriterCaret show={shouldAnimateText && !isComplete && Boolean(note)} />
+          </div>
+        </div>
+        <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
+          Next
+        </button>
+      </section>
+      {flightStyle ? (
+        <section
+          aria-hidden="true"
+          className={`process-onboarding-flight${flightActive ? " is-active" : ""}`}
+          style={flightStyle}
+        >
+          <h2>The Process</h2>
+          <div className="process-step-list">
+            <ProcessStep number="1" text="Upload your bills" />
+            <ProcessStep number="2" text="Choose a retrofit and answer a few questions" />
+            <ProcessStep number="3" text="Get your opportunities, metrics, and next steps" />
+          </div>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function TypewriterCaret({ show }: { show: boolean }) {
+  return show ? <span className="typewriter-caret" aria-hidden="true" /> : null;
+}
+
+function ProcessStep({ active = false, number, text }: { active?: boolean; number: string; text: string }) {
+  return (
+    <div className={`process-step-row${active ? " is-active" : ""}`}>
+      <span>{number}</span>
+      <p>{text || "\u00a0"}</p>
     </div>
   );
 }
@@ -7086,8 +7359,10 @@ export function RetrofitRecommendationsPreview({
 function UserPreviewSidebar({
   activeRetrofitId,
   collapsed,
+  instructionsPulse,
   mobileOpen,
   onCloseMobile,
+  onOpenInstructions,
   onSelectRetrofit,
   onShowAllRetrofits,
   onToggleCollapsed,
@@ -7095,8 +7370,10 @@ function UserPreviewSidebar({
 }: {
   activeRetrofitId: string;
   collapsed: boolean;
+  instructionsPulse: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
+  onOpenInstructions: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onShowAllRetrofits: () => void;
   onToggleCollapsed: () => void;
@@ -7159,6 +7436,15 @@ function UserPreviewSidebar({
             <button className="sidebar-nav-row sidebar-secondary-item" type="button">
               <DashboardIcon />
               <span className="sidebar-label">Dashboard</span>
+            </button>
+            <button
+              className={`sidebar-nav-row sidebar-secondary-item sidebar-instructions-item${instructionsPulse ? " is-pulsing" : ""}`}
+              data-instructions-nav-item="true"
+              onClick={onOpenInstructions}
+              type="button"
+            >
+              <InstructionsIcon />
+              <span className="sidebar-label">Instructions</span>
             </button>
           </div>
         </nav>
@@ -7410,6 +7696,16 @@ function DashboardIcon() {
       <path d="M4.5 19.5h15" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
       <path d="M6.5 17V9.5M12 17V5M17.5 17v-4.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
       <path d="m6.5 9.5 3.2 3.1 3.8-5.1 4 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9" />
+    </svg>
+  );
+}
+
+function InstructionsIcon() {
+  return (
+    <svg className="sidebar-line-icon" fill="none" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.2" stroke="currentColor" strokeWidth="1.9" />
+      <path d="M12 10.8v5.2" stroke="currentColor" strokeLinecap="round" strokeWidth="1.9" />
+      <path d="M12 7.8h.01" stroke="currentColor" strokeLinecap="round" strokeWidth="2.8" />
     </svg>
   );
 }
@@ -11439,6 +11735,7 @@ function AdminDataPanel({
 function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredential | null }) {
   const [payload, setPayload] = useState<AdminApplicationProfilesResponse | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<ApplicationProfileRecord | null>(null);
+  const [profileDetailMode, setProfileDetailMode] = useState<"view" | "edit">("view");
   const [isLoading, setIsLoading] = useState(true);
   const [isImporting, setIsImporting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -11460,6 +11757,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
     applicationArtifacts: "[]",
     primaryApplicationArtifacts: "[]"
   });
+  const profileDetailRef = useRef<HTMLElement | null>(null);
 
   async function loadProfiles() {
     if (!credential) {
@@ -11484,8 +11782,9 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
     }
   }
 
-  function setProfileForReview(profile: ApplicationProfileRecord) {
+  function setProfileForReview(profile: ApplicationProfileRecord, mode: "view" | "edit" = "view") {
     setSelectedProfile(profile);
+    setProfileDetailMode(mode);
     setAdminNote(profile.adminNotes || "");
     setApproveAsReferenceOnly(profile.approvedAsReferenceOnly || ["closed", "funding_exhausted"].includes(profile.applicationStatus || ""));
     setEditor({
@@ -11501,14 +11800,14 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
     });
   }
 
-  async function viewProfile(profileId: string) {
+  async function viewProfile(profileId: string, mode: "view" | "edit" = "view") {
     if (!credential) return;
     setError(null);
     try {
       const response = await apiGet<AdminApplicationProfileDetailResponse>(`/api/admin/application-profiles/${encodeURIComponent(profileId)}`, {
         headers: adminAuthHeaders(credential)
       });
-      setProfileForReview(response.profile);
+      setProfileForReview(response.profile, mode);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not load ApplicationProfile detail.");
     }
@@ -11737,6 +12036,15 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
     void loadProfiles();
   }, [credential, reviewStatusFilter, qualityFilter]);
 
+  useEffect(() => {
+    if (!selectedProfile || typeof window === "undefined") return;
+    const animationFrame = window.requestAnimationFrame(() => {
+      profileDetailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      profileDetailRef.current?.focus({ preventScroll: true });
+    });
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [selectedProfile?.profileId, profileDetailMode]);
+
   const rows = payload?.profiles || [];
   const reviewStatuses = uniqueSorted(rows.map((row) => row.reviewStatus));
   const qualityOptions = uniqueSorted(rows.map((row) => row.profileQuality));
@@ -11802,7 +12110,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
               </thead>
               <tbody>
                 {rows.map((profile) => (
-                  <tr key={profile.profileId}>
+                  <tr className={selectedProfile?.profileId === profile.profileId ? "is-selected" : undefined} key={profile.profileId}>
                     <td>
                       <div className="application-source-cell">
                         <strong>{profile.opportunityName || profile.opportunityId}</strong>
@@ -11823,8 +12131,8 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
                     <td>{profile.updatedAt ? formatProgramDate(profile.updatedAt) : "Unknown"}</td>
                     <td>
                       <div className="application-source-actions">
-                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId)} type="button">View</button>
-                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId)} type="button">Edit</button>
+                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId, "view")} type="button">View</button>
+                        <button className="secondary-button" onClick={() => void viewProfile(profile.profileId, "edit")} type="button">Edit</button>
                         <button className="secondary-button" disabled={isSaving} onClick={() => void approveProfileFromList(profile)} type="button">Approve</button>
                         <button className="secondary-button" disabled={isSaving} onClick={() => void rejectProfileFromList(profile)} type="button">Reject</button>
                       </div>
@@ -11838,10 +12146,10 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
       </section>
 
       {selectedProfile ? (
-        <section className="application-profile-detail">
+        <section className="application-profile-detail" ref={profileDetailRef} tabIndex={-1}>
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Draft — needs admin review</p>
+              <p className="eyebrow">{profileDetailMode === "edit" ? "Edit draft ApplicationProfile" : "Requirement preview"}</p>
               <h2>{selectedProfile.opportunityName || selectedProfile.opportunityId}</h2>
               <p>Approve only after the extracted requirements and evidence are reviewed.</p>
             </div>
@@ -11920,7 +12228,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
             <summary>Extraction diagnostics</summary>
             <pre>{JSON.stringify(selectedProfile.extractionDiagnostics || selectedProfile.diagnostics || {}, null, 2)}</pre>
           </details>
-          <details className="application-profile-editor">
+          <details className="application-profile-editor" key={`${selectedProfile.profileId}:${profileDetailMode}`} open={profileDetailMode === "edit"}>
             <summary>Edit extracted profile fields</summary>
             <div className="application-profile-editor-grid">
               <label className="field"><span>Application method</span><input value={editor.applicationMethod} onChange={(event) => setEditor((current) => ({ ...current, applicationMethod: event.target.value }))} /></label>

@@ -1636,6 +1636,11 @@ dd {
   background: #f8fbf9;
 }
 
+.application-source-table tbody tr.is-selected {
+  background: #eaf5ef;
+  box-shadow: inset 4px 0 0 #0f6b46;
+}
+
 .application-source-table td {
   color: #223128;
   font-size: 14px;
@@ -1983,6 +1988,11 @@ dd {
   gap: 18px;
   margin-top: 18px;
   padding: 18px;
+}
+
+.application-profile-detail:focus {
+  outline: 3px solid #bbdccb;
+  outline-offset: 3px;
 }
 
 .application-profile-summary {
@@ -2718,8 +2728,186 @@ dd {
   font: inherit;
 }
 
+.sidebar-instructions-item.is-pulsing {
+  animation: instructions-nav-pulse 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: #eef8f2;
+  box-shadow: 0 0 0 1px rgba(15, 107, 70, 0.18), 0 10px 26px rgba(15, 107, 70, 0.12);
+  color: var(--rf-text);
+}
+
 .user-preview-sidebar-scrim {
   display: none;
+}
+
+.process-onboarding-backdrop {
+  align-items: center;
+  backdrop-filter: blur(5px);
+  background: rgba(9, 24, 16, 0.28);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 120;
+}
+
+.process-onboarding-modal,
+.process-onboarding-flight {
+  background: #fffefb;
+  border: 1px solid #dfe8e2;
+  border-radius: 24px;
+  box-shadow: 0 28px 80px rgba(7, 27, 18, 0.18);
+  color: #071b12;
+  max-width: calc(100vw - 32px);
+  padding: 32px;
+  width: min(640px, calc(100vw - 32px));
+}
+
+.process-onboarding-modal {
+  min-height: 430px;
+  position: relative;
+}
+
+.process-onboarding-modal.is-original-hidden {
+  opacity: 0;
+}
+
+.process-onboarding-modal h2,
+.process-onboarding-flight h2 {
+  color: #071b12;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  margin: 0 0 26px;
+}
+
+.process-step-list {
+  display: grid;
+  gap: 14px;
+}
+
+.process-step-row {
+  align-items: center;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 36px minmax(0, 1fr);
+}
+
+.process-step-row > span {
+  align-items: center;
+  background: #eaf5ef;
+  border: 1px solid #cbe4d6;
+  border-radius: 999px;
+  color: #0f6b46;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 800;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.process-step-row p {
+  color: #102019;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.process-step-row.is-active > span {
+  box-shadow: 0 0 0 4px rgba(15, 107, 70, 0.08);
+}
+
+.process-note {
+  align-items: flex-start;
+  background: #f3faf6;
+  border: 1px solid #d8e8df;
+  border-radius: 16px;
+  color: #506459;
+  display: flex;
+  gap: 6px;
+  line-height: 1.5;
+  margin-top: 24px;
+  min-height: 74px;
+  padding: 14px 16px;
+}
+
+.process-note strong {
+  color: #23372d;
+  white-space: nowrap;
+}
+
+.process-next-button {
+  background: #0f6b46;
+  border: 0;
+  border-radius: 12px;
+  bottom: 28px;
+  color: #ffffff;
+  font-weight: 750;
+  height: 42px;
+  left: 32px;
+  padding: 0 22px;
+  position: absolute;
+}
+
+.process-next-button:hover {
+  background: #0b5738;
+}
+
+.typewriter-caret {
+  animation: typewriter-caret-blink 900ms steps(2, start) infinite;
+  border-right: 2px solid #0f6b46;
+  display: inline-block;
+  height: 1em;
+  margin-left: 3px;
+  transform: translateY(0.12em);
+}
+
+.process-onboarding-flight {
+  height: var(--process-flight-height);
+  left: var(--process-flight-left);
+  overflow: hidden;
+  position: fixed;
+  top: var(--process-flight-top);
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center center;
+  transition: transform 780ms cubic-bezier(0.22, 1, 0.36, 1), opacity 780ms cubic-bezier(0.22, 1, 0.36, 1), border-radius 780ms cubic-bezier(0.22, 1, 0.36, 1);
+  width: var(--process-flight-width);
+  z-index: 130;
+}
+
+.process-onboarding-flight.is-active {
+  border-radius: 12px;
+  opacity: 0.15;
+  transform: translate3d(var(--process-flight-x), var(--process-flight-y), 0) scale(var(--process-flight-scale));
+}
+
+@keyframes typewriter-caret-blink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@keyframes instructions-nav-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(15, 107, 70, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(15, 107, 70, 0.1), 0 10px 26px rgba(15, 107, 70, 0.12);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(15, 107, 70, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-onboarding-flight,
+  .sidebar-instructions-item.is-pulsing,
+  .typewriter-caret {
+    animation: none;
+    transition: none;
+  }
 }
 
 .retrofit-preview-page {
