@@ -678,13 +678,13 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("linear-gradient(145deg, #0b111a 0%, #0e1622 55%, #090e15 100%)");
     expect(css).toContain(".process-editor-content");
     expect(css).toContain(".process-editor-title");
-    expect(css).toContain("font-size: clamp(38px, 2.8vw, 48px)");
-    expect(css).toContain("margin: 0 0 48px");
+    expect(css).toContain("font-size: clamp(42px, 3vw, 52px)");
+    expect(css).toContain("margin: 0 0 56px");
     expect(css).toContain(".process-number");
-    expect(css).toContain("font-size: clamp(34px, 2.55vw, 44px)");
+    expect(css).toContain("font-size: clamp(38px, 2.8vw, 48px)");
     expect(css).toContain("font-weight: 700");
     expect(css).toContain(".code-accent");
-    expect(css).toContain("font-size: clamp(18px, 1.2vw, 22px)");
+    expect(css).toContain("font-size: clamp(16px, 1vw, 18px)");
     expect(css).toContain(".process-modal-footer");
     expect(css).toContain(".process-next-button");
     expect(css).toContain("justify-content: flex-end");
