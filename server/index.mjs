@@ -2231,6 +2231,23 @@ async function buildAdminUserRows() {
   }));
 }
 
+async function buildAdminFakeClientOptions() {
+  const users = await scanAll(usersTable);
+  return users
+    .filter((user) => isActiveUserRecord(user) && user.role === "client" && isFakeUserRecord(user))
+    .map((user) => {
+      const publicRecord = publicUser(user);
+      return {
+        userId: publicRecord.userId,
+        clientName: publicRecord.fullName || publicRecord.email,
+        companyName: publicRecord.companyName || null,
+        email: publicRecord.email,
+        hasIntake: true
+      };
+    })
+    .sort((left, right) => left.clientName.localeCompare(right.clientName));
+}
+
 async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
   const startedAt = Date.now();
   const pageLimit = Math.min(Math.max(limit, 25), 200);
@@ -3398,6 +3415,15 @@ app.get("/api/admin/users", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
     res.json({ users: await buildAdminUserRows() });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/fake-client-options", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json({ options: await buildAdminFakeClientOptions() });
   } catch (error) {
     handleError(res, error);
   }

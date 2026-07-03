@@ -374,6 +374,10 @@ type AdminUsersResponse = {
   users: AdminRow[];
 };
 
+type AdminUserPreviewOptionsResponse = {
+  options: UserPreviewOption[];
+};
+
 type AdminTableResponse = {
   table: DatabaseTableSnapshot;
 };
@@ -5459,8 +5463,10 @@ function CustomerRetrofitEstimatesPanel({
   emptyMessage,
   endpoint,
   eyebrow,
+  initialPayload = null,
   intro,
   loadingMessage,
+  onPayloadLoaded,
   title,
   hideBillData = false
 }: {
@@ -5468,19 +5474,31 @@ function CustomerRetrofitEstimatesPanel({
   emptyMessage: string;
   endpoint: string;
   eyebrow: string;
+  initialPayload?: PortalRetrofitRecommendationsResponse | null;
   intro: string;
   loadingMessage: string;
+  onPayloadLoaded?: (payload: PortalRetrofitRecommendationsResponse) => void;
   title: string;
   hideBillData?: boolean;
 }) {
-  const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(initialPayload);
+  const [isLoading, setIsLoading] = useState(!initialPayload);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
+    if (initialPayload) {
+      setPayload(initialPayload);
+      setError(null);
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
     if (!credential) {
+      setPayload(null);
       setError("Sign in again to load retrofit estimates.");
       setIsLoading(false);
       return () => {
@@ -5488,6 +5506,7 @@ function CustomerRetrofitEstimatesPanel({
       };
     }
 
+    setPayload(null);
     setIsLoading(true);
     setError(null);
 
@@ -5497,6 +5516,7 @@ function CustomerRetrofitEstimatesPanel({
       .then((response) => {
         if (!isMounted) return;
         setPayload(response);
+        onPayloadLoaded?.(response);
       })
       .catch((requestError) => {
         if (!isMounted) return;
@@ -5509,7 +5529,7 @@ function CustomerRetrofitEstimatesPanel({
     return () => {
       isMounted = false;
     };
-  }, [credential, endpoint]);
+  }, [credential, endpoint, initialPayload, onPayloadLoaded]);
 
   return (
       <RetrofitRecommendationsPreview
@@ -10721,7 +10741,8 @@ function AdminUserPreviewStandalonePage({
   onSignOut: () => void;
   viewer: UserRecord;
 }) {
-  const [rows, setRows] = useState(initialRows);
+  const [previewOptions, setPreviewOptions] = useState(() => buildUserPreviewOptions(initialRows));
+  const [payloadCache, setPayloadCache] = useState<Record<string, PortalRetrofitRecommendationsResponse>>({});
   const [adminControlsOpen, setAdminControlsOpen] = useState(false);
   const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
   const [hideBillData, setHideBillData] = useState(false);
@@ -10731,12 +10752,19 @@ function AdminUserPreviewStandalonePage({
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const previewOptions = useMemo(() => buildUserPreviewOptions(rows), [rows]);
   const selectedOption =
     previewOptions.find((option) => option.userId === selectedUserId) ||
     previewOptions.find((option) => option.hasIntake) ||
     previewOptions[0] ||
     null;
+  const selectedPayload = selectedOption ? payloadCache[selectedOption.userId] || null : null;
+
+  const cacheSelectedPayload = useCallback((payload: PortalRetrofitRecommendationsResponse) => {
+    setPayloadCache((currentCache) => ({
+      ...currentCache,
+      [payload.user.userId]: payload
+    }));
+  }, []);
 
   useEffect(() => {
     if (!selectedOption || selectedUserId === selectedOption.userId) return;
@@ -10746,7 +10774,7 @@ function AdminUserPreviewStandalonePage({
   useEffect(() => {
     let isActive = true;
 
-    async function loadPreviewUsers() {
+    async function loadPreviewOptions() {
       if (!credential) {
         setError("Sign in again to load user previews.");
         setIsLoading(false);
@@ -10756,11 +10784,11 @@ function AdminUserPreviewStandalonePage({
       setIsLoading(true);
       setError(null);
       try {
-        const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
+        const response = await apiGet<AdminUserPreviewOptionsResponse>("/api/admin/fake-client-options", {
           headers: adminAuthHeaders(credential)
         });
         if (isActive) {
-          setRows(response.users);
+          setPreviewOptions(response.options);
         }
       } catch (requestError) {
         if (isActive) {
@@ -10773,7 +10801,7 @@ function AdminUserPreviewStandalonePage({
       }
     }
 
-    void loadPreviewUsers();
+    void loadPreviewOptions();
 
     return () => {
       isActive = false;
@@ -10803,10 +10831,10 @@ function AdminUserPreviewStandalonePage({
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiGet<AdminUsersResponse>("/api/admin/users", {
+      const response = await apiGet<AdminUserPreviewOptionsResponse>("/api/admin/fake-client-options", {
         headers: adminAuthHeaders(credential)
       });
-      setRows(response.users);
+      setPreviewOptions(response.options);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not refresh user previews.");
     } finally {
@@ -10905,17 +10933,19 @@ function AdminUserPreviewStandalonePage({
       {error ? <p className="error-message">{error}</p> : null}
 
       {selectedOption ? (
-        <CustomerRetrofitEstimatesPanel
-          credential={credential}
-          emptyMessage="This client does not have any eligible retrofit matches yet."
-          endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(selectedOption.userId)}`}
-          eyebrow="Admin user preview"
-          intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
-          key={selectedOption.userId}
-          loadingMessage="Loading live retrofit recommendations for this client..."
-          hideBillData={hideBillData}
-          title="Retrofit Recommendations"
-        />
+          <CustomerRetrofitEstimatesPanel
+            credential={credential}
+            emptyMessage="This client does not have any eligible retrofit matches yet."
+            endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(selectedOption.userId)}`}
+            eyebrow="Admin user preview"
+            initialPayload={selectedPayload}
+            intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
+            key={selectedOption.userId}
+            loadingMessage="Loading live retrofit recommendations for this client..."
+            onPayloadLoaded={cacheSelectedPayload}
+            hideBillData={hideBillData}
+            title="Retrofit Recommendations"
+          />
       ) : (
         <section className="retrofit-preview-page">
           <article className="retrofit-preview-card">

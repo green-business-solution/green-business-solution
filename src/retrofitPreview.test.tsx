@@ -457,6 +457,10 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Add tax/entity info");
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
+    expect(source).toContain("/api/admin/fake-client-options");
+    expect(source).toContain("payloadCache");
+    expect(source).toContain("initialPayload={selectedPayload}");
+    expect(source).toContain("onPayloadLoaded={cacheSelectedPayload}");
     expect(source).toContain("Show less retrofits");
     expect(source).toContain("Exit customer preview");
     expect(source).not.toContain("Back to all retrofits");

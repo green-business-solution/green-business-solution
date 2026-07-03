@@ -6,6 +6,12 @@
 - Reworked the modal to use 10% horizontal insets with viewport-aware sizing so the note wraps inside the panel instead of overflowing off-screen.
 - Updated the focused preview CSS regression checks for the new responsive modal scale.
 
+## 2026-07-03 - Codex (GPT-5) user preview per-test-case caching
+
+- Changed `/user-preview` to load a lightweight fake-client option list instead of the full admin user/intake dataset on first page load.
+- Added per-user recommendation payload caching in the standalone preview so switching test cases only fetches the newly selected case and reuses previously loaded previews when returning.
+- Added focused preview coverage for the lightweight endpoint and cache wiring.
+
 ## 2026-07-03 - Codex (GPT-5) final grant estimation package repair
 
 - Imported the final Wisconsin NEVI GPT Pro grant-estimation output, bringing the grant package repair intake to all 37 expected outputs with zero missing, broken, duplicated, or mismatched files.
