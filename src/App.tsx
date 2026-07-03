@@ -2470,6 +2470,66 @@ function PublicNav({
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const isMenuOpenRef = useRef(false);
+  const lastScrollYRef = useRef(0);
+  const isNavVisibleRef = useRef(true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const downThreshold = 12;
+    const upThreshold = 3;
+    let animationFrame = 0;
+
+    const updateNavVisibility = () => {
+      const nextScrollY = Math.max(0, window.scrollY);
+      const delta = nextScrollY - lastScrollYRef.current;
+      const shouldAlwaysShow = nextScrollY < 24 || isMenuOpenRef.current;
+      let nextVisible = isNavVisibleRef.current;
+
+      if (shouldAlwaysShow || delta < -upThreshold) {
+        nextVisible = true;
+      } else if (delta > downThreshold) {
+        nextVisible = false;
+      }
+
+      if (nextVisible !== isNavVisibleRef.current) {
+        isNavVisibleRef.current = nextVisible;
+        setIsNavVisible(nextVisible);
+      }
+
+      lastScrollYRef.current = nextScrollY;
+      animationFrame = 0;
+    };
+
+    const requestUpdate = () => {
+      if (!animationFrame) {
+        animationFrame = window.requestAnimationFrame(updateNavVisibility);
+      }
+    };
+
+    lastScrollYRef.current = Math.max(0, window.scrollY);
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("touchmove", requestUpdate, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("touchmove", requestUpdate);
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
+  useEffect(() => {
+    isMenuOpenRef.current = isMenuOpen;
+
+    if (isMenuOpen && !isNavVisibleRef.current) {
+      isNavVisibleRef.current = true;
+      setIsNavVisible(true);
+    }
+  }, [isMenuOpen]);
 
   function go(route: Route) {
     setIsMenuOpen(false);
@@ -2496,7 +2556,7 @@ function PublicNav({
   }
 
   return (
-    <header className="site-header">
+    <header className={["site-header", isNavVisible ? "site-header-visible" : "site-header-hidden"].join(" ")}>
       <div className="navbar-inner">
         <Brand onClick={() => go("home")} />
         <nav aria-label="Primary" className="site-nav">

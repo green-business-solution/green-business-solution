@@ -27,6 +27,12 @@
 - Equalized the vertical gap between `Retrofits` and `Profile info` so it matches the gap between `Profile info` and `Dashboard`.
 - Kept the primary sidebar rows at the same size and tone.
 
+## 2026-07-02 - Codex (GPT-5) liquid glass navbar
+
+- Changed the shared public navbar to a fixed liquid-glass header that hides on downward scroll and reappears immediately on upward scroll.
+- Added lightweight requestAnimationFrame scroll-direction tracking with cleanup, mobile drawer visibility handling, and reduced-motion CSS support.
+- Restyled the desktop header, dropdown, mobile menu, nav links, and CTA with a translucent dark blurred glass surface while preserving existing navigation and auth actions.
+
 ## 2026-07-02 - Codex (GPT-5) Geocodio quota guard
 
 - Added a DynamoDB-backed daily quota guard for Geocodio fallback lookups so the API stops calling Geocodio after 2,500 fallback reservations in a UTC day.
