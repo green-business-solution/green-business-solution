@@ -6804,9 +6804,12 @@ export function RetrofitRecommendationsPreview({
   }, [initialScenarioIds, initialSelectedOpportunityIds, preview.generatedAt, preview.intakeId, preview.profileId, preview.retrofits]);
 
   useEffect(() => {
+    const postFormPreviewParam =
+      typeof window !== "undefined" && new URLSearchParams(window.location.search).get("postFormPreview") === "1";
     const intakeJustCompleted = safeStorageGet("session", INTAKE_JUST_COMPLETED_KEY) === "true";
     const instructionsSeen = safeStorageGet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY) === "true";
-    if (intakeJustCompleted && !instructionsSeen) {
+    if (postFormPreviewParam || (intakeJustCompleted && !instructionsSeen)) {
+      if (postFormPreviewParam) safeStorageRemove("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY);
       setInstructionsOpenedFromNav(false);
       setShowInstructionsModal(true);
     } else if (intakeJustCompleted && instructionsSeen) {
@@ -9926,6 +9929,7 @@ const ADMIN_APPLICATION_PROFILES_TAB = "Application Profiles";
 const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
+const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-client-intake", "gbs-energy-data", "gbs-users"]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
@@ -9971,6 +9975,7 @@ function AdminDashboard({
   const navItems = [
     "Users",
     ADMIN_USER_PREVIEW_TAB,
+    ADMIN_POST_FORM_PREVIEW_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
     ADMIN_APPLICATION_PROFILES_TAB,
@@ -10097,6 +10102,7 @@ function AdminDashboard({
 
     if (
       activeTab !== "Users" &&
+      activeTab !== ADMIN_POST_FORM_PREVIEW_TAB &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_APPLICATION_SOURCES_TAB &&
       activeTab !== ADMIN_APPLICATION_PROFILES_TAB &&
@@ -10115,6 +10121,11 @@ function AdminDashboard({
   function handleAdminNavItemChange(item: string) {
     if (item === ADMIN_USER_PREVIEW_TAB) {
       window.open(pathForRoute("user-preview"), "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (item === ADMIN_POST_FORM_PREVIEW_TAB) {
+      const params = new URLSearchParams({ postFormPreview: "1" });
+      window.open(`${pathForRoute("user-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
       return;
     }
     if (item === ADMIN_TEST_CASES_TAB) {

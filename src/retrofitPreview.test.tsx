@@ -472,6 +472,10 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Dashboard");
     expect(source).toContain("Instructions");
     expect(source).toContain("ProcessOnboardingModal");
+    expect(source).toContain("Post Form Preview");
+    expect(source).toContain("ADMIN_POST_FORM_PREVIEW_TAB");
+    expect(source).toContain("postFormPreview");
+    expect(source).toContain("new URLSearchParams({ postFormPreview: \"1\" })");
     expect(source).toContain("useTypewriterSequence");
     expect(source).toContain("retrofi.instructionsOnboardingSeen");
     expect(source).toContain("retrofi.intakeJustCompleted");

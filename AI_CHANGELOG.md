@@ -1825,3 +1825,4 @@
 - Fixed the production diagnostics route to report `dataRegion` instead of referencing an undefined `region` variable.
 - Completed selected-retrofit workspace details without changing the all-retrofits picker: separated opportunity source/program/application links, expanded application prep fields, added no-bill environmental masking, richer opportunity details, question save actions, and fuller add-to-plan snapshots.
 - Added the `/user-preview` Process onboarding modal with typewriter text, reduced-motion support, shrink-to-Instructions animation, local/session seen-state handling, and a left-nav Instructions item for reopening the guide.
+- Added an admin `Post Form Preview` nav item that opens `/user-preview?postFormPreview=1` and forces the same post-intake onboarding modal for review without filling out the form.
