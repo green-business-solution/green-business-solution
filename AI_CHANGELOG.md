@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) update how it works step 7 image
+
+- Replaced the final How It Works transformation frame with the newly provided sunny sustainable business image.
+
 ## 2026-07-02 - Codex (GPT-5) user preview sidebar collapse control
 
 - Added a top-of-sidebar collapse arrow to the `/user-preview` navigation.
@@ -25,6 +29,11 @@
 
 - Added product TODOs to seed realistic synthetic tax documents into test cases and later build tax document ingestion plus tax form assembly.
 - Clarified that future tax document extraction should preserve source confidence and require user/admin confirmation before tax estimates are trusted.
+=======
+## 2026-07-03 - Codex (GPT-5) update how it works step 7 image
+
+- Replaced the final How It Works transformation frame with the newly provided sunny sustainable business image.
+>>>>>>> 4f2444d (Update How It Works step 7 image)
 
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile first-10 production import
 
