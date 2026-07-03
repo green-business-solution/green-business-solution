@@ -1878,9 +1878,9 @@
 - Restyled the Process onboarding modal as a dark VS Code-inspired editor panel with blue syntax accents, slower step-line typewriter timing, and a bottom-right blue Next button while preserving the shrink-to-Instructions behavior.
 - Enlarged the Process onboarding editor panel and primary lines, increased spacing after the title, and prevented partial `Step 1/2/3` prefixes from flashing during the typewriter animation.
 - Rebalanced the Process onboarding typography without changing modal dimensions: larger title/step lines, stronger plain step numbers, smaller secondary note text, and more title-to-step breathing room.
-
 # 2026-07-03
 
 - Added an import-readiness tax source registry shell with a JSON schema, normalized seed registry, adapter backlog, and validation report that distinguishes importable sources from tax calculations still requiring parcel, bill, accountant, or assessor facts.
 - Repaired the Shell 4 tax source registry validation rules so non-gap records require official URLs and evidence, gap records carry searched official sources, SST child records preserve parent official source pages, and MI/multi-state gap jurisdictions are correctly scoped.
 - Saved the 50 GPT Pro scenario-verification outputs and added a scenario results summary preserving the correct, repair-needed, and data-gap counts for later repair work.
+- Added a standardized retrofit question clarifying whether users want to enter tax-inclusive costs or let RetroFi estimate them, with standardized values treated as tax-inclusive.

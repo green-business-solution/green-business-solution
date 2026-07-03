@@ -650,8 +650,10 @@ describe("retrofit recommendations preview", () => {
     const biomassQuestions = preview.retrofits[0].detailQuestions.map((question) => question.question);
     const solarQuestions = preview.retrofits[1].detailQuestions.map((question) => question.question);
 
+    expect(biomassQuestions[0]).toContain("Do you want to enter costs with tax included");
     expect(biomassQuestions).toContain("What fuel or waste stream would the system use?");
     expect(biomassQuestions).toContain("What quantity of feedstock is available per month?");
+    expect(solarQuestions[0]).toContain("Do you want to enter costs with tax included");
     expect(solarQuestions).toContain("What roof or site area is available?");
     expect(solarQuestions).toContain("Do you control the roof or site?");
     expect(solarQuestions).not.toContain("What quantity or scope is being upgraded?");
