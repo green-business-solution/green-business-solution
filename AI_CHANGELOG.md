@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) parallel local tax research prompts
+
+- Added separate top-down and bottom-up Codex shell prompts for nationwide/local tax dataset research so parallel shells can split statewide source coverage from locality-specific evidence without editing each other's files.
+
 ## 2026-07-03 - Codex (GPT-5) tax context runtime wiring
 
 - Routed sample/profile tax context into v2 incentive package calculations so tax profile facts, extracted tax values, and opportunity-specific tax inputs can satisfy repaired tax package requirements.
