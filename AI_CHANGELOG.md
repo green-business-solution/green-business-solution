@@ -1886,3 +1886,4 @@
 - Added a standardized retrofit question clarifying whether users want to enter tax-inclusive costs or let RetroFi estimate them, with standardized values treated as tax-inclusive.
 - Added deployable local-tax workflow rules and a gated local-tax evaluator for researched city business taxes, property-tax adapter routing, and program-specific tax workflows; Rhode Island property-tax valuation now requires counterfactual tax evidence instead of using statutory tax as a fallback savings number.
 - Added a GPT Pro remaining-gap research packet for Quincy non-utility B&O, Everett B&O rates, Rhode Island municipal renewable ordinances, Detroit/Wayne RERZ evidence, property-tax adapter terms, and California local business-tax edge classes.
+- Expanded the product TODOs to explicitly cover regulatory penalties and carbon-credit/environmental-market modeling.
