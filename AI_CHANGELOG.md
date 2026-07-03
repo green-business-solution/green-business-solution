@@ -11,6 +11,11 @@
 - Sanitized ApplicationProfile registry writes to remove undefined optional fields before DynamoDB persistence.
 - Added a registry regression test for undefined-value cleanup during ApplicationProfile saves.
 
+## 2026-07-03 - Codex (GPT-5) tax research GPT Pro packets
+
+- Added reproducible GPT Pro work packets for official tax dataset/rule research and all 50 test-case synthetic tax document updates.
+- Added a generator script that batches sample profiles, embeds current tax rules/packages, and creates matching blank output files for each prompt.
+
 ## 2026-07-02 - Codex (GPT-5) sidebar retrofit return navigation
 
 - Removed the selected-workspace `Back to all retrofits` button from `/user-preview`.
