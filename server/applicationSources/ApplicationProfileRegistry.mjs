@@ -212,3 +212,133 @@ export function extractDraftProfilesFromFirstTenAudit(audit = {}) {
     .filter((profile) => profile && cleanText(profile.opportunityId))
     .map((profile) => normalizeApplicationProfileForRegistry(profile, { statusMode: "draft" }));
 }
+
+export function sortApplicationProfileImportOpportunities(opportunities = []) {
+  return [...ensureArray(opportunities)].sort((a, b) =>
+    String(b?.lastSeenAt || b?.updatedAt || b?.publishedAt || "").localeCompare(
+      String(a?.lastSeenAt || a?.updatedAt || a?.publishedAt || "")
+    )
+  );
+}
+
+export function summarizeApplicationProfileImport(profile = {}, status = "imported", reason = "") {
+  return {
+    opportunityId: profile.opportunityId,
+    profileId: profile.profileId,
+    reviewStatus: profile.reviewStatus,
+    profileQuality: profile.profileQuality,
+    status,
+    reason: cleanOptional(reason)
+  };
+}
+
+export function applicationProfileImportSourceUnavailableError() {
+  return {
+    message: "Import source unavailable. Generate drafts from production opportunities or check server logs."
+  };
+}
+
+export async function importApplicationProfilesFromOpportunities({
+  opportunities = [],
+  buildDraftForOpportunity,
+  getExistingProfile,
+  saveProfile,
+  limit = 10,
+  concurrency = 10
+} = {}) {
+  const selectedOpportunities = sortApplicationProfileImportOpportunities(opportunities).slice(0, limit);
+  const imported = [];
+  const skipped = [];
+  const errors = [];
+
+  if (!selectedOpportunities.length) {
+    return {
+      imported,
+      skipped,
+      errors: [applicationProfileImportSourceUnavailableError()],
+      profiles: [],
+      importedCount: 0,
+      skippedCount: 0,
+      errorCount: 1
+    };
+  }
+
+  if (typeof buildDraftForOpportunity !== "function" || typeof getExistingProfile !== "function" || typeof saveProfile !== "function") {
+    return {
+      imported,
+      skipped,
+      errors: [{ message: "ApplicationProfile import is not configured on the server." }],
+      profiles: [],
+      importedCount: 0,
+      skippedCount: 0,
+      errorCount: 1
+    };
+  }
+
+  let nextIndex = 0;
+  const workerCount = Math.max(1, Math.min(selectedOpportunities.length, Number.parseInt(concurrency, 10) || 1));
+
+  async function processOpportunity(opportunity, index) {
+    const opportunityId = cleanText(opportunity?.opportunityId);
+    try {
+      const expectedProfileId = applicationProfileIdForOpportunity(opportunityId);
+      if (expectedProfileId) {
+        const existing = await getExistingProfile({ profileId: expectedProfileId, opportunityId });
+        if (existing) {
+          const skippedSummary = summarizeApplicationProfileImport(
+            publicApplicationProfileRecord(existing),
+            "skipped",
+            "Existing ApplicationProfile already saved for this opportunity."
+          );
+          skipped.push(skippedSummary);
+          return;
+        }
+      }
+
+      const draft = await buildDraftForOpportunity(opportunity, { index });
+      const normalized = normalizeApplicationProfileForRegistry(draft, { statusMode: "draft" });
+      const existingAfterBuild = expectedProfileId === normalized.profileId ? null : await getExistingProfile(normalized);
+      if (existingAfterBuild) {
+        const skippedSummary = summarizeApplicationProfileImport(
+          publicApplicationProfileRecord(existingAfterBuild),
+          "skipped",
+          "Existing ApplicationProfile already saved for this opportunity."
+        );
+        skipped.push(skippedSummary);
+        return;
+      }
+      const saved = await saveProfile(normalized);
+      imported.push(summarizeApplicationProfileImport(saved, "imported"));
+    } catch (error) {
+      errors.push({
+        opportunityId,
+        opportunityName: cleanOptional(opportunity?.canonicalTitle || opportunity?.normalizedTitle),
+        message: cleanText(error?.message || error) || "ApplicationProfile import failed for this opportunity."
+      });
+    }
+  }
+
+  async function worker() {
+    while (nextIndex < selectedOpportunities.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await processOpportunity(selectedOpportunities[index], index);
+    }
+  }
+
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+
+  imported.sort((a, b) => a.opportunityId.localeCompare(b.opportunityId));
+  skipped.sort((a, b) => a.opportunityId.localeCompare(b.opportunityId));
+  errors.sort((a, b) => cleanText(a.opportunityId).localeCompare(cleanText(b.opportunityId)));
+
+  return {
+    imported,
+    skipped,
+    errors,
+    profiles: imported,
+    importedCount: imported.length,
+    skippedCount: skipped.length,
+    errorCount: errors.length
+  };
+}

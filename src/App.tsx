@@ -737,10 +737,30 @@ type AdminApplicationProfileMutationResponse = {
 
 type AdminApplicationProfileImportResponse = {
   generatedAt: string;
-  imported: ApplicationProfileRecord[];
-  skipped: Array<{ profileId: string; opportunityId: string; reason: string }>;
-  sourceGeneratedAt?: string;
-  aggregateCounts?: Record<string, unknown>;
+  importedCount: number;
+  skippedCount: number;
+  errorCount?: number;
+  errors?: Array<{ opportunityId?: string; opportunityName?: string; message: string }>;
+  profiles: Array<{
+    opportunityId: string;
+    profileId: string;
+    reviewStatus: ApplicationProfileReviewStatus;
+    profileQuality: string;
+    status?: string;
+    reason?: string;
+  }>;
+  skippedProfiles?: Array<{
+    opportunityId: string;
+    profileId: string;
+    reviewStatus: ApplicationProfileReviewStatus;
+    profileQuality: string;
+    status?: string;
+    reason?: string;
+  }>;
+  skipped?: Array<{ profileId: string; opportunityId: string; reason: string }>;
+  scannedCount?: number;
+  sourceOpportunityCount?: number;
+  note?: string | null;
 };
 
 type SampleMatchResult = {
@@ -11204,6 +11224,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
   const [isImporting, setIsImporting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [importSummary, setImportSummary] = useState<string | null>(null);
   const [reviewStatusFilter, setReviewStatusFilter] = useState("");
   const [qualityFilter, setQualityFilter] = useState("");
   const [opportunityIdInput, setOpportunityIdInput] = useState("");
@@ -11281,8 +11302,25 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
     }
     setIsImporting(true);
     setError(null);
+    setImportSummary(null);
     try {
-      await apiPost<AdminApplicationProfileImportResponse>("/api/admin/application-profiles/import-first10", adminAuthBody(credential));
+      const response = await apiPost<AdminApplicationProfileImportResponse>("/api/admin/application-profiles/import-first10", adminAuthBody(credential));
+      const errorSummary = response.errors?.map((item) => [item.opportunityName || item.opportunityId, item.message].filter(Boolean).join(": ")).join(" ");
+      const skippedSummary = response.skippedProfiles?.length
+        ? `Skipped ${response.skippedCount}: ${response.skippedProfiles.slice(0, 3).map((item) => item.reason || item.opportunityId).join("; ")}${response.skippedProfiles.length > 3 ? "..." : ""}`
+        : "";
+      const summary = [
+        `Imported ${response.importedCount}.`,
+        `Skipped ${response.skippedCount}.`,
+        response.sourceOpportunityCount != null ? `Source opportunities checked: ${response.sourceOpportunityCount}.` : "",
+        response.note || "",
+        skippedSummary,
+        errorSummary || ""
+      ].filter(Boolean).join(" ");
+      setImportSummary(summary || "Import completed.");
+      if (response.importedCount === 0 && response.skippedCount === 0 && response.errors?.length) {
+        setError(errorSummary || "Import source unavailable. Generate drafts from production opportunities or check server logs.");
+      }
       await loadProfiles();
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not import first-10 profiles.");
@@ -11518,6 +11556,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
       </div>
 
       {payload?.note ? <p className="muted-message">{payload.note}</p> : null}
+      {importSummary ? <p className="success-message">{importSummary}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
 
       <section className="application-source-table-shell">

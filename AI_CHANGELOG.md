@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) ApplicationProfile first-10 production import
+
+- Reworked `/api/admin/application-profiles/import-first10` to generate draft ApplicationProfiles from production SOURCE_DSIRE opportunity data instead of reading a local audit JSON file that is unavailable in Lambda.
+- Added idempotent import behavior that skips existing profiles before extraction, returns imported/skipped/error counts with profile summaries, and keeps all imported profiles as drafts only.
+- Updated the admin Application Profiles page to show the actual import result and server-provided errors when first-10 import produces zero new drafts.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit sub-tab scale adjustment
 
 - Reduced the expanded retrofit sub-tab row height, font size, and icon size.

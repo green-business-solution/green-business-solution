@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   applyApplicationProfileAdminPatch,
   extractDraftProfilesFromFirstTenAudit,
+  importApplicationProfilesFromOpportunities,
   normalizeApplicationProfileForRegistry
 } from "./ApplicationProfileRegistry.mjs";
 import {
@@ -105,6 +106,65 @@ describe("ApplicationProfileRegistry", () => {
     expect(patched.applicationStatus).toBe("needs_review");
     expect(patched.adminNotes).toBe("Admin corrected status.");
     expect(patched.requiredFields).toEqual([]);
+  });
+
+  it("generates first-10 imports from opportunity records without a local audit artifact", async () => {
+    const savedProfiles = [];
+    const result = await importApplicationProfilesFromOpportunities({
+      opportunities: [
+        { opportunityId: "opp_old", canonicalTitle: "Old Program", updatedAt: "2026-01-01T00:00:00.000Z" },
+        { opportunityId: "opp_new", canonicalTitle: "New Program", updatedAt: "2026-02-01T00:00:00.000Z" }
+      ],
+      buildDraftForOpportunity: async (opportunity) =>
+        readyProfile({
+          opportunityId: opportunity.opportunityId,
+          opportunityName: opportunity.canonicalTitle,
+          reviewStatus: "admin_reviewed"
+        }),
+      getExistingProfile: async () => null,
+      saveProfile: async (profile) => {
+        savedProfiles.push(profile);
+        return profile;
+      }
+    });
+
+    expect(result.importedCount).toBe(2);
+    expect(result.skippedCount).toBe(0);
+    expect(savedProfiles).toHaveLength(2);
+    expect(savedProfiles.every((profile) => profile.reviewStatus !== "admin_reviewed")).toBe(true);
+  });
+
+  it("dedupes existing profiles during first-10 import", async () => {
+    const existing = readyProfile({ opportunityId: "opp_existing" });
+    let buildCalled = false;
+    const result = await importApplicationProfilesFromOpportunities({
+      opportunities: [{ opportunityId: "opp_existing", canonicalTitle: "Existing Program", updatedAt: "2026-02-01T00:00:00.000Z" }],
+      buildDraftForOpportunity: async (opportunity) => {
+        buildCalled = true;
+        return readyProfile({ opportunityId: opportunity.opportunityId });
+      },
+      getExistingProfile: async () => existing,
+      saveProfile: async () => {
+        throw new Error("saveProfile should not be called for existing profiles");
+      }
+    });
+
+    expect(result.importedCount).toBe(0);
+    expect(result.skippedCount).toBe(1);
+    expect(result.skipped[0].reason).toMatch(/already saved/i);
+    expect(buildCalled).toBe(false);
+  });
+
+  it("returns a useful first-10 import error when opportunities are unavailable", async () => {
+    const result = await importApplicationProfilesFromOpportunities({
+      opportunities: [],
+      buildDraftForOpportunity: async () => readyProfile(),
+      getExistingProfile: async () => null,
+      saveProfile: async (profile) => profile
+    });
+
+    expect(result.importedCount).toBe(0);
+    expect(result.errors[0].message).toMatch(/Import source unavailable/i);
   });
 });
 
@@ -210,5 +270,12 @@ describe("ApplicationProfileApprovalValidator", () => {
   it("does not add a customer-facing Prepare Application route", async () => {
     const routes = await fs.readFile("src/routes.ts", "utf8");
     expect(routes).not.toMatch(/prepare-application/i);
+  });
+
+  it("keeps Generate Draft opportunity validation separate from Import First 10", async () => {
+    const appSource = await fs.readFile("src/App.tsx", "utf8");
+    expect(appSource).toMatch(/Enter an opportunity ID before generating a draft/);
+    expect(appSource).toMatch(/\/api\/admin\/application-profiles\/import-first10/);
+    expect(appSource).toMatch(/adminAuthBody\(credential\)/);
   });
 });

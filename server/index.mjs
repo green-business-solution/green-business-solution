@@ -1,5 +1,4 @@
 import crypto from "node:crypto";
-import fs from "node:fs/promises";
 import express from "express";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -27,7 +26,7 @@ import {
   applicationProfileStateKey,
   applyApplicationProfileAdminPatch,
   compactApplicationProfileRecord,
-  extractDraftProfilesFromFirstTenAudit,
+  importApplicationProfilesFromOpportunities,
   isApplicationProfileRegistryItem,
   normalizeApplicationProfileForRegistry,
   profileCanBeRegenerated,
@@ -2395,8 +2394,7 @@ async function saveGeneratedApplicationProfileDraft(profile) {
   return putApplicationProfileRecord(normalized);
 }
 
-async function generateApplicationProfileDraftForOpportunity(opportunityId) {
-  const opportunity = await findOpportunityForApplicationProfile(opportunityId);
+async function buildApplicationProfileDraftForOpportunity(opportunity) {
   const applicationSourceProfile = resolveOpportunityApplicationSource(opportunity);
   const officialProgramWebsiteProfile = resolveOfficialProgramWebsite(opportunity);
   const applicationPathProfile = await discoverOpportunityApplicationLinks({
@@ -2418,9 +2416,9 @@ async function generateApplicationProfileDraftForOpportunity(opportunityId) {
     extractionStatus: applicationRequirementProfile.extractionStatus,
     createdAutomatically: true
   });
-  const profile = await saveGeneratedApplicationProfileDraft(draftApplicationProfile);
+
   return {
-    profile,
+    draftApplicationProfile,
     validation,
     applicationSourceProfile,
     officialProgramWebsiteProfile,
@@ -2429,44 +2427,51 @@ async function generateApplicationProfileDraftForOpportunity(opportunityId) {
   };
 }
 
+async function generateApplicationProfileDraftForOpportunity(opportunityId) {
+  const opportunity = await findOpportunityForApplicationProfile(opportunityId);
+  const built = await buildApplicationProfileDraftForOpportunity(opportunity);
+  const profile = await saveGeneratedApplicationProfileDraft(built.draftApplicationProfile);
+  return {
+    ...built,
+    profile
+  };
+}
+
 async function importFirstTenApplicationProfiles() {
-  const auditPath = new URL("../APPLICATION_PREP_FIRST_10_AFTER_FIX.json", import.meta.url);
-  let audit;
-  try {
-    audit = JSON.parse(await fs.readFile(auditPath, "utf8"));
-  } catch (error) {
-    const wrapped = new Error("First-10 ApplicationPrepEngine audit output was not found. Run npm run application-prep:first10 first.");
-    wrapped.status = error?.code === "ENOENT" ? 404 : 500;
-    throw wrapped;
-  }
+  const loaded = await loadAdminApplicationSourceOpportunityBatch({
+    cursor: null,
+    limit: applicationSourceBatchLimit
+  });
 
-  const drafts = extractDraftProfilesFromFirstTenAudit(audit);
-  const imported = [];
-  const skipped = [];
-
-  for (const draft of drafts) {
-    const existing = await db.send(
-      new GetCommand({
-        TableName: runtimeStateTable,
-        Key: applicationProfileStateKey(draft.profileId)
-      })
-    );
-    if (existing.Item && !profileCanBeRegenerated(existing.Item)) {
-      skipped.push({
-        profileId: draft.profileId,
-        opportunityId: draft.opportunityId,
-        reason: `Existing profile is ${existing.Item.reviewStatus}.`
-      });
-      continue;
-    }
-    imported.push(await putApplicationProfileRecord(draft));
-  }
+  const importResult = await importApplicationProfilesFromOpportunities({
+    opportunities: loaded.opportunities,
+    limit: 10,
+    concurrency: 10,
+    buildDraftForOpportunity: async (opportunity) => {
+      const built = await buildApplicationProfileDraftForOpportunity(opportunity);
+      return built.draftApplicationProfile;
+    },
+    getExistingProfile: async (profile) => {
+      const result = await db.send(
+        new GetCommand({
+          TableName: runtimeStateTable,
+          Key: applicationProfileStateKey(profile.profileId)
+        })
+      );
+      return result.Item || null;
+    },
+    saveProfile: putApplicationProfileRecord
+  });
 
   return {
-    imported,
-    skipped,
-    sourceGeneratedAt: audit.generatedAt,
-    aggregateCounts: audit.aggregateCounts || {}
+    ...importResult,
+    scannedCount: loaded.scannedCount,
+    scanCalls: loaded.scanCalls,
+    sourceOpportunityCount: loaded.opportunities.length,
+    note:
+      importResult.importedCount === 0 && importResult.skippedCount === 0 && importResult.errors.length === 0
+        ? "No visible SOURCE_DSIRE opportunities were found for first-10 import."
+        : null
   };
 }
 
@@ -3596,14 +3601,21 @@ app.post("/api/admin/application-profiles/import-first10", async (req, res) => {
     const startedAt = Date.now();
     const result = await importFirstTenApplicationProfiles();
     console.log(
-      `[admin/application-profiles/import-first10] imported=${result.imported.length} skipped=${result.skipped.length} durationMs=${Date.now() - startedAt}`
+      `[admin/application-profiles/import-first10] imported=${result.importedCount} skipped=${result.skippedCount} errors=${result.errorCount} scanned=${result.scannedCount} sourceOpportunities=${result.sourceOpportunityCount} durationMs=${Date.now() - startedAt}`
     );
     res.json({
       generatedAt: new Date().toISOString(),
-      imported: result.imported.map(compactApplicationProfileRecord),
+      importedCount: result.importedCount,
+      skippedCount: result.skippedCount,
+      errorCount: result.errorCount,
+      errors: result.errors,
+      profiles: result.profiles,
+      skippedProfiles: result.skipped,
       skipped: result.skipped,
-      sourceGeneratedAt: result.sourceGeneratedAt,
-      aggregateCounts: result.aggregateCounts
+      scannedCount: result.scannedCount,
+      scanCalls: result.scanCalls,
+      sourceOpportunityCount: result.sourceOpportunityCount,
+      note: result.note
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
