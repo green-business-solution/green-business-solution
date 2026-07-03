@@ -1,23 +1,39 @@
 # Tax Source Validation Report
 
 Generated: 2026-07-03
+Updated: 2026-07-03 Shell 4 import-readiness repair
 
 ## Scope
 
 This shell converts existing tax research artifacts into an import-readiness registry. It does not claim that all tax law has been collected. It is not a complete nationwide local-tax law database.
 
-## Registry Counts
+## Before / After Repair Counts
 
 - Total registry records: 399
+- Before repair: 54 records had empty sourceUrls; 48 records had empty evidenceText; 49 non-gap records had empty sourceUrls; 48 non-gap records had empty evidenceText.
+- After repair: 6 records have empty sourceUrls; 0 records have empty evidenceText; 0 non-gap records have empty sourceUrls; 0 non-gap records have empty evidenceText; 0 gap records lack both sourceUrls and searchedOfficialSources.
+- Empty sourceUrls now occur only on explicit gap records that include searchedOfficialSources.
+
+## Registry Counts
+
 - By taxDomain: {"assessor_boundary":1,"local_business_tax":10,"parcel_boundary":5,"program_specific_tax_incentive":2,"property_tax":112,"sales_use_tax":159,"special_assessment":1,"special_district_boundary":1,"state_business_tax":108}
-- By state: {"AK":4,"AL":6,"AR":7,"AZ":6,"CA":14,"CO":7,"CT":5,"DC":5,"DE":5,"FL":6,"GA":8,"HI":6,"IA":8,"ID":6,"IL":6,"IN":8,"KS":8,"KY":7,"LA":6,"MA":5,"MD":5,"ME":5,"MI":11,"MN":8,"MO":6,"MS":6,"MT":6,"MULTI_OR_UNKNOWN":35,"NC":8,"ND":8,"NE":8,"NH":5,"NJ":8,"NM":7,"NV":8,"NY":7,"OH":8,"OK":8,"OR":5,"PA":6,"RI":9,"SC":7,"SD":8,"TN":8,"TX":6,"UT":8,"VA":6,"VT":8,"WA":14,"WI":8,"WV":8,"WY":8}
+- By state: {"AK":4,"AL":6,"AR":7,"AZ":7,"CA":17,"CO":8,"CT":5,"DC":5,"DE":5,"FL":8,"GA":9,"HI":6,"IA":8,"ID":6,"IL":7,"IN":8,"KS":9,"KY":7,"LA":7,"MA":6,"MD":5,"ME":5,"MI":12,"MN":9,"MO":6,"MS":6,"MT":6,"MULTI_OR_UNKNOWN":8,"NC":9,"ND":8,"NE":8,"NH":5,"NJ":8,"NM":7,"NV":8,"NY":10,"OH":10,"OK":8,"OR":6,"PA":7,"RI":9,"SC":7,"SD":8,"TN":8,"TX":9,"UT":8,"VA":6,"VT":8,"WA":15,"WI":9,"WV":8,"WY":8}
 - By accessMethod: {"api":11,"download":120,"html_table":115,"lookup_tool":19,"pdf":7,"unknown":127}
-- By importReadiness: {"gap":5,"lookup_only":19,"manual_review":123,"needs_adapter":122,"ready_for_import":130}
+- By importReadiness: {"gap":6,"lookup_only":19,"manual_review":122,"needs_adapter":122,"ready_for_import":130}
 - By calculationSupported: {"accountant_input_required":118,"address_plus_project_inputs":159,"assessor_confirmation_required":105,"not_supported":7,"tax_document_required":10}
+
+## Import-Readiness Fixes Applied
+
+- SST child records now carry the official Streamlined Sales Tax rate/boundary source page and update page. Their evidenceText says the state file name came from the SST directory artifact and that direct file URL discovery remains an importer validation step when the direct URL was not preserved.
+- Non-gap records now have at least one official source URL and non-empty evidenceText.
+- Gap records now include searchedOfficialSources or sourceUrls for official owners checked and keep importReadiness = gap.
+- gap_mi_rerz_detroit_wayne_project_documents is corrected to MI / Wayne County / Detroit.
+- gap_property_tax_bulk_api_terms is represented as a multi-state CA/WA/MI priority-county gap, not WA-only.
+- bulk_26_assessor_boundary was downgraded from manual_review to gap because the research artifact did not prove a single official nationwide county assessor/treasurer source URL.
 
 ## Automation Boundary
 
-Taxes that can be partly automated from address/geography: sales/use tax rate lookup where an official download/API/lookup source exists, with transaction date and project taxability inputs still required. Boundary and parcel datasets can automate routing, but they do not calculate tax amounts. Registry records marked address-only or address-plus-project-inputs: 159.
+Taxes that can be partly automated from address/geography: sales/use tax rate lookup where an official download/API/lookup source exists, with transaction date and project taxability inputs still required. Boundary and parcel datasets can automate routing, but they do not calculate tax amounts.
 
 Taxes requiring tax bill, parcel/APN, accountant return data, or assessor confirmation:
 
@@ -29,22 +45,35 @@ Taxes requiring tax bill, parcel/APN, accountant return data, or assessor confir
 
 No. The research is enough to start an import/adaptor queue and to gate calculations conservatively. It is not enough to finish nationwide local tax calculations. Sales/use rate automation is the strongest path, but final sales/use estimates still need project taxability and transaction facts. Property-tax and business-tax calculations remain gated on parcel/bill/accountant/assessor evidence.
 
-## Official URL Spot Checks
+## Validation Command Output
 
-1. https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files - HTTP 200 text/html via official SST site; accessible 2026-07-03.
-2. https://cdtfa.ca.gov/taxes-and-fees/sales-use-tax-rates.htm - HTTP 200 text/html via official CDTFA site; accessible 2026-07-03.
-3. https://maps.cdtfa.ca.gov/ - HTTP 200 text/html via official CDTFA map/lookup site; accessible 2026-07-03.
-4. https://dor.wa.gov/wa-sales-tax-rate-lookup-url-interface - HTTP 200 text/html via official Washington DOR site; accessible 2026-07-03.
-5. https://tax.colorado.gov/GIS-info - HTTP 403 from official Colorado DOR site during automated GET; record remains official but needs manual/browser or approved API access validation before import.
-6. https://comptroller.texas.gov/taxes/file-pay/edi/sales-tax-rates.php - HTTP 200 text/html via official Texas Comptroller site; accessible 2026-07-03.
-7. https://thefinder.tax.ohio.gov/streamlinesalestaxweb/default.aspx - HTTP 200 text/html via official Ohio Finder site; accessible 2026-07-03.
-8. https://tax.illinois.gov/research/taxrates/sales-tax-rate-machine-readable-files.html - HTTP 200 text/html via official Illinois DOR site; accessible 2026-07-03.
-9. https://floridarevenue.com/property/Pages/DataPortal.aspx - HTTP 200 text/html via official Florida Revenue site; accessible 2026-07-03.
-10. https://comptroller.texas.gov/taxes/property-tax/rates/ - HTTP 200 text/html via official Texas Comptroller site; accessible 2026-07-03.
-11. https://www.propertytax.lacounty.gov/ - HTTP 200 text/html via official LA County property tax portal; accessible 2026-07-03.
-12. https://finance.lacity.gov/tax-information-booklet - HTTP 200 text/html via official Los Angeles Finance site; accessible 2026-07-03.
-13. https://www.seattle.gov/city-finance/business-taxes-and-licenses/business-taxes - HTTP 206 text/html partial-content response via official Seattle site; accessible 2026-07-03.
-14. https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-treasury/income-tax/business-income-tax - HTTP 206 text/html partial-content response via official Detroit site; accessible 2026-07-03.
+```text
+$ node - <<'NODE'
+const fs=require('fs');
+const files=[
+  'canonical_tax_source_registry.schema.json',
+  'canonical_tax_source_registry_seed.json',
+  'tax_rule_import_backlog.json'
+];
+for (const f of files) JSON.parse(fs.readFileSync(f,'utf8'));
+const seed=JSON.parse(fs.readFileSync('canonical_tax_source_registry_seed.json','utf8'));
+const missingNonGapUrls=seed.sources.filter(r=>r.importReadiness!=='gap'&&(!r.sourceUrls||r.sourceUrls.length===0));
+const missingEvidence=seed.sources.filter(r=>!String(r.evidenceText||'').trim());
+const gapMissingSearch=seed.sources.filter(r=>r.importReadiness==='gap'&&(!r.sourceUrls||r.sourceUrls.length===0)&&(!r.searchedOfficialSources||r.searchedOfficialSources.length===0));
+const missingRequired=[];
+const required=['sourceId','taxDomain','jurisdiction','officialOwner','sourceName','sourceUrls','accessMethod','machineReadable','importReadiness','effectiveDateHandling','updateFrequency','joinKeys','runtimeUse','requiredUserOrAccountantInputs','requiredParcelOrBillInputs','calculationSupported','sourceConfidence','evidenceText','limitations','refreshNotes'];
+for (const r of seed.sources) for (const k of required) if (!(k in r)) missingRequired.push(`${r.sourceId}:${k}`);
+const badNullState=seed.sources.filter(r=>r.jurisdiction.state==null&&!/multi|national|member states|priority counties in ca, wa, and mi|streamlined sales tax|census|county assessor|united states/i.test([r.sourceId,r.sourceName,r.officialOwner,r.runtimeUse,r.refreshNotes,r.jurisdiction.countyName,r.jurisdiction.specialDistrict].join(' ')));
+const rerz=seed.sources.find(r=>r.sourceId==='gap_mi_rerz_detroit_wayne_project_documents');
+const terms=seed.sources.find(r=>r.sourceId==='gap_property_tax_bulk_api_terms');
+console.log({parsedFiles:files.length,totalSources:seed.sources.length,missingRequired:missingRequired.length,missingNonGapUrls:missingNonGapUrls.length,missingEvidence:missingEvidence.length,gapMissingSearch:gapMissingSearch.length,badNullState:badNullState.length,badMi:rerz.jurisdiction.state==='MI'&&rerz.jurisdiction.countyName==='Wayne County'&&rerz.jurisdiction.placeName==='Detroit'?0:1,badMulti:terms.jurisdiction.state===null&&/CA, WA, and MI/i.test(terms.jurisdiction.countyName||'')?0:1});
+NODE
+{ parsedFiles: 3, totalSources: 399, missingRequired: 0, missingNonGapUrls: 0, missingEvidence: 0, gapMissingSearch: 0, badNullState: 0, badMi: 0, badMulti: 0 }
+```
+
+## Official URL Spot Checks From Prior Pass
+
+The previous Shell 4 pass spot-checked 14 high-impact official URLs. Thirteen returned HTTP 200/206. Colorado DOR GIS returned HTTP 403 during automated GET and remains a manual/API validation blocker before production import.
 
 ## Explicit Non-Calculable Areas
 

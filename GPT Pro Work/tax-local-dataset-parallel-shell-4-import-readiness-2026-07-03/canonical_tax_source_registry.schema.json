@@ -88,7 +88,8 @@
               "type": [
                 "string",
                 "null"
-              ]
+              ],
+              "description": "Use a two-letter state code for single-state records. Null is allowed only for records that truly span multiple states or national sources."
             },
             "countyFips": {
               "type": [
@@ -131,8 +132,10 @@
         "sourceUrls": {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Non-gap records must include at least one official source URL. Gap records may leave this empty only when searchedOfficialSources documents official sources checked."
         },
         "accessMethod": {
           "enum": [
@@ -204,7 +207,8 @@
           "type": "string"
         },
         "evidenceText": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "limitations": {
           "type": "array",
@@ -217,8 +221,64 @@
         },
         "sourceArtifact": {
           "type": "string"
+        },
+        "searchedOfficialSources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "For explicit gap records, official sources checked when no import-ready source URL is available."
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "importReadiness": {
+                "const": "gap"
+              }
+            },
+            "required": [
+              "importReadiness"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "properties": {
+                  "sourceUrls": {
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "sourceUrls"
+                ]
+              },
+              {
+                "properties": {
+                  "searchedOfficialSources": {
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "searchedOfficialSources"
+                ]
+              }
+            ]
+          },
+          "else": {
+            "properties": {
+              "sourceUrls": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "sourceUrls"
+            ]
+          }
+        }
+      ]
     }
   }
 }

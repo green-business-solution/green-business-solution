@@ -65,7 +65,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "CA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -106,7 +106,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Quarterly or as CDTFA posts new effective-date files.",
+      "refreshNotes": "Quarterly or as CDTFA posts new effective-date files. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -114,7 +114,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "TX",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -156,7 +156,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Current and historical files as posted by the Comptroller.",
+      "refreshNotes": "Current and historical files as posted by the Comptroller. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -164,7 +164,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "WA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -205,7 +205,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "DOR-maintained live lookup/API; validate cache refresh cadence against API terms.",
+      "refreshNotes": "DOR-maintained live lookup/API; validate cache refresh cadence against API terms. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -213,7 +213,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "CO",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -256,7 +256,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "State-maintained SUTS/GIS data; API access requires SUTS setup.",
+      "refreshNotes": "State-maintained SUTS/GIS data; API access requires SUTS setup. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -264,7 +264,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "OH",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -306,7 +306,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As posted by Ohio Department of Taxation.",
+      "refreshNotes": "As posted by Ohio Department of Taxation. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -314,7 +314,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "IL",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -354,7 +354,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Local Illinois sales-tax rate changes generally occur January 1 and July 1; use official files as posted.",
+      "refreshNotes": "Local Illinois sales-tax rate changes generally occur January 1 and July 1; use official files as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -362,7 +362,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "FL",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -402,7 +402,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "DR-15DSS is updated yearly in November for the following calendar year; PointMatch displays current jurisdiction information.",
+      "refreshNotes": "DR-15DSS is updated yearly in November for the following calendar year; PointMatch displays current jurisdiction information. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -410,7 +410,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "NY",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -450,7 +450,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As rate publications and local-rate-change notices are posted.",
+      "refreshNotes": "As rate publications and local-rate-change notices are posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -458,7 +458,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "AZ",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -499,7 +499,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Monthly or as TPT updates are posted; confirm CSV publication cadence.",
+      "refreshNotes": "Monthly or as TPT updates are posted; confirm CSV publication cadence. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -507,7 +507,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "KS",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -546,7 +546,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As KDOR posts rate-table updates.",
+      "refreshNotes": "As KDOR posts rate-table updates. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -554,7 +554,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "LA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -595,7 +595,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Lookup-tool data as maintained by the local board; LDR state sources as posted.",
+      "refreshNotes": "Lookup-tool data as maintained by the local board; LDR state sources as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -603,7 +603,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "GA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -642,7 +642,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Quarterly and as upcoming/historic rate charts are posted.",
+      "refreshNotes": "Quarterly and as upcoming/historic rate charts are posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -696,7 +696,7 @@
       "taxDomain": "sales_use_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "MN",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -734,7 +734,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Updated quarterly according to Minnesota Revenue.",
+      "refreshNotes": "Updated quarterly according to Minnesota Revenue. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -788,7 +788,7 @@
       "taxDomain": "parcel_boundary",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "FL",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -829,7 +829,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Annual assessment rolls and data books; GIS parcel layer as maintained by state/county contributors.",
+      "refreshNotes": "Annual assessment rolls and data books; GIS parcel layer as maintained by state/county contributors. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -837,7 +837,7 @@
       "taxDomain": "property_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "TX",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -880,7 +880,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Annual or as reported by taxing units to the Comptroller.",
+      "refreshNotes": "Annual or as reported by taxing units to the Comptroller. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -888,7 +888,7 @@
       "taxDomain": "property_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "NY",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -932,7 +932,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Annual for tax-rate/levy files; parcel resources as state GIS updates.",
+      "refreshNotes": "Annual for tax-rate/levy files; parcel resources as state GIS updates. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -940,7 +940,7 @@
       "taxDomain": "parcel_boundary",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "MA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -979,7 +979,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As municipalities and MassGIS publish updates.",
+      "refreshNotes": "As municipalities and MassGIS publish updates. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -987,7 +987,7 @@
       "taxDomain": "parcel_boundary",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "WI",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1024,7 +1024,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Versioned statewide releases.",
+      "refreshNotes": "Versioned statewide releases. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1079,7 +1079,7 @@
       "taxDomain": "parcel_boundary",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "NC",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1115,7 +1115,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As NC OneMap standardizes and republishes county/EBCI parcel data.",
+      "refreshNotes": "As NC OneMap standardizes and republishes county/EBCI parcel data. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1174,10 +1174,10 @@
       "taxDomain": "property_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "NY",
         "countyFips": null,
         "countyName": null,
-        "placeName": null,
+        "placeName": "New York City",
         "placeGeoid": null,
         "specialDistrict": null
       },
@@ -1220,7 +1220,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Annual tax-year rates and assessment notices; ACRIS as records are filed.",
+      "refreshNotes": "Annual tax-year rates and assessment notices; ACRIS as records are filed. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1241,7 +1241,7 @@
       "accessMethod": "unknown",
       "originalAccessMethod": "unknown",
       "machineReadable": false,
-      "importReadiness": "manual_review",
+      "importReadiness": "gap",
       "effectiveDateHandling": "Use the county assessment date, levy date, tax-bill date, delinquency date, and exemption filing year exactly as published by the local official.",
       "updateFrequency": "Varies by county and tax year.",
       "joinKeys": [
@@ -1258,21 +1258,28 @@
         "parcel/APN or address for parcel match when used downstream"
       ],
       "calculationSupported": "not_supported",
-      "sourceConfidence": "medium",
+      "sourceConfidence": "low",
       "evidenceText": "Safest user-facing behavior: when a parcel-specific assessor/treasurer source is not imported, show a geography-derived estimate only and ask for a tax bill, parcel number, or county lookup confirmation before presenting a precise liability.",
       "limitations": [
         "Coverage and schema must be validated against the current official file before production import.",
-        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
+        "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability.",
+        "No single official nationwide assessor/treasurer source URL was identified in the research artifact; county assessor/treasurer sources must be collected jurisdiction by jurisdiction before import."
       ],
-      "refreshNotes": "Varies by county and tax year.",
-      "sourceArtifact": "shell_2_official_bulk_source_manifest"
+      "refreshNotes": "Varies by county and tax year. Downgraded to gap because a nationwide official county assessor/treasurer source was not proven.",
+      "sourceArtifact": "shell_2_official_bulk_source_manifest",
+      "searchedOfficialSources": [
+        "https://assessor.lacounty.gov/homeowners/property-search",
+        "https://kingcounty.gov/en/dept/kcit/data-information-services/gis-center/maps-apps/parcel-viewer",
+        "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-assessor",
+        "https://www.census.gov/programs-surveys/gov-finances.html"
+      ]
     },
     {
       "sourceId": "bulk_27_state_business_tax",
       "taxDomain": "state_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "TX",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1314,7 +1321,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Annual report year/forms as posted.",
+      "refreshNotes": "Annual report year/forms as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1322,7 +1329,7 @@
       "taxDomain": "state_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "OH",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1361,7 +1368,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As Ohio posts tax-year updates.",
+      "refreshNotes": "As Ohio posts tax-year updates. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1369,7 +1376,7 @@
       "taxDomain": "state_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "WA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1411,7 +1418,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As DOR updates classifications, rates, and special notices.",
+      "refreshNotes": "As DOR updates classifications, rates, and special notices. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1419,7 +1426,7 @@
       "taxDomain": "state_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "OR",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1461,7 +1468,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Tax-year forms and program pages as posted.",
+      "refreshNotes": "Tax-year forms and program pages as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1521,7 +1528,7 @@
       "taxDomain": "state_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "CA",
         "countyFips": null,
         "countyName": null,
         "placeName": null,
@@ -1563,7 +1570,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Tax-year forms and FTB pages as posted.",
+      "refreshNotes": "Tax-year forms and FTB pages as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1571,10 +1578,10 @@
       "taxDomain": "local_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "WA",
         "countyFips": null,
         "countyName": null,
-        "placeName": null,
+        "placeName": "Seattle",
         "placeGeoid": null,
         "specialDistrict": null
       },
@@ -1612,7 +1619,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As city tax pages and filing guidance are updated.",
+      "refreshNotes": "As city tax pages and filing guidance are updated. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1620,10 +1627,10 @@
       "taxDomain": "local_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "CA",
         "countyFips": null,
         "countyName": null,
-        "placeName": null,
+        "placeName": "San Francisco",
         "placeGeoid": null,
         "specialDistrict": null
       },
@@ -1662,7 +1669,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "Tax-year city pages and municipal-code updates as posted.",
+      "refreshNotes": "Tax-year city pages and municipal-code updates as posted. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -1670,10 +1677,10 @@
       "taxDomain": "local_business_tax",
       "jurisdiction": {
         "country": "US",
-        "state": null,
+        "state": "PA",
         "countyFips": null,
         "countyName": null,
-        "placeName": null,
+        "placeName": "Philadelphia",
         "placeGeoid": null,
         "specialDistrict": null
       },
@@ -1710,7 +1717,7 @@
         "Coverage and schema must be validated against the current official file before production import.",
         "Rate/source imports do not replace user/accountant facts needed for tax base, eligibility, or liability."
       ],
-      "refreshNotes": "As Philadelphia updates tax-year pages and forms.",
+      "refreshNotes": "As Philadelphia updates tax-year pages and forms. Jurisdiction state normalized from official owner/source scope.",
       "sourceArtifact": "shell_2_official_bulk_source_manifest"
     },
     {
@@ -2426,7 +2433,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:ARR2026Q3JUN02.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -2445,11 +2455,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name ARR2026Q3JUN02.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -2508,7 +2519,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:ARB2026Q3JUN02.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -2527,11 +2541,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name ARB2026Q3JUN02.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -4214,7 +4229,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:GAR2026Q3JUN05.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -4233,11 +4251,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name GAR2026Q3JUN05.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -4296,7 +4315,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:GAB2026Q3MAY19.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -4315,11 +4337,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name GAB2026Q3MAY19.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -5342,7 +5365,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:INR2008Q4MAY7.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -5361,11 +5387,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name INR2008Q4MAY7.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -5424,7 +5451,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:INB2005Q1JAN6.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -5443,11 +5473,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name INB2005Q1JAN6.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -5684,7 +5715,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:IAR2025Q3MAY30.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -5703,11 +5737,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name IAR2025Q3MAY30.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -5766,7 +5801,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:IAB2026Q3MAY19.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -5785,11 +5823,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name IAB2026Q3MAY19.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -6026,7 +6065,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:KSR2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -6045,11 +6087,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name KSR2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -6108,7 +6151,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:KSB2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -6127,11 +6173,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name KSB2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -6368,7 +6415,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:KYR2012Q4Aug13.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -6387,11 +6437,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name KYR2012Q4Aug13.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -6450,7 +6501,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:KYB2013Q2MAR13.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -6469,11 +6523,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name KYB2013Q2MAR13.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -7584,7 +7639,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:MIR2023Q1DEC22.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -7603,11 +7661,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name MIR2023Q1DEC22.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -7666,7 +7725,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:MIB2023Q1DEC15.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -7685,11 +7747,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name MIB2023Q1DEC15.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -7926,7 +7989,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:MNR2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -7945,11 +8011,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name MNR2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -8008,7 +8075,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:MNB2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -8027,11 +8097,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name MNB2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -9054,7 +9125,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:NER2026Q3MAY26.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -9073,11 +9147,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NER2026Q3MAY26.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -9136,7 +9211,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:NEB2026Q3JUN08.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -9155,11 +9233,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NEB2026Q3JUN08.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -9396,7 +9475,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:NVR2025Q4NOV05.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -9415,11 +9497,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NVR2025Q4NOV05.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=forms_required.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=forms_required. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -9478,7 +9561,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:NVB2025Q4NOV05.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -9497,11 +9583,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NVB2025Q4NOV05.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=forms_required.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=county_level_only; stateBusinessTaxCoverage=forms_required. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -9958,7 +10045,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:NJR2018Q1OCT16.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -9977,11 +10067,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NJR2018Q1OCT16.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -10040,7 +10131,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:NJB2019Q2MAR27.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -10059,11 +10153,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NJB2019Q2MAR27.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -10908,7 +11003,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:NCR2026Q3APR23.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -10927,11 +11025,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NCR2026Q3APR23.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -10990,7 +11089,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:NCB2026Q3APR23.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11009,11 +11111,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NCB2026Q3APR23.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -11250,7 +11353,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:NDR2026Q3MAY19.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11269,11 +11375,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NDR2026Q3MAY19.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -11332,7 +11439,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:NDB2026Q3MAY19.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11351,11 +11461,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name NDB2026Q3MAY19.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -11592,7 +11703,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:OHR2026Q1NOV28.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11611,11 +11725,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name OHR2026Q1NOV28.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -11674,7 +11789,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:OHB2026Q1NOV28.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11693,11 +11811,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name OHB2026Q1NOV28.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -11934,7 +12053,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:OKR2026Q3MAY29.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -11953,11 +12075,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name OKR2026Q3MAY29.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -12016,7 +12139,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:OKB2026Q3JUN10.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -12035,11 +12161,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name OKB2026Q3JUN10.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -12758,7 +12885,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:RIR2019Q2MAR27.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -12777,11 +12907,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name RIR2019Q2MAR27.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -12882,7 +13013,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:RIB2019Q2MAR27.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -12901,11 +13035,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name RIB2019Q2MAR27.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -13404,7 +13539,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:SDR2026Q3JUN02.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -13423,11 +13561,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name SDR2026Q3JUN02.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -13486,7 +13625,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:SDB2026Q3JUN04.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -13505,11 +13647,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name SDB2026Q3JUN04.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -13746,7 +13889,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:TNR2026Q3JUN11.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -13765,11 +13911,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name TNR2026Q3JUN11.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -13828,7 +13975,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:TNB2026Q3MAY22.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -13847,11 +13997,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name TNB2026Q3MAY22.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -14350,7 +14501,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:UTR2026Q3MAY11.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -14369,11 +14523,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name UTR2026Q3MAY11.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -14432,7 +14587,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:UTB2026Q3MAY11.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -14451,11 +14609,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name UTB2026Q3MAY11.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -14692,7 +14851,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:VTR2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -14711,11 +14873,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name VTR2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -14774,7 +14937,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:VTB2026Q3MAY20.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -14793,11 +14959,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name VTB2026Q3MAY20.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=parcel_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -15296,7 +15463,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:WAR2026Q3MAY27.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -15315,11 +15485,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WAR2026Q3MAY27.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_api; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_api; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -15378,7 +15549,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:WAB2026Q3MAY27.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -15397,11 +15571,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WAB2026Q3MAY27.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_api; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_api; propertyTaxCoverage=tax_bill_required; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -15596,7 +15771,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:WVR2026Q3FEB25.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -15615,11 +15793,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WVR2026Q3FEB25.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -15678,7 +15857,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:WVB2026Q3APR29.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -15697,11 +15879,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WVB2026Q3APR29.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -15938,7 +16121,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:WIR2026Q3MAY22.csv",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -15957,11 +16143,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WIR2026Q3MAY22.csv from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -16020,7 +16207,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:WIB2026Q3MAY22.zip",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -16039,11 +16229,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WIB2026Q3MAY22.zip from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=official_rate_schedule. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -16280,7 +16471,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstRateDir:WYR2026Q3JUN2.CSV",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -16299,11 +16493,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WYR2026Q3JUN2.CSV from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=no_major_business_tax.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=no_major_business_tax. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -16362,7 +16557,10 @@
       },
       "officialOwner": "Official state tax agency or Streamlined Sales Tax source identified by source URL",
       "sourceName": "sstBoundaryDir:WYB2026Q3MAY18.CSV",
-      "sourceUrls": [],
+      "sourceUrls": [
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+        "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+      ],
       "accessMethod": "download",
       "originalAccessMethod": "download",
       "machineReadable": true,
@@ -16381,11 +16579,12 @@
       "requiredParcelOrBillInputs": [],
       "calculationSupported": "address_plus_project_inputs",
       "sourceConfidence": "high",
-      "evidenceText": "",
+      "evidenceText": "Official SST rate/boundary pages are the parent official source for member-state rate and boundary files. This child record preserves the state file name WYB2026Q3MAY18.CSV from the SST directory artifact; a direct file URL was not preserved in the source artifact and must be discovered by the importer from the official SST directory/update pages before production import.",
       "limitations": [
-        "Does not by itself determine retrofit equipment or installation labor taxability."
+        "Does not by itself determine retrofit equipment or installation labor taxability.",
+        "Direct state file URL was not preserved in the research artifact; importer must resolve the file from the official SST directory/update pages and version the retrieved URL/content hash."
       ],
-      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=no_major_business_tax.",
+      "refreshNotes": "State matrix coverage: salesUseTaxCoverage=official_download; propertyTaxCoverage=statewide_machine_readable; stateBusinessTaxCoverage=no_major_business_tax. Parent SST official URLs attached for import-readiness validation; direct file URL discovery remains an adapter validation step.",
       "sourceArtifact": "shell_2_statewide_source_coverage_matrix"
     },
     {
@@ -17366,14 +17565,18 @@
         "Need official municipal adoption/waiver/assessment treatment for renewable energy property/tangible tax beyond statewide constants."
       ],
       "refreshNotes": "Recommended next step: GPT Pro research; priority=high.",
-      "sourceArtifact": "shell_3_locality_source_manifest_gaps"
+      "sourceArtifact": "shell_3_locality_source_manifest_gaps",
+      "searchedOfficialSources": [
+        "https://tax.ri.gov/help/municipalities",
+        "https://energy.ri.gov/renewable-energy/solar/solar-taxation"
+      ]
     },
     {
       "sourceId": "gap_mi_rerz_detroit_wayne_project_documents",
       "taxDomain": "program_specific_tax_incentive",
       "jurisdiction": {
         "country": "US",
-        "state": "WA",
+        "state": "MI",
         "countyFips": null,
         "countyName": "Wayne County",
         "placeName": "Detroit",
@@ -17406,8 +17609,13 @@
       "limitations": [
         "RERZ-style benefit cannot be calculated from geography alone; need approved zone boundary, local-unit certificate/approval, parcel inclusion, eligible tax-line treatment, and actual tax bill evidence."
       ],
-      "refreshNotes": "Recommended next step: GPT Pro research; priority=high.",
-      "sourceArtifact": "shell_3_locality_source_manifest_gaps"
+      "refreshNotes": "Recommended next step: GPT Pro research; priority=high. Jurisdiction corrected to MI / Wayne County / Detroit.",
+      "sourceArtifact": "shell_3_locality_source_manifest_gaps",
+      "searchedOfficialSources": [
+        "https://www.michigan.gov/taxes/property",
+        "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-assessor",
+        "https://www.waynecountymi.gov/Government/Elected-Officials/Treasurer/Property-Tax-Information"
+      ]
     },
     {
       "sourceId": "gap_wa_city_bo_non_seattle_samples",
@@ -17450,7 +17658,12 @@
         "Official city-level B&O applicability/rates for Everett and Quincy were not proven from official city sources during this pass."
       ],
       "refreshNotes": "Recommended next step: GPT Pro research; priority=medium.",
-      "sourceArtifact": "shell_3_locality_source_manifest_gaps"
+      "sourceArtifact": "shell_3_locality_source_manifest_gaps",
+      "searchedOfficialSources": [
+        "https://dor.wa.gov/forms-publications/publications-subject/tax-topics/city-bo-tax",
+        "https://everettwa.gov/",
+        "https://www.quincywashington.us/"
+      ]
     },
     {
       "sourceId": "gap_ca_business_license_bulk_rates",
@@ -17493,19 +17706,25 @@
         "City business license taxes are official but classification/employee/square-foot or special business facts are needed; no normalized machine-readable current rate table was found for all sample cities."
       ],
       "refreshNotes": "Recommended next step: official_adapter; priority=medium.",
-      "sourceArtifact": "shell_3_locality_source_manifest_gaps"
+      "sourceArtifact": "shell_3_locality_source_manifest_gaps",
+      "searchedOfficialSources": [
+        "https://www.burbankca.gov/web/community-development/business-tax",
+        "https://www.cityofpasadena.net/finance/licenses/business-licenses/",
+        "https://www.cityofvernonca.gov/government/finance-treasury/licenses-permits",
+        "https://www.anaheim.net/494/Business-License"
+      ]
     },
     {
       "sourceId": "gap_property_tax_bulk_api_terms",
       "taxDomain": "property_tax",
       "jurisdiction": {
         "country": "US",
-        "state": "WA",
+        "state": null,
         "countyFips": null,
-        "countyName": null,
+        "countyName": "Priority counties in CA, WA, and MI",
         "placeName": null,
         "placeGeoid": null,
-        "specialDistrict": null
+        "specialDistrict": "multi-state priority county property portals"
       },
       "officialOwner": "unknown; official source not yet identified or not sufficient for import",
       "sourceName": "Priority counties in CA, WA, MI",
@@ -17536,8 +17755,38 @@
       "limitations": [
         "Most county sources are official lookup/GIS portals. Production bulk adapters need API/licensing/terms confirmation before automated ingestion."
       ],
-      "refreshNotes": "Recommended next step: official_adapter; priority=medium.",
-      "sourceArtifact": "shell_3_locality_source_manifest_gaps"
+      "refreshNotes": "Recommended next step: official_adapter; priority=medium. Multi-state gap spans CA, WA, and MI priority counties; not represented as WA-only.",
+      "sourceArtifact": "shell_3_locality_source_manifest_gaps",
+      "searchedOfficialSources": [
+        "https://www.propertytax.lacounty.gov/",
+        "https://assessor.lacounty.gov/homeowners/property-search",
+        "https://www.sdttc.com/",
+        "https://specialassessments.sandiegocounty.gov/",
+        "https://kingcounty.gov/en/dept/kcit/data-information-services/gis-center/maps-apps/parcel-viewer",
+        "https://payment.kingcounty.gov/Home/Index?app=PropertyTaxes",
+        "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-assessor",
+        "https://pta.waynecounty.com/"
+      ]
     }
-  ]
+  ],
+  "registryValidation": {
+    "updatedAt": "2026-07-03T00:00:00-07:00",
+    "before": {
+      "total": 399,
+      "missingSourceUrls": 54,
+      "missingEvidenceText": 48,
+      "nonGapMissingSourceUrls": 49,
+      "nonGapMissingEvidenceText": 48
+    },
+    "after": {
+      "total": 399,
+      "missingSourceUrls": 6,
+      "missingEvidenceText": 0,
+      "nonGapMissingSourceUrls": 0,
+      "nonGapMissingEvidenceText": 0,
+      "gapWithoutSourceUrlsOrSearchedOfficialSources": 0,
+      "singleStateRecordsWithNullState": []
+    },
+    "validationCommand": "node validation audit in Shell 4 update: JSON.parse schema/seed/backlog and assert non-gap sourceUrls/evidenceText plus gap searchedOfficialSources/sourceUrls and state-null jurisdiction consistency."
+  }
 }

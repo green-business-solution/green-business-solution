@@ -1871,3 +1871,4 @@
 # 2026-07-03
 
 - Added an import-readiness tax source registry shell with a JSON schema, normalized seed registry, adapter backlog, and validation report that distinguishes importable sources from tax calculations still requiring parcel, bill, accountant, or assessor facts.
+- Repaired the Shell 4 tax source registry validation rules so non-gap records require official URLs and evidence, gap records carry searched official sources, SST child records preserve parent official source pages, and MI/multi-state gap jurisdictions are correctly scoped.
