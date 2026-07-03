@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) shell 3 bottom-up local tax source research
+
+- Added shell-3 locality-specific tax research artifacts for prioritized sample geographies, covering county property tax sources, local business tax workflows, adapter notes, and GPT Pro follow-up prompts.
+
 ## 2026-07-03 - Codex (GPT-5) parallel local tax research prompts
 
 - Added separate top-down and bottom-up Codex shell prompts for nationwide/local tax dataset research so parallel shells can split statewide source coverage from locality-specific evidence without editing each other's files.

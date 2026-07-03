@@ -1,0 +1,521 @@
+{
+  "schemaVersion": "retrofi_locality_tax_source_manifest.v1",
+  "generatedAt": "2026-07-03",
+  "source": "codex_shell_3_bottom_up",
+  "sources": [
+    {
+      "sourceId": "ca_los_angeles_county_property_tax_portal",
+      "stateCode": "CA",
+      "countyFips": "06037",
+      "countyName": "Los Angeles County",
+      "placeName": "",
+      "taxDomain": "property_tax",
+      "officialOwner": "Los Angeles County Assessor, Auditor-Controller, Treasurer and Tax Collector, Assessment Appeals Board",
+      "sourceName": "Los Angeles County Property Tax Portal and Assessor Property Search",
+      "sourceUrls": [
+        "https://www.propertytax.lacounty.gov/",
+        "https://assessor.lacounty.gov/homeowners/property-search",
+        "https://ttc.lacounty.gov/pay-your-property-taxes/"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "AIN",
+        "property address"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Resolve APN/AIN and retrieve current bill/payment/tax-detail facts after parcel identification or tax bill upload.",
+      "limitations": [
+        "Tax amount lookup requires Assessor Identification Number for the treasurer workflow.",
+        "Lookup data is not a bulk official rate import for all parcels.",
+        "Exemptions, direct assessments, and parcel-specific levy detail should come from tax bill/assessor records."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "County property tax portal is run by Assessor, Auditor-Controller, Treasurer and Tax Collector, and Assessment Appeals Board; current secured taxes are looked up with AIN."
+    },
+    {
+      "sourceId": "ca_city_los_angeles_business_tax",
+      "stateCode": "CA",
+      "countyFips": "06037",
+      "countyName": "Los Angeles County",
+      "placeName": "Los Angeles",
+      "taxDomain": "local_business_tax",
+      "officialOwner": "City of Los Angeles Office of Finance",
+      "sourceName": "Los Angeles Business Tax Information Booklet / Know Your Rates",
+      "sourceUrls": [
+        "https://finance.lacity.gov/tax-information-booklet",
+        "https://finance.lacity.gov/tax-education/business-taxes/about-business-tax",
+        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
+        "https://finance.lacity.gov/business-tax-renewal-instructions"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": true,
+      "joinKeys": [
+        "city business location",
+        "business tax classification",
+        "gross receipts",
+        "apportionment facts"
+      ],
+      "requiresParcelOrAccount": false,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Source-backed rates by classification can power estimates only after address-in-city, classification, gross receipts, and apportionment are supplied.",
+      "limitations": [
+        "Address alone cannot determine taxable gross receipts or business classification.",
+        "Multiple classifications, exemptions, and apportionment require tax return/accountant facts.",
+        "Annual renewal timing and city rulings can affect final liability."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Los Angeles states most business taxes are based on gross receipts at rates per $1,000; city pages publish classification-specific rates such as retail sales and services."
+    },
+    {
+      "sourceId": "ca_city_vernon_special_parcel_tax",
+      "stateCode": "CA",
+      "countyFips": "06037",
+      "countyName": "Los Angeles County",
+      "placeName": "Vernon",
+      "taxDomain": "special_assessment",
+      "officialOwner": "City of Vernon Finance/Treasury",
+      "sourceName": "Vernon Licenses & Permits / Doing Business in Vernon",
+      "sourceUrls": [
+        "https://www.cityofvernonca.gov/government/finance-treasury/licenses-permits",
+        "https://www.cityofvernonca.gov/doing-business/doing-business-in-vernon"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": false,
+      "joinKeys": [
+        "property address",
+        "parcel",
+        "facility use"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "no",
+      "runtimeUse": "Flag Vernon warehouse/distribution properties for tax-bill upload or city confirmation of special parcel tax.",
+      "limitations": [
+        "City says current special parcel tax rate should be checked with the City.",
+        "Applies to specific facility categories, not all businesses.",
+        "Collected through property tax bill, so bill lines are needed."
+      ],
+      "sourceConfidence": "medium",
+      "evidenceText": "Vernon states it has a Special Parcel Tax assessment on non-refrigerated warehouses, truck terminals, freight terminals, and distribution facilities, collected through the property tax bill."
+    },
+    {
+      "sourceId": "ca_san_diego_county_property_tax_and_special_assessments",
+      "stateCode": "CA",
+      "countyFips": "06073",
+      "countyName": "San Diego County",
+      "placeName": "San Diego",
+      "taxDomain": "property_tax",
+      "officialOwner": "San Diego County Treasurer-Tax Collector; Assessor/Recorder/County Clerk; Auditor and Controller Property Tax Services",
+      "sourceName": "San Diego County property bill, APN, and special assessment lookup sources",
+      "sourceUrls": [
+        "https://www.sdttc.com/",
+        "https://www.sdarcc.gov/content/arcc/home/divisions/assessor/property-records.html",
+        "https://specialassessments.sandiegocounty.gov/",
+        "https://www.sandiegocounty.gov/content/sdc/auditor/ptspage.html"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "parcel number",
+        "bill number",
+        "mailing address",
+        "unsecured bill number"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "After APN/tax bill upload, retrieve bill, assessed valuation, tax rates, and special assessment breakdown.",
+      "limitations": [
+        "Assessor records route through ParcelQuest and value-notice searches rather than a public bulk feed.",
+        "Special assessment lookup requires secured tax parcel number.",
+        "Not suitable for estimating parcel taxes from ZIP/city alone."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Treasurer-Tax Collector supports bill search by parcel/bill number, mailing address, or unsecured bill number; special assessment lookup returns assessed valuation, tax rates, and Mello-Roos/CFD breakdown by secured parcel."
+    },
+    {
+      "sourceId": "ca_city_san_diego_business_tax_certificate",
+      "stateCode": "CA",
+      "countyFips": "06073",
+      "countyName": "San Diego County",
+      "placeName": "San Diego",
+      "taxDomain": "local_business_tax",
+      "officialOwner": "City of San Diego Office of the City Treasurer",
+      "sourceName": "San Diego Business Tax Certificate",
+      "sourceUrls": [
+        "https://www.sandiego.gov/treasurer/taxesfees/btax",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": true,
+      "joinKeys": [
+        "business location",
+        "employee count",
+        "business start date",
+        "rental unit facts if applicable"
+      ],
+      "requiresParcelOrAccount": false,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Estimate annual certificate fees after location, employee count, and business category are supplied.",
+      "limitations": [
+        "Address plus NAICS is not enough for final certificate fee.",
+        "Late fees and rental-unit business tax require account and filing facts.",
+        "Portal is a filing/lookup workflow, not a bulk local business tax dataset."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "City requires all businesses operating in San Diego to obtain a Business Tax Certificate; application fee examples include base business tax, SB-1186 fee, and employee-based minimum wage enforcement fee."
+    },
+    {
+      "sourceId": "ca_orange_county_property_tax",
+      "stateCode": "CA",
+      "countyFips": "06059",
+      "countyName": "Orange County",
+      "placeName": "Anaheim",
+      "taxDomain": "property_tax",
+      "officialOwner": "Orange County Assessor Department; Orange County Treasurer-Tax Collector",
+      "sourceName": "Orange County property value and tax bill lookup",
+      "sourceUrls": [
+        "https://assessedvalue.ocassessor.gov/",
+        "https://taxbill.octreasurer.gov/",
+        "https://octreasurer.gov/property-tax",
+        "https://www.ocgov.com/residents/property-taxes-assessments"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "APN",
+        "property address",
+        "tax lien number"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Resolve APN/address and verify assessed value/tax bill lines after parcel match.",
+      "limitations": [
+        "Owner search is restricted.",
+        "Tax bill contains value and tax lines but should be treated as parcel-specific evidence.",
+        "No confirmed bulk adapter from official pages."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Orange County Assessor provides secured property value information online; Treasurer tax bill search supports property address, parcel number/APN, tax lien number, and other identifiers."
+    },
+    {
+      "sourceId": "ca_city_anaheim_business_license_tax",
+      "stateCode": "CA",
+      "countyFips": "06059",
+      "countyName": "Orange County",
+      "placeName": "Anaheim",
+      "taxDomain": "local_business_tax",
+      "officialOwner": "City of Anaheim",
+      "sourceName": "Anaheim Business License and Municipal Code license-tax provisions",
+      "sourceUrls": [
+        "https://www.anaheim.net/494/Business-License",
+        "https://www.anaheim.net/495/Business-License-FAQs",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706"
+      ],
+      "accessMethod": "ordinance",
+      "machineReadable": true,
+      "joinKeys": [
+        "business activity",
+        "employee count",
+        "regulatory permit category"
+      ],
+      "requiresParcelOrAccount": false,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "For known business class and employee count, calculate ordinance-based license-tax components.",
+      "limitations": [
+        "Business-class mapping from NAICS is not safe without user confirmation.",
+        "Regulated activities can require extra permits/fees.",
+        "No unified official machine-readable rate file identified."
+      ],
+      "sourceConfidence": "medium",
+      "evidenceText": "Anaheim code section 3.16.010 sets a services license tax as a flat amount plus an amount for each employee; city pages provide business license workflow."
+    },
+    {
+      "sourceId": "wa_king_county_property_tax_parcel",
+      "stateCode": "WA",
+      "countyFips": "53033",
+      "countyName": "King County",
+      "placeName": "Seattle",
+      "taxDomain": "property_tax",
+      "officialOwner": "King County",
+      "sourceName": "King County Parcel Viewer and property tax payment/search",
+      "sourceUrls": [
+        "https://kingcounty.gov/en/dept/kcit/data-information-services/gis-center/maps-apps/parcel-viewer",
+        "https://payment.kingcounty.gov/Home/Index?app=PropertyTaxes",
+        "https://www.seattle.gov/city-finance/business-taxes-and-licenses/seattle-taxes/property-tax-and-sales-tax"
+      ],
+      "accessMethod": "GIS_service",
+      "machineReadable": false,
+      "joinKeys": [
+        "address",
+        "parcel number"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Use address to find parcel and link to assessor/tax reports; block final calculation until parcel tax statement or official parcel tax data is captured.",
+      "limitations": [
+        "Seattle does not collect property tax; county property system controls land/building tax lookup.",
+        "Parcel Viewer is an interactive map, not a guaranteed bulk tax-detail API.",
+        "Levy and exemptions remain parcel/year-specific."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "King County Parcel Viewer supports search by address or parcel and links to Assessor eReal Property reports; Seattle directs property tax users to King County."
+    },
+    {
+      "sourceId": "wa_city_seattle_bo_tax",
+      "stateCode": "WA",
+      "countyFips": "53033",
+      "countyName": "King County",
+      "placeName": "Seattle",
+      "taxDomain": "local_business_tax",
+      "officialOwner": "City of Seattle City Finance",
+      "sourceName": "Seattle Business License Tax / B&O tax",
+      "sourceUrls": [
+        "https://www.seattle.gov/city-finance/business-taxes-and-licenses/business-taxes",
+        "https://www.filelocal-wa.gov/",
+        "https://dor.wa.gov/forms-publications/publications-subject/tax-topics/city-bo-tax"
+      ],
+      "accessMethod": "HTML_table",
+      "machineReadable": true,
+      "joinKeys": [
+        "Seattle business presence",
+        "business tax classification",
+        "gross income",
+        "deductions",
+        "FileLocal account facts"
+      ],
+      "requiresParcelOrAccount": false,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "City B&O source can drive estimates after Seattle activity, classification, gross receipts, and deductions are supplied.",
+      "limitations": [
+        "Seattle B&O is separate from Washington state B&O.",
+        "Address alone cannot determine gross income attributable to Seattle.",
+        "FileLocal/accountant facts are needed for filed liability and deductions."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Seattle states its business license tax/B&O tax applies to gross income and varies by business type; Washington DOR states local B&O is administered by cities, not DOR."
+    },
+    {
+      "sourceId": "mi_wayne_detroit_property_tax",
+      "stateCode": "MI",
+      "countyFips": "26163",
+      "countyName": "Wayne County",
+      "placeName": "Detroit",
+      "taxDomain": "property_tax",
+      "officialOwner": "City of Detroit Office of the Assessor; City Treasurer; Wayne County Treasurer",
+      "sourceName": "Detroit assessor and Wayne County delinquent property tax systems",
+      "sourceUrls": [
+        "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-assessor",
+        "https://pta.waynecounty.com/",
+        "https://www.waynecountymi.gov/Government/Elected-Officials/Treasurer/Property-Tax-Information",
+        "https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "parcel ID",
+        "street address",
+        "city"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Use as parcel/tax-status source for Detroit property tax workflows; require city tax bill for current detailed line-item calculation.",
+      "limitations": [
+        "Wayne County site is delinquent-tax focused; current Detroit taxes may require city treasurer/assessor systems.",
+        "Wayne County directs users to local communities for current assessment data and tax parcel maps.",
+        "RERZ/abatement calculations need approved project/zone documents and actual eligible tax lines."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Wayne County delinquent tax system supports lookup by parcel ID or street address and city; Detroit Assessor values real and tangible personal property for levied taxes."
+    },
+    {
+      "sourceId": "mi_city_detroit_business_income_tax",
+      "stateCode": "MI",
+      "countyFips": "26163",
+      "countyName": "Wayne County",
+      "placeName": "Detroit",
+      "taxDomain": "local_business_tax",
+      "officialOwner": "City of Detroit; Michigan Department of Treasury City Tax Administration",
+      "sourceName": "Detroit business income tax and city withholding guidance",
+      "sourceUrls": [
+        "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-treasury/income-tax/business-income-tax",
+        "https://www.michigan.gov/taxes/citytax/detroit/business/cit",
+        "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/City-Withholding/TY2026/5469_ty2026.pdf"
+      ],
+      "accessMethod": "form_instruction",
+      "machineReadable": true,
+      "joinKeys": [
+        "Detroit business activity",
+        "entity type",
+        "taxable income",
+        "apportionment",
+        "resident/nonresident partner facts",
+        "employee withholding facts"
+      ],
+      "requiresParcelOrAccount": false,
+      "requiresUserOrAccountantFacts": true,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Can source rates/forms and route Detroit entities to accountant-input workflow; not safe for address-only estimates.",
+      "limitations": [
+        "Tax base is income/apportionment based, not derivable from address.",
+        "Partnership partner status and corporation/entity classification matter.",
+        "Withholding obligations require payroll and employee work-location facts."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Detroit publishes business income tax rates including 2.00% for businesses and partner-rate distinctions; 2026 withholding guide requires employers doing business in Detroit to withhold."
+    },
+    {
+      "sourceId": "mi_washtenaw_ann_arbor_property_tax",
+      "stateCode": "MI",
+      "countyFips": "26161",
+      "countyName": "Washtenaw County",
+      "placeName": "Ann Arbor",
+      "taxDomain": "property_tax",
+      "officialOwner": "Washtenaw County Treasurer; City of Ann Arbor Assessing and Treasury",
+      "sourceName": "Washtenaw property/parcel lookup and Ann Arbor tax payment",
+      "sourceUrls": [
+        "https://www.washtenaw.org/2014/Search",
+        "https://secure4.ewashtenaw.org/parcelsearch/",
+        "https://www.a2gov.org/finance-and-administrative-services/assessing/online-assessment-and-property-tax-data/",
+        "https://www.a2gov.org/finance-and-administrative-services/treasury/pay-taxes-online/"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "parcel number",
+        "address",
+        "last name"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Resolve parcel and assessment/tax payment facts for Zingerman's-like Ann Arbor cases; require bill upload for final tax lines.",
+      "limitations": [
+        "Ann Arbor payment search requires parcel number and last name.",
+        "County parcel lookup combines county treasury/equalization data but is lookup-oriented.",
+        "No city income/business tax source verified for Ann Arbor."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Washtenaw property/parcel lookup combines current real property data from the Treasurer and Equalization/Property Description; Ann Arbor online tax payments search by parcel number and last name."
+    },
+    {
+      "sourceId": "wa_grant_county_property_tax",
+      "stateCode": "WA",
+      "countyFips": "53025",
+      "countyName": "Grant County",
+      "placeName": "Quincy",
+      "taxDomain": "property_tax",
+      "officialOwner": "Grant County Assessor; Grant County Treasurer",
+      "sourceName": "Grant County property search and tax statements",
+      "sourceUrls": [
+        "https://propertysearch.grantcountywa.gov/",
+        "https://www.grantcountywa.gov/248/Assessor",
+        "https://www.grantcountywa.gov/384/Treasurer"
+      ],
+      "accessMethod": "lookup_tool",
+      "machineReadable": false,
+      "joinKeys": [
+        "parcel number",
+        "property ID",
+        "owner name",
+        "property address"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Support parcel/tax statement retrieval for Quincy data-center workflow after parcel/account match.",
+      "limitations": [
+        "Treasurer statement search is lookup-oriented and owner-name/property-ID dependent.",
+        "No verified bulk parcel-tax line import.",
+        "Local B&O status for Quincy remains unresolved."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Grant County property search accepts parcel/property search terms; Treasurer page supports searching 2025 and 2026 tax statements by property ID, parcel number, or exact owner name."
+    },
+    {
+      "sourceId": "wa_snohomish_county_property_tax",
+      "stateCode": "WA",
+      "countyFips": "53061",
+      "countyName": "Snohomish County",
+      "placeName": "Everett",
+      "taxDomain": "property_tax",
+      "officialOwner": "Snohomish County Assessor and Treasurer",
+      "sourceName": "Snohomish County property taxes, SCOPI map, and treasurer search",
+      "sourceUrls": [
+        "https://www.snohomishcountywa.gov/assessor",
+        "https://www.snohomishcountywa.gov/2251/Property-Taxes-and-Assessments",
+        "https://www.snohomishcountywa.gov/5414/Interactive-Map-SCOPI",
+        "https://www.snohomishcountywa.gov/treasurer"
+      ],
+      "accessMethod": "GIS_service",
+      "machineReadable": false,
+      "joinKeys": [
+        "address",
+        "parcel ID"
+      ],
+      "requiresParcelOrAccount": true,
+      "requiresUserOrAccountantFacts": false,
+      "canSupportRuntimeCalculation": "partial",
+      "runtimeUse": "Parcel and tax-bill lookup for Everett industrial property workflows.",
+      "limitations": [
+        "SCOPI is an interactive map; production adapter needs terms/API confirmation.",
+        "Final tax amount and exemptions remain parcel/year specific.",
+        "Business personal property listing is a separate workflow."
+      ],
+      "sourceConfidence": "high",
+      "evidenceText": "Snohomish County Assessor provides property information, exemptions, and SCOPI mapping; county states assessor and treasurer use the same software for value and taxes due."
+    }
+  ],
+  "gaps": [
+    {
+      "gapId": "gap_ri_municipal_renewable_property_tax_table",
+      "jurisdiction": "Rhode Island municipalities",
+      "taxDomain": "program_specific_tax_incentive",
+      "gapDescription": "Need official municipal adoption/waiver/assessment treatment for renewable energy property/tangible tax beyond statewide constants.",
+      "recommendedNextStep": "GPT Pro research",
+      "priority": "high"
+    },
+    {
+      "gapId": "gap_mi_rerz_detroit_wayne_project_documents",
+      "jurisdiction": "Detroit / Wayne County / Michigan RERZ local units",
+      "taxDomain": "program_specific_tax_incentive",
+      "gapDescription": "RERZ-style benefit cannot be calculated from geography alone; need approved zone boundary, local-unit certificate/approval, parcel inclusion, eligible tax-line treatment, and actual tax bill evidence.",
+      "recommendedNextStep": "GPT Pro research",
+      "priority": "high"
+    },
+    {
+      "gapId": "gap_wa_city_bo_non_seattle_samples",
+      "jurisdiction": "Everett and Quincy, WA",
+      "taxDomain": "local_business_tax",
+      "gapDescription": "Official city-level B&O applicability/rates for Everett and Quincy were not proven from official city sources during this pass.",
+      "recommendedNextStep": "GPT Pro research",
+      "priority": "medium"
+    },
+    {
+      "gapId": "gap_ca_business_license_bulk_rates",
+      "jurisdiction": "Burbank, Pasadena, Vernon, Anaheim",
+      "taxDomain": "local_business_tax",
+      "gapDescription": "City business license taxes are official but classification/employee/square-foot or special business facts are needed; no normalized machine-readable current rate table was found for all sample cities.",
+      "recommendedNextStep": "official_adapter",
+      "priority": "medium"
+    },
+    {
+      "gapId": "gap_property_tax_bulk_api_terms",
+      "jurisdiction": "Priority counties in CA, WA, MI",
+      "taxDomain": "property_tax",
+      "gapDescription": "Most county sources are official lookup/GIS portals. Production bulk adapters need API/licensing/terms confirmation before automated ingestion.",
+      "recommendedNextStep": "official_adapter",
+      "priority": "medium"
+    }
+  ]
+}
