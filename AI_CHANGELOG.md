@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) ApplicationProfile detail visibility
+
+- Made `/admin/application-profiles` View/Edit actions scroll and focus the extracted requirements detail panel so profile requirements are immediately visible.
+- Added selected-row highlighting and opened the JSON editor automatically when admins choose Edit.
+- Added a frontend regression check for the ApplicationProfile View/Edit reveal behavior.
+
 ## 2026-07-03 - Codex (GPT-5) update how it works step 7 image
 
 - Replaced the final How It Works transformation frame with the newly provided sunny sustainable business image.
