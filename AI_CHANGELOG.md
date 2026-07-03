@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) post-form Process modal isolation
+
+- Moved the post-form Process onboarding modal outside the retrofit preview section to prevent preview heading/body typography from leaking into the modal.
+- Reworked the modal/backdrop CSS with scoped process selectors, a full-screen dark overlay, wider editor-style panel sizing, tighter inner padding, and desktop/mobile responsive type scales.
+- Updated focused preview regression coverage for the new cascade-isolated modal styling.
+
 ## 2026-07-03 - Codex (GPT-5) GPT Pro work S3 archive
 
 - Created a private versioned S3 development-work bucket for raw GPT Pro prompt/output artifacts.

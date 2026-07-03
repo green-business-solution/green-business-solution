@@ -7378,14 +7378,14 @@ export function RetrofitRecommendationsPreview({
             />
           ) : null}
 
-          {showInstructionsModal ? (
-            <ProcessOnboardingModal
-              animateText={!instructionsOpenedFromNav}
-              onClose={handleInstructionsDismiss}
-            />
-          ) : null}
         </section>
       </main>
+      {showInstructionsModal ? (
+        <ProcessOnboardingModal
+          animateText={!instructionsOpenedFromNav}
+          onClose={handleInstructionsDismiss}
+        />
+      ) : null}
     </div>
   );
 }
