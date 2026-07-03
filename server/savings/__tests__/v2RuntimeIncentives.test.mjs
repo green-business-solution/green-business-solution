@@ -383,7 +383,7 @@ function humanReviewTaxExpressionPackage() {
   const effect = {
     effect_id: "effect_tax_expression",
     label: "Tax expression requiring review",
-    effect_type: "tax_credit",
+    effect_type: "tax_exemption",
     cash_flow_direction: "benefit",
     timing: { cadence: "annual", source_timing: "annual" },
     calculation: { method: "expression", expression_id: "tax_exempt_liability" },

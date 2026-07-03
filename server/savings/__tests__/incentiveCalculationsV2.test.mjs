@@ -215,7 +215,7 @@ describe("incentive calculation v2", () => {
     const result = calculateV2IncentivePackage(
       expressionPackage({
         expressionId: "tax_exempt_liability",
-        effectType: "tax_credit",
+        effectType: "tax_exemption",
         requiredInputs: [
           "approved_rerz_designation",
           "qualified_company_operations",
@@ -249,7 +249,7 @@ describe("incentive calculation v2", () => {
     const result = calculateV2IncentivePackage(
       expressionPackage({
         expressionId: "tax_rate_difference",
-        effectType: "tax_credit",
+        effectType: "tax_rate_preference",
         calculation: { preferential_solar_b_and_o_rate_decimal: 0.00275 },
         requiredInputs: [
           "annual_tax_performance_report_filed",
@@ -274,7 +274,7 @@ describe("incentive calculation v2", () => {
     const result = calculateV2IncentivePackage(
       expressionPackage({
         expressionId: "property_tax_valuation_formula",
-        effectType: "recurring_savings",
+        effectType: "property_tax_valuation",
         timing: { cadence: "annual" },
         requiredInputs: [
           "ac_kw_capacity",
@@ -334,6 +334,10 @@ describe("incentive calculation v2", () => {
       value: "Providence city",
       source: "address_geography",
       defaultIsPlaceholder: false
+    });
+    expect(ctx.answers.ac_nameplate_capacity_kw).toMatchObject({
+      value: 100,
+      canonicalInputKey: "system_kw"
     });
     expect(result.missingInputs).toEqual([]);
     expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(15000);

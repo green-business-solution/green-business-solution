@@ -44,7 +44,17 @@ const PORT_COUNT_ALIASES = ["charger_count", "port_count", "portcount", "level_2
 const FIXTURE_COUNT_ALIASES = ["fixture_count", "lamp_count", "bulb_count", "lighting_quantity", "lighting_fixture_count"];
 const THERMOSTAT_COUNT_ALIASES = ["thermostat_count", "smart_thermostat_count"];
 const TON_ALIASES = ["tons", "tonnage", "cooling_tons", "equipment_tons"];
-const KW_ALIASES = ["system_kw", "charger_kw", "charger_power_kw", "charger_output_kw", "dcfc_power_kw", "connected_control_kw"];
+const KW_ALIASES = [
+  "ac_nameplate_capacity_kw",
+  "ac_kw_capacity",
+  "system_capacity_kw_dc",
+  "system_kw",
+  "charger_kw",
+  "charger_power_kw",
+  "charger_output_kw",
+  "dcfc_power_kw",
+  "connected_control_kw"
+];
 const KWH_ALIASES = [
   "annual_kwh_savings",
   "annual_kwh_saved",
@@ -154,7 +164,9 @@ const SYNTHETIC_DEFAULTS = {
   manufacturer_system_exemption: false,
   interconnection_agreement_date: "2026-07-02",
   counterfactual_ordinary_annual_property_tax_cents: 100000,
-  local_assessor_confirmation: false
+  local_assessor_confirmation: false,
+  ac_nameplate_capacity_kw: 100,
+  system_capacity_kw_dc: 100
 };
 
 export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {

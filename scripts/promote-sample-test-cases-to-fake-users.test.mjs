@@ -31,7 +31,14 @@ describe("buildPromotionRecords", () => {
             annualElectricCost: 1200,
             annualGasCost: 600,
             annualWaterCost: 240
-          }
+          },
+          uploadedTaxFiles: [{ fileId: "tax-file-one", taxDocumentType: "property_tax_bill" }],
+          taxExtractedValues: [{ extractedValueId: "tax-value-one", fileId: "tax-file-one", fieldId: "assessed_value_cents", value: 1000000 }],
+          siteTaxProfile: {
+            uploadedFileCount: 1,
+            extractedValueCount: 1
+          },
+          taxProfileFacts: [{ inputKey: "property_tax_jurisdiction", value: "Test County, CA" }]
         }
       ],
       testCases: [
@@ -67,6 +74,10 @@ describe("buildPromotionRecords", () => {
       "LED lighting retrofit",
       "Heat pump HVAC retrofit"
     ]);
+    expect(records[0].intake.uploadedTaxFiles).toEqual([{ fileId: "tax-file-one", taxDocumentType: "property_tax_bill" }]);
+    expect(records[0].intake.taxExtractedValues).toHaveLength(1);
+    expect(records[0].intake.siteTaxProfile).toMatchObject({ uploadedFileCount: 1 });
+    expect(records[0].intake.taxProfileFacts).toEqual([{ inputKey: "property_tax_jurisdiction", value: "Test County, CA" }]);
   });
 
   it("rejects selected profiles that do not have imported utility data", () => {

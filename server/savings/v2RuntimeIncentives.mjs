@@ -17,6 +17,10 @@ const MONETARY_EFFECT_TYPES = new Set([
   "recurring_expense",
   "grant_expected_value",
   "tax_credit",
+  "tax_exemption",
+  "tax_abatement",
+  "tax_rate_preference",
+  "property_tax_valuation",
   "financing_subsidy"
 ]);
 
@@ -196,13 +200,25 @@ function buildRuntimeRulesForPackage({ pkg, result }) {
 
 function isRuntimeEffectEligibleForTotals(effect) {
   if (effect.repair_metadata?.included_in_user_facing_total_default === true) return true;
-  if (effect.effect_type !== "tax_credit") return false;
+  if (
+    effect.effect_type !== "tax_credit" &&
+    effect.effect_type !== "tax_exemption" &&
+    effect.effect_type !== "tax_abatement" &&
+    effect.effect_type !== "tax_rate_preference" &&
+    effect.effect_type !== "property_tax_valuation"
+  ) {
+    return false;
+  }
   if (effect.repair_metadata?.human_review_required === true) return false;
   return effect.calculation?.method && effect.calculation.method !== "zero_when_not_applicable";
 }
 
 function runtimeIncentiveType(effect) {
   if (effect.effect_type === "tax_credit") return "tax_credit";
+  if (effect.effect_type === "tax_rate_preference") return "tax_credit";
+  if (effect.effect_type === "tax_exemption" || effect.effect_type === "tax_abatement" || effect.effect_type === "property_tax_valuation") {
+    return "property_tax_exemption";
+  }
   if (effect.effect_type === "grant_expected_value" || effect.repair_metadata?.cash_value_classification === "cash_grant") {
     return "grant";
   }

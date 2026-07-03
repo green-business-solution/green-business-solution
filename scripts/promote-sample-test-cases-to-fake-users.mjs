@@ -259,6 +259,12 @@ export function buildPromotionRecords({ now, sampleUsers, selectedIds, testCases
       uploadedUtilityFiles: sample.uploadedUtilityFiles,
       utilityExtractedValues: sample.utilityExtractedValues,
       siteEnergyProfile: sample.siteEnergyProfile,
+      uploadedTaxFiles: Array.isArray(sample.uploadedTaxFiles) ? sample.uploadedTaxFiles : [],
+      taxExtractedValues: Array.isArray(sample.taxExtractedValues) ? sample.taxExtractedValues : [],
+      siteTaxProfile: sample.siteTaxProfile || null,
+      taxProfileFacts: Array.isArray(sample.taxProfileFacts) ? sample.taxProfileFacts : [],
+      taxOpportunitySpecificInputs: Array.isArray(sample.taxOpportunitySpecificInputs) ? sample.taxOpportunitySpecificInputs : [],
+      taxMissingOrReviewInputs: Array.isArray(sample.taxMissingOrReviewInputs) ? sample.taxMissingOrReviewInputs : [],
       sampleMatchingSummary: testCase
         ? {
             topOpportunityCount: testCase.topOpportunities?.length || 0,

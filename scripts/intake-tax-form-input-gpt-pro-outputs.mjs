@@ -491,8 +491,11 @@ function taxPackageCalculationStatus(repair, effectRepair, pkg) {
 }
 
 function mappedEffectType(effectRepair) {
-  if (effectRepair.effectType === "property_tax_valuation" || effectRepair.valueModelKind === "property_tax_valuation_formula") {
-    return "process_value";
+  if (["tax_exemption", "tax_abatement", "tax_rate_preference", "property_tax_valuation"].includes(effectRepair.effectType)) {
+    return effectRepair.effectType;
+  }
+  if (effectRepair.valueModelKind === "property_tax_valuation_formula") {
+    return "property_tax_valuation";
   }
   return "tax_credit";
 }

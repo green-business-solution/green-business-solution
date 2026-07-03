@@ -23,6 +23,10 @@ const EFFECT_TYPES = new Set([
   "recurring_expense",
   "grant_expected_value",
   "tax_credit",
+  "tax_exemption",
+  "tax_abatement",
+  "tax_rate_preference",
+  "property_tax_valuation",
   "financing_subsidy",
   "process_value",
   "no_cash_value"
@@ -377,7 +381,7 @@ function calculateExpressionEffect({ effect, calculation, ctx }) {
   }
 
   if (expressionId === "property_tax_valuation_formula") {
-    const acKwCapacity = firstNumberAnswer(ctx, ["ac_kw_capacity", "system_kw", "system_capacity_kw_dc"]) || 0;
+    const acKwCapacity = firstNumberAnswer(ctx, ["ac_nameplate_capacity_kw", "ac_kw_capacity", "system_kw", "system_capacity_kw_dc"]) || 0;
     const tangiblePropertyApplicable = booleanAnswer(ctx, "tangible_property_applicable") === true;
     const realPropertyApplicable = booleanAnswer(ctx, "real_property_applicable") === true;
     const statutoryTaxCents =
@@ -708,8 +712,17 @@ function applyV2Caps(amountCents, caps = [], basisCents = 0) {
 function aggregateEffectResults(effectResults) {
   const totals = emptyTotals();
   for (const result of effectResults) {
-    if (result.effectType === "one_time_savings" || result.effectType === "tax_credit" || result.effectType === "financing_subsidy") {
+    if (
+      result.effectType === "one_time_savings" ||
+      result.effectType === "tax_credit" ||
+      result.effectType === "tax_exemption" ||
+      result.effectType === "tax_abatement" ||
+      result.effectType === "tax_rate_preference" ||
+      result.effectType === "financing_subsidy"
+    ) {
       totals.expectedOneTimeSavingsCents += result.amountCents;
+    } else if (result.effectType === "property_tax_valuation") {
+      totals.expectedRecurringSavingsAnnualCents += result.annualizedAmountCents;
     } else if (result.effectType === "grant_expected_value") {
       totals.expectedGrantAmountCents += result.amountCents;
     } else if (result.effectType === "recurring_savings") {
