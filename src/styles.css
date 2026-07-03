@@ -5657,7 +5657,6 @@ dd {
   --retrofi-border: #dce5dd;
   --retrofi-pale: #e7f2ec;
   --retrofi-gradient: linear-gradient(135deg, #eef1ff 0%, #ddebe4 45%, #c2d8d2 100%);
-  --site-header-offset: 112px;
 }
 
 body {
@@ -5671,7 +5670,6 @@ body {
   color: var(--retrofi-text);
   min-height: 100vh;
   overflow-x: clip;
-  padding-top: var(--site-header-offset);
 }
 
 .public-page a {
@@ -8008,10 +8006,6 @@ body {
 }
 
 @media (max-width: 860px) {
-  :root {
-    --site-header-offset: 98px;
-  }
-
   .database-toolbar {
     align-items: start;
     grid-template-columns: 1fr;
@@ -8313,10 +8307,6 @@ body {
 }
 
 @media (max-width: 520px) {
-  :root {
-    --site-header-offset: 90px;
-  }
-
   .navbar-inner {
     grid-template-columns: auto minmax(0, 1fr) auto;
     padding: 0 12px 0 14px;
