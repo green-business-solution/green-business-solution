@@ -6,6 +6,10 @@
 - Added idempotent import behavior that skips existing profiles before extraction, returns imported/skipped/error counts with profile summaries, and keeps all imported profiles as drafts only.
 - Updated the admin Application Profiles page to show the actual import result and server-provided errors when first-10 import produces zero new drafts.
 
+## 2026-07-02 - Codex (GPT-5) restore green admin shell background
+
+- Restored a clearer RetroFi-tinted background and explicit shell surfaces for the admin and workspace layouts so the site no longer falls back to an overly white canvas.
+
 ## 2026-07-02 - Codex (GPT-5) retrofit sub-tab scale adjustment
 
 - Reduced the expanded retrofit sub-tab row height, font size, and icon size.

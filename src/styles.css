@@ -739,11 +739,16 @@ textarea {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(14, 70, 55, 0.08), transparent 28%),
+    var(--retrofi-bg);
 }
 
 .workspace-sidebar {
   align-self: start;
-  background: #17211b;
+  background:
+    linear-gradient(180deg, rgba(17, 34, 27, 0.98), rgba(15, 27, 22, 0.98)),
+    var(--retrofi-green-dark);
   color: #f9fbf6;
   display: flex;
   flex-direction: column;
@@ -845,6 +850,9 @@ textarea {
   align-content: start;
   display: grid;
   gap: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
+    var(--retrofi-bg);
   padding: 30px;
 }
 
@@ -5648,7 +5656,7 @@ dd {
 
 /* Retrofi public site */
 :root {
-  --retrofi-bg: #f7f8f4;
+  --retrofi-bg: #eef4ee;
   --retrofi-surface: #ffffff;
   --retrofi-text: #102018;
   --retrofi-muted: #5e6b63;
@@ -7342,7 +7350,7 @@ body {
 }
 
 .database-page {
-  background: #f7faf7;
+  background: var(--retrofi-bg);
 }
 
 .database-shell {
@@ -7354,6 +7362,9 @@ body {
 }
 
 .admin-database-shell {
+  background:
+    radial-gradient(circle at top right, rgba(14, 70, 55, 0.08), transparent 30%),
+    var(--retrofi-bg);
   margin: 0;
   max-width: none;
   padding: 0;
