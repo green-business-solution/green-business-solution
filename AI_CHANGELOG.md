@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) tax input workflow TODO clarification
+
+- Clarified that the tax input resolver is a provenance-aware input translation layer separate from the tax calculation formulas.
+- Updated product TODOs so customer tax estimates rely on automated resolution plus user/accountant confirmation rather than normal admin intervention.
+- Documented GPT Pro's role as offline research/repair support that must feed deterministic import and validation, not runtime customer calculations.
+
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile detail visibility
 
 - Made `/admin/application-profiles` View/Edit actions scroll and focus the extracted requirements detail panel so profile requirements are immediately visible.
