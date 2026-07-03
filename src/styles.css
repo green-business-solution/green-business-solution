@@ -2754,24 +2754,23 @@ dd {
 .process-onboarding-modal,
 .process-onboarding-flight {
   background:
-    radial-gradient(circle at top left, rgba(55, 120, 255, 0.12), transparent 34%),
-    linear-gradient(145deg, #0b111a 0%, #0e1622 55%, #090e15 100%);
-  border: 1px solid rgba(120, 150, 190, 0.28);
-  border-radius: 22px;
+    radial-gradient(circle at 30% 20%, rgba(38, 97, 150, 0.1), transparent 34%),
+    #070d16;
+  border: 1px solid rgba(145, 165, 190, 0.28);
+  border-radius: 20px;
   box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.48),
-    0 0 42px rgba(44, 130, 255, 0.14);
+    0 28px 90px rgba(0, 0, 0, 0.55);
   color: #d7dee8;
   font-family: "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
-  max-height: min(86vh, 760px);
-  max-width: min(92vw, 1500px);
+  max-height: min(82vh, 740px);
+  max-width: min(92vw, 1560px);
   overflow: hidden;
-  padding: 56px 64px 48px;
-  width: min(92vw, 1500px);
+  padding: 76px 60px 56px;
+  width: min(92vw, 1560px);
 }
 
 .process-onboarding-modal {
-  min-height: 560px;
+  min-height: 680px;
   position: relative;
 }
 
@@ -2785,62 +2784,67 @@ dd {
 
 .process-editor-title {
   color: #4ea1ff;
-  font-size: clamp(42px, 3vw, 52px);
+  font-size: clamp(30px, 2.1vw, 34px);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
-  margin: 0 0 56px;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  margin: 0 0 46px;
+  text-shadow: 0 0 18px rgba(79, 163, 255, 0.32);
 }
 
 .process-step-list {
   display: grid;
-  gap: 44px;
+  gap: 46px;
 }
 
 .process-step-row {
-  align-items: center;
+  align-items: baseline;
   display: flex;
   gap: 30px;
   min-width: 0;
 }
 
 .process-number {
-  flex: 0 0 96px;
-  color: #aeb8c6;
-  font-size: clamp(38px, 2.8vw, 48px);
-  font-weight: 700;
-  line-height: 1;
-  min-width: 96px;
+  flex: 0 0 74px;
+  color: rgba(218, 226, 238, 0.86);
+  font-size: clamp(30px, 2.2vw, 34px);
+  font-weight: 500;
+  line-height: 1.1;
+  min-width: 74px;
+  text-shadow: 0 0 14px rgba(220, 230, 245, 0.14);
 }
 
 .process-step-row p {
   flex: 1 1 auto;
-  color: #d7dee8;
-  font-size: clamp(38px, 2.8vw, 48px);
-  font-weight: 600;
-  line-height: 1.2;
+  color: rgba(218, 226, 238, 0.86);
+  font-size: clamp(30px, 2.2vw, 34px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.005em;
   margin: 0;
   min-width: 0;
+  text-shadow: 0 0 14px rgba(220, 230, 245, 0.12);
 }
 
 .process-step-row.is-active p,
 .process-step-row.is-active .process-number {
-  text-shadow: 0 0 18px rgba(78, 161, 255, 0.18);
+  text-shadow: 0 0 18px rgba(79, 163, 255, 0.18);
 }
 
 .process-note {
-  color: #c9d2df;
-  font-size: clamp(16px, 1vw, 18px);
+  color: rgba(218, 226, 238, 0.82);
+  font-size: clamp(22px, 1.45vw, 24px);
   font-weight: 500;
-  line-height: 1.45;
-  margin-top: 82px;
+  line-height: 1.35;
+  letter-spacing: 0.002em;
+  margin-top: 72px;
   min-height: 30px;
 }
 
 .code-accent {
   color: #4ea1ff;
   font-weight: 800;
-  text-shadow: 0 0 18px rgba(78, 161, 255, 0.2);
+  text-shadow: 0 0 18px rgba(79, 163, 255, 0.28);
 }
 
 .process-modal-footer {
@@ -2850,28 +2854,35 @@ dd {
 }
 
 .process-next-button {
-  background: linear-gradient(180deg, #3b82f6, #1d4ed8);
-  border: 1px solid rgba(147, 197, 253, 0.55);
-  border-radius: 12px;
-  color: #ffffff;
-  box-shadow: 0 0 24px rgba(59, 130, 246, 0.32);
+  background: rgba(8, 18, 31, 0.74);
+  border: 2px solid #2f8cff;
+  border-radius: 10px;
+  color: #4fa3ff;
+  box-shadow:
+    0 0 0 1px rgba(94, 163, 255, 0.2),
+    0 0 24px rgba(47, 140, 255, 0.35),
+    inset 0 0 20px rgba(47, 140, 255, 0.08);
   font-family: "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
-  font-size: clamp(28px, 1.95vw, 32px);
+  font-size: clamp(40px, 2.8vw, 48px);
   font-weight: 800;
-  height: 74px;
-  padding: 0 38px;
+  height: 102px;
+  padding: 0 32px;
+  text-shadow: 0 0 18px rgba(79, 163, 255, 0.45);
   transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .process-next-button:hover {
-  background: linear-gradient(180deg, #60a5fa, #2563eb);
-  box-shadow: 0 0 30px rgba(96, 165, 250, 0.42);
+  background: rgba(10, 22, 38, 0.84);
+  box-shadow:
+    0 0 0 1px rgba(94, 163, 255, 0.24),
+    0 0 28px rgba(47, 140, 255, 0.42),
+    inset 0 0 20px rgba(47, 140, 255, 0.1);
   transform: translateY(-1px);
 }
 
 .process-next-button:focus-visible {
-  outline: 3px solid rgba(96, 165, 250, 0.42);
-  outline-offset: 3px;
+  outline: 3px solid rgba(79, 163, 255, 0.42);
+  outline-offset: 4px;
 }
 
 .typewriter-caret {
@@ -2910,8 +2921,8 @@ dd {
 
 @media (min-width: 900px) {
   .process-onboarding-modal {
-    max-height: min(86vh, 760px);
-    width: min(92vw, 1500px);
+    max-height: min(82vh, 740px);
+    width: min(92vw, 1560px);
   }
 }
 
