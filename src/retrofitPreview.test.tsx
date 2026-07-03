@@ -277,10 +277,10 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("sidebar-retrofit-item");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
+    expect(html).toContain("Collapse retrofit navigation");
     expect(html).not.toContain("Customer preview bar");
     expect(html).not.toContain("Retrofit preview</span>");
     expect(html).not.toContain("Collapse sidebar");
-    expect(html).not.toContain("Expand sidebar");
     expect(html).toContain("LED Lighting");
     expect(html).not.toContain("LED Lighting Upgrade");
     expect(html).toContain("Replace existing lights with high-efficiency LEDs.");
@@ -427,6 +427,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Exit customer preview");
     expect(source).not.toContain("Back to all retrofits");
     expect(source).toContain("function UserPreviewSidebar");
+    expect(source).toContain("sidebarCollapsed");
+    expect(source).toContain("onToggleCollapsed");
+    expect(source).toContain("user-preview-sidebar-collapse");
     expect(source).toContain("onShowAllRetrofits={() =>");
     expect(source).toContain("if (activeRetrofitId) {");
     expect(source).toContain("onShowAllRetrofits();");
@@ -436,8 +439,6 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
     expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
     expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
-    expect(source).not.toContain("user-preview-sidebar-collapse");
-    expect(source).not.toContain("onToggleCollapsed");
     expect(source).toContain("activeRetrofit ? (");
     expect(source).toContain("onSelectRetrofit(retrofit.id)");
     expect(source).toContain("setMobileSidebarOpen(false)");
@@ -587,8 +588,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".picker-view-icon");
     expect(css).toContain(".sidebar-retrofit-item:hover");
     expect(css).toContain(".sidebar-retrofit-item.is-active");
-    expect(css).not.toContain(".user-preview-shell.is-sidebar-collapsed");
-    expect(css).not.toContain(".user-preview-sidebar-collapse");
+    expect(css).toContain(".user-preview-shell.is-sidebar-collapsed");
+    expect(css).toContain(".user-preview-sidebar-collapse");
     expect(css).not.toContain("border-top: 1px solid var(--rf-border);\n  margin-top: 4px;\n  padding-top: 0;");
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");

@@ -6609,6 +6609,7 @@ export function RetrofitRecommendationsPreview({
   const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
@@ -6805,11 +6806,12 @@ export function RetrofitRecommendationsPreview({
 
   return (
     <div
-      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}`}
+      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       data-testid="retrofit-recommendations-preview"
     >
       <UserPreviewSidebar
         activeRetrofitId={activeRetrofit?.id || ""}
+        collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
         onSelectRetrofit={handleSidebarRetrofitSelect}
@@ -6817,6 +6819,7 @@ export function RetrofitRecommendationsPreview({
           setActiveRetrofitId("");
           setMobileSidebarOpen(false);
         }}
+        onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
         retrofits={displayedRetrofits}
       />
       <main className="user-preview-main">
@@ -6936,17 +6939,21 @@ export function RetrofitRecommendationsPreview({
 
 function UserPreviewSidebar({
   activeRetrofitId,
+  collapsed,
   mobileOpen,
   onCloseMobile,
   onSelectRetrofit,
   onShowAllRetrofits,
+  onToggleCollapsed,
   retrofits
 }: {
   activeRetrofitId: string;
+  collapsed: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onShowAllRetrofits: () => void;
+  onToggleCollapsed: () => void;
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
@@ -6958,6 +6965,14 @@ function UserPreviewSidebar({
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
       <aside className={`user-preview-sidebar${mobileOpen ? " is-mobile-open" : ""}`} aria-label="RetroFi navigation">
+        <button
+          aria-label={collapsed ? "Expand retrofit navigation" : "Collapse retrofit navigation"}
+          className="user-preview-sidebar-collapse"
+          onClick={onToggleCollapsed}
+          type="button"
+        >
+          <ChevronDownIcon />
+        </button>
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
           <button
             aria-expanded={retrofitsOpen}

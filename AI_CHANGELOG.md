@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-02 - Codex (GPT-5) user preview sidebar collapse control
+
+- Added a top-of-sidebar collapse arrow to the `/user-preview` navigation.
+- Added a collapsed icon-only sidebar state for desktop while preserving full-label mobile drawer behavior.
+
 ## 2026-07-02 - Codex (GPT-5) ApplicationProfile import runtime fix
 
 - Fixed `/api/admin/application-profiles/import-first10` so production imports no longer pass null DynamoDB scan cursors.
