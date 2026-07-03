@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) final grant estimation package repair
+
+- Imported the final Wisconsin NEVI GPT Pro grant-estimation output, bringing the grant package repair intake to all 37 expected outputs with zero missing, broken, duplicated, or mismatched files.
+- Corrected grant package intake normalization so JSON `null` award amounts stay unknown instead of being coerced to zero in expected-value calculations.
+- Updated the Wisconsin NEVI v2 package as a competitive cost-share workflow with a historical probability prior, required project inputs, and user-facing total exclusion by default.
+
 ## 2026-07-03 - Codex (GPT-5) grant estimation package repair import
 
 - Audited the 37 GPT Pro grant-estimation outputs, moved the duplicate Michigan and VW outputs into `redundant_outputs`, shifted the misnumbered outputs back into their correct prompt slots, and left the missing Wisconsin NEVI output as an explicit placeholder.
