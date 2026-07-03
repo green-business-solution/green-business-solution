@@ -13,7 +13,7 @@ RetroFi uses address-resolved geography as the join key for locality-aware tax e
 
 ## Data File
 
-`data/tax_geography_rules.json` is the current seed artifact. It is intentionally conservative and should later become a database table.
+`data/tax_geography_rules.json` is the current seed artifact for opportunity-specific tax rules and source-backed geography constants. `data/tax_local_workflow_rules.json` is the companion local-tax workflow artifact for city/county business-tax and property-tax adapter routing. Both are intentionally conservative and should later become database tables.
 
 Rule shape:
 
@@ -83,6 +83,8 @@ Do not include a tax estimate in user-facing totals unless:
 - required user, bill, quote, tax-return, accountant, or assessor inputs are present;
 - the v2 package does not require human review; and
 - the result is not based on placeholder synthetic test-case values.
+
+Local workflow records add one more default: `includeInUserFacingTotalDefault` is `false` unless a workflow is explicitly promoted after source, user-input, bill, accountant, or assessor confirmation. A local business-tax formula can return an internal calculation once the class and tax-base inputs are present, but it should still stay out of customer-facing savings totals until the input source is confirmable.
 
 ## Scheduled Refresh TODO
 

@@ -1,0 +1,572 @@
+{
+  "schemaVersion": "tax-local-workflow-rules-v1",
+  "generatedAt": "2026-07-03T00:00:00.000Z",
+  "sourceArtifact": "GPT Pro Work/tax-local-dataset-parallel-shell-5-local-gap-research-2026-07-03/local_tax_gap_research_records.json",
+  "description": "Conservative local-tax workflow records researched for locality-aware tax calculations. These records are runtime-routable, but default user-facing totals remain suppressed unless all required user, tax-bill, accountant, or assessor inputs are present.",
+  "safetyPolicy": {
+    "includeInUserFacingTotalDefault": false,
+    "notes": [
+      "Do not use these records as nationwide local-tax completion.",
+      "Use city business-tax formulas only when the business class and required tax-base inputs are present.",
+      "Use property-tax adapter records only to route required bill/parcel inputs; do not calculate line-item impacts from geography alone.",
+      "Keep Quincy non-utility local B&O suppressed until an official source proves whether a separate general non-utility gross-receipts tax applies."
+    ]
+  },
+  "workflows": [
+    {
+      "id": "local_tax_ri_renewable_property_tax_dsire_22798_v1",
+      "sourceTargetId": "program_ri_renewable_property_tax_dsire_22798",
+      "taxDomain": "program_specific_property_tax",
+      "taxType": "property_tax",
+      "calculationStatus": "assessor_or_accountant_review_required",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "RI", "stateFips": "44" },
+      "opportunityIds": ["SOURCE_DSIRE:dsire_program_id:22798"],
+      "requiredInputs": [
+        "ac_nameplate_capacity_kw",
+        "renewable_resource_type",
+        "municipality",
+        "system_use_and_tax_classification",
+        "municipal_exemption_or_waiver_status",
+        "tangible_property_applicable",
+        "real_property_applicable",
+        "counterfactual_ordinary_annual_property_tax_cents",
+        "local_assessor_confirmation"
+      ],
+      "calculationModels": [],
+      "sourceConfidence": "high_for_state_formula_high_for_2025_oer_municipal_inventory_medium_for_project_tax_treatment",
+      "sourceUrls": [
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-3.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-5/44-5-12.htm",
+        "https://webserver.rilegislature.gov/Statutes/TITLE44/44-3/44-3-3.htm",
+        "https://rules.sos.ri.gov/regulations/part/300-00-00-2",
+        "https://energy.ri.gov/sites/g/files/xkgbur741/files/2025-07/Inventory%20of%20Municipal%20Solar%20Ordinances%20Updated%202025%20%28Includes%20ESS%29_0.pdf"
+      ]
+    },
+    {
+      "id": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1",
+      "sourceTargetId": "program_mi_rerz_detroit_wayne_dsire_3216",
+      "taxDomain": "program_specific_tax_abatement",
+      "taxType": "property_income_tax_exemption",
+      "calculationStatus": "assessor_or_accountant_review_required",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "MI", "countyFips": "26163", "cities": ["Detroit"] },
+      "opportunityIds": ["SOURCE_DSIRE:dsire_program_id:3216"],
+      "requiredInputs": [
+        "approved_rerz_designation",
+        "qualified_company_operations",
+        "parcel_or_facility_within_approved_zone_boundary",
+        "company_current_on_state_and_local_taxes",
+        "phaseout_multiplier",
+        "eligible_state_education_tax_cents",
+        "eligible_real_property_tax_cents",
+        "eligible_personal_property_tax_cents",
+        "eligible_local_income_tax_cents"
+      ],
+      "calculationModels": [],
+      "sourceConfidence": "medium_for_program_law_low_for_project_specific_detroit_wayne_example",
+      "sourceUrls": [
+        "https://www.michigan.gov/taxes/business-taxes/renaissance-zones",
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/renewable-energy-renaissance-zones",
+        "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-2688d"
+      ]
+    },
+    {
+      "id": "local_tax_wa_everett_bo_v1",
+      "sourceTargetId": "wa_everett_local_bo_status",
+      "taxDomain": "local_business_tax",
+      "taxType": "local_business_and_occupation_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "WA", "countyFips": "53061", "cities": ["Everett"] },
+      "requiredInputs": [
+        "local_business_tax_class",
+        "gross_receipts_cents",
+        "everett_local_bo_rate_decimal"
+      ],
+      "calculationModels": [
+        {
+          "modelId": "everett_user_supplied_rate",
+          "label": "Everett local B&O from user/accountant-supplied class rate",
+          "appliesToClasses": ["everett_bo", "gross_receipts", "local_bo"],
+          "method": "gross_receipts_rate",
+          "grossReceiptsInput": "gross_receipts_cents",
+          "rateInput": "everett_local_bo_rate_decimal",
+          "inputKeys": ["gross_receipts_cents", "everett_local_bo_rate_decimal"]
+        }
+      ],
+      "sourceConfidence": "medium_for_status_low_for_class_rates",
+      "sourceUrls": [
+        "https://everett.municipal.codes/EMC/3.24",
+        "https://www.everettwa.gov/300/Business-Taxes",
+        "https://www.everettwa.gov/DocumentCenter/View/2790/Business-and-Occupation-Tax-Guide"
+      ]
+    },
+    {
+      "id": "local_tax_wa_quincy_public_utility_v1",
+      "sourceTargetId": "wa_quincy_local_bo_status",
+      "taxDomain": "local_business_tax",
+      "taxType": "public_utility_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "WA", "countyFips": "53025", "cities": ["Quincy"] },
+      "requiredInputs": [
+        "public_utility_activity_type",
+        "gross_income_cents"
+      ],
+      "calculationModels": [
+        {
+          "modelId": "quincy_public_utility_tax",
+          "label": "Quincy public utility tax",
+          "appliesToClasses": ["telephone", "light_power", "gas", "domestic_sewerage", "refuse", "water", "industrial_sewer", "reuse_water_distribution"],
+          "method": "class_rate_table",
+          "classInput": "public_utility_activity_type",
+          "grossReceiptsInput": "gross_income_cents",
+          "ratesByClass": {
+            "telephone": 0.06,
+            "light_power": 0.06,
+            "gas": 0.06,
+            "domestic_sewerage": 0.04,
+            "refuse": 0.04,
+            "water": 0.04,
+            "industrial_sewer": 0.01,
+            "reuse_water_distribution": 0.01
+          },
+          "inputKeys": ["public_utility_activity_type", "gross_income_cents"]
+        }
+      ],
+      "unresolvedGaps": ["General non-utility local B&O/gross-receipts tax remains unproven."],
+      "sourceConfidence": "high_for_public_utility_tax_low_for_non_utility_bo",
+      "sourceUrls": [
+        "https://quincy.municipal.codes/QMC/3.28",
+        "https://quincy.municipal.codes/QMC/5.06"
+      ]
+    },
+    {
+      "id": "local_tax_ca_burbank_business_license_v1",
+      "sourceTargetId": "ca_burbank_business_license_tax",
+      "taxDomain": "local_business_tax",
+      "taxType": "business_license_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06037", "cities": ["Burbank"] },
+      "requiredInputs": ["local_business_tax_class"],
+      "calculationModels": [
+        {
+          "modelId": "burbank_manufacturing_wholesale_retail",
+          "label": "Manufacturing, wholesale, or retail",
+          "appliesToClasses": ["manufacturing", "wholesale", "retail"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "employee_count",
+          "baseCents": 12740,
+          "perEmployeeCents": 760,
+          "employeeOffset": 0,
+          "inputKeys": ["employee_count"]
+        },
+        {
+          "modelId": "burbank_services_entertainment_unclassified",
+          "label": "Business services, personal services, entertainment, or unclassified",
+          "appliesToClasses": ["business_services", "personal_services", "motion_picture", "recreation", "entertainment", "unclassified"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "employee_count",
+          "baseCents": 12740,
+          "perEmployeeCents": 1190,
+          "employeeOffset": 0,
+          "inputKeys": ["employee_count"]
+        },
+        {
+          "modelId": "burbank_professions",
+          "label": "Professions and related activities",
+          "appliesToClasses": ["profession", "professional"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "employee_count",
+          "baseCents": 12740,
+          "perEmployeeCents": 1545,
+          "employeeOffset": 0,
+          "inputKeys": ["employee_count"]
+        },
+        {
+          "modelId": "burbank_contractors",
+          "label": "Contractors",
+          "appliesToClasses": ["contractor", "contractors"],
+          "method": "valuation_per_thousand",
+          "valuationInput": "contractor_valuation_cents",
+          "centsPerThousandDollars": 100,
+          "maxCents": 53000,
+          "inputKeys": ["contractor_valuation_cents"]
+        },
+        {
+          "modelId": "burbank_commercial_rental",
+          "label": "Commercial rental",
+          "appliesToClasses": ["commercial_rental", "commercial_landlord"],
+          "method": "base_plus_sqft_over_threshold",
+          "squareFeetInput": "commercial_square_feet",
+          "baseCents": 12740,
+          "includedSquareFeet": 5000,
+          "centsPerIncrement": 255,
+          "incrementSquareFeet": 100,
+          "inputKeys": ["commercial_square_feet"]
+        }
+      ],
+      "sourceConfidence": "high_for_listed_rows",
+      "sourceUrls": [
+        "https://www.burbankca.gov/web/financial-services/business-taxes",
+        "https://ecode360.com/43533196",
+        "https://ecode360.com/43533197"
+      ]
+    },
+    {
+      "id": "local_tax_ca_pasadena_business_license_v1",
+      "sourceTargetId": "ca_pasadena_business_license_tax",
+      "taxDomain": "local_business_tax",
+      "taxType": "business_license_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06037", "cities": ["Pasadena"] },
+      "requiredInputs": ["local_business_tax_class"],
+      "calculationModels": [
+        {
+          "modelId": "pasadena_general_or_service",
+          "label": "General business or service",
+          "appliesToClasses": ["general_business", "service"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "employee_count",
+          "baseCents": 20923,
+          "perEmployeeCents": 4152,
+          "employeeOffset": 1,
+          "inputKeys": ["employee_count"]
+        },
+        {
+          "modelId": "pasadena_takeout_or_restaurant",
+          "label": "Take-out or restaurant-like business",
+          "appliesToClasses": ["take_out", "restaurant"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "employee_count",
+          "baseCents": 41708,
+          "perEmployeeCents": 8311,
+          "employeeOffset": 1,
+          "inputKeys": ["employee_count"]
+        },
+        {
+          "modelId": "pasadena_professional_office",
+          "label": "Professional office",
+          "appliesToClasses": ["professional", "professional_office"],
+          "method": "professional_employee_formula",
+          "professionalPrincipalInput": "professional_principal_count",
+          "professionalEmployeeInput": "professional_employee_count",
+          "nonProfessionalEmployeeInput": "nonprofessional_employee_count",
+          "firstProfessionalCents": 55569,
+          "additionalProfessionalCents": 27712,
+          "professionalEmployeeCents": 27712,
+          "nonProfessionalEmployeeCents": 4152,
+          "inputKeys": ["professional_principal_count", "professional_employee_count", "nonprofessional_employee_count"]
+        },
+        {
+          "modelId": "pasadena_retail_wholesale_delivery",
+          "label": "Retail or wholesale delivery",
+          "appliesToClasses": ["retail_delivery", "wholesale_delivery"],
+          "method": "fixed_amount",
+          "amountCents": 28011,
+          "inputKeys": []
+        },
+        {
+          "modelId": "pasadena_rental_accommodations",
+          "label": "Rental accommodations or hotel",
+          "appliesToClasses": ["rental_accommodations", "hotel"],
+          "method": "base_plus_units_over_threshold",
+          "unitInput": "accommodation_unit_count",
+          "baseCents": 20577,
+          "includedUnits": 3,
+          "centsPerAdditionalUnit": 2220,
+          "inputKeys": ["accommodation_unit_count"]
+        }
+      ],
+      "maxCents": 7996703,
+      "sourceConfidence": "high_for_listed_rows",
+      "sourceUrls": [
+        "https://www.cityofpasadena.net/finance/licenses/business-license/",
+        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/Business-License-Tax-Schedule.pdf",
+        "https://library.municode.com/ca/pasadena/codes/code_of_ordinances"
+      ]
+    },
+    {
+      "id": "local_tax_ca_anaheim_business_license_v1",
+      "sourceTargetId": "ca_anaheim_business_license_tax",
+      "taxDomain": "local_business_tax",
+      "taxType": "business_license_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06059", "cities": ["Anaheim"] },
+      "requiredInputs": ["local_business_tax_class"],
+      "calculationModels": [
+        {
+          "modelId": "anaheim_manufacturing_wholesale_retail_misc",
+          "label": "Manufacturing, wholesale, retail, or miscellaneous",
+          "appliesToClasses": ["manufacturing", "wholesale", "retail", "miscellaneous"],
+          "method": "gross_receipts_rate",
+          "grossReceiptsInput": "gross_receipts_cents",
+          "rateDecimal": 0.000095,
+          "lowGrossThresholdCents": 10000000,
+          "lowGrossAmountCents": 4000,
+          "minCents": 6000,
+          "inputKeys": ["gross_receipts_cents"]
+        },
+        {
+          "modelId": "anaheim_hotel_entertainment",
+          "label": "Hotel, lodging, recreation, or entertainment",
+          "appliesToClasses": ["hotel", "lodging", "recreation", "entertainment"],
+          "method": "gross_receipts_rate",
+          "grossReceiptsInput": "gross_receipts_cents",
+          "rateDecimal": 0.00019,
+          "lowGrossThresholdCents": 10000000,
+          "lowGrossAmountCents": 4000,
+          "minCents": 6000,
+          "inputKeys": ["gross_receipts_cents"]
+        },
+        {
+          "modelId": "anaheim_professional",
+          "label": "Professional",
+          "appliesToClasses": ["professional"],
+          "method": "professional_employee_formula",
+          "professionalPrincipalInput": "professional_principal_count",
+          "professionalEmployeeInput": "professional_employee_count",
+          "nonProfessionalEmployeeInput": "other_employee_count",
+          "firstProfessionalCents": 13500,
+          "additionalProfessionalCents": 15000,
+          "professionalEmployeeCents": 7500,
+          "nonProfessionalEmployeeCents": 1000,
+          "inputKeys": ["professional_principal_count", "professional_employee_count", "other_employee_count"]
+        },
+        {
+          "modelId": "anaheim_services",
+          "label": "Services",
+          "appliesToClasses": ["services", "service"],
+          "method": "fixed_plus_per_employee",
+          "employeeInput": "average_employee_count",
+          "baseCents": 6800,
+          "perEmployeeCents": 1000,
+          "employeeOffset": 0,
+          "inputKeys": ["average_employee_count"]
+        },
+        {
+          "modelId": "anaheim_nonresidential_rental",
+          "label": "Nonresidential rental, warehouse, or storage",
+          "appliesToClasses": ["nonresidential_rental", "warehouse", "storage"],
+          "method": "square_foot_rate",
+          "squareFeetInput": "gross_rental_square_feet",
+          "centsPerSquareFoot": 1.5,
+          "inputKeys": ["gross_rental_square_feet"]
+        }
+      ],
+      "sourceConfidence": "high_for_listed_rows",
+      "sourceUrls": [
+        "https://www.anaheim.net/515/Business-License",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-64610",
+        "https://www.anaheim.net/DocumentCenter/View/5674/Business-License-Tax-Schedule"
+      ]
+    },
+    {
+      "id": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
+      "sourceTargetId": "ca_vernon_business_license_and_special_parcel_tax",
+      "taxDomain": "local_business_tax_and_special_assessment",
+      "taxType": "business_license_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06037", "cities": ["Vernon"] },
+      "requiredInputs": ["local_business_tax_class"],
+      "calculationModels": [
+        {
+          "modelId": "vernon_warehouse",
+          "label": "Warehouse",
+          "appliesToClasses": ["warehouse", "warehousing"],
+          "method": "base_plus_sqft_over_threshold",
+          "squareFeetInput": "warehouse_square_feet",
+          "baseCents": 120000,
+          "includedSquareFeet": 5000,
+          "centsPerIncrement": 21,
+          "incrementSquareFeet": 1,
+          "maxCents": 1195000,
+          "inputKeys": ["warehouse_square_feet"]
+        },
+        {
+          "modelId": "vernon_hazardous_waste",
+          "label": "Hazardous waste",
+          "appliesToClasses": ["hazardous_waste"],
+          "method": "two_receipts_rate",
+          "firstGrossReceiptsInput": "inorganic_hazardous_waste_gross_receipts_cents",
+          "firstRateDecimal": 0.04,
+          "secondGrossReceiptsInput": "organic_or_infectious_hazardous_waste_gross_receipts_cents",
+          "secondRateDecimal": 0.01,
+          "minCents": 500000,
+          "inputKeys": [
+            "inorganic_hazardous_waste_gross_receipts_cents",
+            "organic_or_infectious_hazardous_waste_gross_receipts_cents"
+          ]
+        }
+      ],
+      "unresolvedGaps": ["General employee-count brackets and special parcel tax rates require tax bill or class-specific lookup before runtime use."],
+      "sourceConfidence": "medium_for_listed_rows",
+      "sourceUrls": [
+        "https://www.cityofvernon.org/government/city-departments/finance/business-license",
+        "https://codelibrary.amlegal.com/codes/vernon/latest/vernon_ca/0-0-0-17558",
+        "https://www.cityofvernon.org/government/city-departments/finance/special-parcel-tax"
+      ]
+    },
+    {
+      "id": "local_tax_ca_san_diego_business_tax_certificate_v1",
+      "sourceTargetId": "ca_san_diego_business_tax_certificate",
+      "taxDomain": "local_business_tax",
+      "taxType": "business_tax_certificate",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06073", "cities": ["San Diego"] },
+      "requiredInputs": ["employee_count"],
+      "calculationModels": [
+        {
+          "modelId": "san_diego_business_tax_certificate_base",
+          "label": "San Diego business tax certificate base amount",
+          "appliesToClasses": ["general_business", "business_tax_certificate"],
+          "method": "san_diego_employee_certificate",
+          "employeeInput": "employee_count",
+          "sb1186FeeAppliesInput": "sb1186_fee_applies",
+          "minimumWageFeeAppliesInput": "minimum_wage_fee_applies",
+          "inputKeys": ["employee_count"]
+        }
+      ],
+      "sourceConfidence": "high_for_base_rows_medium_for_addons",
+      "sourceUrls": [
+        "https://www.sandiego.gov/treasurer/taxesfees/btax",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxrates",
+        "https://docs.sandiego.gov/municode/MuniCodeChapter03/Ch03Art01Division03.pdf"
+      ]
+    },
+    {
+      "id": "property_adapter_ca_los_angeles_county_v1",
+      "sourceTargetId": "property_adapter_terms_ca_los_angeles_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06037" },
+      "requiredInputs": ["parcel_id_or_apn", "current_tax_bill_or_portal_result", "direct_assessment_lines"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://portal.assessor.lacounty.gov/",
+        "https://ttc.lacounty.gov/",
+        "https://egis-lacounty.hub.arcgis.com/"
+      ]
+    },
+    {
+      "id": "property_adapter_ca_san_diego_county_v1",
+      "sourceTargetId": "property_adapter_terms_ca_san_diego_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06073" },
+      "requiredInputs": ["parcel_id_or_apn", "current_tax_bill_or_portal_result", "special_assessment_lookup_result"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://www.sdarcc.gov/",
+        "https://www.sdttc.com/",
+        "https://sdgis-sandag.opendata.arcgis.com/"
+      ]
+    },
+    {
+      "id": "property_adapter_ca_orange_county_v1",
+      "sourceTargetId": "property_adapter_terms_ca_orange_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "CA", "countyFips": "06059" },
+      "requiredInputs": ["parcel_id_or_apn", "current_tax_bill_or_portal_result", "direct_assessment_lines"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://www.ocgov.com/gov/assessor",
+        "https://tax.ocgov.com/",
+        "https://data-ocpw.opendata.arcgis.com/"
+      ]
+    },
+    {
+      "id": "property_adapter_wa_king_county_v1",
+      "sourceTargetId": "property_adapter_terms_wa_king_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "WA", "countyFips": "53033" },
+      "requiredInputs": ["parcel_id_or_apn", "assessor_report_or_tax_bill", "current_levy_lines"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://kingcounty.gov/en/dept/assessor",
+        "https://kingcounty.gov/en/dept/dnrp/data-information-services/gis-center",
+        "https://payment.kingcounty.gov/Home/Index"
+      ]
+    },
+    {
+      "id": "property_adapter_mi_wayne_detroit_v1",
+      "sourceTargetId": "property_adapter_terms_mi_wayne_detroit",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "MI", "countyFips": "26163", "cities": ["Detroit"] },
+      "requiredInputs": ["parcel_id_or_apn", "current_city_tax_bill", "approved_abatement_or_rerz_documents"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://data.detroitmi.gov/",
+        "https://pta.waynecounty.com/",
+        "https://is.bsasoftware.com/bsa.is/AssessingServices/ServiceAssessingSearch.aspx"
+      ]
+    },
+    {
+      "id": "property_adapter_mi_washtenaw_ann_arbor_v1",
+      "sourceTargetId": "property_adapter_terms_mi_washtenaw_ann_arbor",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "MI", "countyFips": "26161", "cities": ["Ann Arbor"] },
+      "requiredInputs": ["parcel_id_or_apn", "local_unit_tax_account_or_bill", "current_assessed_taxable_value_and_levy_lines"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://www.washtenaw.org/1197/PropertyParcel-Lookup",
+        "https://www.a2gov.org/departments/finance-admin-services/assessing/Pages/default.aspx",
+        "https://bsaonline.com/"
+      ]
+    },
+    {
+      "id": "property_adapter_wa_grant_county_v1",
+      "sourceTargetId": "property_adapter_terms_wa_grant_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "WA", "countyFips": "53025" },
+      "requiredInputs": ["parcel_id_or_apn", "tax_statement_or_treasurer_record", "current_levy_and_assessment_lines"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://www.grantcountywa.gov/149/Assessor",
+        "https://www.grantcountywa.gov/162/Treasurer",
+        "https://grantcountywa.maps.arcgis.com/"
+      ]
+    },
+    {
+      "id": "property_adapter_wa_snohomish_county_v1",
+      "sourceTargetId": "property_adapter_terms_wa_snohomish_county",
+      "taxDomain": "property_tax_adapter_terms",
+      "taxType": "property_tax_adapter",
+      "calculationStatus": "calculable_with_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "geography": { "country": "US", "state": "WA", "countyFips": "53061" },
+      "requiredInputs": ["parcel_id_or_apn", "property_account_summary_or_tax_bill", "current_assessed_value_tax_code_and_tax_history"],
+      "calculationModels": [],
+      "sourceUrls": [
+        "https://snohomishcountywa.gov/5167/Assessor",
+        "https://snohomishcountywa.gov/225/Property-Tax-Exemptions",
+        "https://gis-snoco.opendata.arcgis.com/"
+      ]
+    }
+  ]
+}

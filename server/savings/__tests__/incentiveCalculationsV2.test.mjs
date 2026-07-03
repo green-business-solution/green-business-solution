@@ -297,6 +297,36 @@ describe("incentive calculation v2", () => {
     expect(result.effectResults[0].trace.join(" ")).toContain("Statutory renewable property tax value 85000 cents");
   });
 
+  it("does not estimate property-tax valuation savings without counterfactual tax evidence", () => {
+    const result = calculateV2IncentivePackage(
+      expressionPackage({
+        expressionId: "property_tax_valuation_formula",
+        effectType: "property_tax_valuation",
+        timing: { cadence: "annual" },
+        requiredInputs: [
+          "ac_kw_capacity",
+          "tangible_property_applicable",
+          "real_property_applicable"
+        ]
+      }),
+      baseCtx({
+        answers: {
+          ac_kw_capacity: { value: 100 },
+          tangible_property_applicable: { value: true },
+          real_property_applicable: { value: true }
+        }
+      })
+    );
+
+    expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(0);
+    expect(result.missingInputs).toEqual([
+      {
+        inputKey: "counterfactual_ordinary_annual_property_tax_cents",
+        effectId: "effect_property_tax_valuation_formula"
+      }
+    ]);
+  });
+
   it("resolves tax geography inputs from site geography before v2 tax package calculation", () => {
     const pkg = expressionPackage({
       expressionId: "property_tax_valuation_formula",

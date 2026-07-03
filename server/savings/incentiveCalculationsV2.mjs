@@ -423,9 +423,16 @@ function calculateExpressionEffect({ effect, calculation, ctx }) {
   }
 
   if (expressionId === "property_tax_valuation_formula") {
-    const acKwCapacity = firstNumberAnswer(ctx, ["ac_nameplate_capacity_kw", "ac_kw_capacity", "system_kw", "system_capacity_kw_dc"]) || 0;
-    const tangiblePropertyApplicable = booleanAnswer(ctx, "tangible_property_applicable") === true;
-    const realPropertyApplicable = booleanAnswer(ctx, "real_property_applicable") === true;
+    const acKwCapacity = firstNumberAnswer(ctx, ["ac_nameplate_capacity_kw", "ac_kw_capacity", "system_kw", "system_capacity_kw_dc"]);
+    if (!Number.isFinite(acKwCapacity)) return missingResult("ac_nameplate_capacity_kw", effect);
+
+    const tangiblePropertyApplicableAnswer = booleanAnswer(ctx, "tangible_property_applicable");
+    const realPropertyApplicableAnswer = booleanAnswer(ctx, "real_property_applicable");
+    if (tangiblePropertyApplicableAnswer === null) return missingResult("tangible_property_applicable", effect);
+    if (realPropertyApplicableAnswer === null) return missingResult("real_property_applicable", effect);
+
+    const tangiblePropertyApplicable = tangiblePropertyApplicableAnswer === true;
+    const realPropertyApplicable = realPropertyApplicableAnswer === true;
     const statutoryTaxCents =
       (tangiblePropertyApplicable ? acKwCapacity * 500 : 0) +
       (realPropertyApplicable ? acKwCapacity * 350 : 0);
@@ -433,18 +440,18 @@ function calculateExpressionEffect({ effect, calculation, ctx }) {
       "counterfactual_ordinary_annual_property_tax_cents",
       "counterfactual_assessment_cents"
     ]);
-    const amountCents = Number.isFinite(counterfactualTaxCents)
-      ? Math.max(0, Number(counterfactualTaxCents) - statutoryTaxCents)
-      : statutoryTaxCents;
+    if (statutoryTaxCents > 0 && !Number.isFinite(counterfactualTaxCents)) {
+      return missingResult("counterfactual_ordinary_annual_property_tax_cents", effect);
+    }
+
+    const amountCents = Math.max(0, Number(counterfactualTaxCents || 0) - statutoryTaxCents);
 
     return {
       amountCents: roundCents(amountCents),
       missingInputs: [],
       trace: [
         `Statutory renewable property tax value ${statutoryTaxCents} cents for ${acKwCapacity} AC kW.`,
-        Number.isFinite(counterfactualTaxCents)
-          ? `Counterfactual ordinary annual property tax ${counterfactualTaxCents} cents; gross annual difference ${amountCents} cents.`
-          : "No counterfactual ordinary annual property tax supplied; returning statutory tax value only."
+        `Counterfactual ordinary annual property tax ${counterfactualTaxCents || 0} cents; gross annual difference ${amountCents} cents.`
       ]
     };
   }
