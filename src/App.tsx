@@ -2981,6 +2981,8 @@ function AboutHubCard({
 
 function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const scanCopyStateRef = useRef<"before" | "after">("before");
+  const [scanCopyState, setScanCopyState] = useState<"before" | "after">("before");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -2994,6 +2996,8 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
         section?.style.setProperty("--planet-scan-position", "100%");
         section?.style.setProperty("--planet-scan-ray-opacity", "0");
         section?.style.setProperty("--planet-scan-hint-opacity", "0");
+        scanCopyStateRef.current = "after";
+        setScanCopyState("after");
         return;
       }
 
@@ -3005,10 +3009,16 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
       const rawProgress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
       const easedProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
       const edgeFade = Math.min(1, rawProgress * 10, (1 - rawProgress) * 10);
+      const nextCopyState = easedProgress >= 0.6 ? "after" : "before";
 
       section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
       section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
       section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
+
+      if (scanCopyStateRef.current !== nextCopyState) {
+        scanCopyStateRef.current = nextCopyState;
+        setScanCopyState(nextCopyState);
+      }
     };
 
     const scheduleScanUpdate = () => {
@@ -3036,6 +3046,36 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
     ["We value", "Savings, payback, and next steps."],
     ["We transform", "Opportunity into measurable impact."]
   ];
+  const activeCopy =
+    scanCopyState === "before"
+      ? {
+          eyebrow: "RetroFi scan",
+          headline: "Find the money behind your next retrofit.",
+          supporting:
+            "Billions in sustainability incentives go unused because they are hard to find, compare, qualify for, and claim.",
+          emphasis: "The money exists. Getting it is the hard part.",
+          secondaryCta: "See how it works"
+        }
+      : {
+          eyebrow: "RetroFi results",
+          headline: "Save time. Save money. Upgrade smarter.",
+          supporting:
+            "RetroFi matches your business with the best retrofit opportunities, estimates incentives and savings, and shows what to do next.",
+          emphasis: "Lower costs. Stronger assets. Measurable impact.",
+          secondaryCta: "Explore opportunities"
+        };
+
+  const handleSecondaryAction = () => {
+    if (scanCopyState === "before") {
+      navigate("how-it-works");
+      return;
+    }
+
+    document.getElementById("home-opportunities")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  };
 
   return (
     <section aria-labelledby="planet-scan-heading" className="planet-scan-section" ref={sectionRef}>
@@ -3066,18 +3106,18 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
 
         <div className="planet-scan-content">
           <div className="planet-scan-copy">
-            <p className="planet-scan-eyebrow">RetroFi opportunity scan</p>
-            <h1 id="planet-scan-heading">Find the money behind your next retrofit.</h1>
-            <p className="planet-scan-subhead">
-              RetroFi scans your business for rebates, grants, tax incentives, financing, and efficiency upgrades, then shows
-              what is worth doing first.
-            </p>
+            <div className="planet-scan-message" key={scanCopyState}>
+              <p className="planet-scan-eyebrow">{activeCopy.eyebrow}</p>
+              <h1 id="planet-scan-heading">{activeCopy.headline}</h1>
+              <p className="planet-scan-subhead">{activeCopy.supporting}</p>
+              <p className="planet-scan-emphasis">{activeCopy.emphasis}</p>
+            </div>
             <div className="planet-scan-actions">
               <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
                 Start free scan
               </button>
-              <button className="planet-scan-secondary" onClick={() => navigate("how-it-works")} type="button">
-                See how it works
+              <button className="planet-scan-secondary" onClick={handleSecondaryAction} type="button">
+                {activeCopy.secondaryCta}
               </button>
             </div>
           </div>
@@ -3126,7 +3166,7 @@ function HomePage({
         </p>
       </section>
 
-      <section className="content-section">
+      <section className="content-section" id="home-opportunities">
         <SectionHeading
           copy="RetroFi connects program matching, savings context, and a decision-ready path forward."
           eyebrow="Platform focus"

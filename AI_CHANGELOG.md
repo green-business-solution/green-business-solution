@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) scanner-synchronized homepage copy
+
+- Tied the homepage hero copy to the existing planet scanner progress, switching from the incentive problem to the completed RetroFi value message at 60% reveal.
+- Added a single-state fade/slide transition, stronger emphasis lines, stable CTA placement, and reduced-motion behavior without changing the planet animation.
+
 ## 2026-07-03 - Codex (GPT-5) homepage planet scan hero
 
 - Replaced the static homepage hero with a full-bleed, scroll-driven scanner that reveals the sustainable planet over the polluted starting state.

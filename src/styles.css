@@ -6715,10 +6715,18 @@ body {
 .planet-scan-copy {
   align-self: center;
   display: grid;
-  gap: 22px;
+  gap: 18px;
   grid-column: 1;
   justify-items: start;
   max-width: 510px;
+}
+
+.planet-scan-message {
+  align-content: start;
+  animation: planet-scan-copy-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  display: grid;
+  gap: 18px;
+  min-height: 600px;
 }
 
 .planet-scan-eyebrow {
@@ -6736,7 +6744,7 @@ body {
   letter-spacing: -0.052em;
   line-height: 0.97;
   margin: 0;
-  max-width: 9.5ch;
+  max-width: 11.5ch;
   text-wrap: balance;
 }
 
@@ -6748,10 +6756,33 @@ body {
   max-width: 39ch;
 }
 
+.planet-scan-emphasis {
+  color: #f0f8f2;
+  font-size: clamp(17px, 1.25vw, 20px);
+  font-weight: 780;
+  line-height: 1.42;
+  margin: 0;
+  max-width: 35ch;
+}
+
+@keyframes planet-scan-copy-enter {
+  from {
+    filter: blur(4px);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .planet-scan-actions {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
   margin-top: 6px;
 }
@@ -6762,6 +6793,7 @@ body {
   font-size: 15px;
   font-weight: 800;
   min-height: 52px;
+  min-width: 220px;
   padding: 0 24px;
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
@@ -6913,6 +6945,11 @@ body {
     max-width: 520px;
   }
 
+  .planet-scan-message {
+    gap: 17px;
+    min-height: 410px;
+  }
+
   .planet-scan-copy h1 {
     font-size: clamp(45px, 13vw, 62px);
     max-width: 9.5ch;
@@ -6924,7 +6961,15 @@ body {
     max-width: 34ch;
   }
 
+  .planet-scan-emphasis {
+    font-size: 16px;
+    max-width: 31ch;
+  }
+
   .planet-scan-actions {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 9px;
   }
 
@@ -6932,6 +6977,7 @@ body {
   .public-page .planet-scan-secondary {
     font-size: 14px;
     min-height: 48px;
+    min-width: 0;
     padding: 0 18px;
   }
 
@@ -6950,6 +6996,22 @@ body {
   }
 }
 
+@media (max-height: 780px) and (min-width: 761px) {
+  .planet-scan-message {
+    gap: 14px;
+    min-height: 450px;
+  }
+
+  .planet-scan-copy h1 {
+    font-size: clamp(48px, 4.7vw, 64px);
+  }
+
+  .planet-scan-subhead,
+  .planet-scan-emphasis {
+    font-size: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .planet-scan-section {
     --planet-scan-position: 100%;
@@ -6963,6 +7025,10 @@ body {
   .planet-scan-ray,
   .planet-scan-scroll-cue {
     display: none;
+  }
+
+  .planet-scan-message {
+    animation: none;
   }
 
   .public-page .planet-scan-primary,
