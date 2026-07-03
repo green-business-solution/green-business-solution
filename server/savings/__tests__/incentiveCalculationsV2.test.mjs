@@ -430,6 +430,73 @@ describe("incentive calculation v2", () => {
     expect(result.totals.expectedOneTimeSavingsCents).toBe(7500);
   });
 
+  it("resolves grant profile inputs by matched opportunity and current retrofit without overriding user answers", () => {
+    const ctx = buildV2ResolvedRuntimeContext(
+      {
+        answers: {
+          eligible_project_cost_cents: { value: 123456 }
+        },
+        retrofitTypeId: "led_lighting_retrofit",
+        grantContext: {
+          grantProfileFacts: [
+            { inputKey: "organization_is_nonprofit_501c3", value: true, sourceStrategy: "existing_test_case" }
+          ],
+          grantRetrofitProjectInputs: [
+            {
+              retrofitTypeId: "led_lighting_retrofit",
+              inputFacts: [
+                { inputKey: "fixture_count", value: 42, sourceStrategy: "synthetic_realistic_default" },
+                { inputKey: "lighting_project_scope_confirmed", value: true, sourceStrategy: "synthetic_realistic_default" }
+              ]
+            },
+            {
+              retrofitTypeId: "heat_pump_hvac_retrofit",
+              inputFacts: [
+                { inputKey: "excluded_retrofit_specific_input", value: true, sourceStrategy: "synthetic_realistic_default" }
+              ]
+            }
+          ],
+          grantOpportunitySpecificInputs: [
+            {
+              opportunityId: "opp_grant_a",
+              expectedHandling: "calculate_if_formula_ready",
+              inputFacts: [
+                { inputKey: "eligible_project_cost_cents", value: 500000, sourceStrategy: "synthetic_quote_estimate" },
+                { inputKey: "grant_application_status", value: "not_started", sourceStrategy: "synthetic_realistic_default" }
+              ]
+            },
+            {
+              opportunityId: "opp_grant_b",
+              inputFacts: [
+                { inputKey: "ignored_opportunity_marker", value: true, sourceStrategy: "synthetic_realistic_default" }
+              ]
+            }
+          ]
+        }
+      },
+      [{ opportunity_id: "opp_grant_a" }]
+    );
+
+    expect(ctx.answers.eligible_project_cost_cents).toMatchObject({ value: 123456 });
+    expect(ctx.answers.fixture_count).toMatchObject({
+      value: 42,
+      source: "grant_retrofit_project_input",
+      retrofitTypeId: "led_lighting_retrofit"
+    });
+    expect(ctx.answers.grant_application_status).toMatchObject({
+      value: "not_started",
+      source: "grant_opportunity_input",
+      grantOpportunityId: "opp_grant_a",
+      estimateStatusIfUsed: "calculate_if_formula_ready"
+    });
+    expect(ctx.answers.organization_is_nonprofit_501c3).toMatchObject({
+      value: true,
+      source: "grant_profile_fact"
+    });
+    expect(ctx.answers.excluded_retrofit_specific_input).toBeUndefined();
+    expect(ctx.answers.ignored_opportunity_marker).toBeUndefined();
+  });
+
   it("short-circuits disqualified tax workflows to zero before requiring downstream tax documents", () => {
     const result = calculateV2IncentivePackage(
       expressionPackage({

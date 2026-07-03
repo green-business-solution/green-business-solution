@@ -186,6 +186,8 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
     addOptional(answer, "sourceFileId", options.sourceFileId);
     addOptional(answer, "sourceStrategy", options.sourceStrategy);
     addOptional(answer, "taxOpportunityId", options.taxOpportunityId);
+    addOptional(answer, "grantOpportunityId", options.grantOpportunityId);
+    addOptional(answer, "retrofitTypeId", options.retrofitTypeId);
     addOptional(answer, "estimateStatusIfUsed", options.estimateStatusIfUsed);
     addOptional(
       answer,
@@ -205,6 +207,8 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
     addOptional(resolved, "sourceFileId", answers[key].sourceFileId);
     addOptional(resolved, "sourceStrategy", answers[key].sourceStrategy);
     addOptional(resolved, "taxOpportunityId", answers[key].taxOpportunityId);
+    addOptional(resolved, "grantOpportunityId", answers[key].grantOpportunityId);
+    addOptional(resolved, "retrofitTypeId", answers[key].retrofitTypeId);
     addOptional(resolved, "estimateStatusIfUsed", answers[key].estimateStatusIfUsed);
     addOptional(
       resolved,
@@ -215,6 +219,7 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
     return true;
   };
 
+  addGrantProfileInputs({ ctx, packages, add });
   addCostAliases({ ctx, answers, add });
   addQuantityAliases({ ctx, answers, add });
   addEnergyAliases({ ctx, answers, add });
@@ -257,6 +262,81 @@ function addCostAliases({ ctx, answers, add }) {
   }
   for (const key of ["purchase_price", "invoice", "home_preparation_cost", "attic_insulation_invoice_cost"]) {
     add(key, eligibleCost, "derived_project_cost", { canonicalInputKey: "eligible_project_cost_cents" });
+  }
+}
+
+function addGrantProfileInputs({ ctx, packages, add }) {
+  const grantContext = ctx.grantContext || ctx.grant || {};
+  const packageOpportunityIds = new Set((packages || []).map((pkg) => pkg?.opportunity_id).filter(Boolean));
+  const currentRetrofitTypeId = ctx.retrofitTypeId || ctx.retrofitTypeSlug || null;
+
+  for (const row of grantOpportunitySpecificRows(ctx, grantContext, packageOpportunityIds)) {
+    for (const fact of arrayOf(row.inputFacts)) {
+      addGrantInput(
+        {
+          ...fact,
+          opportunityId: fact.opportunityId || row.opportunityId || row.opportunity_id,
+          estimateStatusIfUsed: fact.estimateStatusIfUsed || row.expectedHandling || null
+        },
+        "grant_opportunity_input",
+        add
+      );
+    }
+  }
+
+  for (const project of grantRetrofitProjectRows(ctx, grantContext, currentRetrofitTypeId)) {
+    for (const fact of arrayOf(project.inputFacts)) {
+      addGrantInput(
+        {
+          ...fact,
+          retrofitTypeId: fact.retrofitTypeId || project.retrofitTypeId || project.retrofit_type_id
+        },
+        "grant_retrofit_project_input",
+        add
+      );
+    }
+  }
+
+  for (const row of [...arrayOf(ctx.grantProfileFacts), ...arrayOf(grantContext.grantProfileFacts)]) {
+    addGrantInput(row, "grant_profile_fact", add);
+  }
+}
+
+function grantOpportunitySpecificRows(ctx, grantContext, packageOpportunityIds) {
+  const rows = [...arrayOf(ctx.grantOpportunitySpecificInputs), ...arrayOf(grantContext.grantOpportunitySpecificInputs)];
+  if (!packageOpportunityIds.size) return rows;
+  return rows.filter((row) => {
+    const opportunityId = row?.opportunityId || row?.opportunity_id;
+    return !opportunityId || packageOpportunityIds.has(opportunityId);
+  });
+}
+
+function grantRetrofitProjectRows(ctx, grantContext, currentRetrofitTypeId) {
+  const rows = [...arrayOf(ctx.grantRetrofitProjectInputs), ...arrayOf(grantContext.grantRetrofitProjectInputs)];
+  if (!currentRetrofitTypeId) return [];
+  return rows.filter((row) => row?.retrofitTypeId === currentRetrofitTypeId || row?.retrofit_type_id === currentRetrofitTypeId);
+}
+
+function addGrantInput(row, source, add) {
+  const inputKey = row?.inputKey || row?.input_key || row?.fieldId || row?.field_id;
+  if (!inputKey || row.value === undefined || row.value === null || row.value === "") return;
+  const canonicalInputKey = canonicalInputKeyFor(inputKey);
+  const metadata = {
+    canonicalInputKey,
+    defaultIsPlaceholder: Boolean(row.defaultIsSynthetic),
+    defaultConfidence: row.confidenceImpactUntilConfirmed || row.confidence || null,
+    userOverrideAllowed: row.userOverrideAllowed !== false,
+    sourceFileId: row.sourceFileId || row.fileId || row.sourceFile || null,
+    sourceStrategy: row.sourceStrategy || row.sourceType || source,
+    grantOpportunityId: row.opportunityId || row.opportunity_id || null,
+    retrofitTypeId: row.retrofitTypeId || row.retrofit_type_id || null,
+    estimateStatusIfUsed: row.estimateStatusIfUsed || null,
+    includeInUserFacingTotalBeforeConfirmation: row.includeInUserFacingTotalBeforeConfirmation ?? null
+  };
+
+  add(inputKey, row.value, source, metadata);
+  if (canonicalInputKey !== inputKey) {
+    add(canonicalInputKey, row.value, source, metadata);
   }
 }
 

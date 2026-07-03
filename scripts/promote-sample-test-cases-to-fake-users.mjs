@@ -265,6 +265,24 @@ export function buildPromotionRecords({ now, sampleUsers, selectedIds, testCases
       taxProfileFacts: Array.isArray(sample.taxProfileFacts) ? sample.taxProfileFacts : [],
       taxOpportunitySpecificInputs: Array.isArray(sample.taxOpportunitySpecificInputs) ? sample.taxOpportunitySpecificInputs : [],
       taxMissingOrReviewInputs: Array.isArray(sample.taxMissingOrReviewInputs) ? sample.taxMissingOrReviewInputs : [],
+      grantProfileFacts: Array.isArray(sample.grantProfileFacts) ? sample.grantProfileFacts : [],
+      grantRetrofitProjectInputs: Array.isArray(sample.grantRetrofitProjectInputs)
+        ? sample.grantRetrofitProjectInputs
+        : [],
+      grantOpportunitySpecificInputs: Array.isArray(sample.grantOpportunitySpecificInputs)
+        ? sample.grantOpportunitySpecificInputs
+        : [],
+      grantMissingOrReviewInputs: Array.isArray(sample.grantMissingOrReviewInputs)
+        ? sample.grantMissingOrReviewInputs
+        : [],
+      grantDoNotForceQualificationReasons: Array.isArray(sample.grantDoNotForceQualificationReasons)
+        ? sample.grantDoNotForceQualificationReasons
+        : [],
+      syntheticGrantProfileDataNotice: sample.syntheticGrantProfileDataNotice || null,
+      grantProfileConfidence: sample.grantProfileConfidence || null,
+      grantProfileNotes: sample.grantProfileNotes || null,
+      grantProfileDataSchemaVersion: sample.grantProfileDataSchemaVersion || null,
+      grantProfileDataSourceArtifact: sample.grantProfileDataSourceArtifact || null,
       sampleMatchingSummary: testCase
         ? {
             topOpportunityCount: testCase.topOpportunities?.length || 0,

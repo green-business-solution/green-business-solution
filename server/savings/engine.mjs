@@ -347,7 +347,11 @@ function finalizeCalculatedEstimate({
   taxProfileFacts = [],
   taxExtractedValues = [],
   taxOpportunitySpecificInputs = [],
-  siteTaxProfile = null
+  siteTaxProfile = null,
+  grantContext = null,
+  grantProfileFacts = [],
+  grantRetrofitProjectInputs = [],
+  grantOpportunitySpecificInputs = []
 }) {
   const upfrontCostCents = aggregateUpfrontCost(costBreakdown);
   const selectedRequestedOpportunityIds = retrofitInstance.selectedOpportunityIds || selectedOpportunityIds || [];
@@ -367,6 +371,10 @@ function finalizeCalculatedEstimate({
     taxExtractedValues,
     taxOpportunitySpecificInputs,
     siteTaxProfile,
+    grantContext,
+    grantProfileFacts,
+    grantRetrofitProjectInputs,
+    grantOpportunitySpecificInputs,
     allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({
@@ -1167,7 +1175,11 @@ function calculateModeledRetrofitSavingsEstimate({
     taxProfileFacts: fixture.taxProfileFacts || [],
     taxExtractedValues: fixture.taxExtractedValues || [],
     taxOpportunitySpecificInputs: fixture.taxOpportunitySpecificInputs || [],
-    siteTaxProfile: fixture.siteTaxProfile || null
+    siteTaxProfile: fixture.siteTaxProfile || null,
+    grantContext: fixture.grantContext || null,
+    grantProfileFacts: fixture.grantProfileFacts || [],
+    grantRetrofitProjectInputs: fixture.grantRetrofitProjectInputs || [],
+    grantOpportunitySpecificInputs: fixture.grantOpportunitySpecificInputs || []
   });
 }
 
@@ -1411,6 +1423,10 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     taxExtractedValues: fixture.taxExtractedValues || [],
     taxOpportunitySpecificInputs: fixture.taxOpportunitySpecificInputs || [],
     siteTaxProfile: fixture.siteTaxProfile || null,
+    grantContext: fixture.grantContext || null,
+    grantProfileFacts: fixture.grantProfileFacts || [],
+    grantRetrofitProjectInputs: fixture.grantRetrofitProjectInputs || [],
+    grantOpportunitySpecificInputs: fixture.grantOpportunitySpecificInputs || [],
     allowSyntheticV2Defaults: Boolean(retrofitInstance.allowSyntheticV2Defaults)
   };
   const v2Bridge = buildV2RuntimeIncentiveBridge({

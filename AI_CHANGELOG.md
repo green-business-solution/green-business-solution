@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) grant test-case profile import
+
+- Validated all 50 GPT Pro test-case grant-profile outputs with zero broken, mismatched, duplicated, or trailing-text files.
+- Imported synthetic grant/project profile facts into sample users and public matching fixtures, preserving organization, retrofit-scoped, opportunity-scoped, intentionally missing, and do-not-force-qualification data separately.
+- Wired grant profile context into v2 incentive input resolution with per-package opportunity scoping and current-retrofit scoping so synthetic project facts can satisfy grant formulas without cross-retrofit leakage.
+
 ## 2026-07-03 - Codex (GPT-5) user preview progressive loading
 
 - Added a lightweight `/api/admin/client-retrofit-preview/:userId` shell endpoint that returns selected-client identity, intake, and saved top retrofit summaries without scanning or evaluating the full opportunity table.

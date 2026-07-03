@@ -30,11 +30,11 @@ export function buildV2RuntimeIncentiveBridge({
   ctx = {}
 }) {
   const legacyOpportunityIds = new Set(existingLegacyRules.map((rule) => rule.opportunityId).filter(Boolean));
-  const augmentedCtx = augmentRuntimeContext(buildV2ResolvedRuntimeContext(ctx, packages));
   const runtimeRules = [];
   const packageSummaries = [];
 
   for (const pkg of packages || []) {
+    const augmentedCtx = augmentRuntimeContext(buildV2ResolvedRuntimeContext(ctx, [pkg]));
     const validation = validateIncentiveCalculationPackageV2(pkg);
     if (!validation.valid) {
       packageSummaries.push({

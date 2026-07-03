@@ -97,6 +97,26 @@ export function normalizeUserProfile(intake) {
       taxDataSchemaVersion: source.taxDataSchemaVersion || null,
       taxDataSourceArtifact: source.taxDataSourceArtifact || null
     },
+    grant: {
+      grantProfileFacts: Array.isArray(source.grantProfileFacts) ? source.grantProfileFacts : [],
+      grantRetrofitProjectInputs: Array.isArray(source.grantRetrofitProjectInputs)
+        ? source.grantRetrofitProjectInputs
+        : [],
+      grantOpportunitySpecificInputs: Array.isArray(source.grantOpportunitySpecificInputs)
+        ? source.grantOpportunitySpecificInputs
+        : [],
+      grantMissingOrReviewInputs: Array.isArray(source.grantMissingOrReviewInputs)
+        ? source.grantMissingOrReviewInputs
+        : [],
+      grantDoNotForceQualificationReasons: Array.isArray(source.grantDoNotForceQualificationReasons)
+        ? source.grantDoNotForceQualificationReasons
+        : [],
+      syntheticGrantProfileDataNotice: source.syntheticGrantProfileDataNotice || null,
+      grantProfileConfidence: source.grantProfileConfidence || null,
+      grantProfileNotes: source.grantProfileNotes || null,
+      grantProfileDataSchemaVersion: source.grantProfileDataSchemaVersion || null,
+      grantProfileDataSourceArtifact: source.grantProfileDataSourceArtifact || null
+    },
     completeness: {
       hasState: Boolean(stateCode),
       hasZip: Boolean(zip5),

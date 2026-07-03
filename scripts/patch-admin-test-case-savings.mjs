@@ -40,6 +40,7 @@ const testCases = (source.testCases || []).map((testCase) => {
         taxDataSchemaVersion: testCase.taxDataSchemaVersion || null,
         taxDataSourceArtifact: testCase.taxDataSourceArtifact || null
       },
+      grantContext: buildGrantContext(testCase),
       calculationDate,
       opportunityIncentiveRules,
       opportunityIncentiveCalculationPackages,
@@ -97,4 +98,27 @@ function readTaxGeographyRules(filePath) {
   if (!fs.existsSync(filePath)) return [];
   const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
   return (source.rules || []).filter((rule) => rule?.id && rule.active !== false);
+}
+
+function buildGrantContext(testCase) {
+  return {
+    grantProfileFacts: Array.isArray(testCase.grantProfileFacts) ? testCase.grantProfileFacts : [],
+    grantRetrofitProjectInputs: Array.isArray(testCase.grantRetrofitProjectInputs)
+      ? testCase.grantRetrofitProjectInputs
+      : [],
+    grantOpportunitySpecificInputs: Array.isArray(testCase.grantOpportunitySpecificInputs)
+      ? testCase.grantOpportunitySpecificInputs
+      : [],
+    grantMissingOrReviewInputs: Array.isArray(testCase.grantMissingOrReviewInputs)
+      ? testCase.grantMissingOrReviewInputs
+      : [],
+    grantDoNotForceQualificationReasons: Array.isArray(testCase.grantDoNotForceQualificationReasons)
+      ? testCase.grantDoNotForceQualificationReasons
+      : [],
+    syntheticGrantProfileDataNotice: testCase.syntheticGrantProfileDataNotice || null,
+    grantProfileConfidence: testCase.grantProfileConfidence || null,
+    grantProfileNotes: testCase.grantProfileNotes || null,
+    grantProfileDataSchemaVersion: testCase.grantProfileDataSchemaVersion || null,
+    grantProfileDataSourceArtifact: testCase.grantProfileDataSourceArtifact || null
+  };
 }
