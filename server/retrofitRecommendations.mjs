@@ -5,7 +5,7 @@ import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchPr
 import { evaluateOpportunityForUser } from "./matching/evaluateRules.mjs";
 import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
-import { classifyRetrofitsForOpportunity, RETROFIT_TYPES_BY_ID } from "./matching/retrofitTaxonomy.mjs";
+import { classifyRetrofitsForOpportunity, RETROFIT_TYPES, RETROFIT_TYPES_BY_ID } from "./matching/retrofitTaxonomy.mjs";
 import { buildAdminTestCaseSavingsPreview } from "./savings/adminTestCaseSavings.mjs";
 
 const incentiveRulesPath = path.resolve(import.meta.dirname, "..", "data", "opportunity_incentive_rules.json");
@@ -91,6 +91,114 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
     },
     retrofits
   };
+}
+
+export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user }) {
+  const retrofits = buildLightweightRetrofitGroups(intake);
+  return {
+    user,
+    intake,
+    generatedAt: now.toISOString(),
+    isProgressiveShell: true,
+    summary: {
+      matchedRetrofitCount: retrofits.length,
+      matchedOpportunityCount: intake?.sampleMatchingSummary?.promisingOpportunityCount ?? intake?.sampleMatchingSummary?.topOpportunityCount ?? 0
+    },
+    retrofits
+  };
+}
+
+function buildLightweightRetrofitGroups(intake) {
+  const selected = [];
+  for (const value of intake?.sustainability?.interestedImprovements || []) {
+    const type = resolveRetrofitType(value);
+    if (type) selected.push(type);
+  }
+
+  if (selected.length === 0) {
+    selected.push(...fallbackRetrofitTypesForIntake(intake));
+  }
+
+  return uniqueRetrofitTypes(selected)
+    .slice(0, 8)
+    .map((type) => ({
+      retrofitTypeId: type.retrofitTypeId,
+      displayName: type.displayName,
+      parentCategory: type.parentCategory,
+      isPhysicalRetrofit: type.isPhysicalRetrofit,
+      opportunityCount: 0,
+      opportunities: [],
+      savingsPreview: null,
+      typicalComponents: type.typicalComponents || []
+    }));
+}
+
+function resolveRetrofitType(value) {
+  const key = normalizeRetrofitLookupText(value);
+  if (!key) return null;
+  if (RETROFIT_TYPES_BY_ID[key]) return RETROFIT_TYPES_BY_ID[key];
+  return RETROFIT_TYPES.find((type) =>
+    normalizeRetrofitLookupText(type.displayName) === key ||
+    normalizeRetrofitLookupText(type.retrofitTypeId) === key ||
+    type.aliases.some((alias) => normalizeRetrofitLookupText(alias) === key)
+  ) || null;
+}
+
+function fallbackRetrofitTypesForIntake(intake) {
+  const text = normalizeRetrofitLookupText([
+    intake?.business?.industry,
+    intake?.business?.primaryActivityText,
+    intake?.site?.buildingType,
+    intake?.sustainability?.goals,
+    intake?.sustainability?.currentChallenges,
+    intake?.sustainability?.notes
+  ].filter(Boolean).join(" "));
+  const selected = [];
+  const add = (id) => {
+    const type = RETROFIT_TYPES_BY_ID[id];
+    if (type) selected.push(type);
+  };
+
+  add("led_lighting_retrofit");
+  if (text.includes("restaurant") || text.includes("food") || text.includes("kitchen") || text.includes("cafe")) {
+    add("high_efficiency_refrigeration_equipment");
+    add("high_efficiency_commercial_dishwasher");
+    add("demand_controlled_kitchen_ventilation");
+  }
+  if (text.includes("school") || text.includes("office") || text.includes("library") || text.includes("hospital") || text.includes("museum")) {
+    add("high_efficiency_hvac_replacement");
+    add("building_automation_system");
+  }
+  if (text.includes("data center") || text.includes("factory") || text.includes("plant") || text.includes("industrial")) {
+    add("variable_frequency_drive_retrofit");
+    add("efficient_air_compressor");
+  }
+  if (intake?.siteEnergyProfile?.annualWaterCost || intake?.siteEnergyProfile?.annualWaterUse) {
+    add("low_flow_fixture_retrofit");
+  }
+  if (intake?.siteEnergyProfile?.annualGasCost || intake?.siteEnergyProfile?.annualTherms) {
+    add("heat_pump_hvac_retrofit");
+  }
+  add("rooftop_solar_pv");
+  add("energy_audit");
+  return selected;
+}
+
+function uniqueRetrofitTypes(types) {
+  const seen = new Set();
+  return types.filter((type) => {
+    if (!type || seen.has(type.retrofitTypeId)) return false;
+    seen.add(type.retrofitTypeId);
+    return true;
+  });
+}
+
+function normalizeRetrofitLookupText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function buildEvaluatedOpportunity({ normalizedProfile, now, opportunity }) {

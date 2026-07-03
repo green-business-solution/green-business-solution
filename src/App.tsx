@@ -195,6 +195,7 @@ type AdminClientPortalProfilePayload = PortalPayload;
 
 type PortalRetrofitRecommendationsResponse = PortalPayload & {
   generatedAt: string;
+  isProgressiveShell?: boolean;
   summary: {
     matchedRetrofitCount: number;
     matchedOpportunityCount: number;
@@ -5467,6 +5468,7 @@ function CustomerRetrofitEstimatesPanel({
   intro,
   loadingMessage,
   onPayloadLoaded,
+  summaryEndpoint,
   title,
   hideBillData = false
 }: {
@@ -5478,24 +5480,21 @@ function CustomerRetrofitEstimatesPanel({
   intro: string;
   loadingMessage: string;
   onPayloadLoaded?: (payload: PortalRetrofitRecommendationsResponse) => void;
+  summaryEndpoint?: string;
   title: string;
   hideBillData?: boolean;
 }) {
   const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(initialPayload);
   const [isLoading, setIsLoading] = useState(!initialPayload);
   const [error, setError] = useState<string | null>(null);
+  const requestKey = `${summaryEndpoint || ""}|${endpoint}`;
+  const initialPayloadRef = useRef({ payload: initialPayload, requestKey });
+  if (initialPayloadRef.current.requestKey !== requestKey) {
+    initialPayloadRef.current = { payload: initialPayload, requestKey };
+  }
 
   useEffect(() => {
     let isMounted = true;
-
-    if (initialPayload) {
-      setPayload(initialPayload);
-      setError(null);
-      setIsLoading(false);
-      return () => {
-        isMounted = false;
-      };
-    }
 
     if (!credential) {
       setPayload(null);
@@ -5505,31 +5504,68 @@ function CustomerRetrofitEstimatesPanel({
         isMounted = false;
       };
     }
+    const authCredential = credential;
 
-    setPayload(null);
-    setIsLoading(true);
-    setError(null);
+    async function loadProgressivePayload() {
+      const warmPayload = initialPayloadRef.current.payload;
+      let hasRenderablePayload = Boolean(warmPayload);
 
-    apiGet<PortalRetrofitRecommendationsResponse>(endpoint, {
-      headers: adminAuthHeaders(credential)
-    })
-      .then((response) => {
+      if (warmPayload) {
+        setPayload(warmPayload);
+        setError(null);
+        setIsLoading(false);
+      } else {
+        setPayload(null);
+        setIsLoading(true);
+        setError(null);
+      }
+
+      if (!warmPayload && summaryEndpoint) {
+        try {
+          const summaryPayload = await apiGet<PortalRetrofitRecommendationsResponse>(summaryEndpoint, {
+            headers: adminAuthHeaders(authCredential)
+          });
+          if (!isMounted) return;
+          hasRenderablePayload = true;
+          setPayload(summaryPayload);
+          setError(null);
+          setIsLoading(false);
+          onPayloadLoaded?.(summaryPayload);
+        } catch {
+          if (!isMounted) return;
+        }
+      }
+
+      if (warmPayload && !warmPayload.isProgressiveShell) {
+        return;
+      }
+
+      try {
+        const detailPayload = await apiGet<PortalRetrofitRecommendationsResponse>(endpoint, {
+          headers: adminAuthHeaders(authCredential)
+        });
         if (!isMounted) return;
-        setPayload(response);
-        onPayloadLoaded?.(response);
-      })
-      .catch((requestError) => {
+        setPayload(detailPayload);
+        setError(null);
+        onPayloadLoaded?.(detailPayload);
+      } catch (requestError) {
         if (!isMounted) return;
-        setError(requestError instanceof Error ? requestError.message : "Could not load retrofit estimates.");
-      })
-      .finally(() => {
+        if (!hasRenderablePayload) {
+          setError(requestError instanceof Error ? requestError.message : "Could not load retrofit estimates.");
+        } else {
+          setError(requestError instanceof Error ? `Detailed estimates could not load: ${requestError.message}` : "Detailed estimates could not load.");
+        }
+      } finally {
         if (isMounted) setIsLoading(false);
-      });
+      }
+    }
+
+    void loadProgressivePayload();
 
     return () => {
       isMounted = false;
     };
-  }, [credential, endpoint, initialPayload, onPayloadLoaded]);
+  }, [credential, endpoint, onPayloadLoaded, summaryEndpoint]);
 
   return (
       <RetrofitRecommendationsPreview
@@ -7007,6 +7043,9 @@ export function RetrofitRecommendationsPreview({
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
     setSelectedScenarioIds(initialScenarioIds);
+  }, [initialScenarioIds, initialSelectedOpportunityIds]);
+
+  useEffect(() => {
     setActiveRetrofitId("");
     setAddedRetrofitPlans({});
     setDirtyRetrofitIds({});
@@ -7014,7 +7053,7 @@ export function RetrofitRecommendationsPreview({
     setPlanMessage(null);
     setLastAddedRetrofitId(null);
     setPickerVisibleCount(6);
-  }, [initialScenarioIds, initialSelectedOpportunityIds, preview.generatedAt, preview.intakeId, preview.profileId, preview.retrofits]);
+  }, [preview.intakeId, preview.profileId]);
 
   useEffect(() => {
     const postFormPreviewParam =
@@ -10943,6 +10982,7 @@ function AdminUserPreviewStandalonePage({
             key={selectedOption.userId}
             loadingMessage="Loading live retrofit recommendations for this client..."
             onPayloadLoaded={cacheSelectedPayload}
+            summaryEndpoint={`/api/admin/client-retrofit-preview/${encodeURIComponent(selectedOption.userId)}`}
             hideBillData={hideBillData}
             title="Retrofit Recommendations"
           />

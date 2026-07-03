@@ -458,6 +458,10 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
     expect(source).toContain("/api/admin/fake-client-options");
+    expect(source).toContain("/api/admin/client-retrofit-preview/");
+    expect(source).toContain("summaryEndpoint");
+    expect(source).toContain("isProgressiveShell");
+    expect(source).toContain("Detailed estimates could not load");
     expect(source).toContain("payloadCache");
     expect(source).toContain("initialPayload={selectedPayload}");
     expect(source).toContain("onPayloadLoaded={cacheSelectedPayload}");

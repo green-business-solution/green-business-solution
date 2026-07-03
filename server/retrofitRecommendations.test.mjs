@@ -5,7 +5,11 @@ import { evaluateOpportunityForUser } from "./matching/evaluateRules.mjs";
 import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { classifyRetrofitsForOpportunity } from "./matching/retrofitTaxonomy.mjs";
-import { buildPortalRetrofitRecommendations, buildRetrofitGroupsFromEligibleResults } from "./retrofitRecommendations.mjs";
+import {
+  buildPortalRetrofitPreviewShell,
+  buildPortalRetrofitRecommendations,
+  buildRetrofitGroupsFromEligibleResults
+} from "./retrofitRecommendations.mjs";
 
 const now = new Date("2026-06-30T12:00:00Z");
 
@@ -86,6 +90,51 @@ function summarizeRetrofits(retrofits) {
 }
 
 describe("portal retrofit recommendations", () => {
+  it("builds a lightweight shell from saved retrofit interests without opportunity details", () => {
+    const intake = baseIntake({
+      sustainability: {
+        goals: "Reduce energy costs",
+        currentChallenges: "High bills",
+        interestedImprovements: ["LED lighting retrofit", "Heat pump HVAC retrofit"],
+        monthlyUtilitySpend: "4000",
+        timeline: "This year",
+        notes: null
+      },
+      sampleMatchingSummary: {
+        promisingOpportunityCount: 12,
+        topOpportunityCount: 5,
+        generatedAt: now.toISOString()
+      }
+    });
+    const user = {
+      userId: intake.userId,
+      role: "client",
+      status: "active",
+      fullName: "Test Client",
+      email: "client@example.com",
+      companyName: "Retrofit Test Co",
+      authProvider: "google",
+      googleLinked: true,
+      isFakeUser: false,
+      createdAt: now.toISOString(),
+      lastLoginAt: now.toISOString()
+    };
+
+    const payload = buildPortalRetrofitPreviewShell({ user, intake, now });
+
+    expect(payload.isProgressiveShell).toBe(true);
+    expect(payload.summary).toMatchObject({
+      matchedRetrofitCount: 2,
+      matchedOpportunityCount: 12
+    });
+    expect(payload.retrofits.map((retrofit) => retrofit.retrofitTypeId)).toEqual([
+      "led_lighting_retrofit",
+      "heat_pump_hvac_retrofit"
+    ]);
+    expect(payload.retrofits.every((retrofit) => retrofit.opportunities.length === 0)).toBe(true);
+    expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview === null)).toBe(true);
+  });
+
   it("reuses the same grouped eligible retrofit matches that feed test cases", () => {
     const intake = baseIntake();
     const user = {

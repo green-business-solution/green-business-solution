@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) user preview progressive loading
+
+- Added a lightweight `/api/admin/client-retrofit-preview/:userId` shell endpoint that returns selected-client identity, intake, and saved top retrofit summaries without scanning or evaluating the full opportunity table.
+- Updated `/user-preview` to render the lightweight shell first, then hydrate the full recommendation payload in the background while preserving the selected retrofit workspace.
+- Added focused frontend and backend coverage for progressive shell loading and detailed-payload hydration wiring.
+
 ## 2026-07-03 - Codex (GPT-5) process preview modal responsive spacing
 
 - Enlarged and respaced the post-form Process onboarding modal title and typed step layout to better match the supplied reference.

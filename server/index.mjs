@@ -14,7 +14,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
-import { buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
+import { buildPortalRetrofitPreviewShell, buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { resolveOfficialProgramWebsite } from "./applicationSources/OfficialProgramWebsiteResolver.mjs";
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
@@ -3453,6 +3453,23 @@ app.get("/api/admin/client-portal-profile/:userId", async (req, res) => {
       user: publicUser(user),
       intake
     });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/client-retrofit-preview/:userId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const user = await getUserRecord(cleanText(req.params.userId));
+    if (!user || user.role !== "client") {
+      const error = new Error("Client account was not found.");
+      error.status = 404;
+      throw error;
+    }
+
+    const intake = await getIntake(user.userId);
+    res.json(buildPortalRetrofitPreviewShell({ user: publicUser(user), intake, now: new Date() }));
   } catch (error) {
     handleError(res, error);
   }
