@@ -17,3 +17,6 @@ vite.config.d.ts
 .vite/
 .idea/
 .vscode/
+
+# Raw prompt/output work packets are archived in the private development S3 bucket.
+GPT Pro Work/

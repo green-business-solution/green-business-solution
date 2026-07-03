@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) GPT Pro work S3 archive
+
+- Created a private versioned S3 development-work bucket for raw GPT Pro prompt/output artifacts.
+- Uploaded the local `GPT Pro Work/` tree to the S3 `gpt-pro-work/` prefix and documented restore/sync commands.
+- Removed raw GPT Pro work packets from Git tracking and ignored future local prompt/output work directories.
+
 ## 2026-07-03 - Codex (GPT-5) grant test-case profile import
 
 - Validated all 50 GPT Pro test-case grant-profile outputs with zero broken, mismatched, duplicated, or trailing-text files.
