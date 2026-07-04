@@ -7401,7 +7401,7 @@ export function RetrofitRecommendationsPreview({
   }, [activeRetrofitId]);
 
   function handleUploadBills() {
-    setBillUploadFocusStepId(null);
+    setBillUploadFocusStepId("electric");
     setBillUploadModalOpen(true);
     setRefinementMessage("Upload your utility bills to unlock detailed retrofit estimates.");
   }
@@ -8359,6 +8359,28 @@ function BillUploadModal({
     handleFileUpload(file);
   }
 
+  function handleStepTabClick(index: number) {
+    setCurrentStepIndex(index);
+    setShowSkipWarning(false);
+    setFileError(null);
+  }
+
+  function handleRemoveBillUpload(stepId: BillUploadStepId) {
+    const nextFiles = { ...uploadState.files };
+    delete nextFiles[stepId];
+    const nextState: BillUploadState = {
+      ...uploadState,
+      files: nextFiles,
+      flowComplete: false,
+      statuses: {
+        ...uploadState.statuses,
+        [stepId]: "pending"
+      }
+    };
+    completeWithState(nextState, currentStepIndex);
+    setFileError(null);
+  }
+
   function handleContinue() {
     if (!canContinue) return;
     const allUploaded = BILL_UPLOAD_STEPS.every((step) => uploadState.statuses[step.id] === "uploaded");
@@ -8431,10 +8453,16 @@ function BillUploadModal({
             const status = uploadState.statuses[step.id];
             const isCurrent = index === currentStepIndex && status !== "uploaded";
             return (
-              <span
+              <button
+                aria-current={index === currentStepIndex ? "step" : undefined}
+                aria-label={`Go to ${step.utilityLabel.toLowerCase()} bill upload`}
                 className={`bill-upload-progress-segment is-${status}${isCurrent ? " is-current" : ""}${index === currentStepIndex && status === "uploaded" ? " is-current-uploaded" : ""}`}
                 key={step.id}
-              />
+                onClick={() => handleStepTabClick(index)}
+                type="button"
+              >
+                <span className="sr-only">{step.utilityLabel} bill</span>
+              </button>
             );
           })}
         </div>
@@ -8498,7 +8526,17 @@ function BillUploadModal({
                   </span>
                   <p>{file?.name || step.utilityLabel}</p>
                 </div>
-                <span className="bill-upload-complete-badge">Complete</span>
+                <div className="bill-upload-summary-actions">
+                  <span className="bill-upload-complete-badge">Complete</span>
+                  <button
+                    aria-label={`Remove ${step.utilityLabel.toLowerCase()} bill`}
+                    className="bill-upload-remove-button"
+                    onClick={() => handleRemoveBillUpload(step.id)}
+                    type="button"
+                  >
+                    <CloseIcon />
+                  </button>
+                </div>
               </article>
             );
           })}
@@ -9255,6 +9293,14 @@ function RetrofitPreviewCardView({
     onAddToPlan();
   }
 
+  function openReadyApplicationChecklist() {
+    if (readyApplicationPrepOpportunity) {
+      setApplicationPrepOpportunity(readyApplicationPrepOpportunity);
+      return;
+    }
+    openWorkspaceTab("opportunities");
+  }
+
   return (
     <article className="retrofit-preview-card retrofit-preview-card-active">
       <section className="active-command-center">
@@ -9278,6 +9324,22 @@ function RetrofitPreviewCardView({
             <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
           </div>
         </div>
+        {readyApplicationPrepOpportunity ? (
+          <div className="application-prep-ready-callout">
+            <div>
+              <strong>Application checklist ready for one or more incentives</strong>
+              <p>RetroFi has reviewed a program checklist for this retrofit.</p>
+            </div>
+            <button className="secondary-button small-action-button" onClick={openReadyApplicationChecklist} type="button">
+              View application checklist
+            </button>
+          </div>
+        ) : hasReferenceOnlyApplicationProfile ? (
+          <div className="application-prep-reference-callout">
+            <strong>Funding exhausted — reference only</strong>
+            <span>RetroFi is not showing this as ready to prepare.</span>
+          </div>
+        ) : null}
         <div className="command-summary-grid" aria-label="Decision summary">
           <button className="command-summary-card" onClick={() => openWorkspaceTab("financials")} type="button">
             <span>Financial snapshot</span>
@@ -9962,15 +10024,13 @@ function RetrofitPreviewCardView({
           <button className="secondary-button small-action-button" onClick={onExploreFinancing} type="button">Financing preview</button>
           <button
             className="secondary-button small-action-button"
-            onClick={() => {
-              if (readyApplicationPrepOpportunity) setApplicationPrepOpportunity(readyApplicationPrepOpportunity);
-            }}
+            onClick={openReadyApplicationChecklist}
             disabled={!readyApplicationPrepOpportunity}
             type="button"
           >
             {readyApplicationPrepOpportunity ? "Prepare application" : "Application prep not available yet"}
           </button>
-          {hasReferenceOnlyApplicationProfile ? <span>This program appears closed or funding-exhausted.</span> : null}
+          {hasReferenceOnlyApplicationProfile ? <span>Funding exhausted — reference only</span> : null}
           <span>Impact/certification preview</span>
         </div>
       </section>
@@ -10087,9 +10147,12 @@ function OpportunityPreviewRow({
           {applicationPrepLoading ? (
             <span className="application-prep-availability">Checking application prep...</span>
           ) : applicationPrepReady ? (
-            <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
+            <>
+              <span className="application-prep-ready-badge">Application checklist ready</span>
+              <button className="secondary-button" onClick={onPrepareApplication} type="button">Prepare application</button>
+            </>
           ) : applicationPrepReferenceOnly ? (
-            <span className="application-prep-reference-notice">This program appears closed or funding-exhausted.</span>
+            <span className="application-prep-reference-notice">Funding exhausted — reference only</span>
           ) : (
             <span className="application-prep-availability">Application prep not available yet.</span>
           )}

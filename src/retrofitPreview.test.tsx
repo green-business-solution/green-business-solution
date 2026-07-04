@@ -529,8 +529,13 @@ describe("retrofit recommendations preview", () => {
     const instructionsModalIndex = source.indexOf("{showInstructionsModal", previewReturnIndex);
 
     expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
+    expect(uploadHandlerSource).toContain('setBillUploadFocusStepId("electric")');
     expect(uploadHandlerSource).not.toContain("scan-energy-data");
     expect(source).toContain("function BillUploadModal(");
+    expect(source).toContain("function handleStepTabClick(index: number)");
+    expect(source).toContain("function handleRemoveBillUpload(stepId: BillUploadStepId)");
+    expect(source).toContain('aria-current={index === currentStepIndex ? "step" : undefined}');
+    expect(source).toContain("bill-upload-remove-button");
     expect(modalMountIndex).toBeGreaterThan(mainCloseIndex);
     expect(modalMountIndex).toBeLessThan(instructionsModalIndex);
   });
@@ -682,17 +687,27 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("status === \"customer_ready\"");
     expect(source).toContain("status === \"reference_only\"");
     expect(source).toContain("Application prep not available yet.");
-    expect(source).toContain("This program appears closed or funding-exhausted.");
+    expect(source).toContain("Application checklist ready for one or more incentives");
+    expect(source).toContain("Application checklist ready");
+    expect(source).toContain("View application checklist");
+    expect(source).toContain("function openReadyApplicationChecklist()");
+    expect(source).toContain("if (readyApplicationPrepOpportunity) {");
+    expect(source).toContain("setApplicationPrepOpportunity(readyApplicationPrepOpportunity)");
+    expect(source).toContain("Funding exhausted — reference only");
     expect(source).toContain("Reviewed by RetroFi");
     expect(source).toContain("User data mapping coming next.");
     expect(source).toContain("No application is submitted automatically.");
     expect(source).toContain("navigator.clipboard.writeText(applicationPrepChecklistText(profile))");
     expect(source).toContain("Copy checklist");
+    expect(source).toContain("applicationPrepStatus?.status === \"customer_ready\" && Boolean(applicationPrepStatus.profile)");
+    expect(source).toContain("applicationPrepStatus?.status === \"reference_only\"");
     expect(source).not.toContain("Save packet");
     expect(source).not.toContain("Copy answers");
     expect(source).not.toContain("Autofill readiness");
     expect(source).not.toContain("Generated packet preview");
     expect(css).toContain(".application-prep-drawer");
+    expect(css).toContain(".application-prep-ready-callout");
+    expect(css).toContain(".application-prep-ready-badge");
     expect(css).toContain(".application-prep-reference-notice");
   });
 

@@ -6,6 +6,17 @@
 - Split the next GPT Pro work into three separate packet families: grant package formula/input repair, realistic test-profile project facts, and historical award/probability research.
 - Kept generated raw prompt/output folders under the ignored `GPT Pro Work/` tree while committing the generator for reproducibility.
 
+## 2026-07-04 - Codex (GPT-5) prepare application discoverability
+
+- Added a selected-retrofit application checklist callout and per-opportunity ready badge, still gated by the customer-safe approved ApplicationProfile endpoint.
+- Changed reference-only application prep copy to show funding-exhausted/reference-only status without exposing a prepare action.
+
+## 2026-07-03 - Codex (GPT-5) bill upload modal tab controls
+
+- Changed the top Upload bills entry point to always open the bill upload modal on the electric bill tab.
+- Made bill progress segments clickable tabs so users can move back to previous bill steps without closing the modal.
+- Added per-upload remove controls and centered the drag-and-drop dropzone more explicitly inside the modal.
+
 ## 2026-07-03 - Codex (GPT-5) retrofit readiness circles
 
 - Added the three-circle retrofit readiness row to every retrofit picker card, with per-card bills/questions/estimate completion state and neutral label text.
