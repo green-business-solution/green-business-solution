@@ -3117,7 +3117,6 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
         <div className="planet-scan-content">
           <div className="planet-scan-copy">
             <div className="planet-scan-message planet-scan-message-before">
-              <p className="planet-scan-eyebrow">RetroFi scan</p>
               <h1 id="planet-scan-heading">Find the money behind your next retrofit.</h1>
               <p className="planet-scan-subhead">
                 Billions in retrofit incentives exist while building owners lose billions to operating expenses.
@@ -3126,14 +3125,14 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
           </div>
 
           <div className="planet-scan-result-copy">
-            <p className="planet-scan-eyebrow">RetroFi results</p>
+            <p className="planet-scan-eyebrow">Results</p>
             <h2>RetroFi helps you find, compare, and claim retrofit incentives.</h2>
             <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
           </div>
 
           <div className="planet-scan-actions">
             <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
-              Start free scan
+              Get Started
             </button>
             <button className="planet-scan-secondary" onClick={handleSecondaryAction} type="button">
               See how it works

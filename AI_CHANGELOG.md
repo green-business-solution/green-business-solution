@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) home hero copy cleanup
+
+- Removed the `RetroFi scan` eyebrow from the home hero, simplified the results eyebrow to `Results`, and changed the primary CTA from `Start free scan` to `Get Started`.
+
 ## 2026-07-04 - Codex (GPT-5) retrofit impact estimate copy
 
 - Restyled the selected retrofit impact hero value row and replaced internal estimate-basis copy with plain-language annual impact text.
