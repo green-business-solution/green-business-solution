@@ -11492,6 +11492,66 @@ function EstimateImpactIllustration() {
   );
 }
 
+function EstimateImpactProjectionChart() {
+  const years = Array.from({ length: 10 }, (_, index) => index + 1);
+  const width = 920;
+  const height = 360;
+  const plot = { left: 76, right: 28, top: 36, bottom: 58 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const yTicks = Array.from({ length: 5 }, (_, index) => index);
+  const xForYear = (year: number) => plot.left + ((year - 1) / (years.length - 1)) * plotWidth;
+
+  return (
+    <section className="estimate-impact-projection-card" aria-labelledby="impact-projection-title">
+      <div className="estimate-impact-projection-header">
+        <span className="estimate-impact-leaf" aria-hidden="true"><MetricSavingsIcon /></span>
+        <div>
+          <h3 id="impact-projection-title">Cumulative CO2e avoided <span aria-label="Projection details">ⓘ</span></h3>
+          <p>Total cumulative CO2e avoided by this retrofit over time.</p>
+        </div>
+        <aside aria-label="Ten year cumulative impact estimate">
+          <small>10-year total</small>
+          <strong>Unknown</strong>
+          <span>Cumulative CO2e avoided</span>
+        </aside>
+      </div>
+      <div className="estimate-impact-projection-chart">
+        <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Cumulative CO2e avoided forecast chart. Projection values are unknown.">
+          <defs>
+            <linearGradient id="impactProjectionEmptyGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#dff0e5" stopOpacity="0.68" />
+              <stop offset="100%" stopColor="#f7fbf8" stopOpacity="0.18" />
+            </linearGradient>
+          </defs>
+          <text className="estimate-impact-chart-unit" x="0" y={plot.top - 14}>tCO2e</text>
+          {yTicks.map((tick) => {
+            const y = plot.top + tick * (plotHeight / (yTicks.length - 1));
+            return (
+              <g key={`impact-y:${tick}`}>
+                <text className="estimate-impact-chart-y-label" x={plot.left - 16} y={y + 5} textAnchor="end">{tick === yTicks.length - 1 ? "0" : "Unknown"}</text>
+                <line className="estimate-impact-chart-grid" x1={plot.left} x2={width - plot.right} y1={y} y2={y} />
+              </g>
+            );
+          })}
+          <line className="estimate-impact-chart-axis" x1={plot.left} x2={width - plot.right} y1={height - plot.bottom} y2={height - plot.bottom} />
+          <line className="estimate-impact-chart-axis" x1={plot.left} x2={plot.left} y1={plot.top} y2={height - plot.bottom} />
+          <rect className="estimate-impact-chart-empty-area" x={plot.left} y={plot.top} width={plotWidth} height={plotHeight} />
+          {years.map((year) => (
+            <text className="estimate-impact-chart-x-label" key={`impact-x:${year}`} x={xForYear(year)} y={height - 20} textAnchor="middle">
+              {`Year ${year}`}
+            </text>
+          ))}
+        </svg>
+        <div className="estimate-impact-projection-empty">
+          <strong>Unknown</strong>
+          <span>Cumulative impact forecast will appear after backend sustainability projections are available.</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function RetrofitPreviewCardView({
   credential,
   initialWorkspaceTab = "overview",
@@ -12520,6 +12580,7 @@ function RetrofitPreviewCardView({
                   </article>
                 ))}
               </div>
+              <EstimateImpactProjectionChart />
             </section>
           ) : null}
 

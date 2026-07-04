@@ -1230,6 +1230,9 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).not.toContain("avoided / year");
     expect(workspaceSource).toContain("Additional impact metrics");
     expect(workspaceSource).toContain("Certification contribution");
+    expect(workspaceSource).toContain("EstimateImpactProjectionChart");
+    expect(source).toContain("Cumulative CO2e avoided");
+    expect(source).toContain("estimate-impact-projection-chart");
     expect(source).toContain("metric tons of carbon dioxide equivalent");
     expect(source).toContain("CO2e reduced/year");
     expect(source).not.toContain("CO2e reduced / year");

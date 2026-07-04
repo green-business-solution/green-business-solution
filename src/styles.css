@@ -8838,6 +8838,145 @@ dd {
   width: 100%;
 }
 
+.estimate-impact-projection-card {
+  background: #ffffff;
+  border: 1px solid #e1e8e3;
+  border-radius: 16px;
+  display: grid;
+  gap: 22px;
+  margin-top: 4px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 24px;
+}
+
+.estimate-impact-projection-header {
+  align-items: center;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: auto minmax(0, 1fr) minmax(260px, 0.36fr);
+  min-width: 0;
+}
+
+.estimate-impact-projection-header h3 {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.estimate-impact-projection-header h3 span {
+  color: #8b9790;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.estimate-impact-projection-header p {
+  color: #52635a;
+  font-size: 15px;
+  line-height: 22px;
+  margin: 8px 0 0;
+}
+
+.estimate-impact-projection-header aside {
+  background: linear-gradient(135deg, #edf7f1 0%, #f8fbf8 100%);
+  border-radius: 18px;
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  min-width: 0;
+  padding: 20px 22px;
+}
+
+.estimate-impact-projection-header aside small {
+  color: #0f7a4f;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+.estimate-impact-projection-header aside strong {
+  color: #0f7a4f;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.estimate-impact-projection-header aside span {
+  color: #52635a;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.estimate-impact-projection-chart {
+  min-width: 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.estimate-impact-projection-chart svg {
+  display: block;
+  min-width: 820px;
+  width: 100%;
+}
+
+.estimate-impact-chart-unit,
+.estimate-impact-chart-y-label,
+.estimate-impact-chart-x-label {
+  fill: #52635a;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.estimate-impact-chart-y-label {
+  font-size: 13px;
+}
+
+.estimate-impact-chart-grid {
+  stroke: #dfe7e2;
+  stroke-dasharray: 6 7;
+  stroke-width: 1;
+}
+
+.estimate-impact-chart-axis {
+  stroke: #cddbd3;
+  stroke-width: 1.5;
+}
+
+.estimate-impact-chart-empty-area {
+  fill: url("#impactProjectionEmptyGradient");
+  opacity: 0.55;
+}
+
+.estimate-impact-projection-empty {
+  background: #ffffff;
+  border: 1px solid #dfe7e2;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(11, 43, 27, 0.08);
+  display: grid;
+  gap: 3px;
+  left: 50%;
+  max-width: 320px;
+  padding: 12px 14px;
+  position: absolute;
+  text-align: center;
+  top: 46%;
+  transform: translate(-50%, -50%);
+}
+
+.estimate-impact-projection-empty strong {
+  color: #0f7a4f;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.estimate-impact-projection-empty span {
+  color: #52635a;
+  font-size: 13px;
+  line-height: 18px;
+}
+
 .estimate-certification-list {
   display: grid;
   gap: 0;
@@ -8915,6 +9054,7 @@ dd {
   .estimate-overview-lower-grid,
   .estimate-scenario-detail-grid,
   .estimate-impact-hero,
+  .estimate-impact-projection-header,
   .estimate-financing-strip,
   .application-overview-footer {
     grid-template-columns: 1fr;
@@ -8962,6 +9102,17 @@ dd {
 
   .estimate-opportunity-value strong {
     text-align: left;
+  }
+
+  .estimate-impact-projection-card {
+    padding: 18px;
+  }
+
+  .estimate-impact-projection-empty {
+    left: 18px;
+    right: auto;
+    top: 72px;
+    transform: none;
   }
 }
 

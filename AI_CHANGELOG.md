@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) impact projection placeholder
+
+- Added a cumulative CO2e avoided forecast chart shell to the selected retrofit Impact tab, using native SVG with unknown placeholders until backend sustainability projections are available.
+
 ## 2026-07-04 - Codex (GPT-5) Narragansett fake-user promotion
 
 - Added processed synthetic electric and gas utility records to the ignored generated fixtures for the Narragansett Organics Recovery sample test case and uploaded the refreshed 51-user fixture set to the development S3 fixture bucket.
