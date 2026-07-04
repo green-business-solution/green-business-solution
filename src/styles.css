@@ -2852,11 +2852,11 @@ dd {
   letter-spacing: 0.002em;
   line-height: 1.28;
   margin-top: clamp(34px, 4.5vh, 44px);
-  max-width: 100%;
+  max-width: calc(100% - clamp(240px, 18vw, 320px));
   min-height: 1.4em;
-  overflow-wrap: normal;
-  text-wrap: normal;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .process-onboarding-backdrop .code-accent {

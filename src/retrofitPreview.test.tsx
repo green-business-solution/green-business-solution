@@ -722,7 +722,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("font-weight: 500");
     expect(css).toContain(".process-onboarding-backdrop .code-accent");
     expect(css).toContain("font-size: clamp(16px, 1.12vw, 20px)");
-    expect(css).toContain("white-space: nowrap");
+    expect(css).toContain("max-width: calc(100% - clamp(240px, 18vw, 320px))");
+    expect(css).toContain("white-space: normal");
     expect(css).toContain(".process-onboarding-modal .process-modal-footer");
     expect(css).toContain(".process-onboarding-backdrop .process-next-button");
     expect(css).toContain("justify-content: flex-end");
