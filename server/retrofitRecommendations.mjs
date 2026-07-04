@@ -94,7 +94,13 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
 }
 
 export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user }) {
-  const retrofits = buildLightweightRetrofitGroups(intake);
+  const normalizedProfile = normalizeUserProfile(intake);
+  const calculationDate = now.toISOString().slice(0, 10);
+  const retrofits = buildLightweightRetrofitGroups(intake, {
+    calculationDate,
+    normalizedProfile,
+    subjectId: user?.userId || intake?.userId || "client"
+  });
   return {
     user,
     intake,
@@ -108,7 +114,7 @@ export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user
   };
 }
 
-function buildLightweightRetrofitGroups(intake) {
+function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedProfile, subjectId } = {}) {
   const selected = [];
   for (const value of intake?.sustainability?.interestedImprovements || []) {
     const type = resolveRetrofitType(value);
@@ -121,16 +127,27 @@ function buildLightweightRetrofitGroups(intake) {
 
   return uniqueRetrofitTypes(selected)
     .slice(0, 8)
-    .map((type) => ({
-      retrofitTypeId: type.retrofitTypeId,
-      displayName: type.displayName,
-      parentCategory: type.parentCategory,
-      isPhysicalRetrofit: type.isPhysicalRetrofit,
-      opportunityCount: 0,
-      opportunities: [],
-      savingsPreview: null,
-      typicalComponents: type.typicalComponents || []
-    }));
+    .map((type) => {
+      const group = {
+        retrofitTypeId: type.retrofitTypeId,
+        displayName: type.displayName,
+        parentCategory: type.parentCategory,
+        isPhysicalRetrofit: type.isPhysicalRetrofit,
+        opportunityCount: 0,
+        opportunities: [],
+        typicalComponents: type.typicalComponents || []
+      };
+      return {
+        ...group,
+        savingsPreview: buildAdminTestCaseSavingsPreview({
+          retrofitGroup: group,
+          sampleUserId: subjectId,
+          normalizedProfile,
+          taxContext: normalizedProfile?.tax || null,
+          calculationDate
+        })
+      };
+    });
 }
 
 function resolveRetrofitType(value) {

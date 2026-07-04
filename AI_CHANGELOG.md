@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) admin preview shell savings
+
+- Enriched the admin user preview retrofit shell with bill-modeled savings previews so completed-bill test cases do not initially show "Needs bill" while detailed opportunity matching loads.
+- Updated the server recommendation test to require calculated shell savings instead of null savings placeholders.
+
 ## 2026-07-04 - Codex (GPT-5) selected workspace header actions
 
 - Removed the selected workspace header recommendation callout and moved the confirm/discard actions into that header position.
