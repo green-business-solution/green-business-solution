@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T01:04:57.816Z",
+  "generatedAt": "2026-07-04T01:17:55.177Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -15,7 +15,7 @@
     },
     "matchedV2PackageEvaluationCount": 560,
     "runtimeInclusionStatusCounts": {
-      "included": 259,
+      "included": 279,
       "low_confidence": 20,
       "no_calculable_value": 72,
       "not_user_facing_default": 93,
@@ -23,14 +23,14 @@
       "non_monetary_workflow": 12,
       "custom_quote_estimate": 12,
       "no_supported_effect_amount": 12,
-      "human_review_required": 39,
+      "human_review_required": 19,
       "legacy_rule_preferred": 2
     },
     "outcomeClassCounts": {
-      "calculated_and_included": 259,
+      "calculated_and_included": 279,
       "suppressed_without_amount": 118,
       "source_or_package_blocked": 123,
-      "computed_but_suppressed": 34,
+      "computed_but_suppressed": 14,
       "non_monetary_workflow": 12,
       "calculated_zero_or_no_supported_amount": 12,
       "legacy_rule_preferred": 2
@@ -41,12 +41,12 @@
       "recurring_savings": 53,
       "financing_subsidy": 2,
       "no_cash_value": 28,
-      "process_value": 24,
+      "process_value": 34,
       "tax_rate_preference": 1,
       "tax_exemption": 3
     },
-    "runtimeIncludedPackageCount": 259,
-    "computedButSuppressedPackageCount": 34,
+    "runtimeIncludedPackageCount": 279,
+    "computedButSuppressedPackageCount": 14,
     "missingEvidenceOrInputPackageCount": 0,
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 2,
@@ -62,16 +62,16 @@
   "grantAndIncentivePackageOutcomes": {
     "count": 525,
     "outcomeClassCounts": {
-      "calculated_and_included": 259,
+      "calculated_and_included": 279,
       "suppressed_without_amount": 114,
       "source_or_package_blocked": 103,
-      "computed_but_suppressed": 34,
+      "computed_but_suppressed": 14,
       "non_monetary_workflow": 1,
       "calculated_zero_or_no_supported_amount": 12,
       "legacy_rule_preferred": 2
     },
     "runtimeInclusionStatusCounts": {
-      "included": 259,
+      "included": 279,
       "low_confidence": 20,
       "no_calculable_value": 57,
       "not_user_facing_default": 93,
@@ -79,10 +79,10 @@
       "non_monetary_workflow": 1,
       "custom_quote_estimate": 12,
       "no_supported_effect_amount": 12,
-      "human_review_required": 35,
+      "human_review_required": 15,
       "legacy_rule_preferred": 2
     },
-    "totalComputedAmountCents": 641933061,
+    "totalComputedAmountCents": 641626061,
     "sampleRows": [
       {
         "sampleUserId": "california-endowment-hq",
@@ -8793,155 +8793,37 @@
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
+        "sampleUserId": "common-ground-coop-urbana",
+        "sampleName": "common-ground-coop-urbana",
         "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22174",
+        "programName": "Electric Vehicle Fleet Fee Exemption",
+        "runtimeInclusionStatus": "not_user_facing_default",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
+        "confidence": "high",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
+            "inputKey": "number_of_exempt_electric_vehicles_registered_in_covered_area",
+            "canonicalInputKey": "number_of_exempt_electric_vehicles_registered_in_covered_area",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
+            "inputKey": "fleet_subject_to_covered_area_user_fee",
+            "canonicalInputKey": "fleet_subject_to_covered_area_user_fee",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
+            "inputKey": "fiscal_years_claimed",
+            "canonicalInputKey": "fiscal_years_claimed",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8949,507 +8831,12 @@
           }
         ],
         "effectTypes": [
-          "one_time_savings"
+          "recurring_savings"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "ground_source_geothermal_heat_pump",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "the-rose-minneapolis-household",
-        "sampleName": "the-rose-minneapolis-household",
-        "retrofitTypeId": "ground_source_geothermal_heat_pump",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "charger_type",
-            "canonicalInputKey": "measure_selection",
-            "source": "synthetic_test_case_measure_selection",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "participating_utility_confirmation",
-            "canonicalInputKey": "participating_utility_confirmation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "proof_of_purchase",
-            "canonicalInputKey": "proof_of_purchase",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "connection_status_for_chargepoint",
-            "canonicalInputKey": "connection_status_for_chargepoint",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
+        "computedAmountCents": 2000,
         "includedInRuntimeTotals": false
       }
     ],

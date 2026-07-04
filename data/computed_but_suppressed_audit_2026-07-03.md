@@ -1,12 +1,12 @@
 # Computed-But-Suppressed Package Audit
 
-Generated: 2026-07-04T01:04:39.650Z
+Generated: 2026-07-04T01:17:55.170Z
 
 ## Summary
 
-- Computed-but-suppressed package evaluations: 34
-- Positive suppressed effect evaluations: 34
-- Unique positive package/effect targets: 6
+- Computed-but-suppressed package evaluations: 14
+- Positive suppressed effect evaluations: 14
+- Unique positive package/effect targets: 4
 - Ready for default inclusion candidates: 0
 - Targets needing GPT Pro/source repair: 0
 
@@ -14,7 +14,6 @@ Generated: 2026-07-04T01:04:39.650Z
 
 | Key | Count |
 | --- | --- |
-| needs_package_recode | 2 |
 | keep_human_review_source_blocked | 1 |
 | keep_suppressed_grant_ev | 1 |
 | needs_product_policy | 1 |
@@ -24,7 +23,7 @@ Generated: 2026-07-04T01:04:39.650Z
 
 | Key | Count |
 | --- | --- |
-| human_review_required | 27 |
+| human_review_required | 7 |
 | low_confidence | 4 |
 | not_user_facing_default | 3 |
 
@@ -32,9 +31,9 @@ Generated: 2026-07-04T01:04:39.650Z
 
 | Key | Count |
 | --- | --- |
-| one_time_savings | 3 |
 | financing_subsidy | 1 |
 | grant_expected_value | 1 |
+| one_time_savings | 1 |
 | recurring_savings | 1 |
 
 ## Ready For Default Inclusion
@@ -49,8 +48,6 @@ _None._
 
 | Program | Effect | Cash Class | Method | Evaluations | Amount Range | Action |
 | --- | --- | --- | --- | --- | --- | --- |
-| Grand Marais PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2539) | one_time_savings / measure_catalog | rebate | measure_catalog | 10 | $150-$500 | Do not include. GPT Pro found that current official source rows differ from the existing package; rebuild or split the package effect before reconsidering default inclusion. |
-| Princeton PUC - Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:2555) | one_time_savings / measure_catalog | rebate | measure_catalog | 10 | $150-$500 | Do not include. GPT Pro found that current official source rows differ from the existing package; rebuild or split the package effect before reconsidering default inclusion. |
 | Xcel Energy - Residential Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:1581) | one_time_savings / measure_catalog | rebate | measure_catalog | 7 | $600-$600 | Keep suppressed. GPT Pro found partial support but unresolved official-source access or term conflicts remain. |
 
 ## Policy / Intentional Suppression

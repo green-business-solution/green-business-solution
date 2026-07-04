@@ -1,40 +1,39 @@
 {
   "schemaVersion": "retrofi_computed_but_suppressed_audit.v1",
-  "generatedAt": "2026-07-04T01:04:39.650Z",
+  "generatedAt": "2026-07-04T01:17:55.170Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json"
   },
   "summary": {
-    "computedButSuppressedPackageEvaluationCount": 34,
-    "positiveSuppressedEffectEvaluationCount": 34,
-    "uniquePositiveEffectTargetCount": 6,
+    "computedButSuppressedPackageEvaluationCount": 14,
+    "positiveSuppressedEffectEvaluationCount": 14,
+    "uniquePositiveEffectTargetCount": 4,
     "recommendationCounts": {
-      "needs_package_recode": 2,
       "keep_human_review_source_blocked": 1,
       "keep_suppressed_grant_ev": 1,
       "needs_product_policy": 1,
       "needs_recurring_savings_policy": 1
     },
     "effectTypeCounts": {
-      "one_time_savings": 3,
       "financing_subsidy": 1,
       "grant_expected_value": 1,
+      "one_time_savings": 1,
       "recurring_savings": 1
     },
     "cashValueClassificationCounts": {
-      "rebate": 3,
       "cash_grant": 1,
       "process_value": 1,
+      "rebate": 1,
       "tariff_or_rate": 1
     },
     "calculationMethodCounts": {
-      "measure_catalog": 3,
       "percent_of_cost": 2,
-      "fixed_amount": 1
+      "fixed_amount": 1,
+      "measure_catalog": 1
     },
     "runtimeInclusionStatusCounts": {
-      "human_review_required": 27,
+      "human_review_required": 7,
       "low_confidence": 4,
       "not_user_facing_default": 3
     },
@@ -267,106 +266,6 @@
       }
     },
     {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
-      "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
-      "effectId": "effect_one_time_savings_1_62e8123e06b32401",
-      "effectType": "one_time_savings",
-      "calculationMethod": "measure_catalog",
-      "valueModelKind": "measure_catalog",
-      "cashValueClassification": "rebate",
-      "includedInUserFacingTotalDefault": false,
-      "humanReviewRequired": true,
-      "effectConfidenceOverall": 0.38,
-      "effectConfidenceLabel": "low",
-      "confidenceReasonCodes": [
-        "repair_status_calculation_package_found",
-        "calculation_status_calculable_with_missing_inputs",
-        "source_confidence_medium",
-        "estimate_confidence_medium",
-        "value_model_measure_catalog",
-        "computed_suppressed_source_repair_applied",
-        "research_status_program_changed",
-        "source_confidence_high",
-        "estimate_confidence_low",
-        "official_grand_marais_2026_source_verified_visual",
-        "program_changed_from_bright_energy_catalog",
-        "retrofi_measure_catalog_mismatch",
-        "current_local_ev_charger_rebate_is_15_dollars",
-        "ev_charging_rate_enrollment_is_separate_150_to_500_incentive",
-        "keep_human_review_recode_required"
-      ],
-      "humanReviewReasons": [
-        "Current Grand Marais PUC 2026 sources do not support the existing Bright Energy Solutions ChargePoint/Home Flex EV charger catalog for this opportunity.",
-        "The current Grand Marais 2026 rebate summary shows EV Chargers as a separate ENERGY STAR Level 2 Connected measure with a $15 rebate, while the $150-$500 amount range applies to a separate EV Charging Rate Enrollment incentive.",
-        "The existing effect should be recoded or split before default inclusion: one effect for the $15 connected Level 2 EV charger rebate, and a separate effect for the $500 first-household/$150 additional-EV time-of-use EV charging rate enrollment incentive.",
-        "Grand Marais Google Drive source forms were accessible visually through the Drive viewer but are image-based/dynamic rather than text-readable; keep review until the source package can preserve the corrected rows and citations."
-      ],
-      "computedSuppressedSourceRepairStatus": "program_changed",
-      "label": "For participating Bright Energy Solutions municipal utilities, a Wi-Fi-enabled ChargePoint Home Flex connected to the local utility receives $500; a different qualifying Level 2 charger receives $150.",
-      "evaluationCount": 10,
-      "runtimeInclusionStatusCounts": {
-        "human_review_required": 10
-      },
-      "packageConfidenceCounts": {
-        "medium": 10
-      },
-      "retrofitTypeIds": [
-        "ev_charger_installation",
-        "ground_source_geothermal_heat_pump",
-        "heat_pump_hvac_retrofit",
-        "heat_pump_water_heater",
-        "high_efficiency_commercial_dishwasher",
-        "high_efficiency_furnace_retrofit",
-        "high_efficiency_hvac_replacement",
-        "high_efficiency_refrigeration_equipment",
-        "led_lighting_retrofit",
-        "level_2_ev_charger_installation"
-      ],
-      "sampleUserIds": [
-        "the-rose-minneapolis-household"
-      ],
-      "amountCentsMin": 15000,
-      "amountCentsMax": 50000,
-      "amountCentsTotalAcrossEvaluations": 185000,
-      "defaultedInputKeyCounts": {
-        "measure_selection": 10,
-        "participating_utility_confirmation": 10,
-        "proof_of_purchase": 10,
-        "connection_status_for_chargepoint": 10
-      },
-      "defaultedInputSourceCounts": {
-        "synthetic_test_case_default": 30,
-        "synthetic_test_case_measure_selection": 10
-      },
-      "lowConfidenceDefaultedInputCount": 40,
-      "topDefaultedInputs": [
-        {
-          "value": "connection_status_for_chargepoint",
-          "count": 10
-        },
-        {
-          "value": "measure_selection",
-          "count": 10
-        },
-        {
-          "value": "participating_utility_confirmation",
-          "count": 10
-        },
-        {
-          "value": "proof_of_purchase",
-          "count": 10
-        }
-      ],
-      "auditRecommendation": {
-        "bucket": "needs_package_recode",
-        "action": "Do not include. GPT Pro found that current official source rows differ from the existing package; rebuild or split the package effect before reconsidering default inclusion.",
-        "needsGptPro": false,
-        "reasons": [
-          "computed-suppressed source repair found program_changed"
-        ]
-      }
-    },
-    {
       "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
       "programName": "Power Your Drive for Fleets",
       "effectId": "effect_financing_subsidy_2_72cf31805713d39c",
@@ -465,105 +364,6 @@
         "reasons": [
           "cash value classification is process_value",
           "effect type is financing_subsidy"
-        ]
-      }
-    },
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
-      "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
-      "effectId": "effect_one_time_savings_1_c7bf7c257460020e",
-      "effectType": "one_time_savings",
-      "calculationMethod": "measure_catalog",
-      "valueModelKind": "measure_catalog",
-      "cashValueClassification": "rebate",
-      "includedInUserFacingTotalDefault": false,
-      "humanReviewRequired": true,
-      "effectConfidenceOverall": 0.38,
-      "effectConfidenceLabel": "low",
-      "confidenceReasonCodes": [
-        "repair_status_calculation_package_found",
-        "calculation_status_calculable_with_missing_inputs",
-        "source_confidence_medium",
-        "estimate_confidence_medium",
-        "value_model_measure_catalog",
-        "computed_suppressed_source_repair_applied",
-        "research_status_program_changed",
-        "source_confidence_high",
-        "estimate_confidence_low",
-        "program_changed_official_princeton_rate_row_differs",
-        "current_catalog_amount_overstates_rebate",
-        "official_source_visual_not_text_parsed",
-        "measure_catalog_update_required_before_default_inclusion",
-        "source_confidence_high_official_princeton_smmpa_page",
-        "estimate_confidence_low_existing_estimate_invalid"
-      ],
-      "humanReviewReasons": [
-        "Current official Princeton/SMMPA 2026 EV charger form shows a different rebate row than RetroFi's Bright Energy Solutions catalog: $15 per qualifying ENERGY STAR Level 2 connected EV charger, not $500 for ChargePoint Home Flex or $150 for other Level 2 chargers.",
-        "The official Princeton EV charger form is rendered through Google Drive as an image rather than parsed text; a human source review should confirm the visual transcription and update the measure catalog before enabling user-facing totals.",
-        "The existing computed estimate overstates the current Princeton amount and should remain excluded until the EV charger catalog and label are replaced with the Princeton-specific 2026 row."
-      ],
-      "computedSuppressedSourceRepairStatus": "program_changed",
-      "label": "For participating Bright Energy Solutions municipal utilities, a Wi-Fi-enabled ChargePoint Home Flex connected to the local utility receives $500; a different qualifying Level 2 charger receives $150.",
-      "evaluationCount": 10,
-      "runtimeInclusionStatusCounts": {
-        "human_review_required": 10
-      },
-      "packageConfidenceCounts": {
-        "medium": 10
-      },
-      "retrofitTypeIds": [
-        "ev_charger_installation",
-        "ground_source_geothermal_heat_pump",
-        "heat_pump_hvac_retrofit",
-        "heat_pump_water_heater",
-        "high_efficiency_commercial_dishwasher",
-        "high_efficiency_furnace_retrofit",
-        "high_efficiency_hvac_replacement",
-        "high_efficiency_refrigeration_equipment",
-        "led_lighting_retrofit",
-        "level_2_ev_charger_installation"
-      ],
-      "sampleUserIds": [
-        "the-rose-minneapolis-household"
-      ],
-      "amountCentsMin": 15000,
-      "amountCentsMax": 50000,
-      "amountCentsTotalAcrossEvaluations": 185000,
-      "defaultedInputKeyCounts": {
-        "measure_selection": 10,
-        "participating_utility_confirmation": 10,
-        "proof_of_purchase": 10,
-        "connection_status_for_chargepoint": 10
-      },
-      "defaultedInputSourceCounts": {
-        "synthetic_test_case_default": 30,
-        "synthetic_test_case_measure_selection": 10
-      },
-      "lowConfidenceDefaultedInputCount": 40,
-      "topDefaultedInputs": [
-        {
-          "value": "connection_status_for_chargepoint",
-          "count": 10
-        },
-        {
-          "value": "measure_selection",
-          "count": 10
-        },
-        {
-          "value": "participating_utility_confirmation",
-          "count": 10
-        },
-        {
-          "value": "proof_of_purchase",
-          "count": 10
-        }
-      ],
-      "auditRecommendation": {
-        "bucket": "needs_package_recode",
-        "action": "Do not include. GPT Pro found that current official source rows differ from the existing package; rebuild or split the package effect before reconsidering default inclusion.",
-        "needsGptPro": false,
-        "reasons": [
-          "computed-suppressed source repair found program_changed"
         ]
       }
     },
