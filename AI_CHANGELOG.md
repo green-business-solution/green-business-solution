@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) grant estimate form/funding TODOs
+
+- Clarified that quote, scope, bill, filing, and project-input-dependent grant statuses are production form gates rather than source-data blockers.
+- Added a TODO for recurring funding-status refreshes on budget-limited or while-funds-last incentives.
+
 ## 2026-07-04 - Codex (GPT-5) scenario view toggle
 
 - Added a per-retrofit Scenarios tab toggle so admins can switch between the comparison matrix and the earlier scenario card/detail view.
