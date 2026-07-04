@@ -196,6 +196,7 @@ type AdminClientPortalProfilePayload = PortalPayload;
 type PortalRetrofitRecommendationsResponse = PortalPayload & {
   generatedAt: string;
   isProgressiveShell?: boolean;
+  isPartialRecommendations?: boolean;
   summary: {
     matchedRetrofitCount: number;
     matchedOpportunityCount: number;
@@ -2833,7 +2834,7 @@ function Footer({
     <footer className="site-footer">
       <div className="footer-brand">
         <Brand onClick={() => navigate("home")} />
-        <p>Helping businesses identify, fund, and plan high-value sustainability retrofits.</p>
+        <p>Helping you identify, fund, and plan high-value sustainability retrofits.</p>
       </div>
       <nav aria-label="Site links" className="footer-links">
         <span className="footer-heading">Site</span>
@@ -3101,7 +3102,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
 
           <div className="planet-scan-result-copy">
             <p className="planet-scan-eyebrow">RetroFi results</p>
-            <h2>RetroFi helps businesses find, compare, and claim retrofit incentives.</h2>
+            <h2>RetroFi helps you find, compare, and claim retrofit incentives.</h2>
             <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
           </div>
 
@@ -3197,7 +3198,7 @@ function HomePage({
         {[
           "Your information is kept private",
           "Utility bills are used only for analysis",
-          "Built for businesses, not consumers",
+          "Built for you, not consumers",
           "Recommendations are based on facility and program data"
         ].map((item) => (
           <span key={item}>{item}</span>
@@ -5434,6 +5435,37 @@ function UserDashboard({
   );
 }
 
+function mergePortalRetrofitRecommendationsPayload(
+  currentPayload: PortalRetrofitRecommendationsResponse | null,
+  detailPayload: PortalRetrofitRecommendationsResponse
+): PortalRetrofitRecommendationsResponse {
+  if (!detailPayload.isPartialRecommendations || !currentPayload) {
+    return detailPayload;
+  }
+
+  const detailRetrofitsById = new Map(detailPayload.retrofits.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
+  const seenRetrofitIds = new Set<string>();
+  const retrofits = currentPayload.retrofits.map((retrofit) => {
+    seenRetrofitIds.add(retrofit.retrofitTypeId);
+    return detailRetrofitsById.get(retrofit.retrofitTypeId) || retrofit;
+  });
+  for (const retrofit of detailPayload.retrofits) {
+    if (!seenRetrofitIds.has(retrofit.retrofitTypeId)) {
+      retrofits.push(retrofit);
+    }
+  }
+
+  return {
+    ...currentPayload,
+    generatedAt: detailPayload.generatedAt || currentPayload.generatedAt,
+    retrofits,
+    summary: {
+      matchedRetrofitCount: Math.max(currentPayload.summary.matchedRetrofitCount, retrofits.length),
+      matchedOpportunityCount: Math.max(currentPayload.summary.matchedOpportunityCount, detailPayload.summary.matchedOpportunityCount)
+    }
+  };
+}
+
 function CustomerRetrofitEstimatesPanel({
   credential,
   emptyMessage,
@@ -5465,12 +5497,20 @@ function CustomerRetrofitEstimatesPanel({
 }) {
   const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(initialPayload);
   const [isLoading, setIsLoading] = useState(!initialPayload);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [loadingRetrofitDetailIds, setLoadingRetrofitDetailIds] = useState<Record<string, boolean>>({});
   const [error, setError] = useState<string | null>(null);
   const requestKey = `${summaryEndpoint || ""}|${endpoint}`;
+  const requestedRetrofitDetailIdsRef = useRef<Set<string>>(new Set());
   const initialPayloadRef = useRef({ payload: initialPayload, requestKey });
   if (initialPayloadRef.current.requestKey !== requestKey) {
     initialPayloadRef.current = { payload: initialPayload, requestKey };
   }
+
+  useEffect(() => {
+    requestedRetrofitDetailIdsRef.current = new Set();
+    setLoadingRetrofitDetailIds({});
+  }, [requestKey]);
 
   useEffect(() => {
     let isMounted = true;
@@ -5479,6 +5519,7 @@ function CustomerRetrofitEstimatesPanel({
       setPayload(null);
       setError("Sign in again to load retrofit estimates.");
       setIsLoading(false);
+      setIsDetailLoading(false);
       return () => {
         isMounted = false;
       };
@@ -5496,6 +5537,7 @@ function CustomerRetrofitEstimatesPanel({
       } else {
         setPayload(null);
         setIsLoading(true);
+        setIsDetailLoading(false);
         setError(null);
       }
 
@@ -5516,10 +5558,12 @@ function CustomerRetrofitEstimatesPanel({
       }
 
       if (warmPayload && !warmPayload.isProgressiveShell) {
+        setIsDetailLoading(false);
         return;
       }
 
       try {
+        setIsDetailLoading(true);
         const detailPayload = await apiGet<PortalRetrofitRecommendationsResponse>(endpoint, {
           headers: adminAuthHeaders(authCredential)
         });
@@ -5535,7 +5579,10 @@ function CustomerRetrofitEstimatesPanel({
           setError(requestError instanceof Error ? `Detailed estimates could not load: ${requestError.message}` : "Detailed estimates could not load.");
         }
       } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+          setIsDetailLoading(false);
+        }
       }
     }
 
@@ -5546,6 +5593,29 @@ function CustomerRetrofitEstimatesPanel({
     };
   }, [credential, endpoint, onPayloadLoaded, summaryEndpoint]);
 
+  const loadRetrofitDetailsFirst = useCallback((retrofitId: string) => {
+    if (!credential || !retrofitId || requestedRetrofitDetailIdsRef.current.has(retrofitId)) {
+      return;
+    }
+    requestedRetrofitDetailIdsRef.current.add(retrofitId);
+    setLoadingRetrofitDetailIds((current) => ({ ...current, [retrofitId]: true }));
+    const separator = endpoint.includes("?") ? "&" : "?";
+    const detailEndpoint = `${endpoint}${separator}retrofitTypeId=${encodeURIComponent(retrofitId)}`;
+    void apiGet<PortalRetrofitRecommendationsResponse>(detailEndpoint, {
+      headers: adminAuthHeaders(credential)
+    })
+      .then((detailPayload) => {
+        setPayload((currentPayload) => mergePortalRetrofitRecommendationsPayload(currentPayload, detailPayload));
+        setError(null);
+      })
+      .catch((requestError) => {
+        setError(requestError instanceof Error ? `Detailed retrofit data could not load: ${requestError.message}` : "Detailed retrofit data could not load.");
+      })
+      .finally(() => {
+        setLoadingRetrofitDetailIds((current) => ({ ...current, [retrofitId]: false }));
+      });
+  }, [credential, endpoint]);
+
   return (
       <RetrofitRecommendationsPreview
         credential={credential}
@@ -5553,8 +5623,11 @@ function CustomerRetrofitEstimatesPanel({
         error={error}
         eyebrow={eyebrow}
         intro={intro}
+        isDetailLoading={isDetailLoading}
         isLoading={isLoading}
+        loadingRetrofitDetailIds={loadingRetrofitDetailIds}
         loadingMessage={loadingMessage}
+        onPrioritizeRetrofit={loadRetrofitDetailsFirst}
         hideBillData={hideBillData}
         hideFormDetails={hideFormDetails}
         enableSeededFormDetails={enableSeededFormDetails}
@@ -8127,8 +8200,11 @@ export function RetrofitRecommendationsPreview({
   error,
   eyebrow,
   intro,
+  isDetailLoading = false,
   isLoading,
+  loadingRetrofitDetailIds = {},
   loadingMessage,
+  onPrioritizeRetrofit,
   enableSeededFormDetails = false,
   hideBillData = false,
   hideFormDetails = true,
@@ -8140,8 +8216,11 @@ export function RetrofitRecommendationsPreview({
   error: string | null;
   eyebrow: string;
   intro: string;
+  isDetailLoading?: boolean;
   isLoading: boolean;
+  loadingRetrofitDetailIds?: Record<string, boolean>;
   loadingMessage: string;
+  onPrioritizeRetrofit?: (retrofitId: string) => void;
   enableSeededFormDetails?: boolean;
   hideBillData?: boolean;
   hideFormDetails?: boolean;
@@ -8294,6 +8373,8 @@ export function RetrofitRecommendationsPreview({
   const activeRetrofit = activePrimaryView === "retrofits" && activeRetrofitId
     ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
     : null;
+  const isProgressiveDetailLoading = Boolean(payload?.isProgressiveShell && isDetailLoading);
+  const activeRetrofitDetailsLoading = Boolean(activeRetrofit && (loadingRetrofitDetailIds[activeRetrofit.id] || (isProgressiveDetailLoading && activeRetrofit.opportunities.length === 0)));
   const activeFormRetrofit = activeFormRetrofitId
     ? preview.retrofits.find((retrofit) => retrofit.id === activeFormRetrofitId) || null
     : null;
@@ -8323,6 +8404,11 @@ export function RetrofitRecommendationsPreview({
       setActiveRetrofitId("");
     }
   }, [activeRetrofitId, displayedRetrofits]);
+
+  useEffect(() => {
+    if (!payload?.isProgressiveShell || !activeRetrofitId) return;
+    onPrioritizeRetrofit?.(activeRetrofitId);
+  }, [activeRetrofitId, onPrioritizeRetrofit, payload?.isProgressiveShell]);
 
   useEffect(() => {
     if (typeof document === "undefined" || !activeRetrofitId) return;
@@ -8559,6 +8645,12 @@ export function RetrofitRecommendationsPreview({
             <span>Retrofits</span>
           </button>
           {error ? <p className="error-message">{error}</p> : null}
+          {isProgressiveDetailLoading ? (
+            <section className="retrofit-detail-loading-banner">
+              <strong>Loading detailed opportunities and calculations...</strong>
+              <span>The retrofit workspace is available now; source-backed details will fill in as they finish loading.</span>
+            </section>
+          ) : null}
 
           {activePrimaryView === "dashboard" ? (
             <DashboardPerformanceHub
@@ -8586,6 +8678,7 @@ export function RetrofitRecommendationsPreview({
                   selectedScenarioId={selectedScenarioIds[activeRetrofit.id] || activeRetrofit.scenarios[0]?.id || ""}
                   selectedOpportunityIds={selectedOpportunityIds}
                   hideBillData={shouldMaskBillDerivedMetrics}
+                  isDetailLoading={activeRetrofitDetailsLoading}
                 />
               </div>
             </>
@@ -11112,6 +11205,7 @@ function RetrofitPreviewCardView({
   planState,
   retrofit,
   hideBillData,
+  isDetailLoading = false,
   selectedScenarioId,
   selectedOpportunityIds
 }: {
@@ -11125,6 +11219,7 @@ function RetrofitPreviewCardView({
   planState: string;
   retrofit: RetrofitPreviewCard;
   hideBillData: boolean;
+  isDetailLoading?: boolean;
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
@@ -11865,6 +11960,12 @@ function RetrofitPreviewCardView({
 
           {activeWorkspaceTab === "opportunities" ? (
             <section className="estimate-tab-panel estimate-opportunities-tab" data-workspace-panel="opportunities">
+              {isDetailLoading ? (
+                <div className="retrofit-detail-loading-inline">
+                  <strong>Loading detailed opportunities...</strong>
+                  <span>Matched incentives and application details are being filled in for this retrofit.</span>
+                </div>
+              ) : null}
               <div className="estimate-opportunity-summary-grid">
                 <EstimateMetricCard icon={<MetricImpactIcon />} label="Total opportunities" value={`${retrofit.opportunities.length}`} subtitle="Across incentives and rebates" />
                 <EstimateMetricCard icon={<MetricSavingsIcon />} label="Selected" value={`${selectedCount}`} subtitle={`Total selected value ${formatEstimateCents(selectedOpportunitiesTotalValue, "unavailable")}`} />
@@ -11937,7 +12038,11 @@ function RetrofitPreviewCardView({
                       ) : null}
                     </article>
                   );
-                }) : <p className="compact-empty">No external opportunities found yet for this retrofit.</p>}
+                }) : (
+                  <p className="compact-empty">
+                    {isDetailLoading ? "Loading external opportunities for this retrofit..." : "No external opportunities found yet for this retrofit."}
+                  </p>
+                )}
               </div>
             </section>
           ) : null}
@@ -14397,6 +14502,7 @@ function AdminUserPreviewStandalonePage({
         });
         if (isActive) {
           setPreviewOptions(response.options);
+          queueAdminRecommendationPrecompute(credential, response.options);
         }
       } catch (requestError) {
         if (isActive) {
@@ -14443,6 +14549,7 @@ function AdminUserPreviewStandalonePage({
         headers: adminAuthHeaders(credential)
       });
       setPreviewOptions(response.options);
+      queueAdminRecommendationPrecompute(credential, response.options);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not refresh user previews.");
     } finally {
@@ -14590,6 +14697,16 @@ function buildUserPreviewOptions(rows: AdminRow[]): UserPreviewOption[] {
       hasIntake: Boolean(row.intake)
     }))
     .sort((left, right) => Number(right.hasIntake) - Number(left.hasIntake) || left.clientName.localeCompare(right.clientName));
+}
+
+function queueAdminRecommendationPrecompute(credential: AuthCredential | null, options: UserPreviewOption[]) {
+  if (!credential || !options.length) return;
+  void apiPost<{ queuedUserCount: number }>("/api/admin/client-retrofit-recommendations/precompute", {
+    ...adminAuthBody(credential),
+    userIds: options.map((option) => option.userId)
+  }).catch(() => {
+    // Background warming should never block the admin preview.
+  });
 }
 
 function AdminTestCasesPanel() {

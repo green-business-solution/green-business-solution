@@ -1046,7 +1046,14 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("/api/admin/client-retrofit-preview/");
     expect(source).toContain("summaryEndpoint");
     expect(source).toContain("isProgressiveShell");
+    expect(source).toContain("isPartialRecommendations");
+    expect(source).toContain("mergePortalRetrofitRecommendationsPayload");
+    expect(source).toContain("retrofitTypeId=");
+    expect(source).toContain("Loading detailed opportunities and calculations");
+    expect(source).toContain("queueAdminRecommendationPrecompute");
+    expect(source).toContain("/api/admin/client-retrofit-recommendations/precompute");
     expect(source).toContain("Detailed estimates could not load");
+    expect(source).toContain("Detailed retrofit data could not load");
     expect(source).toContain("payloadCache");
     expect(source).toContain("initialPayload={selectedPayload}");
     expect(source).toContain("onPayloadLoaded={cacheSelectedPayload}");

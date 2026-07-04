@@ -66,12 +66,13 @@ export function buildRetrofitGroupsFromEligibleResults({
     .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
 }
 
-export function buildPortalRetrofitRecommendations({ intake, now = new Date(), opportunities, user }) {
+export function buildPortalRetrofitRecommendations({ intake, now = new Date(), opportunities, retrofitTypeIds = null, user }) {
   const normalizedProfile = normalizeUserProfile(intake);
   const calculationDate = now.toISOString().slice(0, 10);
+  const requestedRetrofitTypeIds = normalizeRetrofitTypeIdFilter(retrofitTypeIds);
   const eligibleResults = (opportunities || [])
     .filter(isVisibleOpportunity)
-    .map((opportunity) => buildEvaluatedOpportunity({ normalizedProfile, now, opportunity }))
+    .map((opportunity) => buildEvaluatedOpportunity({ normalizedProfile, now, opportunity, requestedRetrofitTypeIds }))
     .filter(Boolean)
     .filter((result) => result.eligibilityStatus === "eligible");
   const retrofits = buildRetrofitGroupsFromEligibleResults({
@@ -85,6 +86,7 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
     user,
     intake,
     generatedAt: now.toISOString(),
+    isPartialRecommendations: requestedRetrofitTypeIds.size > 0,
     summary: {
       matchedRetrofitCount: retrofits.length,
       matchedOpportunityCount: eligibleResults.length
@@ -218,9 +220,24 @@ function normalizeRetrofitLookupText(value) {
     .trim();
 }
 
-function buildEvaluatedOpportunity({ normalizedProfile, now, opportunity }) {
+function normalizeRetrofitTypeIdFilter(retrofitTypeIds) {
+  return new Set(
+    (Array.isArray(retrofitTypeIds) ? retrofitTypeIds : [])
+      .map((value) => normalizeRetrofitLookupText(value))
+      .filter(Boolean)
+  );
+}
+
+function buildEvaluatedOpportunity({ normalizedProfile, now, opportunity, requestedRetrofitTypeIds = new Set() }) {
   const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
   if (!isVisibleAvailability(matchProfile.availability)) {
+    return null;
+  }
+  const retrofitTypes = classifyRetrofitsForOpportunity(opportunity, matchProfile);
+  if (
+    requestedRetrofitTypeIds.size > 0 &&
+    !retrofitTypes.some((retrofit) => requestedRetrofitTypeIds.has(normalizeRetrofitLookupText(retrofit.retrofitTypeId)))
+  ) {
     return null;
   }
 
@@ -229,7 +246,7 @@ function buildEvaluatedOpportunity({ normalizedProfile, now, opportunity }) {
     opportunity,
     {
       ...matchProfile,
-      retrofitTypes: classifyRetrofitsForOpportunity(opportunity, matchProfile)
+      retrofitTypes
     },
     { now }
   );

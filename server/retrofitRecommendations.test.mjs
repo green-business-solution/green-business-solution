@@ -210,6 +210,47 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits.every((retrofit) => retrofit.opportunities.every((opportunity) => summarizeMatchResult(opportunity).opportunityId))).toBe(true);
   });
 
+  it("can build only the selected retrofit for prioritized detail loading", () => {
+    const intake = baseIntake();
+    const user = {
+      userId: intake.userId,
+      role: "client",
+      status: "active",
+      fullName: "Test Client",
+      email: "client@example.com",
+      companyName: "Retrofit Test Co",
+      authProvider: "google",
+      googleLinked: true,
+      isFakeUser: false,
+      createdAt: now.toISOString(),
+      lastLoginAt: now.toISOString()
+    };
+    const payload = buildPortalRetrofitRecommendations({
+      user,
+      intake,
+      opportunities: [
+        makeOpportunity({
+          opportunityId: "lighting-1",
+          canonicalTitle: "PG&E Business LED Rebate",
+          technologies: ["LED Lighting"]
+        }),
+        makeOpportunity({
+          opportunityId: "hvac-1",
+          canonicalTitle: "PG&E Commercial Heat Pump Incentive",
+          technologies: ["Heat Pumps"],
+          summary: "Commercial customers can receive incentives for high-efficiency heat pump HVAC upgrades."
+        })
+      ],
+      retrofitTypeIds: ["led_lighting_retrofit"],
+      now
+    });
+
+    expect(payload.isPartialRecommendations).toBe(true);
+    expect(payload.retrofits.map((retrofit) => retrofit.retrofitTypeId)).toEqual(["led_lighting_retrofit"]);
+    expect(payload.summary.matchedRetrofitCount).toBe(1);
+    expect(payload.summary.matchedOpportunityCount).toBe(1);
+  });
+
   it("keeps fixture-based savings previews attached to grouped retrofit recommendations", () => {
     const intake = baseIntake();
     const payload = buildPortalRetrofitRecommendations({

@@ -165,6 +165,8 @@ const retrofitRecommendationsCacheTtlMs = Math.max(
   60_000,
   Number.parseInt(process.env.GBS_RETROFIT_RECOMMENDATIONS_CACHE_TTL_MS || "300000", 10) || 300_000
 );
+const persistentRetrofitRecommendationsStateScope = "retrofitRecommendations";
+const persistentRetrofitRecommendationsCacheVersion = "2026-07-04-selected-retrofit-detail-v1";
 const retrofitRecommendationsCache = new Map();
 const retrofitRecommendationsPromiseCache = new Map();
 
@@ -1114,7 +1116,11 @@ async function getCachedOpportunities() {
   return opportunitiesCache.promise;
 }
 
-function retrofitRecommendationsCacheKey(user, intake) {
+function normalizeRetrofitTypeIdList(retrofitTypeIds) {
+  return [...new Set(cleanStringArray(retrofitTypeIds).map((value) => value.toLowerCase()).filter(Boolean))].sort();
+}
+
+function retrofitRecommendationsBaseCacheKey(user, intake) {
   return [
     user?.userId || "unknown",
     intake?.submissionId || "",
@@ -1124,8 +1130,16 @@ function retrofitRecommendationsCacheKey(user, intake) {
   ].join(":");
 }
 
-function readCachedRetrofitRecommendations(user, intake) {
-  const key = retrofitRecommendationsCacheKey(user, intake);
+function retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds = []) {
+  const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
+  return [
+    retrofitRecommendationsBaseCacheKey(user, intake),
+    requestedRetrofitTypeIds.length ? `retrofits:${requestedRetrofitTypeIds.join(",")}` : "all"
+  ].join(":");
+}
+
+function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = []) {
+  const key = retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds);
   const cached = retrofitRecommendationsCache.get(key);
   if (!cached) {
     return null;
@@ -1139,11 +1153,130 @@ function readCachedRetrofitRecommendations(user, intake) {
   return cached.payload;
 }
 
-function writeCachedRetrofitRecommendations(user, intake, payload) {
-  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake), {
+function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeIds = []) {
+  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds), {
     createdAt: Date.now(),
     payload
   });
+}
+
+function stableJsonStringify(value) {
+  if (Array.isArray(value)) {
+    return `[${value.map(stableJsonStringify).join(",")}]`;
+  }
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJsonStringify(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function retrofitRecommendationsFingerprint(user, intake) {
+  return crypto
+    .createHash("sha256")
+    .update(stableJsonStringify({
+      cacheVersion: persistentRetrofitRecommendationsCacheVersion,
+      intake: intake || null,
+      user: {
+        userId: user?.userId || null,
+        updatedAt: user?.updatedAt || null,
+        isFakeUser: Boolean(user?.isFakeUser)
+      }
+    }))
+    .digest("hex");
+}
+
+function persistentRetrofitRecommendationsStateKey(user) {
+  return {
+    stateScope: persistentRetrofitRecommendationsStateScope,
+    stateKey: `user:${cleanText(user?.userId) || "unknown"}`
+  };
+}
+
+function persistentRetrofitRecommendationsS3Key(user, fingerprint) {
+  return `runtime-cache/retrofit-recommendations/${encodeURIComponent(cleanText(user?.userId) || "unknown")}/${fingerprint}.json`;
+}
+
+function filterRetrofitRecommendationsPayload(payload, retrofitTypeIds = []) {
+  const requestedRetrofitTypeIds = new Set(normalizeRetrofitTypeIdList(retrofitTypeIds));
+  if (!requestedRetrofitTypeIds.size) {
+    return payload;
+  }
+  const retrofits = (payload?.retrofits || []).filter((retrofit) => requestedRetrofitTypeIds.has(cleanText(retrofit.retrofitTypeId).toLowerCase()));
+  return {
+    ...payload,
+    isPartialRecommendations: true,
+    retrofits,
+    summary: {
+      matchedRetrofitCount: retrofits.length,
+      matchedOpportunityCount: retrofits.reduce((sum, retrofit) => sum + (retrofit.opportunities?.length || 0), 0)
+    }
+  };
+}
+
+async function readPersistentRetrofitRecommendations(user, intake) {
+  if (!energyDataBucket || !runtimeStateTable) {
+    return null;
+  }
+  const fingerprint = retrofitRecommendationsFingerprint(user, intake);
+  try {
+    const result = await db.send(
+      new GetCommand({
+        TableName: runtimeStateTable,
+        Key: persistentRetrofitRecommendationsStateKey(user)
+      })
+    );
+    const item = result.Item || null;
+    if (item?.fingerprint !== fingerprint || !item?.s3Key) {
+      return null;
+    }
+    const response = await s3.send(
+      new GetObjectCommand({
+        Bucket: energyDataBucket,
+        Key: item.s3Key
+      })
+    );
+    const text = await response.Body?.transformToString("utf-8");
+    return text ? JSON.parse(text) : null;
+  } catch (error) {
+    console.warn(`[retrofit-recommendations-cache] persistent read failed for ${user?.userId || "unknown"}:`, error);
+    return null;
+  }
+}
+
+async function writePersistentRetrofitRecommendations(user, intake, payload) {
+  if (!energyDataBucket || !runtimeStateTable || !payload || payload.isPartialRecommendations) {
+    return;
+  }
+  const now = new Date().toISOString();
+  const fingerprint = retrofitRecommendationsFingerprint(user, intake);
+  const s3Key = persistentRetrofitRecommendationsS3Key(user, fingerprint);
+  try {
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: energyDataBucket,
+        Key: s3Key,
+        Body: JSON.stringify(payload),
+        ContentType: "application/json",
+        ServerSideEncryption: "AES256"
+      })
+    );
+    await db.send(
+      new PutCommand({
+        TableName: runtimeStateTable,
+        Item: {
+          ...persistentRetrofitRecommendationsStateKey(user),
+          cacheVersion: persistentRetrofitRecommendationsCacheVersion,
+          fingerprint,
+          s3Key,
+          userId: user?.userId || null,
+          generatedAt: payload.generatedAt || now,
+          updatedAt: now
+        }
+      })
+    );
+  } catch (error) {
+    console.warn(`[retrofit-recommendations-cache] persistent write failed for ${user?.userId || "unknown"}:`, error);
+  }
 }
 
 function encodeScanCursor(key) {
@@ -1588,13 +1721,36 @@ async function getUserRecord(userId) {
   return result.Item || null;
 }
 
-async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date() }) {
-  const cached = readCachedRetrofitRecommendations(user, intake);
+async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date(), persist = true, retrofitTypeIds = [] }) {
+  const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
+  const cached = readCachedRetrofitRecommendations(user, intake, requestedRetrofitTypeIds);
   if (cached) {
     return cached;
   }
 
-  const cacheKey = retrofitRecommendationsCacheKey(user, intake);
+  if (requestedRetrofitTypeIds.length > 0) {
+    const fullMemoryPayload = readCachedRetrofitRecommendations(user, intake);
+    if (fullMemoryPayload) {
+      const filteredPayload = filterRetrofitRecommendationsPayload(fullMemoryPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds);
+      return filteredPayload;
+    }
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake);
+    if (persistentPayload) {
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload);
+      const filteredPayload = filterRetrofitRecommendationsPayload(persistentPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds);
+      return filteredPayload;
+    }
+  } else if (persist) {
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake);
+    if (persistentPayload) {
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload);
+      return persistentPayload;
+    }
+  }
+
+  const cacheKey = retrofitRecommendationsCacheKey(user, intake, requestedRetrofitTypeIds);
   if (!retrofitRecommendationsPromiseCache.has(cacheKey)) {
     retrofitRecommendationsPromiseCache.set(
       cacheKey,
@@ -1604,9 +1760,13 @@ async function buildCachedPortalRetrofitRecommendations({ user, intake, now = ne
           user: publicUser(user),
           intake,
           opportunities,
-          now
+          now,
+          retrofitTypeIds: requestedRetrofitTypeIds
         });
-        writeCachedRetrofitRecommendations(user, intake, payload);
+        writeCachedRetrofitRecommendations(user, intake, payload, requestedRetrofitTypeIds);
+        if (persist && requestedRetrofitTypeIds.length === 0) {
+          await writePersistentRetrofitRecommendations(user, intake, payload);
+        }
         return payload;
       })().finally(() => {
         retrofitRecommendationsPromiseCache.delete(cacheKey);
@@ -1615,6 +1775,27 @@ async function buildCachedPortalRetrofitRecommendations({ user, intake, now = ne
   }
 
   return retrofitRecommendationsPromiseCache.get(cacheKey);
+}
+
+async function precomputeAdminClientRetrofitRecommendations(userIds) {
+  const uniqueUserIds = [...new Set(cleanStringArray(userIds))].slice(0, 75);
+  const results = [];
+  for (const userId of uniqueUserIds) {
+    try {
+      const user = await getUserRecord(userId);
+      if (!user || user.role !== "client") {
+        results.push({ userId, status: "skipped" });
+        continue;
+      }
+      const intake = await getIntake(user.userId);
+      await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date(), persist: true });
+      results.push({ userId, status: "ready" });
+    } catch (error) {
+      console.warn(`[retrofit-recommendations-cache] precompute failed for ${userId}:`, error);
+      results.push({ userId, status: "error" });
+    }
+  }
+  return results;
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -3374,7 +3555,15 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
     }
 
     const intake = await getIntake(user.userId);
-    res.json(await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date() }));
+    const retrofitTypeId = cleanText(req.query.retrofitTypeId);
+    res.json(
+      await buildCachedPortalRetrofitRecommendations({
+        user,
+        intake,
+        now: new Date(),
+        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
+      })
+    );
   } catch (error) {
     handleError(res, error);
   }
@@ -3475,6 +3664,17 @@ app.get("/api/admin/client-retrofit-preview/:userId", async (req, res) => {
   }
 });
 
+app.post("/api/admin/client-retrofit-recommendations/precompute", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const userIds = cleanStringArray(req.body?.userIds).slice(0, 75);
+    res.status(202).json({ queuedUserCount: userIds.length });
+    void precomputeAdminClientRetrofitRecommendations(userIds);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
@@ -3486,7 +3686,15 @@ app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) =
     }
 
     const intake = await getIntake(user.userId);
-    res.json(await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date() }));
+    const retrofitTypeId = cleanText(req.query.retrofitTypeId);
+    res.json(
+      await buildCachedPortalRetrofitRecommendations({
+        user,
+        intake,
+        now: new Date(),
+        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
+      })
+    );
   } catch (error) {
     handleError(res, error);
   }

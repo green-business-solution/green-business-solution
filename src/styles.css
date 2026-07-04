@@ -5111,6 +5111,29 @@ dd {
   padding: 18px;
 }
 
+.retrofit-detail-loading-banner,
+.retrofit-detail-loading-inline {
+  background: #f4fbf7;
+  border: 1px solid #cfe6d8;
+  border-radius: 14px;
+  color: #234238;
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+}
+
+.retrofit-detail-loading-banner strong,
+.retrofit-detail-loading-inline strong {
+  color: #0f6b46;
+}
+
+.retrofit-detail-loading-banner span,
+.retrofit-detail-loading-inline span {
+  color: #53635b;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .retrofit-picker-more-row {
   display: flex;
   gap: 10px;

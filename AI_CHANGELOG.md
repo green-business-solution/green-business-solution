@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) admin preview recommendation loading
+
+- Added persisted per-user retrofit recommendation caching backed by S3/runtime-state metadata, invalidated by a fingerprint of the user's current intake/test data.
+- Added selected-retrofit prioritized detail loading so a clicked retrofit can hydrate before the full recommendation payload finishes.
+- Added visible "loading detailed opportunities" states and background admin precompute queuing for fake-user recommendation payloads.
+
 ## 2026-07-04 - Codex (GPT-5) grant production action audit
 
 - Added grant production action buckets to the grant/tax coverage report so unresolved packages are separated into form-input gates, funding refresh needs, non-grant workflows, zero-placeholder no-calculable values, and formula repair targets.
