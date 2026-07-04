@@ -5919,7 +5919,7 @@ const PROCESS_ONBOARDING_LINES = [
   { id: "step1", text: "Step 1: Upload your bills" },
   { id: "step2", text: "Step 2: Choose a retrofit and answer a few questions" },
   { id: "step3", text: "Step 3: Get your opportunities, metrics, and more" },
-  { id: "step4", text: "Step 4: Receive automated retrofit implementation and rebate application support" },
+  { id: "step4", text: "Step 4: Receive implementation and application support" },
   { id: "step5", text: "Step 5: View your dashboard" },
   {
     id: "note",
@@ -7557,7 +7557,7 @@ function ProcessOnboardingModal({
   return (
     <div className="process-onboarding-backdrop" data-testid="process-onboarding-modal">
       <div className="sr-only" aria-live="off">
-        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and more. Step 4: Receive automated retrofit implementation and rebate application support. Step 5: View your dashboard. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
+        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and more. Step 4: Receive implementation and application support. Step 5: View your dashboard. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
       </div>
       <section
         aria-labelledby="process-onboarding-title"
@@ -7629,7 +7629,7 @@ function ProcessOnboardingModal({
             <ProcessStep number="1" text="Upload your bills" accent="Upload" />
             <ProcessStep number="2" text="Choose a retrofit and answer a few questions" accent="Choose" />
             <ProcessStep number="3" text="Get your opportunities, metrics, and more" accent="Get" />
-            <ProcessStep number="4" text="Receive automated retrofit implementation and rebate application support" accent="Receive" />
+            <ProcessStep number="4" text="Receive implementation and application support" accent="Receive" />
             <ProcessStep number="5" text="View your dashboard" accent="View" />
           </div>
           </div>
