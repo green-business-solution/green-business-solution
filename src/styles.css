@@ -8763,9 +8763,26 @@ dd {
 
 .estimate-impact-hero {
   align-items: center;
-  grid-template-columns: auto minmax(0, 1fr) minmax(220px, 0.45fr);
+  column-gap: 18px;
+  grid-template-columns: auto minmax(280px, 1fr) minmax(220px, 0.4fr);
   min-height: 132px;
   overflow: hidden;
+}
+
+.estimate-impact-copy {
+  align-content: center;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.estimate-impact-value-row {
+  align-items: baseline;
+  column-gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  row-gap: 2px;
 }
 
 .estimate-impact-leaf {
@@ -8789,17 +8806,30 @@ dd {
   font-weight: 800;
 }
 
+.estimate-impact-kicker {
+  font-size: 14px;
+  line-height: 18px;
+}
+
 .estimate-impact-hero strong {
   color: #0f7a4f;
   font-size: clamp(2.4rem, 4vw, 3.375rem);
-  line-height: 1.05;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
   overflow-wrap: anywhere;
 }
 
 .estimate-impact-hero b {
   color: #071b12;
   font-size: clamp(1rem, 1.45vw, 1.25rem);
-  margin-left: 12px;
+  line-height: 1.2;
+  margin-left: 0;
+}
+
+.estimate-impact-hero p {
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 520px;
 }
 
 .estimate-impact-illustration {

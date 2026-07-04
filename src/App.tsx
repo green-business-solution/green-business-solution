@@ -6879,6 +6879,33 @@ function formatImpactQuantity(value: number, maximumFractionDigits = 0) {
   }).format(value);
 }
 
+function stripAnnualUnitSuffix(unit: string) {
+  return unit.replace(/\s*\/\s*(year|yr)\b/gi, "").trim();
+}
+
+function formatAnnualImpactUnitLabel(unit: string, action = "avoided") {
+  const baseUnit = stripAnnualUnitSuffix(unit);
+  return baseUnit ? `${baseUnit} ${action}/year` : `${action}/year`;
+}
+
+function expandedImpactUnitLabel(unit: string) {
+  const normalized = stripAnnualUnitSuffix(unit).replace(/\s+/g, "").toLowerCase();
+  if (normalized === "tco2e") return "metric tons of carbon dioxide equivalent";
+  if (normalized === "kwh") return "kilowatt-hours";
+  if (normalized === "therms") return "therms";
+  if (normalized === "gallons") return "gallons";
+  if (normalized === "mmbtu") return "MMBtu";
+  if (normalized === "gge") return "gasoline gallon equivalents";
+  return stripAnnualUnitSuffix(unit) || unit;
+}
+
+function impactPlainLanguageSentence(impact: RetrofitEnvironmentalImpact["overall"]) {
+  if (impact.displayValue === "?") return impact.subtext;
+  const action = impact.impactType === "potential_identified" ? "identified" : "avoided";
+  const cadence = /\/\s*(year|yr)\b/i.test(impact.unit) ? " every year" : "";
+  return `${impact.displayValue} ${expandedImpactUnitLabel(impact.unit)} ${action}${cadence}.`;
+}
+
 function maskEnvironmentalImpactForNoBillData(impact: RetrofitEnvironmentalImpact): RetrofitEnvironmentalImpact {
   return {
     ...impact,
@@ -9956,7 +9983,7 @@ function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewMode
     <>
       <DashboardKpiGrid metrics={[
         dashboardMetric("Open Actions", String(actions.length), "Across certifications", "green"),
-        dashboardMetric("Highest Impact Action", highestImpact?.projectedOutcome || "Unavailable", "CO2e reduced / year", "green", !highestImpact),
+        dashboardMetric("Highest Impact Action", highestImpact?.projectedOutcome || "Unavailable", "CO2e reduced/year", "green", !highestImpact),
         dashboardMetric("Lowest Cost Action", lowestCost ? formatDashboardCurrencyCents(lowestCost.estimatedCostCents) : "Unavailable", "Total investment", "green", !lowestCost),
         dashboardMetric("Fastest Timeline Action", fastest?.timeRequired || "Unavailable", "Time to complete", "green", !fastest),
         dashboardMetric("Documents Ready %", formatDashboardPercent(viewModel.certifications.applicationReadinessPercent), "Documents ready to submit", "green", viewModel.certifications.applicationReadinessPercent == null)
@@ -12464,11 +12491,13 @@ function RetrofitPreviewCardView({
               <h3>Impact overview</h3>
               <section className="estimate-impact-hero">
                 <span className="estimate-impact-leaf" aria-hidden="true"><MetricSavingsIcon /></span>
-                <div>
-                  <span>Main impact estimate</span>
-                  <strong>{displayedEnvironmentalImpact.overall.displayValue}</strong>
-                  <b>{displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.unit} avoided / year`}</b>
-                  <p>{displayedEnvironmentalImpact.overall.subtext}</p>
+                <div className="estimate-impact-copy">
+                  <span className="estimate-impact-kicker">Main impact estimate</span>
+                  <div className="estimate-impact-value-row">
+                    <strong>{displayedEnvironmentalImpact.overall.displayValue}</strong>
+                    <b>{displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)}</b>
+                  </div>
+                  <p>{impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)}</p>
                 </div>
                 <EstimateImpactIllustration />
               </section>

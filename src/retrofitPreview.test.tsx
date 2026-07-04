@@ -1223,8 +1223,16 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Fastest payback");
     expect(source).toContain("Highest one-time & recurring savings");
     expect(workspaceSource).toContain("Main impact estimate");
+    expect(workspaceSource).toContain("estimate-impact-copy");
+    expect(workspaceSource).toContain("estimate-impact-value-row");
+    expect(workspaceSource).toContain("formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)");
+    expect(workspaceSource).toContain("impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)");
+    expect(workspaceSource).not.toContain("avoided / year");
     expect(workspaceSource).toContain("Additional impact metrics");
     expect(workspaceSource).toContain("Certification contribution");
+    expect(source).toContain("metric tons of carbon dioxide equivalent");
+    expect(source).toContain("CO2e reduced/year");
+    expect(source).not.toContain("CO2e reduced / year");
     expect(source).toContain("LEED O+M");
     expect(source).toContain("ENERGY STAR readiness");
     expect(source).toContain("Green Business certification");

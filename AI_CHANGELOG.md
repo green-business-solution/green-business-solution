@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) retrofit impact estimate copy
+
+- Restyled the selected retrofit impact hero value row and replaced internal estimate-basis copy with plain-language annual impact text.
+- Normalized annual impact unit labels so `tCO2e/year` displays as `tCO2e avoided/year` instead of duplicating year wording.
+
 ## 2026-07-04 - Codex (GPT-5) dashboard performance admin seed fix
 
 - Fixed dashboard performance admin seed/list behavior by paginating DynamoDB Scan/Query reads and returning real generated datasets from seed-all instead of placeholder summary arrays.
