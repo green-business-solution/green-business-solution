@@ -410,6 +410,94 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("SOURCE_DSIRE");
   });
 
+  it("hydrates test-case bill readiness from intake data and lets admins hide it", () => {
+    const payloadWithBills = {
+      ...liveShapedPayload,
+      intake: {
+        ...liveShapedPayload.intake,
+        uploadedUtilityFiles: [
+          {
+            fileId: "sample-electric",
+            clientIntakeId: "intake-1",
+            siteId: "intake-1:primary",
+            originalFilename: "sample-electric.json",
+            fileType: "unknown",
+            utilityCategory: "electric",
+            utilityProvider: "Sample Utility",
+            s3Key: "synthetic/sample-electric.json",
+            processingStatus: "processed",
+            uploadedAt: "2026-06-01T00:00:00.000Z",
+            processedAt: "2026-06-01T00:00:00.000Z",
+            errorMessage: null
+          }
+        ],
+        utilityExtractedValues: [
+          {
+            extractedValueId: "sample-annual-kwh",
+            clientIntakeId: "intake-1",
+            fileId: "sample-electric",
+            fieldId: "annual_kwh",
+            fieldDisplayName: "Annual kWh",
+            value: 12000,
+            unit: "kWh",
+            periodStart: "2025-01-01",
+            periodEnd: "2025-12-31",
+            confidence: "medium",
+            sourceType: "unknown",
+            sourceText: null,
+            sourcePath: null
+          }
+        ],
+        siteEnergyProfile: {
+          uploadedFileCount: 1,
+          processedFileCount: 1,
+          availableFieldIds: ["annual_kwh"],
+          latestUtilityProvider: "Sample Utility",
+          latestBillingPeriodStart: "2025-01-01",
+          latestBillingPeriodEnd: "2025-12-31",
+          annualKwh: 12000,
+          annualElectricCost: 240000,
+          averageCostPerKwh: 20,
+          monthlySummaries: [],
+          utilitySummaries: [],
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+        }
+      }
+    } as any;
+
+    const shownHtml = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview
+        emptyMessage="No retrofit recommendations yet."
+        error={null}
+        eyebrow="Admin-only portal preview"
+        intro="Review recommended retrofits."
+        isLoading={false}
+        loadingMessage="Loading live retrofit recommendations for this client..."
+        hideBillData={false}
+        payload={payloadWithBills}
+        title="Retrofit Recommendations"
+      />
+    );
+    const hiddenHtml = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview
+        emptyMessage="No retrofit recommendations yet."
+        error={null}
+        eyebrow="Admin-only portal preview"
+        intro="Review recommended retrofits."
+        isLoading={false}
+        loadingMessage="Loading live retrofit recommendations for this client..."
+        hideBillData={true}
+        payload={payloadWithBills}
+        title="Retrofit Recommendations"
+      />
+    );
+
+    expect(shownHtml).toContain("Retrofit readiness: Bills complete");
+    expect(shownHtml).not.toContain("Upload bills to estimate savings.");
+    expect(hiddenHtml).toContain("Retrofit readiness: Bills incomplete");
+    expect(hiddenHtml).toContain("Upload bills to estimate savings.");
+  });
+
   it("updates local confirmation state helpers", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
     const firstAssumption = preview.retrofits[0].editableAssumptions[0];

@@ -6047,16 +6047,8 @@ function normalizeUtilityCategoryToBillUploadStepId(value: UtilityCategory | str
   return null;
 }
 
-function hasStoredBillUploadProgress(state: BillUploadState) {
-  return Boolean(
-    state.flowComplete ||
-    Object.values(state.files).some(Boolean) ||
-    Object.values(state.statuses).some((status) => status !== "pending")
-  );
-}
-
 function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState: BillUploadState) {
-  if (!intake || hasStoredBillUploadProgress(baseState)) return baseState;
+  if (!intake) return baseState;
   const nextState: BillUploadState = {
     ...baseState,
     files: { ...baseState.files },
@@ -6072,7 +6064,19 @@ function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState
       nextState.statuses[step.id] = "uploaded";
     }
   }
+  nextState.flowComplete = nextState.flowComplete || BILL_UPLOAD_STEPS.every((step) => nextState.statuses[step.id] === "uploaded");
   return nextState;
+}
+
+function intakeHasUtilityBillData(intake: IntakeRecord | null | undefined) {
+  return Boolean(
+    intake?.uploadedUtilityFiles?.length ||
+    intake?.utilityExtractedValues?.length ||
+    intake?.siteEnergyProfile?.uploadedFileCount ||
+    intake?.siteEnergyProfile?.processedFileCount ||
+    intake?.siteEnergyProfile?.availableFieldIds?.length ||
+    intake?.siteEnergyProfile?.utilitySummaries?.some((summary) => summary.uploadedFileCount || summary.processedFileCount || summary.availableFieldIds.length)
+  );
 }
 
 function getBillUploadStepIndex(stepId: BillUploadStepId | null | undefined) {
@@ -7241,12 +7245,18 @@ export function RetrofitRecommendationsPreview({
   title: string;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
-  const hasUploadedBills = Boolean(payload?.intake?.uploadedUtilityFiles?.length || payload?.intake?.utilityExtractedValues?.length);
+  const hasUploadedBills = intakeHasUtilityBillData(payload?.intake);
   const billUploadStorageKey = useMemo(() => getBillUploadStorageKey(preview.profileId, preview.intakeId), [preview.intakeId, preview.profileId]);
   const [billUploadModalOpen, setBillUploadModalOpen] = useState(false);
   const [billUploadState, setBillUploadState] = useState<BillUploadState>(() => loadBillUploadState(billUploadStorageKey));
   const [billUploadFocusStepId, setBillUploadFocusStepId] = useState<BillUploadStepId | null>(null);
-  const shouldMaskBillDerivedMetrics = hideBillData || (!hasUploadedBills && !billUploadState.flowComplete);
+  const intakeHydratedBillUploadState = useMemo(
+    () => hydrateBillUploadStateFromIntake(payload?.intake || null, billUploadState),
+    [billUploadState, payload?.intake]
+  );
+  const hiddenBillUploadState = useMemo(() => getDefaultBillUploadState(), []);
+  const effectiveBillUploadState = hideBillData ? hiddenBillUploadState : intakeHydratedBillUploadState;
+  const shouldMaskBillDerivedMetrics = hideBillData || (!hasUploadedBills && !effectiveBillUploadState.flowComplete);
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
     const ids: Record<string, string> = {};
@@ -7333,10 +7343,10 @@ export function RetrofitRecommendationsPreview({
   const retrofitReadinessById = useMemo(() => {
     const readinessById = new Map<string, RetrofitReadiness>();
     for (const retrofit of preview.retrofits) {
-      readinessById.set(retrofit.id, getRetrofitReadiness(retrofit, billUploadState, detailAnswers));
+      readinessById.set(retrofit.id, getRetrofitReadiness(retrofit, effectiveBillUploadState, detailAnswers));
     }
     return readinessById;
-  }, [billUploadState, detailAnswers, preview.retrofits]);
+  }, [detailAnswers, effectiveBillUploadState, preview.retrofits]);
 
   const displayedRetrofits = useMemo(() => {
     return preview.retrofits
@@ -7407,7 +7417,7 @@ export function RetrofitRecommendationsPreview({
 
   function handleUploadBillsForRetrofit(retrofit: RetrofitPreviewCard) {
     const firstMissingRequiredBill = getRequiredBillTypesForRetrofit(retrofit).find(
-      (billType) => billUploadState.statuses[billType] !== "uploaded"
+      (billType) => effectiveBillUploadState.statuses[billType] !== "uploaded"
     );
     setBillUploadFocusStepId(firstMissingRequiredBill || null);
     setBillUploadModalOpen(true);
@@ -7510,7 +7520,7 @@ export function RetrofitRecommendationsPreview({
   function handleRetrofitTabClick(retrofitId: string) {
     const retrofit = preview.retrofits.find((item) => item.id === retrofitId);
     if (!retrofit) return;
-    const readiness = retrofitReadinessById.get(retrofit.id) || getRetrofitReadiness(retrofit, billUploadState, detailAnswers);
+    const readiness = retrofitReadinessById.get(retrofit.id) || getRetrofitReadiness(retrofit, effectiveBillUploadState, detailAnswers);
     if (!readiness.billsComplete) {
       handleUploadBillsForRetrofit(retrofit);
       return;
