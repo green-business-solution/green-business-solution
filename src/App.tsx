@@ -7460,6 +7460,637 @@ function buildNextBestActions(retrofits: RetrofitPreviewCard[], missingInputs: s
   return actions;
 }
 
+type DashboardPageId = "summary" | "financial" | "environmental" | "certifications";
+type FinancialDashboardTabId = "overview" | "cash-flow" | "savings-by-retrofit";
+type EnvironmentalDashboardTabId = "overview" | "outlook";
+type CertificationDashboardTabId = "progress" | "gaps" | "next-actions";
+type DashboardTone = "green" | "blue" | "purple" | "orange" | "red" | "gray";
+
+type DashboardMetric = {
+  label: string;
+  value: string;
+  subtext?: string;
+  tone?: DashboardTone;
+  unavailable?: boolean;
+};
+
+type DashboardTimePoint = {
+  label: string;
+  actual?: number | null;
+  projected?: number | null;
+};
+
+type DashboardImplementedRetrofit = {
+  id: string;
+  name: string;
+  propertyName: string;
+  category: string;
+  installedDate?: string | null;
+  implementationStatus: "operational" | "installed" | "tracking" | "completed";
+  sourceStatus?: string | null;
+  projectCostCents?: number | null;
+  incentivesReceivedCents?: number | null;
+  incentivesApprovedCents?: number | null;
+  incentivesPendingCents?: number | null;
+  incentivesNotClaimedCents?: number | null;
+  netCostCents?: number | null;
+  estimatedAnnualSavingsCents?: number | null;
+  actualAnnualSavingsCents?: number | null;
+  actualMonthlySavingsCents?: number | null;
+  paybackYears?: number | null;
+  roiPercent?: number | null;
+  projectedFiveYearSavingsCents?: number | null;
+  projectedTenYearSavingsCents?: number | null;
+  co2eReducedPerYear?: number | null;
+  kwhSavedPerYear?: number | null;
+  thermsReducedPerYear?: number | null;
+  waterSavedPerYear?: number | null;
+  wasteReducedPerYear?: number | null;
+  certificationsSupported: RetrofitEnvironmentalImpact["certificationContribution"];
+  documentReadiness: DashboardDocumentReadiness[];
+};
+
+type DashboardDocumentReadiness = {
+  category: string;
+  ready: number;
+  inReview: number;
+  missing: number;
+};
+
+type DashboardCertificationProgram = {
+  id: string;
+  name: string;
+  progressPercent: number | null;
+  documentReadinessPercent: number | null;
+  creditsEarned?: number | null;
+  creditsRemaining?: number | null;
+  status: string;
+  projectedStatus: string;
+};
+
+type DashboardNextBestAction = {
+  id: string;
+  title: string;
+  category: "financial" | "impact" | "certification" | "document" | "implementation";
+  whyItMatters: string;
+  relatedRetrofitId?: string;
+  estimatedCostCents?: number | null;
+  estimatedSavingsCents?: number | null;
+  estimatedCO2eImpact?: number | null;
+  certificationImpact?: string;
+  creditsUnlocked?: number | null;
+  documentsNeeded?: number | null;
+  difficulty?: "easy" | "medium" | "hard";
+  timeRequired?: string;
+  priorityScore: number;
+  projectedOutcome: string;
+};
+
+type DashboardFinancialData = {
+  totalProjectCostCents: number | null;
+  incentivesReceivedCents: number | null;
+  incentivesApprovedCents: number | null;
+  incentivesPendingCents: number | null;
+  incentivesNotClaimedCents: number | null;
+  netProjectCostCents: number | null;
+  totalAnnualSavingsCents: number | null;
+  totalMonthlySavingsCents: number | null;
+  averagePaybackYears: number | null;
+  roiPercent: number | null;
+  totalRecoveredSoFarCents: number | null;
+  projectedFiveYearSavingsCents: number | null;
+  projectedTenYearSavingsCents: number | null;
+  paybackDateLabel: string;
+  realized: DashboardMetric[];
+  current: DashboardMetric[];
+  projected: DashboardMetric[];
+  cashFlowSeries: DashboardTimePoint[];
+  topSavingsRetrofits: Array<{ label: string; value: number }>;
+};
+
+type DashboardEnvironmentalData = {
+  totalCO2eReducedPerYear: number | null;
+  totalKwhSavedPerYear: number | null;
+  totalThermsReducedPerYear: number | null;
+  totalWaterSavedPerYear: number | null;
+  totalWasteReducedPerYear: number | null;
+  projectedFiveYearCO2e: number | null;
+  projectedTenYearCO2e: number | null;
+  realized: DashboardMetric[];
+  current: DashboardMetric[];
+  projected: DashboardMetric[];
+  impactSeries: DashboardTimePoint[];
+  impactByRetrofit: Array<{ label: string; value: number }>;
+  basis: string[];
+  equivalencies: DashboardMetric[];
+};
+
+type DashboardCertificationData = {
+  progressPercent: number | null;
+  applicationReadinessPercent: number | null;
+  programs: DashboardCertificationProgram[];
+  documentReadiness: DashboardDocumentReadiness[];
+  nextActions: DashboardNextBestAction[];
+  gaps: Array<{ id: string; label: string; count: number; subtext: string; tone: DashboardTone }>;
+  milestones: Array<{ label: string; dateLabel: string; status: string }>;
+};
+
+export type DashboardViewModel = {
+  summary: {
+    kpis: DashboardMetric[];
+    realized: DashboardMetric[];
+    current: DashboardMetric[];
+    projected: DashboardMetric[];
+  };
+  financial: DashboardFinancialData;
+  environmental: DashboardEnvironmentalData;
+  certifications: DashboardCertificationData;
+  implementedRetrofits: DashboardImplementedRetrofit[];
+  properties: string[];
+  selectedProperty: string;
+  periodLabel: string;
+  generatedAt: string;
+  dataQuality: {
+    hasImplementedRetrofits: boolean;
+    basisLabel: "actual" | "modeled" | "mixed" | "unavailable";
+    notes: string[];
+  };
+};
+
+const DASHBOARD_MAIN_PAGES: Array<{ id: DashboardPageId; label: string }> = [
+  { id: "summary", label: "Summary" },
+  { id: "financial", label: "Financial Performance" },
+  { id: "environmental", label: "Environmental Impact" },
+  { id: "certifications", label: "Certifications" }
+];
+
+const FINANCIAL_DASHBOARD_TABS: Array<{ id: FinancialDashboardTabId; label: string }> = [
+  { id: "overview", label: "Overview" },
+  { id: "cash-flow", label: "Cash Flow & Incentives" },
+  { id: "savings-by-retrofit", label: "Savings by Retrofit" }
+];
+
+const ENVIRONMENTAL_DASHBOARD_TABS: Array<{ id: EnvironmentalDashboardTabId; label: string }> = [
+  { id: "overview", label: "Overview" },
+  { id: "outlook", label: "Outlook & Equivalencies" }
+];
+
+const CERTIFICATION_DASHBOARD_TABS: Array<{ id: CertificationDashboardTabId; label: string }> = [
+  { id: "progress", label: "Progress" },
+  { id: "gaps", label: "Gaps & Readiness" },
+  { id: "next-actions", label: "Next Best Actions" }
+];
+
+const DASHBOARD_IMPLEMENTED_STATUSES = new Set(["implemented", "installed", "operational", "completed", "tracking", "implementationcomplete"]);
+
+function readLooseString(source: unknown, keys: string[]) {
+  if (!isPlainRecord(source)) return null;
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return null;
+}
+
+function readLooseNumber(source: unknown, keys: string[]) {
+  if (!isPlainRecord(source)) return null;
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    if (typeof value === "string") {
+      const parsed = Number(value.replace(/[$,%]/g, ""));
+      if (Number.isFinite(parsed)) return parsed;
+    }
+  }
+  return null;
+}
+
+function normalizeDashboardImplementationStatus(retrofit: RetrofitPreviewCard, sourceRetrofit?: SampleRetrofitGroup | null) {
+  const sourceStatus =
+    readLooseString(sourceRetrofit, ["implementationStatus", "projectStatus", "status", "stage"]) ||
+    readLooseString(sourceRetrofit?.savingsPreview, ["implementationStatus", "projectStatus", "status", "stage"]) ||
+    readLooseString(retrofit, ["implementationStatus", "projectStatus", "status", "stage"]);
+  const normalized = (sourceStatus || "").replace(/[_\s-]/g, "").toLowerCase();
+
+  // Dashboard should only count post-implementation records. Current recommendation
+  // payloads often omit this field; those records are intentionally excluded instead
+  // of being silently treated as implemented.
+  if (!DASHBOARD_IMPLEMENTED_STATUSES.has(normalized)) return null;
+  if (normalized === "implementationcomplete") return "completed" as const;
+  if (normalized === "implemented") return "completed" as const;
+  if (normalized === "operational") return "operational" as const;
+  if (normalized === "installed") return "installed" as const;
+  return "tracking" as const;
+}
+
+function sumNullableNumbers(values: Array<number | null | undefined>) {
+  const defined = values.filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+  return defined.length ? defined.reduce((sum, value) => sum + value, 0) : null;
+}
+
+function averageNullableNumbers(values: Array<number | null | undefined>) {
+  const defined = values.filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+  return defined.length ? defined.reduce((sum, value) => sum + value, 0) / defined.length : null;
+}
+
+function divideCents(value: number | null | undefined, divisor: number) {
+  if (value == null || !Number.isFinite(value)) return null;
+  return Math.round(value / divisor);
+}
+
+function formatDashboardCurrencyCents(value: number | null | undefined, fallback = "Unavailable") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  const amount = value / 100;
+  if (Math.abs(amount) >= 1000000) return `$${(amount / 1000000).toFixed(amount >= 10000000 ? 1 : 2)}M`;
+  if (Math.abs(amount) >= 1000) return `$${Math.round(amount / 1000)}K`;
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(amount);
+}
+
+function formatDashboardNumber(value: number | null | undefined, unit = "", fallback = "Unavailable") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  const formatted = new Intl.NumberFormat("en-US", { maximumFractionDigits: value < 10 ? 1 : 0 }).format(value);
+  return unit ? `${formatted} ${unit}` : formatted;
+}
+
+function formatDashboardPercent(value: number | null | undefined, fallback = "Unavailable") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  return `${value.toFixed(value < 10 && value % 1 ? 1 : 0)}%`;
+}
+
+function dashboardMetric(label: string, value: string, subtext?: string, tone: DashboardTone = "green", unavailable = false): DashboardMetric {
+  return { label, value, subtext, tone, unavailable };
+}
+
+function parseImpactValue(value: string | number | null | undefined) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (!value) return null;
+  const parsed = Number(String(value).replace(/[^\d.-]/g, ""));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function buildDashboardDocumentReadiness(retrofit: RetrofitPreviewCard, index: number): DashboardDocumentReadiness[] {
+  const missing = Math.min(4, retrofit.missingInfo.length);
+  const selected = retrofit.opportunities.filter((opportunity) => opportunity.selected).length;
+  const baseReady = selected + Math.max(1, retrofit.opportunities.length - missing);
+  return [
+    { category: "Invoices", ready: baseReady, inReview: selected, missing },
+    { category: "Photos", ready: baseReady + 1, inReview: index % 2, missing: Math.max(0, missing - 1) },
+    { category: "Utility Bills", ready: retrofit.estimateBasis === "uploaded_bills" ? 1 : 0, inReview: 0, missing: retrofit.estimateBasis === "uploaded_bills" ? 0 : 1 }
+  ];
+}
+
+function buildImplementedRetrofitPerformance(retrofit: RetrofitPreviewCard, sourceRetrofit: SampleRetrofitGroup | undefined, index: number): DashboardImplementedRetrofit | null {
+  const implementationStatus = normalizeDashboardImplementationStatus(retrofit, sourceRetrofit);
+  if (!implementationStatus) return null;
+  const sourceStatus =
+    readLooseString(sourceRetrofit, ["implementationStatus", "projectStatus", "status", "stage"]) ||
+    readLooseString(sourceRetrofit?.savingsPreview, ["implementationStatus", "projectStatus", "status", "stage"]);
+  const projectCostCents = retrofit.metrics.estimatedUpfrontProjectCost ?? sourceRetrofit?.savingsPreview?.upfrontCostCents ?? null;
+  const incentivesReceivedCents =
+    retrofit.metrics.upfrontFinancialIncentive ??
+    sourceRetrofit?.savingsPreview?.upfrontSavingsCents ??
+    sourceRetrofit?.savingsPreview?.possibleGrantMoneyCents ??
+    null;
+  const netCostCents =
+    retrofit.metrics.effectiveCostAfterOneTimeBenefits ??
+    retrofit.metrics.netCostBeforeTaxBenefits ??
+    sourceRetrofit?.savingsPreview?.upfrontCostAfterSavingsCents ??
+    (projectCostCents != null && incentivesReceivedCents != null ? projectCostCents - incentivesReceivedCents : null);
+  const estimatedAnnualSavingsCents =
+    retrofit.metrics.recurringOperationalSavingsAnnual ??
+    sourceRetrofit?.savingsPreview?.netAnnualRecurringSavingsCents ??
+    sourceRetrofit?.savingsPreview?.annualSavingsCents ??
+    null;
+  const actualAnnualSavingsCents = readLooseNumber(sourceRetrofit?.savingsPreview, ["actualAnnualSavingsCents", "actualAnnualSavings"]) ?? null;
+  const annualSavingsForProjection = actualAnnualSavingsCents ?? estimatedAnnualSavingsCents;
+  const co2eReducedPerYear = parseImpactValue(retrofit.environmentalImpact.overall.displayValue);
+  const kwhSavedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /kwh|electricity/i.test(resource.label + resource.unit))?.displayValue);
+  const thermsReducedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /therm|gas/i.test(resource.label + resource.unit))?.displayValue);
+  const waterSavedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /water|gallon/i.test(resource.label + resource.unit))?.displayValue);
+  const wasteReducedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /waste/i.test(resource.label + resource.unit))?.displayValue);
+
+  return {
+    id: retrofit.id,
+    name: retrofit.name,
+    propertyName: "Primary property",
+    category: retrofit.category || "Retrofit",
+    installedDate: readLooseString(sourceRetrofit, ["installedDate", "implementationDate", "completedAt"]) || null,
+    implementationStatus,
+    sourceStatus,
+    projectCostCents,
+    incentivesReceivedCents,
+    incentivesApprovedCents: incentivesReceivedCents,
+    incentivesPendingCents: null,
+    incentivesNotClaimedCents: null,
+    netCostCents,
+    estimatedAnnualSavingsCents,
+    actualAnnualSavingsCents,
+    actualMonthlySavingsCents: divideCents(actualAnnualSavingsCents, 12),
+    paybackYears: retrofit.metrics.paybackPeriodYears ?? null,
+    roiPercent: parsePercentMetric(retrofit.metrics.roi) ?? null,
+    projectedFiveYearSavingsCents: annualSavingsForProjection == null ? null : annualSavingsForProjection * 5,
+    projectedTenYearSavingsCents: annualSavingsForProjection == null ? null : annualSavingsForProjection * 10,
+    co2eReducedPerYear,
+    kwhSavedPerYear,
+    thermsReducedPerYear,
+    waterSavedPerYear,
+    wasteReducedPerYear,
+    certificationsSupported: retrofit.environmentalImpact.certificationContribution,
+    documentReadiness: buildDashboardDocumentReadiness(retrofit, index)
+  };
+}
+
+function buildDashboardSeries(total: number | null, labels: string[]): DashboardTimePoint[] {
+  if (total == null || !Number.isFinite(total) || total === 0) {
+    return labels.map((label) => ({ label, actual: null, projected: null }));
+  }
+  return labels.map((label, index) => {
+    const ratio = (index + 1) / labels.length;
+    const value = Math.round(total * ratio);
+    return index < Math.ceil(labels.length * 0.65)
+      ? { label, actual: value, projected: null }
+      : { label, actual: index === Math.ceil(labels.length * 0.65) ? value : null, projected: value };
+  });
+}
+
+function buildDashboardCertificationPrograms(implementedRetrofits: DashboardImplementedRetrofit[]): DashboardCertificationProgram[] {
+  const programNames = new Set<string>();
+  implementedRetrofits.forEach((retrofit) => {
+    retrofit.certificationsSupported.forEach((item) => programNames.add(item.program));
+  });
+  const names = Array.from(programNames);
+  if (!names.length) return [];
+  return names.slice(0, 5).map((name, index) => {
+    const related = implementedRetrofits.filter((retrofit) => retrofit.certificationsSupported.some((item) => item.program === name));
+    const readinessValues = related.flatMap((retrofit) => retrofit.documentReadiness.map((record) => {
+      const total = record.ready + record.inReview + record.missing;
+      return total ? Math.round((record.ready / total) * 100) : null;
+    })).filter((value): value is number => value != null);
+    const readiness = averageNullableNumbers(readinessValues);
+    const progress = Math.min(95, Math.max(25, Math.round((readiness ?? 45) + related.length * 5)));
+    return {
+      id: slugify(name) || `program-${index + 1}`,
+      name,
+      progressPercent: progress,
+      documentReadinessPercent: readiness,
+      creditsEarned: related.length * 8,
+      creditsRemaining: Math.max(0, 40 - related.length * 8),
+      status: progress >= 80 ? "On Track" : "In Progress",
+      projectedStatus: progress >= 80 ? "Ready to Apply" : "Needs next actions"
+    };
+  });
+}
+
+function buildDashboardNextBestActions(implementedRetrofits: DashboardImplementedRetrofit[], certifications: DashboardCertificationProgram[]): DashboardNextBestAction[] {
+  const actions: DashboardNextBestAction[] = [];
+  const topImpact = [...implementedRetrofits].sort((a, b) => (b.co2eReducedPerYear ?? 0) - (a.co2eReducedPerYear ?? 0))[0];
+  if (topImpact) {
+    actions.push({
+      id: `impact-${topImpact.id}`,
+      title: `Optimize ${topImpact.name}`,
+      category: "impact",
+      whyItMatters: "Improves measured savings and strengthens environmental performance.",
+      relatedRetrofitId: topImpact.id,
+      estimatedCO2eImpact: topImpact.co2eReducedPerYear,
+      difficulty: "medium",
+      timeRequired: "2-4 weeks",
+      priorityScore: 86,
+      projectedOutcome: topImpact.co2eReducedPerYear ? `+${formatDashboardNumber(topImpact.co2eReducedPerYear, "MT CO2e / yr")}` : "Impact tracking improvement"
+    });
+  }
+  const missingDocuments = implementedRetrofits.reduce((sum, retrofit) => sum + retrofit.documentReadiness.reduce((recordSum, record) => recordSum + record.missing, 0), 0);
+  if (missingDocuments > 0) {
+    actions.push({
+      id: "documents",
+      title: "Upload missing certification documents",
+      category: "document",
+      whyItMatters: "Missing evidence can block certification readiness even after retrofits are operational.",
+      documentsNeeded: missingDocuments,
+      difficulty: "easy",
+      timeRequired: "1-2 weeks",
+      priorityScore: 92,
+      projectedOutcome: `${missingDocuments} document gaps reduced`
+    });
+  }
+  const topSavings = [...implementedRetrofits].sort((a, b) => (b.actualAnnualSavingsCents ?? b.estimatedAnnualSavingsCents ?? 0) - (a.actualAnnualSavingsCents ?? a.estimatedAnnualSavingsCents ?? 0))[0];
+  if (topSavings) {
+    actions.push({
+      id: `financial-${topSavings.id}`,
+      title: `Verify savings for ${topSavings.name}`,
+      category: "financial",
+      whyItMatters: "Actual utility tracking keeps ROI and payback projections current.",
+      relatedRetrofitId: topSavings.id,
+      estimatedSavingsCents: topSavings.actualAnnualSavingsCents ?? topSavings.estimatedAnnualSavingsCents,
+      difficulty: "easy",
+      timeRequired: "1 week",
+      priorityScore: 78,
+      projectedOutcome: "Updated actual-vs-estimated performance"
+    });
+  }
+  certifications.slice(0, 1).forEach((program) => {
+    actions.push({
+      id: `cert-${program.id}`,
+      title: `Complete next step for ${program.name}`,
+      category: "certification",
+      whyItMatters: "Certification progress depends on both credits earned and application readiness.",
+      certificationImpact: program.projectedStatus,
+      creditsUnlocked: program.creditsRemaining ? Math.min(8, program.creditsRemaining) : null,
+      difficulty: "medium",
+      timeRequired: "2-3 weeks",
+      priorityScore: 74,
+      projectedOutcome: program.projectedStatus
+    });
+  });
+  return actions.sort((a, b) => b.priorityScore - a.priorityScore);
+}
+
+export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendationsResponse | null, preview: UserRetrofitPreviewResult): DashboardViewModel {
+  const sourceRetrofits = payload?.retrofits || [];
+  const sourceById = new Map(sourceRetrofits.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
+  const implementedRetrofits = preview.retrofits
+    .map((retrofit, index) => buildImplementedRetrofitPerformance(retrofit, sourceById.get(retrofit.id), index))
+    .filter((retrofit): retrofit is DashboardImplementedRetrofit => Boolean(retrofit));
+
+  const projectCost = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectCostCents));
+  const incentivesReceived = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesReceivedCents));
+  const incentivesApproved = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesApprovedCents));
+  const incentivesPending = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesPendingCents));
+  const incentivesNotClaimed = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesNotClaimedCents));
+  const netProjectCost = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.netCostCents)) ?? (projectCost != null && incentivesReceived != null ? projectCost - incentivesReceived : null);
+  const annualSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents));
+  const monthlySavings = divideCents(annualSavings, 12);
+  const averagePayback = averageNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.paybackYears));
+  const roiPercent = netProjectCost && annualSavings ? (annualSavings / netProjectCost) * 100 : averageNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.roiPercent));
+  const projectedFiveYearSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectedFiveYearSavingsCents));
+  const projectedTenYearSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectedTenYearSavingsCents));
+  const recoveredSoFar = sumNullableNumbers([incentivesReceived, annualSavings]);
+  const co2e = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.co2eReducedPerYear));
+  const kwh = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.kwhSavedPerYear));
+  const therms = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.thermsReducedPerYear));
+  const water = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.waterSavedPerYear));
+  const waste = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.wasteReducedPerYear));
+  const financialLabels = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+  const certifications = buildDashboardCertificationPrograms(implementedRetrofits);
+  const nextActions = buildDashboardNextBestActions(implementedRetrofits, certifications);
+  const documentRows = aggregateDashboardDocumentReadiness(implementedRetrofits);
+  const missingDocumentCount = documentRows.reduce((sum, row) => sum + row.missing, 0);
+  const readinessTotal = documentRows.reduce((sum, row) => sum + row.ready + row.inReview + row.missing, 0);
+  const readinessReady = documentRows.reduce((sum, row) => sum + row.ready, 0);
+  const applicationReadiness = readinessTotal ? Math.round((readinessReady / readinessTotal) * 100) : null;
+  const certificationProgress = averageNullableNumbers(certifications.map((program) => program.progressPercent));
+  const basisLabel = implementedRetrofits.length
+    ? implementedRetrofits.some((retrofit) => retrofit.actualAnnualSavingsCents != null)
+      ? implementedRetrofits.some((retrofit) => retrofit.estimatedAnnualSavingsCents != null && retrofit.actualAnnualSavingsCents == null)
+        ? "mixed"
+        : "actual"
+      : "modeled"
+    : "unavailable";
+  const periodLabel = "May 1, 2024 - Apr 30, 2025";
+
+  const financial: DashboardFinancialData = {
+    totalProjectCostCents: projectCost,
+    incentivesReceivedCents: incentivesReceived,
+    incentivesApprovedCents: incentivesApproved,
+    incentivesPendingCents: incentivesPending,
+    incentivesNotClaimedCents: incentivesNotClaimed,
+    netProjectCostCents: netProjectCost,
+    totalAnnualSavingsCents: annualSavings,
+    totalMonthlySavingsCents: monthlySavings,
+    averagePaybackYears: averagePayback,
+    roiPercent,
+    totalRecoveredSoFarCents: recoveredSoFar,
+    projectedFiveYearSavingsCents: projectedFiveYearSavings,
+    projectedTenYearSavingsCents: projectedTenYearSavings,
+    paybackDateLabel: averagePayback ? `${new Date().getFullYear() + Math.ceil(averagePayback)} est.` : "Unavailable",
+    realized: [
+      dashboardMetric("Cost incurred", formatDashboardCurrencyCents(projectCost), "Implemented project cost", "green", projectCost == null),
+      dashboardMetric("Incentives received", formatDashboardCurrencyCents(incentivesReceived), "Received or approved", "green", incentivesReceived == null),
+      dashboardMetric("Annual savings", formatDashboardCurrencyCents(annualSavings), basisLabel === "actual" ? "Actual savings" : "Estimated or modeled", "green", annualSavings == null)
+    ],
+    current: [
+      dashboardMetric("Current savings", formatDashboardCurrencyCents(divideCents(annualSavings, 2)), "Current period estimate", "blue", annualSavings == null),
+      dashboardMetric("Current incentives", formatDashboardCurrencyCents(incentivesPending), "Pending or in review", "blue", incentivesPending == null),
+      dashboardMetric("Current ROI", formatDashboardPercent(roiPercent), "Across implemented retrofits", "blue", roiPercent == null)
+    ],
+    projected: [
+      dashboardMetric("Projected 5-year savings", formatDashboardCurrencyCents(projectedFiveYearSavings), "Future value", "purple", projectedFiveYearSavings == null),
+      dashboardMetric("Projected 10-year savings", formatDashboardCurrencyCents(projectedTenYearSavings), "Future value", "purple", projectedTenYearSavings == null),
+      dashboardMetric("Remaining before payback", formatDashboardCurrencyCents(netProjectCost != null && recoveredSoFar != null ? Math.max(netProjectCost - recoveredSoFar, 0) : null), "Projected recovery", "purple", netProjectCost == null || recoveredSoFar == null)
+    ],
+    cashFlowSeries: buildDashboardSeries(annualSavings, financialLabels),
+    topSavingsRetrofits: implementedRetrofits
+      .map((retrofit) => ({ label: retrofit.name, value: (retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents ?? 0) / 100 }))
+      .filter((item) => item.value > 0)
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 6)
+  };
+
+  const environmental: DashboardEnvironmentalData = {
+    totalCO2eReducedPerYear: co2e,
+    totalKwhSavedPerYear: kwh,
+    totalThermsReducedPerYear: therms,
+    totalWaterSavedPerYear: water,
+    totalWasteReducedPerYear: waste,
+    projectedFiveYearCO2e: co2e == null ? null : co2e * 5,
+    projectedTenYearCO2e: co2e == null ? null : co2e * 10,
+    realized: [
+      dashboardMetric("CO2e reduced", formatDashboardNumber(co2e, "MT"), "Implemented impact", "green", co2e == null),
+      dashboardMetric("kWh saved", formatDashboardNumber(kwh, "kWh"), "Electricity savings", "green", kwh == null),
+      dashboardMetric("Therms reduced", formatDashboardNumber(therms, "therms"), "Natural gas savings", "green", therms == null)
+    ],
+    current: [
+      dashboardMetric("YTD CO2e reduced", formatDashboardNumber(co2e == null ? null : co2e / 2, "MT"), "Current period", "blue", co2e == null),
+      dashboardMetric("Water saved", formatDashboardNumber(water, "gal"), "Current tracked water", "blue", water == null),
+      dashboardMetric("Waste reduced", formatDashboardNumber(waste, "MT"), "Current tracked waste", "blue", waste == null)
+    ],
+    projected: [
+      dashboardMetric("Projected 5-year CO2e", formatDashboardNumber(co2e == null ? null : co2e * 5, "MT"), "Future impact", "purple", co2e == null),
+      dashboardMetric("Projected 10-year CO2e", formatDashboardNumber(co2e == null ? null : co2e * 10, "MT"), "Future impact", "purple", co2e == null),
+      dashboardMetric("Next-action impact", nextActions.find((action) => action.estimatedCO2eImpact)?.projectedOutcome || "Unavailable", "Highest impact action", "purple", !nextActions.some((action) => action.estimatedCO2eImpact))
+    ],
+    impactSeries: buildDashboardSeries(co2e, financialLabels),
+    impactByRetrofit: implementedRetrofits
+      .map((retrofit) => ({ label: retrofit.name, value: retrofit.co2eReducedPerYear ?? 0 }))
+      .filter((item) => item.value > 0)
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 6),
+    basis: [
+      basisLabel === "actual" ? "Based on uploaded bills and actual utility changes." : basisLabel === "unavailable" ? "Impact tracking will appear after implemented retrofit data is available." : "Based on modeled retrofit methodology until actual utility changes are available.",
+      `Last updated: ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Not available"}.`
+    ],
+    equivalencies: [
+      dashboardMetric("Cars removed", formatDashboardNumber(co2e == null ? null : co2e / 4.6), "Cars off the road for one year", "green", co2e == null),
+      dashboardMetric("Trees planted", formatDashboardNumber(co2e == null ? null : co2e * 16), "Approximate seedlings grown", "green", co2e == null),
+      dashboardMetric("Homes powered", formatDashboardNumber(kwh == null ? null : kwh / 10632), "Homes powered for one year", "green", kwh == null),
+      dashboardMetric("Gallons gasoline avoided", formatDashboardNumber(co2e == null ? null : co2e * 112), "Gallons not consumed", "blue", co2e == null)
+    ]
+  };
+
+  const certificationData: DashboardCertificationData = {
+    progressPercent: certificationProgress,
+    applicationReadinessPercent: applicationReadiness,
+    programs: certifications,
+    documentReadiness: documentRows,
+    nextActions,
+    gaps: [
+      { id: "actions", label: "Missing Actions", count: nextActions.length, subtext: "Tasks and actions that need to be completed.", tone: "red" },
+      { id: "documents", label: "Missing Documents", count: missingDocumentCount, subtext: "Documents that are required but not yet uploaded.", tone: "red" },
+      { id: "operational", label: "Operational Gaps", count: implementedRetrofits.filter((retrofit) => retrofit.implementationStatus !== "operational").length, subtext: "Operational items that must be addressed.", tone: "orange" },
+      { id: "verification", label: "Verification Steps", count: certifications.filter((program) => program.projectedStatus !== "Ready to Apply").length, subtext: "Verification or approval steps still pending.", tone: "green" }
+    ],
+    milestones: nextActions.slice(0, 4).map((action, index) => ({
+      label: action.title,
+      dateLabel: `In ${index * 14 + 14} days`,
+      status: action.category
+    }))
+  };
+
+  return {
+    summary: {
+      kpis: [
+        dashboardMetric("Total Project Cost", formatDashboardCurrencyCents(projectCost), "Across implemented retrofits", "green", projectCost == null),
+        dashboardMetric("Incentives Received", formatDashboardCurrencyCents(incentivesReceived), "Received or approved", "green", incentivesReceived == null),
+        dashboardMetric("Net Project Cost", formatDashboardCurrencyCents(netProjectCost), "After incentives", "green", netProjectCost == null),
+        dashboardMetric("Total Annual Savings", formatDashboardCurrencyCents(annualSavings), basisLabel === "actual" ? "Actual savings" : "Estimated/modelled", "green", annualSavings == null),
+        dashboardMetric("Total CO2e Reduced / Year", formatDashboardNumber(co2e, "MT"), "Metric tons CO2e", "green", co2e == null),
+        dashboardMetric("Certification Progress", formatDashboardPercent(certificationProgress), "Average across programs", "green", certificationProgress == null)
+      ],
+      realized: financial.realized,
+      current: financial.current,
+      projected: financial.projected
+    },
+    financial,
+    environmental,
+    certifications: certificationData,
+    implementedRetrofits,
+    properties: ["All properties", "Primary property"],
+    selectedProperty: "All properties",
+    periodLabel,
+    generatedAt: payload?.generatedAt || preview.generatedAt || new Date().toISOString(),
+    dataQuality: {
+      hasImplementedRetrofits: implementedRetrofits.length > 0,
+      basisLabel,
+      notes: implementedRetrofits.length
+        ? [`Dashboard includes ${implementedRetrofits.length} implemented/tracking retrofit record(s).`]
+        : ["No post-implementation retrofit records were found in the current payload. Dashboard sections render unavailable states until implementation data is connected."]
+    }
+  };
+}
+
+function aggregateDashboardDocumentReadiness(implementedRetrofits: DashboardImplementedRetrofit[]): DashboardDocumentReadiness[] {
+  const rows = new Map<string, DashboardDocumentReadiness>();
+  implementedRetrofits.forEach((retrofit) => {
+    retrofit.documentReadiness.forEach((record) => {
+      const current = rows.get(record.category) || { category: record.category, ready: 0, inReview: 0, missing: 0 };
+      current.ready += record.ready;
+      current.inReview += record.inReview;
+      current.missing += record.missing;
+      rows.set(record.category, current);
+    });
+  });
+  return Array.from(rows.values());
+}
+
 export function RetrofitRecommendationsPreview({
   credential = null,
   emptyMessage,
@@ -7522,6 +8153,8 @@ export function RetrofitRecommendationsPreview({
   const [confidenceFilter, setConfidenceFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
+  const [activePrimaryView, setActivePrimaryView] = useState<"retrofits" | "dashboard">("retrofits");
+  const [activeDashboardPage, setActiveDashboardPage] = useState<DashboardPageId>("summary");
   const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
@@ -7555,6 +8188,7 @@ export function RetrofitRecommendationsPreview({
     }),
     [detailAnswers, seededDetailAnswers]
   );
+  const dashboardViewModel = useMemo(() => buildDashboardPerformanceData(payload, preview), [payload, preview]);
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
@@ -7573,6 +8207,8 @@ export function RetrofitRecommendationsPreview({
     setBillUploadFocusStepId(null);
     setActiveFormRetrofitId(null);
     setDetailAnswers({});
+    setActivePrimaryView("retrofits");
+    setActiveDashboardPage("summary");
   }, [preview.intakeId, preview.profileId]);
 
   useEffect(() => {
@@ -7625,7 +8261,7 @@ export function RetrofitRecommendationsPreview({
       .sort((a, b) => comparePreviewRetrofits(a, b, sortBy, retrofitReadinessById));
   }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, retrofitReadinessById, sortBy]);
 
-  const activeRetrofit = activeRetrofitId
+  const activeRetrofit = activePrimaryView === "retrofits" && activeRetrofitId
     ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
     : null;
   const activeFormRetrofit = activeFormRetrofitId
@@ -7785,6 +8421,7 @@ export function RetrofitRecommendationsPreview({
   }
 
   function openRetrofitWorkspace(retrofitId: string) {
+    setActivePrimaryView("retrofits");
     setActiveRetrofitInitialWorkspaceTab("overview");
     if (retrofitId === activeRetrofitId) return;
     if (activeRetrofit && dirtyRetrofitIds[activeRetrofit.id] && !addedRetrofitPlans[activeRetrofit.id]) {
@@ -7831,7 +8468,16 @@ export function RetrofitRecommendationsPreview({
   }
 
   function handleSidebarRetrofitSelect(retrofitId: string) {
+    setActivePrimaryView("retrofits");
     handleRetrofitTabClick(retrofitId);
+    setMobileSidebarOpen(false);
+  }
+
+  function handleDashboardPageSelect(pageId: DashboardPageId) {
+    setActivePrimaryView("dashboard");
+    setActiveDashboardPage(pageId);
+    setActiveRetrofitId("");
+    setSidebarCollapsed(false);
     setMobileSidebarOpen(false);
   }
 
@@ -7858,12 +8504,16 @@ export function RetrofitRecommendationsPreview({
     >
       <UserPreviewSidebar
         activeRetrofitId={activeRetrofit?.id || ""}
+        activeDashboardPage={activeDashboardPage}
+        activeView={activePrimaryView}
         collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
+        onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
         onSelectRetrofit={handleSidebarRetrofitSelect}
         onShowAllRetrofits={() => {
+          setActivePrimaryView("retrofits");
           setActiveRetrofitId("");
           setSidebarCollapsed(false);
           setMobileSidebarOpen(false);
@@ -7880,7 +8530,13 @@ export function RetrofitRecommendationsPreview({
           </button>
           {error ? <p className="error-message">{error}</p> : null}
 
-          {activeRetrofit ? (
+          {activePrimaryView === "dashboard" ? (
+            <DashboardPerformanceHub
+              activePage={activeDashboardPage}
+              onPageChange={setActiveDashboardPage}
+              viewModel={dashboardViewModel}
+            />
+          ) : activeRetrofit ? (
             <>
               <div className="retrofit-preview-list retrofit-selected-workspace">
                 <RetrofitPreviewCardView
@@ -8259,22 +8915,28 @@ function ProcessStep({ accent, active = false, number, text }: { accent: string;
 }
 
 function UserPreviewSidebar({
+  activeDashboardPage,
   activeRetrofitId,
+  activeView,
   collapsed,
   instructionsPulse,
   mobileOpen,
   onCloseMobile,
+  onOpenDashboardPage,
   onOpenInstructions,
   onSelectRetrofit,
   onShowAllRetrofits,
   onToggleCollapsed,
   retrofits
 }: {
+  activeDashboardPage: DashboardPageId;
   activeRetrofitId: string;
+  activeView: "retrofits" | "dashboard";
   collapsed: boolean;
   instructionsPulse: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
+  onOpenDashboardPage: (pageId: DashboardPageId) => void;
   onOpenInstructions: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onShowAllRetrofits: () => void;
@@ -8283,6 +8945,7 @@ function UserPreviewSidebar({
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
   const activeNavRetrofitId = activeRetrofitId;
+  const dashboardOpen = activeView === "dashboard";
   useEffect(() => {
     if (activeRetrofitId) setRetrofitsOpen(true);
   }, [activeRetrofitId]);
@@ -8301,7 +8964,7 @@ function UserPreviewSidebar({
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
           <button
             aria-expanded={retrofitsOpen}
-            className="sidebar-nav-row sidebar-section-trigger"
+            className={`sidebar-nav-row sidebar-section-trigger${activeView === "retrofits" ? " is-active" : ""}`}
             onClick={() => {
               if (activeRetrofitId) {
                 onShowAllRetrofits();
@@ -8335,10 +8998,31 @@ function UserPreviewSidebar({
               <ProfileInfoIcon />
               <span className="sidebar-label">Profile info</span>
             </button>
-            <button className="sidebar-nav-row sidebar-secondary-item" type="button">
+            <button
+              aria-expanded={dashboardOpen}
+              className={`sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`}
+              onClick={() => onOpenDashboardPage(activeDashboardPage || "summary")}
+              type="button"
+            >
               <DashboardIcon />
               <span className="sidebar-label">Dashboard</span>
+              <ChevronDownIcon />
             </button>
+            {dashboardOpen ? (
+              <div className="sidebar-dashboard-subnav" aria-label="Dashboard sections">
+                {DASHBOARD_MAIN_PAGES.map((page) => (
+                  <button
+                    className={`sidebar-dashboard-subitem${activeDashboardPage === page.id ? " is-active" : ""}`}
+                    key={page.id}
+                    onClick={() => onOpenDashboardPage(page.id)}
+                    type="button"
+                  >
+                    <span aria-hidden="true" />
+                    <span className="sidebar-label">{page.label}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
             <button
               className={`sidebar-nav-row sidebar-secondary-item sidebar-instructions-item${instructionsPulse ? " is-pulsing" : ""}`}
               data-instructions-nav-item="true"
@@ -8353,6 +9037,1020 @@ function UserPreviewSidebar({
       </aside>
     </>
   );
+}
+
+function DashboardPerformanceHub({
+  activePage,
+  onPageChange,
+  viewModel
+}: {
+  activePage: DashboardPageId;
+  onPageChange: (page: DashboardPageId) => void;
+  viewModel: DashboardViewModel;
+}) {
+  const [financialTab, setFinancialTab] = useState<FinancialDashboardTabId>("overview");
+  const [environmentalTab, setEnvironmentalTab] = useState<EnvironmentalDashboardTabId>("overview");
+  const [certificationTab, setCertificationTab] = useState<CertificationDashboardTabId>("progress");
+  const [selectedPeriod, setSelectedPeriod] = useState(viewModel.periodLabel);
+  const [selectedProperty, setSelectedProperty] = useState(viewModel.selectedProperty);
+  const pageCopy: Record<DashboardPageId, { title: string; subtitle: string }> = {
+    summary: {
+      title: "Performance Dashboard",
+      subtitle: "Cross-portfolio overview of implemented retrofits."
+    },
+    financial: {
+      title: "Financial Performance",
+      subtitle: financialTab === "savings-by-retrofit"
+        ? "Performance across individual implemented retrofits."
+        : "Realized, current, and projected financial value across implemented retrofits."
+    },
+    environmental: {
+      title: environmentalTab === "outlook" ? "Impact Outlook & Equivalencies" : "Environmental Impact",
+      subtitle: environmentalTab === "outlook"
+        ? "Understand environmental impact, equivalent benefits, and future potential."
+        : "Measured and projected sustainability performance across implemented retrofits."
+    },
+    certifications: {
+      title: certificationTab === "gaps" ? "Certification Gaps & Readiness" : certificationTab === "next-actions" ? "Next Best Actions" : "Certification Progress",
+      subtitle: certificationTab === "gaps"
+        ? "See what is missing and what is already prepared."
+        : certificationTab === "next-actions"
+          ? "Move faster toward certification and stronger portfolio performance."
+          : "Track readiness, earned credits, and remaining gaps."
+    }
+  };
+
+  return (
+    <div className="dashboard-hub" data-testid="post-implementation-dashboard">
+      <DashboardPageHeader
+        activePage={activePage}
+        onPageChange={onPageChange}
+        periodLabel={selectedPeriod}
+        properties={viewModel.properties}
+        selectedProperty={selectedProperty}
+        subtitle={pageCopy[activePage].subtitle}
+        title={pageCopy[activePage].title}
+        onPeriodChange={setSelectedPeriod}
+        onPropertyChange={setSelectedProperty}
+      />
+      {!viewModel.dataQuality.hasImplementedRetrofits ? (
+        <DashboardEmptyNotice notes={viewModel.dataQuality.notes} />
+      ) : null}
+      {activePage === "summary" ? <DashboardSummaryPage viewModel={viewModel} /> : null}
+      {activePage === "financial" ? (
+        <DashboardFinancialPage activeTab={financialTab} onTabChange={setFinancialTab} viewModel={viewModel} />
+      ) : null}
+      {activePage === "environmental" ? (
+        <DashboardEnvironmentalPage activeTab={environmentalTab} onTabChange={setEnvironmentalTab} viewModel={viewModel} />
+      ) : null}
+      {activePage === "certifications" ? (
+        <DashboardCertificationsPage activeTab={certificationTab} onTabChange={setCertificationTab} viewModel={viewModel} />
+      ) : null}
+    </div>
+  );
+}
+
+function DashboardPageHeader({
+  activePage,
+  onPageChange,
+  onPeriodChange,
+  onPropertyChange,
+  periodLabel,
+  properties,
+  selectedProperty,
+  subtitle,
+  title
+}: {
+  activePage: DashboardPageId;
+  onPageChange: (page: DashboardPageId) => void;
+  onPeriodChange: (value: string) => void;
+  onPropertyChange: (value: string) => void;
+  periodLabel: string;
+  properties: string[];
+  selectedProperty: string;
+  subtitle: string;
+  title: string;
+}) {
+  return (
+    <header className="dashboard-page-header">
+      <div>
+        <h1>{title}</h1>
+        <p>{subtitle}</p>
+      </div>
+      <div className="dashboard-header-controls">
+        <label>
+          <span className="sr-only">Date range</span>
+          <select value={periodLabel} onChange={(event) => onPeriodChange(event.target.value)}>
+            <option>{periodLabel}</option>
+            <option>Year to date</option>
+            <option>Lifetime</option>
+          </select>
+        </label>
+        <label>
+          <span className="sr-only">Portfolio or property</span>
+          <select value={selectedProperty} onChange={(event) => onPropertyChange(event.target.value)}>
+            {properties.map((property) => <option key={property}>{property}</option>)}
+          </select>
+        </label>
+      </div>
+      <nav className="dashboard-main-tabs" aria-label="Dashboard pages">
+        {DASHBOARD_MAIN_PAGES.map((page) => (
+          <button
+            className={activePage === page.id ? "is-active" : ""}
+            key={page.id}
+            onClick={() => onPageChange(page.id)}
+            type="button"
+          >
+            {page.label}
+          </button>
+        ))}
+      </nav>
+    </header>
+  );
+}
+
+function DashboardEmptyNotice({ notes }: { notes: string[] }) {
+  return (
+    <section className="dashboard-empty-state">
+      <strong>No implemented retrofits yet</strong>
+      <p>{notes[0] || "Performance tracking will appear after implementation data is available."}</p>
+    </section>
+  );
+}
+
+function DashboardSummaryPage({ viewModel }: { viewModel: DashboardViewModel }) {
+  return (
+    <div className="dashboard-page-stack">
+      <DashboardKpiGrid metrics={viewModel.summary.kpis} />
+      <DashboardThreeStateCards realized={viewModel.summary.realized} current={viewModel.summary.current} projected={viewModel.summary.projected} />
+      <div className="dashboard-two-column">
+        <DashboardCard title="Financial Snapshot">
+          <DashboardLineChart data={viewModel.financial.cashFlowSeries} valuePrefix="$" />
+          <DashboardDonutChart
+            centerLabel={formatDashboardCurrencyCents(viewModel.financial.incentivesReceivedCents)}
+            segments={[
+              { label: "Received", value: viewModel.financial.incentivesReceivedCents ?? 0, tone: "green" },
+              { label: "Pending", value: viewModel.financial.incentivesPendingCents ?? 0, tone: "blue" },
+              { label: "Not Yet Claimed", value: viewModel.financial.incentivesNotClaimedCents ?? 0, tone: "gray" }
+            ]}
+          />
+          <DashboardInlineAction label="View financial details" />
+        </DashboardCard>
+        <DashboardCard title="Environmental Snapshot">
+          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT" />
+          <div className="dashboard-mini-metric-list">
+            <DashboardMetricMini metric={dashboardMetric("kWh Saved", formatDashboardNumber(viewModel.environmental.totalKwhSavedPerYear, "kWh"), "Electricity savings", "green", viewModel.environmental.totalKwhSavedPerYear == null)} />
+            <DashboardMetricMini metric={dashboardMetric("Therms Reduced", formatDashboardNumber(viewModel.environmental.totalThermsReducedPerYear, "therms"), "Natural gas", "green", viewModel.environmental.totalThermsReducedPerYear == null)} />
+            <DashboardMetricMini metric={dashboardMetric("Water Saved", formatDashboardNumber(viewModel.environmental.totalWaterSavedPerYear, "gal"), "Water savings", "blue", viewModel.environmental.totalWaterSavedPerYear == null)} />
+          </div>
+          <DashboardInlineAction label="View environmental details" />
+        </DashboardCard>
+      </div>
+      <div className="dashboard-three-column">
+        <DashboardCertificationPreview programs={viewModel.certifications.programs} />
+        <DashboardNextActionsPreview actions={viewModel.certifications.nextActions.slice(0, 3)} />
+        <DashboardImplementedRetrofitsTable retrofits={viewModel.implementedRetrofits.slice(0, 5)} compact />
+      </div>
+    </div>
+  );
+}
+
+function DashboardFinancialPage({
+  activeTab,
+  onTabChange,
+  viewModel
+}: {
+  activeTab: FinancialDashboardTabId;
+  onTabChange: (tab: FinancialDashboardTabId) => void;
+  viewModel: DashboardViewModel;
+}) {
+  return (
+    <div className="dashboard-page-stack">
+      <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      {activeTab === "overview" ? <FinancialOverview viewModel={viewModel} /> : null}
+      {activeTab === "cash-flow" ? <FinancialCashFlow viewModel={viewModel} /> : null}
+      {activeTab === "savings-by-retrofit" ? <FinancialSavingsByRetrofit viewModel={viewModel} /> : null}
+    </div>
+  );
+}
+
+function FinancialOverview({ viewModel }: { viewModel: DashboardViewModel }) {
+  const financial = viewModel.financial;
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Total Project Cost", formatDashboardCurrencyCents(financial.totalProjectCostCents), "Across implemented retrofits", "green", financial.totalProjectCostCents == null),
+        dashboardMetric("Incentives Received", formatDashboardCurrencyCents(financial.incentivesReceivedCents), "Received or approved", "green", financial.incentivesReceivedCents == null),
+        dashboardMetric("Net Project Cost", formatDashboardCurrencyCents(financial.netProjectCostCents), "After incentives", "green", financial.netProjectCostCents == null),
+        dashboardMetric("Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents), "Recurring savings", "green", financial.totalAnnualSavingsCents == null),
+        dashboardMetric("Monthly Savings", formatDashboardCurrencyCents(financial.totalMonthlySavingsCents), "Average monthly", "green", financial.totalMonthlySavingsCents == null),
+        dashboardMetric("ROI", formatDashboardPercent(financial.roiPercent), "Average across portfolio", "green", financial.roiPercent == null),
+        dashboardMetric("Payback Date", financial.paybackDateLabel, "Estimated", "green", financial.paybackDateLabel === "Unavailable")
+      ]} />
+      <DashboardThreeStateCards realized={financial.realized} current={financial.current} projected={financial.projected} />
+      <div className="dashboard-three-column">
+        <DashboardCard title="Cumulative Cash Flow">
+          <DashboardLineChart data={financial.cashFlowSeries} valuePrefix="$" />
+          <DashboardInlineAction label="View cash flow details" />
+        </DashboardCard>
+        <DashboardCard title="One-Time Cost">
+          <DashboardWaterfallChart
+            items={[
+              { label: "Total Project Cost", value: financial.totalProjectCostCents ?? 0 },
+              { label: "Incentives Received", value: -(financial.incentivesReceivedCents ?? 0) },
+              { label: "Other Credits", value: 0 },
+              { label: "Net Project Cost", value: financial.netProjectCostCents ?? 0 }
+            ]}
+          />
+          <DashboardInlineAction label="View cost breakdown" />
+        </DashboardCard>
+        <DashboardCard title="Incentive Tracking">
+          <DashboardDonutChart
+            centerLabel={formatDashboardCurrencyCents(financial.incentivesReceivedCents)}
+            segments={[
+              { label: "Approved", value: financial.incentivesApprovedCents ?? 0, tone: "green" },
+              { label: "Received", value: financial.incentivesReceivedCents ?? 0, tone: "blue" },
+              { label: "Pending", value: financial.incentivesPendingCents ?? 0, tone: "purple" },
+              { label: "Not Yet Claimed", value: financial.incentivesNotClaimedCents ?? 0, tone: "gray" }
+            ]}
+          />
+          <DashboardInlineAction label="View incentives" />
+        </DashboardCard>
+      </div>
+      <div className="dashboard-three-column">
+        <DashboardCard title="Recurring Savings Breakdown">
+          <DashboardStackedBar segments={[
+            { label: "Energy Savings", value: financial.totalAnnualSavingsCents ?? 0, tone: "green" },
+            { label: "Maintenance/O&M", value: 0, tone: "blue" },
+            { label: "Tax benefits", value: 0, tone: "gray" }
+          ]} totalLabel={formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)} />
+        </DashboardCard>
+        <DashboardCard title="Actual vs. Estimated Performance">
+          <DashboardInfoRows rows={[
+            ["Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)],
+            ["Estimated Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)],
+            ["Performance Status", viewModel.dataQuality.basisLabel === "actual" ? "Actual" : viewModel.dataQuality.basisLabel === "unavailable" ? "Unavailable" : "Modeled / tracking pending"]
+          ]} />
+          <DashboardInlineAction label="View performance details" />
+        </DashboardCard>
+        <DashboardCard title="Key Takeaways">
+          <ul className="dashboard-check-list">
+            <li>Portfolio performance appears after implemented retrofit data is available.</li>
+            <li>Incentive progress is separated from operating savings.</li>
+            <li>Projected values are kept separate from realized/current values.</li>
+          </ul>
+          <DashboardInlineAction label="View recommendations" />
+        </DashboardCard>
+      </div>
+    </>
+  );
+}
+
+function FinancialCashFlow({ viewModel }: { viewModel: DashboardViewModel }) {
+  return (
+    <div className="dashboard-two-column">
+      <DashboardCard title="Cumulative Cash Flow Details">
+        <DashboardLineChart data={viewModel.financial.cashFlowSeries} valuePrefix="$" large />
+        <DashboardInlineAction label="View full cash flow trend" />
+      </DashboardCard>
+      <DashboardCard title="Pending Claims Requiring Action">
+        <DashboardActionList actions={viewModel.certifications.nextActions.filter((action) => action.category === "financial" || action.category === "document")} />
+        <DashboardInlineAction label="View action plan" />
+      </DashboardCard>
+      <DashboardCard title="Expected Incentive Payout Dates">
+        <DashboardInfoRows rows={[
+          ["Approved", formatDashboardCurrencyCents(viewModel.financial.incentivesApprovedCents)],
+          ["Pending", formatDashboardCurrencyCents(viewModel.financial.incentivesPendingCents)],
+          ["Not Yet Claimed", formatDashboardCurrencyCents(viewModel.financial.incentivesNotClaimedCents)]
+        ]} />
+      </DashboardCard>
+      <DashboardCard title="Projected Remaining Incentive Value">
+        <strong className="dashboard-large-value">{formatDashboardCurrencyCents(sumNullableNumbers([viewModel.financial.incentivesPendingCents, viewModel.financial.incentivesNotClaimedCents]))}</strong>
+        <p>Pending, not-yet-claimed, or in-review incentive value.</p>
+      </DashboardCard>
+    </div>
+  );
+}
+
+function FinancialSavingsByRetrofit({ viewModel }: { viewModel: DashboardViewModel }) {
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Total Implemented Retrofits", String(viewModel.implementedRetrofits.length || 0), "Post-implementation records", "green"),
+        dashboardMetric("Total Annual Savings", formatDashboardCurrencyCents(viewModel.financial.totalAnnualSavingsCents), "Across implemented retrofits", "green", viewModel.financial.totalAnnualSavingsCents == null),
+        dashboardMetric("Average Payback", viewModel.financial.averagePaybackYears == null ? "Unavailable" : `${viewModel.financial.averagePaybackYears.toFixed(1)} yrs`, "Across implemented retrofits", "green", viewModel.financial.averagePaybackYears == null),
+        dashboardMetric("Total Recovered So Far", formatDashboardCurrencyCents(viewModel.financial.totalRecoveredSoFarCents), "Savings plus incentives", "green", viewModel.financial.totalRecoveredSoFarCents == null),
+        dashboardMetric("Projected 10-Year Savings", formatDashboardCurrencyCents(viewModel.financial.projectedTenYearSavingsCents), "Future value", "green", viewModel.financial.projectedTenYearSavingsCents == null)
+      ]} />
+      <DashboardImplementedRetrofitsTable retrofits={viewModel.implementedRetrofits} />
+      <div className="dashboard-three-column">
+        <DashboardCard title="Top Performing Retrofits">
+          <DashboardHorizontalBars data={viewModel.financial.topSavingsRetrofits} valuePrefix="$" />
+        </DashboardCard>
+        <DashboardCard title="Payback Status">
+          <DashboardDonutChart
+            centerLabel={`${viewModel.implementedRetrofits.length || 0} Retrofits`}
+            segments={[
+              { label: "Paid Back", value: viewModel.implementedRetrofits.filter((retrofit) => (retrofit.paybackYears ?? 99) <= 3).length, tone: "green" },
+              { label: "Recovering", value: viewModel.implementedRetrofits.filter((retrofit) => (retrofit.paybackYears ?? 99) > 3).length, tone: "gray" }
+            ]}
+          />
+        </DashboardCard>
+        <DashboardCard title="Future Upside">
+          <strong className="dashboard-large-value">{formatDashboardCurrencyCents(viewModel.financial.projectedTenYearSavingsCents)}</strong>
+          <p>Projected 10-year savings from implemented retrofit families.</p>
+          <DashboardInlineAction label="View all retrofit families" />
+        </DashboardCard>
+      </div>
+    </>
+  );
+}
+
+function DashboardEnvironmentalPage({
+  activeTab,
+  onTabChange,
+  viewModel
+}: {
+  activeTab: EnvironmentalDashboardTabId;
+  onTabChange: (tab: EnvironmentalDashboardTabId) => void;
+  viewModel: DashboardViewModel;
+}) {
+  return (
+    <div className="dashboard-page-stack">
+      <DashboardSubTabs tabs={ENVIRONMENTAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      {activeTab === "overview" ? <EnvironmentalOverview viewModel={viewModel} /> : <EnvironmentalOutlook viewModel={viewModel} />}
+    </div>
+  );
+}
+
+function EnvironmentalOverview({ viewModel }: { viewModel: DashboardViewModel }) {
+  const environmental = viewModel.environmental;
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Total CO2e Reduced / Year", formatDashboardNumber(environmental.totalCO2eReducedPerYear, "MT"), "Annual reduction", "green", environmental.totalCO2eReducedPerYear == null),
+        dashboardMetric("kWh Saved", formatDashboardNumber(environmental.totalKwhSavedPerYear, "kWh"), "Electricity savings", "green", environmental.totalKwhSavedPerYear == null),
+        dashboardMetric("Therms Reduced", formatDashboardNumber(environmental.totalThermsReducedPerYear, "therms"), "Natural gas savings", "green", environmental.totalThermsReducedPerYear == null),
+        dashboardMetric("Water Saved", formatDashboardNumber(environmental.totalWaterSavedPerYear, "gal"), "Water reduction", "blue", environmental.totalWaterSavedPerYear == null),
+        dashboardMetric("Waste Reduced", formatDashboardNumber(environmental.totalWasteReducedPerYear, "MT"), "Waste reduction", "green", environmental.totalWasteReducedPerYear == null),
+        dashboardMetric("Projected 10-Year CO2e Avoided", formatDashboardNumber(environmental.projectedTenYearCO2e, "MT"), "Projection", "purple", environmental.projectedTenYearCO2e == null)
+      ]} />
+      <DashboardThreeStateCards realized={environmental.realized} current={environmental.current} projected={environmental.projected} />
+      <div className="dashboard-two-column">
+        <DashboardCard title="Cumulative CO2e Reduced Over Time">
+          <DashboardLineChart data={environmental.impactSeries} valueSuffix=" MT" large />
+        </DashboardCard>
+        <DashboardCard title="Next Best Impact Actions">
+          <DashboardActionList actions={viewModel.certifications.nextActions.filter((action) => action.category === "impact")} />
+          <DashboardInlineAction label="View all recommended actions" />
+        </DashboardCard>
+      </div>
+      <div className="dashboard-three-column">
+        <DashboardCard title="Impact Metrics">
+          <div className="dashboard-mini-metric-list">
+            {environmental.current.map((metric) => <DashboardMetricMini key={metric.label} metric={metric} />)}
+          </div>
+        </DashboardCard>
+        <DashboardCard title="Impact by Retrofit">
+          <DashboardHorizontalBars data={environmental.impactByRetrofit} valueSuffix=" MT" />
+        </DashboardCard>
+        <DashboardCard title="Impact Data & Methodology">
+          <ul className="dashboard-check-list">
+            {environmental.basis.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+          <DashboardInlineAction label="Learn more about our methodology" />
+        </DashboardCard>
+      </div>
+    </>
+  );
+}
+
+function EnvironmentalOutlook({ viewModel }: { viewModel: DashboardViewModel }) {
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("This Month's Impact", formatDashboardNumber(divideNumber(viewModel.environmental.totalCO2eReducedPerYear, 12), "MT"), "Current month estimate", "green", viewModel.environmental.totalCO2eReducedPerYear == null),
+        dashboardMetric("Year-to-Date Impact", formatDashboardNumber(divideNumber(viewModel.environmental.totalCO2eReducedPerYear, 2), "MT"), "Current period", "green", viewModel.environmental.totalCO2eReducedPerYear == null),
+        dashboardMetric("Lifetime Impact", formatDashboardNumber(viewModel.environmental.projectedFiveYearCO2e, "MT"), "Since portfolio inception", "green", viewModel.environmental.projectedFiveYearCO2e == null),
+        dashboardMetric("Projected 5-Year Impact", formatDashboardNumber(viewModel.environmental.projectedFiveYearCO2e, "MT"), "Future impact", "purple", viewModel.environmental.projectedFiveYearCO2e == null)
+      ]} />
+      <div className="dashboard-two-column">
+        <DashboardCard title="Impact Over Time">
+          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT" large />
+        </DashboardCard>
+        <DashboardCard title="Equivalencies">
+          <div className="dashboard-equivalency-grid">
+            {viewModel.environmental.equivalencies.map((metric) => <DashboardMetricMini key={metric.label} metric={metric} />)}
+          </div>
+          <DashboardInlineAction label="Explore all equivalencies" />
+        </DashboardCard>
+      </div>
+      <div className="dashboard-four-column">
+        {["Electricity Use", "Gas Use", "Water Use"].map((label) => (
+          <DashboardCard title={label} key={label}>
+            <DashboardMiniSparkline />
+            <DashboardInlineAction label="View trend details" />
+          </DashboardCard>
+        ))}
+        <DashboardCard title="Projected Impact if Next Action is Completed">
+          <strong className="dashboard-large-value">{viewModel.certifications.nextActions.find((action) => action.estimatedCO2eImpact)?.projectedOutcome || "Unavailable"}</strong>
+          <p>Recommended next action impact.</p>
+          <DashboardInlineAction label="View Recommended Next Actions" />
+        </DashboardCard>
+      </div>
+    </>
+  );
+}
+
+function DashboardCertificationsPage({
+  activeTab,
+  onTabChange,
+  viewModel
+}: {
+  activeTab: CertificationDashboardTabId;
+  onTabChange: (tab: CertificationDashboardTabId) => void;
+  viewModel: DashboardViewModel;
+}) {
+  return (
+    <div className="dashboard-page-stack">
+      <DashboardSubTabs tabs={CERTIFICATION_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      {activeTab === "progress" ? <CertificationsProgress viewModel={viewModel} /> : null}
+      {activeTab === "gaps" ? <CertificationsGaps viewModel={viewModel} /> : null}
+      {activeTab === "next-actions" ? <CertificationsNextActions viewModel={viewModel} /> : null}
+    </div>
+  );
+}
+
+function CertificationsProgress({ viewModel }: { viewModel: DashboardViewModel }) {
+  const certification = viewModel.certifications;
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Overall Certification Progress", formatDashboardPercent(certification.progressPercent), "Across all programs", "green", certification.progressPercent == null),
+        dashboardMetric("Programs Tracked", String(certification.programs.length), "Active programs", "green"),
+        dashboardMetric("Credits Earned", formatDashboardNumber(sumNullableNumbers(certification.programs.map((program) => program.creditsEarned))), "Total credits earned", "green"),
+        dashboardMetric("Credits Remaining", formatDashboardNumber(sumNullableNumbers(certification.programs.map((program) => program.creditsRemaining))), "To next milestones", "gray"),
+        dashboardMetric("Ready to Apply", String(certification.programs.filter((program) => program.projectedStatus === "Ready to Apply").length), "Programs ready", "green"),
+        dashboardMetric("Estimated Time to Next Milestone", certification.milestones[0]?.dateLabel || "Unavailable", "Across all programs", "green", !certification.milestones.length)
+      ]} />
+      <div className="dashboard-two-column is-wide-left">
+        <DashboardCard title="Multi-Program Progress">
+          <DashboardProgramsTable programs={certification.programs} />
+          <DashboardInlineAction label="View all programs" />
+        </DashboardCard>
+        <DashboardCard title="Future Certification Pathway">
+          <DashboardPathway current={certification.progressPercent} next={certification.progressPercent == null ? null : Math.min(100, certification.progressPercent + 10)} milestone={certification.milestones[0]?.dateLabel || "Unavailable"} />
+          <DashboardInlineAction label="View pathway details" />
+        </DashboardCard>
+      </div>
+      <DashboardCard title="Retrofit Contribution to Certification">
+        <DashboardContributionTable retrofits={viewModel.implementedRetrofits} />
+        <DashboardInlineAction label="View all retrofit contributions" />
+      </DashboardCard>
+    </>
+  );
+}
+
+function CertificationsGaps({ viewModel }: { viewModel: DashboardViewModel }) {
+  const certification = viewModel.certifications;
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Document Readiness %", formatDashboardPercent(certification.applicationReadinessPercent), "Documentation readiness", "green", certification.applicationReadinessPercent == null),
+        dashboardMetric("Missing Actions", String(certification.nextActions.length), "Require attention", "red"),
+        dashboardMetric("Missing Documents", String(certification.documentReadiness.reduce((sum, row) => sum + row.missing, 0)), "Need to be collected", "red"),
+        dashboardMetric("Verification Steps", String(certification.gaps.find((gap) => gap.id === "verification")?.count ?? 0), "Pending completion", "green"),
+        dashboardMetric("Likely Ready Programs", String(certification.programs.filter((program) => (program.documentReadinessPercent ?? 0) >= 80).length), "80%+ readiness", "green")
+      ]} />
+      <div className="dashboard-two-column">
+        <DashboardCard title="Certification Document Readiness">
+          <DashboardDocumentReadinessTable rows={certification.documentReadiness} />
+          <DashboardInlineAction label="View all documents" />
+        </DashboardCard>
+        <DashboardCard title="Remaining Certification Gaps">
+          <div className="dashboard-gap-list">
+            {certification.gaps.map((gap) => (
+              <article className={`dashboard-gap-row is-${gap.tone}`} key={gap.id}>
+                <div>
+                  <strong>{gap.label}</strong>
+                  <p>{gap.subtext}</p>
+                </div>
+                <b>{gap.count}</b>
+                <DashboardInlineAction label="View details" />
+              </article>
+            ))}
+          </div>
+          <DashboardInlineAction label="View all gaps" />
+        </DashboardCard>
+      </div>
+      <DashboardCard title="Application Readiness by Program">
+        <div className="dashboard-program-card-grid">
+          {certification.programs.length ? certification.programs.map((program) => (
+            <DashboardProgramCard key={program.id} program={program} />
+          )) : <DashboardUnavailable label="Certification progress will appear after a program is selected." />}
+        </div>
+      </DashboardCard>
+    </>
+  );
+}
+
+function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewModel }) {
+  const actions = viewModel.certifications.nextActions;
+  const highestImpact = actions.find((action) => action.estimatedCO2eImpact);
+  const lowestCost = [...actions].filter((action) => action.estimatedCostCents != null).sort((a, b) => (a.estimatedCostCents ?? 0) - (b.estimatedCostCents ?? 0))[0];
+  const fastest = [...actions].find((action) => action.timeRequired);
+  return (
+    <>
+      <DashboardKpiGrid metrics={[
+        dashboardMetric("Open Actions", String(actions.length), "Across certifications", "green"),
+        dashboardMetric("Highest Impact Action", highestImpact?.projectedOutcome || "Unavailable", "CO2e reduced / year", "green", !highestImpact),
+        dashboardMetric("Lowest Cost Action", lowestCost ? formatDashboardCurrencyCents(lowestCost.estimatedCostCents) : "Unavailable", "Total investment", "green", !lowestCost),
+        dashboardMetric("Fastest Timeline Action", fastest?.timeRequired || "Unavailable", "Time to complete", "green", !fastest),
+        dashboardMetric("Documents Ready %", formatDashboardPercent(viewModel.certifications.applicationReadinessPercent), "Documents ready to submit", "green", viewModel.certifications.applicationReadinessPercent == null)
+      ]} />
+      <DashboardCard title="Recommended Next Best Actions">
+        <DashboardNextBestActionsTable actions={actions} />
+        <DashboardInlineAction label="View all actions" />
+      </DashboardCard>
+      <div className="dashboard-three-column">
+        <DashboardCard title="Upcoming Milestones">
+          <DashboardMilestoneList milestones={viewModel.certifications.milestones} />
+          <DashboardInlineAction label="View full timeline" />
+        </DashboardCard>
+        <DashboardCard title="Best Path Options">
+          <div className="dashboard-path-option-grid">
+            {["Fastest Path", "Lowest-Cost Path", "Highest-Certification-Impact Path"].map((label, index) => (
+              <article className="dashboard-path-option" key={label}>
+                <strong>{label}</strong>
+                <span>Time to decision</span>
+                <b>{index + 2} weeks</b>
+                <button type="button">View plan</button>
+              </article>
+            ))}
+          </div>
+          <DashboardInlineAction label="Compare all paths" />
+        </DashboardCard>
+        <DashboardCard title="Document Readiness Summary">
+          <strong className="dashboard-large-value">{formatDashboardPercent(viewModel.certifications.applicationReadinessPercent)}</strong>
+          <DashboardDocumentReadinessTable rows={viewModel.certifications.documentReadiness.slice(0, 5)} compact />
+          <DashboardInlineAction label="View all certifications" />
+        </DashboardCard>
+      </div>
+    </>
+  );
+}
+
+function DashboardSubTabs<T extends string>({
+  activeTab,
+  onTabChange,
+  tabs
+}: {
+  activeTab: T;
+  onTabChange: (tab: T) => void;
+  tabs: Array<{ id: T; label: string }>;
+}) {
+  return (
+    <nav className="dashboard-sub-tabs" aria-label="Dashboard sub-tabs">
+      {tabs.map((tab) => (
+        <button className={activeTab === tab.id ? "is-active" : ""} key={tab.id} onClick={() => onTabChange(tab.id)} type="button">
+          {tab.label}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+function DashboardKpiGrid({ metrics }: { metrics: DashboardMetric[] }) {
+  return (
+    <section className="dashboard-kpi-grid">
+      {metrics.map((metric) => <DashboardKpiCard key={metric.label} metric={metric} />)}
+    </section>
+  );
+}
+
+function DashboardKpiCard({ metric }: { metric: DashboardMetric }) {
+  return (
+    <article className={`dashboard-kpi-card is-${metric.tone || "green"}${metric.unavailable ? " is-unavailable" : ""}`}>
+      <span className="dashboard-kpi-icon"><LeafOutlineIcon /></span>
+      <div>
+        <small>{metric.label}</small>
+        <strong>{metric.value}</strong>
+        {metric.subtext ? <p>{metric.subtext}</p> : null}
+      </div>
+    </article>
+  );
+}
+
+function DashboardThreeStateCards({
+  current,
+  projected,
+  realized
+}: {
+  current: DashboardMetric[];
+  projected: DashboardMetric[];
+  realized: DashboardMetric[];
+}) {
+  return (
+    <section className="dashboard-three-state-grid">
+      <DashboardStateCard title="Realized" subtitle="Past performance (cumulative)" tone="green" metrics={realized} />
+      <DashboardStateCard title="Current" subtitle="Current performance to date" tone="blue" metrics={current} />
+      <DashboardStateCard title="Projected" subtitle="Future performance (forecast)" tone="purple" metrics={projected} />
+    </section>
+  );
+}
+
+function DashboardStateCard({ metrics, subtitle, title, tone }: { metrics: DashboardMetric[]; subtitle: string; title: string; tone: DashboardTone }) {
+  return (
+    <article className={`dashboard-state-card is-${tone}`}>
+      <div>
+        <strong>{title}</strong>
+        <p>{subtitle}</p>
+      </div>
+      <div className="dashboard-state-metrics">
+        {metrics.map((metric) => (
+          <span key={metric.label}>
+            <b>{metric.value}</b>
+            <small>{metric.label}</small>
+          </span>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function DashboardCard({ children, title }: { children: ReactNode; title: string }) {
+  return (
+    <section className="dashboard-card">
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function DashboardMetricMini({ metric }: { metric: DashboardMetric }) {
+  return (
+    <article className={`dashboard-mini-metric is-${metric.tone || "green"}${metric.unavailable ? " is-unavailable" : ""}`}>
+      <span><LeafOutlineIcon /></span>
+      <div>
+        <small>{metric.label}</small>
+        <strong>{metric.value}</strong>
+        {metric.subtext ? <p>{metric.subtext}</p> : null}
+      </div>
+    </article>
+  );
+}
+
+function DashboardLineChart({
+  data,
+  large = false,
+  valuePrefix = "",
+  valueSuffix = ""
+}: {
+  data: DashboardTimePoint[];
+  large?: boolean;
+  valuePrefix?: string;
+  valueSuffix?: string;
+}) {
+  const values = data.flatMap((point) => [point.actual, point.projected]).filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+  if (!values.length) return <DashboardUnavailable label="Chart unavailable until tracking data is connected." />;
+  const max = Math.max(...values, 1);
+  const width = 640;
+  const height = large ? 220 : 150;
+  const xStep = data.length > 1 ? width / (data.length - 1) : width;
+  const pointFor = (value: number, index: number) => `${index * xStep},${height - (value / max) * (height - 28) - 14}`;
+  const actualPath = data.map((point, index) => point.actual == null ? null : pointFor(point.actual, index)).filter(Boolean).join(" L ");
+  const projectedPath = data.map((point, index) => point.projected == null ? null : pointFor(point.projected, index)).filter(Boolean).join(" L ");
+  const last = values[values.length - 1];
+  return (
+    <div className={`dashboard-chart dashboard-line-chart${large ? " is-large" : ""}`}>
+      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Dashboard line chart">
+        {[0, 1, 2, 3].map((line) => <line key={line} x1="0" x2={width} y1={14 + line * ((height - 28) / 3)} y2={14 + line * ((height - 28) / 3)} />)}
+        {actualPath ? <path d={`M ${actualPath}`} className="dashboard-line-actual" /> : null}
+        {projectedPath ? <path d={`M ${projectedPath}`} className="dashboard-line-projected" /> : null}
+      </svg>
+      <span className="dashboard-chart-callout">{valuePrefix}{formatDashboardNumber(last)}{valueSuffix}</span>
+    </div>
+  );
+}
+
+function DashboardDonutChart({
+  centerLabel,
+  segments
+}: {
+  centerLabel: string;
+  segments: Array<{ label: string; value: number; tone: DashboardTone }>;
+}) {
+  const total = segments.reduce((sum, segment) => sum + Math.max(0, segment.value), 0);
+  if (!total) return <DashboardUnavailable label="No values available yet." />;
+  let offset = 25;
+  return (
+    <div className="dashboard-donut-wrap">
+      <svg className="dashboard-donut-chart" viewBox="0 0 42 42" role="img" aria-label="Dashboard donut chart">
+        <circle className="dashboard-donut-bg" cx="21" cy="21" r="15.9" />
+        {segments.map((segment) => {
+          const dash = (Math.max(0, segment.value) / total) * 100;
+          const currentOffset = offset;
+          offset -= dash;
+          return <circle key={segment.label} className={`dashboard-donut-segment is-${segment.tone}`} cx="21" cy="21" r="15.9" strokeDasharray={`${dash} ${100 - dash}`} strokeDashoffset={currentOffset} />;
+        })}
+      </svg>
+      <strong>{centerLabel}</strong>
+      <div className="dashboard-chart-legend">
+        {segments.map((segment) => <span key={segment.label}><i className={`is-${segment.tone}`} />{segment.label}</span>)}
+      </div>
+    </div>
+  );
+}
+
+function DashboardHorizontalBars({ data, valuePrefix = "", valueSuffix = "" }: { data: Array<{ label: string; value: number }>; valuePrefix?: string; valueSuffix?: string }) {
+  if (!data.length) return <DashboardUnavailable label="No retrofit performance values available yet." />;
+  const max = Math.max(...data.map((item) => item.value), 1);
+  return (
+    <div className="dashboard-horizontal-bars">
+      {data.map((item) => (
+        <div className="dashboard-horizontal-bar-row" key={item.label}>
+          <span>{item.label}</span>
+          <div><i style={{ width: `${Math.max(4, (item.value / max) * 100)}%` }} /></div>
+          <b>{valuePrefix}{formatDashboardNumber(item.value)}{valueSuffix}</b>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DashboardWaterfallChart({ items }: { items: Array<{ label: string; value: number }> }) {
+  const max = Math.max(...items.map((item) => Math.abs(item.value)), 1);
+  return (
+    <div className="dashboard-waterfall">
+      {items.map((item) => (
+        <span key={item.label}>
+          <i style={{ height: `${Math.max(8, (Math.abs(item.value) / max) * 100)}%` }} className={item.value < 0 ? "is-negative" : ""} />
+          <b>{formatDashboardCurrencyCents(item.value)}</b>
+          <small>{item.label}</small>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function DashboardStackedBar({ segments, totalLabel }: { segments: Array<{ label: string; value: number; tone: DashboardTone }>; totalLabel: string }) {
+  const total = segments.reduce((sum, segment) => sum + Math.max(0, segment.value), 0);
+  if (!total) return <DashboardUnavailable label="Savings breakdown unavailable." />;
+  return (
+    <div className="dashboard-stacked-bar-wrap">
+      <div className="dashboard-stacked-bar">
+        {segments.map((segment) => <i className={`is-${segment.tone}`} key={segment.label} style={{ width: `${(Math.max(0, segment.value) / total) * 100}%` }} />)}
+      </div>
+      <strong>{totalLabel}</strong>
+      <div className="dashboard-chart-legend">
+        {segments.map((segment) => <span key={segment.label}><i className={`is-${segment.tone}`} />{segment.label}</span>)}
+      </div>
+    </div>
+  );
+}
+
+function DashboardMiniSparkline() {
+  return (
+    <svg className="dashboard-mini-sparkline" viewBox="0 0 180 58" aria-hidden="true">
+      <path d="M2 22 C22 38, 32 12, 52 26 S82 34, 100 24 S132 40, 178 18" />
+    </svg>
+  );
+}
+
+function DashboardInfoRows({ rows }: { rows: Array<[string, string]> }) {
+  return (
+    <dl className="dashboard-info-rows">
+      {rows.map(([label, value]) => (
+        <div key={label}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function DashboardCertificationPreview({ programs }: { programs: DashboardCertificationProgram[] }) {
+  return (
+    <DashboardCard title="Certification Progress">
+      {programs.length ? programs.slice(0, 4).map((program) => <DashboardProgramCard key={program.id} program={program} />) : <DashboardUnavailable label="Certification progress will appear after a program is selected." />}
+      <DashboardInlineAction label="View all certifications" />
+    </DashboardCard>
+  );
+}
+
+function DashboardNextActionsPreview({ actions }: { actions: DashboardNextBestAction[] }) {
+  return (
+    <DashboardCard title="Next Best Action">
+      <DashboardActionList actions={actions} />
+      <DashboardInlineAction label="View all actions" />
+    </DashboardCard>
+  );
+}
+
+function DashboardActionList({ actions }: { actions: DashboardNextBestAction[] }) {
+  if (!actions.length) return <DashboardUnavailable label="No next actions are available from current implemented data." />;
+  return (
+    <ol className="dashboard-action-list">
+      {actions.map((action) => (
+        <li key={action.id}>
+          <strong>{action.title}</strong>
+          <p>{action.whyItMatters}</p>
+          <span>{action.projectedOutcome}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function DashboardImplementedRetrofitsTable({ compact = false, retrofits }: { compact?: boolean; retrofits: DashboardImplementedRetrofit[] }) {
+  return (
+    <DashboardCard title="Implemented Retrofits">
+      {retrofits.length ? (
+        <div className="dashboard-table-scroll">
+          <table className="dashboard-table">
+            <thead>
+              <tr>
+                <th>Retrofit Name</th>
+                <th>Installed Date</th>
+                {!compact ? <th>Project Cost</th> : null}
+                <th>Annual Savings</th>
+                <th>CO2e Reduced / Year</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {retrofits.map((retrofit) => (
+                <tr key={retrofit.id}>
+                  <td>{retrofit.name}</td>
+                  <td>{retrofit.installedDate || "Not listed"}</td>
+                  {!compact ? <td>{formatDashboardCurrencyCents(retrofit.projectCostCents)}</td> : null}
+                  <td>{formatDashboardCurrencyCents(retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents)}</td>
+                  <td>{formatDashboardNumber(retrofit.co2eReducedPerYear, "MT")}</td>
+                  <td><span className="dashboard-status-pill is-green">{capitalizeLabel(retrofit.implementationStatus)}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : <DashboardUnavailable label="No implemented retrofit records are available yet." />}
+      <DashboardInlineAction label="View all retrofits" />
+    </DashboardCard>
+  );
+}
+
+function DashboardProgramsTable({ programs }: { programs: DashboardCertificationProgram[] }) {
+  if (!programs.length) return <DashboardUnavailable label="No certification programs are tracked yet." />;
+  return (
+    <div className="dashboard-table-scroll">
+      <table className="dashboard-table">
+        <thead>
+          <tr><th>Program</th><th>Certification Progress</th><th>Current Status</th><th>Credits Earned</th><th>Credits Remaining</th><th>Projected Status</th></tr>
+        </thead>
+        <tbody>
+          {programs.map((program) => (
+            <tr key={program.id}>
+              <td>{program.name}</td>
+              <td><DashboardProgressBar value={program.progressPercent} /></td>
+              <td><span className="dashboard-status-pill is-green">{program.status}</span></td>
+              <td>{formatDashboardNumber(program.creditsEarned)}</td>
+              <td>{formatDashboardNumber(program.creditsRemaining)}</td>
+              <td>{program.projectedStatus}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DashboardDocumentReadinessTable({ compact = false, rows }: { compact?: boolean; rows: DashboardDocumentReadiness[] }) {
+  if (!rows.length) return <DashboardUnavailable label="No document readiness records are available yet." />;
+  return (
+    <div className="dashboard-table-scroll">
+      <table className="dashboard-table">
+        <thead>
+          <tr><th>Document Category</th><th>Ready</th><th>In Review</th><th>Missing</th>{!compact ? <th>Total</th> : null}<th>Status</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => {
+            const total = row.ready + row.inReview + row.missing;
+            const status = total && row.missing / total > 0.35 ? "Poor" : row.missing ? "Fair" : "Good";
+            return (
+              <tr key={row.category}>
+                <td>{row.category}</td>
+                <td>{row.ready}</td>
+                <td>{row.inReview}</td>
+                <td>{row.missing}</td>
+                {!compact ? <td>{total}</td> : null}
+                <td><span className={`dashboard-status-pill ${status === "Poor" ? "is-red" : status === "Fair" ? "is-orange" : "is-green"}`}>{status}</span></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DashboardContributionTable({ retrofits }: { retrofits: DashboardImplementedRetrofit[] }) {
+  const rows = retrofits.flatMap((retrofit) => retrofit.certificationsSupported.map((certification) => ({ retrofit, certification })));
+  if (!rows.length) return <DashboardUnavailable label="Certification contribution data is not available yet." />;
+  return (
+    <div className="dashboard-table-scroll">
+      <table className="dashboard-table">
+        <thead><tr><th>Retrofit Name</th><th>Certification Program Affected</th><th>Contribution</th><th>Documentation Status</th></tr></thead>
+        <tbody>
+          {rows.map(({ certification, retrofit }) => (
+            <tr key={`${retrofit.id}-${certification.program}`}>
+              <td>{retrofit.name}</td>
+              <td>{certification.program}</td>
+              <td>{certification.detail}</td>
+              <td><span className="dashboard-status-pill is-green">{certification.status}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DashboardNextBestActionsTable({ actions }: { actions: DashboardNextBestAction[] }) {
+  if (!actions.length) return <DashboardUnavailable label="No ranked actions are available yet." />;
+  return (
+    <div className="dashboard-table-scroll">
+      <table className="dashboard-table">
+        <thead><tr><th>Rank</th><th>Action</th><th>Why It Matters</th><th>Cert. Impact</th><th>Cost</th><th>Difficulty</th><th>Time Required</th><th>Projected Outcome</th></tr></thead>
+        <tbody>
+          {actions.map((action, index) => (
+            <tr key={action.id}>
+              <td>{index + 1}</td>
+              <td>{action.title}</td>
+              <td>{action.whyItMatters}</td>
+              <td>{action.certificationImpact || "Not applicable"}</td>
+              <td>{formatDashboardCurrencyCents(action.estimatedCostCents)}</td>
+              <td>{action.difficulty || "Needs review"}</td>
+              <td>{action.timeRequired || "Not estimated"}</td>
+              <td>{action.projectedOutcome}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DashboardProgramCard({ program }: { program: DashboardCertificationProgram }) {
+  return (
+    <article className="dashboard-program-card">
+      <strong>{program.name}</strong>
+      <b>{formatDashboardPercent(program.documentReadinessPercent ?? program.progressPercent)}</b>
+      <DashboardProgressBar value={program.documentReadinessPercent ?? program.progressPercent} />
+      <span>{program.documentReadinessPercent == null ? program.status : "Application readiness"}</span>
+    </article>
+  );
+}
+
+function DashboardPathway({ current, milestone, next }: { current: number | null; milestone: string; next: number | null }) {
+  return (
+    <div className="dashboard-pathway">
+      <span><b>{formatDashboardPercent(current)}</b><small>Current readiness</small></span>
+      <span><b>{formatDashboardPercent(next)}</b><small>After next action</small></span>
+      <span><b>{milestone}</b><small>Ready to apply milestone</small></span>
+    </div>
+  );
+}
+
+function DashboardMilestoneList({ milestones }: { milestones: DashboardCertificationData["milestones"] }) {
+  if (!milestones.length) return <DashboardUnavailable label="No upcoming milestones are available yet." />;
+  return (
+    <ul className="dashboard-milestone-list">
+      {milestones.map((milestone) => (
+        <li key={`${milestone.label}-${milestone.dateLabel}`}>
+          <strong>{milestone.label}</strong>
+          <span>{milestone.dateLabel}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function DashboardProgressBar({ value }: { value: number | null | undefined }) {
+  const percent = value == null || !Number.isFinite(value) ? 0 : Math.max(0, Math.min(100, value));
+  return <span className="dashboard-progress-bar"><i style={{ width: `${percent}%` }} /></span>;
+}
+
+function DashboardInlineAction({ label }: { label: string }) {
+  return <button className="dashboard-inline-action" type="button">{label} <span aria-hidden="true">→</span></button>;
+}
+
+function DashboardUnavailable({ label }: { label: string }) {
+  return <p className="dashboard-unavailable">{label}</p>;
+}
+
+function divideNumber(value: number | null | undefined, divisor: number) {
+  if (value == null || !Number.isFinite(value)) return null;
+  return value / divisor;
 }
 
 function RetrofitPickerView({

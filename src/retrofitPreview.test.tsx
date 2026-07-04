@@ -5,6 +5,7 @@ import {
   CUSTOMER_RETROFIT_UI_NAMES,
   areBillsCompleteForRetrofit,
   areRetrofitQuestionsComplete,
+  buildDashboardPerformanceData,
   buildSeededRetrofitDetailAnswers,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
@@ -189,6 +190,95 @@ describe("retrofit recommendations preview", () => {
     expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
     expect(preview.estimateCompletenessPercent).toBeLessThanOrEqual(65);
     expect(preview.retrofits[0].confidenceLabel).toBe("Medium");
+  });
+
+  it("builds dashboard data only from post-implementation retrofit records", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const dashboard = buildDashboardPerformanceData(liveShapedPayload, preview);
+
+    expect(dashboard.implementedRetrofits).toEqual([]);
+    expect(dashboard.dataQuality.hasImplementedRetrofits).toBe(false);
+    expect(dashboard.dataQuality.basisLabel).toBe("unavailable");
+    expect(dashboard.dataQuality.notes[0]).toContain("No post-implementation retrofit records");
+    expect(dashboard.summary.kpis.map((metric) => metric.value)).toContain("Unavailable");
+  });
+
+  it("derives dashboard aggregates from implemented retrofit data when available", () => {
+    const implementedPayload = {
+      ...liveShapedPayload,
+      retrofits: [
+        {
+          ...liveShapedPayload.retrofits[0],
+          implementationStatus: "operational",
+          installedDate: "2025-02-14",
+          savingsPreview: {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            actualAnnualSavingsCents: 720000,
+            implementationStatus: "operational"
+          }
+        }
+      ]
+    } as any;
+    const preview = buildUserRetrofitPreviewResult(implementedPayload);
+    const dashboard = buildDashboardPerformanceData(implementedPayload, preview);
+
+    expect(dashboard.implementedRetrofits).toHaveLength(1);
+    expect(dashboard.implementedRetrofits[0].implementationStatus).toBe("operational");
+    expect(dashboard.financial.totalProjectCostCents).toBe(1200000);
+    expect(dashboard.financial.incentivesReceivedCents).toBe(300000);
+    expect(dashboard.financial.totalAnnualSavingsCents).toBe(720000);
+    expect(dashboard.financial.projectedTenYearSavingsCents).toBe(7200000);
+    expect(dashboard.summary.kpis.map((metric) => metric.label)).toContain("Total Annual Savings");
+    expect(dashboard.dataQuality.hasImplementedRetrofits).toBe(true);
+    expect(dashboard.dataQuality.basisLabel).toBe("actual");
+  });
+
+  it("defines the post-implementation dashboard structure and source-backed empty states", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const styles = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+    const dashboardStart = source.indexOf("function DashboardPerformanceHub(");
+    const dashboardSource = source.slice(dashboardStart, source.indexOf("function RetrofitPickerView", dashboardStart));
+    const mainPagesStart = source.indexOf("const DASHBOARD_MAIN_PAGES");
+    const mainPagesSource = source.slice(mainPagesStart, source.indexOf("const FINANCIAL_DASHBOARD_TABS", mainPagesStart));
+
+    expect(source).toContain("export function buildDashboardPerformanceData");
+    expect(source).toContain("DASHBOARD_IMPLEMENTED_STATUSES");
+    expect(source).toContain("normalizeDashboardImplementationStatus");
+    expect(source).toContain("No post-implementation retrofit records were found");
+    expect(mainPagesSource).toContain("Summary");
+    expect(mainPagesSource).toContain("Financial Performance");
+    expect(mainPagesSource).toContain("Environmental Impact");
+    expect(mainPagesSource).toContain("Certifications");
+    expect(mainPagesSource).not.toContain("Next Best Actions");
+    expect(mainPagesSource).not.toContain("Savings by Retrofit");
+    expect(mainPagesSource).not.toContain("Gaps & Readiness");
+    expect(source).toContain("Cash Flow & Incentives");
+    expect(source).toContain("Savings by Retrofit");
+    expect(source).toContain("Outlook & Equivalencies");
+    expect(source).toContain("Gaps & Readiness");
+    expect(source).toContain("Next Best Actions");
+    expect(dashboardSource).toContain("Performance Dashboard");
+    expect(dashboardSource).toContain("Financial Snapshot");
+    expect(dashboardSource).toContain("Environmental Snapshot");
+    expect(dashboardSource).toContain("Certification Progress");
+    expect(dashboardSource).toContain("Next Best Action");
+    expect(dashboardSource).toContain("Implemented Retrofits");
+    expect(dashboardSource).toContain("Cumulative Cash Flow");
+    expect(dashboardSource).toContain("Incentive Tracking");
+    expect(dashboardSource).toContain("Recurring Savings Breakdown");
+    expect(dashboardSource).toContain("Actual vs. Estimated Performance");
+    expect(dashboardSource).toContain("Impact Data & Methodology");
+    expect(dashboardSource).toContain("Application Readiness by Program");
+    expect(dashboardSource).toContain("Recommended Next Best Actions");
+    expect(dashboardSource).toContain("Document Readiness Summary");
+    expect(source).toContain("sidebar-dashboard-subnav");
+    expect(styles).toContain(".dashboard-hub");
+    expect(styles).toContain(".dashboard-kpi-grid");
+    expect(styles).toContain(".dashboard-three-state-grid");
+    expect(styles).toContain(".dashboard-table-scroll");
+    expect(styles).toContain("@media (max-width: 1180px)");
   });
 
   it("defines short customer UI names for every taxonomy retrofit type", async () => {
