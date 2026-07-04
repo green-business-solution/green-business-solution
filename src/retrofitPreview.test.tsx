@@ -3,6 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
+  areBillsCompleteForRetrofit,
+  areRetrofitQuestionsComplete,
+  comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
   buildUserRetrofitPreviewResult,
@@ -11,10 +14,12 @@ import {
   countScenarioSelectedOpportunities,
   customerRetrofitUiName,
   getBillUploadResumeIndex,
-  getBillUploadStorageKey,
-  getScenarioSelectedOpportunityCount,
-  getOpportunityIncludedLabel,
   getDefaultBillUploadState,
+  getBillUploadStorageKey,
+  getRequiredBillTypesForRetrofit,
+  getRetrofitReadiness,
+  getOpportunityIncludedLabel,
+  getScenarioSelectedOpportunityCount,
   isSupportedBillUploadFile,
   sanitizeBillUploadState
 } from "./App";
@@ -321,6 +326,10 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("metric-impact-icon");
     expect(html).toContain("retrofit-picker-metric-label");
     expect((html.match(/class=\"retrofit-picker-card\"/g) || []).length).toBe(6);
+    expect((html.match(/class=\"retrofit-readiness-row\"/g) || []).length).toBe(6);
+    expect(html).toContain("Bills");
+    expect(html).toContain("Questions");
+    expect(html).toContain("Estimate");
     expect(html).toContain("Show more retrofits");
     expect(html).toContain("retrofit-picker-grid");
     expect(html).toContain("retrofit-picker-card");
@@ -411,6 +420,62 @@ describe("retrofit recommendations preview", () => {
     expect(Object.values(all).every(Boolean)).toBe(true);
   });
 
+  it("derives retrofit readiness and keeps complete cards ahead of incomplete ones", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const retrofit = preview.retrofits[0];
+    const readyRetrofit = {
+      ...retrofit,
+      id: "solar_rooftop_ready",
+      name: "Solar Rooftop",
+      detailQuestions: [],
+      metrics: {
+        ...retrofit.metrics,
+        estimatedUpfrontProjectCost: 100000,
+        recurringOperationalSavingsAnnual: 24000,
+        paybackPeriodYears: 4,
+        roi: "24%"
+      }
+    } as any;
+    const billState = {
+      ...getDefaultBillUploadState(),
+      statuses: {
+        electric: "uploaded" as const,
+        water: "pending" as const,
+        gas: "pending" as const,
+        waste: "pending" as const
+      }
+    };
+
+    expect(getRequiredBillTypesForRetrofit(retrofit)).toEqual(["electric"]);
+    expect(areBillsCompleteForRetrofit(retrofit, billState)).toBe(true);
+    expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
+
+    const readiness = getRetrofitReadiness(readyRetrofit, billState, {});
+    expect(readiness.billsComplete).toBe(true);
+    expect(readiness.questionsComplete).toBe(true);
+    expect(readiness.estimateComplete).toBe(true);
+
+    const comparison = comparePreviewRetrofits(
+      readyRetrofit,
+      {
+        ...retrofit,
+        metrics: {
+          ...retrofit.metrics,
+          estimatedUpfrontProjectCost: null,
+          recurringOperationalSavingsAnnual: null,
+          paybackPeriodYears: null,
+          roi: null
+        }
+      } as any,
+      "recommended",
+      new Map([
+        [readyRetrofit.id, readiness],
+        [retrofit.id, getRetrofitReadiness(retrofit, getDefaultBillUploadState(), {})]
+      ])
+    );
+    expect(comparison).toBeLessThan(0);
+  });
+
   it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
     expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual(["electric", "water", "gas", "waste"]);
     expect(BILL_UPLOAD_STEPS[0].title).toBe("Upload your electric bill");
@@ -458,10 +523,16 @@ describe("retrofit recommendations preview", () => {
     const handleUploadIndex = source.indexOf("function handleUploadBills()");
     const handleEnterIndex = source.indexOf("function handleEnterDetails()");
     const uploadHandlerSource = source.slice(handleUploadIndex, handleEnterIndex);
+    const previewReturnIndex = source.indexOf("return (", source.indexOf("function RetrofitRecommendationsPreview"));
+    const mainCloseIndex = source.indexOf("</main>", previewReturnIndex);
+    const modalMountIndex = source.indexOf("<BillUploadModal", previewReturnIndex);
+    const instructionsModalIndex = source.indexOf("{showInstructionsModal", previewReturnIndex);
 
     expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
     expect(uploadHandlerSource).not.toContain("scan-energy-data");
     expect(source).toContain("function BillUploadModal(");
+    expect(modalMountIndex).toBeGreaterThan(mainCloseIndex);
+    expect(modalMountIndex).toBeLessThan(instructionsModalIndex);
   });
 
   it("keeps detailed preview features behind workspace tabs instead of removing them", async () => {
@@ -824,6 +895,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("@media (max-width: 719px)");
     expect(css).toContain(".retrofit-picker-metric-label");
     expect(css).toContain(".retrofit-picker-card-impact");
+    expect(css).toContain(".retrofit-readiness-row");
+    expect(css).toContain(".retrofit-readiness-dot.is-complete");
     expect(css).not.toContain(".retrofit-picker-metric-value[data-tooltip]");
     expect(css).toContain(".metric-savings-icon");
     expect(css).toContain(".metric-cost-icon");

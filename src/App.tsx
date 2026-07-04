@@ -5951,6 +5951,12 @@ type BillUploadState = {
   statuses: Record<BillUploadStepId, BillUploadStatus>;
 };
 
+type RetrofitReadiness = {
+  billsComplete: boolean;
+  questionsComplete: boolean;
+  estimateComplete: boolean;
+};
+
 export const BILL_UPLOAD_STEPS: BillUploadStep[] = [
   {
     id: "electric",
@@ -6027,6 +6033,137 @@ export function getDefaultBillUploadState(): BillUploadState {
       waste: "pending"
     }
   };
+}
+
+function normalizeBillUploadStepId(value: string | null | undefined): BillUploadStepId | null {
+  if (value === "electric" || value === "water" || value === "gas" || value === "waste") return value;
+  if (value === "other") return "waste";
+  return null;
+}
+
+function normalizeUtilityCategoryToBillUploadStepId(value: UtilityCategory | string | null | undefined): BillUploadStepId | null {
+  if (value === "electric" || value === "gas" || value === "waste") return value;
+  if (value === "water_sewer" || value === "water") return "water";
+  return null;
+}
+
+function hasStoredBillUploadProgress(state: BillUploadState) {
+  return Boolean(
+    state.flowComplete ||
+    Object.values(state.files).some(Boolean) ||
+    Object.values(state.statuses).some((status) => status !== "pending")
+  );
+}
+
+function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState: BillUploadState) {
+  if (!intake || hasStoredBillUploadProgress(baseState)) return baseState;
+  const nextState: BillUploadState = {
+    ...baseState,
+    files: { ...baseState.files },
+    statuses: { ...baseState.statuses }
+  };
+  const uploadedCategories = new Set(
+    intake.uploadedUtilityFiles
+      .map((file) => normalizeUtilityCategoryToBillUploadStepId(file.utilityCategory))
+      .filter((stepId): stepId is BillUploadStepId => Boolean(stepId))
+  );
+  for (const step of BILL_UPLOAD_STEPS) {
+    if (uploadedCategories.has(step.id)) {
+      nextState.statuses[step.id] = "uploaded";
+    }
+  }
+  return nextState;
+}
+
+function getBillUploadStepIndex(stepId: BillUploadStepId | null | undefined) {
+  if (!stepId) return 0;
+  const index = BILL_UPLOAD_STEPS.findIndex((step) => step.id === stepId);
+  return index >= 0 ? index : 0;
+}
+
+export function getRequiredBillTypesForRetrofit(
+  retrofit: Pick<RetrofitPreviewCard, "id" | "name" | "category"> & { requiredBillTypes?: string[] }
+): BillUploadStepId[] {
+  const explicitTypes = (retrofit.requiredBillTypes || [])
+    .map((type) => normalizeBillUploadStepId(type))
+    .filter((type): type is BillUploadStepId => Boolean(type));
+  if (explicitTypes.length > 0) {
+    return [...new Set(explicitTypes)];
+  }
+
+  const key = `${retrofit.id} ${retrofit.name} ${retrofit.category || ""}`.toLowerCase();
+  if (key.includes("water")) return ["water"];
+  if (key.includes("ev") || key.includes("charger")) return ["electric"];
+  if (key.includes("solar")) return ["electric"];
+  if (key.includes("refrigeration")) return ["electric"];
+  if (key.includes("lighting") || key.includes("led")) return ["electric"];
+  if (key.includes("heat pump") || key.includes("hvac") || key.includes("boiler") || key.includes("furnace") || key.includes("heating")) {
+    return ["electric", "gas"];
+  }
+  if (key.includes("insulation") || key.includes("envelope") || key.includes("weatherization") || key.includes("window") || key.includes("roof")) {
+    return ["electric"];
+  }
+  if (key.includes("waste") || key.includes("recycling") || key.includes("organics")) return ["waste"];
+  return ["electric"];
+}
+
+export function areBillsCompleteForRetrofit(
+  retrofit: Pick<RetrofitPreviewCard, "id" | "name" | "category"> & { requiredBillTypes?: string[] },
+  billUploadState: BillUploadState
+) {
+  const requiredBillTypes = getRequiredBillTypesForRetrofit(retrofit);
+  return requiredBillTypes.every((billType) => billUploadState.statuses[billType] === "uploaded");
+}
+
+export function areRetrofitQuestionsComplete(
+  retrofit: Pick<RetrofitPreviewCard, "detailQuestions">,
+  detailAnswers: Record<string, string>
+) {
+  if (retrofit.detailQuestions.length === 0) return true;
+  return retrofit.detailQuestions.every((question) => {
+    const answer = detailAnswers[question.id];
+    return typeof answer === "string" ? answer.trim().length > 0 : false;
+  });
+}
+
+export function isEstimateCompleteForRetrofit(retrofit: RetrofitPreviewCard) {
+  const hasNumericValue = (value: number | null | undefined) => typeof value === "number" && Number.isFinite(value);
+  const hasValidRoi =
+    retrofit.metrics.roi == null
+      ? true
+      : typeof retrofit.metrics.roi === "number"
+        ? Number.isFinite(retrofit.metrics.roi)
+        : typeof retrofit.metrics.roi === "string"
+          ? Number.isFinite(parsePercentMetric(retrofit.metrics.roi) ?? Number.NaN)
+          : false;
+  return (
+    hasNumericValue(retrofit.metrics.estimatedUpfrontProjectCost) &&
+    hasNumericValue(retrofit.metrics.recurringOperationalSavingsAnnual) &&
+    hasNumericValue(retrofit.metrics.paybackPeriodYears) &&
+    hasValidRoi
+  );
+}
+
+export function getRetrofitReadiness(
+  retrofit: RetrofitPreviewCard,
+  billUploadState: BillUploadState,
+  detailAnswers: Record<string, string>
+): RetrofitReadiness {
+  const billsComplete = areBillsCompleteForRetrofit(retrofit, billUploadState);
+  const questionsComplete = areRetrofitQuestionsComplete(retrofit, detailAnswers);
+  const estimateComplete = billsComplete && questionsComplete && isEstimateCompleteForRetrofit(retrofit);
+  return {
+    billsComplete,
+    questionsComplete,
+    estimateComplete
+  };
+}
+
+function readinessSortGroup(readiness: RetrofitReadiness) {
+  if (readiness.estimateComplete) return 0;
+  if (readiness.billsComplete && readiness.questionsComplete) return 1;
+  if (readiness.billsComplete) return 2;
+  return 3;
 }
 
 export function sanitizeBillUploadState(parsed: unknown): BillUploadState {
@@ -7108,6 +7245,7 @@ export function RetrofitRecommendationsPreview({
   const billUploadStorageKey = useMemo(() => getBillUploadStorageKey(preview.profileId, preview.intakeId), [preview.intakeId, preview.profileId]);
   const [billUploadModalOpen, setBillUploadModalOpen] = useState(false);
   const [billUploadState, setBillUploadState] = useState<BillUploadState>(() => loadBillUploadState(billUploadStorageKey));
+  const [billUploadFocusStepId, setBillUploadFocusStepId] = useState<BillUploadStepId | null>(null);
   const shouldMaskBillDerivedMetrics = hideBillData || (!hasUploadedBills && !billUploadState.flowComplete);
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
@@ -7145,6 +7283,7 @@ export function RetrofitRecommendationsPreview({
   const [lastAddedRetrofitId, setLastAddedRetrofitId] = useState<string | null>(null);
   const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
+  const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview" | "requirements">("overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
@@ -7164,11 +7303,14 @@ export function RetrofitRecommendationsPreview({
     setPlanMessage(null);
     setLastAddedRetrofitId(null);
     setPickerVisibleCount(6);
+    setActiveRetrofitInitialWorkspaceTab("overview");
+    setBillUploadFocusStepId(null);
   }, [preview.intakeId, preview.profileId]);
 
   useEffect(() => {
     setBillUploadState(loadBillUploadState(billUploadStorageKey));
     setBillUploadModalOpen(false);
+    setBillUploadFocusStepId(null);
   }, [billUploadStorageKey]);
 
   useEffect(() => {
@@ -7189,6 +7331,14 @@ export function RetrofitRecommendationsPreview({
     }
   }, []);
 
+  const retrofitReadinessById = useMemo(() => {
+    const readinessById = new Map<string, RetrofitReadiness>();
+    for (const retrofit of preview.retrofits) {
+      readinessById.set(retrofit.id, getRetrofitReadiness(retrofit, billUploadState, detailAnswers));
+    }
+    return readinessById;
+  }, [billUploadState, detailAnswers, preview.retrofits]);
+
   const displayedRetrofits = useMemo(() => {
     return preview.retrofits
       .filter((retrofit) => {
@@ -7204,8 +7354,8 @@ export function RetrofitRecommendationsPreview({
         if (missingInfoFilter === "ready" && retrofit.missingInfo.length > 0) return false;
         return true;
       })
-      .sort((a, b) => comparePreviewRetrofits(a, b, sortBy));
-  }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, sortBy]);
+      .sort((a, b) => comparePreviewRetrofits(a, b, sortBy, retrofitReadinessById));
+  }, [basisFilter, categoryFilter, confidenceFilter, missingInfoFilter, preview.retrofits, retrofitReadinessById, sortBy]);
 
   const activeRetrofit = activeRetrofitId
     ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
@@ -7251,8 +7401,18 @@ export function RetrofitRecommendationsPreview({
   }, [activeRetrofitId]);
 
   function handleUploadBills() {
+    setBillUploadFocusStepId(null);
     setBillUploadModalOpen(true);
     setRefinementMessage("Upload your utility bills to unlock detailed retrofit estimates.");
+  }
+
+  function handleUploadBillsForRetrofit(retrofit: RetrofitPreviewCard) {
+    const firstMissingRequiredBill = getRequiredBillTypesForRetrofit(retrofit).find(
+      (billType) => billUploadState.statuses[billType] !== "uploaded"
+    );
+    setBillUploadFocusStepId(firstMissingRequiredBill || null);
+    setBillUploadModalOpen(true);
+    setRefinementMessage(`Upload bills to unlock ${retrofit.name} estimates.`);
   }
 
   function handleEnterDetails() {
@@ -7349,6 +7509,8 @@ export function RetrofitRecommendationsPreview({
 
   function handleBillUploadComplete(state: BillUploadState) {
     setBillUploadState(state);
+    setBillUploadFocusStepId(null);
+    setBillUploadModalOpen(false);
     setRefinementMessage("Uploaded bills are now available for retrofit estimates.");
   }
 
@@ -7368,6 +7530,15 @@ export function RetrofitRecommendationsPreview({
   }
 
   function handleRetrofitTabClick(retrofitId: string) {
+    const retrofit = preview.retrofits.find((item) => item.id === retrofitId);
+    if (!retrofit) return;
+    const readiness = retrofitReadinessById.get(retrofit.id) || getRetrofitReadiness(retrofit, billUploadState, detailAnswers);
+    if (!readiness.billsComplete) {
+      handleUploadBillsForRetrofit(retrofit);
+      return;
+    }
+    const nextWorkspaceTab = readiness.questionsComplete ? "overview" : "requirements";
+    setActiveRetrofitInitialWorkspaceTab(nextWorkspaceTab);
     if (retrofitId === activeRetrofitId) return;
     if (activeRetrofit && dirtyRetrofitIds[activeRetrofit.id] && !addedRetrofitPlans[activeRetrofit.id]) {
       setPendingTabRetrofitId(retrofitId);
@@ -7444,6 +7615,7 @@ export function RetrofitRecommendationsPreview({
                   confirmedAssumptionIds={confirmedAssumptionIds}
                   detailAnswers={detailAnswers}
                   key={activeRetrofit.id}
+                  initialWorkspaceTab={activeRetrofitInitialWorkspaceTab}
                   onConfirmAll={() => confirmAll(activeRetrofit)}
                   onConfirmAssumption={toggleAssumption}
                   onDetailAnswerChange={(questionId, value) => {
@@ -7505,6 +7677,7 @@ export function RetrofitRecommendationsPreview({
               isLoading={isLoading}
               loadingMessage={loadingMessage}
               hideBillData={shouldMaskBillDerivedMetrics}
+              retrofitReadinessById={retrofitReadinessById}
               onCloseDetails={() => setActiveRetrofitId("")}
               onSelectRetrofit={handleRetrofitTabClick}
               onSetViewMode={setPickerViewMode}
@@ -7536,6 +7709,18 @@ export function RetrofitRecommendationsPreview({
 
         </section>
       </main>
+
+      <BillUploadModal
+        initialStepId={billUploadFocusStepId}
+        isOpen={billUploadModalOpen}
+        onClose={() => {
+          setBillUploadModalOpen(false);
+          setBillUploadFocusStepId(null);
+        }}
+        onComplete={handleBillUploadComplete}
+        onStateChange={setBillUploadState}
+        storageKey={billUploadStorageKey}
+      />
       {showInstructionsModal ? (
         <ProcessOnboardingModal
           animateText={!instructionsOpenedFromNav}
@@ -7934,6 +8119,7 @@ function RetrofitPickerView({
   isLoading,
   loadingMessage,
   hideBillData,
+  retrofitReadinessById,
   onCloseDetails,
   onSelectRetrofit,
   onSetViewMode,
@@ -7951,6 +8137,7 @@ function RetrofitPickerView({
   isLoading: boolean;
   loadingMessage: string;
   hideBillData: boolean;
+  retrofitReadinessById: Map<string, RetrofitReadiness>;
   onCloseDetails: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onSetViewMode: (mode: "grid" | "panel") => void;
@@ -8055,6 +8242,7 @@ function RetrofitPickerView({
                 <div className="retrofit-picker-card-impact" aria-label={`${retrofit.name} environmental impact`}>
                   <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact()} />
                 </div>
+                <RetrofitReadinessRow {...(retrofitReadinessById.get(retrofit.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false })} />
               </button>
             ))}
           </section>
@@ -8084,17 +8272,23 @@ function RetrofitPickerView({
 
 function BillUploadModal({
   isOpen,
+  initialStepId,
   onClose,
   onComplete,
+  onStateChange,
   storageKey
 }: {
   isOpen: boolean;
+  initialStepId?: BillUploadStepId | null;
   onClose: () => void;
   onComplete: (state: BillUploadState) => void;
+  onStateChange?: (state: BillUploadState) => void;
   storageKey: string;
 }) {
   const [uploadState, setUploadState] = useState<BillUploadState>(() => loadBillUploadState(storageKey));
-  const [currentStepIndex, setCurrentStepIndex] = useState(() => getBillUploadResumeIndex(loadBillUploadState(storageKey)));
+  const [currentStepIndex, setCurrentStepIndex] = useState(() =>
+    initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(loadBillUploadState(storageKey))
+  );
   const [showSkipWarning, setShowSkipWarning] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -8102,16 +8296,17 @@ function BillUploadModal({
   useEffect(() => {
     const nextState = loadBillUploadState(storageKey);
     setUploadState(nextState);
-    setCurrentStepIndex(getBillUploadResumeIndex(nextState));
+    setCurrentStepIndex(initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(nextState));
     setShowSkipWarning(false);
     setFileError(null);
-  }, [storageKey, isOpen]);
+  }, [initialStepId, isOpen, storageKey]);
 
   useEffect(() => {
     if (isOpen) {
       storeBillUploadState(storageKey, uploadState);
+      onStateChange?.(uploadState);
     }
-  }, [isOpen, storageKey, uploadState]);
+  }, [isOpen, onStateChange, storageKey, uploadState]);
 
   const currentStep = BILL_UPLOAD_STEPS[Math.min(currentStepIndex, BILL_UPLOAD_STEPS.length - 1)];
   const currentStatus = uploadState.statuses[currentStep.id];
@@ -8410,6 +8605,32 @@ function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) 
   };
 }
 
+function RetrofitReadinessRow({
+  billsComplete,
+  estimateComplete,
+  questionsComplete
+}: RetrofitReadiness) {
+  const items = [
+    { complete: billsComplete, label: "Bills" },
+    { complete: questionsComplete, label: "Questions" },
+    { complete: estimateComplete, label: "Estimate" }
+  ];
+
+  return (
+    <div
+      aria-label={`Retrofit readiness: ${items.map((item) => `${item.label} ${item.complete ? "complete" : "incomplete"}`).join(", ")}`}
+      className="retrofit-readiness-row"
+    >
+      {items.map((item) => (
+        <div className="retrofit-readiness-item" key={item.label}>
+          <span aria-hidden="true" className={`retrofit-readiness-dot${item.complete ? " is-complete" : ""}`} />
+          <span>{item.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function UploadCloudIcon() {
   return (
     <svg className="upload-cloud-icon" fill="none" viewBox="0 0 48 48">
@@ -8665,6 +8886,7 @@ function RetrofitPreviewCardView({
   confirmedAssumptionIds,
   credential,
   detailAnswers,
+  initialWorkspaceTab = "overview",
   onAddToPlan,
   onConfirmAll,
   onConfirmAssumption,
@@ -8682,6 +8904,7 @@ function RetrofitPreviewCardView({
   confirmedAssumptionIds: Record<string, boolean>;
   credential?: AuthCredential | null;
   detailAnswers: Record<string, string>;
+  initialWorkspaceTab?: "overview" | "requirements";
   onAddToPlan: () => void;
   onConfirmAll: () => void;
   onConfirmAssumption: (assumptionId: string) => void;
@@ -8696,7 +8919,7 @@ function RetrofitPreviewCardView({
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "requirements" | "more">("overview");
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "requirements" | "more">(initialWorkspaceTab);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     why: false,
     financial: true,
@@ -8716,6 +8939,9 @@ function RetrofitPreviewCardView({
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
   const [applicationPrepLoading, setApplicationPrepLoading] = useState<Record<string, boolean>>({});
   const billDataLocked = hideBillData;
+  useEffect(() => {
+    setActiveWorkspaceTab(initialWorkspaceTab);
+  }, [initialWorkspaceTab, retrofit.id]);
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -10643,7 +10869,16 @@ function certificationBoostLabel(programType: string) {
   return "May support LEED or ENERGY STAR-related criteria.";
 }
 
-function comparePreviewRetrofits(a: RetrofitPreviewCard, b: RetrofitPreviewCard, sortBy: string) {
+export function comparePreviewRetrofits(
+  a: RetrofitPreviewCard,
+  b: RetrofitPreviewCard,
+  sortBy: string,
+  readinessById: Map<string, RetrofitReadiness> = new Map()
+) {
+  const aReadiness = readinessById.get(a.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false };
+  const bReadiness = readinessById.get(b.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false };
+  const readinessDelta = readinessSortGroup(aReadiness) - readinessSortGroup(bReadiness);
+  if (readinessDelta !== 0) return readinessDelta;
   if (sortBy === "total_savings") return compareNullableNumber(b.metrics.recurringOperationalSavingsAnnual, a.metrics.recurringOperationalSavingsAnnual) || a.rank - b.rank;
   if (sortBy === "monthly_savings") return compareNullableNumber(b.metrics.recurringOperationalSavingsMonthly, a.metrics.recurringOperationalSavingsMonthly) || a.rank - b.rank;
   if (sortBy === "payback") return compareNullableNumber(a.metrics.paybackPeriodYears, b.metrics.paybackPeriodYears) || a.rank - b.rank;

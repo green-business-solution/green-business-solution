@@ -3857,6 +3857,44 @@ dd {
   font-size: 13px;
 }
 
+.retrofit-readiness-row {
+  align-items: center;
+  background: #fbfdfb;
+  border: 1px solid #e3e8e2;
+  border-radius: 12px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+.retrofit-readiness-item {
+  align-items: center;
+  color: #1a2a21;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 650;
+  gap: 8px;
+  line-height: 16px;
+  min-width: 0;
+}
+
+.retrofit-readiness-dot {
+  background: #ffffff;
+  border: 1.5px solid #75877f;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  height: 14px;
+  width: 14px;
+}
+
+.retrofit-readiness-dot.is-complete {
+  background: var(--rf-green);
+  border-color: var(--rf-green);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
 .retrofit-picker-metric {
   align-items: start;
   border-right: 1px solid var(--rf-border);
@@ -6357,6 +6395,16 @@ dd {
     align-items: start;
     flex-direction: column;
     gap: 4px;
+  }
+
+  .retrofit-readiness-row {
+    gap: 6px;
+    padding: 7px 10px;
+  }
+
+  .retrofit-readiness-item {
+    font-size: 12px;
+    gap: 6px;
   }
 
   .retrofit-picker-metric {
