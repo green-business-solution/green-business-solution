@@ -575,43 +575,57 @@ function rowsMatchingRuntimeInputs(rows, dimensions, ctx) {
   const normalizedDimensions = (dimensions || []).map((dimension) => String(dimension || "").trim()).filter(Boolean);
   const matched = rows.filter((row) =>
     normalizedDimensions.every((dimension) => {
-      if (row[dimension] == null) return true;
+      const rowValue = rowValueForDimension(row, dimension);
+      if (rowValue == null) return true;
       const answer = answerForDimension(ctx, dimension);
       if (answer == null || answer === "") return true;
-      return normalizeDimensionValue(answer) === normalizeDimensionValue(row[dimension]);
+      return normalizeDimensionValue(answer) === normalizeDimensionValue(rowValue);
     })
   );
-  return matched.length ? matched : rows;
+  return refineRowsByRetrofitTokens(matched.length ? matched : rows, ctx);
 }
 
 function calculateRateTableRow(row, effect, ctx) {
   const missingInputs = [];
   const trace = [];
 
-  if (Number.isFinite(row.amountCents)) {
+  const fixedAmountCents = fixedAmountCentsForRateTableRow(row);
+  if (Number.isFinite(fixedAmountCents)) {
     const quantity = quantityForRateTableRow(row, ctx);
     if (!Number.isFinite(quantity)) return { amountCents: 0, missingInputs: [{ inputKey: "unit_count", effectId: effect.effect_id }], trace };
     return {
-      amountCents: roundCents(Number(row.amountCents) * quantity),
+      amountCents: roundCents(Number(fixedAmountCents) * quantity),
       missingInputs,
-      trace: [`amountCents ${row.amountCents} * quantity ${quantity}`]
+      trace: [`fixed row amount ${fixedAmountCents} cents * quantity ${quantity}`]
     };
   }
 
-  if (Number.isFinite(row.rateCents) || Number.isFinite(row.rateDollars)) {
-    const rateCents = Number.isFinite(row.rateCents) ? Number(row.rateCents) : Number(row.rateDollars) * 100;
+  const rateCents = rateCentsForRateTableRow(row);
+  if (Number.isFinite(rateCents)) {
     const quantity = quantityForRateTableRow(row, ctx);
-    if (!Number.isFinite(quantity)) return { amountCents: 0, missingInputs: [{ inputKey: quantityInputForUnit(row.unit), effectId: effect.effect_id }], trace };
+    if (!Number.isFinite(quantity)) return { amountCents: 0, missingInputs: [{ inputKey: quantityInputForUnit(rateTableRowUnit(row)), effectId: effect.effect_id }], trace };
     return {
       amountCents: roundCents(rateCents * quantity),
       missingInputs,
-      trace: [`rate ${rateCents} cents/${row.unit || "unit"} * quantity ${quantity}`]
+      trace: [`rate ${rateCents} cents/${rateTableRowUnit(row) || "unit"} * quantity ${quantity}`]
     };
   }
 
-  if (Number.isFinite(row.rateCentsPerKwh)) {
+  if (Number.isFinite(row.rateCentsPerKwh) || Number.isFinite(row.rateCentsPerAnnualKwhSaved)) {
     const quantity = Number(answerValue(ctx.answers, "annual_kwh_savings") || annualKwhDeltaAbs(ctx));
-    return { amountCents: roundCents(quantity * Number(row.rateCentsPerKwh)), missingInputs, trace: [`${quantity} kWh * ${row.rateCentsPerKwh} cents/kWh`] };
+    const rowRateCents = Number(row.rateCentsPerKwh ?? row.rateCentsPerAnnualKwhSaved);
+    return { amountCents: roundCents(quantity * rowRateCents), missingInputs, trace: [`${quantity} kWh * ${rowRateCents} cents/kWh`] };
+  }
+
+  if (Number.isFinite(row.baseAmountCentsPerSquareFoot) || Number.isFinite(row.potentialTotalCentsPerSquareFoot)) {
+    const rate = Number(row.baseAmountCentsPerSquareFoot ?? row.potentialTotalCentsPerSquareFoot);
+    const squareFeet = firstNumberAnswer(ctx, ["gross_building_square_footage", "project_square_footage", "square_feet"]);
+    if (!Number.isFinite(squareFeet)) return missingResult("gross_building_square_footage", effect);
+    return {
+      amountCents: roundCents(squareFeet * rate),
+      missingInputs,
+      trace: [`${squareFeet} square feet * ${rate} cents/square foot`]
+    };
   }
 
   if (Number.isFinite(row.rateCentsPerPeakKw) || Number.isFinite(row.rateCentsPerKw)) {
@@ -633,17 +647,27 @@ function calculateRateTableRow(row, effect, ctx) {
 
   if (Number.isFinite(row.maxPercentOfEligibleCost)) {
     const basis = Number(answerValue(ctx.answers, "eligible_project_cost_cents") || ctx.upfrontCostCents || 0);
-    return { amountCents: percentOfCents(basis, Number(row.maxPercentOfEligibleCost)), missingInputs, trace: [`eligible cost ${basis} * ${row.maxPercentOfEligibleCost}`] };
+    const percent = normalizePercent(row.maxPercentOfEligibleCost);
+    return { amountCents: percentOfCents(basis, percent), missingInputs, trace: [`eligible cost ${basis} * ${percent}`] };
+  }
+
+  const formulaResult = amountFromSimpleFormulaRow(row, effect, ctx);
+  if (formulaResult) {
+    return formulaResult;
   }
 
   return { amountCents: 0, missingInputs, trace: ["Rate-table row has no supported amount field."] };
 }
 
 function quantityForRateTableRow(row, ctx) {
-  const unit = String(row.unit || "").toLowerCase();
+  const unit = String(rateTableRowUnit(row) || "").toLowerCase();
   if (unit.includes("kwh")) return Number(answerValue(ctx.answers, "annual_kwh_savings") || annualKwhDeltaAbs(ctx));
   if (unit.includes("mcf")) return Number(answerValue(ctx.answers, "annual_mcf_savings") || 0);
   if (unit.includes("therm")) return Number(answerValue(ctx.answers, "annual_therm_savings") || 0);
+  if (unit.includes("watt")) return rateTableWattQuantity(ctx);
+  if (unit.includes("linear_foot") || unit.includes("linear foot")) return Number(answerValue(ctx.answers, "linear_feet") || answerValue(ctx.answers, "unit_count") || 0);
+  if (unit.includes("horsepower")) return Number(answerValue(ctx.answers, "horsepower") || answerValue(ctx.answers, "unit_count") || 0);
+  if (unit.includes("mbtuh") || unit.includes("btuh")) return Number(answerValue(ctx.answers, "input_capacity_kbtu_per_hour") || answerValue(ctx.answers, "inputbtu") || answerValue(ctx.answers, "equipment_capacity") || 0);
   if (unit.includes("ton-hour") || unit.includes("ton_hour")) return Number(answerValue(ctx.answers, "ton_hours") || answerValue(ctx.answers, "tons") || 0);
   if (unit.includes("ton")) return Number(answerValue(ctx.answers, "tons") || answerValue(ctx.answers, "tonnage") || 0);
   if (unit.includes("kw")) return Number(answerValue(ctx.answers, "system_kw") || answerValue(ctx.answers, "demand_reduction_kw") || 0);
@@ -659,11 +683,144 @@ function quantityInputForUnit(unit) {
   if (value.includes("kwh")) return "annual_kwh_savings";
   if (value.includes("mcf")) return "annual_mcf_savings";
   if (value.includes("therm")) return "annual_therm_savings";
+  if (value.includes("watt")) return "watts_reduced_or_controlled";
+  if (value.includes("linear_foot") || value.includes("linear foot")) return "linear_feet";
+  if (value.includes("horsepower")) return "horsepower";
+  if (value.includes("mbtuh") || value.includes("btuh")) return "input_capacity_kbtu_per_hour";
   if (value.includes("ton")) return "tons";
   if (value.includes("port")) return "port_count";
   if (value.includes("charger") || value.includes("station")) return "charger_count";
   if (value.includes("fixture") || value.includes("lamp") || value.includes("bulb")) return "fixture_count";
   return "unit_count";
+}
+
+function fixedAmountCentsForRateTableRow(row) {
+  const amountKeys = [
+    "amountCents",
+    "minAmountCents",
+    "maxAmountCents",
+    "amountCentsPerUnit",
+    "amountCentsPerEligibleChargerOrPort",
+    "amountCentsPerStation",
+    "maxAmountCentsPerStation",
+    "maxAmountCentsPerCharger",
+    "maxReimbursementCents",
+    "maxAwardCents",
+    "rebateCents"
+  ];
+
+  for (const key of amountKeys) {
+    const amount = Number(row[key]);
+    if (Number.isFinite(amount) && amount > 0) return amount;
+  }
+
+  return null;
+}
+
+function rateCentsForRateTableRow(row) {
+  if (Number.isFinite(row.rateCents)) return Number(row.rateCents);
+  if (Number.isFinite(row.rateDollars)) return Number(row.rateDollars) * 100;
+  if (Number.isFinite(row.minRate) && isUsdRateUnit(row.rateUnit)) return Number(row.minRate) * 100;
+  if (Number.isFinite(row.rate) && isUsdRateUnit(row.rateUnit)) return Number(row.rate) * 100;
+  return null;
+}
+
+function rateTableRowUnit(row) {
+  return row.unit || row.rateUnit || "";
+}
+
+function isUsdRateUnit(unit) {
+  return /^USD[_ ]?per/i.test(String(unit || ""));
+}
+
+function amountFromSimpleFormulaRow(row, effect, ctx) {
+  const formula = String(row.formula || "");
+  if (!formula) return null;
+
+  const kwhRateMatch = formula.match(/\$?\s*([0-9]+(?:\.[0-9]+)?)\s*\/\s*kWh/i);
+  if (!kwhRateMatch || !/annual\s+kWh\s+savings/i.test(formula)) return null;
+
+  const multiplierMatch = formula.match(/\*\s*([0-9]+(?:\.[0-9]+)?)\s*$/);
+  const rateDollars = Number(kwhRateMatch[1]);
+  const multiplier = multiplierMatch ? Number(multiplierMatch[1]) : 1;
+  const annualKwhSavings = Number(answerValue(ctx.answers, "annual_kwh_savings") || annualKwhDeltaAbs(ctx));
+  if (!Number.isFinite(rateDollars) || !Number.isFinite(multiplier) || !Number.isFinite(annualKwhSavings)) {
+    return missingResult("annual_kwh_savings", effect);
+  }
+
+  return {
+    amountCents: roundCents(annualKwhSavings * rateDollars * multiplier * 100),
+    missingInputs: [],
+    trace: [`${annualKwhSavings} annual kWh savings * $${rateDollars}/kWh * ${multiplier}.`]
+  };
+}
+
+function rateTableWattQuantity(ctx) {
+  const explicit = firstNumberAnswer(ctx, ["watts_reduced_or_controlled", "watts_reduced", "watts_controlled"]);
+  if (Number.isFinite(explicit)) return explicit;
+  const fixtureCount = firstNumberAnswer(ctx, ["fixture_count", "unit_count"]) || 0;
+  const existingWatts = firstNumberAnswer(ctx, ["existing_fixture_watts", "existing_watts"]) || 0;
+  const newWatts = firstNumberAnswer(ctx, ["new_fixture_watts", "replacement_fixture_watts"]) || 0;
+  const reduced = fixtureCount * Math.max(0, existingWatts - newWatts);
+  return reduced > 0 ? reduced : 0;
+}
+
+function rowValueForDimension(row, dimension) {
+  if (!row || !dimension) return null;
+  if (row[dimension] != null) return row[dimension];
+
+  const normalizedDimension = normalizeDimensionKey(dimension);
+  const matchingKey = Object.keys(row).find((key) => normalizeDimensionKey(key) === normalizedDimension);
+  if (matchingKey) return row[matchingKey];
+  if (normalizedDimension.includes("measure")) return row.measure || row.name || row.category || null;
+  return null;
+}
+
+function normalizeDimensionKey(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function refineRowsByRetrofitTokens(rows, ctx) {
+  const tokens = expandedRetrofitTokens(ctx.sourceRetrofitTypeId || ctx.retrofitTypeId || ctx.retrofitTypeSlug);
+  if (!tokens.length) return rows;
+
+  const scored = rows
+    .map((row) => ({ row, score: scoreRateTableRow(row, tokens) }))
+    .filter((item) => item.score > 0);
+  if (!scored.length) return rows;
+
+  const maxScore = Math.max(...scored.map((item) => item.score));
+  return scored.filter((item) => item.score === maxScore).map((item) => item.row);
+}
+
+function scoreRateTableRow(row, tokens) {
+  const text = normalizeDimensionValue(
+    `${row.measure || ""} ${row.measure_category || ""} ${row.measureCategory || ""} ${row.category || ""} ${row.item || ""} ${row.name || ""}`
+  );
+  return tokens.reduce((score, token) => score + (text.includes(token) ? 1 : 0), 0);
+}
+
+function expandedRetrofitTokens(retrofitTypeId) {
+  const value = String(retrofitTypeId || "").toLowerCase();
+  const tokens = new Set(
+    value
+      .split(/[^a-z0-9]+/)
+      .filter((token) => token.length >= 3)
+      .filter((token) => !["retrofit", "replacement", "installation", "system", "high", "efficiency"].includes(token))
+  );
+
+  if (/hvac|heat_pump/.test(value)) ["heat", "pump", "air", "source", "central", "ac"].forEach((token) => tokens.add(token));
+  if (/geothermal|ground_source/.test(value)) ["geothermal", "ground", "source", "heat", "pump"].forEach((token) => tokens.add(token));
+  if (/lighting|led/.test(value)) ["led", "lighting", "fixture", "lamp"].forEach((token) => tokens.add(token));
+  if (/exterior_site_lighting/.test(value)) ["exterior", "led", "fixture"].forEach((token) => tokens.add(token));
+  if (/controls/.test(value)) ["controls", "control"].forEach((token) => tokens.add(token));
+  if (/water_heater/.test(value)) ["water", "heater"].forEach((token) => tokens.add(token));
+  if (/refrigeration/.test(value)) ["refrigeration", "case"].forEach((token) => tokens.add(token));
+  if (/anti_sweat/.test(value)) ["anti", "sweat", "heater", "controls"].forEach((token) => tokens.add(token));
+  if (/laundry/.test(value)) ["washer", "clothes"].forEach((token) => tokens.add(token));
+  if (/ev|charger/.test(value)) ["charger", "charging", "station"].forEach((token) => tokens.add(token));
+
+  return [...tokens];
 }
 
 function answerForDimension(ctx, dimension) {
@@ -755,10 +912,16 @@ function applyV2Caps(amountCents, caps = [], basisCents = 0) {
   return caps.reduce((current, cap) => {
     const legacyCap = {
       maxAmountCents: cap.cap_type === "maximum_amount" ? moneyToCents(cap.amount) : undefined,
-      maxPercentOfBasis: cap.cap_type === "maximum_percent_of_cost" ? cap.percent : undefined
+      maxPercentOfBasis: cap.cap_type === "maximum_percent_of_cost" ? normalizePercent(cap.percent) : undefined
     };
     return applyCaps(current, legacyCap, basisCents);
   }, amountCents);
+}
+
+function normalizePercent(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  return number > 1 ? number / 100 : number;
 }
 
 function aggregateEffectResults(effectResults) {

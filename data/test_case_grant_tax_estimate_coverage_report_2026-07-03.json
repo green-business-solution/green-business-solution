@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T01:17:55.177Z",
+  "generatedAt": "2026-07-04T01:56:02.570Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -13,30 +13,30 @@
       "calculated": 848,
       "unsupported": 42
     },
-    "matchedV2PackageEvaluationCount": 560,
+    "matchedV2PackageEvaluationCount": 554,
     "runtimeInclusionStatusCounts": {
-      "included": 279,
+      "included": 305,
       "low_confidence": 20,
       "no_calculable_value": 72,
-      "not_user_facing_default": 93,
+      "not_user_facing_default": 56,
       "source_inaccessible_repair_failure": 39,
       "non_monetary_workflow": 12,
-      "custom_quote_estimate": 12,
-      "no_supported_effect_amount": 12,
+      "custom_quote_estimate": 14,
+      "no_supported_effect_amount": 15,
       "human_review_required": 19,
       "legacy_rule_preferred": 2
     },
     "outcomeClassCounts": {
-      "calculated_and_included": 279,
-      "suppressed_without_amount": 118,
-      "source_or_package_blocked": 123,
-      "computed_but_suppressed": 14,
+      "calculated_and_included": 305,
+      "suppressed_without_amount": 77,
+      "source_or_package_blocked": 125,
+      "computed_but_suppressed": 18,
       "non_monetary_workflow": 12,
-      "calculated_zero_or_no_supported_amount": 12,
+      "calculated_zero_or_no_supported_amount": 15,
       "legacy_rule_preferred": 2
     },
     "packageEffectTypeCounts": {
-      "one_time_savings": 400,
+      "one_time_savings": 394,
       "grant_expected_value": 77,
       "recurring_savings": 53,
       "financing_subsidy": 2,
@@ -45,8 +45,8 @@
       "tax_rate_preference": 1,
       "tax_exemption": 3
     },
-    "runtimeIncludedPackageCount": 279,
-    "computedButSuppressedPackageCount": 14,
+    "runtimeIncludedPackageCount": 305,
+    "computedButSuppressedPackageCount": 18,
     "missingEvidenceOrInputPackageCount": 0,
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 2,
@@ -60,29 +60,29 @@
   },
   "topMissingInputs": [],
   "grantAndIncentivePackageOutcomes": {
-    "count": 525,
+    "count": 519,
     "outcomeClassCounts": {
-      "calculated_and_included": 279,
-      "suppressed_without_amount": 114,
-      "source_or_package_blocked": 103,
-      "computed_but_suppressed": 14,
+      "calculated_and_included": 305,
+      "suppressed_without_amount": 74,
+      "source_or_package_blocked": 105,
+      "computed_but_suppressed": 17,
       "non_monetary_workflow": 1,
-      "calculated_zero_or_no_supported_amount": 12,
+      "calculated_zero_or_no_supported_amount": 15,
       "legacy_rule_preferred": 2
     },
     "runtimeInclusionStatusCounts": {
-      "included": 279,
+      "included": 305,
       "low_confidence": 20,
       "no_calculable_value": 57,
-      "not_user_facing_default": 93,
+      "not_user_facing_default": 56,
       "source_inaccessible_repair_failure": 34,
       "non_monetary_workflow": 1,
-      "custom_quote_estimate": 12,
-      "no_supported_effect_amount": 12,
+      "custom_quote_estimate": 14,
+      "no_supported_effect_amount": 15,
       "human_review_required": 15,
       "legacy_rule_preferred": 2
     },
-    "totalComputedAmountCents": 641626061,
+    "totalComputedAmountCents": 57775731,
     "sampleRows": [
       {
         "sampleUserId": "california-endowment-hq",
@@ -158,17 +158,6 @@
           }
         ],
         "defaultedInputs": [
-          {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_010_california-endowment-hq.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "ev_charger_installation"
-          },
           {
             "inputKey": "solicitation_number",
             "canonicalInputKey": "solicitation_number",
@@ -556,17 +545,6 @@
         ],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_010_california-endowment-hq.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "ev_charger_installation"
-          },
-          {
             "inputKey": "requested_grant_amount_cents",
             "canonicalInputKey": "requested_grant_amount_cents",
             "source": "synthetic_test_case_default",
@@ -723,17 +701,6 @@
           }
         ],
         "defaultedInputs": [
-          {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_010_california-endowment-hq.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "ev_charger_installation"
-          },
           {
             "inputKey": "funding_lane",
             "canonicalInputKey": "funding_lane",
@@ -1226,8 +1193,8 @@
         "retrofitTypeId": "led_lighting_retrofit",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
         "programName": "LADWP - Non-Residential Energy Efficiency Incentive Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "suppressed_without_amount",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -1279,9 +1246,9 @@
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 24960,
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -2356,7 +2323,7 @@
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:5685",
         "programName": "LADWP - Feed-in Tariff (FiT) Program",
         "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "suppressed_without_amount",
+        "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -2489,8 +2456,8 @@
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 472500,
         "includedInRuntimeTotals": false
       },
       {
@@ -5331,7 +5298,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 678400,
+        "computedAmountCents": 480000,
         "includedInRuntimeTotals": false
       },
       {
@@ -6167,12 +6134,13 @@
   "taxOpportunityPackageOutcomes": {
     "count": 4,
     "outcomeClassCounts": {
-      "suppressed_without_amount": 4
+      "computed_but_suppressed": 1,
+      "suppressed_without_amount": 3
     },
     "runtimeInclusionStatusCounts": {
       "human_review_required": 4
     },
-    "totalComputedAmountCents": 0,
+    "totalComputedAmountCents": 20900,
     "sampleRows": [
       {
         "sampleUserId": "boeing-everett-factory",
@@ -6181,12 +6149,20 @@
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
         "programName": "Tax Abatement for Solar Manufacturers",
         "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "suppressed_without_amount",
+        "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
+          {
+            "inputKey": "qualifying_solar_b_and_o_classification",
+            "canonicalInputKey": "qualifying_solar_b_and_o_classification",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
           {
             "inputKey": "qualifying_activity_and_product_confirmation",
             "canonicalInputKey": "qualifying_activity_and_product_confirmation",
@@ -6214,6 +6190,14 @@
           {
             "inputKey": "gross_receipts_by_bo_classification",
             "canonicalInputKey": "gross_receipts_by_bo_classification",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+            "canonicalInputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6257,8 +6241,8 @@
         ],
         "taxRelated": true,
         "grantOrIncentiveRelated": false,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 20900,
         "includedInRuntimeTotals": false
       },
       {
@@ -6274,6 +6258,22 @@
         "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
+          {
+            "inputKey": "approved_rerz_designation",
+            "canonicalInputKey": "approved_rerz_designation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualified_company_operations",
+            "canonicalInputKey": "qualified_company_operations",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
           {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
@@ -6325,6 +6325,46 @@
           {
             "inputKey": "zone_final_year_and_phaseout_year",
             "canonicalInputKey": "zone_final_year_and_phaseout_year",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "phaseout_multiplier",
+            "canonicalInputKey": "phaseout_multiplier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_state_education_tax_cents",
+            "canonicalInputKey": "eligible_state_education_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_real_property_tax_cents",
+            "canonicalInputKey": "eligible_real_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_personal_property_tax_cents",
+            "canonicalInputKey": "eligible_personal_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_local_income_tax_cents",
+            "canonicalInputKey": "eligible_local_income_tax_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6378,6 +6418,22 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "approved_rerz_designation",
+            "canonicalInputKey": "approved_rerz_designation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualified_company_operations",
+            "canonicalInputKey": "qualified_company_operations",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
             "source": "synthetic_test_case_default",
@@ -6428,6 +6484,46 @@
           {
             "inputKey": "zone_final_year_and_phaseout_year",
             "canonicalInputKey": "zone_final_year_and_phaseout_year",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "phaseout_multiplier",
+            "canonicalInputKey": "phaseout_multiplier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_state_education_tax_cents",
+            "canonicalInputKey": "eligible_state_education_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_real_property_tax_cents",
+            "canonicalInputKey": "eligible_real_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_personal_property_tax_cents",
+            "canonicalInputKey": "eligible_personal_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_local_income_tax_cents",
+            "canonicalInputKey": "eligible_local_income_tax_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6481,6 +6577,22 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "approved_rerz_designation",
+            "canonicalInputKey": "approved_rerz_designation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualified_company_operations",
+            "canonicalInputKey": "qualified_company_operations",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
             "source": "synthetic_test_case_default",
@@ -6531,6 +6643,46 @@
           {
             "inputKey": "zone_final_year_and_phaseout_year",
             "canonicalInputKey": "zone_final_year_and_phaseout_year",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "phaseout_multiplier",
+            "canonicalInputKey": "phaseout_multiplier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_state_education_tax_cents",
+            "canonicalInputKey": "eligible_state_education_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_real_property_tax_cents",
+            "canonicalInputKey": "eligible_real_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_personal_property_tax_cents",
+            "canonicalInputKey": "eligible_personal_property_tax_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_local_income_tax_cents",
+            "canonicalInputKey": "eligible_local_income_tax_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -7104,6 +7256,150 @@
     "missingEvidenceOrInputs": [],
     "computedButSuppressed": [
       {
+        "sampleUserId": "california-endowment-hq",
+        "sampleName": "california-endowment-hq",
+        "retrofitTypeId": "rooftop_solar_pv",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:5685",
+        "programName": "LADWP - Feed-in Tariff (FiT) Program",
+        "runtimeInclusionStatus": "not_user_facing_default",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "project_capacity_kw",
+            "canonicalInputKey": "project_capacity_kw",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_location",
+            "canonicalInputKey": "project_location",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "technology_type",
+            "canonicalInputKey": "technology_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_monthly_generation_kwh",
+            "canonicalInputKey": "metered_monthly_generation_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "soppa_approval",
+            "canonicalInputKey": "soppa_approval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "available_fit_capacity",
+            "canonicalInputKey": "available_fit_capacity",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_generation_kwh",
+            "canonicalInputKey": "metered_generation_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_capacity",
+            "canonicalInputKey": "project_capacity",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_fit_price",
+            "canonicalInputKey": "approved_fit_price",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "installed_carport_or_canopy_watts",
+            "canonicalInputKey": "installed_carport_or_canopy_watts",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_size_tier",
+            "canonicalInputKey": "project_size_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "disadvantaged_community_status",
+            "canonicalInputKey": "disadvantaged_community_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "installed_watts",
+            "canonicalInputKey": "installed_watts",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "dac_status",
+            "canonicalInputKey": "dac_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_carport_or_canopy_eligibility",
+            "canonicalInputKey": "approved_carport_or_canopy_eligibility",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "recurring_savings",
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 472500,
+        "includedInRuntimeTotals": false
+      },
+      {
         "sampleUserId": "juniper-and-ivy-san-diego",
         "sampleName": "juniper-and-ivy-san-diego",
         "retrofitTypeId": "ev_charger_installation",
@@ -7220,7 +7516,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 678400,
+        "computedAmountCents": 480000,
         "includedInRuntimeTotals": false
       },
       {
@@ -7344,6 +7640,164 @@
         "includedInRuntimeTotals": false
       },
       {
+        "sampleUserId": "northgate-market-anaheim",
+        "sampleName": "northgate-market-anaheim",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22275",
+        "programName": "Anaheim Public Utilities - Personal Use EV Charger Rebates",
+        "runtimeInclusionStatus": "not_user_facing_default",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "high",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_networked_status",
+            "canonicalInputKey": "charger_networked_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "time_of_use_rate_enrollment",
+            "canonicalInputKey": "time_of_use_rate_enrollment",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_charger_equipment_cost",
+            "canonicalInputKey": "eligible_charger_equipment_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_installation_cost",
+            "canonicalInputKey": "eligible_installation_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "panel_upgrade_required",
+            "canonicalInputKey": "panel_upgrade_required",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_panel_upgrade_cost",
+            "canonicalInputKey": "eligible_panel_upgrade_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_costs",
+            "canonicalInputKey": "eligible_costs",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 75000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "northgate-market-anaheim",
+        "sampleName": "northgate-market-anaheim",
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22275",
+        "programName": "Anaheim Public Utilities - Personal Use EV Charger Rebates",
+        "runtimeInclusionStatus": "not_user_facing_default",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "high",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_networked_status",
+            "canonicalInputKey": "charger_networked_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "time_of_use_rate_enrollment",
+            "canonicalInputKey": "time_of_use_rate_enrollment",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_charger_equipment_cost",
+            "canonicalInputKey": "eligible_charger_equipment_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_installation_cost",
+            "canonicalInputKey": "eligible_installation_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "panel_upgrade_required",
+            "canonicalInputKey": "panel_upgrade_required",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_panel_upgrade_cost",
+            "canonicalInputKey": "eligible_panel_upgrade_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_costs",
+            "canonicalInputKey": "eligible_costs",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 30000,
+        "includedInRuntimeTotals": false
+      },
+      {
         "sampleUserId": "santa-clara-university-campus",
         "sampleName": "santa-clara-university-campus",
         "retrofitTypeId": "high_efficiency_hvac_replacement",
@@ -7356,17 +7810,6 @@
         "confidence": "low",
         "missingInputs": [],
         "defaultedInputs": [
-          {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_040_santa-clara-university-campus.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "high_efficiency_hvac_replacement"
-          },
           {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
@@ -7550,7 +7993,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 2500000,
+        "computedAmountCents": 480000,
         "includedInRuntimeTotals": false
       },
       {
@@ -7567,17 +8010,6 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_040_santa-clara-university-campus.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "low_flow_fixture_retrofit"
-          },
-          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -7760,7 +8192,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 2500000,
+        "computedAmountCents": 64000,
         "includedInRuntimeTotals": false
       },
       {
@@ -7777,17 +8209,6 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_040_santa-clara-university-campus.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "led_lighting_retrofit"
-          },
-          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -7970,7 +8391,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 2500000,
+        "computedAmountCents": 128340,
         "includedInRuntimeTotals": false
       },
       {
@@ -7987,17 +8408,6 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_040_santa-clara-university-campus.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "air_sealing_weatherization"
-          },
-          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -8180,7 +8590,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 2500000,
+        "computedAmountCents": 96000,
         "includedInRuntimeTotals": false
       },
       {
@@ -8838,6 +9248,109 @@
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 2000,
         "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "boeing-everett-factory",
+        "sampleName": "boeing-everett-factory",
+        "retrofitTypeId": "rooftop_solar_pv",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
+        "programName": "Tax Abatement for Solar Manufacturers",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "qualifying_solar_b_and_o_classification",
+            "canonicalInputKey": "qualifying_solar_b_and_o_classification",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_activity_and_product_confirmation",
+            "canonicalInputKey": "qualifying_activity_and_product_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tax_period_start_date",
+            "canonicalInputKey": "tax_period_start_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tax_period_end_date",
+            "canonicalInputKey": "tax_period_end_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "gross_receipts_by_bo_classification",
+            "canonicalInputKey": "gross_receipts_by_bo_classification",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+            "canonicalInputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "otherwise_applicable_b_and_o_rate_decimal",
+            "canonicalInputKey": "otherwise_applicable_b_and_o_rate_decimal",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "deductions_and_interstate_foreign_sales",
+            "canonicalInputKey": "deductions_and_interstate_foreign_sales",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "multiple_activities_tax_credit_treatment",
+            "canonicalInputKey": "multiple_activities_tax_credit_treatment",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "annual_tax_performance_report_filed",
+            "canonicalInputKey": "annual_tax_performance_report_filed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "tax_rate_preference"
+        ],
+        "taxRelated": true,
+        "grantOrIncentiveRelated": false,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 20900,
+        "includedInRuntimeTotals": false
       }
     ],
     "sourceOrPackageBlocked": [
@@ -9058,17 +9571,6 @@
         ],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_010_california-endowment-hq.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "ev_charger_installation"
-          },
-          {
             "inputKey": "requested_grant_amount_cents",
             "canonicalInputKey": "requested_grant_amount_cents",
             "source": "synthetic_test_case_default",
@@ -9225,17 +9727,6 @@
           }
         ],
         "defaultedInputs": [
-          {
-            "inputKey": "eligible_project_cost_cents",
-            "canonicalInputKey": "eligible_project_cost_cents",
-            "source": "grant_retrofit_project_input",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "medium",
-            "userOverrideAllowed": true,
-            "sourceFileId": "output_010_california-endowment-hq.md",
-            "sourceStrategy": "synthetic_realistic_default",
-            "retrofitTypeId": "ev_charger_installation"
-          },
           {
             "inputKey": "funding_lane",
             "canonicalInputKey": "funding_lane",

@@ -231,6 +231,7 @@ function runtimeTiming(timing = {}) {
   if (timing.cadence === "one_time") return "upfront";
   if (timing.cadence === "monthly") return "monthly";
   if (timing.cadence === "annual") return "annual";
+  if (/point_of_sale|instant|rebate|reimbursement|grant|upfront/i.test(String(timing.source_timing || ""))) return "upfront";
   return null;
 }
 

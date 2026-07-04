@@ -1,12 +1,12 @@
 # Blocked And Suppressed Package Audit
 
-Generated: 2026-07-04T01:35:16.573Z
+Generated: 2026-07-04T01:56:02.494Z
 
 ## Summary
 
-- Blocked/suppressed package evaluations: 241
-- Unique package targets: 50
-- High-priority targets: 15
+- Blocked/suppressed package evaluations: 202
+- Unique package targets: 37
+- High-priority targets: 3
 - Targets needing GPT Pro/source repair: 0
 
 ## Recommendation Counts
@@ -14,48 +14,30 @@ Generated: 2026-07-04T01:35:16.573Z
 | Key | Count |
 | --- | --- |
 | keep_suppressed_ev_or_probability_gap | 15 |
-| needs_formula_or_input_resolution_audit | 12 |
-| needs_recurring_or_tariff_workflow | 8 |
-| needs_quote_or_custom_calculation_workflow | 6 |
+| needs_quote_or_custom_calculation_workflow | 7 |
+| needs_recurring_or_tariff_workflow | 7 |
 | archive_or_exclude_source_inaccessible | 3 |
 | intentional_non_cash_or_process_workflow | 2 |
-| keep_review_gated_tax_workflow | 2 |
 | needs_runtime_verification_or_document_upload | 2 |
+| keep_review_gated_tax_workflow | 1 |
 
 ## Runtime Status Counts
 
 | Key | Count |
 | --- | --- |
-| not_user_facing_default | 90 |
 | no_calculable_value | 72 |
+| not_user_facing_default | 50 |
 | source_inaccessible_repair_failure | 39 |
 | low_confidence | 16 |
-| custom_quote_estimate | 12 |
-| human_review_required | 12 |
+| custom_quote_estimate | 14 |
+| human_review_required | 11 |
 
 ## Outcome Class Counts
 
 | Key | Count |
 | --- | --- |
-| source_or_package_blocked | 123 |
-| suppressed_without_amount | 118 |
-
-## Needs Formula Or Input Resolution Audit
-
-| Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
-| --- | --- | --- | --- | --- | --- | --- |
-| Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4971) | 6 | not_user_facing_default: 6 | one_time_savings | rebate | quaker-oats-cedar-rapids | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Anaheim Public Utilities - EV Fleet Charger and Infrastructure Rebate (SOURCE_DSIRE:dsire_program_id:22277) | 2 | not_user_facing_default: 2 | one_time_savings | rebate | northgate-market-anaheim | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Anaheim Public Utilities - Personal Use EV Charger Rebates (SOURCE_DSIRE:dsire_program_id:22275) | 2 | not_user_facing_default: 2 | one_time_savings | rebate | northgate-market-anaheim | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Commercial Retro-Commissioning and New Construction Program (SOURCE_DSIRE:dsire_program_id:5218) | 1 | not_user_facing_default: 1 | one_time_savings, process_value | rebate, technical_assistance | organic-valley-lafarge-hq | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Controls Program (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:controls-program) | 3 | not_user_facing_default: 3 | one_time_savings | rebate | santa-clara-university-campus | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Customer Directed Electrification Rebate (SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate) | 4 | not_user_facing_default: 4 | one_time_savings | rebate | santa-clara-university-campus | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Eagle County - Walking Mountains Science Center Solar PV Rebate (SOURCE_DSIRE:dsire_program_id:22786) | 2 | not_user_facing_default: 2 | one_time_savings | rebate | food-bank-rockies-aurora-dc, tapiz-mariposa-denver-household | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Georgia Power - Commercial Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:4656) | 8 | not_user_facing_default: 8 | one_time_savings | rebate | trees-atlanta-kendeda-treehouse | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| LADWP - Non-Residential Energy Efficiency Incentive Program (SOURCE_DSIRE:dsire_program_id:1866) | 1 | not_user_facing_default: 1 | one_time_savings | rebate | california-endowment-hq | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Rocky Mountain Power - wattsmart Business Program (SOURCE_DSIRE:dsire_program_id:2412) | 7 | not_user_facing_default: 7 | one_time_savings | rebate | salt-lake-public-safety-building | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| SD Energy Edge (SOURCE_SDGE_BUSINESS:program_url:sdenergyedge_com) | 2 | not_user_facing_default: 2 | one_time_savings | rebate | juniper-and-ivy-san-diego | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
-| Solar Water Heater Rebate (SOURCE_DSIRE:dsire_program_id:506) | 1 | not_user_facing_default: 1 | one_time_savings | rebate | keauhou-lane-honolulu-renter | Audit runtime inputs and formula rows. This may be a code/input-default issue rather than a source-research issue because the package is direct monetary but computes zero. |
+| source_or_package_blocked | 125 |
+| suppressed_without_amount | 77 |
 
 ## Archive Or Exclude Source Inaccessible
 
@@ -71,6 +53,7 @@ Generated: 2026-07-04T01:35:16.573Z
 | --- | --- | --- | --- | --- | --- | --- |
 | City and County of Denver - Solar Rebate (SOURCE_DSIRE:dsire_program_id:22753) | 1 | low_confidence: 1 | one_time_savings | rebate | tapiz-mariposa-denver-household | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | Comfortably CA (SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com) | 1 | custom_quote_estimate: 1 | one_time_savings, process_value | rebate, technical_assistance | juniper-and-ivy-san-diego | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
+| Eagle County - Walking Mountains Science Center Solar PV Rebate (SOURCE_DSIRE:dsire_program_id:22786) | 2 | custom_quote_estimate: 2 | one_time_savings | rebate | food-bank-rockies-aurora-dc, tapiz-mariposa-denver-household | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | GRID-Lodging (SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging) | 1 | low_confidence: 1 | one_time_savings | rebate | juniper-and-ivy-san-diego | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | Groceries, Restaurants and Food Storage Program (SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program) | 3 | custom_quote_estimate: 3 | one_time_savings | rebate | juniper-and-ivy-san-diego | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712) | 5 | no_calculable_value: 5 | no_cash_value | unknown | boston-latin-school, ocracoke-school-island, santa-clara-university-campus | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
@@ -98,7 +81,6 @@ Generated: 2026-07-04T01:35:16.573Z
 | Critical Peak Pricing Plans (SOURCE_SDGE_BUSINESS:program_url:myenergycenter_com) | 2 | not_user_facing_default: 2 | recurring_savings | tariff_or_rate | juniper-and-ivy-san-diego | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
 | E-ZPass Minnesota Electric Vehicle Incentive (SOURCE_DSIRE:dsire_program_id:22194) | 1 | not_user_facing_default: 1 | one_time_savings | tariff_or_rate | the-rose-minneapolis-household | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
 | Emergency Load Reduction Program (ELRP) (SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:emergency-load-reduction-program-elrp) | 1 | not_user_facing_default: 1 | recurring_savings | tariff_or_rate | fender-corona-plant | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
-| LADWP - Feed-in Tariff (FiT) Program (SOURCE_DSIRE:dsire_program_id:5685) | 1 | not_user_facing_default: 1 | one_time_savings, recurring_savings | rebate, tariff_or_rate | california-endowment-hq | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
 | Marin Clean Energy - Feed-In Tariff Plus (SOURCE_DSIRE:dsire_program_id:22615) | 40 | not_user_facing_default: 40 | recurring_savings | tariff_or_rate | california-endowment-hq, fender-corona-plant, ikea-burbank | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
 | MassSAVE (Electric) - CI Connected Solutions Program (SOURCE_DSIRE:dsire_program_id:22744) | 1 | not_user_facing_default: 1 | recurring_savings | tariff_or_rate | boston-latin-school | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
 | Xcel Energy - Solar Rewards Program (SOURCE_DSIRE:dsire_program_id:5295) | 1 | low_confidence: 1 | recurring_savings | tariff_or_rate | food-bank-rockies-aurora-dc | Keep suppressed until recurring savings and tariff/rate product treatment is designed. Do not include in upfront totals. |
@@ -108,7 +90,6 @@ Generated: 2026-07-04T01:35:16.573Z
 | Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
 | --- | --- | --- | --- | --- | --- | --- |
 | Renewable Energy Renaissance Zones (SOURCE_DSIRE:dsire_program_id:3216) | 3 | human_review_required: 3 | tax_exemption | tax_exemption | gm-factory-zero-detroit | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
-| Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381) | 1 | human_review_required: 1 | tax_rate_preference | tax_rate_preference | boeing-everett-factory | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
 
 ## Keep Suppressed Ev Or Probability Gap
 
@@ -135,5 +116,5 @@ Generated: 2026-07-04T01:35:16.573Z
 - This report groups repeated test-case evaluations into unique opportunity/package targets. Counts here should drive repair batching, not the raw repeated evaluation count.
 - `archive_or_exclude_source_inaccessible` targets do not need another GPT Pro pass under the current product policy unless a new official source appears.
 - Buckets marked as needing GPT Pro/source repair are the only candidates for targeted GPT Pro repair prompts. Expected-value grants, tax workflows, quote workflows, and tariff/rate workflows are intentionally not treated as GPT Pro blockers here.
-- `needs_formula_or_input_resolution_audit` should be checked in code/data first because the package is monetary but computed no amount.
+- If `needs_formula_or_input_resolution_audit` appears, check code/data first because the package is monetary but computed no amount.
 - Custom quote, tariff/rate, process-value, and non-cash buckets should stay suppressed until the corresponding product workflow exists.

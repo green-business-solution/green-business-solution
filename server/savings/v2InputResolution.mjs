@@ -540,6 +540,7 @@ function syntheticDefaultForInput(key, valueType, ctx) {
   if (Object.prototype.hasOwnProperty.call(SYNTHETIC_DEFAULTS, key)) return SYNTHETIC_DEFAULTS[key];
   if (/date/.test(key)) return "2026-07-02";
   if (/cost|price|invoice|receipt|basis|taxcents|liability/.test(key)) return finiteNumber(ctx.upfrontCostCents) ?? 100000;
+  if (/square.*(foot|feet)|sqft|square_feet/.test(key)) return SYNTHETIC_DEFAULTS.square_feet;
   if (/count|quantity|number|units|ports|chargers|doors|systems|vehicles/.test(key)) return 1;
   if (/tons|tonnage/.test(key)) return syntheticTonsForRetrofit(ctx.sourceRetrofitTypeId || ctx.retrofitTypeId);
   if (/kwh/.test(key)) return annualDeltaAbs(ctx.billLineDeltas, "annual_kwh_delta") || 1000;

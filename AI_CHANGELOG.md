@@ -1974,3 +1974,4 @@
 # 2026-07-04
 
 - Added a blocked/suppressed package audit that groups repeated source/package-blocked and suppressed-without-amount test-case evaluations into unique package targets, separating formula/input audits, source-inaccessible archive candidates, quote workflows, tax/tariff gates, expected-value suppressions, and runtime verification gates.
+- Repaired the blocked/suppressed formula-input audit targets by restoring source-backed v2 rate tables and per-kWh formulas from embedded GPT Pro payloads, adding conservative runtime support for additional rate-row shapes, and deleting bad SVP electrification retrofit edges from the public/test-case matching data.

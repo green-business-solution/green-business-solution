@@ -475,7 +475,7 @@ function buildMarkdown(report) {
     "- Buckets marked as needing GPT Pro/source repair are the only candidates for targeted GPT Pro repair prompts. Expected-value grants, tax workflows, quote workflows, and tariff/rate workflows are intentionally not treated as GPT Pro blockers here."
   );
   lines.push(
-    "- `needs_formula_or_input_resolution_audit` should be checked in code/data first because the package is monetary but computed no amount."
+    "- If `needs_formula_or_input_resolution_audit` appears, check code/data first because the package is monetary but computed no amount."
   );
   lines.push(
     "- Custom quote, tariff/rate, process-value, and non-cash buckets should stay suppressed until the corresponding product workflow exists."

@@ -46,6 +46,7 @@
     "matching:test-case-grant-tax-coverage": "node scripts/report-test-case-grant-tax-coverage.mjs",
     "matching:computed-suppressed-audit": "node scripts/audit-computed-suppressed-packages.mjs",
     "matching:blocked-suppressed-audit": "node scripts/audit-blocked-suppressed-packages.mjs",
+    "matching:blocked-suppressed-formula-input-repairs": "node scripts/apply-blocked-suppressed-formula-input-repairs.mjs",
     "matching:computed-suppressed-repairs:apply": "node scripts/apply-computed-suppressed-repairs.mjs",
     "matching:incentive-formula-work-packet": "node scripts/write-incentive-formula-rate-table-work-packet.mjs",
     "matching:incentive-formula-repairs:intake": "node scripts/intake-incentive-formula-rate-table-repairs.mjs",

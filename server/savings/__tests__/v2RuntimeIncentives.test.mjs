@@ -119,6 +119,21 @@ describe("v2 runtime incentive bridge", () => {
     expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(400000);
   });
 
+  it("uses conservative range rate-table rows and point-of-sale timing for repaired packages", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [rangeRateTablePointOfSalePackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: { tons: { value: 3 } },
+        sourceRetrofitTypeId: "heat_pump_hvac_retrofit"
+      })
+    });
+
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(bridge.runtimeRules[0].timing).toBe("upfront");
+    expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(3000);
+  });
+
   it("treats supported v2 tax credits as first-class runtime effects even when not grant totals", () => {
     const bridge = buildV2RuntimeIncentiveBridge({
       packages: [supportedTaxCreditPackage()],
@@ -413,6 +428,60 @@ function sourceRowMeasureCatalogPackage() {
         value_type: "number",
         required_for: ["effect_source_row_catalog"],
         source_precedence: ["retrofit_quantity"],
+        missing_severity: "blocks_calculation"
+      }
+    ]
+  };
+}
+
+function rangeRateTablePointOfSalePackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_range_rate",
+    program_name: "V2 Range Rate Rebate",
+    rate_tables: [
+      {
+        table_id: "range_rates",
+        name: "Range Rates",
+        dimensions: ["measure_type"],
+        rows: [
+          { measure: "commercial heat pump", minRate: 10, maxRate: 100, rateUnit: "USD_per_ton" },
+          { measure: "LED fixture", minRate: 2, maxRate: 20, rateUnit: "USD_per_fixture" }
+        ]
+      }
+    ],
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_range_rate",
+        label: "Range rate rebate",
+        timing: { cadence: "custom", source_timing: "point_of_sale" },
+        calculation: { method: "rate_table", rate_table_id: "range_rates", lookup_inputs: ["measure_type"] },
+        required_inputs: [
+          {
+            input_key: "tons",
+            label: "Tons",
+            value_type: "number",
+            required_for: ["effect_range_rate"],
+            source_precedence: ["quote"],
+            missing_severity: "blocks_calculation"
+          }
+        ],
+        repair_metadata: {
+          included_in_user_facing_total_default: true,
+          cash_value_classification: "rebate",
+          value_model_kind: "rate_table"
+        }
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "tons",
+        label: "Tons",
+        value_type: "number",
+        required_for: ["effect_range_rate"],
+        source_precedence: ["quote"],
         missing_severity: "blocks_calculation"
       }
     ]
