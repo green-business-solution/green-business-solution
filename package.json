@@ -62,6 +62,8 @@
     "matching:grant-production-action-work-packet": "node scripts/write-grant-production-action-repair-work-packet.mjs",
     "matching:grant-production-quality:intake": "node scripts/intake-grant-production-quality-outputs.mjs",
     "matching:ri-renewable-tax-test-case": "node scripts/apply-ri-renewable-tax-valuation-test-case.mjs",
+    "matching:tax-framework:validate": "node scripts/validate-tax-model-framework.mjs",
+    "matching:tax-comprehensive-work-packet": "node scripts/write-comprehensive-tax-research-work-packets.mjs",
     "fixtures:generated:list": "node scripts/sync-generated-test-fixtures.mjs list",
     "fixtures:generated:upload": "node scripts/sync-generated-test-fixtures.mjs upload",
     "fixtures:generated:download": "node scripts/sync-generated-test-fixtures.mjs download",

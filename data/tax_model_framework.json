@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "retrofi_tax_model_framework.v1",
+  "generatedAt": "2026-07-04T00:00:00.000Z",
+  "purpose": "Defines normalized tax model kinds, runtime statuses, input gates, and unsupported fallback behavior for future tax-related opportunity calculation packages.",
+  "safetyPrinciples": [
+    "Never invent a tax dollar estimate when the tax type, formula, jurisdiction, effective date, or taxpayer-specific base is missing.",
+    "Use address geography to derive jurisdiction facts, not taxpayer eligibility.",
+    "Use official source data for rates, formulas, effective dates, caps, and filing rules.",
+    "Use tax returns, tax bills, accounting records, program approval documents, or assessor/accountant confirmation for taxpayer-specific tax bases.",
+    "If a future tax opportunity does not map to a supported model, return unsupported_tax_model with a $0 customer-facing value until repaired."
+  ],
+  "runtimeStatuses": [
+    {
+      "status": "calculated",
+      "customerFacingTotalAllowed": true,
+      "meaning": "All required source-backed formula fields and runtime inputs are present, no review gate blocks inclusion, and the package is configured for user-facing totals."
+    },
+    {
+      "status": "not_applicable_zero_value",
+      "customerFacingTotalAllowed": false,
+      "meaning": "Known facts prove the tax benefit does not apply or the qualifying tax base is zero."
+    },
+    {
+      "status": "needs_tax_bill",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The formula is known, but final dollars require a property tax bill, levy lines, parcel/APN, assessment notice, or licensed bill-line data."
+    },
+    {
+      "status": "needs_tax_return",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The formula is known, but final dollars require tax-return or accounting values such as gross receipts, taxable income, deductions, apportionment, or tax liability."
+    },
+    {
+      "status": "needs_assessor_confirmation",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The formula or valuation rule is known, but a local assessor must confirm classification, taxable value, exemption treatment, or counterfactual assessment."
+    },
+    {
+      "status": "needs_tax_profile",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The formula is known, but organization tax profile fields such as entity type, tax appetite, filing status, or exemption certificate status are missing."
+    },
+    {
+      "status": "needs_program_documentation",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The benefit depends on an approved zone, abatement agreement, certificate, award letter, local ordinance adoption, or other program-specific document."
+    },
+    {
+      "status": "needs_filing_confirmation",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The taxpayer must confirm a required filing, annual report, application, election, or certificate before value can be shown."
+    },
+    {
+      "status": "needs_tax_appetite",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The credit or deduction has a value only if the taxpayer has enough tax liability, transferability, refundability, direct pay eligibility, or a modeled monetization path."
+    },
+    {
+      "status": "needs_local_ordinance_confirmation",
+      "customerFacingTotalAllowed": false,
+      "meaning": "A state law authorizes a local option, but the city/county/municipality adoption, effective ordinance, or local terms must be confirmed."
+    },
+    {
+      "status": "unsupported_tax_model",
+      "customerFacingTotalAllowed": false,
+      "meaning": "RetroFi has not implemented this tax model kind. The safe customer-facing value is $0 until a model package is researched and added."
+    },
+    {
+      "status": "source_unavailable",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The official source needed to verify the rule is unavailable or inaccessible."
+    },
+    {
+      "status": "stale_source",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The source exists but is stale, expired, superseded, or missing current effective-date support."
+    },
+    {
+      "status": "human_review_required",
+      "customerFacingTotalAllowed": false,
+      "meaning": "A tax professional, assessor, or admin review gate remains because source interpretation or taxpayer facts cannot be safely automated yet."
+    },
+    {
+      "status": "suppressed",
+      "customerFacingTotalAllowed": false,
+      "meaning": "The package is intentionally hidden from customer-facing totals by policy."
+    }
+  ],
+  "sourceStrategies": [
+    "address_geography",
+    "official_rate_file",
+    "official_boundary_file",
+    "official_lookup_tool",
+    "statute_or_regulation",
+    "agency_guidance",
+    "tax_return",
+    "tax_bill",
+    "accountant_review",
+    "assessor_review",
+    "program_approval_document",
+    "user_profile",
+    "admin_review"
+  ],
+  "modelKinds": [
+    {
+      "kind": "sales_use_tax_rate",
+      "taxTypes": ["sales_tax", "use_tax"],
+      "estimateFormula": "tax_cents = taxable_basis_cents * combined_rate_decimal",
+      "requiredSourceFields": ["state", "rate_decimal", "effective_start_date", "taxability_basis"],
+      "requiredRuntimeInputs": ["taxable_basis_cents"],
+      "commonGates": ["needs_tax_profile"],
+      "serverDerivableInputs": ["state_code", "county_fips", "place_geoid", "postal_code", "combined_rate_decimal when official source supports address lookup"],
+      "userFacingPolicy": "Can be included when rate, taxable basis, and taxability treatment are source-backed."
+    },
+    {
+      "kind": "sales_use_tax_exemption",
+      "taxTypes": ["sales_tax", "use_tax"],
+      "estimateFormula": "savings_cents = eligible_taxable_basis_cents * combined_rate_decimal * exemption_percent",
+      "requiredSourceFields": ["eligible_items", "exemption_percent", "jurisdiction", "effective_dates"],
+      "requiredRuntimeInputs": ["eligible_taxable_basis_cents", "equipment_or_service_category"],
+      "commonGates": ["needs_tax_profile", "needs_filing_confirmation"],
+      "serverDerivableInputs": ["combined_rate_decimal", "jurisdiction"],
+      "userFacingPolicy": "Include only when the source clearly exempts the matched equipment/service and all certification or filing requirements are satisfied."
+    },
+    {
+      "kind": "state_income_or_franchise_tax_credit",
+      "taxTypes": ["income_tax", "franchise_tax", "corporate_tax"],
+      "estimateFormula": "gross_credit_cents = min(eligible_basis_cents * credit_percent, cap_cents); realized_value_cents requires tax appetite or monetization path",
+      "requiredSourceFields": ["credit_percent_or_amount", "eligible_basis", "caps", "refundability_or_carryforward", "effective_dates"],
+      "requiredRuntimeInputs": ["eligible_basis_cents", "tax_liability_or_tax_appetite"],
+      "commonGates": ["needs_tax_return", "needs_tax_appetite", "needs_filing_confirmation"],
+      "serverDerivableInputs": ["state_code", "credit_percent", "cap_cents"],
+      "userFacingPolicy": "Show gross credit separately from realized value unless tax appetite, refundability, transferability, or direct pay is known."
+    },
+    {
+      "kind": "gross_receipts_or_bo_rate_preference",
+      "taxTypes": ["gross_receipts_tax", "business_and_occupation_tax", "commercial_activity_tax"],
+      "estimateFormula": "savings_cents = qualifying_tax_base_cents * max(0, ordinary_rate_decimal - preferential_rate_decimal)",
+      "requiredSourceFields": ["ordinary_rate_decimal", "preferential_rate_decimal", "qualifying_activity", "effective_dates"],
+      "requiredRuntimeInputs": ["qualifying_tax_base_cents", "business_activity_classification"],
+      "commonGates": ["needs_tax_return", "needs_filing_confirmation", "human_review_required"],
+      "serverDerivableInputs": ["state_code", "city", "preferential_rate_decimal when source-backed"],
+      "userFacingPolicy": "Default to internal-only until tax-return/accountant inputs confirm the activity classification, deductions, credits, and qualifying tax base."
+    },
+    {
+      "kind": "property_tax_exemption",
+      "taxTypes": ["property_tax"],
+      "estimateFormula": "savings_cents = ordinary_tax_on_exempt_value_cents",
+      "requiredSourceFields": ["exempt_property_type", "exemption_scope", "jurisdiction", "filing_deadline"],
+      "requiredRuntimeInputs": ["tax_bill_or_assessed_value", "eligible_property_value_cents"],
+      "commonGates": ["needs_tax_bill", "needs_assessor_confirmation", "needs_filing_confirmation"],
+      "serverDerivableInputs": ["state_code", "county_fips", "place_geoid", "assessor_jurisdiction"],
+      "userFacingPolicy": "Do not include until tax bill, assessor value, or official exemption certificate supports the ordinary tax counterfactual."
+    },
+    {
+      "kind": "property_tax_credit",
+      "taxTypes": ["property_tax"],
+      "estimateFormula": "credit_cents = min(eligible_property_tax_cents * credit_percent, cap_cents)",
+      "requiredSourceFields": ["credit_percent_or_amount", "eligible_property_tax_lines", "caps", "term_years", "jurisdiction"],
+      "requiredRuntimeInputs": ["eligible_property_tax_cents"],
+      "commonGates": ["needs_tax_bill", "needs_assessor_confirmation", "needs_filing_confirmation"],
+      "serverDerivableInputs": ["jurisdiction", "credit_percent", "cap_cents"],
+      "userFacingPolicy": "Include only when current property tax lines and eligibility are confirmed."
+    },
+    {
+      "kind": "property_tax_special_valuation",
+      "taxTypes": ["property_tax"],
+      "estimateFormula": "savings_cents = max(0, counterfactual_ordinary_tax_cents - statutory_or_special_tax_cents)",
+      "requiredSourceFields": ["special_valuation_formula", "applicable_property_types", "jurisdiction"],
+      "requiredRuntimeInputs": ["counterfactual_ordinary_tax_cents", "capacity_or_assessed_value_inputs"],
+      "commonGates": ["needs_tax_bill", "needs_assessor_confirmation"],
+      "serverDerivableInputs": ["state_code", "municipality", "valuation_rate"],
+      "userFacingPolicy": "Statutory value can be computed internally; savings require counterfactual ordinary tax and assessor confirmation."
+    },
+    {
+      "kind": "tax_abatement_or_pilot",
+      "taxTypes": ["property_tax", "income_tax", "local_tax", "special_assessment"],
+      "estimateFormula": "abatement_cents = eligible_tax_liability_cents * abatement_percent_or_phaseout_multiplier",
+      "requiredSourceFields": ["approved_program_terms", "eligible_tax_lines", "term_years", "phaseout_schedule"],
+      "requiredRuntimeInputs": ["program_approval_document", "eligible_tax_liability_cents"],
+      "commonGates": ["needs_program_documentation", "needs_tax_bill", "needs_tax_return", "needs_assessor_confirmation"],
+      "serverDerivableInputs": ["state_code", "local_unit", "program_id"],
+      "userFacingPolicy": "Default to $0 unless an approved project/company/parcel agreement and eligible tax lines are present."
+    },
+    {
+      "kind": "local_business_license_or_receipts_tax",
+      "taxTypes": ["local_business_tax", "business_license_tax", "local_gross_receipts_tax"],
+      "estimateFormula": "tax_cents = local_formula(tax_base, employee_count, square_feet, class, units)",
+      "requiredSourceFields": ["local_code_or_return", "rate_table", "business_class_rules", "effective_dates"],
+      "requiredRuntimeInputs": ["business_class", "tax_base_or_formula_inputs"],
+      "commonGates": ["needs_tax_return", "needs_tax_profile"],
+      "serverDerivableInputs": ["city", "place_geoid", "local_business_tax_class when inferable"],
+      "userFacingPolicy": "Calculate internal-only from source-backed local formula; user-facing totals require user/accountant confirmation of tax-base inputs."
+    },
+    {
+      "kind": "depreciation_or_deduction",
+      "taxTypes": ["income_tax", "franchise_tax"],
+      "estimateFormula": "realized_value_cents = deduction_cents * marginal_tax_rate_decimal, subject to basis, timing, recapture, and tax appetite",
+      "requiredSourceFields": ["eligible_basis", "deduction_percent_or_schedule", "recapture_rules", "effective_dates"],
+      "requiredRuntimeInputs": ["eligible_basis_cents", "tax_rate_or_tax_liability", "placed_in_service_date"],
+      "commonGates": ["needs_tax_return", "needs_tax_appetite", "human_review_required"],
+      "serverDerivableInputs": ["federal_or_state_rule_id", "deduction_schedule"],
+      "userFacingPolicy": "Default to non-user-facing until tax profile and accountant assumptions are present."
+    },
+    {
+      "kind": "unsupported_tax_model",
+      "taxTypes": ["unknown"],
+      "estimateFormula": "estimated_savings_cents = 0",
+      "requiredSourceFields": [],
+      "requiredRuntimeInputs": [],
+      "commonGates": ["unsupported_tax_model"],
+      "serverDerivableInputs": [],
+      "userFacingPolicy": "Show no customer-facing tax savings and queue the opportunity for model repair if it is important."
+    }
+  ],
+  "opportunityMappingPolicy": {
+    "mappingPriority": [
+      "Use explicit v2 tax calculation package model kind when present.",
+      "Match official source language to one supported model kind.",
+      "Use source-backed formula/caps/effective dates before applying any runtime estimate.",
+      "Use unsupported_tax_model when source language is vague, non-tax, obsolete, or outside supported model kinds."
+    ],
+    "archiveOrSuppressWhen": [
+      "official source is inaccessible and no current reliable source can verify the tax rule",
+      "program is expired or closed",
+      "benefit is only a financing/PACE loan workflow and not a tax savings amount",
+      "no formula, rate, cap, or tax base can be sourced"
+    ]
+  }
+}

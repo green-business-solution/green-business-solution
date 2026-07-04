@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) comprehensive tax model research framework
+
+- Added a source-backed tax model framework covering runtime statuses, supported tax model kinds, source strategies, and opportunity mapping policy for future tax calculation expansion.
+- Added a tax source registry seed for official rate, boundary, credit, exemption, property-tax, local-option, and unsupported-workflow research/import planning.
+- Added validation and GPT Pro work-packet scripts for comprehensive nationwide tax data research, generating 10 prompt/output pairs in the ignored `GPT Pro Work` area.
+
 ## 2026-07-04 - Codex (GPT-5) scenario tradeoff diagram
 
 - Added a third Scenarios tab view that compares scenario upfront cost, payback speed, total savings, and complexity as relative high/medium/low bar ratings.

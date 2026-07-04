@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "retrofi_tax_source_registry_seed.v1",
+  "generatedAt": "2026-07-04T00:00:00.000Z",
+  "description": "Seed registry for official tax data sources and future imports. This is a planning/import skeleton, not a claim of nationwide runtime completion.",
+  "sourceArtifacts": [
+    "data/tax_official_dataset_rule_research_gpt_pro_2026-07-03.json",
+    "data/tax_geography_rules.json",
+    "data/tax_local_workflow_rules.json",
+    "data/tax_model_framework.json"
+  ],
+  "importPolicy": {
+    "authoritativeSourceOrder": [
+      "official statute or regulation",
+      "official tax agency rate file, rule file, or API",
+      "official assessor, treasurer, municipal, or GIS dataset",
+      "official program manual, application guide, or filed form instructions",
+      "DSIRE or third-party summaries only as discovery, never as final authority"
+    ],
+    "minimumImportFields": [
+      "sourceId",
+      "taxDataFamily",
+      "jurisdictionLevel",
+      "jurisdictionsCovered",
+      "officialOwner",
+      "sourceUrls",
+      "accessMethod",
+      "effectiveDateHandling",
+      "refreshCadence",
+      "sourceConfidence",
+      "runtimeUsePolicy"
+    ],
+    "skipPolicy": "If official source data cannot be verified or the tax model kind is unsupported, create an unsupported_tax_model or source_unavailable record with customer-facing value fixed at $0."
+  },
+  "sourceFamilies": [
+    {
+      "taxDataFamily": "sales_use_tax_rates_and_boundaries",
+      "modelKindsSupported": ["sales_use_tax_rate", "sales_use_tax_exemption"],
+      "priority": "high",
+      "runtimeGoal": "Resolve combined sales/use tax rates and source-backed retrofit taxability when address and taxable basis are known.",
+      "recommendedSources": [
+        {
+          "sourceId": "sst_rate_and_boundary_files",
+          "officialOwner": "Streamlined Sales Tax Governing Board and member states",
+          "jurisdictionsCovered": ["member_states"],
+          "accessMethod": "download",
+          "machineReadable": true,
+          "sourceUrls": [
+            "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files",
+            "https://www.streamlinedsalestax.org/Shared-Pages/rate-and-boundary-files/rate-and-boundary-file-updates"
+          ],
+          "runtimeUsePolicy": "Use where member-state files provide rate and boundary joins; validate state-specific file terms before production import."
+        },
+        {
+          "sourceId": "state_dor_sales_tax_rate_files",
+          "officialOwner": "State revenue departments",
+          "jurisdictionsCovered": ["all_states_and_dc_where_available"],
+          "accessMethod": "download_or_api_or_lookup",
+          "machineReadable": "state_specific",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Prefer official state downloads/APIs over ZIP-only inference. Use lookup-only tools for validation or admin research unless terms permit automated production use."
+        }
+      ],
+      "requiredRuntimeInputs": ["eligible_taxable_basis_cents", "equipment_or_service_taxability_category"],
+      "documentGates": ["taxability certificate when required", "invoice/quote for taxable basis"],
+      "refreshCadence": "monthly_or_quarterly_by_state"
+    },
+    {
+      "taxDataFamily": "state_tax_credits_exemptions_and_deductions",
+      "modelKindsSupported": [
+        "state_income_or_franchise_tax_credit",
+        "sales_use_tax_exemption",
+        "property_tax_exemption",
+        "property_tax_credit",
+        "depreciation_or_deduction"
+      ],
+      "priority": "high",
+      "runtimeGoal": "Map state tax incentive opportunities to source-backed credit, exemption, deduction, valuation, or unsupported models.",
+      "recommendedSources": [
+        {
+          "sourceId": "state_statutes_and_revenue_guidance",
+          "officialOwner": "State legislatures and state tax agencies",
+          "jurisdictionsCovered": ["all_states_and_dc"],
+          "accessMethod": "statute_regulation_guidance",
+          "machineReadable": false,
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Use GPT Pro/Codex research to normalize formulas and required inputs; import only when source URLs and evidence are official."
+        }
+      ],
+      "requiredRuntimeInputs": ["eligible_basis_cents", "entity_tax_status", "tax_liability_or_tax_appetite_when_relevant"],
+      "documentGates": ["tax return", "filing confirmation", "exemption certificate", "credit form"],
+      "refreshCadence": "monthly_watch_plus_annual_legislative_review"
+    },
+    {
+      "taxDataFamily": "property_tax_assessor_and_valuation",
+      "modelKindsSupported": [
+        "property_tax_exemption",
+        "property_tax_credit",
+        "property_tax_special_valuation",
+        "tax_abatement_or_pilot"
+      ],
+      "priority": "medium",
+      "runtimeGoal": "Route property-tax incentives to parcel, assessor, tax-bill, and local ordinance inputs without inventing counterfactual property tax values.",
+      "recommendedSources": [
+        {
+          "sourceId": "state_property_tax_agency_sources",
+          "officialOwner": "State property tax agencies or equalization boards",
+          "jurisdictionsCovered": ["states_with_centralized_property_tax_data"],
+          "accessMethod": "download_or_guidance",
+          "machineReadable": "state_specific",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Use for statewide exemption/valuation rules and centralized files where production terms are clear."
+        },
+        {
+          "sourceId": "county_city_assessor_treasurer_sources",
+          "officialOwner": "County/city assessors and treasurers",
+          "jurisdictionsCovered": ["county_city_priority_jurisdictions"],
+          "accessMethod": "open_data_or_lookup_or_bill_upload",
+          "machineReadable": "jurisdiction_specific",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Use open data for parcel/jurisdiction routing; require uploaded tax bill or licensed source for current bill-line calculations when terms are lookup-only."
+        }
+      ],
+      "requiredRuntimeInputs": ["parcel_id_or_apn", "current_tax_bill_lines", "assessed_or_taxable_value", "counterfactual_ordinary_tax_cents"],
+      "documentGates": ["property tax bill", "assessment notice", "assessor confirmation", "approved abatement agreement"],
+      "refreshCadence": "annual_roll_plus_monthly_source_status_check"
+    },
+    {
+      "taxDataFamily": "business_income_franchise_gross_receipts_and_bo",
+      "modelKindsSupported": [
+        "state_income_or_franchise_tax_credit",
+        "gross_receipts_or_bo_rate_preference",
+        "local_business_license_or_receipts_tax",
+        "depreciation_or_deduction"
+      ],
+      "priority": "medium",
+      "runtimeGoal": "Model credits, rate preferences, and local business taxes when tax-return/accounting inputs exist.",
+      "recommendedSources": [
+        {
+          "sourceId": "state_business_tax_rate_and_form_sources",
+          "officialOwner": "State tax agencies",
+          "jurisdictionsCovered": ["all_states_and_dc"],
+          "accessMethod": "forms_instructions_statutes_rate_tables",
+          "machineReadable": "partial",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Use source-backed rates/formulas, but keep taxpayer-specific base, deductions, apportionment, and liability as tax-return/accountant inputs."
+        },
+        {
+          "sourceId": "major_local_business_tax_sources",
+          "officialOwner": "City finance departments and municipal codes",
+          "jurisdictionsCovered": ["priority_cities_and_known_local_tax_jurisdictions"],
+          "accessMethod": "municipal_code_return_forms_guidance",
+          "machineReadable": "partial",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Calculate internal-only unless business class and tax base are user/accountant-confirmed."
+        }
+      ],
+      "requiredRuntimeInputs": ["gross_receipts_cents", "taxable_income_or_tax_liability_cents", "business_tax_class", "deductions_or_apportionment_when_applicable"],
+      "documentGates": ["tax return", "accounting export", "accountant review"],
+      "refreshCadence": "annual_tax_year_plus_quarterly_rate_check"
+    },
+    {
+      "taxDataFamily": "county_city_local_option_incentives",
+      "modelKindsSupported": [
+        "property_tax_exemption",
+        "property_tax_credit",
+        "property_tax_special_valuation",
+        "tax_abatement_or_pilot",
+        "unsupported_tax_model"
+      ],
+      "priority": "medium",
+      "runtimeGoal": "Normalize local-option clean-energy, high-performance-building, and economic-development tax incentives where official local adoption can be verified.",
+      "recommendedSources": [
+        {
+          "sourceId": "local_option_statutory_authority",
+          "officialOwner": "State legislatures and state tax agencies",
+          "jurisdictionsCovered": ["states_with_local_option_authority"],
+          "accessMethod": "statute_guidance",
+          "machineReadable": false,
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Use as authority only; do not assume a city/county adopted the option."
+        },
+        {
+          "sourceId": "local_adoption_sources",
+          "officialOwner": "City/county/municipal councils, assessors, and code publishers",
+          "jurisdictionsCovered": ["localities_with_verified_adoption"],
+          "accessMethod": "ordinance_code_assessor_guidance",
+          "machineReadable": "partial",
+          "sourceUrls": [],
+          "runtimeUsePolicy": "Require direct local adoption evidence before enabling a local-option estimate."
+        }
+      ],
+      "requiredRuntimeInputs": ["local_ordinance_confirmation", "eligible_tax_lines_or_basis", "filing_or_application_status"],
+      "documentGates": ["local ordinance", "application approval", "tax bill", "assessor confirmation"],
+      "refreshCadence": "semiannual_or_when_opportunity_collected"
+    },
+    {
+      "taxDataFamily": "unsupported_or_exotic_tax_workflows",
+      "modelKindsSupported": ["unsupported_tax_model"],
+      "priority": "low",
+      "runtimeGoal": "Provide a safe $0 fallback for tax-like opportunities outside current support.",
+      "recommendedSources": [],
+      "requiredRuntimeInputs": [],
+      "documentGates": [],
+      "refreshCadence": "only_when_a_matching_opportunity_is_collected"
+    }
+  ],
+  "databaseTableSkeleton": [
+    {
+      "tableName": "tax_source_registry",
+      "primaryKey": ["sourceId"],
+      "purpose": "Official source metadata, access terms, refresh cadence, and import status."
+    },
+    {
+      "tableName": "tax_rate_records",
+      "primaryKey": ["taxType", "jurisdictionKey", "effectiveStartDate", "sourceId"],
+      "purpose": "Structured sales/use, local tax, and business tax rate records."
+    },
+    {
+      "tableName": "tax_boundary_records",
+      "primaryKey": ["boundarySourceId", "jurisdictionKey", "effectiveStartDate"],
+      "purpose": "Address/geography boundary or tax-code joins for local tax rates."
+    },
+    {
+      "tableName": "tax_incentive_rule_records",
+      "primaryKey": ["taxRuleId", "version"],
+      "purpose": "Normalized credit, exemption, valuation, abatement, deduction, and unsupported tax model records."
+    },
+    {
+      "tableName": "tax_rule_evidence",
+      "primaryKey": ["taxRuleId", "evidenceId"],
+      "purpose": "Official source URLs and evidence text for every material rate/formula/eligibility claim."
+    },
+    {
+      "tableName": "tax_import_runs",
+      "primaryKey": ["importRunId"],
+      "purpose": "Refresh logs, validation errors, source hashes, and change summaries."
+    }
+  ],
+  "validationRules": [
+    "Reject tax incentive rules without official source URLs unless explicitly marked unsupported_tax_model or source_unavailable.",
+    "Reject user-facing tax estimates without effective dates.",
+    "Reject local-option records without direct local adoption evidence.",
+    "Reject property-tax savings records that lack either tax bill/counterfactual tax inputs or assessor-confirmed valuation treatment.",
+    "Reject business tax rate-preference estimates that lack a tax-return/accounting tax base.",
+    "Permit $0 not_applicable_zero_value outcomes when a source-backed eligibility gate is false or qualifying tax base is zero."
+  ],
+  "nextImportPhases": [
+    {
+      "phase": "schema_and_prompting",
+      "status": "current",
+      "deliverables": ["tax_model_framework", "tax_source_registry_seed", "comprehensive_gpt_pro_work_packet"]
+    },
+    {
+      "phase": "structured_source_imports",
+      "status": "planned",
+      "deliverables": ["sales_use_tax_rate_import", "tax_boundary_import", "source_registry_import_validation"]
+    },
+    {
+      "phase": "gpt_researched_rule_imports",
+      "status": "planned",
+      "deliverables": ["state_tax_incentive_rules", "property_tax_local_option_rules", "business_tax_rate_preference_rules"]
+    },
+    {
+      "phase": "runtime_mapping",
+      "status": "planned",
+      "deliverables": ["new_tax_opportunity_classifier", "unsupported_tax_model_fallback", "tax_form_upload_field_mapping"]
+    }
+  ]
+}
