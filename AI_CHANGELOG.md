@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) test recommendation precompute script
+
+- Added a reusable retrofit recommendation cache helper module so API reads/writes and offline precompute use the same fingerprint, S3 key, and runtime-state metadata.
+- Added a test-user recommendation precompute script with dry-run and write modes to persist full fake-user recommendation payloads in S3 until the underlying user/intake fingerprint changes.
+- Added npm aliases for dry-run and write-mode test recommendation precompute runs.
+
 ## 2026-07-04 - Codex (GPT-5) home hero copy cleanup
 
 - Removed the `RetroFi scan` eyebrow from the home hero, simplified the results eyebrow to `Results`, and changed the primary CTA from `Start free scan` to `Get Started`.
@@ -2160,3 +2166,9 @@
 - Imported the GPT Pro Rhode Island renewable property-tax valuation sample test case, corrected stale facility/utility matching metadata, fixed v2 tax input precedence so opportunity-specific AC nameplate capacity wins over generic system kW, and regenerated 51-case grant/tax coverage showing all 3 tax opportunity packages are now represented.
 - Archived/excluded three repeated source-inaccessible opportunities from product-visible matching and estimates, updated their v2 packages to `unavailable_archived`, applied matching lifecycle archives in DynamoDB, and regenerated public matching/coverage artifacts with no source-inaccessible package failures.
 - Added a post-implementation Dashboard in `/user-preview` with Summary, Financial Performance, Environmental Impact, and Certifications pages backed by a frontend view-model adapter that only counts implemented/tracking retrofits and renders unavailable states when performance data is not connected.
+
+## 2026-07-04 - Codex (GPT-5) grant production action repair intake
+
+- Imported the five GPT Pro grant-production action repair outputs, applying 20 package-level repairs across 22 v2 incentive effects with source-backed formula, input, probability, funding, and runtime recommendation metadata.
+- Updated the v2 runtime bridge to distinguish grant-production action outcomes for no-calculable-value placeholders and non-grant workflows instead of collapsing them into generic suppression.
+- Regenerated grant/tax coverage and form-input audit reports, confirming all 87 form-input-required grant/rebate evaluations map to collection surfaces, and uploaded the regenerated generated-test-fixture manifest to S3.

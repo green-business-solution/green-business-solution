@@ -60,6 +60,12 @@ import {
   summarizeDashboardPostImplementationDataset
 } from "./dashboardPerformance/dashboardPerformanceStore.mjs";
 import { validateDashboardPostImplementationDataset } from "./dashboardPerformance/schemas.mjs";
+import {
+  filterRetrofitRecommendationsPayload,
+  normalizeRetrofitTypeIdList,
+  readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
+  writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
+} from "./retrofitRecommendationsCache.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -180,8 +186,6 @@ const retrofitRecommendationsCacheTtlMs = Math.max(
   60_000,
   Number.parseInt(process.env.GBS_RETROFIT_RECOMMENDATIONS_CACHE_TTL_MS || "300000", 10) || 300_000
 );
-const persistentRetrofitRecommendationsStateScope = "retrofitRecommendations";
-const persistentRetrofitRecommendationsCacheVersion = "2026-07-04-selected-retrofit-detail-v1";
 const retrofitRecommendationsCache = new Map();
 const retrofitRecommendationsPromiseCache = new Map();
 
@@ -1131,10 +1135,6 @@ async function getCachedOpportunities() {
   return opportunitiesCache.promise;
 }
 
-function normalizeRetrofitTypeIdList(retrofitTypeIds) {
-  return [...new Set(cleanStringArray(retrofitTypeIds).map((value) => value.toLowerCase()).filter(Boolean))].sort();
-}
-
 function retrofitRecommendationsBaseCacheKey(user, intake) {
   return [
     user?.userId || "unknown",
@@ -1175,123 +1175,27 @@ function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeI
   });
 }
 
-function stableJsonStringify(value) {
-  if (Array.isArray(value)) {
-    return `[${value.map(stableJsonStringify).join(",")}]`;
-  }
-  if (value && typeof value === "object") {
-    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJsonStringify(value[key])}`).join(",")}}`;
-  }
-  return JSON.stringify(value);
-}
-
-function retrofitRecommendationsFingerprint(user, intake) {
-  return crypto
-    .createHash("sha256")
-    .update(stableJsonStringify({
-      cacheVersion: persistentRetrofitRecommendationsCacheVersion,
-      intake: intake || null,
-      user: {
-        userId: user?.userId || null,
-        updatedAt: user?.updatedAt || null,
-        isFakeUser: Boolean(user?.isFakeUser)
-      }
-    }))
-    .digest("hex");
-}
-
-function persistentRetrofitRecommendationsStateKey(user) {
-  return {
-    stateScope: persistentRetrofitRecommendationsStateScope,
-    stateKey: `user:${cleanText(user?.userId) || "unknown"}`
-  };
-}
-
-function persistentRetrofitRecommendationsS3Key(user, fingerprint) {
-  return `runtime-cache/retrofit-recommendations/${encodeURIComponent(cleanText(user?.userId) || "unknown")}/${fingerprint}.json`;
-}
-
-function filterRetrofitRecommendationsPayload(payload, retrofitTypeIds = []) {
-  const requestedRetrofitTypeIds = new Set(normalizeRetrofitTypeIdList(retrofitTypeIds));
-  if (!requestedRetrofitTypeIds.size) {
-    return payload;
-  }
-  const retrofits = (payload?.retrofits || []).filter((retrofit) => requestedRetrofitTypeIds.has(cleanText(retrofit.retrofitTypeId).toLowerCase()));
-  return {
-    ...payload,
-    isPartialRecommendations: true,
-    retrofits,
-    summary: {
-      matchedRetrofitCount: retrofits.length,
-      matchedOpportunityCount: retrofits.reduce((sum, retrofit) => sum + (retrofit.opportunities?.length || 0), 0)
-    }
-  };
-}
-
 async function readPersistentRetrofitRecommendations(user, intake) {
-  if (!energyDataBucket || !runtimeStateTable) {
-    return null;
-  }
-  const fingerprint = retrofitRecommendationsFingerprint(user, intake);
-  try {
-    const result = await db.send(
-      new GetCommand({
-        TableName: runtimeStateTable,
-        Key: persistentRetrofitRecommendationsStateKey(user)
-      })
-    );
-    const item = result.Item || null;
-    if (item?.fingerprint !== fingerprint || !item?.s3Key) {
-      return null;
-    }
-    const response = await s3.send(
-      new GetObjectCommand({
-        Bucket: energyDataBucket,
-        Key: item.s3Key
-      })
-    );
-    const text = await response.Body?.transformToString("utf-8");
-    return text ? JSON.parse(text) : null;
-  } catch (error) {
-    console.warn(`[retrofit-recommendations-cache] persistent read failed for ${user?.userId || "unknown"}:`, error);
-    return null;
-  }
+  return readPersistentRetrofitRecommendationsFromStore({
+    bucket: energyDataBucket,
+    db,
+    intake,
+    s3,
+    table: runtimeStateTable,
+    user
+  });
 }
 
 async function writePersistentRetrofitRecommendations(user, intake, payload) {
-  if (!energyDataBucket || !runtimeStateTable || !payload || payload.isPartialRecommendations) {
-    return;
-  }
-  const now = new Date().toISOString();
-  const fingerprint = retrofitRecommendationsFingerprint(user, intake);
-  const s3Key = persistentRetrofitRecommendationsS3Key(user, fingerprint);
-  try {
-    await s3.send(
-      new PutObjectCommand({
-        Bucket: energyDataBucket,
-        Key: s3Key,
-        Body: JSON.stringify(payload),
-        ContentType: "application/json",
-        ServerSideEncryption: "AES256"
-      })
-    );
-    await db.send(
-      new PutCommand({
-        TableName: runtimeStateTable,
-        Item: {
-          ...persistentRetrofitRecommendationsStateKey(user),
-          cacheVersion: persistentRetrofitRecommendationsCacheVersion,
-          fingerprint,
-          s3Key,
-          userId: user?.userId || null,
-          generatedAt: payload.generatedAt || now,
-          updatedAt: now
-        }
-      })
-    );
-  } catch (error) {
-    console.warn(`[retrofit-recommendations-cache] persistent write failed for ${user?.userId || "unknown"}:`, error);
-  }
+  await writePersistentRetrofitRecommendationsToStore({
+    bucket: energyDataBucket,
+    db,
+    intake,
+    payload,
+    s3,
+    table: runtimeStateTable,
+    user
+  });
 }
 
 function encodeScanCursor(key) {
