@@ -192,7 +192,7 @@ describe("v2 runtime incentive bridge", () => {
     });
 
     expect(bridge.runtimeRules).toEqual([]);
-    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("suppressed_by_policy");
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("no_calculable_value");
     expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
       effectType: "grant_expected_value",
       estimateStatus: "suppressed",
@@ -217,6 +217,38 @@ describe("v2 runtime incentive bridge", () => {
         implementationStatus: "planned"
       })
     ]);
+  });
+
+  it("treats grant production action zero placeholders as no-calculable-value decisions", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [productionActionZeroValuePackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("no_calculable_value");
+    expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
+      estimateStatus: "zero_value",
+      hasProductionDecision: true,
+      runtimeEligibleForTotals: false
+    });
+  });
+
+  it("routes grant production action non-grant workflows outside grant totals", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [productionActionNonGrantWorkflowPackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("non_monetary_workflow");
+    expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
+      estimateStatus: "non_grant_workflow",
+      hasProductionDecision: true,
+      runtimeEligibleForTotals: false
+    });
   });
 
   it("uses repaired tax metadata instead of stale non-monetary package status", () => {
@@ -724,6 +756,68 @@ function customQuoteRebatePackage() {
           included_in_user_facing_total_default: true,
           cash_value_classification: "rebate",
           value_model_kind: "custom_quote"
+        }
+      }
+    ]
+  };
+}
+
+function productionActionZeroValuePackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_grant_action_zero",
+    program_name: "No Calculable Grant",
+    calculation_status: "no_calculable_value",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_grant_action_zero",
+        label: "No calculable grant",
+        calculation: { method: "zero_when_not_applicable", reason: "No calculable value." },
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "rebate",
+          value_model_kind: "no_calculable_value",
+          human_review_required: false,
+          repair_status: "zero_placeholder_no_calculable_value",
+          calculation_status: "no_calculable_value",
+          grant_production_action_repair: {
+            estimate_status: "zero_value",
+            recommended_action: "zero_placeholder_no_calculable_value",
+            reason_codes: ["zero_value", "no_calculable_value"]
+          }
+        }
+      }
+    ]
+  };
+}
+
+function productionActionNonGrantWorkflowPackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_grant_action_non_grant",
+    program_name: "Managed Charging Workflow",
+    calculation_status: "non_monetary_workflow",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_grant_action_non_grant",
+        label: "Managed charging workflow",
+        calculation: { method: "zero_when_not_applicable", reason: "Handled outside the grant estimator." },
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "rebate",
+          value_model_kind: "hybrid_rate_plus_cap",
+          human_review_required: false,
+          repair_status: "non_grant_workflow",
+          calculation_status: "non_monetary_workflow",
+          grant_production_action_repair: {
+            estimate_status: "non_grant_workflow",
+            recommended_action: "non_grant_workflow",
+            reason_codes: ["non_grant_workflow", "outside_grant_estimator"]
+          }
         }
       }
     ]

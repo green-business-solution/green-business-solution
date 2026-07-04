@@ -265,6 +265,12 @@ function productionDecisionRuntimeStatus(effectSummaries, pkg) {
   if (/\b(needs_accountant_review|needs_property_tax_profile|tax_or_assessor_review_required|suppressed_until_program_documentation)\b/.test(decisionText)) {
     return "human_review_required";
   }
+  if (/\b(non_grant_workflow|not_grant_estimation_target|outside_grant_estimator|not_a_grant)\b/.test(decisionText)) {
+    return "non_monetary_workflow";
+  }
+  if (decisionText.includes("zero_value") || decisionText.includes("no_calculable_value") || /\bnot_calculable\b/.test(decisionText)) {
+    return "no_calculable_value";
+  }
   if (decisionText.includes("suppressed") || decisionText.includes("exclude_from_user_facing") || decisionText.includes("do_not_include")) {
     return "suppressed_by_policy";
   }
@@ -301,7 +307,8 @@ function isGrantOrReimbursementEffect(effect) {
 function hasProductionDecisionMetadata(effect) {
   const metadata = effect.repair_metadata || {};
   return Boolean(
-    metadata.grant_production_quality_repair ||
+    metadata.grant_production_action_repair ||
+      metadata.grant_production_quality_repair ||
       metadata.grant_estimation_package_repair ||
       metadata.grant_probability_deep_research ||
       metadata.grant_probability_repair ||
@@ -313,6 +320,8 @@ function hasProductionDecisionMetadata(effect) {
 function repairEstimateStatus(effect) {
   const metadata = effect.repair_metadata || {};
   return (
+    metadata.grant_production_action_repair?.estimate_status ||
+    metadata.grant_production_action_repair?.estimate_recommendation?.estimate_status ||
     metadata.grant_production_quality_repair?.estimate_status ||
     metadata.grant_production_quality_repair?.estimate_recommendation?.estimate_status ||
     metadata.grant_estimation_package_repair?.estimate_recommendation?.estimate_status ||
@@ -331,6 +340,8 @@ function repairReasonCodes(effect) {
   return dedupeStrings([
     ...(effect.confidence?.reason_codes || []),
     ...(metadata.human_review_reasons || []),
+    ...(metadata.grant_production_action_repair?.reason_codes || []),
+    ...(metadata.grant_production_action_repair?.estimate_recommendation?.reason_codes || []),
     ...(metadata.grant_production_quality_repair?.estimate_recommendation?.reason_codes || []),
     ...(metadata.grant_estimation_package_repair?.reason_codes || []),
     ...(metadata.grant_probability_repair?.reason_codes || []),
@@ -342,6 +353,8 @@ function repairDisplayRecommendation(effect) {
   const metadata = effect.repair_metadata || {};
   const display =
     metadata.tax_package_repair?.display_recommendation ||
+    metadata.grant_production_action_repair?.estimate_recommendation ||
+    metadata.grant_production_action_repair?.runtime_recommendation ||
     metadata.grant_production_quality_repair?.estimate_recommendation ||
     metadata.grant_estimation_package_repair?.display_recommendation ||
     {};

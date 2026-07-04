@@ -1,31 +1,48 @@
 {
   "schemaVersion": "retrofi_grant_form_input_field_audit.v1",
-  "generatedAt": "2026-07-04T10:04:18.832Z",
+  "generatedAt": "2026-07-04T20:58:10.037Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json"
   },
   "summary": {
-    "formInputRequiredEvaluationCount": 65,
-    "uniqueOpportunityCount": 16,
+    "formInputRequiredEvaluationCount": 87,
+    "uniqueOpportunityCount": 24,
     "rowsWithoutMappedFields": 0,
     "collectionSurfaceCounts": {
-      "Project quote or invoice upload": 238,
-      "Program application or award status": 335,
-      "Business/site intake form": 684,
-      "Utility bill upload": 18,
-      "Tax/accounting document upload": 10
+      "Retrofit scope form": 14,
+      "Project quote or invoice upload": 310,
+      "Program application or award status": 482,
+      "Business/site intake form": 912,
+      "Utility bill upload": 31,
+      "Tax/accounting document upload": 12
     },
     "implementationStatusCounts": {
-      "planned": 583,
-      "implemented": 702
+      "implemented": 957,
+      "planned": 804
     },
     "plannedSurfaceCounts": {
-      "Project quote or invoice upload": 238,
-      "Program application or award status": 335,
-      "Tax/accounting document upload": 10
+      "Project quote or invoice upload": 310,
+      "Program application or award status": 482,
+      "Tax/accounting document upload": 12
     }
   },
   "uniqueOpportunityRows": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 10,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Retrofit scope form"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
     {
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
       "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
@@ -92,8 +109,71 @@
       "plannedSurfaces": []
     },
     {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging",
+      "programName": "GRID-Lodging",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+      "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 4,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives",
+      "programName": "New Construction Incentives",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 3,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Retrofit scope form"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
+    {
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608",
       "programName": "GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME)",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2794",
+      "programName": "CPS Energy - Solar PV Rebate Program",
       "runtimeInclusionStatus": "needs_quote",
       "evaluationCount": 1,
       "fieldSurfaces": [
@@ -135,6 +215,23 @@
       ]
     },
     {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22753",
+      "programName": "City and County of Denver - Solar Rebate",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Tax/accounting document upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Tax/accounting document upload"
+      ]
+    },
+    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
       "programName": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants",
       "runtimeInclusionStatus": "needs_quote",
@@ -159,6 +256,41 @@
         "Project quote or invoice upload"
       ],
       "plannedSurfaces": [
+        "Project quote or invoice upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21862",
+      "programName": "Santee Cooper - Rooftop Solar Rebate Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Tax/accounting document upload",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Tax/accounting document upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
+      "programName": "PPL Electric Utilities - Commercial, Industrial and Agricultural Energy Efficiency Rebate Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Retrofit scope form",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
         "Project quote or invoice upload"
       ]
     },
@@ -255,6 +387,176 @@
     {
       "sampleUserId": "california-endowment-hq",
       "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "california-endowment-hq",
+      "retrofitTypeId": "ev_charger_installation",
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
       "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
       "runtimeInclusionStatus": "needs_quote",
@@ -814,6 +1116,176 @@
     {
       "sampleUserId": "ikea-burbank",
       "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "ikea-burbank",
+      "retrofitTypeId": "ev_charger_installation",
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
       "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
       "runtimeInclusionStatus": "needs_quote",
@@ -1364,6 +1836,176 @@
         {
           "inputKey": "total_eligible_project_budget",
           "label": "total eligible project budget",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "juniper-and-ivy-san-diego",
+      "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -1741,6 +2383,120 @@
         {
           "inputKey": "verified_savings_or_deemed_measure_details",
           "label": "verified savings or deemed measure details",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "juniper-and-ivy-san-diego",
+      "retrofitTypeId": "automated_demand_response_controls",
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging",
+      "programName": "GRID-Lodging",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "project_cost_cents",
+          "label": "Eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "twelve_months_pre_project_usage_data",
+          "label": "12 months pre-project usage data",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "post_installation_metered_savings_by_period",
+          "label": "Post-installation savings by period",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "program_calculator_or_approval_amount_cents",
+          "label": "Program calculator or approved amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "12_months_pre_project_interval_or_billing_data",
+          "label": "12 months pre-project interval or billing data",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "active_sdg_e_account",
+          "label": "Active SDG&E account",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "aggregator_or_self_aggregator_participation",
+          "label": "aggregator or self-aggregator participation",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "avoided_cost_rates",
+          "label": "avoided-cost rates",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_lodging_naics_category",
+          "label": "Eligible lodging NAICS",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_scope",
+          "label": "eligible project scope",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "metered_annual_savings",
+          "label": "metered annual savings",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "post_installation_metered_usage",
+          "label": "post-installation metered usage",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "post_installation_performance_period",
+          "label": "post-installation performance period",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "program_avoided_cost_rate_schedule",
+          "label": "program avoided-cost rate schedule",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "project_measure_scope",
+          "label": "Project measure scope",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -2276,6 +3032,176 @@
     {
       "sampleUserId": "northgate-market-anaheim",
       "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "northgate-market-anaheim",
+      "retrofitTypeId": "ev_charger_installation",
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
       "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
       "runtimeInclusionStatus": "needs_quote",
@@ -2826,6 +3752,176 @@
         {
           "inputKey": "total_eligible_project_budget",
           "label": "total eligible project budget",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "melissas-vernon-distribution",
+      "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -3555,6 +4651,346 @@
       ]
     },
     {
+      "sampleUserId": "fender-corona-plant",
+      "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "westin-pasadena",
+      "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
       "sampleUserId": "westin-pasadena",
       "retrofitTypeId": "ev_charger_installation",
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
@@ -4107,6 +5543,176 @@
         {
           "inputKey": "total_eligible_project_budget",
           "label": "total eligible project budget",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "one-community-health-midtown",
+      "retrofitTypeId": "ev_charger_installation",
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "solicitation_available_funding_cents",
+          "label": "Total funding available under the applicable solicitation",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "ccs_port_count_per_station",
+          "label": "Ccs Port Count Per Station",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_costs_verified",
+          "label": "Eligible Costs Verified",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "station_count",
+          "label": "Station Count",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Verified eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "cash_match_share_cents",
+          "label": "Cash Match Share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "agreement_execution_status",
+          "label": "CEC agreement execution status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "cec_approved_award_amount_cents",
+          "label": "CEC-approved award amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "solicitation_applicant_award_cap_cents",
+          "label": "Current applicant award cap",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "fhwa_phase_authorization_status",
+          "label": "FHWA phase authorization status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "requested_grant_amount_cents",
+          "label": "Requested grant amount",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "match_share_cents",
+          "label": "Required match share",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "applicant_eligibility_status",
+          "label": "Applicant Eligibility Status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_acceptance_start_date",
+          "label": "Application Acceptance Start Date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "application_deadline",
+          "label": "Application Deadline",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "award_selection_status",
+          "label": "Award selection and approval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_number",
+          "label": "CEC NEVI solicitation number",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_status",
+          "label": "Current solicitation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "dcfc_site_and_corridor_compliance",
+          "label": "Dcfc Site And Corridor Compliance",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "match_funding",
+          "label": "match funding",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "requested_grant_amount",
+          "label": "requested grant amount",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "solicitation_specific_caps",
+          "label": "Solicitation Specific Caps",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -4674,303 +6280,154 @@
     },
     {
       "sampleUserId": "santa-clara-university-campus",
-      "retrofitTypeId": "battery_storage_system",
-      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
-      "programName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
+      "retrofitTypeId": "high_efficiency_hvac_replacement",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+      "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
       "runtimeInclusionStatus": "needs_quote",
       "fields": [
         {
-          "inputKey": "award_decision",
-          "label": "Award Decision",
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Eligible project cost",
           "collectionSurfaceLabel": "Project quote or invoice upload",
           "implementationStatus": "planned",
           "uploadKind": "quote_or_invoice"
         },
         {
-          "inputKey": "colocated_production_storage_end_use",
-          "label": "Colocated Production Storage End Use",
+          "inputKey": "energy_savings_calculation_source",
+          "label": "Energy Savings Calculation Source",
           "collectionSurfaceLabel": "Project quote or invoice upload",
           "implementationStatus": "planned",
           "uploadKind": "quote_or_invoice"
         },
         {
-          "inputKey": "eligible_match_amount",
-          "label": "Eligible Match Amount",
+          "inputKey": "estimated_annual_electricity_savings_kwh",
+          "label": "Estimated annual electricity savings",
           "collectionSurfaceLabel": "Project quote or invoice upload",
           "implementationStatus": "planned",
           "uploadKind": "quote_or_invoice"
         },
         {
-          "inputKey": "eligible_reimbursable_project_costs_cents",
-          "label": "Eligible Reimbursable Project Costs",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
+          "inputKey": "facility_in_city_of_santa_clara",
+          "label": "Facility in City of Santa Clara",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
         },
         {
-          "inputKey": "hydrogen_production_capacity_metric_tons_per_day",
-          "label": "Hydrogen Production Capacity Metric Tons Per Day",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
+          "inputKey": "prior_svp_rebate_funds_same_facility_similar_measures_5yr_cents",
+          "label": "Prior SVP funds for similar measures at same facility in five years",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
         },
         {
-          "inputKey": "renewable_energy_supply_strategy",
-          "label": "Renewable Energy Supply Strategy",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "water_source_not_for_human_consumption",
-          "label": "Water Source Not For Human Consumption",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "application_award_status",
-          "label": "Application Award Status",
+          "inputKey": "application_period_deadline",
+          "label": "Application Period Deadline",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "approved_cec_award_cents",
-          "label": "Approved Cec Award",
+          "inputKey": "ftb_active_exempt_status",
+          "label": "California FTB active exempt status",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "cec_funding_request_cents",
-          "label": "Cec Funding Request",
+          "inputKey": "has_at_least_one_full_time_employee",
+          "label": "Has At Least One Full Time Employee",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "eligible_match_amount_cents",
-          "label": "Eligible Match Amount",
+          "inputKey": "nonprofit_tax_exempt_status",
+          "label": "IRS nonprofit tax-exempt status",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "fully_executed_grant_agreement",
-          "label": "Fully Executed Grant Agreement",
+          "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+          "label": "Minimum Operating History Or 12 Month Svp Bills",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "application_score_or_award_decision",
-          "label": "application score or award decision",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "award_probability",
-          "label": "award probability",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "cec_funding_request",
-          "label": "CEC funding request",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_budget",
-          "label": "eligible project budget",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "human_reviewed_probability_discount",
-          "label": "Human Reviewed Probability Discount",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "hydrogen_production_capacity_in_metric_tons_per_day",
-          "label": "hydrogen production capacity in metric tons per day",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "hydrogen_storage_scope",
-          "label": "hydrogen storage scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "onsite_hydrogen_end_use_scope",
-          "label": "Onsite Hydrogen End Use Scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "project_site_in_california",
-          "label": "Project Site In California",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "total_eligible_project_budget",
-          "label": "total eligible project budget",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "santa-clara-university-campus",
-      "retrofitTypeId": "ev_charger_installation",
-      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608",
-      "programName": "GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME)",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "approved_award_cents",
-          "label": "Approved Award",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "award_decision_status",
-          "label": "Award Decision Status",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "documented_award_probability",
-          "label": "Documented Award Probability",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_reimbursable_project_budget_cents",
-          "label": "Eligible Reimbursable Project Budget",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "application_submitted_at",
-          "label": "Application Submitted At",
+          "inputKey": "facility_ownership_or_lease_5yr_remaining",
+          "label": "Owns facility or has five-year lease remaining",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "executed_agreement_status",
-          "label": "Executed Agreement Status",
+          "inputKey": "project_description",
+          "label": "Project Description",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "phase_1_funding_request_cents",
-          "label": "Phase 1 Funding Request",
+          "inputKey": "proposed_project_timeline",
+          "label": "Proposed project completion timeline",
           "collectionSurfaceLabel": "Program application or award status",
           "implementationStatus": "planned",
           "uploadKind": "application_or_award_document"
         },
         {
-          "inputKey": "applicant_type",
-          "label": "Applicant Type",
+          "inputKey": "purchase_and_installation_after_svp_preapproval",
+          "label": "Purchase and installation after SVP pre-approval",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_current_funds_available_status",
+          "label": "Svp Current Funds Available Status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_preapproval_notice_status",
+          "label": "SVP pre-approval or award notice status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_approved_grant_funding_cents",
+          "label": "SVP-approved grant funding",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "application_period",
+          "label": "application period",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
         },
         {
-          "inputKey": "application_score_or_award_decision",
-          "label": "application score or award decision",
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
         },
         {
-          "inputKey": "application_score_or_rank",
-          "label": "Application Score Or Rank",
+          "inputKey": "estimated_electricity_savings",
+          "label": "estimated electricity savings",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
         },
         {
-          "inputKey": "award_probability",
-          "label": "award probability",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "cbo_partner_commitment",
-          "label": "Cbo Partner Commitment",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "cec_funding_request",
-          "label": "CEC funding request",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "dac_or_lic_census_tracts_served",
-          "label": "Dac Or Lic Census Tracts Served",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_budget",
-          "label": "eligible project budget",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "installation_mix",
-          "label": "Installation Mix",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "phase_1_ev_acquisition_target",
-          "label": "Phase 1 Ev Acquisition Target",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "phase_1_or_phase_2_scope",
-          "label": "Phase 1 Or Phase 2 Scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "phase_2_requested",
-          "label": "Phase 2 requested",
+          "inputKey": "nonprofit_status",
+          "label": "nonprofit status",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -4983,8 +6440,22 @@
           "uploadKind": null
         },
         {
-          "inputKey": "proposed_region",
-          "label": "Proposed Region",
+          "inputKey": "svp_award_decision",
+          "label": "SVP award decision",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_customer_of_record_status",
+          "label": "SVP customer of record",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_preapproval",
+          "label": "SVP preapproval",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
@@ -4992,7 +6463,587 @@
       ]
     },
     {
-      "sampleUserId": "seghesio-healdsburg-winery",
+      "sampleUserId": "santa-clara-university-campus",
+      "retrofitTypeId": "high_efficiency_hvac_replacement",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives",
+      "programName": "New Construction Incentives",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "tons",
+          "label": "Equipment cooling capacity in tons",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_cost",
+          "label": "eligible cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eer",
+          "label": "Equipment EER or qualifying efficiency tier",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "incremental_cost_cents",
+          "label": "Incremental cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "proposed_equipment_or_lighting_cost_cents",
+          "label": "Proposed equipment or lighting cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "current_program_budget_remaining_cents",
+          "label": "Current program budget remaining",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "current_program_year_funding_confirmed",
+          "label": "Current SVP program-year funding confirmed",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "site_kwh_savings",
+          "label": "Modeled site kWh savings",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "percent_better_than_title24",
+          "label": "Percent better than Title 24",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "preapproval",
+          "label": "preapproval",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_lighting_calculator_rebate_cents",
+          "label": "SVP lighting calculator rebate output",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "written_preapproval_obtained",
+          "label": "Written SVP preapproval obtained before installation",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "building_sqft",
+          "label": "Building square footage",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "chiller_tons_and_eer",
+          "label": "chiller tons and EER",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "energy_savings_percentage",
+          "label": "energy savings percentage",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "equipment_quantity_and_efficiency",
+          "label": "equipment quantity and efficiency",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "incremental_or_proposed_equipment_cost",
+          "label": "incremental or proposed equipment cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "lighting_calculator_outputs_if_applicable",
+          "label": "lighting calculator outputs if applicable",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "new_construction_addition_or_qualifying_major_renovation_status",
+          "label": "new construction, addition, or qualifying major renovation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "project_pathway",
+          "label": "New-construction incentive pathway",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "packaged_hvac_tons_and_efficiencies",
+          "label": "packaged HVAC tons and efficiencies",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "peak_kw_reduction",
+          "label": "Peak kW reduction",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "permit_timing",
+          "label": "permit timing",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "remaining_customer_program_year_cap_cents",
+          "label": "Remaining customer program-year cap",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_served_nonresidential_project",
+          "label": "SVP-served nonresidential project",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "title_24_proposed_and_standard_energy_budgets",
+          "label": "Title 24 proposed and standard energy budgets",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "title_24_savings_or_calculator_output",
+          "label": "Title 24 savings or calculator output",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "santa-clara-university-campus",
+      "retrofitTypeId": "low_flow_fixture_retrofit",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+      "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "eligible_project_cost_cents",
+          "label": "Eligible project cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "energy_savings_calculation_source",
+          "label": "Energy Savings Calculation Source",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "estimated_annual_electricity_savings_kwh",
+          "label": "Estimated annual electricity savings",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "facility_in_city_of_santa_clara",
+          "label": "Facility in City of Santa Clara",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "prior_svp_rebate_funds_same_facility_similar_measures_5yr_cents",
+          "label": "Prior SVP funds for similar measures at same facility in five years",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "application_period_deadline",
+          "label": "Application Period Deadline",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "ftb_active_exempt_status",
+          "label": "California FTB active exempt status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "has_at_least_one_full_time_employee",
+          "label": "Has At Least One Full Time Employee",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "nonprofit_tax_exempt_status",
+          "label": "IRS nonprofit tax-exempt status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+          "label": "Minimum Operating History Or 12 Month Svp Bills",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "facility_ownership_or_lease_5yr_remaining",
+          "label": "Owns facility or has five-year lease remaining",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "project_description",
+          "label": "Project Description",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "proposed_project_timeline",
+          "label": "Proposed project completion timeline",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "purchase_and_installation_after_svp_preapproval",
+          "label": "Purchase and installation after SVP pre-approval",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_current_funds_available_status",
+          "label": "Svp Current Funds Available Status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_preapproval_notice_status",
+          "label": "SVP pre-approval or award notice status",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_approved_grant_funding_cents",
+          "label": "SVP-approved grant funding",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "application_period",
+          "label": "application period",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_project_cost",
+          "label": "eligible project cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "estimated_electricity_savings",
+          "label": "estimated electricity savings",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "nonprofit_status",
+          "label": "nonprofit status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "project_scope",
+          "label": "project scope",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_award_decision",
+          "label": "SVP award decision",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_customer_of_record_status",
+          "label": "SVP customer of record",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_preapproval",
+          "label": "SVP preapproval",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "santa-clara-university-campus",
+      "retrofitTypeId": "low_flow_fixture_retrofit",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives",
+      "programName": "New Construction Incentives",
+      "runtimeInclusionStatus": "needs_quote",
+      "fields": [
+        {
+          "inputKey": "tons",
+          "label": "Equipment cooling capacity in tons",
+          "collectionSurfaceLabel": "Retrofit scope form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "eligible_cost",
+          "label": "eligible cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "eer",
+          "label": "Equipment EER or qualifying efficiency tier",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "incremental_cost_cents",
+          "label": "Incremental cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "proposed_equipment_or_lighting_cost_cents",
+          "label": "Proposed equipment or lighting cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "current_program_budget_remaining_cents",
+          "label": "Current program budget remaining",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "current_program_year_funding_confirmed",
+          "label": "Current SVP program-year funding confirmed",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "site_kwh_savings",
+          "label": "Modeled site kWh savings",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "percent_better_than_title24",
+          "label": "Percent better than Title 24",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "preapproval",
+          "label": "preapproval",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "svp_lighting_calculator_rebate_cents",
+          "label": "SVP lighting calculator rebate output",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "written_preapproval_obtained",
+          "label": "Written SVP preapproval obtained before installation",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "building_sqft",
+          "label": "Building square footage",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "chiller_tons_and_eer",
+          "label": "chiller tons and EER",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "energy_savings_percentage",
+          "label": "energy savings percentage",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "equipment_quantity_and_efficiency",
+          "label": "equipment quantity and efficiency",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "incremental_or_proposed_equipment_cost",
+          "label": "incremental or proposed equipment cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "lighting_calculator_outputs_if_applicable",
+          "label": "lighting calculator outputs if applicable",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "new_construction_addition_or_qualifying_major_renovation_status",
+          "label": "new construction, addition, or qualifying major renovation status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "project_pathway",
+          "label": "New-construction incentive pathway",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "packaged_hvac_tons_and_efficiencies",
+          "label": "packaged HVAC tons and efficiencies",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "peak_kw_reduction",
+          "label": "Peak kW reduction",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "permit_timing",
+          "label": "permit timing",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "remaining_customer_program_year_cap_cents",
+          "label": "Remaining customer program-year cap",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_served_nonresidential_project",
+          "label": "SVP-served nonresidential project",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "title_24_proposed_and_standard_energy_budgets",
+          "label": "Title 24 proposed and standard energy budgets",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "title_24_savings_or_calculator_output",
+          "label": "Title 24 savings or calculator output",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "santa-clara-university-campus",
       "retrofitTypeId": "battery_storage_system",
       "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
       "programName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
@@ -5148,1904 +7199,6 @@
         {
           "inputKey": "total_eligible_project_budget",
           "label": "total eligible project budget",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "rooftop_solar_pv",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22786",
-      "programName": "Eagle County - Walking Mountains Science Center Solar PV Rebate",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "applicant_type",
-          "label": "applicant type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_local_area",
-          "label": "eligible local area",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "grid_tied_net_metered_status",
-          "label": "grid tied net metered status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "holy_cross_energy_solar_rebate_amount",
-          "label": "Holy Cross Energy solar rebate amount",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "solar_pv_project_documentation",
-          "label": "solar PV project documentation",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "rooftop_solar_pv",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "high_efficiency_hvac_replacement",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "high_efficiency_hvac_replacement",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
-      "programName": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "approved_grant_award_cents",
-          "label": "Approved Grant Award",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "core_award_decision_status",
-          "label": "CORE award decision status",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "official_core_award_decision",
-          "label": "Official Core Award Decision",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "core_energy_concierge_contact_status",
-          "label": "Core Energy Concierge Contact Status",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "grant_funding_available_confirmation",
-          "label": "Grant Funding Available Confirmation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "greenhouse_gas_impact_analysis_status",
-          "label": "Greenhouse Gas Impact Analysis Status",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "official_core_award_decision_status",
-          "label": "Official Core Award Decision Status",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "approved_project_completion_deadline",
-          "label": "Approved Project Completion Deadline",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "award_decision",
-          "label": "award decision",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "award_probability",
-          "label": "award probability",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "commercial_or_multifamily_applicant_confirmation",
-          "label": "Commercial Or Multifamily Applicant Confirmation",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "core_grant_application",
-          "label": "CORE grant application",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "core_preapproval_requirements",
-          "label": "CORE preapproval requirements",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "county_or_service_geography",
-          "label": "County Or Service Geography",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_scope",
-          "label": "Eligible Project Scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "ghg_impact_analysis",
-          "label": "GHG impact analysis",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "grant_request",
-          "label": "grant request",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "greenhouse_gas_impact_analysis",
-          "label": "greenhouse-gas impact analysis",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_eligibility",
-          "label": "measure eligibility",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "multifamily_unit_count",
-          "label": "Multifamily Unit Count",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "participant_priority_category",
-          "label": "participant priority category",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "project_location_county",
-          "label": "Project Location County",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "property_type",
-          "label": "Property Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "rebate_insufficiency_rationale",
-          "label": "Rebate Insufficiency Rationale",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "air_sealing_weatherization",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "insulation_upgrade",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "ground_source_geothermal_heat_pump",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "heat_pump_hvac_retrofit",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "heat_pump_water_heater",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "high_efficiency_refrigeration_equipment",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "tapiz-mariposa-denver-household",
-      "retrofitTypeId": "high_efficiency_furnace_retrofit",
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4630",
-      "programName": "Boulder County - EnergySmart Residential Energy Efficiency Rebate Program",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "contractor_registered_or_licensed_if_required",
-          "label": "Contractor Registered Or Licensed If Required",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_project_cost_cents",
-          "label": "Eligible Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "equipment_specifications_and_efficiency_certifications",
-          "label": "Equipment Specifications And Efficiency Certifications",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "purchase_or_project_start_date",
-          "label": "Purchase Or Project Start Date",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "required_project_documents_available",
-          "label": "Required Project Documents Available",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "total_project_cost_cents",
-          "label": "Total Project Cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "primary_electric_utility",
-          "label": "Primary Electric Utility",
-          "collectionSurfaceLabel": "Utility bill upload",
-          "implementationStatus": "implemented",
-          "uploadKind": "utility_bill"
-        },
-        {
-          "inputKey": "household_total_income_cents",
-          "label": "Household Total Income",
-          "collectionSurfaceLabel": "Tax/accounting document upload",
-          "implementationStatus": "planned",
-          "uploadKind": "tax_document"
-        },
-        {
-          "inputKey": "funding_available_or_rebate_reserved",
-          "label": "Funding Available Or Rebate Reserved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "income_verification_approved",
-          "label": "Income Verification Approved",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "other_rebates_incentives_and_tax_credits_cents",
-          "label": "Other Rebates Incentives And Tax Credits",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_approved_before_purchase_or_project_start",
-          "label": "Preapproval Approved Before Purchase Or Project Start",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval_date",
-          "label": "Preapproval Date",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "prior_2026_energysmart_income_qualified_rebates_cents",
-          "label": "Prior 2026 Energysmart Income Qualified Rebates",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "qualifying_assistance_program_participation",
-          "label": "Qualifying Assistance Program Participation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "renter_owner_authorization_if_applicable",
-          "label": "Renter Owner Authorization If Applicable",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "boulder_county_existing_residential_property",
-          "label": "Boulder County Existing Residential Property",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "completion_and_invoice_date",
-          "label": "Completion And Invoice Date",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_cost",
-          "label": "eligible project cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "household_size",
-          "label": "Household Size",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "income_qualification",
-          "label": "income qualification",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "measure_type",
-          "label": "Measure Type",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "other_incentives",
-          "label": "other incentives",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "preapproval_status",
-          "label": "preapproval status",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null

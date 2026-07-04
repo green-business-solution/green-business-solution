@@ -1,15 +1,15 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-04T09:10:42.621Z
+Generated: 2026-07-04T20:58:10.209Z
 
 ## Summary
 
 - Test cases: 51
 - Retrofit previews: 890
 - Matched v2 package evaluations: 531
-- Runtime-included packages: 292
-- Computed but suppressed packages: 15
-- Missing evidence/input packages: 68
+- Runtime-included packages: 293
+- Computed but suppressed packages: 13
+- Missing evidence/input packages: 100
 - Tax opportunity packages in database: 3
 - Tax opportunity packages matched by current test cases: 3
 - Local tax workflow evaluations: 12
@@ -18,29 +18,27 @@ Generated: 2026-07-04T09:10:42.621Z
 
 | Status | Count |
 | --- | --- |
-| included | 292 |
-| needs_quote | 65 |
-| not_user_facing_default | 53 |
-| suppressed_by_policy | 50 |
-| human_review_required | 20 |
-| no_supported_effect_amount | 16 |
-| no_calculable_value | 15 |
-| non_monetary_workflow | 12 |
-| low_confidence | 3 |
-| needs_funding_check | 3 |
+| included | 293 |
+| needs_quote | 87 |
+| no_calculable_value | 50 |
+| not_user_facing_default | 49 |
+| suppressed_by_policy | 16 |
+| non_monetary_workflow | 14 |
+| needs_funding_check | 13 |
+| human_review_required | 6 |
 | legacy_rule_preferred | 2 |
+| low_confidence | 1 |
 
 ## Outcome Classes
 
 | Status | Count |
 | --- | --- |
-| calculated_and_included | 292 |
-| suppressed_without_amount | 111 |
-| missing_evidence_or_inputs | 68 |
-| calculated_zero_or_no_supported_amount | 16 |
-| computed_but_suppressed | 15 |
-| source_or_package_blocked | 15 |
-| non_monetary_workflow | 12 |
+| calculated_and_included | 293 |
+| missing_evidence_or_inputs | 100 |
+| suppressed_without_amount | 59 |
+| source_or_package_blocked | 50 |
+| non_monetary_workflow | 14 |
+| computed_but_suppressed | 13 |
 | legacy_rule_preferred | 2 |
 
 ## Local Tax Workflow Status
@@ -56,21 +54,21 @@ Generated: 2026-07-04T09:10:42.621Z
 
 | Status | Count |
 | --- | --- |
-| production_ready_included | 292 |
-| form_input_required | 65 |
-| grant_formula_repair_required | 57 |
+| production_ready_included | 293 |
+| form_input_required | 87 |
 | not_grant_estimation_target | 48 |
-| zero_placeholder_no_calculable_value | 23 |
-| non_grant_workflow | 11 |
-| funding_refresh_required | 3 |
+| zero_placeholder_no_calculable_value | 28 |
+| grant_formula_repair_required | 17 |
+| funding_refresh_required | 13 |
+| non_grant_workflow | 13 |
 
 ## Unresolved Grant Production Samples
 
 | Action | Opportunity | Program | Runtime status | Reason |
 | --- | --- | --- | --- | --- |
-| grant_formula_repair_required | SOURCE_DSIRE:dsire_program_id:22629 | California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program | suppressed_by_policy | The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate. |
-| zero_placeholder_no_calculable_value | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603 | GFO-25-603 - California's National Electric Vehicle Infrastructure Formula Program - Solicitation 6 Community Charging | suppressed_by_policy | No defensible formula or expected-value model exists, so the grant contribution should remain $0. |
-| zero_placeholder_no_calculable_value | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607 | GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) | suppressed_by_policy | No defensible formula or expected-value model exists, so the grant contribution should remain $0. |
+| form_input_required | SOURCE_DSIRE:dsire_program_id:22629 | California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
+| zero_placeholder_no_calculable_value | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603 | GFO-25-603 - California's National Electric Vehicle Infrastructure Formula Program - Solicitation 6 Community Charging | no_calculable_value | No defensible formula or expected-value model exists, so the grant contribution should remain $0. |
+| zero_placeholder_no_calculable_value | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607 | GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) | no_calculable_value | No defensible formula or expected-value model exists, so the grant contribution should remain $0. |
 | form_input_required | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605 | GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS) | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
 | form_input_required | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902 | GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
 | form_input_required | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308 | GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
@@ -79,9 +77,8 @@ Generated: 2026-07-04T09:10:42.621Z
 | non_grant_workflow | SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891 | National Electric Vehicle Infrastructure (NEVI) Program | suppressed_by_policy | The opportunity is better handled outside grant estimation. |
 | form_input_required | SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com | Comfortably CA | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
 | form_input_required | SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program | Groceries, Restaurants and Food Storage Program | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
-| grant_formula_repair_required | SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging | GRID-Lodging | low_confidence | The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate. |
-| grant_formula_repair_required | SOURCE_DSIRE:dsire_program_id:22275 | Anaheim Public Utilities - Personal Use EV Charger Rebates | not_user_facing_default | The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate. |
-| non_grant_workflow | SOURCE_DSIRE:dsire_program_id:918 | Office of Indian Energy Policy and Programs - Funding Opportunities | suppressed_by_policy | The opportunity is better handled outside grant estimation. |
+| form_input_required | SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging | GRID-Lodging | needs_quote | The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating. |
+| non_grant_workflow | SOURCE_DSIRE:dsire_program_id:918 | Office of Indian Energy Policy and Programs - Funding Opportunities | no_calculable_value | The opportunity is better handled outside grant estimation. |
 
 ## Top Missing Inputs
 
