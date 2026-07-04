@@ -1,11 +1,11 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-07-04T02:18:01.960Z",
-  "matchingNow": "2026-07-04T02:17:37.575Z",
-  "opportunityCount": 1707,
+  "generatedAt": "2026-07-04T02:28:28.703Z",
+  "matchingNow": "2026-07-04T02:28:08.556Z",
+  "opportunityCount": 1704,
   "totalOpportunityRecordCount": 2096,
-  "archivedOpportunityCount": 294,
+  "archivedOpportunityCount": 297,
   "retrofitCount": 85,
   "retrofits": [
     {
@@ -24,7 +24,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 397,
+      "opportunityCount": 395,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -1816,20 +1816,6 @@
           "state": "KY",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -4376,20 +4362,6 @@
           "state": "MO",
           "programType": "Rebate Program",
           "administrator": "Platte-Clay Electric Cooperative",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-          "opportunityName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22067/plumas-sierra-rec-commercial-and-irrigation-rebate-program",
-          "websiteUrl": "https://www.psrec.coop/energy/rebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Plumas-Sierra REC",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -7833,7 +7805,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 797,
+      "opportunityCount": 795,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -11209,20 +11181,6 @@
           "matchedTerms": [
             "air conditioner"
           ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
         },
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3465",
@@ -16251,20 +16209,6 @@
           "matchedTerms": []
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-          "opportunityName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22067/plumas-sierra-rec-commercial-and-irrigation-rebate-program",
-          "websiteUrl": "https://www.psrec.coop/energy/rebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Plumas-Sierra REC",
-          "confidence": 0.68,
-          "matchBasis": "canonical_technology_fallback",
-          "matchedTerms": []
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2289",
           "opportunityName": "Plumas-Sierra REC - Residential Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -19534,7 +19478,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 527,
+      "opportunityCount": 526,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -25794,22 +25738,6 @@
             "heat pump",
             "mini split",
             "ductless"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-          "opportunityName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22067/plumas-sierra-rec-commercial-and-irrigation-rebate-program",
-          "websiteUrl": "https://www.psrec.coop/energy/rebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Plumas-Sierra REC",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump"
           ]
         },
         {
@@ -33840,7 +33768,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 37,
+      "opportunityCount": 36,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -34029,22 +33957,6 @@
           "state": "MI",
           "programType": "Rebate Program",
           "administrator": "DTE Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "hvac controls"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -46581,7 +46493,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 284,
+      "opportunityCount": 283,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -49937,22 +49849,6 @@
           "state": "MO",
           "programType": "Rebate Program",
           "administrator": "Platte-Clay Electric Cooperative",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "heat pump water heater"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-          "opportunityName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22067/plumas-sierra-rec-commercial-and-irrigation-rebate-program",
-          "websiteUrl": "https://www.psrec.coop/energy/rebates/",
-          "applicationUrl": null,
-          "state": "CA",
-          "programType": "Rebate Program",
-          "administrator": "Plumas-Sierra REC",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -53461,7 +53357,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 318,
+      "opportunityCount": 316,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -54853,38 +54749,6 @@
           "state": "KY",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "refrigeration"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
-          "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
-          "applicationUrl": null,
-          "state": "NC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy Carolinas",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "refrigeration"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -60917,7 +60781,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 373,
+      "opportunityCount": 371,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -62872,22 +62736,6 @@
           ]
         },
         {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
-          "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
-          "applicationUrl": null,
-          "state": "NC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy Carolinas",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:2296",
           "opportunityName": "Duke Energy - Residential and Builder Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -62909,22 +62757,6 @@
           "sourceName": "DSIRE",
           "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3605/duke-energy-electric-residential-energy-efficiency-rebate-program",
           "websiteUrl": "https://www.duke-energy.com/home/products/smart-saver",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "insulation"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
           "applicationUrl": null,
           "state": "SC",
           "programType": "Rebate Program",
@@ -70830,7 +70662,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 117,
+      "opportunityCount": 116,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
@@ -71498,22 +71330,6 @@
           "state": "SC",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "window"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
-          "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
-          "applicationUrl": null,
-          "state": "NC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy Carolinas",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -73228,7 +73044,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 32,
+      "opportunityCount": 31,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -73448,22 +73264,6 @@
           "state": "SC",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "window film"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
-          "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
-          "applicationUrl": null,
-          "state": "NC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy Carolinas",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -101304,7 +101104,7 @@
         "gas",
         "water"
       ],
-      "opportunityCount": 111,
+      "opportunityCount": 110,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -101687,22 +101487,6 @@
           "state": "VA",
           "programType": "Rebate Program",
           "administrator": "Dominion",
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "dishwasher"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
-          "opportunityName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver#tab-bd1ef7f8-8e8a-440e-b0ac-6ceb84106a07",
-          "applicationUrl": null,
-          "state": "SC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -107841,7 +107625,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 23,
+      "opportunityCount": 22,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
@@ -107917,22 +107701,6 @@
           "state": "KY",
           "programType": "Rebate Program",
           "administrator": null,
-          "confidence": 0.86,
-          "matchBasis": "text_or_source_technology",
-          "matchedTerms": [
-            "air compressor"
-          ]
-        },
-        {
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
-          "opportunityName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
-          "sourceName": "DSIRE",
-          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program",
-          "websiteUrl": "https://www.duke-energy.com/business/products/smartsaver/all-smartsaver-rebates",
-          "applicationUrl": null,
-          "state": "NC",
-          "programType": "Rebate Program",
-          "administrator": "Duke Energy Carolinas",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [

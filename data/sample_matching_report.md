@@ -1,12 +1,12 @@
 # Sample Matching Report
 
-Generated: 2026-07-04T02:18:38.735Z
-Matcher clock: 2026-07-04T02:17:37.575Z
-Opportunities evaluated: 1707
-Archived opportunities skipped: 294
+Generated: 2026-07-04T02:28:35.969Z
+Matcher clock: 2026-07-04T02:28:08.556Z
+Opportunities evaluated: 1704
+Archived opportunities skipped: 297
 Upcoming opportunities hidden: 93
 Sample users evaluated: 51
-Pairings evaluated: 87057
+Pairings evaluated: 86904
 Opportunity incentive rules loaded: 49
 
 This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.
@@ -62,8 +62,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 24,
-  "ineligible": 1683
+  "eligible": 23,
+  "ineligible": 1681
 }
 ```
 
@@ -90,8 +90,8 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
 
@@ -100,10 +100,10 @@ Common unresolved requirements among promising matches:
 Retrofit types inferred from promising matches:
 - EV charger installation: 6
 - Ground-source / geothermal heat pump: 6
-- LED lighting retrofit: 5
 - Battery storage system: 4
 - Biomass / biogas energy system: 4
-- High-efficiency HVAC replacement: 4
+- LED lighting retrofit: 4
+- High-efficiency HVAC replacement: 3
 - Solar water heating system: 3
 - Combined heat and power system: 2
 
@@ -150,8 +150,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 23,
-  "ineligible": 1684
+  "eligible": 22,
+  "ineligible": 1682
 }
 ```
 
@@ -178,8 +178,8 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
 
@@ -189,9 +189,9 @@ Retrofit types inferred from promising matches:
 - EV charger installation: 6
 - Ground-source / geothermal heat pump: 6
 - Battery storage system: 5
-- High-efficiency HVAC replacement: 5
-- LED lighting retrofit: 5
 - Biomass / biogas energy system: 4
+- High-efficiency HVAC replacement: 4
+- LED lighting retrofit: 4
 - Solar water heating system: 3
 - Combined heat and power system: 2
 
@@ -238,8 +238,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 51,
-  "ineligible": 1656
+  "eligible": 50,
+  "ineligible": 1654
 }
 ```
 
@@ -275,12 +275,12 @@ Common unresolved requirements among promising matches:
 
 Retrofit types inferred from promising matches:
 - EV charger installation: 12
-- High-efficiency HVAC replacement: 8
+- High-efficiency HVAC replacement: 7
 - Automated demand response controls: 6
 - Battery storage system: 6
 - Ground-source / geothermal heat pump: 6
 - Biomass / biogas energy system: 5
-- LED lighting retrofit: 5
+- LED lighting retrofit: 4
 - Combined heat and power system: 3
 
 Common blockers across rejected/unavailable opportunities:
@@ -326,8 +326,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 27,
-  "ineligible": 1680
+  "eligible": 26,
+  "ineligible": 1678
 }
 ```
 
@@ -364,8 +364,8 @@ Common unresolved requirements among promising matches:
 Retrofit types inferred from promising matches:
 - EV charger installation: 9
 - Ground-source / geothermal heat pump: 6
-- High-efficiency HVAC replacement: 6
-- LED lighting retrofit: 6
+- High-efficiency HVAC replacement: 5
+- LED lighting retrofit: 5
 - Battery storage system: 4
 - Biomass / biogas energy system: 4
 - Level 2 EV charger installation: 4
@@ -414,8 +414,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 23,
-  "ineligible": 1684
+  "eligible": 22,
+  "ineligible": 1682
 }
 ```
 
@@ -442,8 +442,8 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
 
@@ -454,9 +454,9 @@ Retrofit types inferred from promising matches:
 - Ground-source / geothermal heat pump: 6
 - Battery storage system: 5
 - Biomass / biogas energy system: 4
-- High-efficiency HVAC replacement: 4
-- LED lighting retrofit: 4
 - Solar water heating system: 4
+- High-efficiency HVAC replacement: 3
+- LED lighting retrofit: 3
 - Combined heat and power system: 2
 
 Common blockers across rejected/unavailable opportunities:
@@ -503,7 +503,7 @@ Status counts:
 ```json
 {
   "eligible": 23,
-  "ineligible": 1684
+  "ineligible": 1681
 }
 ```
 
@@ -549,7 +549,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
 - Project site state CA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state CA does not match opportunity geography CO.: 74
@@ -590,8 +590,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 24,
-  "ineligible": 1683
+  "eligible": 23,
+  "ineligible": 1681
 }
 ```
 
@@ -618,8 +618,8 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
 
@@ -628,10 +628,10 @@ Common unresolved requirements among promising matches:
 Retrofit types inferred from promising matches:
 - EV charger installation: 7
 - Ground-source / geothermal heat pump: 6
-- High-efficiency HVAC replacement: 5
-- LED lighting retrofit: 5
 - Battery storage system: 4
 - Biomass / biogas energy system: 4
+- High-efficiency HVAC replacement: 4
+- LED lighting retrofit: 4
 - Solar water heating system: 3
 - Combined heat and power system: 2
 
@@ -678,8 +678,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 25,
-  "ineligible": 1682
+  "eligible": 24,
+  "ineligible": 1680
 }
 ```
 
@@ -706,8 +706,8 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
 - eligible / 100: California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629)
   - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067)
-  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; No utility restriction was found after source review.
+- eligible / 100: GFO-25-305 - Non-Energy Impacts of Integrated Energy Retrofit Packages from the Equitable Building Decarbonization Program (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-305)
+  - matched: Opportunity appears active.; Project site state CA matches opportunity geography.; Opportunity explicitly has no electric utility restriction.
 
 Common next questions:
 
@@ -718,8 +718,8 @@ Retrofit types inferred from promising matches:
 - Ground-source / geothermal heat pump: 6
 - Battery storage system: 4
 - Biomass / biogas energy system: 4
-- High-efficiency HVAC replacement: 4
-- LED lighting retrofit: 4
+- High-efficiency HVAC replacement: 3
+- LED lighting retrofit: 3
 - Solar water heating system: 3
 - Combined heat and power system: 2
 
@@ -767,7 +767,7 @@ Status counts:
 ```json
 {
   "eligible": 26,
-  "ineligible": 1681
+  "ineligible": 1678
 }
 ```
 
@@ -813,7 +813,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 552
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 361
 - Project site state CA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state CA does not match opportunity geography CO.: 74
@@ -855,7 +855,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1692
+  "ineligible": 1689
 }
 ```
 
@@ -901,7 +901,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
 - Project site state CA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state CA does not match opportunity geography CO.: 74
@@ -943,7 +943,7 @@ Status counts:
 ```json
 {
   "eligible": 14,
-  "ineligible": 1693
+  "ineligible": 1690
 }
 ```
 
@@ -988,9 +988,9 @@ Retrofit types inferred from promising matches:
 - High-efficiency boiler retrofit: 1
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
-- Project site state NY does not match opportunity geography CA.: 176
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 361
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 206
+- Project site state NY does not match opportunity geography CA.: 175
 - Project site state NY does not match opportunity geography MN.: 110
 - Applicant type residential does not match eligible sectors commercial.: 79
 
@@ -1031,7 +1031,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -1074,9 +1074,9 @@ Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 1
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
-- Project site state WA does not match opportunity geography CA.: 176
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 361
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 206
+- Project site state WA does not match opportunity geography CA.: 175
 - Project site state WA does not match opportunity geography MN.: 110
 - Applicant type residential does not match eligible sectors commercial.: 79
 
@@ -1117,7 +1117,7 @@ Status counts:
 ```json
 {
   "eligible": 25,
-  "ineligible": 1682
+  "ineligible": 1679
 }
 ```
 
@@ -1162,9 +1162,9 @@ Retrofit types inferred from promising matches:
 - Heat pump water heater: 4
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
-- Project site state CO does not match opportunity geography CA.: 176
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 361
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 206
+- Project site state CO does not match opportunity geography CA.: 175
 - Project site state CO does not match opportunity geography MN.: 110
 - Applicant type residential does not match eligible sectors commercial.: 79
 
@@ -1205,7 +1205,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -1243,7 +1243,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 552
-- Project site state HI does not match opportunity geography CA.: 176
+- Project site state HI does not match opportunity geography CA.: 175
 - Project site state HI does not match opportunity geography MN.: 110
 - Applicant type residential does not match eligible sectors commercial.: 79
 - Project site state HI does not match opportunity geography CO.: 74
@@ -1285,7 +1285,7 @@ Status counts:
 ```json
 {
   "eligible": 18,
-  "ineligible": 1689
+  "ineligible": 1686
 }
 ```
 
@@ -1330,9 +1330,9 @@ Retrofit types inferred from promising matches:
 - High-efficiency commercial dishwasher: 3
 
 Common blockers across rejected/unavailable opportunities:
-- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 362
-- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 208
-- Project site state MN does not match opportunity geography CA.: 176
+- User site or facility type (multifamily_residential) does not match broad_commercial eligibility.: 361
+- User site or facility type (multifamily_residential) does not match broad_nonresidential eligibility.: 206
+- Project site state MN does not match opportunity geography CA.: 175
 - Applicant type residential does not match eligible sectors commercial.: 79
 - Project site state MN does not match opportunity geography CO.: 74
 
@@ -1373,7 +1373,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -1411,7 +1411,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 552
-- Project site state DC does not match opportunity geography CA.: 176
+- Project site state DC does not match opportunity geography CA.: 175
 - Project site state DC does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state DC does not match opportunity geography CO.: 74
@@ -1453,7 +1453,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -1497,7 +1497,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 552
-- Project site state MI does not match opportunity geography CA.: 176
+- Project site state MI does not match opportunity geography CA.: 175
 - Project site state MI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state MI does not match opportunity geography CO.: 74
@@ -1539,7 +1539,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -1585,7 +1585,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 552
-- Project site state MT does not match opportunity geography CA.: 176
+- Project site state MT does not match opportunity geography CA.: 175
 - Project site state MT does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state MT does not match opportunity geography CO.: 74
@@ -1627,7 +1627,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -1669,8 +1669,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state VT does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state VT does not match opportunity geography CA.: 175
 - Project site state VT does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -1711,7 +1711,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -1747,7 +1747,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (restaurant_foodservice) does not match broad_residential eligibility.: 552
-- Project site state TN does not match opportunity geography CA.: 176
+- Project site state TN does not match opportunity geography CA.: 175
 - Project site state TN does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state TN does not match opportunity geography CO.: 74
@@ -1789,7 +1789,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1695
+  "ineligible": 1692
 }
 ```
 
@@ -1835,7 +1835,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 552
-- Project site state NM does not match opportunity geography CA.: 176
+- Project site state NM does not match opportunity geography CA.: 175
 - Project site state NM does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state NM does not match opportunity geography CO.: 74
@@ -1877,7 +1877,7 @@ Status counts:
 ```json
 {
   "eligible": 19,
-  "ineligible": 1688
+  "ineligible": 1685
 }
 ```
 
@@ -1923,7 +1923,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 552
-- Project site state CO does not match opportunity geography CA.: 176
+- Project site state CO does not match opportunity geography CA.: 175
 - Project site state CO does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state CO does not match opportunity geography MA.: 70
@@ -1965,7 +1965,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -2011,7 +2011,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (mixed_use) does not match broad_residential eligibility.: 552
-- Project site state MI does not match opportunity geography CA.: 176
+- Project site state MI does not match opportunity geography CA.: 175
 - Project site state MI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state MI does not match opportunity geography CO.: 74
@@ -2053,7 +2053,7 @@ Status counts:
 ```json
 {
   "eligible": 6,
-  "ineligible": 1701
+  "ineligible": 1698
 }
 ```
 
@@ -2087,8 +2087,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 552
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
-- Project site state OK does not match opportunity geography CA.: 176
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 361
+- Project site state OK does not match opportunity geography CA.: 175
 - Project site state OK does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2128,8 +2128,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 7,
-  "ineligible": 1700
+  "eligible": 6,
+  "ineligible": 1698
 }
 ```
 
@@ -2140,8 +2140,6 @@ Eligible matches:
   - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible / 100: Property Tax Abatement for Solar Electric Systems (SOURCE_DSIRE:dsire_program_id:3036)
   - matched: Opportunity appears rolling or no-deadline.; Project site state NC matches opportunity geography.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Duke Energy - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3466)
-  - matched: Opportunity appears active.; Project site state NC matches opportunity geography.; Self-reported utility matches Duke Energy.
 - eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears rolling or no-deadline.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible / 100: Duke Energy - PowerPair (SOURCE_DSIRE:dsire_program_id:22607)
@@ -2157,16 +2155,16 @@ Retrofit types inferred from promising matches:
 - Biomass / biogas energy system: 2
 - Ground-source / geothermal heat pump: 2
 - Rooftop solar PV: 2
-- Window replacement: 2
 - Battery storage system: 1
 - Combined heat and power system: 1
-- Efficient air compressor: 1
 - EV charger installation: 1
+- High-efficiency HVAC replacement: 1
+- LED lighting retrofit: 1
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 552
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
-- Project site state NC does not match opportunity geography CA.: 176
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 361
+- Project site state NC does not match opportunity geography CA.: 175
 - Project site state NC does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2207,7 +2205,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -2253,7 +2251,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 552
-- Project site state ME does not match opportunity geography CA.: 176
+- Project site state ME does not match opportunity geography CA.: 175
 - Project site state ME does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state ME does not match opportunity geography CO.: 74
@@ -2295,7 +2293,7 @@ Status counts:
 ```json
 {
   "eligible": 9,
-  "ineligible": 1698
+  "ineligible": 1695
 }
 ```
 
@@ -2335,8 +2333,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 552
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
-- Project site state PA does not match opportunity geography CA.: 176
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 361
+- Project site state PA does not match opportunity geography CA.: 175
 - Project site state PA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2377,7 +2375,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1695
+  "ineligible": 1692
 }
 ```
 
@@ -2423,7 +2421,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 552
-- Project site state ID does not match opportunity geography CA.: 176
+- Project site state ID does not match opportunity geography CA.: 175
 - Project site state ID does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state ID does not match opportunity geography CO.: 74
@@ -2465,7 +2463,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1692
+  "ineligible": 1689
 }
 ```
 
@@ -2511,7 +2509,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (grocery_food_retail) does not match broad_residential eligibility.: 552
-- Project site state IL does not match opportunity geography CA.: 176
+- Project site state IL does not match opportunity geography CA.: 175
 - Project site state IL does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state IL does not match opportunity geography CO.: 74
@@ -2553,7 +2551,7 @@ Status counts:
 ```json
 {
   "eligible": 14,
-  "ineligible": 1693
+  "ineligible": 1690
 }
 ```
 
@@ -2599,7 +2597,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 552
-- Project site state GA does not match opportunity geography CA.: 176
+- Project site state GA does not match opportunity geography CA.: 175
 - Project site state GA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state GA does not match opportunity geography CO.: 74
@@ -2641,7 +2639,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -2687,8 +2685,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state WA does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state WA does not match opportunity geography CA.: 175
 - Project site state WA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2729,7 +2727,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -2773,8 +2771,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state AZ does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state AZ does not match opportunity geography CA.: 175
 - Project site state AZ does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2814,8 +2812,8 @@ Normalized profile:
 Status counts:
 ```json
 {
-  "eligible": 16,
-  "ineligible": 1691
+  "eligible": 15,
+  "ineligible": 1689
 }
 ```
 
@@ -2836,14 +2834,14 @@ Eligible matches:
   - matched: Opportunity appears rolling or no-deadline.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
   - matched: Opportunity appears rolling or no-deadline.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
-- eligible / 100: Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3606)
-  - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Self-reported utility matches Duke Energy.
 - eligible / 100: Renewable Energy Manufacturing Tax Credit (SOURCE_DSIRE:dsire_program_id:5396)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
 - eligible / 100: Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918)
   - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 - eligible / 100: Solar Energy, Small Hydropower, and Geothermal Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:1803)
   - matched: Opportunity appears active.; Project site state SC matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
 
 Common next questions:
 
@@ -2853,16 +2851,16 @@ Retrofit types inferred from promising matches:
 - Ground-source / geothermal heat pump: 5
 - Biomass / biogas energy system: 3
 - EV charger installation: 3
-- High-efficiency HVAC replacement: 3
 - Solar water heating system: 3
 - Automated demand response controls: 2
 - Battery storage system: 2
-- LED lighting retrofit: 2
+- High-efficiency HVAC replacement: 2
+- Air sealing / weatherization: 1
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state SC does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state SC does not match opportunity geography CA.: 175
 - Project site state SC does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2903,7 +2901,7 @@ Status counts:
 ```json
 {
   "eligible": 14,
-  "ineligible": 1693
+  "ineligible": 1690
 }
 ```
 
@@ -2949,8 +2947,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state OH does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state OH does not match opportunity geography CA.: 175
 - Project site state OH does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -2991,7 +2989,7 @@ Status counts:
 ```json
 {
   "eligible": 13,
-  "ineligible": 1694
+  "ineligible": 1691
 }
 ```
 
@@ -3037,8 +3035,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state MI does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state MI does not match opportunity geography CA.: 175
 - Project site state MI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3079,7 +3077,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -3117,7 +3115,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 552
-- Project site state WA does not match opportunity geography CA.: 176
+- Project site state WA does not match opportunity geography CA.: 175
 - Project site state WA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state WA does not match opportunity geography CO.: 74
@@ -3159,7 +3157,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -3195,7 +3193,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (warehouse_logistics) does not match broad_residential eligibility.: 552
-- Project site state TN does not match opportunity geography CA.: 176
+- Project site state TN does not match opportunity geography CA.: 175
 - Project site state TN does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state TN does not match opportunity geography CO.: 74
@@ -3237,7 +3235,7 @@ Status counts:
 ```json
 {
   "eligible": 12,
-  "ineligible": 1695
+  "ineligible": 1692
 }
 ```
 
@@ -3283,7 +3281,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (data_center) does not match broad_residential eligibility.: 552
-- Project site state VA does not match opportunity geography CA.: 176
+- Project site state VA does not match opportunity geography CA.: 175
 - Project site state VA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state VA does not match opportunity geography CO.: 74
@@ -3325,7 +3323,7 @@ Status counts:
 ```json
 {
   "eligible": 18,
-  "ineligible": 1689
+  "ineligible": 1686
 }
 ```
 
@@ -3371,7 +3369,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (retail_storefront) does not match broad_residential eligibility.: 552
-- Project site state PA does not match opportunity geography CA.: 176
+- Project site state PA does not match opportunity geography CA.: 175
 - Project site state PA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state PA does not match opportunity geography CO.: 74
@@ -3413,7 +3411,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -3455,8 +3453,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state IA does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state IA does not match opportunity geography CA.: 175
 - Project site state IA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3497,7 +3495,7 @@ Status counts:
 ```json
 {
   "eligible": 5,
-  "ineligible": 1702
+  "ineligible": 1699
 }
 ```
 
@@ -3529,8 +3527,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 552
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
-- Project site state TX does not match opportunity geography CA.: 176
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 361
+- Project site state TX does not match opportunity geography CA.: 175
 - Project site state TX does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3571,7 +3569,7 @@ Status counts:
 ```json
 {
   "eligible": 9,
-  "ineligible": 1698
+  "ineligible": 1695
 }
 ```
 
@@ -3611,8 +3609,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 552
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
-- Project site state WI does not match opportunity geography CA.: 176
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 361
+- Project site state WI does not match opportunity geography CA.: 175
 - Project site state WI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3653,7 +3651,7 @@ Status counts:
 ```json
 {
   "eligible": 15,
-  "ineligible": 1692
+  "ineligible": 1689
 }
 ```
 
@@ -3699,8 +3697,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 552
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
-- Project site state MA does not match opportunity geography CA.: 176
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 361
+- Project site state MA does not match opportunity geography CA.: 175
 - Project site state MA does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3741,7 +3739,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -3783,8 +3781,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 552
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
-- Project site state AK does not match opportunity geography CA.: 176
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 361
+- Project site state AK does not match opportunity geography CA.: 175
 - Project site state AK does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3825,7 +3823,7 @@ Status counts:
 ```json
 {
   "eligible": 7,
-  "ineligible": 1700
+  "ineligible": 1697
 }
 ```
 
@@ -3861,8 +3859,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (public_institutional) does not match broad_residential eligibility.: 552
-- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 362
-- Project site state UT does not match opportunity geography CA.: 176
+- User site or facility type (public_institutional) does not match broad_commercial eligibility.: 361
+- Project site state UT does not match opportunity geography CA.: 175
 - Project site state UT does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3903,7 +3901,7 @@ Status counts:
 ```json
 {
   "eligible": 10,
-  "ineligible": 1697
+  "ineligible": 1694
 }
 ```
 
@@ -3945,8 +3943,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (agricultural_facility) does not match broad_residential eligibility.: 552
-- User site or facility type (agricultural_facility) does not match broad_commercial eligibility.: 362
-- Project site state HI does not match opportunity geography CA.: 176
+- User site or facility type (agricultural_facility) does not match broad_commercial eligibility.: 361
+- Project site state HI does not match opportunity geography CA.: 175
 - Project site state HI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -3987,7 +3985,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -4025,7 +4023,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (healthcare) does not match broad_residential eligibility.: 552
-- Project site state OK does not match opportunity geography CA.: 176
+- Project site state OK does not match opportunity geography CA.: 175
 - Project site state OK does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state OK does not match opportunity geography CO.: 74
@@ -4067,7 +4065,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -4111,7 +4109,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 552
-- Project site state WI does not match opportunity geography CA.: 176
+- Project site state WI does not match opportunity geography CA.: 175
 - Project site state WI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state WI does not match opportunity geography CO.: 74
@@ -4153,7 +4151,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -4191,8 +4189,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (education_campus) does not match broad_residential eligibility.: 552
-- User site or facility type (education_campus) does not match broad_commercial eligibility.: 362
-- Project site state NC does not match opportunity geography CA.: 176
+- User site or facility type (education_campus) does not match broad_commercial eligibility.: 361
+- Project site state NC does not match opportunity geography CA.: 175
 - Project site state NC does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 
@@ -4233,7 +4231,7 @@ Status counts:
 ```json
 {
   "eligible": 8,
-  "ineligible": 1699
+  "ineligible": 1696
 }
 ```
 
@@ -4271,7 +4269,7 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (office_admin) does not match broad_residential eligibility.: 552
-- Project site state AZ does not match opportunity geography CA.: 176
+- Project site state AZ does not match opportunity geography CA.: 175
 - Project site state AZ does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state AZ does not match opportunity geography CO.: 74
@@ -4313,7 +4311,7 @@ Status counts:
 ```json
 {
   "eligible": 11,
-  "ineligible": 1696
+  "ineligible": 1693
 }
 ```
 
@@ -4357,8 +4355,8 @@ Retrofit types inferred from promising matches:
 
 Common blockers across rejected/unavailable opportunities:
 - User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
-- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
-- Project site state RI does not match opportunity geography CA.: 176
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 361
+- Project site state RI does not match opportunity geography CA.: 175
 - Project site state RI does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 

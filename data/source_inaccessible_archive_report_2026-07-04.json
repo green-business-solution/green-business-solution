@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "retrofi_source_inaccessible_archive_report.v1",
+  "generatedAt": "2026-07-04T02:30:04.370Z",
+  "writeDynamoDb": true,
+  "targetCount": 3,
+  "packageUpdateCount": 3,
+  "dynamoUpdateCount": 3,
+  "targets": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
+      "programName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
+      "archiveReason": "source_inaccessible_repair_failure",
+      "evidenceText": "Repeated GPT Pro/source repair and package audit left the current official Duke Smart Saver non-residential rate table inaccessible, so this record is excluded from product-visible matching until a new accessible official source appears.",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "previousAvailability": {
+        "status": "active",
+        "source_access_status": "inaccessible"
+      },
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3466/duke-energy-non-residential-energy-efficiency-rebate-program"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
+      "programName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
+      "archiveReason": "source_inaccessible_repair_failure",
+      "evidenceText": "Repeated GPT Pro/source repair and package audit left current Duke Energy Smart Saver measure tables inaccessible; search snippets confirm categories but not current source-backed rates or caps.",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "previousAvailability": {
+        "status": "active",
+        "source_access_status": "inaccessible"
+      },
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/3606/duke-energy-carolinas-non-residential-energy-efficiency-rebate-program"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
+      "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
+      "archiveReason": "source_inaccessible_repair_failure",
+      "evidenceText": "Repeated GPT Pro/source repair and package audit left full current PSREC commercial rebate pages/forms inaccessible; snippets are not enough to support current product-visible matching or estimates.",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "previousAvailability": {
+        "status": "active",
+        "source_access_status": "inaccessible"
+      },
+      "sourceUrlsChecked": [
+        "https://programs.dsireusa.org/system/program/detail/22067/plumas-sierra-rec-commercial-and-irrigation-rebate-program"
+      ]
+    }
+  ],
+  "packageResults": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
+      "programName": "Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "newCalculationStatus": "unavailable_archived"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
+      "programName": "Duke Energy - Non-Residential Energy Efficiency Rebate Program",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "newCalculationStatus": "unavailable_archived"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
+      "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
+      "previousCalculationStatus": "source_inaccessible_repair_failure",
+      "newCalculationStatus": "unavailable_archived"
+    }
+  ],
+  "dynamoResults": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3466",
+      "action": "archived"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3606",
+      "action": "archived"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
+      "action": "archived"
+    }
+  ]
+}

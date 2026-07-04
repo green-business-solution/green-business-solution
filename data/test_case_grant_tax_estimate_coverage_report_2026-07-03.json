@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T02:19:06.877Z",
+  "generatedAt": "2026-07-04T02:28:50.835Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -8,18 +8,17 @@
   },
   "summary": {
     "testCaseCount": 51,
-    "retrofitPreviewCount": 906,
+    "retrofitPreviewCount": 890,
     "previewStatusCounts": {
-      "calculated": 862,
+      "calculated": 846,
       "unsupported": 44
     },
-    "matchedV2PackageEvaluationCount": 570,
+    "matchedV2PackageEvaluationCount": 531,
     "runtimeInclusionStatusCounts": {
       "included": 310,
       "low_confidence": 20,
       "no_calculable_value": 72,
       "not_user_facing_default": 56,
-      "source_inaccessible_repair_failure": 39,
       "non_monetary_workflow": 14,
       "custom_quote_estimate": 19,
       "no_supported_effect_amount": 16,
@@ -29,18 +28,18 @@
     "outcomeClassCounts": {
       "calculated_and_included": 310,
       "suppressed_without_amount": 78,
-      "source_or_package_blocked": 130,
+      "source_or_package_blocked": 91,
       "computed_but_suppressed": 20,
       "non_monetary_workflow": 14,
       "calculated_zero_or_no_supported_amount": 16,
       "legacy_rule_preferred": 2
     },
     "packageEffectTypeCounts": {
-      "one_time_savings": 405,
+      "one_time_savings": 371,
       "grant_expected_value": 80,
       "recurring_savings": 53,
       "financing_subsidy": 2,
-      "no_cash_value": 28,
+      "no_cash_value": 23,
       "process_value": 34,
       "tax_rate_preference": 1,
       "tax_exemption": 3,
@@ -61,11 +60,11 @@
   },
   "topMissingInputs": [],
   "grantAndIncentivePackageOutcomes": {
-    "count": 533,
+    "count": 499,
     "outcomeClassCounts": {
       "calculated_and_included": 310,
       "suppressed_without_amount": 74,
-      "source_or_package_blocked": 110,
+      "source_or_package_blocked": 76,
       "computed_but_suppressed": 20,
       "non_monetary_workflow": 1,
       "calculated_zero_or_no_supported_amount": 16,
@@ -76,7 +75,6 @@
       "low_confidence": 20,
       "no_calculable_value": 57,
       "not_user_facing_default": 56,
-      "source_inaccessible_repair_failure": 34,
       "non_monetary_workflow": 1,
       "custom_quote_estimate": 19,
       "no_supported_effect_amount": 16,
@@ -1224,156 +1222,6 @@
       {
         "sampleUserId": "california-endowment-hq",
         "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
-        "programName": "LADWP - Non-Residential Energy Efficiency Incentive Program",
-        "runtimeInclusionStatus": "included",
-        "outcomeClass": "calculated_and_included",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "measure_category",
-            "canonicalInputKey": "measure_category",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "qualification_tier",
-            "canonicalInputKey": "qualification_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ladwp_calculated_annual_kwh_savings",
-            "canonicalInputKey": "ladwp_calculated_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "dlc_or_ladwp_qualification",
-            "canonicalInputKey": "dlc_or_ladwp_qualification",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ladwp_preapproval",
-            "canonicalInputKey": "ladwp_preapproval",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 24960,
-        "includedInRuntimeTotals": true
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
         "retrofitTypeId": "battery_storage_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
         "programName": "Marin Clean Energy - Feed-In Tariff Plus",
@@ -1777,75 +1625,51 @@
       {
         "sampleUserId": "california-endowment-hq",
         "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
+        "retrofitTypeId": "led_lighting_retrofit",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
+        "programName": "LADWP - Non-Residential Energy Efficiency Incentive Program",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "high",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
+            "inputKey": "measure_category",
+            "canonicalInputKey": "measure_category",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
+            "inputKey": "qualification_tier",
+            "canonicalInputKey": "qualification_tier",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
+            "inputKey": "ladwp_calculated_annual_kwh_savings",
+            "canonicalInputKey": "ladwp_calculated_annual_kwh_savings",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
+            "inputKey": "dlc_or_ladwp_qualification",
+            "canonicalInputKey": "dlc_or_ladwp_qualification",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
+            "inputKey": "ladwp_preapproval",
+            "canonicalInputKey": "ladwp_preapproval",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -1857,9 +1681,9 @@
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 24960,
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -2114,180 +1938,6 @@
         ],
         "effectTypes": [
           "grant_expected_value"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
@@ -3971,322 +3621,6 @@
       {
         "sampleUserId": "ikea-burbank",
         "sampleName": "ikea-burbank",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "included",
-        "outcomeClass": "calculated_and_included",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": true
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "included",
-        "outcomeClass": "calculated_and_included",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 1200,
-        "includedInRuntimeTotals": true
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
         "retrofitTypeId": "biomass_biogas_energy_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
         "programName": "Marin Clean Energy - Feed-In Tariff Plus",
@@ -4390,6 +3724,148 @@
       {
         "sampleUserId": "ikea-burbank",
         "sampleName": "ikea-burbank",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
+        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "bwp_business_account",
+            "canonicalInputKey": "bwp_business_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
+            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_specification_documents",
+            "canonicalInputKey": "invoice_and_specification_documents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_catalog_row",
+            "canonicalInputKey": "selected_catalog_row",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "annual_kwh_savings_for_custom_projects",
+            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 100,
+        "includedInRuntimeTotals": true
+      },
+      {
+        "sampleUserId": "ikea-burbank",
+        "sampleName": "ikea-burbank",
+        "retrofitTypeId": "led_lighting_retrofit",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
+        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "bwp_business_account",
+            "canonicalInputKey": "bwp_business_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
+            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_specification_documents",
+            "canonicalInputKey": "invoice_and_specification_documents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_catalog_row",
+            "canonicalInputKey": "selected_catalog_row",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "annual_kwh_savings_for_custom_projects",
+            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 1200,
+        "includedInRuntimeTotals": true
+      },
+      {
+        "sampleUserId": "ikea-burbank",
+        "sampleName": "ikea-burbank",
         "retrofitTypeId": "solar_water_heating_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
         "programName": "Marin Clean Energy - Feed-In Tariff Plus",
@@ -4483,164 +3959,6 @@
         ],
         "effectTypes": [
           "recurring_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "included",
-        "outcomeClass": "calculated_and_included",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 35000,
-        "includedInRuntimeTotals": true
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
@@ -4879,75 +4197,59 @@
       {
         "sampleUserId": "ikea-burbank",
         "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
+        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
+            "inputKey": "bwp_business_account",
+            "canonicalInputKey": "bwp_business_account",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
+            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
+            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
+            "inputKey": "invoice_and_specification_documents",
+            "canonicalInputKey": "invoice_and_specification_documents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
+            "inputKey": "selected_catalog_row",
+            "canonicalInputKey": "selected_catalog_row",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
+            "inputKey": "annual_kwh_savings_for_custom_projects",
+            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -4959,9 +4261,9 @@
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 35000,
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -6148,6 +5450,869 @@
           {
             "inputKey": "subscription_level_kw",
             "canonicalInputKey": "subscription_level_kw",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "recurring_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
+        "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_9badcea914d6d42f",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "funding_lane",
+            "canonicalInputKey": "funding_lane",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_and_type_of_charging_ports",
+            "canonicalInputKey": "number_and_type_of_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "electric_school_bus_deployment_details",
+            "canonicalInputKey": "electric_school_bus_deployment_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lea_or_transportation_provider_pathway",
+            "canonicalInputKey": "lea_or_transportation_provider_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "first_come_status_or_application_score",
+            "canonicalInputKey": "first_come_status_or_application_score",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_l2_ports",
+            "canonicalInputKey": "number_of_l2_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc",
+            "canonicalInputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lane_specific_cap",
+            "canonicalInputKey": "lane_specific_cap",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "first_come_status_or_award_decision",
+            "canonicalInputKey": "first_come_status_or_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_type",
+            "canonicalInputKey": "applicant_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_or_lea_name",
+            "canonicalInputKey": "applicant_or_lea_name",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_l2_charging_ports",
+            "canonicalInputKey": "number_of_l2_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc_chargers",
+            "canonicalInputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc_chargers",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "demonstrated_electric_school_bus_need_count",
+            "canonicalInputKey": "demonstrated_electric_school_bus_need_count",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lane_1_maximum_charging_ports_from_table_4",
+            "canonicalInputKey": "lane_1_maximum_charging_ports_from_table_4",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "serves_more_than_one_lea",
+            "canonicalInputKey": "serves_more_than_one_lea",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_or_award_status",
+            "canonicalInputKey": "application_or_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_award_amount_cents",
+            "canonicalInputKey": "approved_award_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "remaining_lane_funds_or_queue_status",
+            "canonicalInputKey": "remaining_lane_funds_or_queue_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability_discount",
+            "canonicalInputKey": "award_probability_discount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dcfc_or_bidirectional_dcfc_charging_ports",
+            "canonicalInputKey": "number_of_dcfc_or_bidirectional_dcfc_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdenergyedge_com",
+        "programName": "SD Energy Edge",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "estimate_from_range",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "measure_type",
+            "canonicalInputKey": "measure_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_capacity_or_quantity",
+            "canonicalInputKey": "equipment_capacity_or_quantity",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "configuration_or_efficiency_tier",
+            "canonicalInputKey": "configuration_or_efficiency_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "preapproval_status_for_custom",
+            "canonicalInputKey": "preapproval_status_for_custom",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 234,
+        "includedInRuntimeTotals": true
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com",
+        "programName": "Comfortably CA",
+        "runtimeInclusionStatus": "custom_quote_estimate",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "custom_quote_estimate",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "participating_distributor",
+            "canonicalInputKey": "participating_distributor",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualified_product",
+            "canonicalInputKey": "qualified_product",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "contractor_quote",
+            "canonicalInputKey": "contractor_quote",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "distributor_pass_through_amount",
+            "canonicalInputKey": "distributor_pass_through_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "utility_territory",
+            "canonicalInputKey": "utility_territory",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "pass_through_amount",
+            "canonicalInputKey": "pass_through_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "market_actor_role",
+            "canonicalInputKey": "market_actor_role",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participation_status",
+            "canonicalInputKey": "participation_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings",
+          "process_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
+        "programName": "Statewide Midstream Water Heating",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "participating_utility_territory",
+            "canonicalInputKey": "participating_utility_territory",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_category",
+            "canonicalInputKey": "equipment_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_model",
+            "canonicalInputKey": "equipment_model",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "efficiency_rating",
+            "canonicalInputKey": "efficiency_rating",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tank_size_gallons",
+            "canonicalInputKey": "tank_size_gallons",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "input_or_output_capacity_kbtuh",
+            "canonicalInputKey": "input_or_output_capacity_kbtuh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "affected_dwelling_units",
+            "canonicalInputKey": "affected_dwelling_units",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "collector_effective_area_square_feet",
+            "canonicalInputKey": "collector_effective_area_square_feet",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "efficiency_tier",
+            "canonicalInputKey": "efficiency_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_capacity",
+            "canonicalInputKey": "equipment_capacity",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_utility_territory",
+            "canonicalInputKey": "eligible_utility_territory",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 8800,
+        "includedInRuntimeTotals": true
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "automated_demand_response_controls",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+        "programName": "Groceries, Restaurants and Food Storage Program",
+        "runtimeInclusionStatus": "custom_quote_estimate",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "custom_quote_estimate",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "sdg_e_commercial_account",
+            "canonicalInputKey": "sdg_e_commercial_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "canonicalInputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "enrolled_aggregator",
+            "canonicalInputKey": "enrolled_aggregator",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "measure_package",
+            "canonicalInputKey": "measure_package",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_pathway",
+            "canonicalInputKey": "approved_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nmec_baseline_or_deemed_measure_details",
+            "canonicalInputKey": "nmec_baseline_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_data",
+            "canonicalInputKey": "metered_data",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings",
+            "canonicalInputKey": "verified_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "aggregator_approved_scope",
+            "canonicalInputKey": "aggregator_approved_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "program_pathway",
+            "canonicalInputKey": "program_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings_or_deemed_measure_details",
+            "canonicalInputKey": "verified_savings_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "automated_demand_response_controls",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:myenergycenter_com",
+        "programName": "Critical Peak Pricing Plans",
+        "runtimeInclusionStatus": "not_user_facing_default",
+        "outcomeClass": "suppressed_without_amount",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "customer_rate_schedule",
+            "canonicalInputKey": "customer_rate_schedule",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hourly_kwh_usage",
+            "canonicalInputKey": "hourly_kwh_usage",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "event_day_4pm_9pm_kwh",
+            "canonicalInputKey": "event_day_4pm_9pm_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_cpp_events",
+            "canonicalInputKey": "number_of_cpp_events",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "capacity_reservation_level",
+            "canonicalInputKey": "capacity_reservation_level",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "current_cpp_d_tariff_rates",
+            "canonicalInputKey": "current_cpp_d_tariff_rates",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "recurring_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "automated_demand_response_controls",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging",
+        "programName": "GRID-Lodging",
+        "runtimeInclusionStatus": "low_confidence",
+        "outcomeClass": "suppressed_without_amount",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "active_sdg_e_account",
+            "canonicalInputKey": "active_sdg_e_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_lodging_naics_category",
+            "canonicalInputKey": "eligible_lodging_naics_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "12_months_pre_project_interval_or_billing_data",
+            "canonicalInputKey": "12_months_pre_project_interval_or_billing_data",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_measure_scope",
+            "canonicalInputKey": "project_measure_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "post_installation_metered_usage",
+            "canonicalInputKey": "post_installation_metered_usage",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "program_avoided_cost_rate_schedule",
+            "canonicalInputKey": "program_avoided_cost_rate_schedule",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "aggregator_or_self_aggregator_participation",
+            "canonicalInputKey": "aggregator_or_self_aggregator_participation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_annual_savings",
+            "canonicalInputKey": "metered_annual_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "avoided_cost_rates",
+            "canonicalInputKey": "avoided_cost_rates",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_project_scope",
+            "canonicalInputKey": "eligible_project_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "post_installation_performance_period",
+            "canonicalInputKey": "post_installation_performance_period",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "battery_storage_system",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22615",
+        "programName": "Marin Clean Energy - Feed-In Tariff Plus",
+        "runtimeInclusionStatus": "not_user_facing_default",
+        "outcomeClass": "suppressed_without_amount",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "project_technology",
+            "canonicalInputKey": "project_technology",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_mw_ac",
+            "canonicalInputKey": "project_mw_ac",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "accepted_fit_capacity_block",
+            "canonicalInputKey": "accepted_fit_capacity_block",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "delivered_mwh",
+            "canonicalInputKey": "delivered_mwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ppa_price",
+            "canonicalInputKey": "ppa_price",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "interconnection_status",
+            "canonicalInputKey": "interconnection_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "storage_sizing_for_solar_projects",
+            "canonicalInputKey": "storage_sizing_for_solar_projects",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "accepted_ppa_price",
+            "canonicalInputKey": "accepted_ppa_price",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "annual_delivered_mwh",
+            "canonicalInputKey": "annual_delivered_mwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "technology_type",
+            "canonicalInputKey": "technology_type",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -10666,93 +10831,6 @@
       {
         "sampleUserId": "california-endowment-hq",
         "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
         "retrofitTypeId": "battery_storage_system",
         "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
         "programName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
@@ -10950,93 +11028,6 @@
       {
         "sampleUserId": "california-endowment-hq",
         "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
         "retrofitTypeId": "fuel_cell_system",
         "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
         "programName": "GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO)",
@@ -11184,180 +11175,6 @@
         ],
         "effectTypes": [
           "grant_expected_value"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
@@ -12321,267 +12138,6 @@
       {
         "sampleUserId": "ikea-burbank",
         "sampleName": "ikea-burbank",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
         "retrofitTypeId": "fuel_cell_system",
         "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
         "programName": "GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO)",
@@ -12729,93 +12285,6 @@
         ],
         "effectTypes": [
           "grant_expected_value"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_water_heater",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
@@ -13386,93 +12855,6 @@
         "sampleUserId": "juniper-and-ivy-san-diego",
         "sampleName": "juniper-and-ivy-san-diego",
         "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22067",
-        "programName": "Plumas-Sierra REC - Commercial and Irrigation Rebate Program",
-        "runtimeInclusionStatus": "source_inaccessible_repair_failure",
-        "outcomeClass": "source_or_package_blocked",
-        "calculationStatus": "source_inaccessible_repair_failure",
-        "sourceStatus": "inaccessible",
-        "confidence": "low",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "current_psrec_rebate_form",
-            "canonicalInputKey": "current_psrec_rebate_form",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_type",
-            "canonicalInputKey": "equipment_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "unit_quantity",
-            "canonicalInputKey": "unit_quantity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "commercial_or_irrigation_account_status",
-            "canonicalInputKey": "commercial_or_irrigation_account_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "installation_documentation",
-            "canonicalInputKey": "installation_documentation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "current_form_amount",
-            "canonicalInputKey": "current_form_amount",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_tier",
-            "canonicalInputKey": "measure_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "documentation_requirements",
-            "canonicalInputKey": "documentation_requirements",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": false,
-        "computedAmountCents": 0,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "juniper-and-ivy-san-diego",
-        "sampleName": "juniper-and-ivy-san-diego",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
         "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com",
         "programName": "Comfortably CA",
         "runtimeInclusionStatus": "custom_quote_estimate",
@@ -13550,6 +12932,1495 @@
         "effectTypes": [
           "one_time_savings",
           "process_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "automated_demand_response_controls",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+        "programName": "Groceries, Restaurants and Food Storage Program",
+        "runtimeInclusionStatus": "custom_quote_estimate",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "custom_quote_estimate",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "sdg_e_commercial_account",
+            "canonicalInputKey": "sdg_e_commercial_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "canonicalInputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "enrolled_aggregator",
+            "canonicalInputKey": "enrolled_aggregator",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "measure_package",
+            "canonicalInputKey": "measure_package",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_pathway",
+            "canonicalInputKey": "approved_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nmec_baseline_or_deemed_measure_details",
+            "canonicalInputKey": "nmec_baseline_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_data",
+            "canonicalInputKey": "metered_data",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings",
+            "canonicalInputKey": "verified_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "aggregator_approved_scope",
+            "canonicalInputKey": "aggregator_approved_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "program_pathway",
+            "canonicalInputKey": "program_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings_or_deemed_measure_details",
+            "canonicalInputKey": "verified_savings_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "battery_storage_system",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+        "programName": "Groceries, Restaurants and Food Storage Program",
+        "runtimeInclusionStatus": "custom_quote_estimate",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "custom_quote_estimate",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "sdg_e_commercial_account",
+            "canonicalInputKey": "sdg_e_commercial_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "canonicalInputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "enrolled_aggregator",
+            "canonicalInputKey": "enrolled_aggregator",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "measure_package",
+            "canonicalInputKey": "measure_package",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_pathway",
+            "canonicalInputKey": "approved_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nmec_baseline_or_deemed_measure_details",
+            "canonicalInputKey": "nmec_baseline_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_data",
+            "canonicalInputKey": "metered_data",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings",
+            "canonicalInputKey": "verified_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "aggregator_approved_scope",
+            "canonicalInputKey": "aggregator_approved_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "program_pathway",
+            "canonicalInputKey": "program_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings_or_deemed_measure_details",
+            "canonicalInputKey": "verified_savings_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "battery_storage_system",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
+        "programName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_fad24d1a1bf06105",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "cec_funding_request",
+            "canonicalInputKey": "cec_funding_request",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "total_eligible_project_budget",
+            "canonicalInputKey": "total_eligible_project_budget",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hydrogen_production_capacity_in_metric_tons_per_day",
+            "canonicalInputKey": "hydrogen_production_capacity_in_metric_tons_per_day",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hydrogen_storage_scope",
+            "canonicalInputKey": "hydrogen_storage_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "onsite_hydrogen_end_use_scope",
+            "canonicalInputKey": "onsite_hydrogen_end_use_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_score_or_award_decision",
+            "canonicalInputKey": "application_score_or_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_project_budget",
+            "canonicalInputKey": "eligible_project_budget",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_match_amount",
+            "canonicalInputKey": "eligible_match_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_decision",
+            "canonicalInputKey": "award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_funding_request_cents",
+            "canonicalInputKey": "cec_funding_request_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_cec_award_cents",
+            "canonicalInputKey": "approved_cec_award_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_award_status",
+            "canonicalInputKey": "application_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "fully_executed_grant_agreement",
+            "canonicalInputKey": "fully_executed_grant_agreement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_reimbursable_project_costs_cents",
+            "canonicalInputKey": "eligible_reimbursable_project_costs_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_match_amount_cents",
+            "canonicalInputKey": "eligible_match_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_site_in_california",
+            "canonicalInputKey": "project_site_in_california",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hydrogen_production_capacity_metric_tons_per_day",
+            "canonicalInputKey": "hydrogen_production_capacity_metric_tons_per_day",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "colocated_production_storage_end_use",
+            "canonicalInputKey": "colocated_production_storage_end_use",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "renewable_energy_supply_strategy",
+            "canonicalInputKey": "renewable_energy_supply_strategy",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "water_source_not_for_human_consumption",
+            "canonicalInputKey": "water_source_not_for_human_consumption",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902",
+        "programName": "GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_f1659ce17e5da4b9",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_federal_geothermal_funding_opportunity",
+            "canonicalInputKey": "eligible_federal_geothermal_funding_opportunity",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "federal_award_amount",
+            "canonicalInputKey": "federal_award_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "federal_cost_share_requirement",
+            "canonicalInputKey": "federal_cost_share_requirement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "total_eligible_project_budget",
+            "canonicalInputKey": "total_eligible_project_budget",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_cost_share_request",
+            "canonicalInputKey": "cec_cost_share_request",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_award_decision",
+            "canonicalInputKey": "cec_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cost_share_requirement",
+            "canonicalInputKey": "cost_share_requirement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_funding_request",
+            "canonicalInputKey": "cec_funding_request",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_type",
+            "canonicalInputKey": "applicant_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "topic_area",
+            "canonicalInputKey": "topic_area",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "phase_i_application_submitted_by_deadline",
+            "canonicalInputKey": "phase_i_application_submitted_by_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_federal_foa_number",
+            "canonicalInputKey": "eligible_federal_foa_number",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "federal_topic_area",
+            "canonicalInputKey": "federal_topic_area",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "federal_award_received",
+            "canonicalInputKey": "federal_award_received",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "federal_award_amount_cents",
+            "canonicalInputKey": "federal_award_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_cost_share_request_cents",
+            "canonicalInputKey": "cec_cost_share_request_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_award_status",
+            "canonicalInputKey": "cec_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_approved_award_amount_cents",
+            "canonicalInputKey": "cec_approved_award_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "combined_cec_federal_spend_in_california_percent",
+            "canonicalInputKey": "combined_cec_federal_spend_in_california_percent",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "field_demonstration_or_deployment_in_california",
+            "canonicalInputKey": "field_demonstration_or_deployment_in_california",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "fuel_cell_system",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
+        "programName": "GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO)",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_a7ff5e3c336c4dd5",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "requested_grant_amount_cents",
+            "canonicalInputKey": "requested_grant_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_amount_cents",
+            "canonicalInputKey": "match_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hydrogen_station_scope",
+            "canonicalInputKey": "hydrogen_station_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_score_or_award_probability",
+            "canonicalInputKey": "application_score_or_award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "station_type",
+            "canonicalInputKey": "station_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_score_or_award_decision",
+            "canonicalInputKey": "application_score_or_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "total_allowable_project_cost_cents",
+            "canonicalInputKey": "total_allowable_project_cost_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_cec_reimbursable_cost_cents",
+            "canonicalInputKey": "eligible_cec_reimbursable_cost_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_share_cents",
+            "canonicalInputKey": "match_share_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "station_scope_rows",
+            "canonicalInputKey": "station_scope_rows",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_submitted_by_deadline",
+            "canonicalInputKey": "application_submitted_by_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_eligibility_status",
+            "canonicalInputKey": "applicant_eligibility_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_eligibility_status",
+            "canonicalInputKey": "project_eligibility_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_award_status",
+            "canonicalInputKey": "cec_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_approved_award_cents",
+            "canonicalInputKey": "cec_approved_award_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "juniper-and-ivy-san-diego",
+        "sampleName": "juniper-and-ivy-san-diego",
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+        "programName": "Groceries, Restaurants and Food Storage Program",
+        "runtimeInclusionStatus": "custom_quote_estimate",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "custom_quote_estimate",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "sdg_e_commercial_account",
+            "canonicalInputKey": "sdg_e_commercial_account",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "canonicalInputKey": "grocery_restaurant_or_food_storage_facility_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "enrolled_aggregator",
+            "canonicalInputKey": "enrolled_aggregator",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "measure_package",
+            "canonicalInputKey": "measure_package",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_pathway",
+            "canonicalInputKey": "approved_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nmec_baseline_or_deemed_measure_details",
+            "canonicalInputKey": "nmec_baseline_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "metered_data",
+            "canonicalInputKey": "metered_data",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings",
+            "canonicalInputKey": "verified_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "aggregator_approved_scope",
+            "canonicalInputKey": "aggregator_approved_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "program_pathway",
+            "canonicalInputKey": "program_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "verified_savings_or_deemed_measure_details",
+            "canonicalInputKey": "verified_savings_or_deemed_measure_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "northgate-market-anaheim",
+        "sampleName": "northgate-market-anaheim",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
+        "programName": "GFO-25-603 - California's National Electric Vehicle Infrastructure Formula Program - Solicitation 6 Community Charging",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_42355de1814a8757",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "allowable_project_cost",
+            "canonicalInputKey": "allowable_project_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "requested_grant_amount",
+            "canonicalInputKey": "requested_grant_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_funding_amount",
+            "canonicalInputKey": "match_funding_amount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dcfc_ports",
+            "canonicalInputKey": "number_of_dcfc_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cost_per_ccs_port",
+            "canonicalInputKey": "cost_per_ccs_port",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_selection_status",
+            "canonicalInputKey": "award_selection_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_ccs_ports",
+            "canonicalInputKey": "number_of_ccs_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_cec_award_cents",
+            "canonicalInputKey": "approved_cec_award_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "total_allowable_project_cost_cents",
+            "canonicalInputKey": "total_allowable_project_cost_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "requested_cec_reimbursable_share_cents",
+            "canonicalInputKey": "requested_cec_reimbursable_share_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_share_cents",
+            "canonicalInputKey": "match_share_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cash_match_share_cents",
+            "canonicalInputKey": "cash_match_share_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "station_count",
+            "canonicalInputKey": "station_count",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "each_station_ccs_port_count",
+            "canonicalInputKey": "each_station_ccs_port_count",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "each_ccs_port_power_kw",
+            "canonicalInputKey": "each_ccs_port_power_kw",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_type",
+            "canonicalInputKey": "applicant_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nevi_6_afc_site_eligibility",
+            "canonicalInputKey": "nevi_6_afc_site_eligibility",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "site_control_documentation_status",
+            "canonicalInputKey": "site_control_documentation_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "agreement_executed",
+            "canonicalInputKey": "agreement_executed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_notice_to_proceed_or_reimbursable_authorization",
+            "canonicalInputKey": "cec_notice_to_proceed_or_reimbursable_authorization",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cost_per_ccs_port_cents",
+            "canonicalInputKey": "cost_per_ccs_port_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "northgate-market-anaheim",
+        "sampleName": "northgate-market-anaheim",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
+        "programName": "GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO)",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_a7ff5e3c336c4dd5",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_029_northgate-market-anaheim.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
+          {
+            "inputKey": "requested_grant_amount_cents",
+            "canonicalInputKey": "requested_grant_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_amount_cents",
+            "canonicalInputKey": "match_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "hydrogen_station_scope",
+            "canonicalInputKey": "hydrogen_station_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_score_or_award_probability",
+            "canonicalInputKey": "application_score_or_award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "station_type",
+            "canonicalInputKey": "station_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_score_or_award_decision",
+            "canonicalInputKey": "application_score_or_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "total_allowable_project_cost_cents",
+            "canonicalInputKey": "total_allowable_project_cost_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_cec_reimbursable_cost_cents",
+            "canonicalInputKey": "eligible_cec_reimbursable_cost_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "match_share_cents",
+            "canonicalInputKey": "match_share_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "station_scope_rows",
+            "canonicalInputKey": "station_scope_rows",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_submitted_by_deadline",
+            "canonicalInputKey": "application_submitted_by_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_eligibility_status",
+            "canonicalInputKey": "applicant_eligibility_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_eligibility_status",
+            "canonicalInputKey": "project_eligibility_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_award_status",
+            "canonicalInputKey": "cec_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "cec_approved_award_cents",
+            "canonicalInputKey": "cec_approved_award_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "northgate-market-anaheim",
+        "sampleName": "northgate-market-anaheim",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
+        "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "source_or_package_blocked",
+        "calculationStatus": "no_calculable_value",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [
+          {
+            "inputKey": "award_probability",
+            "effectId": "effect_grant_expected_value_1_9badcea914d6d42f",
+            "label": "award_probability"
+          }
+        ],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_029_northgate-market-anaheim.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
+          {
+            "inputKey": "funding_lane",
+            "canonicalInputKey": "funding_lane",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_and_type_of_charging_ports",
+            "canonicalInputKey": "number_and_type_of_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "electric_school_bus_deployment_details",
+            "canonicalInputKey": "electric_school_bus_deployment_details",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lea_or_transportation_provider_pathway",
+            "canonicalInputKey": "lea_or_transportation_provider_pathway",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "first_come_status_or_application_score",
+            "canonicalInputKey": "first_come_status_or_application_score",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability",
+            "canonicalInputKey": "award_probability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_l2_ports",
+            "canonicalInputKey": "number_of_l2_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc",
+            "canonicalInputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lane_specific_cap",
+            "canonicalInputKey": "lane_specific_cap",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "first_come_status_or_award_decision",
+            "canonicalInputKey": "first_come_status_or_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_type",
+            "canonicalInputKey": "applicant_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "applicant_or_lea_name",
+            "canonicalInputKey": "applicant_or_lea_name",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_l2_charging_ports",
+            "canonicalInputKey": "number_of_l2_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc_chargers",
+            "canonicalInputKey": "number_of_dual_port_dcfc_or_bidirectional_dcfc_chargers",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "demonstrated_electric_school_bus_need_count",
+            "canonicalInputKey": "demonstrated_electric_school_bus_need_count",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "lane_1_maximum_charging_ports_from_table_4",
+            "canonicalInputKey": "lane_1_maximum_charging_ports_from_table_4",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "serves_more_than_one_lea",
+            "canonicalInputKey": "serves_more_than_one_lea",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_or_award_status",
+            "canonicalInputKey": "application_or_award_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_award_amount_cents",
+            "canonicalInputKey": "approved_award_amount_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "remaining_lane_funds_or_queue_status",
+            "canonicalInputKey": "remaining_lane_funds_or_queue_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "award_probability_discount",
+            "canonicalInputKey": "award_probability_discount",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "number_of_dcfc_or_bidirectional_dcfc_charging_ports",
+            "canonicalInputKey": "number_of_dcfc_or_bidirectional_dcfc_charging_ports",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,

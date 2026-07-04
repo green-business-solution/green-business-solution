@@ -1,12 +1,12 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-04T02:19:06.877Z
+Generated: 2026-07-04T02:28:50.835Z
 
 ## Summary
 
 - Test cases: 51
-- Retrofit previews: 906
-- Matched v2 package evaluations: 570
+- Retrofit previews: 890
+- Matched v2 package evaluations: 531
 - Runtime-included packages: 310
 - Computed but suppressed packages: 20
 - Missing evidence/input packages: 0
@@ -21,7 +21,6 @@ Generated: 2026-07-04T02:19:06.877Z
 | included | 310 |
 | no_calculable_value | 72 |
 | not_user_facing_default | 56 |
-| source_inaccessible_repair_failure | 39 |
 | human_review_required | 22 |
 | low_confidence | 20 |
 | custom_quote_estimate | 19 |
@@ -34,7 +33,7 @@ Generated: 2026-07-04T02:19:06.877Z
 | Status | Count |
 | --- | --- |
 | calculated_and_included | 310 |
-| source_or_package_blocked | 130 |
+| source_or_package_blocked | 91 |
 | suppressed_without_amount | 78 |
 | computed_but_suppressed | 20 |
 | calculated_zero_or_no_supported_amount | 16 |

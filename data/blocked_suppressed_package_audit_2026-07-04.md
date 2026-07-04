@@ -1,12 +1,12 @@
 # Blocked And Suppressed Package Audit
 
-Generated: 2026-07-04T02:19:01.902Z
+Generated: 2026-07-04T02:28:43.395Z
 
 ## Summary
 
-- Blocked/suppressed package evaluations: 208
-- Unique package targets: 39
-- High-priority targets: 3
+- Blocked/suppressed package evaluations: 169
+- Unique package targets: 36
+- High-priority targets: 0
 - Targets needing GPT Pro/source repair: 0
 
 ## Recommendation Counts
@@ -16,7 +16,6 @@ Generated: 2026-07-04T02:19:01.902Z
 | keep_suppressed_ev_or_probability_gap | 15 |
 | needs_quote_or_custom_calculation_workflow | 8 |
 | needs_recurring_or_tariff_workflow | 7 |
-| archive_or_exclude_source_inaccessible | 3 |
 | intentional_non_cash_or_process_workflow | 2 |
 | keep_review_gated_tax_workflow | 2 |
 | needs_runtime_verification_or_document_upload | 2 |
@@ -27,7 +26,6 @@ Generated: 2026-07-04T02:19:01.902Z
 | --- | --- |
 | no_calculable_value | 72 |
 | not_user_facing_default | 50 |
-| source_inaccessible_repair_failure | 39 |
 | custom_quote_estimate | 19 |
 | low_confidence | 16 |
 | human_review_required | 12 |
@@ -36,16 +34,8 @@ Generated: 2026-07-04T02:19:01.902Z
 
 | Key | Count |
 | --- | --- |
-| source_or_package_blocked | 130 |
+| source_or_package_blocked | 91 |
 | suppressed_without_amount | 78 |
-
-## Archive Or Exclude Source Inaccessible
-
-| Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
-| --- | --- | --- | --- | --- | --- | --- |
-| Duke Energy - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3466) | 5 | source_inaccessible_repair_failure: 5 | no_cash_value | unknown | museum-life-science-durham | Archive or exclude from product-visible estimates unless a new accessible official source appears. This matches the current policy for repeated source-inaccessible repair failures. |
-| Duke Energy Carolinas - Non-Residential Energy Efficiency Rebate Program (SOURCE_DSIRE:dsire_program_id:3606) | 6 | source_inaccessible_repair_failure: 6 | one_time_savings | rebate | bmw-spartanburg-plant | Archive or exclude from product-visible estimates unless a new accessible official source appears. This matches the current policy for repeated source-inaccessible repair failures. |
-| Plumas-Sierra REC - Commercial and Irrigation Rebate Program (SOURCE_DSIRE:dsire_program_id:22067) | 28 | source_inaccessible_repair_failure: 28 | one_time_savings | rebate | california-endowment-hq, ikea-burbank, juniper-and-ivy-san-diego | Archive or exclude from product-visible estimates unless a new accessible official source appears. This matches the current policy for repeated source-inaccessible repair failures. |
 
 ## Needs Quote Or Custom Calculation Workflow
 
