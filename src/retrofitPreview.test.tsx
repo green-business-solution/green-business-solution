@@ -5,6 +5,7 @@ import {
   CUSTOMER_RETROFIT_UI_NAMES,
   areBillsCompleteForRetrofit,
   areRetrofitQuestionsComplete,
+  buildSeededRetrofitDetailAnswers,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
@@ -17,6 +18,7 @@ import {
   getBillUploadStepSummary,
   getDefaultBillUploadState,
   getBillUploadStorageKey,
+  getRetrofitFormQuestions,
   getRequiredBillTypesForRetrofit,
   getRetrofitReadiness,
   getOpportunityIncludedLabel,
@@ -664,6 +666,7 @@ describe("retrofit recommendations preview", () => {
       id: "solar_rooftop_ready",
       name: "Solar Rooftop",
       detailQuestions: [],
+      opportunities: [],
       metrics: {
         ...retrofit.metrics,
         estimatedUpfrontProjectCost: 100000,
@@ -710,6 +713,19 @@ describe("retrofit recommendations preview", () => {
       ])
     );
     expect(comparison).toBeLessThan(0);
+  });
+
+  it("seeds admin test-case form answers from intake details", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const retrofit = preview.retrofits[0];
+    const formQuestions = getRetrofitFormQuestions(retrofit);
+    const seededAnswers = buildSeededRetrofitDetailAnswers(preview.retrofits, liveShapedPayload.intake as any);
+
+    expect(formQuestions.length).toBeGreaterThan(retrofit.detailQuestions.length);
+    expect(formQuestions.map((question) => question.question)).toContain("Confirm project quote.");
+    expect(seededAnswers[`${retrofit.id}:tax-inclusive-costs`]).toContain("Estimate");
+    expect(areRetrofitQuestionsComplete(retrofit, seededAnswers)).toBe(true);
+    expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
 
   it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
@@ -828,6 +844,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).not.toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
+    expect(source).toContain("Hide form details");
+    expect(source).toContain("Form details hidden");
+    expect(source).toContain("enableSeededFormDetails={true}");
     expect(source).toContain("/api/admin/fake-client-options");
     expect(source).toContain("/api/admin/client-retrofit-preview/");
     expect(source).toContain("summaryEndpoint");
@@ -846,6 +865,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("onShowAllRetrofits={() =>");
     expect(source).toContain("if (activeRetrofitId) {");
     expect(source).toContain("onShowAllRetrofits();");
+    expect(source).toContain("function RetrofitDetailFormModal(");
+    expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
+    expect(source).toContain("if (!readiness.questionsComplete)");
+    expect(source).toContain("buildSeededRetrofitDetailAnswers(preview.retrofits");
+    expect(source).toContain("getRetrofitFormQuestions(retrofit)");
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
     expect(source).toContain("Dashboard");
@@ -1121,8 +1145,13 @@ describe("retrofit recommendations preview", () => {
     expect(css).not.toContain("border-top: 1px solid var(--rf-border);\n  margin-top: 4px;\n  padding-top: 0;");
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");
+    expect(css).toContain(".user-preview-form-toggle:hover");
+    expect(css).toContain(".user-preview-form-toggle.is-active");
     expect(css).toContain(".user-preview-toolbar.is-customer-preview");
     expect(css).toContain(".customer-preview-strip");
+    expect(css).toContain(".retrofit-form-backdrop");
+    expect(css).toContain(".retrofit-form-modal");
+    expect(css).toContain(".retrofit-form-question-list");
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .workspace-tab:hover");
     expect(css).toContain(".retrofit-preview-page .command-summary-card:hover");

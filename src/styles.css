@@ -904,7 +904,9 @@ textarea {
 
 .user-preview-admin-toggle,
 .user-preview-admin-controls-button,
+.user-preview-bill-toggle,
 .user-preview-customer-mode-button,
+.user-preview-form-toggle,
 .customer-preview-strip .secondary-button {
   background: #ffffff;
   border: 1px solid #dce5df;
@@ -914,11 +916,19 @@ textarea {
 
 .user-preview-admin-toggle:hover,
 .user-preview-admin-controls-button:hover,
+.user-preview-bill-toggle:hover,
 .user-preview-customer-mode-button:hover,
+.user-preview-form-toggle:hover,
 .customer-preview-strip .secondary-button:hover {
   background: #f3faf6;
   border-color: #bbdccb;
   color: #071b12;
+}
+
+.user-preview-bill-toggle.is-active,
+.user-preview-form-toggle.is-active {
+  border-color: #0f6f49;
+  box-shadow: 0 0 0 2px rgba(15, 111, 73, 0.12);
 }
 
 .user-preview-admin-controls-button span {
@@ -3382,6 +3392,161 @@ dd {
   background: #0d6c46;
 }
 
+.retrofit-form-backdrop {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(3px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 136;
+}
+
+.retrofit-form-modal {
+  background: #ffffff;
+  border: 1px solid rgba(191, 201, 195, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  box-sizing: border-box;
+  color: #07140f;
+  display: grid;
+  gap: 16px;
+  max-height: min(86vh, 820px);
+  overflow: hidden;
+  padding: 24px;
+  position: relative;
+  width: min(760px, calc(100vw - 40px));
+}
+
+.retrofit-form-close-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: #55615b;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 18px;
+  top: 16px;
+  width: 34px;
+}
+
+.retrofit-form-close-button:hover,
+.retrofit-form-close-button:focus-visible {
+  background: #f3faf6;
+  color: #07140f;
+  outline: none;
+}
+
+.retrofit-form-header {
+  display: grid;
+  gap: 10px;
+  padding-right: 44px;
+}
+
+.retrofit-form-header h2,
+.retrofit-form-header p {
+  margin: 0;
+}
+
+.retrofit-form-header h2 {
+  color: #07140f;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+.retrofit-form-header p {
+  color: #5f6e65;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.retrofit-form-question-list {
+  display: grid;
+  gap: 12px;
+  max-height: min(56vh, 520px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.retrofit-form-question {
+  background: #fbfdfb;
+  border: 1px solid #dfe8e3;
+  border-radius: 12px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.retrofit-form-question span:first-child {
+  color: #14221b;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.retrofit-form-question small {
+  color: #617168;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.retrofit-form-question input,
+.retrofit-form-question select {
+  background: #ffffff;
+  border: 1px solid #d6e0da;
+  border-radius: 10px;
+  color: #14211b;
+  font: inherit;
+  min-height: 42px;
+  padding: 9px 10px;
+  width: 100%;
+}
+
+.retrofit-form-question input:focus,
+.retrofit-form-question select:focus {
+  border-color: #0f7a4f;
+  box-shadow: 0 0 0 3px rgba(15, 122, 79, 0.12);
+  outline: none;
+}
+
+.retrofit-form-affects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.retrofit-form-affects em {
+  background: #eef7f1;
+  border: 1px solid #d7e9dd;
+  border-radius: 999px;
+  color: #315242;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 750;
+  line-height: 16px;
+  padding: 3px 8px;
+}
+
+.retrofit-form-footer {
+  align-items: center;
+  border-top: 1px solid #e5ece7;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 14px;
+}
+
+.retrofit-form-footer .primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 @media (max-width: 1100px) {
   .process-onboarding-backdrop .process-note {
     white-space: normal;
@@ -3398,6 +3563,27 @@ dd {
     border-radius: 18px;
     padding: clamp(30px, 6vh, 44px) clamp(24px, 7vw, 36px) clamp(24px, 5vh, 34px);
     width: min(100%, calc(100vw - 32px));
+  }
+
+  .retrofit-form-backdrop {
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .retrofit-form-modal {
+    max-height: calc(100vh - 32px);
+    padding: 20px;
+    width: 100%;
+  }
+
+  .retrofit-form-header h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .retrofit-form-footer {
+    align-items: stretch;
+    flex-direction: column-reverse;
   }
 
   .process-onboarding-modal {

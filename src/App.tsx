@@ -5437,7 +5437,9 @@ function CustomerRetrofitEstimatesPanel({
   onPayloadLoaded,
   summaryEndpoint,
   title,
-  hideBillData = false
+  hideBillData = false,
+  hideFormDetails = true,
+  enableSeededFormDetails = false
 }: {
   credential: AuthCredential | null;
   emptyMessage: string;
@@ -5450,6 +5452,8 @@ function CustomerRetrofitEstimatesPanel({
   summaryEndpoint?: string;
   title: string;
   hideBillData?: boolean;
+  hideFormDetails?: boolean;
+  enableSeededFormDetails?: boolean;
 }) {
   const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(initialPayload);
   const [isLoading, setIsLoading] = useState(!initialPayload);
@@ -5544,6 +5548,8 @@ function CustomerRetrofitEstimatesPanel({
         isLoading={isLoading}
         loadingMessage={loadingMessage}
         hideBillData={hideBillData}
+        hideFormDetails={hideFormDetails}
+        enableSeededFormDetails={enableSeededFormDetails}
         payload={payload}
         title={title}
       />
@@ -6153,11 +6159,138 @@ export function areRetrofitQuestionsComplete(
   retrofit: Pick<RetrofitPreviewCard, "detailQuestions">,
   detailAnswers: Record<string, string>
 ) {
-  if (retrofit.detailQuestions.length === 0) return true;
-  return retrofit.detailQuestions.every((question) => {
+  const questions = getRetrofitFormQuestions(retrofit);
+  if (questions.length === 0) return true;
+  return questions.every((question) => {
     const answer = detailAnswers[question.id];
     return typeof answer === "string" ? answer.trim().length > 0 : false;
   });
+}
+
+export function getRetrofitFormQuestions(
+  retrofit: Pick<RetrofitPreviewCard, "detailQuestions"> & Partial<Pick<RetrofitPreviewCard, "id" | "name" | "opportunities">>
+): RetrofitDetailQuestion[] {
+  const questions = [...retrofit.detailQuestions];
+  const existingQuestionIds = new Set(questions.map((question) => question.id));
+  const existingPrompts = new Set(questions.map((question) => question.question.trim().toLowerCase()));
+  const opportunityInfoItems = [...new Set((retrofit.opportunities || []).flatMap((opportunity) => opportunity.requiredInfo || []))]
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .slice(0, 6);
+
+  for (const item of opportunityInfoItems) {
+    const normalizedPrompt = `Confirm ${item}.`.toLowerCase();
+    if (existingPrompts.has(normalizedPrompt)) continue;
+    const questionId = `${retrofit.id || "retrofit"}:opportunity:${slugify(item)}`;
+    if (existingQuestionIds.has(questionId)) continue;
+    questions.push({
+      id: questionId,
+      retrofitId: retrofit.id || "retrofit",
+      question: `Confirm ${item}.`,
+      answerType: "text",
+      whyItMatters: "Some programs need this information before incentive value and eligibility can be finalized.",
+      affects: ["Opportunity eligibility", "Application overview"]
+    });
+    existingQuestionIds.add(questionId);
+    existingPrompts.add(normalizedPrompt);
+  }
+
+  return questions;
+}
+
+function firstAvailableFormValue(...values: Array<string | number | boolean | null | undefined>) {
+  for (const value of values) {
+    if (value == null) continue;
+    const stringValue = String(value).trim();
+    if (stringValue.length > 0) return stringValue;
+  }
+  return "";
+}
+
+function annualUtilityCostForCategory(intake: IntakeRecord | null | undefined, category: UtilityCategory) {
+  const summary = intake?.siteEnergyProfile?.utilitySummaries.find((item) => item.utilityCategory === category);
+  if (summary?.annualCost != null) return String(summary.annualCost);
+  return "";
+}
+
+function monthlyUtilityCostForCategory(intake: IntakeRecord | null | undefined, category: UtilityCategory) {
+  const annualCost = Number(annualUtilityCostForCategory(intake, category));
+  if (Number.isFinite(annualCost) && annualCost > 0) return String(Math.round(annualCost / 12));
+  return "";
+}
+
+function seededSelectAnswer(question: RetrofitDetailQuestion, intake: IntakeRecord | null | undefined) {
+  const options = question.options || [];
+  const lowerQuestion = question.question.toLowerCase();
+  const findOption = (needle: string) => options.find((option) => option.toLowerCase().includes(needle));
+  if (lowerQuestion.includes("tax included")) return findOption("estimate") || options[0] || "";
+  if (lowerQuestion.includes("quote")) return findOption("in progress") || findOption("yes") || options[0] || "";
+  if (lowerQuestion.includes("fuel type")) {
+    const hasGas = Boolean(intake?.site?.gasUtilityProvider);
+    const hasElectric = Boolean(intake?.site?.electricUtilityProvider);
+    if (hasGas && hasElectric) return findOption("mixed") || findOption("gas") || options[0] || "";
+    if (hasGas) return findOption("gas") || options[0] || "";
+    return findOption("electric") || options[0] || "";
+  }
+  if (lowerQuestion.includes("roof") && lowerQuestion.includes("control")) {
+    const ownership = intake?.site?.ownershipStatus?.toLowerCase() || "";
+    if (ownership.includes("own")) return findOption("yes") || options[0] || "";
+    if (ownership.includes("lease")) return findOption("shared") || findOption("unknown") || options[0] || "";
+  }
+  if (lowerQuestion.includes("lighting") || lowerQuestion.includes("controls") || lowerQuestion.includes("panel") || lowerQuestion.includes("permit")) {
+    return findOption("not sure") || findOption("unknown") || options[0] || "";
+  }
+  return options[0] || "";
+}
+
+function seededNumberAnswer(question: RetrofitDetailQuestion, intake: IntakeRecord | null | undefined) {
+  const lowerQuestion = question.question.toLowerCase();
+  if (lowerQuestion.includes("annual kwh")) return firstAvailableFormValue(intake?.siteEnergyProfile?.annualKwh, "0");
+  if (lowerQuestion.includes("water bill")) return firstAvailableFormValue(monthlyUtilityCostForCategory(intake, "water_sewer"), intake?.sustainability.monthlyUtilitySpend, "0");
+  if (lowerQuestion.includes("area") || lowerQuestion.includes("square")) return firstAvailableFormValue(intake?.site?.squareFootage, "0");
+  if (lowerQuestion.includes("hours")) return "8";
+  if (lowerQuestion.includes("age")) return "10";
+  if (lowerQuestion.includes("charger")) return firstAvailableFormValue(intake?.site?.numberOfUnits, "1");
+  if (lowerQuestion.includes("fixture") || lowerQuestion.includes("bulb") || lowerQuestion.includes("unit") || lowerQuestion.includes("count") || lowerQuestion.includes("many")) {
+    return firstAvailableFormValue(intake?.site?.numberOfUnits, "1");
+  }
+  if (lowerQuestion.includes("system size")) return "0";
+  return "1";
+}
+
+function seededTextAnswer(question: RetrofitDetailQuestion, intake: IntakeRecord | null | undefined) {
+  const lowerQuestion = question.question.toLowerCase();
+  if (lowerQuestion.includes("system") && lowerQuestion.includes("currently")) return firstAvailableFormValue(intake?.site?.buildingType, "Provided in profile");
+  if (lowerQuestion.includes("area") || lowerQuestion.includes("scope")) return firstAvailableFormValue(intake?.site?.squareFootage, "Provided in profile");
+  if (lowerQuestion.includes("fuel") || lowerQuestion.includes("baseline")) {
+    return firstAvailableFormValue(intake?.site?.gasUtilityProvider ? "Gas utility present" : "Electric utility present", intake?.site?.electricUtilityProvider);
+  }
+  if (lowerQuestion.includes("utility territory")) return firstAvailableFormValue(intake?.site?.electricUtilityProvider, intake?.site?.gasUtilityProvider, intake?.business.headquarters);
+  if (lowerQuestion.includes("tax") || lowerQuestion.includes("entity")) return firstAvailableFormValue(intake?.business.organizationType, "Provided in profile");
+  if (lowerQuestion.includes("usage")) return firstAvailableFormValue(intake?.siteEnergyProfile?.annualKwh, annualUtilityCostForCategory(intake, "electric"), "Provided in profile");
+  if (lowerQuestion.includes("water")) return firstAvailableFormValue(monthlyUtilityCostForCategory(intake, "water_sewer"), intake?.sustainability.monthlyUtilitySpend, "Provided in profile");
+  if (lowerQuestion.includes("current") || lowerQuestion.includes("installed")) return firstAvailableFormValue(intake?.sustainability.currentChallenges, intake?.site?.buildingType, "Provided in profile");
+  return firstAvailableFormValue(question.answer, intake?.sustainability.notes, intake?.sustainability.goals, "Provided in profile");
+}
+
+export function buildSeededRetrofitDetailAnswers(retrofits: RetrofitPreviewCard[], intake: IntakeRecord | null | undefined) {
+  const answers: Record<string, string> = {};
+  for (const retrofit of retrofits) {
+    for (const question of getRetrofitFormQuestions(retrofit)) {
+      if (question.answer != null) {
+        answers[question.id] = String(question.answer);
+      } else if (question.answerType === "select") {
+        answers[question.id] = seededSelectAnswer(question, intake);
+      } else if (question.answerType === "number") {
+        answers[question.id] = seededNumberAnswer(question, intake);
+      } else if (question.answerType === "boolean") {
+        answers[question.id] = "Yes";
+      } else {
+        answers[question.id] = seededTextAnswer(question, intake);
+      }
+    }
+  }
+  return answers;
 }
 
 export function isEstimateCompleteForRetrofit(retrofit: RetrofitPreviewCard) {
@@ -7263,7 +7396,9 @@ export function RetrofitRecommendationsPreview({
   intro,
   isLoading,
   loadingMessage,
+  enableSeededFormDetails = false,
   hideBillData = false,
+  hideFormDetails = true,
   payload,
   title
 }: {
@@ -7274,7 +7409,9 @@ export function RetrofitRecommendationsPreview({
   intro: string;
   isLoading: boolean;
   loadingMessage: string;
+  enableSeededFormDetails?: boolean;
   hideBillData?: boolean;
+  hideFormDetails?: boolean;
   payload: PortalRetrofitRecommendationsResponse | null;
   title: string;
 }) {
@@ -7317,6 +7454,7 @@ export function RetrofitRecommendationsPreview({
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
   const [detailAnswers, setDetailAnswers] = useState<Record<string, string>>({});
+  const [activeFormRetrofitId, setActiveFormRetrofitId] = useState<string | null>(null);
   const [nextActionStatuses, setNextActionStatuses] = useState<Record<string, NextBestAction["status"]>>({});
   const [financingRetrofit, setFinancingRetrofit] = useState<RetrofitPreviewCard | null>(null);
   const [refinementMessage, setRefinementMessage] = useState<string | null>(null);
@@ -7334,6 +7472,17 @@ export function RetrofitRecommendationsPreview({
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [instructionsOpenedFromNav, setInstructionsOpenedFromNav] = useState(false);
   const [instructionsPulse, setInstructionsPulse] = useState(false);
+  const seededDetailAnswers = useMemo(
+    () => (enableSeededFormDetails && !hideFormDetails ? buildSeededRetrofitDetailAnswers(preview.retrofits, payload?.intake || null) : {}),
+    [enableSeededFormDetails, hideFormDetails, payload?.intake, preview.retrofits]
+  );
+  const effectiveDetailAnswers = useMemo(
+    () => ({
+      ...seededDetailAnswers,
+      ...detailAnswers
+    }),
+    [detailAnswers, seededDetailAnswers]
+  );
 
   useEffect(() => {
     setSelectedOpportunityIds(initialSelectedOpportunityIds);
@@ -7350,6 +7499,8 @@ export function RetrofitRecommendationsPreview({
     setPickerVisibleCount(6);
     setActiveRetrofitInitialWorkspaceTab("overview");
     setBillUploadFocusStepId(null);
+    setActiveFormRetrofitId(null);
+    setDetailAnswers({});
   }, [preview.intakeId, preview.profileId]);
 
   useEffect(() => {
@@ -7379,10 +7530,10 @@ export function RetrofitRecommendationsPreview({
   const retrofitReadinessById = useMemo(() => {
     const readinessById = new Map<string, RetrofitReadiness>();
     for (const retrofit of preview.retrofits) {
-      readinessById.set(retrofit.id, getRetrofitReadiness(retrofit, effectiveBillUploadState, detailAnswers));
+      readinessById.set(retrofit.id, getRetrofitReadiness(retrofit, effectiveBillUploadState, effectiveDetailAnswers));
     }
     return readinessById;
-  }, [detailAnswers, effectiveBillUploadState, preview.retrofits]);
+  }, [effectiveBillUploadState, effectiveDetailAnswers, preview.retrofits]);
 
   const displayedRetrofits = useMemo(() => {
     return preview.retrofits
@@ -7404,6 +7555,9 @@ export function RetrofitRecommendationsPreview({
 
   const activeRetrofit = activeRetrofitId
     ? displayedRetrofits.find((retrofit) => retrofit.id === activeRetrofitId) || null
+    : null;
+  const activeFormRetrofit = activeFormRetrofitId
+    ? preview.retrofits.find((retrofit) => retrofit.id === activeFormRetrofitId) || null
     : null;
   const topRecommendationStatus = topRetrofit
     ? topRetrofit.metrics.effectiveCostAfterOneTimeBenefits != null
@@ -7557,14 +7711,7 @@ export function RetrofitRecommendationsPreview({
     setDirtyRetrofitIds((current) => ({ ...current, [retrofit.id]: false }));
   }
 
-  function handleRetrofitTabClick(retrofitId: string) {
-    const retrofit = preview.retrofits.find((item) => item.id === retrofitId);
-    if (!retrofit) return;
-    const readiness = retrofitReadinessById.get(retrofit.id) || getRetrofitReadiness(retrofit, effectiveBillUploadState, detailAnswers);
-    if (!readiness.billsComplete) {
-      handleUploadBillsForRetrofit(retrofit);
-      return;
-    }
+  function openRetrofitWorkspace(retrofitId: string) {
     setActiveRetrofitInitialWorkspaceTab("overview");
     if (retrofitId === activeRetrofitId) return;
     if (activeRetrofit && dirtyRetrofitIds[activeRetrofit.id] && !addedRetrofitPlans[activeRetrofit.id]) {
@@ -7572,6 +7719,32 @@ export function RetrofitRecommendationsPreview({
       return;
     }
     setActiveRetrofitId(retrofitId);
+  }
+
+  function handleRetrofitTabClick(retrofitId: string) {
+    const retrofit = preview.retrofits.find((item) => item.id === retrofitId);
+    if (!retrofit) return;
+    const readiness = retrofitReadinessById.get(retrofit.id) || getRetrofitReadiness(retrofit, effectiveBillUploadState, effectiveDetailAnswers);
+    if (!readiness.billsComplete) {
+      handleUploadBillsForRetrofit(retrofit);
+      return;
+    }
+    if (!readiness.questionsComplete) {
+      setActiveFormRetrofitId(retrofit.id);
+      setRefinementMessage(`Answer project details to unlock ${retrofit.name}.`);
+      return;
+    }
+    openRetrofitWorkspace(retrofitId);
+  }
+
+  function handleRetrofitFormSubmit(retrofit: RetrofitPreviewCard, answers: Record<string, string>) {
+    setDetailAnswers((current) => ({
+      ...current,
+      ...answers
+    }));
+    setActiveFormRetrofitId(null);
+    setRefinementMessage(`${retrofit.name} project details saved.`);
+    openRetrofitWorkspace(retrofit.id);
   }
 
   function discardActiveDraftAndSwitch() {
@@ -7742,6 +7915,14 @@ export function RetrofitRecommendationsPreview({
         onStateChange={setBillUploadState}
         storageKey={billUploadStorageKey}
       />
+      {activeFormRetrofit ? (
+        <RetrofitDetailFormModal
+          initialAnswers={effectiveDetailAnswers}
+          onClose={() => setActiveFormRetrofitId(null)}
+          onSubmit={(answers) => handleRetrofitFormSubmit(activeFormRetrofit, answers)}
+          retrofit={activeFormRetrofit}
+        />
+      ) : null}
       {showInstructionsModal ? (
         <ProcessOnboardingModal
           animateText={!instructionsOpenedFromNav}
@@ -8295,6 +8476,126 @@ function RetrofitPickerView({
         </section>
       )}
     </section>
+  );
+}
+
+function RetrofitDetailFormModal({
+  initialAnswers,
+  onClose,
+  onSubmit,
+  retrofit
+}: {
+  initialAnswers: Record<string, string>;
+  onClose: () => void;
+  onSubmit: (answers: Record<string, string>) => void;
+  retrofit: RetrofitPreviewCard;
+}) {
+  const questions = useMemo(() => getRetrofitFormQuestions(retrofit), [retrofit]);
+  const [answers, setAnswers] = useState<Record<string, string>>(() =>
+    Object.fromEntries(questions.map((question) => [question.id, initialAnswers[question.id] || ""]))
+  );
+
+  useEffect(() => {
+    setAnswers(Object.fromEntries(questions.map((question) => [question.id, initialAnswers[question.id] || ""])));
+  }, [initialAnswers, questions]);
+
+  const answeredCount = questions.filter((question) => (answers[question.id] || "").trim().length > 0).length;
+  const canSubmit = questions.length === 0 || answeredCount === questions.length;
+
+  function handleAnswerChange(questionId: string, value: string) {
+    setAnswers((current) => ({
+      ...current,
+      [questionId]: value
+    }));
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!canSubmit) return;
+    onSubmit(answers);
+  }
+
+  function renderQuestionInput(question: RetrofitDetailQuestion) {
+    const value = answers[question.id] || "";
+    if (question.answerType === "select") {
+      return (
+        <select
+          onChange={(event) => handleAnswerChange(question.id, event.target.value)}
+          required
+          value={value}
+        >
+          <option value="">Select</option>
+          {(question.options || []).map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      );
+    }
+    if (question.answerType === "boolean") {
+      return (
+        <select
+          onChange={(event) => handleAnswerChange(question.id, event.target.value)}
+          required
+          value={value}
+        >
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      );
+    }
+    return (
+      <input
+        inputMode={question.answerType === "number" ? "decimal" : undefined}
+        onChange={(event) => handleAnswerChange(question.id, event.target.value)}
+        required
+        type={question.answerType === "number" ? "number" : "text"}
+        value={value}
+      />
+    );
+  }
+
+  return (
+    <div className="retrofit-form-backdrop" role="presentation">
+      <form aria-label={`${retrofit.name} project details`} className="retrofit-form-modal" onSubmit={handleSubmit}>
+        <button aria-label="Close project details form" className="retrofit-form-close-button" onClick={onClose} type="button">
+          x
+        </button>
+        <header className="retrofit-form-header">
+          <span className="soft-badge">Project details</span>
+          <div>
+            <h2>{retrofit.name}</h2>
+            <p>{answeredCount} of {questions.length} answered</p>
+          </div>
+        </header>
+        <div className="retrofit-form-question-list">
+          {questions.map((question) => (
+            <label className="retrofit-form-question" key={question.id}>
+              <span>{question.question}</span>
+              {question.whyItMatters ? <small>{question.whyItMatters}</small> : null}
+              {renderQuestionInput(question)}
+              {question.affects?.length ? (
+                <span className="retrofit-form-affects">
+                  {question.affects.map((item) => (
+                    <em key={item}>{item}</em>
+                  ))}
+                </span>
+              ) : null}
+            </label>
+          ))}
+        </div>
+        <footer className="retrofit-form-footer">
+          <button className="secondary-button" onClick={onClose} type="button">
+            Back
+          </button>
+          <button className="primary-button" disabled={!canSubmit} type="submit">
+            Save and review retrofit
+          </button>
+        </footer>
+      </form>
+    </div>
   );
 }
 
@@ -11392,6 +11693,7 @@ function AdminUserPreviewStandalonePage({
   const [adminControlsOpen, setAdminControlsOpen] = useState(false);
   const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
   const [hideBillData, setHideBillData] = useState(false);
+  const [hideFormDetails, setHideFormDetails] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
@@ -11537,6 +11839,14 @@ function AdminUserPreviewStandalonePage({
                   {hideBillData ? "Show bill data" : "Hide bill data"}
                 </button>
                 <button
+                  aria-pressed={hideFormDetails}
+                  className={`secondary-button user-preview-form-toggle${hideFormDetails ? " is-active" : ""}`}
+                  onClick={() => setHideFormDetails((current) => !current)}
+                  type="button"
+                >
+                  {hideFormDetails ? "Show form details" : "Hide form details"}
+                </button>
+                <button
                   aria-expanded={adminControlsOpen}
                   className="secondary-button user-preview-admin-controls-button"
                   onClick={() => setAdminControlsOpen((current) => !current)}
@@ -11546,6 +11856,7 @@ function AdminUserPreviewStandalonePage({
                   <span aria-hidden="true">{adminControlsOpen ? "v" : ">"}</span>
                 </button>
                 {hideBillData ? <span className="soft-badge user-preview-admin-badge">Bill data hidden</span> : null}
+                {hideFormDetails ? <span className="soft-badge user-preview-admin-badge">Form details hidden</span> : null}
               </div>
             </div>
             {adminControlsOpen ? (
@@ -11591,6 +11902,8 @@ function AdminUserPreviewStandalonePage({
             onPayloadLoaded={cacheSelectedPayload}
             summaryEndpoint={`/api/admin/client-retrofit-preview/${encodeURIComponent(selectedOption.userId)}`}
             hideBillData={hideBillData}
+            hideFormDetails={hideFormDetails}
+            enableSeededFormDetails={true}
             title="Retrofit Recommendations"
           />
       ) : (

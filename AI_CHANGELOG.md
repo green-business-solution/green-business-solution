@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) retrofit form gate
+
+- Added admin preview controls to hide or show seeded retrofit form details independently from bill data.
+- Added a retrofit project-details form gate before the selected-retrofit workspace when required form answers are missing.
+- Seeded admin test-case form answers from available intake data while keeping seeded details disabled by default outside admin preview.
+
 ## 2026-07-04 - Codex (GPT-5) grant production quality GPT Pro packets
 
 - Added a repeatable GPT Pro work-packet generator for production-quality grant estimation repair.
