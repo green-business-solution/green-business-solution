@@ -715,12 +715,13 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".process-onboarding-modal .process-editor-content");
     expect(css).toContain(".process-onboarding-backdrop .process-editor-title");
     expect(css).toContain("font-size: clamp(38px, 2.6vw, 44px)");
-    expect(css).toContain("margin: 0 0 clamp(56px, 7vh, 68px)");
+    expect(css).toContain("transform: translateY(clamp(-20px, -2vh, -12px))");
+    expect(css).toContain("margin: 0 0 clamp(42px, 5.2vh, 52px)");
     expect(css).toContain(".process-onboarding-backdrop .process-number");
     expect(css).toContain("font-size: clamp(34px, 2.45vw, 42px)");
     expect(css).toContain("font-weight: 500");
     expect(css).toContain(".process-onboarding-backdrop .code-accent");
-    expect(css).toContain("font-size: clamp(20px, 1.55vw, 26px)");
+    expect(css).toContain("font-size: clamp(16px, 1.12vw, 20px)");
     expect(css).toContain("white-space: nowrap");
     expect(css).toContain(".process-onboarding-modal .process-modal-footer");
     expect(css).toContain(".process-onboarding-backdrop .process-next-button");
