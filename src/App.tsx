@@ -6047,13 +6047,23 @@ function normalizeUtilityCategoryToBillUploadStepId(value: UtilityCategory | str
   return null;
 }
 
-function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState: BillUploadState) {
+export function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState: BillUploadState) {
   if (!intake) return baseState;
   const nextState: BillUploadState = {
     ...baseState,
     files: { ...baseState.files },
     statuses: { ...baseState.statuses }
   };
+  intake.uploadedUtilityFiles.forEach((file) => {
+    const stepId = normalizeUtilityCategoryToBillUploadStepId(file.utilityCategory);
+    if (!stepId || nextState.files[stepId]) return;
+    nextState.files[stepId] = {
+      name: file.originalFilename || `${formatUtilityCategory(file.utilityCategory)} bill`,
+      size: 0,
+      type: file.fileType || "unknown",
+      uploadedAt: file.uploadedAt
+    };
+  });
   const uploadedCategories = billUploadStepIdsFromIntake(intake);
   for (const step of BILL_UPLOAD_STEPS) {
     if (uploadedCategories.has(step.id)) {
@@ -6255,6 +6265,10 @@ export function getBillUploadResumeIndex(state: BillUploadState) {
 
 export function getBillUploadStepSummary(state: BillUploadState) {
   return BILL_UPLOAD_STEPS.filter((step) => state.statuses[step.id] === "uploaded");
+}
+
+function getFirstIncompleteBillUploadStepId(state: BillUploadState) {
+  return BILL_UPLOAD_STEPS.find((step) => state.statuses[step.id] !== "uploaded")?.id || null;
 }
 
 export const CUSTOMER_RETROFIT_UI_NAMES: Record<string, string> = {
@@ -7276,6 +7290,8 @@ export function RetrofitRecommendationsPreview({
   );
   const hiddenBillUploadState = useMemo(() => getDefaultBillUploadState(), []);
   const effectiveBillUploadState = hideBillData ? hiddenBillUploadState : intakeHydratedBillUploadState;
+  const uploadedBillStepCount = getBillUploadStepSummary(effectiveBillUploadState).length;
+  const isShowingUploadedBillData = !hideBillData && uploadedBillStepCount > 0;
   const shouldMaskBillDerivedMetrics = hideBillData || (!hasUploadedBills && !effectiveBillUploadState.flowComplete);
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
@@ -7430,9 +7446,13 @@ export function RetrofitRecommendationsPreview({
   }, [activeRetrofitId]);
 
   function handleUploadBills() {
-    setBillUploadFocusStepId("electric");
+    setBillUploadFocusStepId(getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null);
     setBillUploadModalOpen(true);
-    setRefinementMessage("Upload your utility bills to unlock detailed retrofit estimates.");
+    setRefinementMessage(
+      isShowingUploadedBillData
+        ? "Review the utility bill data currently available for retrofit estimates."
+        : "Upload your utility bills to unlock detailed retrofit estimates."
+    );
   }
 
   function handleUploadBillsForRetrofit(retrofit: RetrofitPreviewCard) {
@@ -7676,6 +7696,7 @@ export function RetrofitRecommendationsPreview({
               isLoading={isLoading}
               loadingMessage={loadingMessage}
               hideBillData={shouldMaskBillDerivedMetrics}
+              uploadedBillStepCount={isShowingUploadedBillData ? uploadedBillStepCount : 0}
               retrofitReadinessById={retrofitReadinessById}
               onCloseDetails={() => setActiveRetrofitId("")}
               onSelectRetrofit={handleRetrofitTabClick}
@@ -7710,6 +7731,7 @@ export function RetrofitRecommendationsPreview({
       </main>
 
       <BillUploadModal
+        initialState={effectiveBillUploadState}
         initialStepId={billUploadFocusStepId}
         isOpen={billUploadModalOpen}
         onClose={() => {
@@ -8118,6 +8140,7 @@ function RetrofitPickerView({
   isLoading,
   loadingMessage,
   hideBillData,
+  uploadedBillStepCount,
   retrofitReadinessById,
   onCloseDetails,
   onSelectRetrofit,
@@ -8136,6 +8159,7 @@ function RetrofitPickerView({
   isLoading: boolean;
   loadingMessage: string;
   hideBillData: boolean;
+  uploadedBillStepCount: number;
   retrofitReadinessById: Map<string, RetrofitReadiness>;
   onCloseDetails: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
@@ -8153,6 +8177,11 @@ function RetrofitPickerView({
   const hasMoreRetrofits = displayedRetrofits.length > visibleRetrofits.length;
   const hasCollapsedRetrofits = pickerVisibleCount > collapsedRetrofitCount && displayedRetrofits.length > collapsedRetrofitCount;
   const moreRetrofitsLabel = hasMoreRetrofits ? "Show more retrofits" : hasCollapsedRetrofits ? "Show less retrofits" : "";
+  const hasUploadedBillData = uploadedBillStepCount > 0;
+  const billUploadProgressLabel =
+    uploadedBillStepCount >= BILL_UPLOAD_STEPS.length
+      ? "All utility bill types are available for estimates."
+      : `${uploadedBillStepCount} of ${BILL_UPLOAD_STEPS.length} utility bill types are available for estimates.`;
 
   function handleMoreRetrofitsClick() {
     if (hasMoreRetrofits) {
@@ -8166,15 +8195,15 @@ function RetrofitPickerView({
 
   return (
     <section className="retrofit-picker-shell" aria-label="Available retrofits">
-      <section className="estimate-accuracy-banner">
+      <section className={`estimate-accuracy-banner${hasUploadedBillData ? " has-bill-data" : ""}`}>
         <div className="estimate-accuracy-icon" aria-hidden="true">
-          <UploadCloudIcon />
+          {hasUploadedBillData ? <CheckIcon /> : <UploadCloudIcon />}
         </div>
         <div>
-          <h1>Retrieve your estimates</h1>
-          <p>Upload your electric, water, gas, and waste bills to continue</p>
+          <h1>{hasUploadedBillData ? "Utility bills loaded" : "Retrieve your estimates"}</h1>
+          <p>{hasUploadedBillData ? billUploadProgressLabel : "Upload your electric, water, gas, and waste bills to continue"}</p>
         </div>
-        <button onClick={onUploadBills} type="button">Upload bills</button>
+        <button onClick={onUploadBills} type="button">{hasUploadedBillData ? "Review bills" : "Upload bills"}</button>
       </section>
 
       <section className="retrofit-picker-controls" aria-label="Sort and view controls">
@@ -8270,6 +8299,7 @@ function RetrofitPickerView({
 }
 
 function BillUploadModal({
+  initialState,
   isOpen,
   initialStepId,
   onClose,
@@ -8277,6 +8307,7 @@ function BillUploadModal({
   onStateChange,
   storageKey
 }: {
+  initialState: BillUploadState;
   isOpen: boolean;
   initialStepId?: BillUploadStepId | null;
   onClose: () => void;
@@ -8284,21 +8315,25 @@ function BillUploadModal({
   onStateChange?: (state: BillUploadState) => void;
   storageKey: string;
 }) {
-  const [uploadState, setUploadState] = useState<BillUploadState>(() => loadBillUploadState(storageKey));
+  const [uploadState, setUploadState] = useState<BillUploadState>(() => initialState);
   const [currentStepIndex, setCurrentStepIndex] = useState(() =>
-    initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(loadBillUploadState(storageKey))
+    initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(initialState)
   );
   const [showSkipWarning, setShowSkipWarning] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const modalSeedRef = useRef({ isOpen: false, storageKey });
 
   useEffect(() => {
-    const nextState = loadBillUploadState(storageKey);
-    setUploadState(nextState);
-    setCurrentStepIndex(initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(nextState));
-    setShowSkipWarning(false);
-    setFileError(null);
-  }, [initialStepId, isOpen, storageKey]);
+    const shouldSeedState = isOpen && (!modalSeedRef.current.isOpen || modalSeedRef.current.storageKey !== storageKey);
+    if (shouldSeedState) {
+      setUploadState(initialState);
+      setCurrentStepIndex(initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(initialState));
+      setShowSkipWarning(false);
+      setFileError(null);
+    }
+    modalSeedRef.current = { isOpen, storageKey };
+  }, [initialState, initialStepId, isOpen, storageKey]);
 
   useEffect(() => {
     if (isOpen) {
@@ -8467,8 +8502,8 @@ function BillUploadModal({
         </div>
 
         <div className="bill-upload-header">
-          <h2 id="bill-upload-modal-title">{currentStep.title}</h2>
-          <p>{currentStep.subtitle}</p>
+          <h2 id="bill-upload-modal-title">{currentStepUploaded ? `${currentStep.utilityLabel} bill uploaded` : currentStep.title}</h2>
+          <p>{currentStepUploaded ? "This utility bill data is available for retrofit estimates." : currentStep.subtitle}</p>
         </div>
 
         <div
@@ -8494,10 +8529,10 @@ function BillUploadModal({
             type="file"
           />
           <div className="bill-upload-dropzone-icon" aria-hidden="true">
-            <UploadCloudIcon />
+            {currentStepUploaded ? <CheckIcon /> : <UploadCloudIcon />}
           </div>
-          <strong>Drag and drop your file here</strong>
-          <span>or</span>
+          <strong>{currentStepUploaded ? `${currentStep.utilityLabel} bill data loaded` : "Drag and drop your file here"}</strong>
+          <span>{currentStepUploaded ? "Used in current estimates" : "or"}</span>
           <button
             className="bill-upload-file-button"
             onClick={(event) => {
@@ -8506,9 +8541,9 @@ function BillUploadModal({
             }}
             type="button"
           >
-            Choose file
+            {currentStepUploaded ? "Replace file" : "Choose file"}
           </button>
-          <small>Accepted formats: PDF, PNG, JPG</small>
+          <small>{currentStepUploaded ? "Upload a replacement file to update this bill." : "Accepted formats: PDF, PNG, JPG"}</small>
         </div>
 
         {fileError ? <p className="bill-upload-error" role="alert">{fileError}</p> : null}

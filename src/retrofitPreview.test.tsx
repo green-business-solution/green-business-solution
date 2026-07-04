@@ -14,12 +14,14 @@ import {
   countScenarioSelectedOpportunities,
   customerRetrofitUiName,
   getBillUploadResumeIndex,
+  getBillUploadStepSummary,
   getDefaultBillUploadState,
   getBillUploadStorageKey,
   getRequiredBillTypesForRetrofit,
   getRetrofitReadiness,
   getOpportunityIncludedLabel,
   getScenarioSelectedOpportunityCount,
+  hydrateBillUploadStateFromIntake,
   isSupportedBillUploadFile,
   sanitizeBillUploadState
 } from "./App";
@@ -499,6 +501,151 @@ describe("retrofit recommendations preview", () => {
     expect(hiddenHtml).toContain("Upload bills to estimate savings.");
   });
 
+  it("shows uploaded test-case bills in the picker banner and modal seed state", () => {
+    const uploadedUtilityFiles = [
+      {
+        fileId: "sample-electric",
+        clientIntakeId: "intake-1",
+        siteId: "intake-1:primary",
+        originalFilename: "hoa-mai-electric.pdf",
+        fileType: "utility_pdf",
+        utilityCategory: "electric",
+        utilityProvider: "Sample Electric",
+        s3Key: "synthetic/hoa-mai-electric.pdf",
+        processingStatus: "processed",
+        uploadedAt: "2026-06-01T00:00:00.000Z",
+        processedAt: "2026-06-01T00:00:00.000Z",
+        errorMessage: null
+      },
+      {
+        fileId: "sample-gas",
+        clientIntakeId: "intake-1",
+        siteId: "intake-1:primary",
+        originalFilename: "hoa-mai-gas.pdf",
+        fileType: "utility_pdf",
+        utilityCategory: "gas",
+        utilityProvider: "Sample Gas",
+        s3Key: "synthetic/hoa-mai-gas.pdf",
+        processingStatus: "processed",
+        uploadedAt: "2026-06-01T00:00:00.000Z",
+        processedAt: "2026-06-01T00:00:00.000Z",
+        errorMessage: null
+      },
+      {
+        fileId: "sample-water",
+        clientIntakeId: "intake-1",
+        siteId: "intake-1:primary",
+        originalFilename: "hoa-mai-water.pdf",
+        fileType: "utility_pdf",
+        utilityCategory: "water_sewer",
+        utilityProvider: "Sample Water",
+        s3Key: "synthetic/hoa-mai-water.pdf",
+        processingStatus: "processed",
+        uploadedAt: "2026-06-01T00:00:00.000Z",
+        processedAt: "2026-06-01T00:00:00.000Z",
+        errorMessage: null
+      }
+    ];
+    const payloadWithThreeBills = {
+      ...liveShapedPayload,
+      intake: {
+        ...liveShapedPayload.intake,
+        uploadedUtilityFiles,
+        siteEnergyProfile: {
+          siteId: "intake-1:primary",
+          uploadedFileCount: 3,
+          processedFileCount: 3,
+          availableFieldIds: [],
+          latestUtilityProvider: "Sample Electric",
+          latestBillingPeriodStart: "2025-01-01",
+          latestBillingPeriodEnd: "2025-12-31",
+          annualKwh: null,
+          annualElectricCost: null,
+          averageCostPerKwh: null,
+          monthlySummaries: [],
+          utilitySummaries: [
+            {
+              utilityCategory: "electric",
+              uploadedFileCount: 1,
+              processedFileCount: 1,
+              availableFieldIds: [],
+              latestUtilityProvider: "Sample Electric",
+              latestBillingPeriodStart: "2025-01-01",
+              latestBillingPeriodEnd: "2025-12-31",
+              annualUsage: null,
+              annualCost: null,
+              averageUnitCost: null,
+              usageUnit: null,
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+            },
+            {
+              utilityCategory: "gas",
+              uploadedFileCount: 1,
+              processedFileCount: 1,
+              availableFieldIds: [],
+              latestUtilityProvider: "Sample Gas",
+              latestBillingPeriodStart: "2025-01-01",
+              latestBillingPeriodEnd: "2025-12-31",
+              annualUsage: null,
+              annualCost: null,
+              averageUnitCost: null,
+              usageUnit: null,
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+            },
+            {
+              utilityCategory: "water_sewer",
+              uploadedFileCount: 1,
+              processedFileCount: 1,
+              availableFieldIds: [],
+              latestUtilityProvider: "Sample Water",
+              latestBillingPeriodStart: "2025-01-01",
+              latestBillingPeriodEnd: "2025-12-31",
+              annualUsage: null,
+              annualCost: null,
+              averageUnitCost: null,
+              usageUnit: null,
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+            }
+          ],
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+        }
+      }
+    } as any;
+    const hydratedState = hydrateBillUploadStateFromIntake(payloadWithThreeBills.intake, getDefaultBillUploadState());
+
+    expect(hydratedState.statuses).toEqual({
+      electric: "uploaded",
+      water: "uploaded",
+      gas: "uploaded",
+      waste: "pending"
+    });
+    expect(getBillUploadStepSummary(hydratedState).map((step) => step.id)).toEqual(["electric", "water", "gas"]);
+    expect(getBillUploadResumeIndex(hydratedState)).toBe(3);
+    expect(hydratedState.files.electric?.name).toBe("hoa-mai-electric.pdf");
+
+    const html = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview
+        emptyMessage="No retrofit recommendations yet."
+        error={null}
+        eyebrow="Admin-only portal preview"
+        intro="Review recommended retrofits."
+        isLoading={false}
+        loadingMessage="Loading live retrofit recommendations for this client..."
+        hideBillData={false}
+        payload={payloadWithThreeBills}
+        title="Retrofit Recommendations"
+      />
+    );
+
+    expect(html).toContain("Utility bills loaded");
+    expect(html).toContain("3 of 4 utility bill types are available for estimates.");
+    expect(html).toContain(">Review bills<");
+    expect(html).not.toContain(">Upload bills</button>");
+  });
+
   it("updates local confirmation state helpers", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
     const firstAssumption = preview.retrofits[0].editableAssumptions[0];
@@ -618,11 +765,14 @@ describe("retrofit recommendations preview", () => {
     const instructionsModalIndex = source.indexOf("{showInstructionsModal", previewReturnIndex);
 
     expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
-    expect(uploadHandlerSource).toContain('setBillUploadFocusStepId("electric")');
+    expect(uploadHandlerSource).toContain("setBillUploadFocusStepId(getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null)");
     expect(uploadHandlerSource).not.toContain("scan-energy-data");
     expect(source).toContain("function BillUploadModal(");
+    expect(source).toContain("initialState={effectiveBillUploadState}");
+    expect(source).toContain("useState<BillUploadState>(() => initialState)");
     expect(source).toContain("function handleStepTabClick(index: number)");
     expect(source).toContain("function handleRemoveBillUpload(stepId: BillUploadStepId)");
+    expect(source).toContain("currentStepUploaded ? `${currentStep.utilityLabel} bill uploaded` : currentStep.title");
     expect(source).toContain('aria-current={index === currentStepIndex ? "step" : undefined}');
     expect(source).toContain("bill-upload-remove-button");
     expect(modalMountIndex).toBeGreaterThan(mainCloseIndex);
