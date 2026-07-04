@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) remove possible grant savings bucket
+
+- Removed the legacy possible-grant savings bucket from admin/test-case savings outputs and UI displays; modeled grants now flow through normal one-time incentive savings when included.
+- Updated legacy possible-grant handling so unsupported grant estimates produce no savings ledger entry, while included grant estimates use the standard upfront savings path.
+- Regenerated admin test-case savings previews and grant/tax coverage reports after removing `possibleGrantMoneyCents` from generated test-case data.
+
 ## 2026-07-04 - Codex (GPT-5) financial funding mix chart
 
 - Added a selected-retrofit Financials funding mix chart that separates utility rebates, tax credits, grants, financing benefit, and the residual user-covered project cost.

@@ -56,8 +56,7 @@ for (const testCase of testCases) {
       status: preview.status,
       opportunityCount: retrofit.opportunityCount || 0,
       packageCount: (preview.incentiveCalculationPackageSummaries || []).length,
-      upfrontSavingsCents: preview.upfrontSavingsCents || 0,
-      possibleGrantMoneyCents: preview.possibleGrantMoneyCents || 0
+      upfrontSavingsCents: preview.upfrontSavingsCents || 0
     });
 
     for (const summary of preview.incentiveCalculationPackageSummaries || []) {

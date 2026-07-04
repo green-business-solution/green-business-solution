@@ -2,7 +2,6 @@ import {
   aggregateAnnualRecurringExpenses,
   aggregateAnnualRecurringSavings,
   aggregateAnnualNetRecurringSavings,
-  aggregatePossibleGrantMoney,
   aggregateUpfrontSavings
 } from "./aggregation.mjs";
 import { calculateIncentiveAward } from "./incentives.mjs";
@@ -176,7 +175,6 @@ export function calculateScenario({ scenarioRules, allRules, baseCostLedgerEntri
   }
 
   const totalUpfrontSavingsCents = aggregateUpfrontSavings(upfrontSavingsEntries);
-  const possibleGrantMoneyCents = aggregatePossibleGrantMoney(upfrontSavingsEntries);
   const firstYearRecurringSavingsCents = aggregateAnnualRecurringSavings(recurringSavingsEntries);
   const firstYearRecurringExpensesCents = aggregateAnnualRecurringExpenses(recurringSavingsEntries);
   const firstYearNetRecurringSavingsCents = aggregateAnnualNetRecurringSavings(recurringSavingsEntries);
@@ -193,7 +191,6 @@ export function calculateScenario({ scenarioRules, allRules, baseCostLedgerEntri
     upfrontSavingsEntries,
     recurringSavingsEntries,
     totalUpfrontSavingsCents,
-    possibleGrantMoneyCents,
     firstYearRecurringSavingsCents,
     firstYearRecurringExpensesCents,
     firstYearNetRecurringSavingsCents,
@@ -270,7 +267,6 @@ export function selectBestScenario(scenarios = []) {
       (a, b) =>
         b.firstYearTotalBenefitCents - a.firstYearTotalBenefitCents ||
         b.totalUpfrontSavingsCents - a.totalUpfrontSavingsCents ||
-        b.possibleGrantMoneyCents - a.possibleGrantMoneyCents ||
         a.upfrontCostAfterSavingsCents - b.upfrontCostAfterSavingsCents
     )[0] || null;
 }

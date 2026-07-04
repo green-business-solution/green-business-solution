@@ -866,7 +866,7 @@ type SampleMatchResult = {
 
 type SampleSavingsLedgerEntry = {
   id?: string;
-  kind?: "upfront_cost" | "upfront_savings" | "possible_grant";
+  kind?: "upfront_cost" | "upfront_savings";
   category: string;
   label?: string;
   amountCents: number;
@@ -951,7 +951,6 @@ type SampleSavingsPreview = {
   upfrontCostCents: number | null;
   upfrontSavingsCents: number | null;
   oneTimeSavingsCents?: number | null;
-  possibleGrantMoneyCents?: number | null;
   upfrontCostAfterSavingsCents: number | null;
   monthlyRecurringSavingsCents?: number | null;
   annualRecurringSavingsCents?: number | null;
@@ -987,7 +986,6 @@ type SampleSavingsPreview = {
     incentiveRuleIds?: string[];
     status?: string;
     totalUpfrontSavingsCents?: number;
-    possibleGrantMoneyCents?: number;
     firstYearRecurringSavingsCents?: number;
     firstYearRecurringExpensesCents?: number;
     firstYearNetRecurringSavingsCents?: number;
@@ -5685,7 +5683,6 @@ function CustomerRetrofitCard({ retrofit }: { retrofit: SampleRetrofitGroup }) {
       : null;
   const annualSavings = preview?.status === "calculated" ? preview.annualSavingsCents : null;
   const upfrontCostAfterSavings = preview?.status === "calculated" ? preview.upfrontCostAfterSavingsCents : null;
-  const possibleGrantMoney = preview?.status === "calculated" ? preview.possibleGrantMoneyCents ?? null : null;
 
   return (
     <article className="customer-retrofit-card">
@@ -5705,7 +5702,6 @@ function CustomerRetrofitCard({ retrofit }: { retrofit: SampleRetrofitGroup }) {
         <CustomerRetrofitMetric label="Estimated monthly impact" value={formatUsdAmount(monthlySavings)} />
         <CustomerRetrofitMetric label="Estimated annual impact" value={formatUsdAmount(annualSavings)} />
         <CustomerRetrofitMetric label="Estimated upfront after savings" value={formatUsdAmount(upfrontCostAfterSavings)} />
-        <CustomerRetrofitMetric label="Possible grant money" value={formatUsdAmount(possibleGrantMoney)} />
       </div>
 
       <div className="customer-retrofit-content">
@@ -6691,9 +6687,7 @@ function buildRetrofitPreviewCard(
   const monthlyRecurringSavings =
     isCalculated ? preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents ?? null : null;
   const estimatedUpfrontCost = isCalculated ? preview.upfrontCostCents ?? null : null;
-  const upfrontFinancialIncentive = isCalculated
-    ? preview.upfrontSavingsCents ?? preview.possibleGrantMoneyCents ?? null
-    : null;
+  const upfrontFinancialIncentive = isCalculated ? preview.upfrontSavingsCents ?? null : null;
   const taxBenefitAmount = estimateTaxBenefits(retrofit, preview);
   const netCostBeforeTaxBenefits =
     estimatedUpfrontCost != null && upfrontFinancialIncentive != null
@@ -7917,7 +7911,6 @@ function buildImplementedRetrofitPerformance(retrofit: RetrofitPreviewCard, sour
   const incentivesReceivedCents =
     retrofit.metrics.upfrontFinancialIncentive ??
     sourceRetrofit?.savingsPreview?.upfrontSavingsCents ??
-    sourceRetrofit?.savingsPreview?.possibleGrantMoneyCents ??
     null;
   const netCostCents =
     retrofit.metrics.effectiveCostAfterOneTimeBenefits ??
@@ -14212,7 +14205,11 @@ function estimateTaxBenefits(retrofit: SampleRetrofitGroup, preview: SampleSavin
   );
   if (selectedTaxOpportunities.length === 0) return null;
   if (preview?.status !== "calculated") return null;
-  return preview.possibleGrantMoneyCents ?? null;
+  const taxOpportunityIds = new Set(selectedTaxOpportunities.map((opportunity) => opportunity.opportunityId));
+  const includedTaxBenefits = (preview.incentiveCalculationPackageSummaries || [])
+    .filter((summary) => summary.includedInRuntimeTotals && taxOpportunityIds.has(summary.opportunityId))
+    .reduce((total, summary) => total + Number(summary.totals?.expectedOneTimeSavingsCents || 0), 0);
+  return includedTaxBenefits > 0 ? includedTaxBenefits : null;
 }
 
 function missingInfoForRetrofit(
@@ -15930,7 +15927,6 @@ function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null 
   const recurringEntries = preview.savingsBreakdown || [];
   const upfrontCostEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_cost");
   const upfrontSavingsEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "upfront_savings");
-  const possibleGrantEntries = (preview.costBreakdown || []).filter((entry) => entry.kind === "possible_grant");
   const upfrontEquationLines = buildUpfrontEquationLines(upfrontCostEntries, upfrontSavingsEntries);
   const upfrontNetCents = -(preview.upfrontCostAfterSavingsCents ?? 0);
   const recurringEquationLines = buildRecurringEquationLines(recurringEntries);
@@ -15965,7 +15961,6 @@ function SavingsPreviewCard({ preview }: { preview: SampleSavingsPreview | null 
           emptyMessage="No recurring savings or expenses calculated."
           amountSuffix="/month"
         />
-        <PossibleGrantCard entries={possibleGrantEntries} totalAmountCents={preview.possibleGrantMoneyCents ?? 0} />
       </div>
 
       {preview.assumptions?.length ? (
@@ -16077,32 +16072,6 @@ function SavingsEquationCard({
         </>
       ) : (
         <p>{emptyMessage}</p>
-      )}
-    </section>
-  );
-}
-
-function PossibleGrantCard({ entries, totalAmountCents }: { entries: SampleSavingsLedgerEntry[]; totalAmountCents: number }) {
-  return (
-    <section className="savings-equation-card">
-      <h4>Possible grant money</h4>
-      {entries.length > 0 ? (
-        <>
-          <ul className="savings-equation-list">
-            {entries.map((entry) => (
-              <li key={entry.id || `${entry.category}:${entry.amountCents}`}>
-                <strong className="savings-positive">{formatSignedCents(Math.abs(entry.amountCents || 0))}</strong>
-                <span>{entry.label || formatSavingsCategory(entry.category)}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="savings-equation-total">
-            <strong className="savings-positive">{formatSignedCents(totalAmountCents)}</strong>
-            <span>Total possible grant money</span>
-          </div>
-        </>
-      ) : (
-        <p>No possible grant money modeled.</p>
       )}
     </section>
   );

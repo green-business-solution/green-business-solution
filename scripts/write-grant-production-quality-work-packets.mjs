@@ -246,7 +246,6 @@ function compactRetrofitForProfilePrompt(retrofit) {
       upfrontCostCents: preview.upfrontCostCents,
       upfrontCost: compactMoney(preview.upfrontCostCents),
       oneTimeSavingsCents: preview.oneTimeSavingsCents,
-      possibleGrantMoneyCents: preview.possibleGrantMoneyCents,
       annualRecurringSavingsCents: preview.annualRecurringSavingsCents,
       annualRecurringExpensesCents: preview.annualRecurringExpensesCents,
       incentiveCalculationPackageCounts: preview.incentiveCalculationPackageCounts,

@@ -190,7 +190,7 @@ function selectImplementedRetrofitCandidates(retrofits, archetype, rng) {
 function buildImplementedRetrofit(testCaseId, property, sourceRetrofit, archetype, index, rng, now) {
   const preview = sourceRetrofit.savingsPreview || {};
   const estimatedProjectCostCents = positiveCents(preview.upfrontCostCents) || fallbackProjectCost(archetype, rng);
-  const estimatedIncentivesCents = Math.max(0, positiveCents(preview.upfrontSavingsCents) || positiveCents(preview.possibleGrantMoneyCents) || Math.round(estimatedProjectCostCents * decimalBetween(rng, 0.04, 0.18)));
+  const estimatedIncentivesCents = Math.max(0, positiveCents(preview.upfrontSavingsCents) || Math.round(estimatedProjectCostCents * decimalBetween(rng, 0.04, 0.18)));
   const estimatedNetCostCents = positiveCents(preview.upfrontCostAfterSavingsCents) || Math.max(0, estimatedProjectCostCents - estimatedIncentivesCents);
   const estimateSavings = positiveCents(preview.netAnnualRecurringSavingsCents) || positiveCents(preview.annualSavingsCents) || fallbackAnnualSavings(archetype, rng);
   const actualProjectCostCents = Math.round(estimatedProjectCostCents * decimalBetween(rng, 0.88, 1.18));

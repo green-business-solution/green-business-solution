@@ -12,10 +12,6 @@ export function aggregateUpfrontSavings(entries = []) {
   return sum(entries.filter((entry) => entry.kind === "upfront_savings").map((entry) => entry.amountCents));
 }
 
-export function aggregatePossibleGrantMoney(entries = []) {
-  return sum(entries.filter((entry) => entry.kind === "possible_grant").map((entry) => entry.amountCents));
-}
-
 export function aggregateUpfrontCostAfterSavings(entries = []) {
   return aggregateUpfrontCost(entries) - aggregateUpfrontSavings(entries);
 }

@@ -9,9 +9,8 @@ function sum(entries) {
 export function incentiveCategory(rule) {
   switch (rule.incentiveType) {
     case "grant":
-      return "grant";
     case "possible_grant":
-      return "possible_grant";
+      return "grant";
     case "tax_credit":
       return "tax_credit";
     case "sales_tax_exemption":
@@ -185,11 +184,12 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
   const grantEstimate = isGrantLikeRule(rule)
     ? buildGrantEstimateFromLegacyRule(rule, { ...ctx, legacyIncentiveBasisCents: basisCents })
     : null;
+  let grantIncludedInTotals = true;
 
   if (grantEstimate) {
-    const includedGrantAmount = grantEstimate.computedEstimate.includedInUserFacingTotal;
-    amountCents = includedGrantAmount ? Number(grantEstimate.computedEstimate.estimatedAmountCents || 0) : 0;
-    if (!includedGrantAmount) rawAmountCents = 0;
+    grantIncludedInTotals = grantEstimate.computedEstimate.includedInUserFacingTotal;
+    amountCents = grantIncludedInTotals ? Number(grantEstimate.computedEstimate.estimatedAmountCents || 0) : 0;
+    if (!grantIncludedInTotals) rawAmountCents = 0;
   }
 
   const category = incentiveCategory(rule);
@@ -209,12 +209,10 @@ export function calculateIncentiveAward(rule, ctx, priorAwards = []) {
     grantEstimate
   };
 
-  if (timing === "upfront") {
-    const isPossibleGrant =
-      rule.incentiveType === "possible_grant" || rule.estimateTreatment === "possible_grant" || rule.amountCertainty === "possible";
+  if (timing === "upfront" && grantIncludedInTotals) {
     award.upfrontSavingsEntry = {
       id: `cle_${rule.id}`,
-      kind: isPossibleGrant ? "possible_grant" : "upfront_savings",
+      kind: "upfront_savings",
       category,
       label: rule.name || rule.id,
       amountCents,

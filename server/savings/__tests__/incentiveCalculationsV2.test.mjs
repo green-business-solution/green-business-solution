@@ -126,7 +126,7 @@ describe("incentive calculation v2", () => {
     );
   });
 
-  it("suppresses legacy possible grant money without probability evidence", () => {
+  it("suppresses legacy possible grants without probability evidence", () => {
     const { v1Award, v2Result } = compareLegacyToV2(
       legacyRule({
         incentiveType: "possible_grant",
@@ -134,7 +134,7 @@ describe("incentive calculation v2", () => {
       })
     );
 
-    expect(v1Award.upfrontSavingsEntry.kind).toBe("possible_grant");
+    expect(v1Award.upfrontSavingsEntry).toBeUndefined();
     expect(v2Result.totals.expectedOneTimeSavingsCents).toBe(0);
     expect(v1Award.amountCents).toBe(0);
     expect(v2Result.totals.expectedGrantAmountCents).toBe(0);

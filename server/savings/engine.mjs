@@ -5,7 +5,6 @@ import {
   aggregateMonthlyRecurringExpenses,
   aggregateMonthlyRecurringSavings,
   aggregateMonthlySavings,
-  aggregatePossibleGrantMoney,
   aggregateUpfrontCost,
   aggregateUpfrontCostAfterSavings,
   aggregateUpfrontSavings
@@ -59,7 +58,6 @@ function blockedEstimate({ projectId, businessId, retrofitInstance, missingInput
     missingInputs,
     upfrontCostCents: null,
     oneTimeSavingsCents: null,
-    possibleGrantMoneyCents: null,
     upfrontCostAfterSavingsCents: null,
     monthlyRecurringSavingsCents: null,
     annualRecurringSavingsCents: null,
@@ -92,7 +90,6 @@ function blockedEstimate({ projectId, businessId, retrofitInstance, missingInput
 function calculateFinalSavingsMetrics({ finalCostBreakdown, finalRecurringSavingsEntries }) {
   const upfrontCostAfterSavingsCents = aggregateUpfrontCostAfterSavings(finalCostBreakdown);
   const oneTimeSavingsCents = aggregateUpfrontSavings(finalCostBreakdown);
-  const possibleGrantMoneyCents = aggregatePossibleGrantMoney(finalCostBreakdown);
   const monthlyRecurringSavingsCents = aggregateMonthlyRecurringSavings(finalRecurringSavingsEntries);
   const annualRecurringSavingsCents = aggregateAnnualRecurringSavings(finalRecurringSavingsEntries);
   const monthlyRecurringExpensesCents = aggregateMonthlyRecurringExpenses(finalRecurringSavingsEntries);
@@ -103,7 +100,6 @@ function calculateFinalSavingsMetrics({ finalCostBreakdown, finalRecurringSaving
   return {
     upfrontCostAfterSavingsCents,
     oneTimeSavingsCents,
-    possibleGrantMoneyCents,
     monthlyRecurringSavingsCents,
     annualRecurringSavingsCents,
     monthlyRecurringExpensesCents,
@@ -402,7 +398,6 @@ function finalizeCalculatedEstimate({
     upfrontSavingsEntries: [],
     recurringSavingsEntries: [],
     totalUpfrontSavingsCents: 0,
-    possibleGrantMoneyCents: 0,
     firstYearRecurringSavingsCents: 0,
     firstYearRecurringExpensesCents: 0,
     firstYearNetRecurringSavingsCents: 0,
@@ -1455,7 +1450,6 @@ export function calculateRetrofitSavingsEstimate(fixture) {
     upfrontSavingsEntries: [],
     recurringSavingsEntries: [],
     totalUpfrontSavingsCents: 0,
-    possibleGrantMoneyCents: 0,
     firstYearRecurringSavingsCents: 0,
     firstYearRecurringExpensesCents: 0,
     firstYearNetRecurringSavingsCents: 0,

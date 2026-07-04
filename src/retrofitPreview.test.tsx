@@ -106,7 +106,6 @@ const liveShapedPayload = {
         opportunityCount: 1,
         upfrontCostCents: 1200000,
         upfrontSavingsCents: 300000,
-        possibleGrantMoneyCents: 300000,
         upfrontCostAfterSavingsCents: 900000,
         monthlySavingsCents: 50000,
         annualSavingsCents: 600000,

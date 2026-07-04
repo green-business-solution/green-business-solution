@@ -7,7 +7,6 @@ import {
   aggregateMonthlyRecurringExpenses,
   aggregateMonthlyRecurringSavings,
   aggregateMonthlySavings,
-  aggregatePossibleGrantMoney,
   aggregateUpfrontCost,
   aggregateUpfrontCostAfterSavings,
   aggregateUpfrontSavings
@@ -28,16 +27,15 @@ describe("savings aggregation", () => {
     expect(aggregateUpfrontCostAfterSavings(entries)).toBe(122782);
   });
 
-  it("keeps possible grant money separate from deterministic upfront savings", () => {
+  it("does not carry a separate possible grant savings bucket", () => {
     const entries = [
       { kind: "upfront_cost", category: "equipment_cost", amountCents: 100000 },
       { kind: "upfront_savings", category: "rebate", amountCents: 20000 },
-      { kind: "possible_grant", category: "possible_grant", amountCents: 50000 }
+      { kind: "upfront_savings", category: "grant", amountCents: 50000 }
     ];
 
-    expect(aggregateUpfrontSavings(entries)).toBe(20000);
-    expect(aggregatePossibleGrantMoney(entries)).toBe(50000);
-    expect(aggregateUpfrontCostAfterSavings(entries)).toBe(80000);
+    expect(aggregateUpfrontSavings(entries)).toBe(70000);
+    expect(aggregateUpfrontCostAfterSavings(entries)).toBe(30000);
   });
 
   it("aggregates monthly and annual recurring savings without double-counting display cadences", () => {

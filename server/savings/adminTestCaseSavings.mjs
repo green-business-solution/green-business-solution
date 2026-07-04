@@ -435,7 +435,6 @@ export function buildAdminTestCaseSavingsPreview({
         ? estimate.upfrontCostCents - estimate.upfrontCostAfterSavingsCents
         : null,
     oneTimeSavingsCents: estimate.oneTimeSavingsCents ?? null,
-    possibleGrantMoneyCents: estimate.possibleGrantMoneyCents ?? 0,
     upfrontCostAfterSavingsCents: estimate.upfrontCostAfterSavingsCents,
     monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents,
     annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents,
@@ -810,7 +809,6 @@ function unsupportedPreview({ retrofitGroup, sampleUserId, reason }) {
     upfrontCostCents: null,
     upfrontSavingsCents: null,
     oneTimeSavingsCents: null,
-    possibleGrantMoneyCents: 0,
     upfrontCostAfterSavingsCents: null,
     monthlyRecurringSavingsCents: null,
     annualRecurringSavingsCents: null,
