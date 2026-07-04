@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) Narragansett fake-user promotion
+
+- Added processed synthetic electric and gas utility records to the ignored generated fixtures for the Narragansett Organics Recovery sample test case and uploaded the refreshed 51-user fixture set to the development S3 fixture bucket.
+- Promoted `narragansett-organics-recovery-ri` to an active fake client user in AWS and precomputed its retrofit recommendation payload into the S3/runtime-state cache.
+
 ## 2026-07-04 - Codex (GPT-5) incentive classification audit cleanup
 
 - Reclassified source-backed but user-input-gated rebate repairs as `needs_project_scope` runtime form gates instead of generic policy suppressions.

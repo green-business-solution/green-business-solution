@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_generated_test_fixtures_manifest.v1",
-  "updatedAt": "2026-07-04T21:26:02.729Z",
+  "updatedAt": "2026-07-04T21:37:09.385Z",
   "bucket": "gbs-retrofi-dev-work-448016109714-us-east-1",
   "prefix": "generated-test-fixtures",
   "fixtures": [
@@ -8,15 +8,15 @@
       "localPath": "public/sample_matching_test_cases.json",
       "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/public/sample_matching_test_cases.json",
       "description": "Generated public admin-preview matching test cases",
-      "sizeBytes": 70862822,
-      "sha256": "096e13b5a3049f601f82842189185c112f5d5a4e18ee30241335cfa05c901d4d"
+      "sizeBytes": 70884406,
+      "sha256": "e7cd4dd4e163b03c12e2588c01674b10ddceab77a1a3822c5bab29e2527c110c"
     },
     {
       "localPath": "data/sample_user_profiles.json",
       "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/sample_user_profiles.json",
       "description": "Generated sample user profiles used by matching and grant/tax scripts",
-      "sizeBytes": 14330605,
-      "sha256": "f7695a0036efe239bc588e7060d61730a2df188ae4585a1e2002688ab2e217a6"
+      "sizeBytes": 14339823,
+      "sha256": "fed616a60ae8d0b218c6973fb6acbbed1e4c946f20b85a52d945e4477d5ada69"
     },
     {
       "localPath": "data/retrofi_patch_profiles_01_10.json",
