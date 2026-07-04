@@ -27,6 +27,8 @@ const BLOCKED_RUNTIME_STATUSES = new Set([
   "needs_repair_review",
   "custom_quote_estimate"
 ]);
+const INPUT_OR_EVIDENCE_STATUSES = new Set(["missing_inputs", "needs_quote", "needs_project_scope", "needs_funding_check"]);
+const POLICY_SUPPRESSED_STATUSES = new Set(["not_user_facing_default", "human_review_required", "low_confidence", "suppressed_by_policy"]);
 
 const testCases = testCasePayload.testCases || [];
 const allPackages = packagePayload.packages || [];
@@ -150,11 +152,13 @@ function classifyPackageSummary(summary) {
   if (BLOCKED_RUNTIME_STATUSES.has(summary.runtimeInclusionStatus)) return "source_or_package_blocked";
 
   const hasPositiveAmount = (summary.effectSummaries || []).some((effect) => Number(effect.amountCents || 0) > 0);
-  if (["not_user_facing_default", "human_review_required", "low_confidence"].includes(summary.runtimeInclusionStatus)) {
+  if (POLICY_SUPPRESSED_STATUSES.has(summary.runtimeInclusionStatus)) {
     return hasPositiveAmount ? "computed_but_suppressed" : "suppressed_without_amount";
   }
 
-  if (summary.runtimeInclusionStatus === "missing_inputs" || (summary.missingInputs || []).length > 0) return "missing_evidence_or_inputs";
+  if (INPUT_OR_EVIDENCE_STATUSES.has(summary.runtimeInclusionStatus) || (summary.missingInputs || []).length > 0) {
+    return "missing_evidence_or_inputs";
+  }
 
   if (summary.runtimeInclusionStatus === "no_supported_effect_amount") return "calculated_zero_or_no_supported_amount";
   return "other_suppressed";
@@ -409,7 +413,7 @@ function buildMarkdownReport(data) {
     "- Packages classified as `source_or_package_blocked` need source/data repair or intentional archive/suppression decisions, not UI fields.",
     missingCount === 0
       ? "- No packages are currently classified as missing evidence/input repair gaps."
-      : "- Remaining missing inputs are mostly competitive expected-value evidence, especially award probability, and are the highest-priority candidates for follow-up data repair."
+      : "- Packages classified as `missing_evidence_or_inputs` need quote, funding-status, project-scope, award, or runtime-document inputs before they can safely enter customer-facing totals."
   ];
 
   return `${lines.join("\n")}\n`;

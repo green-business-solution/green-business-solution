@@ -270,6 +270,43 @@ describe("incentive calculation v2", () => {
     expect(result.effectResults[0].trace.join(" ")).toContain("rate difference 0.00484 - 0.00275");
   });
 
+  it("derives Washington ordinary B&O comparison rate after activity classification is known", () => {
+    const pkg = expressionPackage({
+      expressionId: "tax_rate_difference",
+      effectType: "tax_rate_preference",
+      calculation: { preferential_solar_b_and_o_rate_decimal: 0.00275 },
+      requiredInputs: [
+        "annual_tax_performance_report_filed",
+        "qualifying_tax_base_after_deductions_and_matc_cents",
+        "business_activity_classification",
+        "otherwise_applicable_b_and_o_rate_decimal"
+      ]
+    });
+    pkg.opportunity_id = "SOURCE_DSIRE:dsire_program_id:381";
+
+    const ctx = buildV2ResolvedRuntimeContext(
+      baseCtx({
+        calculationDate: "2026-07-02",
+        answers: {
+          annual_tax_performance_report_filed: { value: true },
+          qualifying_tax_base_after_deductions_and_matc_cents: { value: 10000000 },
+          business_activity_classification: { value: "qualifying_solar_manufacturing" },
+          tax_period_start_date: { value: "2026-07-01" }
+        }
+      }),
+      [pkg]
+    );
+    const result = calculateV2IncentivePackage(pkg, ctx);
+
+    expect(ctx.answers.otherwise_applicable_b_and_o_rate_decimal).toMatchObject({
+      value: 0.00484,
+      source: "derived_washington_bo_rate_schedule",
+      userOverrideAllowed: true
+    });
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(20900);
+  });
+
   it("calculates property-tax valuation expressions as a recurring workflow amount", () => {
     const result = calculateV2IncentivePackage(
       expressionPackage({
@@ -428,6 +465,52 @@ describe("incentive calculation v2", () => {
     expect(ctx.answers.eligible_real_property_tax_cents.source).toBe("tax_profile_fact");
     expect(result.missingInputs).toEqual([]);
     expect(result.totals.expectedOneTimeSavingsCents).toBe(7500);
+  });
+
+  it("derives Michigan Renaissance Zone phaseout multiplier from approved term and program year", () => {
+    const pkg = expressionPackage({
+      expressionId: "tax_exempt_liability",
+      effectType: "tax_exemption",
+      requiredInputs: [
+        "approved_rerz_designation",
+        "qualified_company_operations",
+        "company_current_on_state_and_local_taxes",
+        "approved_zone_term_years",
+        "program_year",
+        "phaseout_multiplier",
+        "eligible_state_education_tax_cents",
+        "eligible_real_property_tax_cents",
+        "eligible_personal_property_tax_cents",
+        "eligible_local_income_tax_cents"
+      ]
+    });
+    pkg.opportunity_id = "SOURCE_DSIRE:dsire_program_id:3216";
+
+    const ctx = buildV2ResolvedRuntimeContext(
+      baseCtx({
+        answers: {
+          approved_rerz_designation: { value: true },
+          qualified_company_operations: { value: true },
+          company_current_on_state_and_local_taxes: { value: true },
+          approved_zone_term_years: { value: 15 },
+          program_year: { value: 14 },
+          eligible_state_education_tax_cents: { value: 10000 },
+          eligible_real_property_tax_cents: { value: 20000 },
+          eligible_personal_property_tax_cents: { value: 30000 },
+          eligible_local_income_tax_cents: { value: 40000 }
+        }
+      }),
+      [pkg]
+    );
+    const result = calculateV2IncentivePackage(pkg, ctx);
+
+    expect(ctx.answers.phaseout_multiplier).toMatchObject({
+      value: 0.5,
+      source: "derived_michigan_rerz_phaseout_schedule",
+      userOverrideAllowed: true
+    });
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedOneTimeSavingsCents).toBe(50000);
   });
 
   it("uses opportunity-specific AC nameplate capacity before generic system kW for property-tax valuation", () => {

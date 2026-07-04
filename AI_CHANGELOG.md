@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) grant/tax production gating
+
+- Made the v2 runtime bridge prefer repaired effect-level grant/tax decisions over stale package-level statuses, separating suppressed policy decisions, quote needs, funding checks, and tax review gates.
+- Added safe tax input derivations for Washington solar-manufacturing B&O comparison rates and Michigan Renaissance Zone phaseout multipliers when the required taxpayer/program facts are already present.
+- Regenerated admin test-case savings, grant/tax coverage, and blocked/suppressed audits; the blocked/suppressed audit now reports zero GPT Pro/source-repair targets.
+
 ## 2026-07-04 - Codex (GPT-5) selected workspace summary copy
 
 - Removed the extra "Included in this scenario" and "Best mix of savings and payback" helper copy from the selected retrofit overview summary row.

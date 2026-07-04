@@ -233,6 +233,7 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
   addQuantityAliases({ ctx, answers, add });
   addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs });
   addTaxProfileInputs({ ctx, packages, add });
+  addDerivedTaxCalculationInputs({ ctx, packages, answers, add });
   addEnergyAliases({ ctx, answers, add });
   addOperationalAliases({ ctx, answers, add });
   addMeasureSelections({ ctx, packages, answers, add });
@@ -452,6 +453,103 @@ function addTaxProfileInputs({ ctx, packages, add }) {
     const inputKey = row.inputKey || row.input_key || row.fieldId || row.field_id;
     addTaxInput({ ...row, inputKey }, "tax_extracted_value", add);
   }
+}
+
+function addDerivedTaxCalculationInputs({ ctx, packages, answers, add }) {
+  addWashingtonSolarBoOrdinaryRate({ ctx, packages, answers, add });
+  addMichiganRerzPhaseoutMultiplier({ ctx, packages, answers, add });
+}
+
+function addWashingtonSolarBoOrdinaryRate({ ctx, packages, answers, add }) {
+  if (!packageOpportunityIds(packages).has("SOURCE_DSIRE:dsire_program_id:381")) return;
+  if (hasAnswer(answers, "otherwise_applicable_b_and_o_rate_decimal")) return;
+
+  const classification = String(
+    answerValue(answers, "qualifying_solar_b_and_o_classification") ||
+      answerValue(answers, "business_activity_classification") ||
+      ""
+  ).toLowerCase();
+  if (!/(manufactur|processing|wholesale)/.test(classification)) return;
+
+  const taxDate = taxPeriodDate(ctx, answers);
+  const ordinaryRate = taxDate >= "2027-01-01" ? 0.005 : 0.00484;
+  const source = "derived_washington_bo_rate_schedule";
+  const options = {
+    canonicalInputKey: "otherwise_applicable_b_and_o_rate_decimal",
+    defaultConfidence: "medium",
+    userOverrideAllowed: true,
+    sourceStrategy: "official_tax_rate_schedule"
+  };
+
+  add("otherwise_applicable_b_and_o_rate_decimal", ordinaryRate, source, options);
+  add("otherwise_applicable_b_o_tax_rate", ordinaryRate, source, options);
+}
+
+function addMichiganRerzPhaseoutMultiplier({ packages, answers, add }) {
+  if (!packageOpportunityIds(packages).has("SOURCE_DSIRE:dsire_program_id:3216")) return;
+  if (hasAnswer(answers, "phaseout_multiplier")) return;
+
+  const programYear = firstFiniteAnswer(answers, ["program_year", "current_program_year"]);
+  const termYears = firstFiniteAnswer(answers, ["approved_zone_term_years", "zone_term_years"]);
+  const multiplierFromProgramYear =
+    Number.isFinite(programYear) && Number.isFinite(termYears)
+      ? renaissanceZonePhaseoutMultiplierForProgramYear(programYear, termYears)
+      : null;
+  const multiplier =
+    multiplierFromProgramYear ??
+    renaissanceZonePhaseoutMultiplierForFinalYear(
+      firstFiniteAnswer(answers, ["approved_zone_final_year", "zone_final_year", "approved_rerz_final_year"]),
+      firstFiniteAnswer(answers, ["tax_year", "current_tax_year", "program_calendar_year"])
+    );
+
+  if (!Number.isFinite(multiplier)) return;
+
+  add("phaseout_multiplier", multiplier, "derived_michigan_rerz_phaseout_schedule", {
+    canonicalInputKey: "phaseout_multiplier",
+    defaultConfidence: "medium",
+    userOverrideAllowed: true,
+    sourceStrategy: "official_tax_phaseout_schedule"
+  });
+}
+
+function packageOpportunityIds(packages = []) {
+  return new Set((packages || []).map((pkg) => pkg?.opportunity_id).filter(Boolean));
+}
+
+function taxPeriodDate(ctx, answers) {
+  const explicit =
+    answerValue(answers, "tax_period_start_date") ||
+    answerValue(answers, "tax_period_end_date") ||
+    answerValue(answers, "tax_period_date") ||
+    null;
+  if (explicit) return String(explicit).slice(0, 10);
+
+  const taxYear = firstFiniteAnswer(answers, ["tax_year", "current_tax_year"]);
+  if (Number.isFinite(taxYear)) return `${Math.round(taxYear)}-01-01`;
+
+  return String(ctx.calculationDate || "2026-07-02").slice(0, 10);
+}
+
+function renaissanceZonePhaseoutMultiplierForProgramYear(programYear, termYears) {
+  const year = Math.floor(Number(programYear));
+  const term = Math.floor(Number(termYears));
+  if (!Number.isFinite(year) || !Number.isFinite(term) || year <= 0 || term <= 0) return null;
+  if (year > term) return 0;
+  if (year === term) return 0.25;
+  if (year === term - 1) return 0.5;
+  if (year === term - 2) return 0.75;
+  return 1;
+}
+
+function renaissanceZonePhaseoutMultiplierForFinalYear(finalYear, currentYear) {
+  const final = Math.floor(Number(finalYear));
+  const current = Math.floor(Number(currentYear));
+  if (!Number.isFinite(final) || !Number.isFinite(current)) return null;
+  if (current > final) return 0;
+  if (current === final) return 0.25;
+  if (current === final - 1) return 0.5;
+  if (current === final - 2) return 0.75;
+  return 1;
 }
 
 function taxOpportunitySpecificRows(ctx, taxContext, packageOpportunityIds) {

@@ -2,13 +2,24 @@ import crypto from "node:crypto";
 import { calculateV2IncentivePackage, validateIncentiveCalculationPackageV2 } from "./incentiveCalculationsV2.mjs";
 import { buildV2ResolvedRuntimeContext } from "./v2InputResolution.mjs";
 
-const BLOCKED_PACKAGE_STATUSES = new Set([
+const ALWAYS_BLOCKED_PACKAGE_STATUSES = new Set([
   "source_inaccessible_repair_failure",
-  "unavailable_archived",
+  "unavailable_archived"
+]);
+
+const LEGACY_BLOCKED_PACKAGE_STATUSES = new Set([
   "non_monetary_workflow",
   "no_calculable_value",
   "needs_repair_review",
   "custom_quote_estimate"
+]);
+
+const TAX_EFFECT_TYPES = new Set([
+  "tax_credit",
+  "tax_exemption",
+  "tax_abatement",
+  "tax_rate_preference",
+  "property_tax_valuation"
 ]);
 
 const MONETARY_EFFECT_TYPES = new Set([
@@ -16,11 +27,7 @@ const MONETARY_EFFECT_TYPES = new Set([
   "recurring_savings",
   "recurring_expense",
   "grant_expected_value",
-  "tax_credit",
-  "tax_exemption",
-  "tax_abatement",
-  "tax_rate_preference",
-  "property_tax_valuation",
+  ...TAX_EFFECT_TYPES,
   "financing_subsidy"
 ]);
 
@@ -102,6 +109,21 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
       valueModelKind: effect.repair_metadata?.value_model_kind || null,
       cashValueClassification: effect.repair_metadata?.cash_value_classification || null,
       includedInUserFacingTotalDefault: effect.repair_metadata?.included_in_user_facing_total_default === true,
+      repairStatus: effect.repair_metadata?.repair_status || null,
+      repairedCalculationStatus: effect.repair_metadata?.calculation_status || null,
+      estimateStatus: repairEstimateStatus(effect),
+      hasProductionDecision: hasProductionDecisionMetadata(effect),
+      reasonCodes: repairReasonCodes(effect),
+      humanReviewReasons: effect.repair_metadata?.human_review_reasons || [],
+      probabilityDiscount: Number.isFinite(effect.calculation?.probability_discount)
+        ? Number(effect.calculation.probability_discount)
+        : null,
+      conditionalAwardCents: Number.isFinite(effect.calculation?.conditional_award_cents)
+        ? Number(effect.calculation.conditional_award_cents)
+        : null,
+      potentialAwardCents: potentialAwardCents(effect),
+      userFacingLabel: repairDisplayRecommendation(effect).label,
+      userFacingCaveat: repairDisplayRecommendation(effect).caveat,
       runtimeEligibleForTotals: isRuntimeEffectEligibleForTotals(effect),
       humanReviewRequired: effect.repair_metadata?.human_review_required === true,
       amountCents: effectResult?.amountCents || 0,
@@ -137,8 +159,12 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
 
   if (legacyRulePreferred) {
     summary.runtimeInclusionStatus = "legacy_rule_preferred";
-  } else if (BLOCKED_PACKAGE_STATUSES.has(pkg.calculation_status)) {
+  } else if (ALWAYS_BLOCKED_PACKAGE_STATUSES.has(pkg.calculation_status)) {
     summary.runtimeInclusionStatus = pkg.calculation_status;
+  } else if (productionDecisionRuntimeStatus(effectSummaries, pkg)) {
+    summary.runtimeInclusionStatus = productionDecisionRuntimeStatus(effectSummaries, pkg);
+  } else if (legacyPackageBlockStatus(pkg, effectSummaries)) {
+    summary.runtimeInclusionStatus = legacyPackageBlockStatus(pkg, effectSummaries);
   } else if (confidenceLabel(pkg.confidence?.overall) === "low") {
     summary.runtimeInclusionStatus = "low_confidence";
   } else if (hasHumanReviewRequiredEffect) {
@@ -200,17 +226,138 @@ function buildRuntimeRulesForPackage({ pkg, result }) {
 
 function isRuntimeEffectEligibleForTotals(effect) {
   if (effect.repair_metadata?.included_in_user_facing_total_default === true) return true;
-  if (
-    effect.effect_type !== "tax_credit" &&
-    effect.effect_type !== "tax_exemption" &&
-    effect.effect_type !== "tax_abatement" &&
-    effect.effect_type !== "tax_rate_preference" &&
-    effect.effect_type !== "property_tax_valuation"
-  ) {
+  if (!TAX_EFFECT_TYPES.has(effect.effect_type)) {
     return false;
   }
   if (effect.repair_metadata?.human_review_required === true) return false;
   return effect.calculation?.method && effect.calculation.method !== "zero_when_not_applicable";
+}
+
+function productionDecisionRuntimeStatus(effectSummaries, pkg) {
+  const repairedGrantOrTaxEffects = effectSummaries.filter(
+    (effect) => effect.hasProductionDecision && isGrantTaxOrRepairedCashEffect(effect)
+  );
+  if (!repairedGrantOrTaxEffects.length) return null;
+
+  if (repairedGrantOrTaxEffects.some((effect) => effect.runtimeEligibleForTotals && Number(effect.amountCents || 0) > 0)) {
+    return null;
+  }
+
+  const decisionText = repairedGrantOrTaxEffects
+    .flatMap((effect) => [
+      effect.estimateStatus,
+      effect.repairStatus,
+      effect.repairedCalculationStatus,
+      ...(effect.reasonCodes || []),
+      ...(effect.humanReviewReasons || [])
+    ])
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  if (decisionText.includes("needs_quote") || decisionText.includes("quote_required") || decisionText.includes("custom_quote") || decisionText.includes("invoice_required")) {
+    return "needs_quote";
+  }
+  if (decisionText.includes("needs_funding_check")) return "needs_funding_check";
+  if (/\b(needs_accountant_review|needs_property_tax_profile|tax_or_assessor_review_required|suppressed_until_program_documentation)\b/.test(decisionText)) {
+    return "human_review_required";
+  }
+  if (decisionText.includes("suppressed") || decisionText.includes("exclude_from_user_facing") || decisionText.includes("do_not_include")) {
+    return "suppressed_by_policy";
+  }
+  if (decisionText.includes("needs_project_scope") || decisionText.includes("needs_project_inputs")) return "needs_project_scope";
+  if (repairedGrantOrTaxEffects.some((effect) => effect.effectType === "grant_expected_value" || isGrantOrReimbursementEffect(effect))) {
+    return "suppressed_by_policy";
+  }
+  if (repairedGrantOrTaxEffects.some((effect) => effect.humanReviewRequired)) return "human_review_required";
+  if (LEGACY_BLOCKED_PACKAGE_STATUSES.has(pkg.calculation_status)) return "not_user_facing_default";
+  return null;
+}
+
+function legacyPackageBlockStatus(pkg, effectSummaries) {
+  if (!LEGACY_BLOCKED_PACKAGE_STATUSES.has(pkg.calculation_status)) return null;
+  const hasTaxMonetaryEffect = effectSummaries.some((effect) => TAX_EFFECT_TYPES.has(effect.effectType));
+  const hasRepairedGrantOrTaxDecision = effectSummaries.some(
+    (effect) => effect.hasProductionDecision && isGrantTaxOrRepairedCashEffect(effect)
+  );
+  if (hasRepairedGrantOrTaxDecision || hasTaxMonetaryEffect) return null;
+  return pkg.calculation_status;
+}
+
+function isGrantTaxOrRepairedCashEffect(effect) {
+  return effect.effectType === "grant_expected_value" || TAX_EFFECT_TYPES.has(effect.effectType) || isGrantOrReimbursementEffect(effect);
+}
+
+function isGrantOrReimbursementEffect(effect) {
+  return ["cash_grant", "reimbursement", "rebate"].includes(effect.cashValueClassification);
+}
+
+function hasProductionDecisionMetadata(effect) {
+  const metadata = effect.repair_metadata || {};
+  return Boolean(
+    metadata.grant_production_quality_repair ||
+      metadata.grant_estimation_package_repair ||
+      metadata.grant_probability_deep_research ||
+      metadata.grant_probability_repair ||
+      metadata.tax_package_repair ||
+      metadata.tax_geography_repair
+  );
+}
+
+function repairEstimateStatus(effect) {
+  const metadata = effect.repair_metadata || {};
+  return (
+    metadata.grant_production_quality_repair?.estimate_status ||
+    metadata.grant_production_quality_repair?.estimate_recommendation?.estimate_status ||
+    metadata.grant_estimation_package_repair?.estimate_recommendation?.estimate_status ||
+    metadata.grant_estimation_package_repair?.repair_status ||
+    metadata.grant_probability_repair?.estimate_status ||
+    metadata.grant_probability_deep_research?.estimate_status ||
+    metadata.tax_package_repair?.display_recommendation?.estimateStatus ||
+    metadata.tax_geography_repair?.recommended_estimate_status ||
+    metadata.calculation_status ||
+    null
+  );
+}
+
+function repairReasonCodes(effect) {
+  const metadata = effect.repair_metadata || {};
+  return dedupeStrings([
+    ...(effect.confidence?.reason_codes || []),
+    ...(metadata.human_review_reasons || []),
+    ...(metadata.grant_production_quality_repair?.estimate_recommendation?.reason_codes || []),
+    ...(metadata.grant_estimation_package_repair?.reason_codes || []),
+    ...(metadata.grant_probability_repair?.reason_codes || []),
+    ...(metadata.grant_probability_deep_research?.reason_codes || [])
+  ]);
+}
+
+function repairDisplayRecommendation(effect) {
+  const metadata = effect.repair_metadata || {};
+  const display =
+    metadata.tax_package_repair?.display_recommendation ||
+    metadata.grant_production_quality_repair?.estimate_recommendation ||
+    metadata.grant_estimation_package_repair?.display_recommendation ||
+    {};
+  return {
+    label: display.label || display.user_facing_label || effect.label || null,
+    caveat: display.caveat || display.user_facing_caveat || null
+  };
+}
+
+function potentialAwardCents(effect) {
+  const calculation = effect.calculation || {};
+  const candidates = [
+    calculation.conditional_award_cents,
+    calculation.max_award_cents,
+    calculation.conditional_award_model?.max_award_cents,
+    calculation.conditional_award_model?.amount_cents
+  ];
+  for (const candidate of candidates) {
+    const value = Number(candidate);
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+  return null;
 }
 
 function runtimeIncentiveType(effect) {

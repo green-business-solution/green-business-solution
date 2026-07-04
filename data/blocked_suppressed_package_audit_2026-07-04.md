@@ -1,11 +1,11 @@
 # Blocked And Suppressed Package Audit
 
-Generated: 2026-07-04T02:28:43.395Z
+Generated: 2026-07-04T07:36:53.137Z
 
 ## Summary
 
-- Blocked/suppressed package evaluations: 169
-- Unique package targets: 36
+- Blocked/suppressed package evaluations: 95
+- Unique package targets: 20
 - High-priority targets: 0
 - Targets needing GPT Pro/source repair: 0
 
@@ -13,29 +13,28 @@ Generated: 2026-07-04T02:28:43.395Z
 
 | Key | Count |
 | --- | --- |
-| keep_suppressed_ev_or_probability_gap | 15 |
 | needs_quote_or_custom_calculation_workflow | 8 |
 | needs_recurring_or_tariff_workflow | 7 |
 | intentional_non_cash_or_process_workflow | 2 |
 | keep_review_gated_tax_workflow | 2 |
-| needs_runtime_verification_or_document_upload | 2 |
+| needs_runtime_verification_or_document_upload | 1 |
 
 ## Runtime Status Counts
 
 | Key | Count |
 | --- | --- |
-| no_calculable_value | 72 |
-| not_user_facing_default | 50 |
+| not_user_facing_default | 47 |
 | custom_quote_estimate | 19 |
-| low_confidence | 16 |
-| human_review_required | 12 |
+| no_calculable_value | 15 |
+| human_review_required | 11 |
+| low_confidence | 3 |
 
 ## Outcome Class Counts
 
 | Key | Count |
 | --- | --- |
-| source_or_package_blocked | 91 |
-| suppressed_without_amount | 78 |
+| suppressed_without_amount | 61 |
+| source_or_package_blocked | 34 |
 
 ## Needs Quote Or Custom Calculation Workflow
 
@@ -55,7 +54,6 @@ Generated: 2026-07-04T02:28:43.395Z
 | Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
 | --- | --- | --- | --- | --- | --- | --- |
 | Colorado - Home Electrification and Appliance Rebate (HEAR) Program (SOURCE_DSIRE:dsire_program_id:22718) | 7 | human_review_required: 7 | one_time_savings | rebate | tapiz-mariposa-denver-household | Keep suppressed until runtime funding/status, approval documents, or user/accountant/assessor documents are available. |
-| Hawaii - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22630) | 1 | human_review_required: 1 | one_time_savings | reimbursement | kauai-coffee-kalaheo | Keep suppressed until runtime funding/status, approval documents, or user/accountant/assessor documents are available. |
 
 ## Intentional Non Cash Or Process Workflow
 
@@ -82,26 +80,6 @@ Generated: 2026-07-04T02:28:43.395Z
 | --- | --- | --- | --- | --- | --- | --- |
 | Renewable Energy Renaissance Zones (SOURCE_DSIRE:dsire_program_id:3216) | 3 | human_review_required: 3 | tax_exemption | tax_exemption | gm-factory-zero-detroit | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
 | Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381) | 1 | human_review_required: 1 | tax_rate_preference | tax_rate_preference | boeing-everett-factory | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
-
-## Keep Suppressed Ev Or Probability Gap
-
-| Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
-| --- | --- | --- | --- | --- | --- | --- |
-| Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22666) | 3 | not_user_facing_default: 3 | grant_expected_value | reimbursement | uaf-akasofu-building | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22629) | 10 | low_confidence: 10 | grant_expected_value | reimbursement | california-endowment-hq, fender-corona-plant, ikea-burbank | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants (SOURCE_DSIRE:dsire_program_id:5558) | 1 | no_calculable_value: 1 | grant_expected_value, one_time_savings | cash_grant, rebate | tapiz-mariposa-denver-household | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| Electric Vehicle Fast-Charging Plazas Program (SOURCE_DSIRE:dsire_program_id:22160) | 1 | no_calculable_value: 1 | grant_expected_value | reimbursement | food-bank-rockies-aurora-dc | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308) | 10 | no_calculable_value: 10 | grant_expected_value | reimbursement | california-endowment-hq, fender-corona-plant, ikea-burbank | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-603 - California's National Electric Vehicle Infrastructure Formula Program - Solicitation 6 Community Charging (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603) | 7 | no_calculable_value: 7 | grant_expected_value | reimbursement | california-endowment-hq, ikea-burbank, juniper-and-ivy-san-diego | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605) | 7 | no_calculable_value: 7 | grant_expected_value | reimbursement | california-endowment-hq, ikea-burbank, juniper-and-ivy-san-diego | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-607 - Clean Transportation Program Hydrogen Infrastructure Project Opportunity (HIPO) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607) | 14 | no_calculable_value: 14 | grant_expected_value | reimbursement | california-endowment-hq, ikea-burbank, juniper-and-ivy-san-diego | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608) | 1 | no_calculable_value: 1 | grant_expected_value | reimbursement | santa-clara-university-campus | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| GFO-25-902 - Cost-Share for Federal Geothermal Energy Funding Opportunities (SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902) | 7 | no_calculable_value: 7 | grant_expected_value | cash_grant | california-endowment-hq, ikea-burbank, juniper-and-ivy-san-diego | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| Leading By Example Restoration Grant for Solar PV & Decarbonized Systems (SOURCE_DSIRE:dsire_program_id:22770) | 1 | low_confidence: 1 | grant_expected_value | cash_grant | boston-latin-school | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program (SOURCE_DSIRE:dsire_program_id:22647) | 1 | low_confidence: 1 | grant_expected_value | reimbursement | gm-factory-zero-detroit | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| National Electric Vehicle Infrastructure (NEVI) Program (SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891) | 1 | low_confidence: 1 | grant_expected_value, no_cash_value | reimbursement, technical_assistance | juniper-and-ivy-san-diego | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| Office of Indian Energy Policy and Programs - Funding Opportunities (SOURCE_DSIRE:dsire_program_id:918) | 7 | no_calculable_value: 7 | grant_expected_value, no_cash_value | cash_grant, technical_assistance | bmw-spartanburg-plant, boeing-everett-factory, fender-corona-plant | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
-| Public Charger Grants (SOURCE_DSIRE:dsire_program_id:22783) | 2 | no_calculable_value: 2 | grant_expected_value | reimbursement | portland-food-coop-maine | Keep suppressed unless a conditional award and probability model become source-backed. Competitive expected-value grants should not be included just because they matched. |
 
 ## Interpretation
 

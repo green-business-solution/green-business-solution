@@ -175,6 +175,42 @@ describe("v2 runtime incentive bridge", () => {
     expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("human_review_required");
     expect(bridge.packageSummaries[0].effectSummaries[0].amountCents).toBe(100000);
   });
+
+  it("uses repaired grant decision metadata instead of stale needs-repair package status", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [productionSuppressedGrantPackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("suppressed_by_policy");
+    expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
+      effectType: "grant_expected_value",
+      estimateStatus: "suppressed",
+      hasProductionDecision: true,
+      potentialAwardCents: 2000000
+    });
+  });
+
+  it("uses repaired tax metadata instead of stale non-monetary package status", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [nonMonetaryStatusTaxPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: {
+          ac_nameplate_capacity_kw: { value: 100 },
+          tangible_property_applicable: { value: true },
+          real_property_applicable: { value: true },
+          counterfactual_ordinary_annual_property_tax_cents: { value: 100000 }
+        }
+      })
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("human_review_required");
+    expect(bridge.packageSummaries[0].effectSummaries[0].amountCents).toBe(15000);
+  });
 });
 
 function includedFixedPackage() {
@@ -587,5 +623,120 @@ function humanReviewTaxExpressionPackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "tax_expression", source_type: "web_page", quote: "Tax expression", evidence_confidence: 0.9 }],
     confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_repair"] }
+  };
+}
+
+function productionSuppressedGrantPackage() {
+  return {
+    schema_version: "2.0.0",
+    opportunity_id: "opp_v2_production_grant",
+    program_name: "Production Suppressed Grant",
+    calculation_status: "needs_repair_review",
+    availability: { status: "active", source_access_status: "accessible" },
+    customer_segments: ["commercial"],
+    retrofit_types: ["level_2_ev_charger_installation"],
+    geography: { country: "US", states: ["RI"], counties: [], cities: [], utility_territory_required: false },
+    measure_catalogs: [],
+    rate_tables: [],
+    effects: [
+      {
+        effect_id: "effect_grant_ev",
+        label: "Competitive grant EV",
+        effect_type: "grant_expected_value",
+        cash_flow_direction: "benefit",
+        timing: { cadence: "one_time", source_timing: "reimbursement" },
+        calculation: {
+          method: "expected_value",
+          conditional_award_cents: 0,
+          max_award_cents: 2000000,
+          probability_discount: 0
+        },
+        limits: [],
+        caps: [],
+        required_inputs: [],
+        evidence_refs: ["grant_ev"],
+        confidence: { overall: 0.38, calculation: 0.38, extraction: 0.9, reason_codes: ["grant_production_quality_repair_applied"] },
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "cash_grant",
+          value_model_kind: "competitive_max_only",
+          human_review_required: true,
+          repair_status: "suppress_no_probability_evidence",
+          calculation_status: "no_calculable_value",
+          grant_production_quality_repair: {
+            estimate_recommendation: {
+              estimate_status: "suppressed",
+              reason_codes: ["competitive_max_only", "no_probability_evidence"]
+            }
+          }
+        }
+      }
+    ],
+    global_limits: [],
+    global_caps: [],
+    stacking: { behavior: "unknown_requires_review" },
+    input_requirements: [],
+    assumptions: [],
+    source_evidence: [{ evidence_id: "grant_ev", source_type: "web_page", quote: "Up to $20,000", evidence_confidence: 0.9 }],
+    confidence: { overall: 0.38, source_access: 0.9, availability: 0.9, calculation: 0.38, extraction: 0.9, reason_codes: ["needs_repair_review"] }
+  };
+}
+
+function nonMonetaryStatusTaxPackage() {
+  const pkg = humanReviewTaxExpressionPackage();
+  return {
+    ...pkg,
+    opportunity_id: "SOURCE_DSIRE:dsire_program_id:22798",
+    program_name: "Renewable Energy Tax Valuation",
+    calculation_status: "non_monetary_workflow",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_property_tax_valuation",
+        label: "Property tax valuation",
+        effect_type: "property_tax_valuation",
+        calculation: { method: "expression", expression_id: "property_tax_valuation_formula" },
+        required_inputs: [
+          "ac_nameplate_capacity_kw",
+          "tangible_property_applicable",
+          "real_property_applicable",
+          "counterfactual_ordinary_annual_property_tax_cents"
+        ].map((inputKey) => ({
+          input_key: inputKey,
+          label: inputKey,
+          value_type: "text",
+          required_for: ["effect_property_tax_valuation"],
+          source_precedence: ["property_tax_profile"],
+          missing_severity: "blocks_calculation"
+        })),
+        repair_metadata: {
+          included_in_user_facing_total_default: false,
+          cash_value_classification: "process_value",
+          value_model_kind: "property_tax_valuation_formula",
+          human_review_required: true,
+          repair_status: "non_monetary_workflow",
+          calculation_status: "calculable_with_missing_inputs",
+          tax_package_repair: {
+            display_recommendation: {
+              estimateStatus: "needs_property_tax_profile",
+              label: "Rhode Island renewable property-tax valuation workflow"
+            }
+          }
+        }
+      }
+    ],
+    input_requirements: [
+      "ac_nameplate_capacity_kw",
+      "tangible_property_applicable",
+      "real_property_applicable",
+      "counterfactual_ordinary_annual_property_tax_cents"
+    ].map((inputKey) => ({
+      input_key: inputKey,
+      label: inputKey,
+      value_type: "text",
+      required_for: ["effect_property_tax_valuation"],
+      source_precedence: ["property_tax_profile"],
+      missing_severity: "blocks_calculation"
+    }))
   };
 }
