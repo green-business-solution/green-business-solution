@@ -2489,30 +2489,16 @@ async function seedDashboardPostImplementationDataset(testCaseId) {
 
 async function seedAllDashboardPostImplementationDatasets() {
   const testCases = await loadSampleMatchingTestCases();
-  const summaries = [];
+  const datasets = [];
   const warnings = [];
   for (const testCase of testCases) {
     const result = await seedDashboardPostImplementationDataset(testCase.sampleUserId);
-    summaries.push(result.summary);
+    datasets.push(result.dataset);
     if (result.warning) warnings.push(`${testCase.sampleUserId}: ${result.warning}`);
   }
-  const summaryResponse = buildDashboardPerformanceSummaryResponse(testCases, summaries.map((summary) => ({
-      testCaseId: summary.testCaseId,
-      archetype: summary.archetype,
-      isSynthetic: summary.isSynthetic,
-      syntheticSource: summary.syntheticSource,
-      reportingPeriod: summary.reportingPeriod,
-      implementedRetrofits: Array.from({ length: summary.implementedRetrofitCount }),
-      monthlyPerformanceRecords: Array.from({ length: summary.monthlyRecordCount }),
-      incentivePerformanceRecords: Array.from({ length: summary.incentiveRecordCount }),
-      documentRecords: Array.from({ length: summary.documentRecordCount }),
-      certificationRecords: Array.from({ length: summary.certificationRecordCount }),
-      certificationRequirements: Array.from({ length: summary.certificationRequirementCount }),
-      nextBestActions: Array.from({ length: summary.nextBestActionCount }),
-      dataQuality: summary.dataQuality,
-      updatedAt: summary.updatedAt,
-      generatedAt: summary.generatedAt
-    })), { storageStatus: summaries.some((summary) => summary.storageStatus === "dynamodb") ? "dynamodb" : "local_fallback" });
+  const summaryResponse = buildDashboardPerformanceSummaryResponse(testCases, datasets, {
+    storageStatus: warnings.length ? "local_fallback" : "dynamodb"
+  });
   return {
     ...summaryResponse,
     warnings

@@ -13,8 +13,17 @@ async function buildDataset() {
   return buildSyntheticDashboardPostImplementationDataset(payload.testCases[0]);
 }
 
-function createMockDocumentClient() {
+function createMockDocumentClient({ queryPageSize = 1000, scanPageSize = 1000 } = {}) {
   const items = [];
+  function pageRows(rows, pageSize, exclusiveStartKey) {
+    const start = exclusiveStartKey?.mockOffset || 0;
+    const page = rows.slice(start, start + pageSize);
+    const nextOffset = start + pageSize;
+    return {
+      Items: page,
+      LastEvaluatedKey: nextOffset < rows.length ? { mockOffset: nextOffset } : undefined
+    };
+  }
   return {
     items,
     async send(command) {
@@ -27,18 +36,16 @@ function createMockDocumentClient() {
         return {};
       }
       if (name === "QueryCommand") {
-        return {
-          Items: items.filter((item) => item.stateScope === input.ExpressionAttributeValues[":scope"])
-        };
+        const rows = items.filter((item) => item.stateScope === input.ExpressionAttributeValues[":scope"]);
+        return pageRows(rows, queryPageSize, input.ExclusiveStartKey);
       }
       if (name === "ScanCommand") {
-        return {
-          Items: items.filter(
-            (item) =>
-              item.entityType === input.ExpressionAttributeValues[":entityType"] &&
-              item.schemaVersion === input.ExpressionAttributeValues[":schemaVersion"]
-          )
-        };
+        const rows = items.filter(
+          (item) =>
+            item.entityType === input.ExpressionAttributeValues[":entityType"] &&
+            item.schemaVersion === input.ExpressionAttributeValues[":schemaVersion"]
+        );
+        return pageRows(rows, scanPageSize, input.ExclusiveStartKey);
       }
       if (name === "DeleteCommand") {
         const index = items.findIndex(
@@ -56,7 +63,7 @@ function createMockDocumentClient() {
 
 describe("dashboard performance store", () => {
   it("batch writes, reads, summarizes, and deletes all dashboard performance entity types", async () => {
-    const db = createMockDocumentClient();
+    const db = createMockDocumentClient({ queryPageSize: 7, scanPageSize: 1 });
     const tableName = "dashboardPerformanceTestTable";
     const dataset = await buildDataset();
 

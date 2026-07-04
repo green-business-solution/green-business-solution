@@ -125,16 +125,14 @@ export async function getDashboardPostImplementationDatasetByTestCase({ db, tabl
   if (!cleanTestCaseId) return null;
   if (db && tableName) {
     try {
-      const result = await db.send(
-        new QueryCommand({
+      const items = await queryAllDashboardPerformanceItems(db, {
           TableName: tableName,
           KeyConditionExpression: "stateScope = :scope",
           ExpressionAttributeValues: {
             ":scope": dashboardPerformanceScope(cleanTestCaseId)
           }
-        })
-      );
-      const dataset = deserializeDataset(result.Items || []);
+        });
+      const dataset = deserializeDataset(items);
       if (dataset) return { dataset, storageStatus: "dynamodb" };
     } catch (error) {
       console.warn(`[dashboard-performance] DynamoDB read failed for ${cleanTestCaseId}:`, error);
@@ -152,16 +150,13 @@ export async function deleteSyntheticDashboardPostImplementationDataset({ db, ta
     return { deletedCount: 0, storageStatus: "local_fallback" };
   }
   try {
-    const result = await db.send(
-      new QueryCommand({
+    const items = await queryAllDashboardPerformanceItems(db, {
         TableName: tableName,
         KeyConditionExpression: "stateScope = :scope",
         ExpressionAttributeValues: {
           ":scope": dashboardPerformanceScope(cleanTestCaseId)
         }
-      })
-    );
-    const items = result.Items || [];
+      });
     for (const item of items) {
       await db.send(
         new DeleteCommand({
@@ -185,17 +180,15 @@ export async function listDashboardPostImplementationDatasetSummaries({ db, tabl
   let storageStatus = datasets.length ? "local_fallback" : "not_seeded";
   if (db && tableName) {
     try {
-      const result = await db.send(
-        new ScanCommand({
+      const items = await scanAllDashboardPerformanceItems(db, {
           TableName: tableName,
           FilterExpression: "entityType = :entityType AND schemaVersion = :schemaVersion",
           ExpressionAttributeValues: {
             ":entityType": "DASHBOARD_PERFORMANCE_META",
             ":schemaVersion": DASHBOARD_POST_IMPLEMENTATION_SCHEMA_VERSION
           }
-        })
-      );
-      const dynamoDatasets = (result.Items || []).map((item) => item.dataset).filter(Boolean);
+        });
+      const dynamoDatasets = items.map((item) => item.dataset).filter(Boolean);
       if (dynamoDatasets.length) {
         storageStatus = "dynamodb";
         return buildDashboardPerformanceSummaryResponse(testCases, dynamoDatasets, { storageStatus });
@@ -255,6 +248,28 @@ function serializeDataset(dataset) {
       });
     }
   }
+  return items;
+}
+
+async function queryAllDashboardPerformanceItems(db, input) {
+  const items = [];
+  let ExclusiveStartKey;
+  do {
+    const result = await db.send(new QueryCommand({ ...input, ExclusiveStartKey }));
+    items.push(...(result.Items || []));
+    ExclusiveStartKey = result.LastEvaluatedKey;
+  } while (ExclusiveStartKey);
+  return items;
+}
+
+async function scanAllDashboardPerformanceItems(db, input) {
+  const items = [];
+  let ExclusiveStartKey;
+  do {
+    const result = await db.send(new ScanCommand({ ...input, ExclusiveStartKey }));
+    items.push(...(result.Items || []));
+    ExclusiveStartKey = result.LastEvaluatedKey;
+  } while (ExclusiveStartKey);
   return items;
 }
 

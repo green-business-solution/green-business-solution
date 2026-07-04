@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) dashboard performance admin seed fix
+
+- Fixed dashboard performance admin seed/list behavior by paginating DynamoDB Scan/Query reads and returning real generated datasets from seed-all instead of placeholder summary arrays.
+- Hardened dashboard performance validation so malformed records produce validation errors instead of runtime exceptions.
+
 ## 2026-07-04 - Codex (GPT-5) dashboard test-case fixture deployment fix
 
 - Updated the production deploy package to include `public/sample_matching_test_cases.json` in the API Lambda bundle so the dashboard performance admin seed page can load existing sample test cases in production.

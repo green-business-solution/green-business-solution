@@ -96,20 +96,29 @@ export function validateDashboardPostImplementationDataset(dataset) {
 
   if (!retrofits.length) warnings.push("No implemented retrofits.");
   for (const retrofit of retrofits) {
+    if (!retrofit || typeof retrofit !== "object") {
+      errors.push("Invalid implemented retrofit record.");
+      continue;
+    }
     if (!IMPLEMENTED_RETROFIT_STATUSES.has(retrofit.status)) errors.push(`Invalid retrofit status for ${retrofit.id}.`);
     if (!retrofit.retrofitId) errors.push(`Missing retrofitId for ${retrofit.id}.`);
     if (!retrofit.propertyId) errors.push(`Missing propertyId for ${retrofit.id}.`);
   }
 
-  const retrofitIds = new Set(retrofits.map((retrofit) => retrofit.id));
+  const validRetrofits = retrofits.filter((retrofit) => retrofit && typeof retrofit === "object");
+  const retrofitIds = new Set(validRetrofits.map((retrofit) => retrofit.id));
   const monthlyByRetrofit = new Map();
   for (const record of monthly) {
+    if (!record || typeof record !== "object") {
+      errors.push("Invalid monthly performance record.");
+      continue;
+    }
     if (!retrofitIds.has(record.retrofitPerformanceId)) {
       errors.push(`Monthly record ${record.id} is linked to an unknown retrofit.`);
     }
     monthlyByRetrofit.set(record.retrofitPerformanceId, (monthlyByRetrofit.get(record.retrofitPerformanceId) || 0) + 1);
   }
-  for (const retrofit of retrofits) {
+  for (const retrofit of validRetrofits) {
     const count = monthlyByRetrofit.get(retrofit.id) || 0;
     if (count < 12) warnings.push(`Retrofit ${retrofit.id} has fewer than 12 monthly records.`);
     const beforeOperational = monthly.some((record) =>
@@ -122,6 +131,7 @@ export function validateDashboardPostImplementationDataset(dataset) {
 
   const sortedByRetrofit = new Map();
   for (const record of monthly) {
+    if (!record || typeof record !== "object") continue;
     const rows = sortedByRetrofit.get(record.retrofitPerformanceId) || [];
     rows.push(record);
     sortedByRetrofit.set(record.retrofitPerformanceId, rows);
@@ -137,24 +147,44 @@ export function validateDashboardPostImplementationDataset(dataset) {
   }
 
   for (const incentive of incentives) {
+    if (!incentive || typeof incentive !== "object") {
+      errors.push("Invalid incentive performance record.");
+      continue;
+    }
     if (!INCENTIVE_STATUSES.has(incentive.status)) errors.push(`Invalid incentive status for ${incentive.id}.`);
     if (incentive.retrofitPerformanceId && !retrofitIds.has(incentive.retrofitPerformanceId)) {
       errors.push(`Incentive ${incentive.id} is linked to an unknown retrofit.`);
     }
   }
   for (const document of documents) {
+    if (!document || typeof document !== "object") {
+      errors.push("Invalid dashboard document record.");
+      continue;
+    }
     if (!DOCUMENT_STATUSES.has(document.status)) errors.push(`Invalid document status for ${document.id}.`);
   }
   for (const certification of certifications) {
+    if (!certification || typeof certification !== "object") {
+      errors.push("Invalid certification record.");
+      continue;
+    }
     if (!CERTIFICATION_STATUSES.has(certification.status)) errors.push(`Invalid certification status for ${certification.id}.`);
     if (Math.round(Number(certification.progressPercent || 0)) === Math.round(Number(certification.readinessPercent || 0))) {
       warnings.push(`Certification ${certification.id} progress and readiness are equal; verify they are modeled separately.`);
     }
   }
   for (const requirement of requirements) {
+    if (!requirement || typeof requirement !== "object") {
+      errors.push("Invalid certification requirement record.");
+      continue;
+    }
     if (!CERTIFICATION_REQUIREMENT_STATUSES.has(requirement.status)) errors.push(`Invalid certification requirement status for ${requirement.id}.`);
   }
   for (const action of actions) {
+    if (!action || typeof action !== "object") {
+      errors.push("Invalid dashboard next-best-action record.");
+      continue;
+    }
     if (!NEXT_BEST_ACTION_STATUSES.has(action.status)) errors.push(`Invalid action status for ${action.id}.`);
   }
 
