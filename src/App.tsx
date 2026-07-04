@@ -11280,6 +11280,21 @@ function MetricImpactIcon() {
   );
 }
 
+function MetricComplexityIcon() {
+  return (
+    <svg className="metric-icon metric-complexity-icon" fill="none" viewBox="0 0 20 20">
+      <path
+        d="M7.2 3.3h3.3v2.8h2.8v3.2h-2.8v2.8H7.2V9.3H4.4V6.1h2.8V3.3Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+      <path d="M13.3 9.3h2.3v3.3h-2.8v4.1H9.4v-4.6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+    </svg>
+  );
+}
+
 function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
   const Icon = iconForRetrofit(retrofit);
   return (
@@ -12123,6 +12138,8 @@ function RetrofitPreviewCardView({
   selectedOpportunityIds: Record<string, boolean>;
 }) {
   type EstimateWorkspaceTab = "overview" | "financials" | "opportunities" | "scenarios" | "environmental" | "application" | "more";
+  type ScenarioWorkspaceViewMode = "cards" | "table" | "tradeoffs";
+  type ScenarioTradeoffLevel = "low" | "medium" | "high" | "unknown";
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<EstimateWorkspaceTab>(initialWorkspaceTab);
   const [financialPeriod, setFinancialPeriod] = useState<"monthly" | "annual">("annual");
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -12137,7 +12154,7 @@ function RetrofitPreviewCardView({
   });
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
-  const [scenarioMatrixVisibleByRetrofit, setScenarioMatrixVisibleByRetrofit] = useState<Record<string, boolean>>({});
+  const [scenarioViewModeByRetrofit, setScenarioViewModeByRetrofit] = useState<Record<string, ScenarioWorkspaceViewMode>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
   const [applicationPrepLoading, setApplicationPrepLoading] = useState<Record<string, boolean>>({});
@@ -12565,7 +12582,10 @@ function RetrofitPreviewCardView({
   const taxBenefitsPeriodValue = financialPeriod === "monthly" ? monthlyTaxBenefitsValue : oneTimeTaxBenefits;
   const recurringSavingsPeriodValue = sumDefinedCents([operatingSavingsPeriodValue, incentiveSavingsPeriodValue, taxBenefitsPeriodValue]);
   const scenarioCards = retrofit.scenarios.slice(0, 3);
-  const showScenarioMatrix = scenarioMatrixVisibleByRetrofit[retrofit.id] ?? true;
+  const scenarioViewMode = scenarioViewModeByRetrofit[retrofit.id] ?? "table";
+  const showScenarioMatrix = scenarioViewMode === "table";
+  const showScenarioCards = scenarioViewMode === "cards";
+  const showScenarioTradeoffs = scenarioViewMode === "tradeoffs";
   const scenarioImpactValue =
     billDataLocked || displayedEnvironmentalImpact.overall.displayValue === "?"
       ? "Unknown"
@@ -12623,6 +12643,16 @@ function RetrofitPreviewCardView({
     return Math.max(0, projectCostValue - oneTimeSavings - taxBenefits);
   }
 
+  function getScenarioUpfrontCostForComparisonCents(scenario: RetrofitScenarioPreview) {
+    const effectiveCost = getScenarioEffectiveCostCents(scenario);
+    if (effectiveCost != null) return effectiveCost;
+    const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
+    if (projectCostValue != null && oneTimeSavings != null) {
+      return Math.max(0, projectCostValue - oneTimeSavings);
+    }
+    return projectCostValue ?? null;
+  }
+
   function getScenarioPaybackYears(scenario: RetrofitScenarioPreview) {
     if (billDataLocked) return null;
     const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
@@ -12646,6 +12676,116 @@ function RetrofitPreviewCardView({
     }
     return (annualSavings / effectiveCost) * 100;
   }
+
+  function getScenarioTenYearSavingsCents(scenario: RetrofitScenarioPreview) {
+    const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
+    const annualSavings = getScenarioAnnualOperatingSavingsCents(scenario);
+    if (oneTimeSavings == null || annualSavings == null) return null;
+    return oneTimeSavings + annualSavings * 10;
+  }
+
+  function scenarioTradeoffLevel(
+    value: number | null,
+    values: Array<number | null>,
+    direction: "ascending" | "descending",
+    equalFallback: ScenarioTradeoffLevel = "medium"
+  ): ScenarioTradeoffLevel {
+    if (value == null || !Number.isFinite(value)) return "unknown";
+    const knownValues = values.filter((item): item is number => typeof item === "number" && Number.isFinite(item));
+    if (!knownValues.length) return "unknown";
+    const min = Math.min(...knownValues);
+    const max = Math.max(...knownValues);
+    if (max === min) {
+      return value === 0 ? (direction === "descending" ? "high" : "low") : equalFallback;
+    }
+    const rawRatio = (value - min) / (max - min);
+    const ratio = direction === "ascending" ? rawRatio : 1 - rawRatio;
+    if (ratio <= 0.34) return "low";
+    if (ratio <= 0.67) return "medium";
+    return "high";
+  }
+
+  function scenarioTradeoffBarCount(level: ScenarioTradeoffLevel) {
+    if (level === "high") return 4;
+    if (level === "medium") return 2;
+    if (level === "low") return 1;
+    return 0;
+  }
+
+  function scenarioTradeoffLabel(level: ScenarioTradeoffLevel) {
+    if (level === "unknown") return "Unknown";
+    return capitalizeLabel(level);
+  }
+
+  const scenarioTradeoffRawProfiles = scenarioCards.map((scenario, index) => ({
+    scenario,
+    index,
+    upfrontCostCents: getScenarioUpfrontCostForComparisonCents(scenario),
+    paybackYears: getScenarioPaybackYears(scenario),
+    totalSavingsCents: getScenarioTenYearSavingsCents(scenario),
+    complexityScore: getScenarioIncludedOpportunityCount(scenario) + getScenarioExcludedOpportunityCount(scenario) * 0.5
+  }));
+  const scenarioTradeoffValues = {
+    upfrontCostCents: scenarioTradeoffRawProfiles.map((profile) => profile.upfrontCostCents),
+    paybackYears: scenarioTradeoffRawProfiles.map((profile) => profile.paybackYears),
+    totalSavingsCents: scenarioTradeoffRawProfiles.map((profile) => profile.totalSavingsCents),
+    complexityScore: scenarioTradeoffRawProfiles.map((profile) => profile.complexityScore)
+  };
+  const scenarioTradeoffProfiles = scenarioTradeoffRawProfiles.map((profile) => ({
+    ...profile,
+    metrics: [
+      {
+        id: "upfront-cost",
+        label: "Upfront cost",
+        helper: "Lower is better",
+        icon: <MetricCostIcon />,
+        level: scenarioTradeoffLevel(profile.upfrontCostCents, scenarioTradeoffValues.upfrontCostCents, "ascending"),
+        detail: formatEstimateCents(profile.upfrontCostCents, "Unknown")
+      },
+      {
+        id: "payback-speed",
+        label: "Payback speed",
+        helper: "Faster is better",
+        icon: <MetricPaybackIcon />,
+        level: scenarioTradeoffLevel(profile.paybackYears, scenarioTradeoffValues.paybackYears, "descending"),
+        detail: formatPayback(profile.paybackYears, "Unknown")
+      },
+      {
+        id: "total-savings",
+        label: "Total savings",
+        helper: "Higher is better",
+        icon: <MetricSavingsIcon />,
+        level: scenarioTradeoffLevel(profile.totalSavingsCents, scenarioTradeoffValues.totalSavingsCents, "ascending", "medium"),
+        detail: formatEstimateCents(profile.totalSavingsCents, "Unknown")
+      },
+      {
+        id: "complexity",
+        label: "Complexity",
+        helper: "Lower is better",
+        icon: <MetricComplexityIcon />,
+        level: scenarioTradeoffLevel(profile.complexityScore, scenarioTradeoffValues.complexityScore, "ascending"),
+        detail: `${scenarioTradeoffLabel(scenarioTradeoffLevel(profile.complexityScore, scenarioTradeoffValues.complexityScore, "ascending"))} effort`
+      }
+    ]
+  }));
+  const selectedTradeoffProfile = scenarioTradeoffProfiles.find((profile) => selectedScenario?.id === profile.scenario.id) || scenarioTradeoffProfiles[0] || null;
+  const selectedTradeoffKnownScores = selectedTradeoffProfile
+    ? selectedTradeoffProfile.metrics
+        .map((metric) => {
+          if (metric.level === "unknown") return null;
+          const rawScore = metric.level === "high" ? 3 : metric.level === "medium" ? 2 : 1;
+          return metric.id === "upfront-cost" || metric.id === "complexity" ? 4 - rawScore : rawScore;
+        })
+        .filter((score): score is number => score != null)
+    : [];
+  const selectedTradeoffImpact =
+    selectedTradeoffKnownScores.length === 0
+      ? "Unknown"
+      : selectedTradeoffKnownScores.reduce((sum, score) => sum + score, 0) / selectedTradeoffKnownScores.length >= 2.5
+        ? "High"
+        : selectedTradeoffKnownScores.reduce((sum, score) => sum + score, 0) / selectedTradeoffKnownScores.length >= 1.7
+          ? "Medium"
+          : "Low";
 
   const scenarioComparisonRows = [
     {
@@ -13023,17 +13163,22 @@ function RetrofitPreviewCardView({
                   <h3>Scenario comparison</h3>
                   <p>Compare different combinations of opportunities and choose the one that fits your goals.</p>
                 </div>
-                <div className="scenario-view-toggle" aria-label="Scenario view">
-                  <span>Cards</span>
-                  <button
-                    aria-pressed={showScenarioMatrix}
-                    className={`scenario-view-switch${showScenarioMatrix ? " is-on" : ""}`}
-                    onClick={() => setScenarioMatrixVisibleByRetrofit((current) => ({ ...current, [retrofit.id]: !showScenarioMatrix }))}
-                    type="button"
-                  >
-                    <span aria-hidden="true" />
-                  </button>
-                  <span>Table</span>
+                <div className="scenario-view-toggle" aria-label="Scenario view" role="group">
+                  {([
+                    ["cards", "Cards"],
+                    ["table", "Table"],
+                    ["tradeoffs", "Tradeoffs"]
+                  ] as const).map(([mode, label]) => (
+                    <button
+                      aria-pressed={scenarioViewMode === mode}
+                      className={`scenario-view-option${scenarioViewMode === mode ? " is-active" : ""}`}
+                      key={mode}
+                      onClick={() => setScenarioViewModeByRetrofit((current) => ({ ...current, [retrofit.id]: mode }))}
+                      type="button"
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
               {showScenarioMatrix && scenarioCards.length ? (
@@ -13091,7 +13236,71 @@ function RetrofitPreviewCardView({
                     ))}
                   </div>
                 </div>
-              ) : !showScenarioMatrix && scenarioCards.length ? (
+              ) : showScenarioTradeoffs && scenarioCards.length ? (
+                <section className="scenario-tradeoff-card" aria-label="Scenario tradeoff profile">
+                  <div className="scenario-tradeoff-scroll">
+                    <div className="scenario-tradeoff-grid">
+                      <div className="scenario-tradeoff-heading scenario-tradeoff-scenario-heading">
+                        <strong>Scenario</strong>
+                      </div>
+                      {scenarioTradeoffProfiles[0]?.metrics.map((metric) => (
+                        <div className="scenario-tradeoff-heading" key={metric.id}>
+                          <span className="scenario-tradeoff-heading-icon" aria-hidden="true">{metric.icon}</span>
+                          <div>
+                            <strong>{metric.label}</strong>
+                            <small>{metric.helper}</small>
+                          </div>
+                        </div>
+                      ))}
+                      {scenarioTradeoffProfiles.map((profile) => {
+                        const selected = selectedScenario?.id === profile.scenario.id;
+                        const isRecommended = profile.index === 0;
+                        return (
+                          <div className={`scenario-tradeoff-row${selected ? " is-selected" : ""}`} key={profile.scenario.id}>
+                            <button
+                              aria-pressed={selected}
+                              className="scenario-tradeoff-scenario-button"
+                              onClick={() => onSelectScenario(profile.scenario.id)}
+                              type="button"
+                            >
+                              <span className="scenario-tradeoff-scenario-icon" aria-hidden="true">
+                                {profile.index + 1}
+                              </span>
+                              <span className="scenario-tradeoff-scenario-copy">
+                                <strong>{scenarioDisplayName(profile.index)}</strong>
+                                <small>{scenarioBestForLabel(profile.index)}</small>
+                                {isRecommended ? <em><span aria-hidden="true">✓</span> Recommended</em> : null}
+                              </span>
+                            </button>
+                            {profile.metrics.map((metric) => (
+                              <div className="scenario-tradeoff-metric" key={`${profile.scenario.id}:${metric.id}`}>
+                                <span className="scenario-tradeoff-bars" aria-hidden="true">
+                                  {Array.from({ length: 4 }).map((_, index) => (
+                                    <span
+                                      className={index < scenarioTradeoffBarCount(metric.level) ? "is-filled" : ""}
+                                      key={index}
+                                    />
+                                  ))}
+                                </span>
+                                <strong>{scenarioTradeoffLabel(metric.level)}</strong>
+                                <small>{metric.detail}</small>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="scenario-tradeoff-footer">
+                    <span className="estimate-card-icon" aria-hidden="true"><MetricSavingsIcon /></span>
+                    <div>
+                      <strong>Selected tradeoff profile</strong>
+                      <p>{selectedTradeoffProfile ? `${scenarioDisplayName(selectedTradeoffProfile.index)} balances cost, payback, savings, and effort based on the available estimate values.` : "Unknown"}</p>
+                    </div>
+                    <b>Impact: {selectedTradeoffImpact}</b>
+                  </div>
+                </section>
+              ) : showScenarioCards && scenarioCards.length ? (
                 <>
                   <div className="estimate-scenario-grid">
                     {scenarioCards.map((scenario, index) => {

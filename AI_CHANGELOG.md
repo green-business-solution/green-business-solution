@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) scenario tradeoff diagram
+
+- Added a third Scenarios tab view that compares scenario upfront cost, payback speed, total savings, and complexity as relative high/medium/low bar ratings.
+- Converted the Scenarios tab view control from a two-state switch to a three-option segmented control while preserving the existing table and card views.
+
 ## 2026-07-04 - Codex (GPT-5) financial projection charts
 
 - Added one-time cost waterfall, payback timeline, and 10-year cumulative cash-flow charts to the selected retrofit Financials tab.

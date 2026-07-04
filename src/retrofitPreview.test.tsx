@@ -1216,11 +1216,15 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).not.toContain("label=\"Help available\"");
     expect(workspaceSource).toContain("Scenario comparison");
     expect(workspaceSource).toContain("scenario-view-toggle");
-    expect(workspaceSource).toContain("scenario-view-switch");
+    expect(workspaceSource).toContain("scenario-view-option");
+    expect(workspaceSource).toContain("[\"tradeoffs\", \"Tradeoffs\"]");
     expect(workspaceSource).toContain("showScenarioMatrix");
+    expect(workspaceSource).toContain("showScenarioTradeoffs");
     expect(workspaceSource).toContain("Key outcomes");
     expect(workspaceSource).toContain("scenario-comparison-recommended-ribbon");
     expect(workspaceSource).toContain("isRecommended");
+    expect(workspaceSource).toContain("scenario-tradeoff-card");
+    expect(workspaceSource).toContain("Selected tradeoff profile");
     expect(workspaceSource).toContain("estimate-scenario-grid");
     expect(workspaceSource).toContain("Selected scenario details");
     expect(workspaceSource).toContain("Edit scenario");
