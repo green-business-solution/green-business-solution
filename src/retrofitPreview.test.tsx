@@ -521,8 +521,8 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const handleUploadIndex = source.indexOf("function handleUploadBills()");
-    const handleEnterIndex = source.indexOf("function handleEnterDetails()");
-    const uploadHandlerSource = source.slice(handleUploadIndex, handleEnterIndex);
+    const uploadHandlerEndIndex = source.indexOf("function toggleOpportunity", handleUploadIndex);
+    const uploadHandlerSource = source.slice(handleUploadIndex, uploadHandlerEndIndex);
     const previewReturnIndex = source.indexOf("return (", source.indexOf("function RetrofitRecommendationsPreview"));
     const mainCloseIndex = source.indexOf("</main>", previewReturnIndex);
     const modalMountIndex = source.indexOf("<BillUploadModal", previewReturnIndex);
@@ -552,7 +552,6 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Selected and included");
     expect(source).toContain("Selected but pending");
     expect(source).toContain("Likely not eligible");
-    expect(source).toContain("Questions to answer");
     expect(source).toContain("Prepare application");
     expect(source).toContain("Open program source");
     expect(source).toContain("Operating Savings");
@@ -580,16 +579,14 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("opportunityAffectsMetric");
     expect(source).toContain("eligibleCostBasis");
     expect(source).toContain("valueCap");
-    expect(source).toContain("Confirm all estimates");
-    expect(source).toContain("Save for preview");
     expect(source).toContain("AddedRetrofitPlanSnapshot");
     expect(source).toContain("includedOpportunityIds");
     expect(source).toContain("pendingOpportunityIds");
     expect(source).toContain("financialSnapshot");
     expect(source).toContain("recalculationStatus");
     expect(source).toContain("Financing preview");
-    expect(source).toContain("Add quote");
-    expect(source).toContain("Add tax/entity info");
+    expect(source).not.toContain("data-workspace-panel=\"requirements\"");
+    expect(source).not.toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
     expect(source).toContain("/api/admin/fake-client-options");
@@ -656,7 +653,6 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Panel</span>");
     expect(source).toContain("data-workspace-tab");
     expect(source).toContain("data-workspace-panel=\"environmental\"");
-    expect(source).toContain("{ key: \"requirements\", label: \"Requirements\" }");
     expect(source).toContain("{ key: \"more\", label: \"More\" }");
   });
 
@@ -927,7 +923,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".workspace-panel");
     expect(css).toContain(".overview-command-grid");
     expect(css).toContain(".overview-opportunity-preview");
-    expect(css).toContain(".requirements-worklist");
+    expect(css).not.toContain(".requirements-worklist");
     expect(css).toContain(".sticky-add-plan-footer");
     expect(css).toContain(".selected-scenario-rows");
     expect(css).toContain(".compact-detail-row");

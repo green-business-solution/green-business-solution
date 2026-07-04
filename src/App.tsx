@@ -7269,7 +7269,6 @@ export function RetrofitRecommendationsPreview({
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
   const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
-  const [confirmedAssumptionIds, setConfirmedAssumptionIds] = useState<Record<string, boolean>>({});
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
   const [detailAnswers, setDetailAnswers] = useState<Record<string, string>>({});
   const [nextActionStatuses, setNextActionStatuses] = useState<Record<string, NextBestAction["status"]>>({});
@@ -7283,7 +7282,7 @@ export function RetrofitRecommendationsPreview({
   const [lastAddedRetrofitId, setLastAddedRetrofitId] = useState<string | null>(null);
   const [pickerViewMode, setPickerViewMode] = useState<"grid" | "panel">("grid");
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
-  const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview" | "requirements">("overview");
+  const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview">("overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
@@ -7415,14 +7414,6 @@ export function RetrofitRecommendationsPreview({
     setRefinementMessage(`Upload bills to unlock ${retrofit.name} estimates.`);
   }
 
-  function handleEnterDetails() {
-    setRefinementMessage("Confirmed details in this preview help explain what inputs still need review.");
-    const requirementsTab = typeof document !== "undefined" ? document.querySelector<HTMLButtonElement>("[data-workspace-tab='requirements']") : null;
-    requirementsTab?.click();
-    const element = typeof document !== "undefined" ? document.querySelector(".retrofit-preview-card-active") : null;
-    element?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   function toggleOpportunity(opportunityId: string) {
     const owningRetrofit = preview.retrofits.find((retrofit) =>
       retrofit.opportunities.some((opportunity) => opportunity.id === opportunityId)
@@ -7432,19 +7423,6 @@ export function RetrofitRecommendationsPreview({
       [opportunityId]: !current[opportunityId]
     }));
     if (owningRetrofit) markRetrofitDirty(owningRetrofit.id);
-  }
-
-  function toggleAssumption(assumptionId: string) {
-    setConfirmedAssumptionIds((current) => confirmSingleEstimateState(current, assumptionId));
-    const owningRetrofit = preview.retrofits.find((retrofit) =>
-      retrofit.editableAssumptions.some((assumption) => assumption.id === assumptionId)
-    );
-    if (owningRetrofit) markRetrofitDirty(owningRetrofit.id);
-  }
-
-  function confirmAll(retrofit: RetrofitPreviewCard) {
-    setConfirmedAssumptionIds((current) => confirmAllEstimateState(current, retrofit.editableAssumptions));
-    markRetrofitDirty(retrofit.id);
   }
 
   function selectScenario(retrofit: RetrofitPreviewCard, scenarioId: string) {
@@ -7537,8 +7515,7 @@ export function RetrofitRecommendationsPreview({
       handleUploadBillsForRetrofit(retrofit);
       return;
     }
-    const nextWorkspaceTab = readiness.questionsComplete ? "overview" : "requirements";
-    setActiveRetrofitInitialWorkspaceTab(nextWorkspaceTab);
+    setActiveRetrofitInitialWorkspaceTab("overview");
     if (retrofitId === activeRetrofitId) return;
     if (activeRetrofit && dirtyRetrofitIds[activeRetrofit.id] && !addedRetrofitPlans[activeRetrofit.id]) {
       setPendingTabRetrofitId(retrofitId);
@@ -7612,16 +7589,8 @@ export function RetrofitRecommendationsPreview({
                   </div>
                 </div>
                 <RetrofitPreviewCardView
-                  confirmedAssumptionIds={confirmedAssumptionIds}
-                  detailAnswers={detailAnswers}
                   key={activeRetrofit.id}
                   initialWorkspaceTab={activeRetrofitInitialWorkspaceTab}
-                  onConfirmAll={() => confirmAll(activeRetrofit)}
-                  onConfirmAssumption={toggleAssumption}
-                  onDetailAnswerChange={(questionId, value) => {
-                    setDetailAnswers((current) => ({ ...current, [questionId]: value }));
-                    markRetrofitDirty(activeRetrofit.id);
-                  }}
                   onAddToPlan={() => addRetrofitToPlan(activeRetrofit)}
                   onExploreFinancing={() => setFinancingRetrofit(activeRetrofit)}
                   onReviewNextRetrofit={() => {
@@ -8923,14 +8892,9 @@ function formatCompactCents(value: number | null | undefined) {
 }
 
 function RetrofitPreviewCardView({
-  confirmedAssumptionIds,
   credential,
-  detailAnswers,
   initialWorkspaceTab = "overview",
   onAddToPlan,
-  onConfirmAll,
-  onConfirmAssumption,
-  onDetailAnswerChange,
   onExploreFinancing,
   onReviewNextRetrofit,
   onSelectScenario,
@@ -8941,14 +8905,9 @@ function RetrofitPreviewCardView({
   selectedScenarioId,
   selectedOpportunityIds
 }: {
-  confirmedAssumptionIds: Record<string, boolean>;
   credential?: AuthCredential | null;
-  detailAnswers: Record<string, string>;
-  initialWorkspaceTab?: "overview" | "requirements";
+  initialWorkspaceTab?: "overview";
   onAddToPlan: () => void;
-  onConfirmAll: () => void;
-  onConfirmAssumption: (assumptionId: string) => void;
-  onDetailAnswerChange: (questionId: string, value: string) => void;
   onExploreFinancing: () => void;
   onReviewNextRetrofit: () => void;
   onSelectScenario: (scenarioId: string) => void;
@@ -8959,7 +8918,7 @@ function RetrofitPreviewCardView({
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "requirements" | "more">(initialWorkspaceTab);
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "more">(initialWorkspaceTab);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     why: false,
     financial: true,
@@ -8968,9 +8927,6 @@ function RetrofitPreviewCardView({
     scenarioDetails: true,
     opportunities: true,
     operatingSavings: false,
-    assumptions: false,
-    details: false,
-    missing: retrofit.missingInfo.length > 0,
     nextActions: false
   });
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(false);
@@ -9122,7 +9078,6 @@ function RetrofitPreviewCardView({
     { key: "opportunities", label: "Opportunities" },
     { key: "environmental", label: "Environmental Impact" },
     { key: "scenarios", label: "Scenarios" },
-    { key: "requirements", label: "Requirements" },
     { key: "more", label: "More" }
   ] as const;
   const sectionIds = {
@@ -9131,14 +9086,10 @@ function RetrofitPreviewCardView({
     scenarios: `${retrofit.id}-scenarios`,
     scenarioDetails: `${retrofit.id}-scenario-details`,
     opportunities: `${retrofit.id}-opportunities`,
-    missing: `${retrofit.id}-missing`,
     operatingSavings: `${retrofit.id}-savings`,
-    assumptions: `${retrofit.id}-assumptions`,
-    details: `${retrofit.id}-details`,
     why: `${retrofit.id}-why`,
     nextActions: `${retrofit.id}-actions`
   } as const;
-  const assumptionsConfirmedCount = retrofit.editableAssumptions.filter((assumption) => confirmedAssumptionIds[assumption.id] || assumption.confirmed).length;
   const pendingValueCount = selectedPendingOpportunities.length + pendingOperatingSavings.length;
   const needsConfirmationCount = retrofit.opportunities.filter((opportunity) =>
     opportunity.requiredInfo.includes("utility territory confirmation") ||
@@ -9159,7 +9110,6 @@ function RetrofitPreviewCardView({
     billDataLocked ? null : displayedUpfrontFinancialIncentive,
     selectedIncludedOpportunities.length ? "Value not estimated yet" : "None included"
   );
-  const topBlocker = retrofit.missingInfo[0] ? capitalizeLabel(retrofit.missingInfo[0]) : "None";
   const overviewOpportunityRows = [
     ...selectedIncludedOpportunities,
     ...selectedPendingOpportunities,
@@ -9178,8 +9128,6 @@ function RetrofitPreviewCardView({
   const opportunitySummary = `${retrofit.opportunities.length} found · ${selectedCount} selected`;
   const environmentalSummary = `${displayedEnvironmentalImpact.overall.displayValue} · ${displayedEnvironmentalImpact.overall.confidence}`;
   const savingsSummary = includedOperatingSavings.length ? `${includedOperatingSavings.length} estimate${includedOperatingSavings.length > 1 ? "s" : ""}` : "Needs bill";
-  const assumptionsSummary = `${retrofit.editableAssumptions.length} inputs · ${Math.max(0, retrofit.editableAssumptions.length - assumptionsConfirmedCount)} unconfirmed`;
-  const missingSummary = retrofit.missingInfo.length ? `${retrofit.missingInfo.length} blocker${retrofit.missingInfo.length > 1 ? "s" : ""}` : "Ready for review";
   const actionsSummary = retrofit.recommendedNextStep || "Review next steps";
   const selectedScenarioOpportunityCount = selectedScenario
     ? selectedScenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id]).length
@@ -9271,12 +9219,6 @@ function RetrofitPreviewCardView({
     setOpenSections((current) => ({ ...current, [section]: !current[section] }));
   }
 
-  function handleUploadBillShortcut() {
-    if (typeof window !== "undefined") {
-      window.open(pathForRoute("scan-energy-data"), "_blank", "noopener,noreferrer");
-    }
-  }
-
   function handlePrimaryPlanAction() {
     if (planState === "Added to plan") {
       if (readyApplicationPrepOpportunity) setApplicationPrepOpportunity(readyApplicationPrepOpportunity);
@@ -9317,10 +9259,6 @@ function RetrofitPreviewCardView({
           </div>
           <div className="retrofit-card-actions">
             <button onClick={onAddToPlan} type="button">Add this retrofit to plan</button>
-            <button className="secondary-button" onClick={handleUploadBillShortcut} type="button">Upload bill</button>
-            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Enter details</button>
-            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Add quote</button>
-            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Add tax/entity info</button>
             <button className="secondary-button" onClick={onExploreFinancing} type="button">Explore financing</button>
           </div>
         </div>
@@ -9352,12 +9290,6 @@ function RetrofitPreviewCardView({
             <strong>{selectedCount.toLocaleString()} selected / {retrofit.opportunities.length.toLocaleString()} found</strong>
             <small>Included: {includedIncentiveSnapshot}</small>
             <em>Review opportunities</em>
-          </button>
-          <button className="command-summary-card" onClick={() => openWorkspaceTab("requirements")} type="button">
-            <span>Missing blockers</span>
-            <strong>{retrofit.missingInfo.length.toLocaleString()} blockers</strong>
-            <small>{topBlocker}</small>
-            <em>Resolve</em>
           </button>
           <button className="command-summary-card" onClick={() => openWorkspaceTab("scenarios")} type="button">
             <span>Scenario</span>
@@ -9406,12 +9338,6 @@ function RetrofitPreviewCardView({
               <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("opportunities")} type="button">Review opportunities</button>
             </article>
             <article className="overview-card">
-              <span>Missing blockers</span>
-              <strong>{retrofit.missingInfo.length} blocker{retrofit.missingInfo.length === 1 ? "" : "s"}</strong>
-              <small>{topBlocker}</small>
-              <button className="secondary-button small-action-button" onClick={() => openWorkspaceTab("requirements")} type="button">Review blockers</button>
-            </article>
-            <article className="overview-card">
               <span>Scenario</span>
               <strong>{selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Choose scenario"}</strong>
               <small>{selectedScenarioOpportunityCount} selected opportunities</small>
@@ -9430,10 +9356,6 @@ function RetrofitPreviewCardView({
             <div>
               <span>Pending values</span>
               <strong>{pendingValueCount} item{pendingValueCount === 1 ? "" : "s"}</strong>
-            </div>
-            <div>
-              <span>Blockers</span>
-              <strong>{retrofit.missingInfo.length}</strong>
             </div>
           </section>
           <section className="overview-opportunity-preview">
@@ -9466,7 +9388,6 @@ function RetrofitPreviewCardView({
           </section>
           <div className="overview-action-row">
             <button disabled={planState === "Added to plan" && !readyApplicationPrepOpportunity} onClick={handlePrimaryPlanAction} type="button">{actionBarPrimary}</button>
-            <button className="secondary-button" onClick={() => openWorkspaceTab("requirements")} type="button">Review blockers</button>
             <button className="secondary-button" onClick={() => openWorkspaceTab("opportunities")} type="button">View opportunities</button>
           </div>
         </section>
@@ -9515,7 +9436,7 @@ function RetrofitPreviewCardView({
         <div>
           <strong>{selectedScenario?.name || "No scenario selected"}</strong>
           <p>
-            {selectedScenarioOpportunityCount} selected opportunities · Incentive {formatMaybeCents(displayedUpfrontFinancialIncentive, selectedScenarioOpportunityCount ? "Not included yet" : "No selected incentives")} · Net cost {formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} · {retrofit.missingInfo.length} blockers
+            {selectedScenarioOpportunityCount} selected opportunities · Incentive {formatMaybeCents(displayedUpfrontFinancialIncentive, selectedScenarioOpportunityCount ? "Not included yet" : "No selected incentives")} · Net cost {formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")}
           </p>
           <small>{actionBarHelper}</small>
         </div>
@@ -9527,8 +9448,8 @@ function RetrofitPreviewCardView({
           >
             {actionBarPrimary}
           </button>
-          <button className="secondary-button" onClick={planState === "Added to plan" ? onReviewNextRetrofit : () => openWorkspaceTab("requirements")} type="button">
-            {planState === "Added to plan" ? "Review next retrofit" : "Review missing info"}
+          <button className="secondary-button" onClick={planState === "Added to plan" ? onReviewNextRetrofit : () => openWorkspaceTab("opportunities")} type="button">
+            {planState === "Added to plan" ? "Review next retrofit" : "Review opportunities"}
           </button>
         </div>
       </section>
@@ -9873,102 +9794,6 @@ function RetrofitPreviewCardView({
           )}
         </div>
       </PreviewAccordionSection>
-      ) : null}
-
-      {activeWorkspaceTab === "requirements" ? (
-      <section className="workspace-panel requirements-workspace-panel" data-workspace-panel="requirements">
-        <div className="overview-panel-header">
-          <div>
-            <p className="eyebrow">Requirements</p>
-            <h3>Missing info, assumptions, and details</h3>
-          </div>
-          <button className="secondary-button small-action-button" onClick={onConfirmAll} type="button">Confirm all estimates</button>
-        </div>
-        <div className="requirements-summary-strip">
-          <DetailItem label="Blockers" value={`${retrofit.missingInfo.length}`} />
-          <DetailItem label="Assumptions" value={`${retrofit.editableAssumptions.length}`} />
-          <DetailItem label="Unconfirmed" value={`${Math.max(0, retrofit.editableAssumptions.length - assumptionsConfirmedCount)}`} />
-          <DetailItem label="Questions" value={`${retrofit.detailQuestions.length}`} />
-        </div>
-        <section className="requirements-worklist">
-          <h4>Missing information</h4>
-          {retrofit.missingInfo.length ? (
-            retrofit.missingInfo.map((item) => {
-              const details = missingInfoGuidance(item);
-              return (
-                <article className="requirements-row" key={item}>
-                  <div>
-                    <strong>{capitalizeLabel(item)}</strong>
-                    <small>{details.reason}</small>
-                  </div>
-                  <span>Affects: {details.affects}</span>
-                  <button className="secondary-button small-action-button" type="button">{details.action}</button>
-                </article>
-              );
-            })
-          ) : (
-            <p className="compact-empty">Missing information: None flagged.</p>
-          )}
-        </section>
-        <section className="requirements-worklist">
-          <h4>Assumptions to confirm</h4>
-          {retrofit.editableAssumptions.map((assumption) => {
-            const confirmed = confirmedAssumptionIds[assumption.id] || assumption.confirmed;
-            return (
-              <article className="requirements-row assumption-row" key={assumption.id}>
-                <label>
-                  <span>{assumption.label}</span>
-                  <input aria-label={assumption.label} defaultValue={String(assumption.value)} />
-                </label>
-                <span>{assumption.unit || "Unit pending"} · {assumption.sourceLabel || estimateSourceLabel(assumption.source)} · {assumption.confidenceLabel || "Needs review"}</span>
-                <span>Affects: {(assumption.affects || []).join(", ") || "Estimate completeness"}</span>
-                <div className="editable-estimate-actions">
-                  <button className="secondary-button small-action-button" onClick={() => onConfirmAssumption(assumption.id)} type="button">
-                    {confirmed ? "Confirmed for this preview" : "Confirm"}
-                  </button>
-                  <button className="secondary-button small-action-button" type="button">Edit</button>
-                </div>
-              </article>
-            );
-          })}
-        </section>
-        <section className="requirements-worklist">
-          <h4>Questions to answer</h4>
-          {retrofit.detailQuestions.map((question) => (
-            <label className="requirements-row question-row" key={question.id}>
-              <div>
-                <strong>{question.question}</strong>
-                <small>{question.whyItMatters}</small>
-              </div>
-              <span>Affects: {(question.affects || []).join(", ") || "Estimate completeness"}</span>
-              {question.answerType === "select" ? (
-                <select onChange={(event) => onDetailAnswerChange(question.id, event.target.value)} value={detailAnswers[question.id] || ""}>
-                  <option value="">Select</option>
-                  {(question.options || []).map((option) => (
-                    <option key={option}>{option}</option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  onChange={(event) => onDetailAnswerChange(question.id, event.target.value)}
-                  type={question.answerType === "number" ? "number" : "text"}
-                  value={detailAnswers[question.id] || ""}
-                />
-              )}
-              <button
-                className="secondary-button small-action-button"
-                onClick={(event) => {
-                  event.preventDefault();
-                  onDetailAnswerChange(question.id, detailAnswers[question.id] || "");
-                }}
-                type="button"
-              >
-                Save for preview
-              </button>
-            </label>
-          ))}
-        </section>
-      </section>
       ) : null}
 
       {activeWorkspaceTab === "more" ? (
