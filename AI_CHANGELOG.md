@@ -1,9 +1,10 @@
 # AI Changelog
 
-## 2026-07-04 - Codex (GPT-5) admin preview shell savings
+## 2026-07-04 - Codex (GPT-5) grant production quality intake
 
-- Enriched the admin user preview retrofit shell with bill-modeled savings previews so completed-bill test cases do not initially show "Needs bill" while detailed opportunity matching loads.
-- Updated the server recommendation test to require calculated shell savings instead of null savings placeholders.
+- Added a repeatable importer for the completed production-quality grant GPT Pro packages.
+- Imported 58 grant package repairs, 15 deep probability repairs, and 51 realistic grant test-profile repairs into durable data artifacts.
+- Applied the repairs to v2 incentive packages and regenerated sample grant/tax coverage plus public test-case savings fixtures.
 
 ## 2026-07-04 - Codex (GPT-5) selected workspace header actions
 

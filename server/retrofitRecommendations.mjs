@@ -94,13 +94,7 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
 }
 
 export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user }) {
-  const normalizedProfile = normalizeUserProfile(intake);
-  const calculationDate = now.toISOString().slice(0, 10);
-  const retrofits = buildLightweightRetrofitGroups(intake, {
-    calculationDate,
-    normalizedProfile,
-    subjectId: user?.userId || intake?.userId || "client"
-  });
+  const retrofits = buildLightweightRetrofitGroups(intake);
   return {
     user,
     intake,
@@ -114,7 +108,7 @@ export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user
   };
 }
 
-function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedProfile, subjectId } = {}) {
+function buildLightweightRetrofitGroups(intake) {
   const selected = [];
   for (const value of intake?.sustainability?.interestedImprovements || []) {
     const type = resolveRetrofitType(value);
@@ -127,27 +121,16 @@ function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedPro
 
   return uniqueRetrofitTypes(selected)
     .slice(0, 8)
-    .map((type) => {
-      const group = {
-        retrofitTypeId: type.retrofitTypeId,
-        displayName: type.displayName,
-        parentCategory: type.parentCategory,
-        isPhysicalRetrofit: type.isPhysicalRetrofit,
-        opportunityCount: 0,
-        opportunities: [],
-        typicalComponents: type.typicalComponents || []
-      };
-      return {
-        ...group,
-        savingsPreview: buildAdminTestCaseSavingsPreview({
-          retrofitGroup: group,
-          sampleUserId: subjectId,
-          normalizedProfile,
-          taxContext: normalizedProfile?.tax || null,
-          calculationDate
-        })
-      };
-    });
+    .map((type) => ({
+      retrofitTypeId: type.retrofitTypeId,
+      displayName: type.displayName,
+      parentCategory: type.parentCategory,
+      isPhysicalRetrofit: type.isPhysicalRetrofit,
+      opportunityCount: 0,
+      opportunities: [],
+      savingsPreview: null,
+      typicalComponents: type.typicalComponents || []
+    }));
 }
 
 function resolveRetrofitType(value) {

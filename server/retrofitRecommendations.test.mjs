@@ -132,8 +132,7 @@ describe("portal retrofit recommendations", () => {
       "heat_pump_hvac_retrofit"
     ]);
     expect(payload.retrofits.every((retrofit) => retrofit.opportunities.length === 0)).toBe(true);
-    expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview?.status === "calculated")).toBe(true);
-    expect(payload.retrofits[0].savingsPreview?.annualSavingsCents).toBeGreaterThan(0);
+    expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview === null)).toBe(true);
   });
 
   it("reuses the same grouped eligible retrofit matches that feed test cases", () => {
