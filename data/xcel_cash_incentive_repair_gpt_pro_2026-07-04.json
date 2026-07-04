@@ -1,0 +1,1493 @@
+{
+  "schemaVersion": "retrofi_xcel_cash_incentive_repair_gpt_pro_intake.v1",
+  "parsedAt": "2026-07-04T22:03:50.327Z",
+  "sourceFile": "GPT Pro Work/xcel-cash-incentive-repair-2026-07-04/output_001_xcel-cash-incentive-repair.md",
+  "trailingCharactersIgnored": 802,
+  "repair": {
+    "schemaVersion": "retrofi_single_cash_incentive_repair.v1",
+    "researchedAt": "2026-07-04",
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+    "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+    "recommendedAction": "form_input_required",
+    "availabilityStatus": "active",
+    "sourceConfidence": "medium",
+    "estimateConfidence": "medium",
+    "cashValueClassification": "rebate",
+    "programGeography": {
+      "country": "US",
+      "states": [
+        "CO"
+      ],
+      "utilityTerritories": [
+        "Xcel Energy Colorado"
+      ],
+      "notes": "Treat DSIRE 1581 as Colorado-only. DSIRE search results identify this record as a Colorado Xcel residential efficiency rebate program, while separate DSIRE records exist for other Xcel geographies and should not be merged into this package. ([DSIRE][1]) ([DSIRE][2]) ([DSIRE][3])"
+    },
+    "overallDecision": {
+      "canBeProductionFormGated": true,
+      "shouldRemainSuppressed": false,
+      "shouldArchiveOrExclude": false,
+      "decisionRationale": "This can move from blanket suppression to production form-gated logic. Official Xcel sources confirm active Colorado heat-pump rebate pages, current heat-pump application deadlines, a digital rebate application path, and official regulatory heat-pump rate/timing changes. The exact 2025-2026 rebate table was located in an Xcel-branded current PDF hosted by a contractor rather than on an official Xcel static URL, so source confidence is medium rather than high; however, the current table is corroborated by official Xcel program pages and official Xcel regulatory filings for the core rates and two-year combo-bonus rule. The prior blanket $600 default must be removed and represented only as a separate conditional bonus. ([Xcel Energy][4]) ([Xcel Energy][5])    "
+    },
+    "measureRepairs": [
+      {
+        "measureId": "air_sealing_standard_xcel_heating_customer",
+        "measureName": "Air sealing for Xcel electric-heat or natural-gas heating customer",
+        "retrofitTypeIds": [
+          "air_sealing_weatherization"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "capped_percent_of_eligible_cost",
+        "formulaRepair": {
+          "status": "needs_quote_or_invoice",
+          "formulaText": "30% of eligible air-sealing project cost, capped at $400, for a Colorado residential customer who heats the home with electricity or natural gas provided by Xcel Energy and meets the 20% CFM50 reduction requirement.",
+          "formulaExpression": "min(eligible_project_cost_cents * 0.30, 40000)",
+          "amountCents": null,
+          "costSharePercent": 30,
+          "maxAwardCents": 40000,
+          "perUnitRates": [],
+          "caps": {
+            "maxAwardCents": 40000,
+            "maxPercentOfEligibleCost": 30,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential electric or gas account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms customer and service-territory eligibility."
+            },
+            {
+              "inputKey": "home_heating_service_type",
+              "label": "Home heating service provided by Xcel Energy",
+              "valueType": "enum",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates the heating-customer formula from the cooling-only formula."
+            },
+            {
+              "inputKey": "eligible_project_cost_cents",
+              "label": "Eligible air-sealing project cost",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The rebate is a capped percentage of project cost."
+            },
+            {
+              "inputKey": "cfm50_reduction_percent",
+              "label": "Modeled or verified CFM50 reduction percentage",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires a 20% reduction in CFM50."
+            },
+            {
+              "inputKey": "xcel_participating_contractor",
+              "label": "Xcel participating contractor used",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The Xcel summary indicates participating-contractor requirements for these measures."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account and heating-customer eligibility.",
+            "Verify air sealing meets the 20% CFM50 reduction requirement.",
+            "Calculate 30% of eligible cost.",
+            "Cap the result at $400.",
+            "Exclude from user-facing totals until cost and eligibility inputs are present."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "air-sealing project documentation",
+            "CFM50 reduction documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists the air-sealing standard for heating customers as 20% CFM50 reduction and 30% of project cost capped at $400; Xcel's digital application requires invoices and equipment/specification documents.  ([Xcel Energy][6])",
+        "reasoningNotes": "The prior $200 heating-customer cap is superseded for current 2025-2026 logic by the current Xcel-branded summary. Because the full current table was not found on an official Xcel-hosted PDF URL, keep medium source confidence and show no amount until quote/invoice cost is known."
+      },
+      {
+        "measureId": "wall_insulation_standard_xcel_heating_customer",
+        "measureName": "Wall insulation for Xcel electric-heat or natural-gas heating customer",
+        "retrofitTypeIds": [
+          "insulation_upgrade"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "capped_percent_of_eligible_cost",
+        "formulaRepair": {
+          "status": "needs_quote_or_invoice",
+          "formulaText": "30% of eligible wall-insulation project cost, capped at $350, for a Colorado residential customer who heats the home with electricity or natural gas provided by Xcel Energy and meets the empty-cavity-to-R13-or-greater requirement.",
+          "formulaExpression": "min(eligible_project_cost_cents * 0.30, 35000)",
+          "amountCents": null,
+          "costSharePercent": 30,
+          "maxAwardCents": 35000,
+          "perUnitRates": [],
+          "caps": {
+            "maxAwardCents": 35000,
+            "maxPercentOfEligibleCost": 30,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential electric or gas account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms customer and service-territory eligibility."
+            },
+            {
+              "inputKey": "home_heating_service_type",
+              "label": "Home heating service provided by Xcel Energy",
+              "valueType": "enum",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates the heating-customer formula from the cooling-only formula."
+            },
+            {
+              "inputKey": "eligible_project_cost_cents",
+              "label": "Eligible wall-insulation project cost",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The rebate is a capped percentage of project cost."
+            },
+            {
+              "inputKey": "pre_job_wall_cavity_status",
+              "label": "Pre-job wall cavity condition",
+              "valueType": "enum",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires a pre-job empty wall cavity."
+            },
+            {
+              "inputKey": "post_job_wall_r_value",
+              "label": "Post-job wall R-value",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires post-job R-value of 13 or greater."
+            },
+            {
+              "inputKey": "xcel_participating_contractor",
+              "label": "Xcel participating contractor used",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The Xcel summary indicates participating-contractor requirements for these measures."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account and heating-customer eligibility.",
+            "Verify wall insulation starts from an empty cavity and reaches R-13 or greater.",
+            "Calculate 30% of eligible cost.",
+            "Cap the result at $350.",
+            "Exclude from user-facing totals until cost and eligibility inputs are present."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "wall-insulation scope documentation",
+            "pre-job and post-job R-value documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists wall insulation for Xcel heating customers as 30% of project cost capped at $350, with an empty-cavity and post-job R-13-or-greater standard. ",
+        "reasoningNotes": "This row is deterministic after Xcel service/fuel, scope, R-value, contractor, and eligible cost inputs are supplied."
+      },
+      {
+        "measureId": "attic_insulation_standard_xcel_heating_customer",
+        "measureName": "Attic insulation for Xcel electric-heat or natural-gas heating customer",
+        "retrofitTypeIds": [
+          "insulation_upgrade"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "capped_percent_of_eligible_cost",
+        "formulaRepair": {
+          "status": "needs_quote_or_invoice",
+          "formulaText": "30% of eligible attic-insulation project cost, capped at $500, for a Colorado residential customer who heats the home with electricity or natural gas provided by Xcel Energy and meets the pre-job R-value under 24 and post-job R-value 60 or greater requirement.",
+          "formulaExpression": "min(eligible_project_cost_cents * 0.30, 50000)",
+          "amountCents": null,
+          "costSharePercent": 30,
+          "maxAwardCents": 50000,
+          "perUnitRates": [],
+          "caps": {
+            "maxAwardCents": 50000,
+            "maxPercentOfEligibleCost": 30,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential electric or gas account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms customer and service-territory eligibility."
+            },
+            {
+              "inputKey": "home_heating_service_type",
+              "label": "Home heating service provided by Xcel Energy",
+              "valueType": "enum",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates the heating-customer formula from the cooling-only formula."
+            },
+            {
+              "inputKey": "eligible_project_cost_cents",
+              "label": "Eligible attic-insulation project cost",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The rebate is a capped percentage of project cost."
+            },
+            {
+              "inputKey": "pre_job_attic_r_value",
+              "label": "Pre-job attic R-value",
+              "valueType": "number",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires pre-job R-value below 24."
+            },
+            {
+              "inputKey": "post_job_attic_r_value",
+              "label": "Post-job attic R-value",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires post-job R-value of 60 or greater."
+            },
+            {
+              "inputKey": "xcel_participating_contractor",
+              "label": "Xcel participating contractor used",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The Xcel summary indicates participating-contractor requirements for these measures."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account and heating-customer eligibility.",
+            "Verify attic insulation begins below R-24 and reaches R-60 or greater.",
+            "Calculate 30% of eligible cost.",
+            "Cap the result at $500.",
+            "Exclude Whole Home Efficiency attic pay-for-performance logic unless the separate WHE workflow is selected."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "attic-insulation scope documentation",
+            "pre-job and post-job R-value documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists attic insulation for Xcel heating customers as 30% of project cost capped at $500, with pre-job R-value under 24 and post-job R-value 60 or greater. ",
+        "reasoningNotes": "The prior $400 attic cap and older R-value thresholds should be replaced for this standard non-WHE row. WHE attic logic is explicitly different and should remain outside this repair."
+      },
+      {
+        "measureId": "air_sealing_cooling_only_xcel_electric_customer",
+        "measureName": "Air sealing for Xcel electric cooling-only customer",
+        "retrofitTypeIds": [
+          "air_sealing_weatherization"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "fixed_amount",
+        "formulaRepair": {
+          "status": "calculable_with_user_inputs",
+          "formulaText": "$15 fixed rebate for eligible air sealing when the customer has Xcel electric service, uses central AC, and heating fuel is not provided by Xcel Energy.",
+          "formulaExpression": "eligible_cooling_only_air_sealing ? 1500 : 0",
+          "amountCents": 1500,
+          "costSharePercent": null,
+          "maxAwardCents": 1500,
+          "perUnitRates": [
+            {
+              "metric": "item",
+              "rateCents": 1500,
+              "unit": "per eligible air-sealing project",
+              "equipmentCriteria": "20% reduction in CFM50; Xcel electric service with central AC; heating fuel not provided by Xcel Energy."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": 1500,
+            "maxPercentOfEligibleCost": null,
+            "maxUnits": 1,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_electric_account",
+              "label": "Xcel Energy Colorado residential electric account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms electric-service eligibility."
+            },
+            {
+              "inputKey": "central_ac_present",
+              "label": "Central AC in use",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Cooling-only weatherization rows require central AC."
+            },
+            {
+              "inputKey": "heating_fuel_not_provided_by_xcel",
+              "label": "Heating fuel not provided by Xcel Energy",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates cooling-only eligibility from the heating-customer formula."
+            },
+            {
+              "inputKey": "cfm50_reduction_percent",
+              "label": "Modeled or verified CFM50 reduction percentage",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires a 20% reduction in CFM50."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Xcel Colorado electric service, central AC, and non-Xcel heating fuel.",
+            "Verify air sealing meets the 20% CFM50 reduction requirement.",
+            "Return the fixed $15 rebate.",
+            "Do not apply the heating-customer percentage-and-cap formula."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel electric account/service address",
+            "invoice or receipt",
+            "central AC and heating-fuel eligibility evidence",
+            "CFM50 reduction documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists the cooling-only air-sealing row at $15 with the Xcel electric, central AC, and non-Xcel heating-fuel eligibility condition. ",
+        "reasoningNotes": "This is a small fixed row and should not inherit any percentage-of-cost or $600 bonus behavior."
+      },
+      {
+        "measureId": "wall_insulation_cooling_only_xcel_electric_customer",
+        "measureName": "Wall insulation for Xcel electric cooling-only customer",
+        "retrofitTypeIds": [
+          "insulation_upgrade"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "fixed_amount",
+        "formulaRepair": {
+          "status": "calculable_with_user_inputs",
+          "formulaText": "$25 fixed rebate for eligible wall insulation when the customer has Xcel electric service, uses central AC, and heating fuel is not provided by Xcel Energy.",
+          "formulaExpression": "eligible_cooling_only_wall_insulation ? 2500 : 0",
+          "amountCents": 2500,
+          "costSharePercent": null,
+          "maxAwardCents": 2500,
+          "perUnitRates": [
+            {
+              "metric": "item",
+              "rateCents": 2500,
+              "unit": "per eligible wall-insulation project",
+              "equipmentCriteria": "Pre-job empty wall cavity and post-job R-value of 13 or greater; Xcel electric service with central AC; heating fuel not provided by Xcel Energy."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": 2500,
+            "maxPercentOfEligibleCost": null,
+            "maxUnits": 1,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_electric_account",
+              "label": "Xcel Energy Colorado residential electric account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms electric-service eligibility."
+            },
+            {
+              "inputKey": "central_ac_present",
+              "label": "Central AC in use",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Cooling-only weatherization rows require central AC."
+            },
+            {
+              "inputKey": "heating_fuel_not_provided_by_xcel",
+              "label": "Heating fuel not provided by Xcel Energy",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates cooling-only eligibility from the heating-customer formula."
+            },
+            {
+              "inputKey": "pre_job_wall_cavity_status",
+              "label": "Pre-job wall cavity condition",
+              "valueType": "enum",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires a pre-job empty wall cavity."
+            },
+            {
+              "inputKey": "post_job_wall_r_value",
+              "label": "Post-job wall R-value",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires post-job R-value of 13 or greater."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Xcel Colorado electric service, central AC, and non-Xcel heating fuel.",
+            "Verify wall insulation starts from an empty cavity and reaches R-13 or greater.",
+            "Return the fixed $25 rebate.",
+            "Do not apply the heating-customer percentage-and-cap formula."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel electric account/service address",
+            "invoice or receipt",
+            "central AC and heating-fuel eligibility evidence",
+            "wall-insulation scope documentation",
+            "pre-job and post-job R-value documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists the cooling-only wall-insulation row at $25 with the same Xcel electric, central AC, and non-Xcel heating-fuel eligibility structure. ",
+        "reasoningNotes": "This row remains valid as a separate small fixed rebate."
+      },
+      {
+        "measureId": "attic_insulation_cooling_only_xcel_electric_customer",
+        "measureName": "Attic insulation for Xcel electric cooling-only customer",
+        "retrofitTypeIds": [
+          "insulation_upgrade"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "fixed_amount",
+        "formulaRepair": {
+          "status": "calculable_with_user_inputs",
+          "formulaText": "$60 fixed rebate for eligible attic insulation when the customer has Xcel electric service, uses central AC, and heating fuel is not provided by Xcel Energy.",
+          "formulaExpression": "eligible_cooling_only_attic_insulation ? 6000 : 0",
+          "amountCents": 6000,
+          "costSharePercent": null,
+          "maxAwardCents": 6000,
+          "perUnitRates": [
+            {
+              "metric": "item",
+              "rateCents": 6000,
+              "unit": "per eligible attic-insulation project",
+              "equipmentCriteria": "Pre-job R-value below 24 and post-job R-value of 60 or greater; Xcel electric service with central AC; heating fuel not provided by Xcel Energy."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": 6000,
+            "maxPercentOfEligibleCost": null,
+            "maxUnits": 1,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_electric_account",
+              "label": "Xcel Energy Colorado residential electric account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms electric-service eligibility."
+            },
+            {
+              "inputKey": "central_ac_present",
+              "label": "Central AC in use",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Cooling-only weatherization rows require central AC."
+            },
+            {
+              "inputKey": "heating_fuel_not_provided_by_xcel",
+              "label": "Heating fuel not provided by Xcel Energy",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Separates cooling-only eligibility from the heating-customer formula."
+            },
+            {
+              "inputKey": "pre_job_attic_r_value",
+              "label": "Pre-job attic R-value",
+              "valueType": "number",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires pre-job R-value below 24."
+            },
+            {
+              "inputKey": "post_job_attic_r_value",
+              "label": "Post-job attic R-value",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current table requires post-job R-value of 60 or greater."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Xcel Colorado electric service, central AC, and non-Xcel heating fuel.",
+            "Verify attic insulation begins below R-24 and reaches R-60 or greater.",
+            "Return the fixed $60 rebate.",
+            "Do not apply the heating-customer percentage-and-cap formula."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel electric account/service address",
+            "invoice or receipt",
+            "central AC and heating-fuel eligibility evidence",
+            "attic-insulation scope documentation",
+            "pre-job and post-job R-value documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)"
+        ],
+        "evidenceText": "The current Xcel-branded 2025-2026 summary lists the cooling-only attic-insulation row at $60 and uses the updated below-R24 to R60-or-greater threshold. ",
+        "reasoningNotes": "This row remains valid as a separate small fixed rebate and should not be grouped with heating-customer or combo-bonus logic."
+      },
+      {
+        "measureId": "insulation_air_sealing_before_space_heating_heat_pump_combo_bonus",
+        "measureName": "Insulation and air sealing before qualifying space-heating heat pump combo bonus",
+        "retrofitTypeIds": [
+          "air_sealing_weatherization",
+          "insulation_upgrade",
+          "heat_pump_hvac_retrofit"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "fixed_amount",
+        "formulaRepair": {
+          "status": "needs_project_scope",
+          "formulaText": "$600 fixed bonus only when the customer installs Xcel rebate-qualifying insulation and air-sealing measures before installing an Xcel rebate-qualifying space-heating heat pump, with the measures within two years of each other based on invoice dates.",
+          "formulaExpression": "qualifying_insulation_and_air_sealing_completed && qualifying_space_heating_heat_pump_completed && insulation_air_sealing_invoice_date <= heat_pump_invoice_date && heat_pump_invoice_date <= add_years(insulation_air_sealing_invoice_date, 2) ? 60000 : 0",
+          "amountCents": 60000,
+          "costSharePercent": null,
+          "maxAwardCents": 60000,
+          "perUnitRates": [
+            {
+              "metric": "bonus",
+              "rateCents": 60000,
+              "unit": "one-time conditional bonus",
+              "equipmentCriteria": "Qualifying insulation and air sealing first; qualifying space-heating heat pump later; within two years by invoice date."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": 60000,
+            "maxPercentOfEligibleCost": null,
+            "maxUnits": 1,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "qualifying_insulation_measure",
+              "label": "Xcel rebate-qualifying insulation measure completed",
+              "valueType": "boolean",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The bonus is tied to qualifying insulation and air-sealing measures, not either measure alone."
+            },
+            {
+              "inputKey": "qualifying_air_sealing_measure",
+              "label": "Xcel rebate-qualifying air-sealing measure completed",
+              "valueType": "boolean",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The bonus requires air sealing as part of the weatherization prerequisite."
+            },
+            {
+              "inputKey": "insulation_air_sealing_invoice_date",
+              "label": "Weatherization invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The two-year timing test is based on invoice dates."
+            },
+            {
+              "inputKey": "qualifying_space_heating_heat_pump",
+              "label": "Xcel rebate-qualifying space-heating heat pump",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The bonus applies only with a qualifying space-heating heat pump."
+            },
+            {
+              "inputKey": "heat_pump_invoice_date",
+              "label": "Heat-pump invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The heat-pump invoice date must be after the weatherization invoice date and within two years."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify the insulation and air-sealing measures separately qualify for Xcel rebates.",
+            "Verify the heat pump is an Xcel rebate-qualifying space-heating heat pump.",
+            "Verify weatherization invoice date occurs before heat-pump invoice date.",
+            "Verify the two invoice dates are within two years.",
+            "Return $600 only for the separate combo-bonus row."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel rebate documentation for qualifying insulation",
+            "Xcel rebate documentation for qualifying air sealing",
+            "weatherization invoice date",
+            "heat-pump invoice date",
+            "heat-pump equipment documentation",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "high",
+        "estimateConfidence": "high",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)"
+        ],
+        "evidenceText": "The official Xcel 2024 Q2 notice changed the prior six-month rule to insulation first and then a heat pump within two years; the current Xcel-branded 2025-2026 summary repeats the two-year invoice-date rule.   ",
+        "reasoningNotes": "This resolves the timing conflict: use two years, not six months. The $600 is valid only as a separate conditional bonus after both weatherization and a qualifying space-heating heat pump are established. It must never be the default amount for the whole opportunity or for unrelated retrofit categories."
+      },
+      {
+        "measureId": "air_source_heat_pump_non_cold_climate",
+        "measureName": "Non-cold-climate air-source heat pump",
+        "retrofitTypeIds": [
+          "heat_pump_hvac_retrofit"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "per_unit_award",
+        "formulaRepair": {
+          "status": "needs_project_scope",
+          "formulaText": "$300 per cooling ton at 95F as the standard rebate; $900 per cooling ton at 95F when current fuel-burning-system bonus conditions are met. Rebate is capped by purchase price.",
+          "formulaExpression": "min((clean_heat_bonus_eligible ? 90000 : 30000) * cooling_tons_at_95f, eligible_equipment_purchase_cost_cents)",
+          "amountCents": null,
+          "costSharePercent": null,
+          "maxAwardCents": null,
+          "perUnitRates": [
+            {
+              "metric": "cooling_ton_95f",
+              "rateCents": 30000,
+              "unit": "per cooling ton at 95F",
+              "equipmentCriteria": "Standard non-cold-climate ASHP rebate."
+            },
+            {
+              "metric": "cooling_ton_95f",
+              "rateCents": 90000,
+              "unit": "per cooling ton at 95F",
+              "equipmentCriteria": "Total rebate with current fuel-burning-system bonus; invoice must be dated 2025 or 2026 and bonus is not available for customers with existing electric heating systems after Nov. 16, 2025."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": null,
+            "maxPercentOfEligibleCost": 100,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms Colorado Xcel residential customer eligibility."
+            },
+            {
+              "inputKey": "ashp_equipment_configuration",
+              "label": "ASHP configuration",
+              "valueType": "enum",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Ducted, non-ducted, and mixed systems have equipment-standard rows."
+            },
+            {
+              "inputKey": "cooling_tons_at_95f",
+              "label": "Cooling capacity at 95F in tons",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The standard and bonus rebates are per cooling ton at 95F."
+            },
+            {
+              "inputKey": "seer2",
+              "label": "SEER2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies minimum equipment standards."
+            },
+            {
+              "inputKey": "eer2",
+              "label": "EER2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies minimum equipment standards."
+            },
+            {
+              "inputKey": "hspf2",
+              "label": "HSPF2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies minimum equipment standards."
+            },
+            {
+              "inputKey": "eligible_equipment_purchase_cost_cents",
+              "label": "Eligible equipment purchase price",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Xcel regulatory terms cap the rebate at purchase price."
+            },
+            {
+              "inputKey": "clean_heat_bonus_eligible",
+              "label": "Fuel-burning-system bonus eligibility",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Determines whether to use the standard or current bonus rate."
+            },
+            {
+              "inputKey": "invoice_date",
+              "label": "Invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current bonus row requires a 2025 or 2026 invoice."
+            },
+            {
+              "inputKey": "xcel_participating_contractor",
+              "label": "Xcel participating contractor used",
+              "valueType": "boolean",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Heat-pump rebates require installation through the Xcel rebate pathway and contractor/application documentation."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account.",
+            "Verify ASHP equipment type and minimum SEER2, EER2, and HSPF2 standards.",
+            "Read cooling tons at 95F from equipment documentation.",
+            "Select $300/ton standard or $900/ton bonus rate after checking fuel-burning-system and invoice-date inputs.",
+            "Multiply rate by cooling tons at 95F and cap at eligible purchase price."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": "For heat pumps, the current Xcel page says 2026 invoices/installations must be completed by Dec. 31, 2026 and applications will be accepted through Sept. 30, 2027.",
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "AHRI or equipment specification documentation",
+            "cooling capacity at 95F",
+            "SEER2/EER2/HSPF2 ratings",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps](https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps)",
+          "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The official Xcel Q2 notice changed non-cold-climate ASHPs to $300 per cooling ton at 95F; the current Xcel-branded 2025-2026 summary lists the same standard rate and a $900 per cooling-ton total with bonus. The current Xcel heat-pump page gives the 2026 invoice/installation and 2027 application deadline.   ([Xcel Energy][4])",
+        "reasoningNotes": "This is deterministic once equipment configuration, ratings, cooling tons at 95F, purchase price, customer bonus eligibility, invoice date, and contractor/application facts are known."
+      },
+      {
+        "measureId": "cold_climate_air_source_heat_pump",
+        "measureName": "Cold-climate air-source heat pump",
+        "retrofitTypeIds": [
+          "heat_pump_hvac_retrofit"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "per_unit_award",
+        "formulaRepair": {
+          "status": "needs_project_scope",
+          "formulaText": "$750 per heating ton at 5F as the standard rebate; $2,250 per heating ton at 5F when current fuel-burning-system bonus conditions are met. Rebate is capped by purchase price.",
+          "formulaExpression": "min((clean_heat_bonus_eligible ? 225000 : 75000) * heating_tons_at_5f, eligible_equipment_purchase_cost_cents)",
+          "amountCents": null,
+          "costSharePercent": null,
+          "maxAwardCents": null,
+          "perUnitRates": [
+            {
+              "metric": "heating_ton_5f",
+              "rateCents": 75000,
+              "unit": "per heating ton at 5F",
+              "equipmentCriteria": "Standard cold-climate ASHP rebate."
+            },
+            {
+              "metric": "heating_ton_5f",
+              "rateCents": 225000,
+              "unit": "per heating ton at 5F",
+              "equipmentCriteria": "Total rebate with current fuel-burning-system bonus; invoice must be dated 2025 or 2026 and bonus is not available for customers with existing electric heating systems after Nov. 16, 2025."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": null,
+            "maxPercentOfEligibleCost": 100,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms Colorado Xcel residential customer eligibility."
+            },
+            {
+              "inputKey": "ccashp_equipment_configuration",
+              "label": "Cold-climate ASHP configuration",
+              "valueType": "enum",
+              "inputSource": "retrofit_scope",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Ducted, non-ducted, and mixed cold-climate systems have different minimum SEER2/EER2/HSPF2 thresholds."
+            },
+            {
+              "inputKey": "heating_tons_at_5f",
+              "label": "Heating capacity at 5F in tons",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The standard and bonus rebates are per heating ton at 5F."
+            },
+            {
+              "inputKey": "seer2",
+              "label": "SEER2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies the applicable minimum equipment standard."
+            },
+            {
+              "inputKey": "eer2",
+              "label": "EER2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies the applicable minimum equipment standard."
+            },
+            {
+              "inputKey": "hspf2",
+              "label": "HSPF2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Verifies the applicable minimum equipment standard."
+            },
+            {
+              "inputKey": "cop_at_5f",
+              "label": "COP at 5F",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Cold-climate ASHP rows require COP at 5F of at least 1.75."
+            },
+            {
+              "inputKey": "capacity_5f_percent_of_47f",
+              "label": "5F heating capacity as a percentage of 47F rated capacity",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Cold-climate ASHP rows require 5F capacity to be at least 70% of 47F capacity."
+            },
+            {
+              "inputKey": "eligible_equipment_purchase_cost_cents",
+              "label": "Eligible equipment purchase price",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Xcel regulatory terms cap the rebate at purchase price."
+            },
+            {
+              "inputKey": "clean_heat_bonus_eligible",
+              "label": "Fuel-burning-system bonus eligibility",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Determines whether to use the standard or current bonus rate."
+            },
+            {
+              "inputKey": "invoice_date",
+              "label": "Invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current bonus row requires a 2025 or 2026 invoice."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account.",
+            "Verify ccASHP configuration and applicable efficiency thresholds.",
+            "Verify COP at 5F is at least 1.75 and 5F capacity is at least 70% of 47F capacity.",
+            "Read heating tons at 5F from equipment documentation.",
+            "Select $750/ton standard or $2,250/ton bonus rate after checking fuel-burning-system and invoice-date inputs.",
+            "Multiply rate by heating tons at 5F and cap at eligible purchase price."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": "For heat pumps, the current Xcel page says 2026 invoices/installations must be completed by Dec. 31, 2026 and applications will be accepted through Sept. 30, 2027.",
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "AHRI or equipment specification documentation",
+            "heating capacity at 5F",
+            "SEER2/EER2/HSPF2 ratings",
+            "COP at 5F",
+            "5F and 47F rated capacity documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps](https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps)",
+          "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The official Xcel Q2 notice changed cold-climate ASHPs to $750 per heating ton at 5F and describes the low-temperature criteria; the current Xcel-branded 2025-2026 summary lists $750 standard and $2,250 total with bonus.  ",
+        "reasoningNotes": "This is deterministic once equipment tier, ratings, heating tons at 5F, purchase price, customer bonus eligibility, invoice date, and application facts are known."
+      },
+      {
+        "measureId": "ground_source_heat_pump",
+        "measureName": "Ground-source heat pump",
+        "retrofitTypeIds": [
+          "ground_source_geothermal_heat_pump",
+          "heat_pump_hvac_retrofit"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "per_unit_award",
+        "formulaRepair": {
+          "status": "needs_project_scope",
+          "formulaText": "$1,100 per heating ton as the standard rebate; $3,300 per heating ton when current fuel-burning-system bonus conditions are met. Rebate is capped by purchase price.",
+          "formulaExpression": "min((clean_heat_bonus_eligible ? 330000 : 110000) * heating_tons, eligible_equipment_purchase_cost_cents)",
+          "amountCents": null,
+          "costSharePercent": null,
+          "maxAwardCents": null,
+          "perUnitRates": [
+            {
+              "metric": "heating_ton_5f",
+              "rateCents": 110000,
+              "unit": "per heating ton",
+              "equipmentCriteria": "Standard GSHP rebate; current summary lists 16 EER2 and 3.3 COP, full load."
+            },
+            {
+              "metric": "heating_ton_5f",
+              "rateCents": 330000,
+              "unit": "per heating ton",
+              "equipmentCriteria": "Total rebate with current fuel-burning-system bonus; invoice must be dated 2025 or 2026 and bonus is not available for customers with existing electric heating systems after Nov. 16, 2025."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": null,
+            "maxPercentOfEligibleCost": 100,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms Colorado Xcel residential customer eligibility."
+            },
+            {
+              "inputKey": "heating_tons",
+              "label": "Ground-source heat-pump heating tons",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The rebate is per heating ton."
+            },
+            {
+              "inputKey": "eer2",
+              "label": "EER2 rating",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current summary lists a 16 EER2 qualifying standard."
+            },
+            {
+              "inputKey": "cop_full_load",
+              "label": "Full-load COP",
+              "valueType": "number",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current summary lists a 3.3 COP full-load qualifying standard."
+            },
+            {
+              "inputKey": "eligible_equipment_purchase_cost_cents",
+              "label": "Eligible equipment purchase price",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Xcel regulatory terms cap the rebate at purchase price."
+            },
+            {
+              "inputKey": "clean_heat_bonus_eligible",
+              "label": "Fuel-burning-system bonus eligibility",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Determines whether to use the standard or current bonus rate."
+            },
+            {
+              "inputKey": "invoice_date",
+              "label": "Invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current bonus row requires a 2025 or 2026 invoice."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account.",
+            "Verify GSHP efficiency standards.",
+            "Read heating tons from equipment documentation.",
+            "Select $1,100/ton standard or $3,300/ton bonus rate after checking fuel-burning-system and invoice-date inputs.",
+            "Multiply rate by heating tons and cap at eligible purchase price."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": "For heat pumps, the current Xcel page says 2026 invoices/installations must be completed by Dec. 31, 2026 and applications will be accepted through Sept. 30, 2027.",
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_installation_reimbursement",
+          "participatingContractorRequired": true,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "equipment specification documentation",
+            "heating tonnage",
+            "EER2 and COP documentation",
+            "participating-contractor information",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps](https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps)",
+          "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The official Xcel Q2 notice increased ground-source heat pumps to $1,100 per heating ton; the current Xcel-branded 2025-2026 summary lists $1,100 standard and $3,300 total with bonus.  ",
+        "reasoningNotes": "This row should be modeled separately from air-source heat pumps and should use heating tons, not a fixed package amount."
+      },
+      {
+        "measureId": "heat_pump_water_heater",
+        "measureName": "Heat pump water heater",
+        "retrofitTypeIds": [
+          "heat_pump_water_heater"
+        ],
+        "recommendedRowAction": "include_form_gated",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "fixed_amount",
+        "formulaRepair": {
+          "status": "needs_project_scope",
+          "formulaText": "$750 standard rebate for an ENERGY STAR heat pump water heater; $2,250 total when current fuel-burning-system bonus conditions are met, subject to current application terms and purchase-price cap if applied by Xcel.",
+          "formulaExpression": "min(clean_heat_bonus_eligible ? 225000 : 75000, eligible_equipment_purchase_cost_cents)",
+          "amountCents": null,
+          "costSharePercent": null,
+          "maxAwardCents": 225000,
+          "perUnitRates": [
+            {
+              "metric": "system",
+              "rateCents": 75000,
+              "unit": "per eligible heat pump water heater",
+              "equipmentCriteria": "ENERGY STAR rated heat pump water heater."
+            },
+            {
+              "metric": "system",
+              "rateCents": 225000,
+              "unit": "per eligible heat pump water heater",
+              "equipmentCriteria": "Total rebate with current fuel-burning-system bonus; invoice must be dated 2025 or 2026 and bonus is not available for customers with existing electric heating systems after Nov. 16, 2025."
+            }
+          ],
+          "caps": {
+            "maxAwardCents": 225000,
+            "maxPercentOfEligibleCost": 100,
+            "maxUnits": 1,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [
+            {
+              "inputKey": "xcel_colorado_residential_account",
+              "label": "Xcel Energy Colorado residential account",
+              "valueType": "boolean",
+              "inputSource": "utility_bill",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Confirms Colorado Xcel residential customer eligibility."
+            },
+            {
+              "inputKey": "hpwh_energy_star_certified",
+              "label": "ENERGY STAR heat pump water heater",
+              "valueType": "boolean",
+              "inputSource": "application_or_award_document",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current summary lists ENERGY STAR as the qualifying HPWH standard."
+            },
+            {
+              "inputKey": "eligible_equipment_purchase_cost_cents",
+              "label": "Eligible HPWH purchase price",
+              "valueType": "money_cents",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Needed to avoid estimating more than eligible purchase cost if Xcel applies the general purchase-price cap."
+            },
+            {
+              "inputKey": "clean_heat_bonus_eligible",
+              "label": "Fuel-burning-system bonus eligibility",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Determines whether to use the $750 standard amount or $2,250 bonus total."
+            },
+            {
+              "inputKey": "invoice_date",
+              "label": "Invoice date",
+              "valueType": "date",
+              "inputSource": "quote_or_invoice",
+              "userOverrideAllowed": true,
+              "whyNeeded": "The current bonus row requires a 2025 or 2026 invoice."
+            },
+            {
+              "inputKey": "existing_electric_heating_system",
+              "label": "Existing electric heating system",
+              "valueType": "boolean",
+              "inputSource": "user_profile",
+              "userOverrideAllowed": true,
+              "whyNeeded": "Current bonus terms exclude customers with existing electric heating systems from the bonus after Nov. 16, 2025, while preserving standard rebate eligibility."
+            }
+          ],
+          "calculationTraceTemplate": [
+            "Verify Colorado Xcel residential account.",
+            "Verify the water heater is an ENERGY STAR heat pump water heater.",
+            "Select $750 standard or $2,250 bonus total after checking fuel-burning-system, existing electric heat, and invoice-date inputs.",
+            "Cap by eligible purchase price if required by the application terms.",
+            "Do not infer HPWH eligibility from generic water-heater rows."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": null,
+          "fundingStatus": "open_while_funds_last",
+          "paymentTiming": "post_purchase_rebate",
+          "participatingContractorRequired": null,
+          "documentationRequired": [
+            "Xcel account/service address",
+            "invoice or receipt",
+            "ENERGY STAR or equipment specification documentation",
+            "bonus-eligibility facts",
+            "rebate application"
+          ]
+        },
+        "sourceConfidence": "medium",
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalAfterInputs": true,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters](https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+          "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)"
+        ],
+        "evidenceText": "The official Xcel water-heater page says Colorado customers can get up to a $2,250 heat pump water heater rebate; the current Xcel-branded 2025-2026 summary lists ENERGY STAR HPWH at $750 standard and $2,250 total with bonus. ([Xcel Energy][5]) ",
+        "reasoningNotes": "The previous generic 'up to $2,250' value is usable only after HPWH scope and bonus eligibility are known. The standard amount should be $750, not $2,250 by default."
+      },
+      {
+        "measureId": "high_efficiency_hvac_replacement_phaseouts",
+        "measureName": "Central AC, gas furnace, and boiler rows for high-efficiency HVAC replacement",
+        "retrofitTypeIds": [
+          "high_efficiency_hvac_replacement"
+        ],
+        "recommendedRowAction": "exclude_row",
+        "cashValueClassification": "rebate",
+        "valueModelKind": "no_calculable_value",
+        "formulaRepair": {
+          "status": "not_calculable",
+          "formulaText": "Do not include a current central AC, gas furnace, or boiler rebate estimate for new 2026 projects in this package. Central AC rebates were eliminated effective Jan. 1, 2024, and the current Xcel-branded table states gas furnace and boiler rebates were removed effective Jan. 1, 2026, except 2025 invoices submitted by Sept. 30, 2026.",
+          "formulaExpression": null,
+          "amountCents": null,
+          "costSharePercent": null,
+          "maxAwardCents": null,
+          "perUnitRates": [],
+          "caps": {
+            "maxAwardCents": null,
+            "maxPercentOfEligibleCost": null,
+            "maxUnits": null,
+            "perCustomerCapCents": null
+          },
+          "requiredInputs": [],
+          "calculationTraceTemplate": [
+            "Return no current estimate for central AC, gas furnace, or boiler replacement rows.",
+            "Do not use the vague current cooling-page 'up to $500' snippet as a formula.",
+            "Route any 2025 gas furnace or boiler invoice claim to a separate historical/post-installation review path if needed."
+          ]
+        },
+        "timingAndApplicationRules": {
+          "approvalRequiredBeforePurchase": null,
+          "approvalRequiredBeforeInstallation": null,
+          "applicationDeadline": "No current new-project deadline for central AC. 2025 gas furnace or boiler invoices may have a Sept. 30, 2026 submission path, but those are not valid new 2026 estimator rows.",
+          "fundingStatus": "closed",
+          "paymentTiming": "unknown",
+          "participatingContractorRequired": null,
+          "documentationRequired": []
+        },
+        "sourceConfidence": "high",
+        "estimateConfidence": "high",
+        "includeInUserFacingTotalAfterInputs": false,
+        "sourceUrls": [
+          "[https://co.my.xcelenergy.com/s/residential/heating-cooling/residential-cooling-rebates](https://co.my.xcelenergy.com/s/residential/heating-cooling/residential-cooling-rebates)",
+          "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+          "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)"
+        ],
+        "evidenceText": "Official Xcel regulatory text says central air conditioner rebates were eliminated Jan. 1, 2024. The current Xcel-branded 2025-2026 table states gas furnace and boiler rebates were removed effective Jan. 1, 2026, with only 2025 invoices allowed through Sept. 30, 2026.  ",
+        "reasoningNotes": "The current Xcel cooling page snippet still mentions up to $500 for eligible central AC and ASHP systems, but no current official central AC formula was verified and the official phaseout evidence controls. ASHP logic remains included under the heat-pump rows."
+      }
+    ],
+    "probabilityModel": {
+      "probabilityRequired": false,
+      "probabilityDiscount": null,
+      "probabilityEvidenceType": "not_required",
+      "probabilityNotes": "This is a utility rebate, not a competitive grant, unless your research proves otherwise."
+    },
+    "runtimeRecommendation": {
+      "estimateStatus": "needs_project_scope",
+      "includeInUserFacingTotalDefault": false,
+      "includedAmountPolicy": "estimated_amount_after_inputs",
+      "userFacingLabel": "Xcel Energy Colorado residential efficiency rebates",
+      "userFacingCaveat": "No Xcel amount should be shown by default. Show an estimate only after the user supplies the applicable measure, Colorado Xcel service/fuel facts, eligible cost or equipment tonnage, equipment ratings, invoice/install timing, and contractor/application facts. Funding is limited and first-come, so availability should be refreshed before application or purchase.",
+      "reasonCodes": [
+        "remove_blanket_600_default",
+        "split_measure_specific_rows",
+        "requires_xcel_colorado_service_verification",
+        "requires_project_scope_and_equipment_tier",
+        "requires_quote_or_invoice_for_cost_capped_rows",
+        "requires_tonnage_for_heat_pump_rows",
+        "requires_invoice_dates_for_bonus_rows",
+        "funding_open_while_funds_last",
+        "central_ac_and_gas_hvac_phaseouts_excluded"
+      ]
+    },
+    "patchInstructions": {
+      "calculationStatus": "repair_review_complete_form_gated",
+      "packageLevelChanges": [
+        "Change runtime inclusion from suppressed_by_policy to form_input_required / needs_project_scope after patching measure-specific gates.",
+        "Remove any package-level default or blanket $600 computed amount.",
+        "Set program geography to Colorado Xcel Energy service territory only; split or leave separate any non-Colorado DSIRE/Xcel records.",
+        "Set fundingStatus to open_while_funds_last with a refresh caveat.",
+        "Set probability model to not_required because this is a utility rebate, not a competitive grant.",
+        "Set source confidence to medium because the exact current 2025-2026 full rebate table was found as an Xcel-branded contractor-hosted PDF while official Xcel pages are partly CSS-error or bot-gated."
+      ],
+      "effectRepairMetadataChanges": [
+        "Create separate formula rows for heating-customer air sealing, wall insulation, attic insulation, cooling-only air sealing, cooling-only wall insulation, cooling-only attic insulation, non-cold-climate ASHP, cold-climate ASHP, GSHP, HPWH, and the $600 combo bonus.",
+        "Use quote_or_invoice gates for percentage-of-cost weatherization rows.",
+        "Use project-scope and equipment-document gates for heat-pump capacity, efficiency tier, AHRI/specification values, and bonus eligibility.",
+        "Use invoice-date gates for 2025/2026 clean-heat bonus eligibility and the two-year weatherization-before-heat-pump combo bonus.",
+        "Cap heat-pump rebates by eligible purchase price where Xcel regulatory terms apply."
+      ],
+      "measureCatalogChanges": [
+        "Correct current heating-customer weatherization caps to air sealing $400, wall insulation $350, attic insulation $500, subject to 30% eligible-cost formula.",
+        "Retain cooling-only weatherization rows as fixed $15 air sealing, $25 wall insulation, and $60 attic insulation.",
+        "Represent the $600 combo bonus only as a separate conditional bonus requiring qualifying insulation and air sealing before a qualifying space-heating heat pump within two years by invoice dates.",
+        "Include ASHP standard and bonus per-ton rates only after cooling/heating tonnage and equipment tier are known.",
+        "Include HPWH as $750 standard or $2,250 bonus total only after ENERGY STAR and bonus-eligibility inputs are known.",
+        "Exclude central AC, gas furnace, and boiler new-project rows from current user-facing totals.",
+        "Do not restore high_efficiency_refrigeration_equipment; no current direct residential Xcel support was found."
+      ],
+      "runtimeStatusExpectedAfterPatch": "needs_project_scope"
+    },
+    "unresolvedQuestions": [
+      {
+        "question": "Can RetroFi locate the same 2025-2026 rebate summary on an official Xcel-hosted static PDF URL or authenticated Xcel application page?",
+        "whyItMatters": "The exact current table is Xcel-branded and internally consistent, but it was found on a contractor-hosted URL. This lowers source confidence even though official Xcel pages and regulatory filings corroborate active status, standard heat-pump rates, deadlines, and the two-year combo-bonus rule.",
+        "canBeSolvedWithUserInput": false,
+        "canBeSolvedWithFutureFundingCron": false,
+        "blocksProductionEstimate": false
+      },
+      {
+        "question": "Are funds still available at the time of a user's application?",
+        "whyItMatters": "The current Xcel-branded summary says rebate funding is limited, first-come, first-served, and available until PUC-approved funding is expended or the program is discontinued.",
+        "canBeSolvedWithUserInput": false,
+        "canBeSolvedWithFutureFundingCron": true,
+        "blocksProductionEstimate": false
+      },
+      {
+        "question": "Does a specific HPWH purchase path require a participating contractor, retailer, or direct-purchase channel?",
+        "whyItMatters": "The HPWH amount is source-backed, but the exact channel requirement may depend on the application path or marketplace. This is an application/form gate rather than a source-data blocker.",
+        "canBeSolvedWithUserInput": true,
+        "canBeSolvedWithFutureFundingCron": false,
+        "blocksProductionEstimate": false
+      },
+      {
+        "question": "Is a user claiming a 2025-only natural-gas weatherization bonus rather than estimating a new 2026 project?",
+        "whyItMatters": "The current table contains a 1.5x natural-gas weatherization bonus only for invoices dated in 2025. For new 2026 estimates it should not be included, but a post-installation claim workflow may need a legacy invoice-date gate.",
+        "canBeSolvedWithUserInput": true,
+        "canBeSolvedWithFutureFundingCron": false,
+        "blocksProductionEstimate": false
+      }
+    ],
+    "sourceUrlsChecked": [
+      "[https://co.my.xcelenergy.com/s/residential/home-rebates](https://co.my.xcelenergy.com/s/residential/home-rebates)",
+      "[https://co.my.xcelenergy.com/s/residential/heating-cooling](https://co.my.xcelenergy.com/s/residential/heating-cooling)",
+      "[https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps](https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps)",
+      "[https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing](https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing)",
+      "[https://co.my.xcelenergy.com/s/residential/heating-cooling/residential-cooling-rebates](https://co.my.xcelenergy.com/s/residential/heating-cooling/residential-cooling-rebates)",
+      "[https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters](https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters)",
+      "[https://www.xcelenergy.com/digital_application](https://www.xcelenergy.com/digital_application)",
+      "[https://xcelenergy.my.salesforce-sites.com/RebateApplication](https://xcelenergy.my.salesforce-sites.com/RebateApplication)",
+      "[https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20%26%20Regulations/2024%20Q2%2060%20Day%20Notice.pdf)",
+      "[https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/24-02-205%20CO%20Res%20Rebate%20Summary%20Information%20Sheet.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/24-02-205%20CO%20Res%20Rebate%20Summary%20Information%20Sheet.pdf)",
+      "[https://www.xcelenergy.com/staticfiles/xe-responsive/Working%20With%20Us/Trade%20Partners/24-04-506_CO-Res_HVAC_OpenPrgms_app.pdf](https://www.xcelenergy.com/staticfiles/xe-responsive/Working%20With%20Us/Trade%20Partners/24-04-506_CO-Res_HVAC_OpenPrgms_app.pdf)",
+      "[https://www.xcelenergy.com/company/rates_and_regulations/filings/colorado_demand-side_management](https://www.xcelenergy.com/company/rates_and_regulations/filings/colorado_demand-side_management)",
+      "[https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf](https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf)",
+      "[https://www.denverwinair.com/documents/xcel/Residential-Rebate-Summary-202501.pdf](https://www.denverwinair.com/documents/xcel/Residential-Rebate-Summary-202501.pdf)",
+      "[https://programs.dsireusa.org/system/program/detail/1581](https://programs.dsireusa.org/system/program/detail/1581)",
+      "[https://programs.dsireusa.org/system/program?state=CO](https://programs.dsireusa.org/system/program?state=CO)"
+    ],
+    "evidenceText": "Official Xcel sources support active Colorado heat-pump rebate workflow, a digital application requiring invoices/specification documents, standard heat-pump per-ton rates, a purchase-price cap, central AC phaseout, and the corrected two-year combo-bonus timing. The current exact 2025-2026 rebate table is Xcel-branded, effective Nov. 16, 2025, and lists the current HP, HPWH, weatherization, fixed cooling-only, bonus, limited-funding, and participating-contractor details, but it was found on a contractor-hosted URL rather than an official Xcel static URL. ([Xcel Energy][4]) ([Xcel Energy][5])   ([Xcel Energy][6])  ",
+    "reasoningNotes": "Recommended repair: production form-gated, not suppressed. The estimator should show zero/default no Xcel value until required form inputs are supplied, then calculate only the specific applicable measure rows. The uploaded repair prompt was treated as the controlling task specification. "
+  }
+}

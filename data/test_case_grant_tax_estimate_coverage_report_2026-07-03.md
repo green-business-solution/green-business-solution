@@ -1,6 +1,6 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-04T21:24:24.738Z
+Generated: 2026-07-04T22:04:50.244Z
 
 ## Summary
 
@@ -8,8 +8,8 @@ Generated: 2026-07-04T21:24:24.738Z
 - Retrofit previews: 890
 - Matched v2 package evaluations: 531
 - Runtime-included packages: 293
-- Computed but suppressed packages: 13
-- Missing evidence/input packages: 108
+- Computed but suppressed packages: 6
+- Missing evidence/input packages: 115
 - Tax opportunity packages in database: 3
 - Tax opportunity packages matched by current test cases: 3
 - Local tax workflow evaluations: 12
@@ -22,24 +22,24 @@ Generated: 2026-07-04T21:24:24.738Z
 | needs_quote | 87 |
 | no_calculable_value | 50 |
 | not_user_facing_default | 49 |
+| needs_project_scope | 15 |
 | non_monetary_workflow | 14 |
 | needs_funding_check | 13 |
-| needs_project_scope | 8 |
-| suppressed_by_policy | 8 |
 | human_review_required | 6 |
 | legacy_rule_preferred | 2 |
 | low_confidence | 1 |
+| suppressed_by_policy | 1 |
 
 ## Outcome Classes
 
 | Status | Count |
 | --- | --- |
 | calculated_and_included | 293 |
-| missing_evidence_or_inputs | 108 |
+| missing_evidence_or_inputs | 115 |
 | suppressed_without_amount | 51 |
 | source_or_package_blocked | 50 |
 | non_monetary_workflow | 14 |
-| computed_but_suppressed | 13 |
+| computed_but_suppressed | 6 |
 | legacy_rule_preferred | 2 |
 
 ## Local Tax Workflow Status
@@ -56,12 +56,11 @@ Generated: 2026-07-04T21:24:24.738Z
 | Status | Count |
 | --- | --- |
 | production_ready_included | 293 |
-| form_input_required | 95 |
+| form_input_required | 102 |
 | not_grant_estimation_target | 48 |
 | zero_placeholder_no_calculable_value | 28 |
 | funding_refresh_required | 13 |
 | non_grant_workflow | 13 |
-| cash_incentive_runtime_repair_required | 7 |
 | legacy_rule_preferred | 2 |
 
 ## Unresolved Grant Production Samples

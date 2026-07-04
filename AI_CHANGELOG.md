@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) Xcel cash incentive form-gated repair
+
+- Imported the focused GPT Pro repair for DSIRE 1581 Xcel Energy Colorado residential rebates and preserved the parsed output as a tracked data artifact.
+- Replaced the old blanket `$600` suppressed Xcel package behavior with measure-specific, production form-gated rebate rows and `needs_project_scope` runtime handling.
+- Regenerated grant/tax coverage, incentive classification, form-input audits, and ignored test fixtures; `cash_incentive_runtime_repair_required` is now zero.
+
 ## 2026-07-04 - Codex (GPT-5) impact projection placeholder
 
 - Added a cumulative CO2e avoided forecast chart shell to the selected retrofit Impact tab, using native SVG with unknown placeholders until backend sustainability projections are available.

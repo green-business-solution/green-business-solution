@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_incentive_classification_audit.v1",
-  "generatedAt": "2026-07-04T21:24:23.898Z",
+  "generatedAt": "2026-07-04T22:07:49.161Z",
   "sourceFiles": {
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
     "coverage": "data/test_case_grant_tax_estimate_coverage_report_2026-07-03.json"
@@ -15,8 +15,8 @@
     "tax": 3
   },
   "calculationStatusCounts": {
-    "calculable_with_missing_inputs": 772,
-    "needs_repair_review": 31,
+    "calculable_with_missing_inputs": 773,
+    "needs_repair_review": 30,
     "estimate_from_range": 27,
     "custom_quote_estimate": 62,
     "source_inaccessible_repair_failure": 21,
@@ -71,12 +71,11 @@
   },
   "coverageGrantProductionActionCounts": {
     "production_ready_included": 293,
-    "form_input_required": 95,
+    "form_input_required": 102,
     "zero_placeholder_no_calculable_value": 28,
     "not_grant_estimation_target": 48,
     "non_grant_workflow": 13,
     "funding_refresh_required": 13,
-    "cash_incentive_runtime_repair_required": 7,
     "legacy_rule_preferred": 2
   },
   "criticalIssueCount": 0,
@@ -11519,7 +11518,7 @@
     {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
       "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-      "calculationStatus": "needs_repair_review",
+      "calculationStatus": "calculable_with_missing_inputs",
       "packageKind": "rebate",
       "cashClasses": [
         "rebate"

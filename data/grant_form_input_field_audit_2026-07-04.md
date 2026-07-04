@@ -1,39 +1,39 @@
 # Grant Form Input Field Audit
 
-Generated: 2026-07-04T21:24:38.344Z
+Generated: 2026-07-04T22:04:50.072Z
 
 ## Summary
 
 | Metric | Value |
 | --- | --- |
-| Form-input evaluations | 95 |
-| Unique opportunities | 27 |
+| Form-input evaluations | 102 |
+| Unique opportunities | 28 |
 | Rows without mapped fields | 0 |
 
 ## Collection Surfaces
 
 | Value | Count |
 | --- | --- |
-| Business/site intake form | 975 |
-| Program application or award status | 495 |
-| Project quote or invoice upload | 321 |
-| Utility bill upload | 37 |
-| Retrofit scope form | 14 |
+| Business/site intake form | 1003 |
+| Program application or award status | 593 |
+| Project quote or invoice upload | 356 |
+| Retrofit scope form | 70 |
+| Utility bill upload | 51 |
 | Tax/accounting document upload | 12 |
 
 ## Implementation Status
 
 | Value | Count |
 | --- | --- |
-| implemented | 1026 |
-| planned | 828 |
+| implemented | 1124 |
+| planned | 961 |
 
 ## Planned Surfaces
 
 | Value | Count |
 | --- | --- |
-| Program application or award status | 495 |
-| Project quote or invoice upload | 321 |
+| Program application or award status | 593 |
+| Project quote or invoice upload | 356 |
 | Tax/accounting document upload | 12 |
 
 ## Unique Opportunity Mapping
@@ -55,6 +55,7 @@ Generated: 2026-07-04T21:24:38.344Z
 | SOURCE_DSIRE:dsire_program_id:22786 | Eagle County - Walking Mountains Science Center Solar PV Rebate | 2 | Business/site intake form | None |
 | SOURCE_DSIRE:dsire_program_id:4630 | Boulder County - EnergySmart Residential Energy Efficiency Rebate Program | 10 | Business/site intake form, Program application or award status, Project quote or invoice upload, Tax/accounting document upload, Utility bill upload | Program application or award status, Project quote or invoice upload, Tax/accounting document upload |
 | SOURCE_DSIRE:dsire_program_id:22753 | City and County of Denver - Solar Rebate | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload, Tax/accounting document upload | Program application or award status, Project quote or invoice upload, Tax/accounting document upload |
+| SOURCE_DSIRE:dsire_program_id:1581 | Xcel Energy - Residential Energy Efficiency Rebate Programs | 7 | Business/site intake form, Program application or award status, Project quote or invoice upload, Retrofit scope form, Utility bill upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:5558 | City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:3639 | OG&E - Commercial Energy Efficiency Rebate Programs | 8 | Business/site intake form, Project quote or invoice upload | Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:22181 | Electric Vehicle Rebate Program | 1 | Business/site intake form | None |

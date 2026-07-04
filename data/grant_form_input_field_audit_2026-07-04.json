@@ -1,28 +1,28 @@
 {
   "schemaVersion": "retrofi_grant_form_input_field_audit.v1",
-  "generatedAt": "2026-07-04T21:24:38.344Z",
+  "generatedAt": "2026-07-04T22:04:50.072Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json"
   },
   "summary": {
-    "formInputRequiredEvaluationCount": 95,
-    "uniqueOpportunityCount": 27,
+    "formInputRequiredEvaluationCount": 102,
+    "uniqueOpportunityCount": 28,
     "rowsWithoutMappedFields": 0,
     "collectionSurfaceCounts": {
-      "Retrofit scope form": 14,
-      "Project quote or invoice upload": 321,
-      "Program application or award status": 495,
-      "Business/site intake form": 975,
-      "Utility bill upload": 37,
+      "Retrofit scope form": 70,
+      "Project quote or invoice upload": 356,
+      "Program application or award status": 593,
+      "Business/site intake form": 1003,
+      "Utility bill upload": 51,
       "Tax/accounting document upload": 12
     },
     "implementationStatusCounts": {
-      "implemented": 1026,
-      "planned": 828
+      "implemented": 1124,
+      "planned": 961
     },
     "plannedSurfaceCounts": {
-      "Project quote or invoice upload": 321,
-      "Program application or award status": 495,
+      "Project quote or invoice upload": 356,
+      "Program application or award status": 593,
       "Tax/accounting document upload": 12
     }
   },
@@ -245,6 +245,23 @@
         "Program application or award status",
         "Project quote or invoice upload",
         "Tax/accounting document upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+      "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "evaluationCount": 7,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Retrofit scope form",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
       ]
     },
     {
