@@ -107,7 +107,11 @@ const report = {
     localTaxWorkflowEvaluationCount: localTaxRows.length,
     localTaxWorkflowStatusCounts: countBy(localTaxRows, (row) => row.status)
   },
-  topMissingInputs: topCounts(packageRows.flatMap((row) => row.missingInputs.map((input) => input.inputKey))),
+  topMissingInputs: topCounts(
+    packageRows
+      .filter((row) => row.outcomeClass === "missing_evidence_or_inputs")
+      .flatMap((row) => row.missingInputs.map((input) => input.inputKey))
+  ),
   grantAndIncentivePackageOutcomes: summarizeRows(packageRows.filter((row) => row.grantOrIncentiveRelated)),
   taxOpportunityPackageOutcomes: summarizeRows(packageRows.filter((row) => row.taxRelated)),
   unmatchedTaxOpportunityPackages: [...packageTaxOpportunityIds]
@@ -142,7 +146,6 @@ console.log(`Local tax workflow statuses: ${JSON.stringify(report.summary.localT
 function classifyPackageSummary(summary) {
   if (summary.runtimeInclusionStatus === "included") return "calculated_and_included";
   if (summary.runtimeInclusionStatus === "legacy_rule_preferred") return "legacy_rule_preferred";
-  if (summary.runtimeInclusionStatus === "missing_inputs" || (summary.missingInputs || []).length > 0) return "missing_evidence_or_inputs";
   if (summary.runtimeInclusionStatus === "non_monetary_workflow") return "non_monetary_workflow";
   if (BLOCKED_RUNTIME_STATUSES.has(summary.runtimeInclusionStatus)) return "source_or_package_blocked";
 
@@ -150,6 +153,8 @@ function classifyPackageSummary(summary) {
   if (["not_user_facing_default", "human_review_required", "low_confidence"].includes(summary.runtimeInclusionStatus)) {
     return hasPositiveAmount ? "computed_but_suppressed" : "suppressed_without_amount";
   }
+
+  if (summary.runtimeInclusionStatus === "missing_inputs" || (summary.missingInputs || []).length > 0) return "missing_evidence_or_inputs";
 
   if (summary.runtimeInclusionStatus === "no_supported_effect_amount") return "calculated_zero_or_no_supported_amount";
   return "other_suppressed";
@@ -320,6 +325,9 @@ function summarizeLocalTaxRows(rows) {
 }
 
 function buildMarkdownReport(data) {
+  const missingCount = data.summary.missingEvidenceOrInputPackageCount;
+  const matchedTaxCount = data.summary.taxOpportunityPackageCountMatchedByTestCases;
+  const totalTaxCount = data.summary.taxOpportunityPackageCountInDatabase;
   const lines = [
     "# Test Case Grant/Tax Estimate Coverage",
     "",
@@ -369,11 +377,15 @@ function buildMarkdownReport(data) {
     "",
     "## Interpretation",
     "",
-    "- The current 50 retrofit previews exercise grant/incentive packages, but they do not currently match the three tax opportunity packages.",
+    matchedTaxCount === 0
+      ? `- The current 50 retrofit previews exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
+      : `- The current 50 retrofit previews now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
     "- Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.",
     "- Packages classified as `computed_but_suppressed` have enough runtime inputs to produce an internal amount, but are held out because of low confidence, review flags, or default user-facing inclusion policy.",
     "- Packages classified as `source_or_package_blocked` need source/data repair or intentional archive/suppression decisions, not UI fields.",
-    "- Remaining missing inputs are mostly competitive expected-value evidence, especially award probability, and are the highest-priority candidates for follow-up data repair."
+    missingCount === 0
+      ? "- No packages are currently classified as missing evidence/input repair gaps."
+      : "- Remaining missing inputs are mostly competitive expected-value evidence, especially award probability, and are the highest-priority candidates for follow-up data repair."
   ];
 
   return `${lines.join("\n")}\n`;

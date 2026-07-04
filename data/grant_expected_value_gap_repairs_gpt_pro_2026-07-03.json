@@ -1,0 +1,946 @@
+{
+  "schemaVersion": "retrofi_grant_probability_research_repairs_gpt_pro.v1",
+  "generatedAt": "2026-07-04T00:24:01.129Z",
+  "sourceWorkDir": "GPT Pro Work/grant-expected-value-gap-repair-2026-07-03",
+  "sourceFiles": [
+    "output_001_grant_ev_gaps_001_001.md",
+    "output_002_grant_ev_gaps_002_002.md",
+    "output_003_grant_ev_gaps_003_003.md",
+    "output_004_grant_ev_gaps_004_004.md",
+    "output_005_grant_ev_gaps_005_005.md",
+    "output_006_grant_ev_gaps_006_006.md",
+    "output_007_grant_ev_gaps_007_007.md",
+    "output_008_grant_ev_gaps_008_008.md",
+    "output_009_grant_ev_gaps_009_009.md",
+    "output_010_grant_ev_gaps_010_010.md"
+  ],
+  "repairCount": 10,
+  "counts": {
+    "statusCounts": {
+      "needs_project_scope": 1,
+      "suppressed": 9
+    },
+    "valueModelCounts": {
+      "competitive_cost_share": 7,
+      "hybrid_rate_plus_cap": 1,
+      "competitive_max_only": 1,
+      "competitive_award_range": 1
+    },
+    "probabilityEvidenceCounts": {
+      "historical_success_rate": 1,
+      "scoring_criteria_only": 4,
+      "none": 1,
+      "first_come_funding_unknown": 1,
+      "historical_awards_only": 2,
+      "eligibility_only": 1
+    },
+    "sourceConfidenceCounts": {
+      "high": 8,
+      "medium": 2
+    },
+    "repairsWithProbabilityDiscount": 1,
+    "repairsIncludedInUserFacingTotalDefault": 0
+  },
+  "validationWarnings": [
+    "output_001_grant_ev_gaps_001_001.md contained 732 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_002_grant_ev_gaps_002_002.md contained 619 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_004_grant_ev_gaps_004_004.md contained 227 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_005_grant_ev_gaps_005_005.md contained 712 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_006_grant_ev_gaps_006_006.md contained 775 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_008_grant_ev_gaps_008_008.md contained 586 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_009_grant_ev_gaps_009_009.md contained 698 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text.",
+    "output_010_grant_ev_gaps_010_010.md contained 776 trailing characters after the first JSON object; imported the first JSON object and ignored trailing text."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
+      "effectId": "effect_grant_expected_value_1_cddd6282f92b5b42",
+      "programName": "Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "For a responsive and selected MDOT NEVI Round 3 proposal, conditional_award_cents should be modeled as Total Funds Requested from Form 3 or the accepted Revised Price Proposal, capped at floor(0.80 * MDOT-approved Total Eligible Cost). If Total Funds Requested is unavailable pre-award, use floor(0.80 * eligible_project_cost_cents) only for internal modeling after application fit, site/equipment compliance, timely proposal submission, current funding/open status, and at least 20% Project Company Share are confirmed. If a project is selected and MDOT has accepted an award, executed contract, or accepted Revised Price Proposal amount, use approved_total_funds_requested_cents as the deterministic post-award reimbursement/payment value subject to contract terms, milestone/payment conditions, change orders, withholding, and deductions.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": null,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "eligible_project_cost",
+          "eligible_project_cost_cents",
+          "total_funds_requested_cents",
+          "approved_award_amount",
+          "approved_total_funds_requested_cents",
+          "project_company_share_percent",
+          "non_federal_match",
+          "corridor_site_compliance",
+          "nevi_equipment_compliance",
+          "mdot_round_3_award_selection",
+          "award_selection",
+          "mdot_round3_proposal_status",
+          "application_fit_review_status",
+          "nevi_round3_site_compliance_confirmed",
+          "proposal_submission_date",
+          "current_mdot_round3_funding_check"
+        ],
+        "calculationTrace": [
+          "MDOT Round 3 is an active competitive DBOM procurement; the official project page lists RFP issuance on 2026-06-08, proposals due 2026-08-07, and anticipated award in October 2026.",
+          "RFP Section 1.3 says MDOT will award, if at all, to responsive and responsible proposers offering the Best Value Proposal and reserves the right to reject any or all proposals.",
+          "The price proposal instructions require itemized eligible costs only; Form 3 requires a minimum 20% Project Company Share and shows Total Funds Requested as Total Eligible Cost less Project Company Share with a maximum 80% share.",
+          "If all pre-award gating inputs are present, internal expected_value_cents may be modeled as floor(conditional_award_cents * 0.38), but it should remain excluded from default user-facing totals until selected or contract-executed status and an approved amount are present.",
+          "Therefore no source-backed dollar value can be calculated for the matched project until site-specific eligible costs and proposal/award inputs are known; there is no per-project dollar cap found beyond the 80% cost-share cap and approved Total Funds Requested mechanics."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_found",
+        "probabilityDiscount": 0.38,
+        "probabilityEvidenceType": "historical_success_rate",
+        "historicalAwardsCount": 83,
+        "historicalApplicationsCount": 214,
+        "totalProgramBudgetCents": 5100000000,
+        "expectedAwardCount": 60,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Michigan-specific historical evidence exists: the FY 2026 Michigan EVID Plan reports 83 project sites selected from 214 submitted proposals across the first two competitive NEVI procurement rounds. The conservative discount is floor_to_two_decimals(83 / 214) = 0.38. Round 3 remains project-specific and competitive; its actual application count is not yet known, so this is a historical prior rather than a project-level probability. MDOT's Round 3 press release states that about $51 million remains and anticipates about 60 additional stations, but that budget/expected-awards evidence is not enough to replace the historical application denominator."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "Fallback prior not needed because Michigan-specific historical selection evidence was found. Do not use any fallback prior without human approval for projects that lack eligible project cost, application-fit review, and proposal/award status.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "needs_project_scope",
+        "expectedValueCents": null,
+        "estimateConfidence": "medium",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "official_mdot_round3_rfp_active",
+          "competitive_best_value_procurement",
+          "mdot_may_reject_any_or_all_proposals",
+          "needs_project_cost",
+          "needs_total_funds_requested_or_approved_award",
+          "needs_application_fit_review",
+          "needs_site_and_equipment_compliance",
+          "capped_at_80_percent_total_eligible_cost",
+          "minimum_20_percent_project_company_share_required",
+          "historical_success_rate_available_83_of_214",
+          "probability_discount_floored_to_0_38",
+          "round3_actual_application_count_unknown",
+          "do_not_include_user_facing_total_by_default"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.michigan.gov/mdot/travel/mobility/initiatives/nevi",
+        "https://www.michigan.gov/mdot/business/contractors/innovativecontracting/national-electric-vehicle-infrastructure-3",
+        "https://www.michigan.gov/mdot/-/media/Project/Websites/MDOT/Business/Contractors/Innovative-Contracting/NEVI---3/RFP.pdf",
+        "https://www.michigan.gov/mdot/-/media/Project/Websites/MDOT/Travel/Mobility/Mobility-Initiatives/NEVI/FY26-Michigan-Plan-Electric-Vehicles.pdf",
+        "https://www.michigan.gov/mdot/news-outreach/pressreleases/2026/06/09/mdot-expanding-ev-charging-network-accepting-proposals-for-round-3-nevi-procurement",
+        "https://www.ecfr.gov/current/title-23/chapter-I/subchapter-G/part-680",
+        "https://www.fhwa.dot.gov/environment/nevi/"
+      ],
+      "evidenceText": "Target context is from the uploaded RetroFi prompt for grant_ev_gap_001_001. MDOT's official Round 3 page describes statewide NEVI-compliant EV charging infrastructure, a minimum of four network-connected 150 kW DC charging ports at a typical site, at least five years of O&M, RFP issuance on June 8, 2026, proposals due August 7, 2026, and anticipated award in October 2026. ([Michigan][1]) The RFP says MDOT anticipates approximately 60 NEVI sites based on Round 3 funding availability, requires a minimum 20% Project Company Share, requires no construction until NEPA review is complete and a contract agreement is executed, and uses a Best Value award approach with MDOT reserving the right to reject any or all proposals. ([Michigan][2]) The RFP schedule states proposals are due at 1:00 p.m. ET on August 7, 2026 and anticipated selected-responsive-proposer notification is November 2026; the public Round 3 page separately lists anticipated award in October 2026. The price proposal form requires eligible costs only, a minimum 20% Project Company Share, and Total Funds Requested as Total Eligible Cost less Project Company Share with a maximum 80% share. ([Michigan][2]) The FY 2026 Michigan EVID Plan reports that the first two competitive NEVI rounds selected 83 project sites from 214 proposals submitted; it also reports $57.96 million obligated and a plan to obligate $52.10 million remaining, while the June 9, 2026 MDOT press release says FHWA approval secured access to $51 million in remaining NEVI formula funds and anticipates 60 additional stations. ([Michigan][3])",
+      "reasoningNotes": "This repair separates conditional award amount from probability. The conditional award is source-backed as a competitive cost-share reimbursement/payment capped by Form 3 Total Funds Requested and the 80% Total Eligible Cost maximum, but the matched project has no eligible-cost, Form 3, selected-proposer, or approved-award input; therefore conditionalAwardCents remains null and the recommendation is needs_project_scope. Probability evidence is defensible only as a historical prior from Michigan's own Round 1 and Round 2 NEVI results: 83 / 214 = 0.38785, floored to 0.38. Because Round 3 is still a competitive statewide procurement with unknown actual proposal denominator, MDOT discretion, responsiveness/scoring review, NEPA/contract gates, and no project-specific approved amount, RetroFi should not include this in default user-facing totals until selected/contract-executed status and approved_total_funds_requested_cents are present.",
+      "sourceFile": "output_001_grant_ev_gaps_001_001.md",
+      "batchRange": "001-001",
+      "rawEvidenceText": "Target context is from the uploaded RetroFi prompt for grant_ev_gap_001_001.  MDOT's official Round 3 page describes statewide NEVI-compliant EV charging infrastructure, a minimum of four network-connected 150 kW DC charging ports at a typical site, at least five years of O&M, RFP issuance on June 8, 2026, proposals due August 7, 2026, and anticipated award in October 2026. ([Michigan][1]) The RFP says MDOT anticipates approximately 60 NEVI sites based on Round 3 funding availability, requires a minimum 20% Project Company Share, requires no construction until NEPA review is complete and a contract agreement is executed, and uses a Best Value award approach with MDOT reserving the right to reject any or all proposals. ([Michigan][2]) The RFP schedule states proposals are due at 1:00 p.m. ET on August 7, 2026 and anticipated selected-responsive-proposer notification is November 2026; the public Round 3 page separately lists anticipated award in October 2026.  The price proposal form requires eligible costs only, a minimum 20% Project Company Share, and Total Funds Requested as Total Eligible Cost less Project Company Share with a maximum 80% share. ([Michigan][2]) The FY 2026 Michigan EVID Plan reports that the first two competitive NEVI rounds selected 83 project sites from 214 proposals submitted; it also reports $57.96 million obligated and a plan to obligate $52.10 million remaining, while the June 9, 2026 MDOT press release says FHWA approval secured access to $51 million in remaining NEVI formula funds and anticipates 60 additional stations. ([Michigan][3])"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "effectId": "effect_grant_expected_value_1_c93b27f2d9d796eb",
+      "programName": "California - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "For a selected and formally approved GFO-25-603 project only, calculate conditional reimbursement as min(cec_approved_award_amount_cents, requested_grant_amount_cents, round(0.80 * eligible_project_cost_cents), solicitation_applicant_award_cap_cents). For GFO-25-603, the current solicitation-specific applicant cap is 35% of $79,000,000 available funding, or $27,650,000. Exact payable reimbursement also depends on eligible invoiced costs, match compliance, CEC approval/agreement status, and required FHWA/Caltrans authorization for the relevant phase.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 2765000000,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "eligible_project_cost_cents",
+          "requested_grant_amount_cents",
+          "cec_approved_award_amount_cents",
+          "solicitation_applicant_award_cap_cents",
+          "match_share_cents",
+          "cash_match_share_cents",
+          "award_selection_status",
+          "agreement_execution_status",
+          "fhwa_phase_authorization_status",
+          "applicant_eligibility_status",
+          "station_count",
+          "ccs_port_count_per_station",
+          "eligible_costs_verified"
+        ],
+        "calculationTrace": [
+          "CEC's official GFO-25-603 page lists the solicitation as Active, with release date February 23, 2026, submission deadline October 16, 2026 at 11:59 pm, and questions deadline July 13, 2026 at 5:00 pm.",
+          "CEC describes GFO-25-603 as a competitive grant solicitation with up to $79,000,000 available for publicly accessible high-powered DC fast charging stations supporting light-duty EV travel along major corridors.",
+          "CEC workshop materials state that total available funding is $79,000,000 and that the maximum grant award per applicant is 35% of funds available, equal to $27,650,000.",
+          "Federal NEVI cost share is capped at 80% of total project cost, so the project must supply the remaining non-federal share.",
+          "$79,000,000 * 35% = $27,650,000 = 2,765,000,000 cents.",
+          "Before selection/approval, there is no source-backed project-specific award amount; the source-backed value is a conditional formula and cap, not an entitlement."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "scoring_criteria_only",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 7900000000,
+        "expectedAwardCount": null,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Official sources confirm a competitive solicitation with screening, scoring, ranking by cost-per-CCS-port, and funding until solicitation funds are exhausted. They do not provide a current GFO-25-603 application denominator, expected award count, or success-rate history suitable for an award-probability discount. Available funding, the 80% cost-share limit, and the $27.65 million applicant cap are conditional cap information, not probability evidence."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "Only a human-reviewed prior should be used for this competitive NEVI solicitation unless RetroFi obtains an official application denominator, expected award count, award-count history, or an approved internal prior for comparable CEC NEVI rounds.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_grant",
+          "missing_probability_anchor",
+          "scoring_criteria_only",
+          "no_current_application_denominator",
+          "no_expected_award_count",
+          "cost_share_cap_only",
+          "up_to_funding_not_entitlement",
+          "needs_project_cost",
+          "needs_requested_grant_amount",
+          "needs_approved_award_record",
+          "selection_required",
+          "cec_business_meeting_approval_required",
+          "agreement_execution_required",
+          "fhwa_phase_authorization_required",
+          "do_not_include_pre_award_expected_value"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
+        "https://www.energy.ca.gov/funding-opportunities/solicitations",
+        "https://www.energy.ca.gov/programs-and-topics/programs/federal-ev-infrastructure-programs",
+        "https://www.energy.ca.gov/programs-and-topics/programs/federal-ev-infrastructure-programs/californias-national-electric",
+        "https://www.energy.ca.gov/sites/default/files/2026-03/GFO-25-603_NEVI_6_Pre-Application_Workshop_Slides_ADA.pdf",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/00_GFO-25-603_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://uscode.house.gov/view.xhtml?edition=prelim&num=0&req=granuleid%3AUSC-prelim-title23-section151",
+        "https://afdc.energy.gov/laws/12744",
+        "https://programs.dsireusa.org/system/program/detail/22629/california-national-electric-vehicle-infrastructure-nevi-formula-grant-program"
+      ],
+      "evidenceText": "The target and current package metadata were supplied in the uploaded prompt. CEC's official GFO-25-603 page lists the solicitation type as Grant Funding Opportunity, solicitation number GFO-25-603, status Active, release date February 23, 2026, submission deadline October 16, 2026 at 11:59 pm, questions deadline July 13, 2026 at 5:00 pm, and describes the opportunity as a competitive grant solicitation with up to $79,000,000 available for publicly accessible high-powered DCFC stations. ([California Energy Commission][1]) CEC's solicitation file list includes the Addendum 2 solicitation manual, and CEC's workshop slides state that $79 million is available and the maximum grant award per applicant is 35% of funds available, or $27.65 million. ([California Energy Commission][1]) The same CEC workshop materials state that the CEC will screen and score applications, rank qualifying applications by cost-per-CCS-port, recommend funding until funds are exhausted, and may partially fund a proposal if remaining funds are insufficient. The workshop materials also state that applicants must include exactly 20% match for total allowable project cost, with at least 50% of the match as cash. ([California Energy Commission][2]) Federal statute states that the federal share of a project carried out with a grant under 23 U.S.C. 151 shall not exceed 80% of total project cost, and AFDC describes NEVI funding as available for up to 80% of eligible project costs. ([US Code][3])",
+      "reasoningNotes": "Repair should preserve a source-backed conditional selected-project formula and cap while suppressing pre-award expected value. The program is active and competitive, not deterministic or first-come. Official sources checked do not provide a current application count, expected award count, or historical success-rate denominator for GFO-25-603. Therefore probabilityDiscount remains null and includeInUserFacingTotalDefault remains false. The $79,000,000 available budget, 80% federal cost-share cap, exact 20% match requirement, and $27,650,000 applicant cap can support conditional-award metadata only after project cost, requested amount, award/approval status, and eligibility inputs are supplied.",
+      "sourceFile": "output_002_grant_ev_gaps_002_002.md",
+      "batchRange": "002-002",
+      "rawEvidenceText": "The target and current package metadata were supplied in the uploaded prompt.  CEC's official GFO-25-603 page lists the solicitation type as Grant Funding Opportunity, solicitation number GFO-25-603, status Active, release date February 23, 2026, submission deadline October 16, 2026 at 11:59 pm, questions deadline July 13, 2026 at 5:00 pm, and describes the opportunity as a competitive grant solicitation with up to $79,000,000 available for publicly accessible high-powered DCFC stations. ([California Energy Commission][1]) CEC's solicitation file list includes the Addendum 2 solicitation manual, and CEC's workshop slides state that $79 million is available and the maximum grant award per applicant is 35% of funds available, or $27.65 million. ([California Energy Commission][1]) The same CEC workshop materials state that the CEC will screen and score applications, rank qualifying applications by cost-per-CCS-port, recommend funding until funds are exhausted, and may partially fund a proposal if remaining funds are insufficient.  The workshop materials also state that applicants must include exactly 20% match for total allowable project cost, with at least 50% of the match as cash. ([California Energy Commission][2]) Federal statute states that the federal share of a project carried out with a grant under 23 U.S.C. 151 shall not exceed 80% of total project cost, and AFDC describes NEVI funding as available for up to 80% of eligible project costs. ([US Code][3])"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
+      "effectId": "effect_grant_expected_value_1_42355de1814a8757",
+      "programName": "GFO-25-603 - California's National Electric Vehicle Infrastructure Formula Program - Solicitation 6 Community Charging",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "Pre-award expected value is not defensible without a probability model. If the applicant is officially selected and the award amount is approved or the agreement is executed, conditional_award_cents = min(approved_cec_award_cents, requested_cec_reimbursable_share_cents, floor(0.80 * total_allowable_project_cost_cents), 2765000000). Before an official award decision, use only a non-user-facing maximum request diagnostic equal to min(requested_cec_reimbursable_share_cents, floor(0.80 * total_allowable_project_cost_cents), 2765000000), subject to all eligibility gates and possible CEC partial funding. If award_selection_status is not_selected, conditional_award_cents = 0. For submitted, application_in_progress, proposed_award without an approved amount, or unknown status, conditional_award_cents remains null.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 2765000000,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "award_selection_status",
+          "approved_cec_award_cents",
+          "total_allowable_project_cost_cents",
+          "requested_cec_reimbursable_share_cents",
+          "match_share_cents",
+          "cash_match_share_cents",
+          "number_of_ccs_ports",
+          "station_count",
+          "each_station_ccs_port_count",
+          "each_ccs_port_power_kw",
+          "applicant_type",
+          "nevi_6_afc_site_eligibility",
+          "site_control_documentation_status",
+          "agreement_executed",
+          "cec_notice_to_proceed_or_reimbursable_authorization",
+          "cost_per_ccs_port_cents"
+        ],
+        "calculationTrace": [
+          "CEC lists GFO-25-603 as an active competitive grant solicitation with up to $79,000,000 available and an October 16, 2026 application deadline.",
+          "The current applicant cap is 35% of total solicitation funds; 35% of $79,000,000 is $27,650,000, or 2765000000 cents.",
+          "The solicitation requires exactly 20% match share of total allowable project cost, implying a maximum 80% reimbursable share for a compliant budget; at least 50% of the match share must be cash match.",
+          "Eligible reimbursable/match costs depend on project phase authorization, executed grant agreement, allowable-cost rules, site eligibility, equipment requirements, and documentation.",
+          "Applications must pass screening and minimum technical scoring thresholds, then are ranked by cost per CCS port; CEC may recommend partial funding if remaining funds are insufficient.",
+          "The Notice of Proposed Awards is expected after the application deadline and will contain the proposed funding amount, rank order, and proposed award amounts; no project-specific GFO-25-603 award record was found before that official decision."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "scoring_criteria_only",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 7900000000,
+        "expectedAwardCount": null,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Official sources provide a competitive scored process, minimum score thresholds, cost-per-CCS-port ranking, total budget, applicant cap, and anticipated NOPA timing, but they do not provide GFO-25-603 application volume, expected award count, a historical success rate, or any official probability discount. The $79,000,000 budget and $27,650,000 applicant cap are capacity/cap inputs, not selection probability evidence. Cost-per-CCS-port ranking is project-specific and cannot be converted to a conservative award probability without applicant pool and ranking data."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": 0.15,
+        "basis": "Low-confidence human-review prior only for a large statewide competitive EV charging solicitation with substantial budget but unknown applicant volume, unknown cost-per-port distribution, and no official success-rate evidence. This prior should remain outside automated user-facing totals unless RetroFi separately approves it.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_grant",
+          "expected_value_suppressed",
+          "probability_evidence_not_found",
+          "scoring_criteria_only_not_probability",
+          "cost_per_ccs_port_ranking_not_probability",
+          "up_to_budget_not_guaranteed",
+          "project_specific_selection_required",
+          "final_award_or_executed_agreement_required",
+          "approved_award_amount_required_for_conditional_award",
+          "eligible_cost_basis_required",
+          "exact_20_percent_match_required",
+          "cash_match_documentation_required",
+          "partial_award_possible",
+          "funding_availability_contingency",
+          "exclude_from_user_facing_total_default"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/00_GFO-25-603_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-03/GFO-25-603_NEVI_6_Pre-Application_Workshop_Slides_ADA.pdf",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/GFO-25-603_Addendum_02_Cover_Letter_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-603_Questions_and_Answers_Round_1_ada.docx",
+        "https://www.energy.ca.gov/programs-and-topics/programs/federal-ev-infrastructure-programs",
+        "https://www.energy.ca.gov/programs-and-topics/programs/federal-ev-infrastructure-programs/californias-national-electric",
+        "https://www.energy.ca.gov/funding-opportunities/awards",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "Official CEC sources identify GFO-25-603 as an active Grant Funding Opportunity for publicly accessible high-powered DC fast charging with up to $79,000,000 available and an October 16, 2026 submission deadline. The solicitation manual/addendum states that applications are accepted in ECAMS beginning July 16, 2026, with anticipated Notice of Proposed Awards in the week of January 11, 2027. The manual and workshop materials state that applications must pass screening and 70% technical thresholds, then advance to cost evaluation and ranking by cost per CCS port; final funding recommendations are made in rank order and partial funding is allowed if remaining funds are insufficient. The manual states a current applicant cap of 35% of the total solicitation funds; the workshop gives this as $27.65 million. The manual and Q&A state the total match share must be exactly 20% of total allowable project cost, which corresponds to an 80% reimbursable share for compliant budgets, and at least 50% of match must be cash. Q&A confirms there is not an $8 million award/project cap, and confirms awards are determined through a competitive, scored evaluation process. The CEC awards page and solicitation page did not show a GFO-25-603 Notice of Proposed Awards or project-specific award amount; no official application count, expected award count, historical success rate, or probability discount was found.",
+      "reasoningNotes": "This repairs the missing award_probability by intentionally suppressing pre-award expected value. The conditional amount is source-backed only as a cost-share/cap formula and remains project- and decision-dependent until CEC publishes/provides an approved award amount or executed agreement. Budget, maximum award, eligibility, scoring thresholds, and cost-per-port ranking are not probability evidence. Prepared against the uploaded RetroFi target prompt for batch 003-003. ",
+      "sourceFile": "output_003_grant_ev_gaps_003_003.md",
+      "batchRange": "003-003",
+      "rawEvidenceText": "Official CEC sources identify GFO-25-603 as an active Grant Funding Opportunity for publicly accessible high-powered DC fast charging with up to $79,000,000 available and an October 16, 2026 submission deadline. The solicitation manual/addendum states that applications are accepted in ECAMS beginning July 16, 2026, with anticipated Notice of Proposed Awards in the week of January 11, 2027. The manual and workshop materials state that applications must pass screening and 70% technical thresholds, then advance to cost evaluation and ranking by cost per CCS port; final funding recommendations are made in rank order and partial funding is allowed if remaining funds are insufficient. The manual states a current applicant cap of 35% of the total solicitation funds; the workshop gives this as $27.65 million. The manual and Q&A state the total match share must be exactly 20% of total allowable project cost, which corresponds to an 80% reimbursable share for compliant budgets, and at least 50% of match must be cash. Q&A confirms there is not an $8 million award/project cap, and confirms awards are determined through a competitive, scored evaluation process. The CEC awards page and solicitation page did not show a GFO-25-603 Notice of Proposed Awards or project-specific award amount; no official application count, expected award count, historical success rate, or probability discount was found."
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
+      "effectId": "effect_grant_expected_value_1_9badcea914d6d42f",
+      "programName": "GFO-25-605 - Reliable Electric Charging for Eligible School-bus Sites (RECESS)",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "hybrid_rate_plus_cap",
+      "conditionalAward": {
+        "status": "needs_project_scope",
+        "formulaText": "Use the approved award amount from a CEC Notice of Proposed Awards, Business Meeting approval, or fully executed agreement when available. Before an award decision, the current Addendum 2 conditional maximum is: min(eligible_project_cost_cents, 2,000,000 cents x eligible L2 charging ports + 3,750,000 cents x eligible DCFC or bidirectional DCFC charging ports, applicable lane cap). Lane 1 has no fixed dollar applicant cap in the current source; it is constrained by the Table 4 maximum number of charging ports for the eligible LEA and by demonstrated electric school bus charging need. Lane 2 cap is 225,000,000 cents. Lane 3 cap is 225,000,000 cents when serving one LEA and 450,000,000 cents when serving more than one LEA. Total requested grid-connected charging ports cannot exceed demonstrated electric school bus need. A dual-port DCFC or bidirectional DCFC equals two eligible DCFC/bidirectional DCFC ports, so it maps to 7,500,000 cents if both ports are eligible.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 450000000,
+        "costSharePercent": null,
+        "requiredProjectInputs": [
+          "funding_lane",
+          "eligible_project_cost_cents",
+          "number_of_l2_charging_ports",
+          "number_of_dcfc_or_bidirectional_dcfc_charging_ports",
+          "demonstrated_electric_school_bus_need_count",
+          "lane_1_maximum_charging_ports_from_table_4_if_lane_1",
+          "serves_more_than_one_lea_if_lane_3",
+          "applicant_type_and_eligibility_pathway",
+          "application_or_award_status",
+          "approved_award_amount_cents_if_awarded"
+        ],
+        "calculationTrace": [
+          "Official CEC page lists GFO-25-605 as active with submission deadline August 31, 2026 at 11:59 pm and up to 2,200,000,000 cents available for electric school bus EV charging infrastructure.",
+          "Official CEC page and Addendum 2 split funding into Lane 1 first-come with 400,000,000 cents, Lane 2 competitive with 900,000,000 cents, and Lane 3 competitive with 900,000,000 cents.",
+          "Current Addendum 2 changed the DCFC/bidirectional DCFC model to a per-port award: L2 charging port = 2,000,000 cents; DCFC or bidirectional DCFC port = 3,750,000 cents. Retain 7,500,000 cents only as the equivalent of two eligible DCFC/bidirectional DCFC ports.",
+          "Current Addendum 2 sets single applicant caps: Lane 1 up to the Table 4/HVIP-related maximum charging port count; Lane 2 225,000,000 cents; Lane 3 225,000,000 cents for one LEA or 450,000,000 cents for more than one LEA.",
+          "Addendum 2 and Q&A state that costs incurred before agreement execution are ineligible and that funds are disbursed as reimbursement for eligible incurred costs supported by invoices.",
+          "CEC may partially fund proposals, modify scope/funding, cancel awards, and no agreement is effective until CEC approval and signatures; therefore the formula is a conditional maximum unless an approved/executed award amount is known."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "human_review_required",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "none",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 2200000000,
+        "expectedAwardCount": null,
+        "competitionScope": "sector_specific",
+        "probabilityNotes": "No single defensible award probability exists for this mixed-lane opportunity. Lane 1 is not a competitive probability problem once the project is a Table 4 eligible LEA, the application is complete and timely, and it passes screening; the official Q&A says funding for the maximum number of charging ports per eligible Lane 1 applicant has been reserved if a complete application is received before the deadline. However, that does not supply a generic probability for non-confirmed applicants. Lanes 2 and 3 are competitive: applications must pass screening, score at least 70 percent overall and 70 percent on Project Implementation and Readiness, then are ranked until lane funds are exhausted. No official historical applications denominator, success rate, expected application count, expected award count, or current NOPA/award list was found for Lanes 2 and 3."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "Do not use a generic prior. For Lane 1, use no probability discount only after confirming the applicant is Table 4 eligible, the application is complete/timely, and the project passes screening or has a proposed/approved award. For Lanes 2 and 3, any fallback probability would be a human-reviewed prior because only budget, scoring criteria, and ranked-until-funds-exhausted rules were found.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "conditional_award_requires_lane_and_project_scope",
+          "current_addendum_02_uses_dcfc_bidirectional_dcfc_per_port_rate",
+          "lane_1_deterministic_only_after_table_4_eligibility_complete_application_and_screening_confirmed",
+          "competitive_lanes_probability_evidence_not_found",
+          "approved_award_or_executed_agreement_preferred",
+          "no_historical_application_denominator_or_success_rate",
+          "do_not_include_in_user_facing_total_default"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-605-reliable-electric-charging-eligible-school-bus-sites-recess",
+        "https://www.energy.ca.gov/funding-opportunities/solicitations",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/00_GFO-25-605%20Solicitation_Manual_Addendum_02_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-605_Questions_and_Answers_ada.docx",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "Input target came from the uploaded RetroFi prompt . The official CEC solicitation page lists GFO-25-605 as an active Grant Funding Opportunity, release date April 6, 2026, submission deadline August 31, 2026 at 11:59 pm, ECAMS submission, and up to $22,000,000 available; it describes Lane 1 as first-come with $4,000,000 and Lanes 2 and 3 as competitive with $9,000,000 each. ([California Energy Commission][1]) The official page lists Addendum 2 solicitation files and the Q&A file. Direct extraction from the official Addendum 2 DOCX supports the current conditional maximum formula, per-port rates, lane caps, scoring rules, NOPA process, and no-agreement-until-signed requirements. Direct extraction from the official Q&A supports that Lane 1 reserved funding applies only for eligible applicants with complete applications by the deadline, that funding is secured only after CEC agreement execution, and that reimbursement requires eligible incurred costs supported by vendor invoices.",
+      "reasoningNotes": "The existing package correctly suppressed a generic expected value, but should be updated for Addendum 2's current DCFC/bidirectional DCFC per-port rate. A conditional award can be calculated only after lane, eligible cost, eligible port counts, demonstrated bus need, and any Lane 1/Table 4 or Lane 3/multi-LEA cap inputs are known. Probability remains unsuitable for a generic user-facing expected value: Lane 1 can be treated as no-discount/deterministic only after applicant-specific eligibility, complete timely submission, and screening or award status are verified; Lanes 2 and 3 have budget and scoring criteria but no official probability anchor.",
+      "sourceFile": "output_004_grant_ev_gaps_004_004.md",
+      "batchRange": "004-004",
+      "rawEvidenceText": "Input target came from the uploaded RetroFi prompt . The official CEC solicitation page lists GFO-25-605 as an active Grant Funding Opportunity, release date April 6, 2026, submission deadline August 31, 2026 at 11:59 pm, ECAMS submission, and up to $22,000,000 available; it describes Lane 1 as first-come with $4,000,000 and Lanes 2 and 3 as competitive with $9,000,000 each. ([California Energy Commission][1]) The official page lists Addendum 2 solicitation files and the Q&A file. Direct extraction from the official Addendum 2 DOCX supports the current conditional maximum formula, per-port rates, lane caps, scoring rules, NOPA process, and no-agreement-until-signed requirements. Direct extraction from the official Q&A supports that Lane 1 reserved funding applies only for eligible applicants with complete applications by the deadline, that funding is secured only after CEC agreement execution, and that reimbursement requires eligible incurred costs supported by vendor invoices."
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
+      "effectId": "effect_grant_expected_value_2_a28bd747b9260955",
+      "programName": "City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants",
+      "availabilityStatus": "active",
+      "cashValueClassification": "cash_grant",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_max_only",
+      "conditionalAward": {
+        "status": "not_calculable",
+        "formulaText": "No defensible pre-award formula. CORE publishes only an up-to grant maximum for this grant path: commercial and multifamily grant awards can be up to $200,000, applications are rolling, and grant eligibility depends on larger, long-term, impactful implementation projects where rebates are insufficient, CORE review, greenhouse-gas impact analysis, and funds being available. After an official CORE approval, use approved_grant_award_cents as the cash grant amount; cap at 20000000 cents only as a validation check, not as an expected value.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 20000000,
+        "costSharePercent": null,
+        "requiredProjectInputs": [
+          "commercial_or_multifamily_applicant_confirmation",
+          "eligible_project_scope",
+          "greenhouse_gas_impact_analysis",
+          "rebate_insufficiency_rationale",
+          "grant_funding_available_confirmation",
+          "official_core_award_decision",
+          "approved_grant_award_cents"
+        ],
+        "calculationTrace": [
+          "CORE funding criteria states that funding is limited, grants provide up to $200,000, eligibility and funding amounts vary by project type, location, and participant qualifications, and applications are first-come, first-served.",
+          "CORE commercial and multifamily funding page states commercial and multifamily grant awards can be up to $200,000 and applications are accepted on a rolling basis.",
+          "The same CORE page states grants are intended for larger, long-term, more impactful projects where rebates are not enough and grants can make the difference in completion.",
+          "CORE states grant applications are accepted as funds allow and staff works with applicants to analyze greenhouse-gas impact before an application is submitted.",
+          "No official formula, percentage of eligible cost, rate table, minimum award, current fund balance, or expected award count was found; therefore the pre-award conditional amount is not calculable."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "first_come_funding_unknown",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "first_come_funding_unknown",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": null,
+        "expectedAwardCount": null,
+        "competitionScope": "narrow_local",
+        "probabilityNotes": "Official materials support a narrow local, commercial/multifamily grant path with rolling applications and first-come treatment, but they do not provide a current fund balance, application count, approval count, denial count, historical success rate, or expected award count. CORE's 2024 aggregate funding/project statistic is grants-and-rebates program information and is not a grant-only probability anchor."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "A low-confidence human-reviewed prior could be considered for a narrow local commercial/multifamily implementation grant, but the official sources reviewed do not support an automated probability discount.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_max_only",
+          "source_says_up_to",
+          "no_conditional_award_formula",
+          "no_award_range",
+          "no_cost_share_formula",
+          "no_probability_evidence",
+          "first_come_funding_unknown",
+          "available_funds_dependency",
+          "award_depends_on_review",
+          "project_specific_ghg_analysis_required",
+          "official_award_required",
+          "exclude_from_user_facing_total"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.aspencore.org/funding-criteria",
+        "https://www.aspencore.org/commercial-multifamily-funding",
+        "https://www.aspencore.org/faq",
+        "https://www.aspencore.org/grants-and-funding-programs",
+        "https://www.aspencore.org/core-offers-enhanced-funding-services-to-make-climate-action-accessible-across-three-counties",
+        "https://www.aspencore.org/impact"
+      ],
+      "evidenceText": "CORE's current funding-criteria page says it funds residential, commercial, and multifamily building electrification and energy-efficiency projects in Pitkin, Eagle, and Garfield Counties; funding is limited; grants provide up to $200,000; eligibility and funding amounts vary by project type, location, and participant qualifications; applications are first-come, first-served; and program details may change without notice. ([Aspen Core][1]) CORE's commercial and multifamily page says grants are for commercial and multifamily applicants only, can be up to $200,000, and are accepted on a rolling basis; it further states grants are for larger, long-term, more impactful implementation projects where rebates are not enough, and that applications are accepted as funds allow after CORE works with interested parties to analyze greenhouse-gas impact. ([Aspen Core][2]) CORE's FAQ says grants are reserved for large commercial and multifamily building projects, recommends contacting CORE before drafting a grant application, and says approved projects must be completed within 18 months. ([Aspen Core][3]) CORE reported $920,536 in 2024 funding across 145 energy-saving projects, but this is aggregate funding and project-count information, not applications, approvals, denials, grant-only awards, current budget, or expected award count. ([Aspen Core][4])",
+      "reasoningNotes": "The uploaded target context was reviewed for the exact opportunityId, effectId, current package, and repair requirements.  The $200,000 value is a published maximum only, not a formula or expected value. A single public example of a $20,000 CCY Architects grant confirms that awards can exist, but it does not establish a typical award, award range, or success probability. Because no official probability anchor or pre-award conditional formula was found, RetroFi should suppress this expected-value effect by default and populate value only from an official CORE award decision.",
+      "sourceFile": "output_005_grant_ev_gaps_005_005.md",
+      "batchRange": "005-005",
+      "rawEvidenceText": "CORE's current funding-criteria page says it funds residential, commercial, and multifamily building electrification and energy-efficiency projects in Pitkin, Eagle, and Garfield Counties; funding is limited; grants provide up to $200,000; eligibility and funding amounts vary by project type, location, and participant qualifications; applications are first-come, first-served; and program details may change without notice. ([Aspen Core][1]) CORE's commercial and multifamily page says grants are for commercial and multifamily applicants only, can be up to $200,000, and are accepted on a rolling basis; it further states grants are for larger, long-term, more impactful implementation projects where rebates are not enough, and that applications are accepted as funds allow after CORE works with interested parties to analyze greenhouse-gas impact. ([Aspen Core][2]) CORE's FAQ says grants are reserved for large commercial and multifamily building projects, recommends contacting CORE before drafting a grant application, and says approved projects must be completed within 18 months. ([Aspen Core][3]) CORE reported $920,536 in 2024 funding across 145 energy-saving projects, but this is aggregate funding and project-count information, not applications, approvals, denials, grant-only awards, current budget, or expected award count. ([Aspen Core][4])"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22160",
+      "effectId": "effect_grant_expected_value_1_f3f277efefdea00d",
+      "programName": "Electric Vehicle Fast-Charging Plazas Program",
+      "availabilityStatus": "unknown",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "medium",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "not_calculable",
+        "formulaText": "Pre-award conditional dollars are not defensibly calculable from accessible official text alone. The accessible Colorado Energy Office page supports only a competitive reimbursement structure: funding amount listed as $17 million, match varies up to 80%, incentives are per charging port, at least four charging ports are required, each port must deliver at least 150 kW, incentive amounts depend on how many vehicles can charge at 150 kW simultaneously, and amounts vary by location. The detailed current-round incentive table is deferred to the application guide, which was not extractable from Google Drive. If application_status == awarded and an official award notice, grant agreement, or administrator record provides approved_award_amount_cents, use approved_award_amount_cents as the post-award conditional value. If RetroFi later stores a human-verified current-round rate table, a pre-agreement conditional cap may be modeled as the lesser of: administrator-approved eligible project cost times approved cost-share percent, current-round per-port amount for the site/location/rate row times simultaneous_150kw_vehicle_count plus any administrator-approved storage enhancement, current-round per-site cap, and any approved award amount once known.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": null,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "application_status",
+          "approved_award_amount_cents",
+          "eligible_project_cost_cents",
+          "site_location",
+          "site_county",
+          "number_of_charging_ports",
+          "charger_power_kw_per_port",
+          "simultaneous_150kw_vehicle_count",
+          "public_access_commitment_years",
+          "selected_funding_source",
+          "within_one_mile_of_designated_alternative_fuel_corridor",
+          "storage_configuration",
+          "storage_kwh",
+          "current_round_rate_table_verified",
+          "current_round_per_site_cap"
+        ],
+        "calculationTrace": [
+          "Colorado Energy Office current page identifies this as the Direct Current Fast-Charging Plazas Grant, with eligible applicant categories, NEVI and CAE funding sources, $17 million funding amount, match varying up to 80%, and application round labeled Spring 2026.",
+          "Colorado Energy Office current page states incentives are available per charging port, require a minimum of four charging ports, require minimum 150 kW output per port, depend on the number of vehicles that can be charged at 150 kW at one time, and vary by location.",
+          "The same official page defers detailed incentive amounts to the DCFC Plazas Application Guide. That Google Drive guide opened only as a loading/sign-in page through extraction, so the current-round rate table, location rows, storage adders, eligible-cost definitions, and per-site caps were not machine-extracted.",
+          "CDOT confirms NEVI funds are distributed through CEO's DCFC Plazas Program and states NEVI-funded projects must be within one mile of a federally designated Alternative Fuel Corridor, while CAE funding makes all parts of Colorado eligible under the DCFC Plazas Program.",
+          "The 2025 Colorado NEVI Plan describes Colorado's approach as a competitive grant program to identify and award the strongest proposals, says programs operate on a reimbursement basis, and says CEO establishes individual project agreements after selection.",
+          "Because the accessible value evidence is an up-to-80% cap plus an unextracted variable per-port structure, no source-backed conditional award cents can be calculated before either an official award decision or a verified current-round rate table."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "historical_awards_only",
+        "historicalAwardsCount": 53,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 1700000000,
+        "expectedAwardCount": null,
+        "competitionScope": "sector_specific",
+        "probabilityNotes": "Official sources do not provide a current-round application denominator, success rate, award probability, or expected award count tied to the Spring 2026 round. CDOT's 2025 NEVI Plan reports three completed solicitation rounds and 53 sites awarded totaling $29,117,000 statewide, and the public awards sheet lists awarded projects and award amounts, but these are historical awards only. The plan also mentions approximately 20 more NEVI locations needed to approach fully built-out status, but that is not a current-round expected award count and has no application-volume denominator. Therefore no defensible probability discount is available."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": 0.15,
+        "basis": "Low-confidence human-review prior for a Colorado statewide, sector-specific, competitive public DC fast-charging reimbursement grant. This is not official probability evidence and should be used only if RetroFi separately approves a human-reviewed prior for competitive public charging infrastructure grants.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_grant",
+          "award_approval_required",
+          "no_official_success_probability",
+          "historical_awards_without_application_denominator",
+          "max_only_match_percent",
+          "current_round_rate_table_not_machine_extracted",
+          "application_portal_not_extractable",
+          "funding_status_and_deadline_unverified",
+          "site_specific_contract_required",
+          "reimbursement_basis",
+          "suppress_pre_award_expected_value"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://energyoffice.colorado.gov/transportation/grants-incentives/dcfc-plazas",
+        "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+        "https://socgov27.my.site.com/CEOEVGrants/s/",
+        "https://www.codot.gov/programs/innovativemobility/electrification/nevi-plan",
+        "https://www.codot.gov/programs/innovativemobility/assets/colorado-2025-nevi-plan_final.pdf",
+        "https://docs.google.com/spreadsheets/d/1VjqJguBah7u92N0qOiSK_BNkDY3qAnVoVVandaSgmEk/edit?gid=32679425",
+        "https://drive.google.com/file/d/1BF3Hh7iffalxQhk462Im5CpmcoMafkWp/view?usp=sharing",
+        "https://afdc.energy.gov/laws/12432",
+        "https://programs.dsireusa.org/system/program/detail/22160/electric-vehicle-fast-charging-plazas-program"
+      ],
+      "evidenceText": "Input target came from the uploaded RetroFi prompt file . The official Colorado Energy Office DCFC Plazas page confirms the Direct Current Fast-Charging Plazas Grant, eligible applicants, NEVI and CAE funding sources, $17 million funding amount, match varying up to 80%, Spring 2026 application round, per-port incentives, minimum four charging ports, minimum 150 kW output, location-varying incentive amounts, enhanced incentives for battery storage, and key dates with close date listed as to be determined. ([Colorado Energy Office][1]) The official Salesforce application portal rendered a loading/CSS error, and the Google Drive application guide rendered only a loading/sign-in page, so current application status and detailed rate-table rows were not extractable. ([SocGov 27][2]) CDOT states NEVI funds are distributed through CEO's DCFC Plazas Program and explains the NEVI Alternative Fuel Corridor one-mile requirement and statewide CAE eligibility. ([Colorado Department of Transportation][3]) The 2025 Colorado NEVI Plan states Colorado implemented a competitive grant program to identify and award the strongest proposals, that programs operate on a reimbursement basis, that CEO establishes individual project agreements after selection, and that three solicitation rounds had issued awards for 53 sites totaling $29,117,000 statewide. ([Colorado Department of Transportation][4]) AFDC corroborates that eligible applicants may receive grants up to 80% of project costs at each proposed location and that awardees must provide five years of continuous use. ([Alternative Fuels Data Center][5]) The public awards sheet supports awarded-project history but not an application denominator or success rate. ([Google Docs][6])",
+      "reasoningNotes": "This repair keeps the up-to-80% value language as a conditional cap, not an expected value. The program is competitive and reimbursable, requires award selection and a project agreement, and the accessible sources do not provide a current-round probability denominator. Historical award counts are useful for context but cannot support a conservative expected-value discount without application counts or an approved prior. Because current-round detailed incentive rows and caps were not extractable and availability/deadline status was not fully verified from the portal or guide, RetroFi should suppress pre-award user-facing savings for this opportunity. A deterministic value may be shown only after an official award amount is supplied, or after a human-verified current-round rate table plus a human-approved probability prior is added.",
+      "sourceFile": "output_006_grant_ev_gaps_006_006.md",
+      "batchRange": "006-006",
+      "rawEvidenceText": "Input target came from the uploaded RetroFi prompt file . The official Colorado Energy Office DCFC Plazas page confirms the Direct Current Fast-Charging Plazas Grant, eligible applicants, NEVI and CAE funding sources, $17 million funding amount, match varying up to 80%, Spring 2026 application round, per-port incentives, minimum four charging ports, minimum 150 kW output, location-varying incentive amounts, enhanced incentives for battery storage, and key dates with close date listed as to be determined. ([Colorado Energy Office][1]) The official Salesforce application portal rendered a loading/CSS error, and the Google Drive application guide rendered only a loading/sign-in page, so current application status and detailed rate-table rows were not extractable. ([SocGov 27][2]) CDOT states NEVI funds are distributed through CEO's DCFC Plazas Program and explains the NEVI Alternative Fuel Corridor one-mile requirement and statewide CAE eligibility. ([Colorado Department of Transportation][3]) The 2025 Colorado NEVI Plan states Colorado implemented a competitive grant program to identify and award the strongest proposals, that programs operate on a reimbursement basis, that CEO establishes individual project agreements after selection, and that three solicitation rounds had issued awards for 53 sites totaling $29,117,000 statewide. ([Colorado Department of Transportation][4]) AFDC corroborates that eligible applicants may receive grants up to 80% of project costs at each proposed location and that awardees must provide five years of continuous use. ([Alternative Fuels Data Center][5]) The public awards sheet supports awarded-project history but not an application denominator or success rate. ([Google Docs][6])"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608",
+      "effectId": "effect_grant_expected_value_1_aa2ca5c972c94202",
+      "programName": "GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME)",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_award_range",
+      "conditionalAward": {
+        "status": "needs_project_scope",
+        "formulaText": "For Phase 1 only, use the CEC-approved reimbursable award amount if the application is selected and an official award amount is available in a Notice of Proposed Award, CEC business-meeting approval, or executed agreement. Official materials show Phase 1 funds available immediately under this solicitation, a Phase 1 funding range of $500,000 to $5,000,000, and Phase 2 as optional and contingent on future appropriations. Do not infer expected value from the $5,000,000 maximum, the applicant's requested amount, or possible future Phase 2 funding. Eligible reimbursable costs must comply with the executed scope and budget, including the 10% administrative-cost cap and residential charger installation reimbursement caps.",
+        "conditionalAwardCents": null,
+        "minAwardCents": 50000000,
+        "maxAwardCents": 500000000,
+        "costSharePercent": null,
+        "requiredProjectInputs": [
+          "phase_1_or_phase_2_scope",
+          "eligible_reimbursable_project_budget_cents",
+          "phase_1_funding_request_cents",
+          "project_scope",
+          "applicant_type",
+          "cbo_partner_commitment",
+          "proposed_region",
+          "dac_or_lic_census_tracts_served",
+          "installation_mix",
+          "application_score_or_rank",
+          "award_decision_status",
+          "approved_award_cents"
+        ],
+        "calculationTrace": [
+          "CEC lists GFO-25-608 as an active Grant Funding Opportunity with a submission deadline of August 18, 2026 at 11:59 pm.",
+          "CEC describes EV HOME as a competitive grant solicitation with up to $10 million available for projects accelerating EV adoption through incentive navigation, residential charging equipment connection, home charger facilitation, education, outreach, and messaging.",
+          "CEC workshop materials identify $10,000,000 in Phase 1 funding as available immediately under the solicitation.",
+          "CEC workshop materials identify the Phase 1 funding range as $500,000 to $5,000,000; Phase 2 has the same nominal range but is optional and contingent on future appropriations.",
+          "CEC workshop materials show administrative costs capped at 10% of total eligible reimbursable cost and residential installation reimbursement caps of $1,000 for single-family 120-volt, $2,000 for single-family 240-volt, $2,500 for multifamily 120-volt, and $6,000 for multifamily 240-volt installations.",
+          "Because the award is competitive and CEC will recommend awards to the highest-ranked projects after screening and scoring, no applicant-specific conditional award should be used until an official CEC award decision and approved award amount exist."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "scoring_criteria_only",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 1000000000,
+        "expectedAwardCount": null,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Official sources provide active status, deadline, budget, Phase 1 funding range, eligibility, screening criteria, scoring criteria, a 70-point minimum passing score, and rank-order award recommendation. They do not provide a historical success rate, application count, expected number of awards, applicant-specific score/rank, or an official award decision. Budget plus maximum award implies capacity constraints but is not a defensible probability model."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": 0.12,
+        "basis": "Low-confidence human-review prior only for a statewide competitive CEC program-administration and outreach grant with broad California eligibility, a $10,000,000 Phase 1 budget, and a $500,000-$5,000,000 Phase 1 award range. This is not source-backed probability evidence for GFO-25-608.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_grant",
+          "conditional_award_range_found",
+          "probability_evidence_not_found",
+          "scoring_criteria_only",
+          "award_requires_project_specific_cec_selection",
+          "application_score_or_rank_required",
+          "official_award_decision_required",
+          "do_not_infer_from_max_award",
+          "phase_2_contingent_future_appropriation",
+          "not_direct_consumer_rebate",
+          "exclude_from_user_facing_total_default"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.energy.ca.gov/solicitations/2026-05/gfo-25-608-electric-vehicle-hub-outreach-messaging-and-equipment-ev-home",
+        "https://www.energy.ca.gov/sites/default/files/2026-05/00_GFO-25-608_Att_00_Solicitation_Manual_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-608_Pre-Application_Workshop_ada.pdf",
+        "https://www.energy.ca.gov/event/funding-workshop/2026-06/pre-application-workshop-gfo-25-608-electric-vehicle-hub-outreach",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "The official CEC solicitation page lists GFO-25-608 as active, identifies it as a Grant Funding Opportunity, gives an August 18, 2026 11:59 pm submission deadline, states that it is a competitive grant solicitation, and states up to $10 million is available with possible future Phase 2 funding. The official pre-application workshop confirms $10 million for Phase 1, a $500,000-$5,000,000 funding range for Phase 1, Phase 2 as contingent on future appropriations, eligibility and project requirements, administrative and installation reimbursement caps, pass/fail screening, 70-point minimum passing score, and recommendations to the highest-ranked projects. The workshop also lists anticipated Notice of Proposed Award posting for October 26, 2026 and anticipated CEC Business Meeting in February 2027. No official source checked provided historical applications, historical awards, expected award count, or another defensible probability anchor. Uploaded target package cited:",
+      "reasoningNotes": "Repair suppresses expected value rather than treating missing award_probability as a broken input. The conditional award can be represented only as an official Phase 1 range or as a future official approved award amount if selected; it cannot be converted into a user-facing expected savings estimate because the solicitation is competitive and probability evidence is absent. Phase 2 remains excluded because it is optional, contingent on future appropriations, and subject to later eligibility, performance, and amendment steps.",
+      "sourceFile": "output_007_grant_ev_gaps_007_007.md",
+      "batchRange": "007-007",
+      "rawEvidenceText": "The official CEC solicitation page lists GFO-25-608 as active, identifies it as a Grant Funding Opportunity, gives an August 18, 2026 11:59 pm submission deadline, states that it is a competitive grant solicitation, and states up to $10 million is available with possible future Phase 2 funding. The official pre-application workshop confirms $10 million for Phase 1, a $500,000-$5,000,000 funding range for Phase 1, Phase 2 as contingent on future appropriations, eligibility and project requirements, administrative and installation reimbursement caps, pass/fail screening, 70-point minimum passing score, and recommendations to the highest-ranked projects. The workshop also lists anticipated Notice of Proposed Award posting for October 26, 2026 and anticipated CEC Business Meeting in February 2027. No official source checked provided historical applications, historical awards, expected award count, or another defensible probability anchor. Uploaded target package cited: "
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22770",
+      "effectId": "effect_grant_expected_value_1_753c755368588c1b",
+      "programName": "Leading By Example Restoration Grant for Solar PV & Decarbonized Systems",
+      "availabilityStatus": "active",
+      "cashValueClassification": "cash_grant",
+      "sourceConfidence": "medium",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "Pre-approval, calculate only a suppressed upper-bound request amount: min(eligible_project_cost_cents, 50000000, entity_remaining_cap_cents, program_funds_remaining_confirmed_cents if officially confirmed). The source-backed published ceiling is up to 100% of eligible costs, subject to a $500,000 per-project cap, a $1,500,000 per-entity cap, total program funding of $5,000,000, remaining funds, eligible state-entity/Commonwealth-owned restoration scope, and DOER approval. After official DOER approval, use only the approved_award_amount_cents as the conditional award, capped as min(approved_award_amount_cents, eligible_project_cost_cents, 50000000, entity_remaining_cap_cents).",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 50000000,
+        "costSharePercent": 1,
+        "requiredProjectInputs": [
+          "applicant_is_massachusetts_state_entity",
+          "applicant_entity_name",
+          "commonwealth_owned_system_or_equipment",
+          "eligible_restoration_scope",
+          "eligible_project_cost_cents",
+          "entity_prior_or_committed_awards_cents",
+          "entity_remaining_cap_cents",
+          "program_funds_remaining_confirmed_cents",
+          "award_approval_status",
+          "approved_award_amount_cents"
+        ],
+        "calculationTrace": [
+          "Official Mass.gov indexed text identifies total program funding of $5,000,000 and a maximum per individual project of $500,000. ([Massachusetts Government][1])",
+          "DSIRE indexed text for program 22770 corroborates the $500,000 per-project and $1,500,000 per-entity caps. ([DSIRE][2])",
+          "Official Mass.gov indexed text says grant requests may cover up to 100% of eligible costs by project category, which supports only a maximum request basis, not a guaranteed award. ([Massachusetts Government][1])",
+          "Official Mass.gov indexed text says applications are accepted and reviewed on a rolling basis and approved until funds are no longer available, with a PON response deadline of June 30, 2027. ([Massachusetts Government][1])",
+          "COMMBUYS lists bid BD-25-1041-ENE01-ENE01-109288 for LBE Restoration Grant Program for Solar and Decarbonized Systems (PON-ENE-2025-007), Department of Energy Resources, bid type OPEN, bid opening date 06/30/2027, and file attachments for the PON and application form. ([Commbuys][3])",
+          "Before an official award notice, the output should remain a suppressed upper-bound request amount only; after official approval, the conditional award can be set from approved_award_amount_cents, subject to eligible cost and program caps."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "eligibility_only",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 500000000,
+        "expectedAwardCount": null,
+        "competitionScope": "sector_specific",
+        "probabilityNotes": "No source-backed award probability, application count, success rate, expected award count, or current remaining-funds figure was found. The available official evidence establishes eligibility, rolling review, program caps, and that approval is subject to available funds; it does not support discounting this grant into a conservative expected value."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "Rolling Massachusetts state-entity grant with published caps and funds-remaining dependency, but no official probability anchor. Any assumed probability prior should require RetroFi human review because eligibility and an up-to cap are not sufficient to estimate award likelihood.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "rolling_grant_approval_required",
+          "missing_probability_anchor",
+          "up_to_amount_not_guaranteed",
+          "needs_project_cost",
+          "needs_entity_remaining_cap",
+          "funding_remaining_unknown",
+          "approved_award_amount_required",
+          "state_entity_only",
+          "commonwealth_owned_system_required",
+          "restoration_scope_only",
+          "exclude_from_user_facing_total_default"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.mass.gov/info-details/leading-by-example-restoration-grant-for-solar-pv-decarbonized-systems",
+        "https://www.mass.gov/leading-by-example-grants",
+        "https://www.commbuys.com/bso/external/bidDetail.sdo?docId=BD-25-1041-ENE01-ENE01-109288&external=true&parentUrl=bid",
+        "https://programs.dsireusa.org/system/program/detail/22770/leading-by-example-restoration-grant-for-solar-pv-decarbonized-systems"
+      ],
+      "evidenceText": "The prompt target is DSIRE program 22770 and asks for one repair for effect_grant_expected_value_1_753c755368588c1b. Official Mass.gov indexed text supports a $5,000,000 total program budget, $500,000 per-project cap, up-to-100% eligible-cost request basis, rolling review, approvals only while funds remain, and a June 30, 2027 PON response deadline. ([Massachusetts Government][1]) DSIRE indexed text corroborates the $500,000 per-project and $1,500,000 per-entity caps. ([DSIRE][2]) COMMBUYS lists the official Department of Energy Resources solicitation as OPEN for PON-ENE-2025-007, with bid opening date 06/30/2027 and attachments for the PON and application form. ([Commbuys][3]) No official historical application count, historical award count for this PON, success rate, expected award count, or current remaining-budget figure was found in the official sources checked.",
+      "reasoningNotes": "Repair should preserve this as a cash grant but suppress user-facing EV. The conditional value is not a deterministic rebate; the published up-to-100% language and caps define a maximum request/approval envelope. A nonzero user-facing value should be used only after official DOER approval or after RetroFi human review supplies a defensible probability model. The Mass.gov detail pages returned 403 in direct browser fetch, but official search snippets and the official COMMBUYS solicitation were accessible, so source confidence is medium rather than high.",
+      "sourceFile": "output_008_grant_ev_gaps_008_008.md",
+      "batchRange": "008-008",
+      "rawEvidenceText": "The prompt target is DSIRE program 22770 and asks for one repair for effect_grant_expected_value_1_753c755368588c1b.  Official Mass.gov indexed text supports a $5,000,000 total program budget, $500,000 per-project cap, up-to-100% eligible-cost request basis, rolling review, approvals only while funds remain, and a June 30, 2027 PON response deadline. ([Massachusetts Government][1]) DSIRE indexed text corroborates the $500,000 per-project and $1,500,000 per-entity caps. ([DSIRE][2]) COMMBUYS lists the official Department of Energy Resources solicitation as OPEN for PON-ENE-2025-007, with bid opening date 06/30/2027 and attachments for the PON and application form. ([Commbuys][3]) No official historical application count, historical award count for this PON, success rate, expected award count, or current remaining-budget figure was found in the official sources checked."
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_23891",
+      "effectId": "effect_grant_expected_value_2_78ea28615e9acd08",
+      "programName": "National Electric Vehicle Infrastructure (NEVI) Program",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "For CEC GFO-25-603, a selected project can request reimbursement equal to the lesser of 80% of eligible allowable project cost and the current per-applicant cap of $27,650,000, subject to CEC screening, scoring, ranking, possible partial funding, CEC approval, grant agreement execution, eligible-cost review, and FHWA authorization. Formula for pre-award metadata: min(0.80 * eligible_allowable_project_cost_cents, 2765000000). If an official proposed award, CEC Business Meeting approval, or executed agreement gives a project-specific amount, use approved_award_amount_cents instead of the pre-award formula.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 2765000000,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "eligible_allowable_project_cost_cents",
+          "approved_award_amount_cents",
+          "application_status",
+          "station_count",
+          "number_of_ccs_ports",
+          "ccs_ports_per_station",
+          "station_locations_within_one_mile_of_afc",
+          "match_share_percent",
+          "cash_match_share_percent_of_match",
+          "applicant_eligibility_status",
+          "active_cec_zev_infrastructure_projects_count",
+          "agreement_executed",
+          "fhwa_e76_authorized"
+        ],
+        "calculationTrace": [
+          "SDG&E is an application-support page for NEVI customers, not a direct SDG&E charger rebate or grant amount.",
+          "CEC GFO-25-603 is active and competitive, with up to 7900000000 cents available and an October 16, 2026 submission deadline.",
+          "CEC workshop materials state the maximum grant award per applicant is 35% of available funds, or 2765000000 cents.",
+          "NEVI federal share is 80% of eligible project cost; CEC materials require exactly 20% match, with at least 50% of that match as cash.",
+          "Therefore the pre-award conditional reimbursement formula is min(0.80 * eligible_allowable_project_cost_cents, 2765000000), but only as conditional metadata.",
+          "CEC screens and scores applications, ranks eligible applications by Cost-per-CCS-Port, recommends funding until funds are exhausted, and may partially fund a proposal.",
+          "Suppress automated expected value until official award evidence or a human-reviewed probability prior is available."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "scoring_criteria_only",
+        "historicalAwardsCount": null,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 7900000000,
+        "expectedAwardCount": null,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Official sources show a competitive, screened, scored, and ranked CEC solicitation with a budget and award cap, but no application denominator, expected award count, historical success rate, or project-specific selection probability for GFO-25-603. Budget and cap facts do not support an automated probability discount."
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "A human-reviewed prior could be created for statewide competitive EV-infrastructure solicitations, but the official sources checked do not support an automated probability discount for this applicant or solicitation.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_cost_share",
+          "competitive_scored_ranked_solicitation",
+          "no_probability_evidence",
+          "no_historical_success_rate",
+          "no_expected_award_count",
+          "conditional_award_needs_project_cost",
+          "project_specific_award_required",
+          "conditional_up_to_cap_only",
+          "reimbursement_after_agreement_and_fhwa_authorization",
+          "sdge_page_non_cash_application_support",
+          "do_not_include_in_default_total"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.sdge.com/business/electric-vehicles/nevi",
+        "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
+        "https://www.energy.ca.gov/sites/default/files/2026-03/GFO-25-603_NEVI_6_Pre-Application_Workshop_Slides_ADA.pdf",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/00_GFO-25-603_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/GFO-25-603_Addendum_02_Cover_Letter_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-603_Questions_and_Answers_Round_1_ada.docx",
+        "https://www.energy.ca.gov/programs-and-topics/programs/federal-ev-infrastructure-programs",
+        "https://highways.dot.gov/laws-regulations/directives/notices/n-4510909"
+      ],
+      "evidenceText": "The uploaded target is the SDG&E NEVI opportunity/effect needing award-probability repair. SDG&E describes supporting customers in the NEVI application process and points applicants to CEC for program and solicitation details, rather than offering a direct SDG&E cash incentive. ([SDGE][1]) CEC lists GFO-25-603 as an active grant funding opportunity with an October 16, 2026 submission deadline and up to $79,000,000 available for a competitive solicitation. ([California Energy Commission][2]) CEC workshop materials state that $79,000,000 is available, the maximum grant award per applicant is 35% of funds available or $27,650,000, applicants must include exactly 20% match with at least 50% cash match, CEC screens and scores applications, eligible applications are ranked by Cost-per-CCS-Port, recommendations continue until funds are exhausted, and partial funding is possible. ([California Energy Commission][3]) FHWA states the NEVI federal share payable for a project is 80%. ([Federal Highway Administration][4])",
+      "reasoningNotes": "This repair separates conditional award mechanics from probability. The conditional amount is source-backed only as a formula/cap, not as an expected value: min(80% of eligible allowable project cost, 2765000000 cents), superseded by an official project-specific award if posted. The probability repair remains negative because the official sources provide scoring and ranking rules, but no application count, expected award count, success-rate denominator, or applicant-specific probability. Treat the estimate as suppressed by default.",
+      "sourceFile": "output_009_grant_ev_gaps_009_009.md",
+      "batchRange": "009-009",
+      "rawEvidenceText": "The uploaded target is the SDG&E NEVI opportunity/effect needing award-probability repair.  SDG&E describes supporting customers in the NEVI application process and points applicants to CEC for program and solicitation details, rather than offering a direct SDG&E cash incentive. ([SDGE][1]) CEC lists GFO-25-603 as an active grant funding opportunity with an October 16, 2026 submission deadline and up to $79,000,000 available for a competitive solicitation. ([California Energy Commission][2]) CEC workshop materials state that $79,000,000 is available, the maximum grant award per applicant is 35% of funds available or $27,650,000, applicants must include exactly 20% match with at least 50% cash match, CEC screens and scores applications, eligible applications are ranked by Cost-per-CCS-Port, recommendations continue until funds are exhausted, and partial funding is possible. ([California Energy Commission][3]) FHWA states the NEVI federal share payable for a project is 80%. ([Federal Highway Administration][4])"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22783",
+      "effectId": "effect_grant_expected_value_1_c8247b1ced6ec8db",
+      "programName": "Public Charger Grants",
+      "availabilityStatus": "active",
+      "cashValueClassification": "reimbursement",
+      "sourceConfidence": "high",
+      "grantValueModelKind": "competitive_cost_share",
+      "conditionalAward": {
+        "status": "needs_project_cost",
+        "formulaText": "For an awarded site, conditional reimbursement is capped at the lesser of the approved/countersigned award amount, the incentive amount requested in the proposal, 80% of verified eligible project costs, and $200,000 per site. If approved_award_cents is unavailable, only the maximum possible cap is source-backed; do not populate a nonzero user-facing value before a project-specific award decision.",
+        "conditionalAwardCents": null,
+        "minAwardCents": null,
+        "maxAwardCents": 20000000,
+        "costSharePercent": 0.8,
+        "requiredProjectInputs": [
+          "eligible_project_cost_cents",
+          "requested_incentive_cents",
+          "approved_award_cents",
+          "award_status",
+          "project_is_physically_in_maine",
+          "number_of_level_2_ports",
+          "host_site_agreement_or_property_owner_attestation",
+          "documentation_verified_for_reimbursement"
+        ],
+        "calculationTrace": [
+          "Official RFP materials state that Efficiency Maine is offering $9.6 million through a competitive RFP for public Level 2 EV chargers at multifamily, business, and public properties.",
+          "The RFP reimbursement formula is up to 80% of total eligible project costs, capped at $200,000 per site.",
+          "The RFP requires at least four Level 2 ports per site and a Maine site location.",
+          "The Q&A confirms there is no separate maximum incentive cap per port after the 2026-06-23 RFP update.",
+          "Funding is allocated only to winning proposals and is not held in reserve until the close of the RFP.",
+          "Final reimbursement is post-installation: Efficiency Maine processes the incentive only after project documentation requirements are met and may require post-installation inspection or additional documentation.",
+          "Automated numeric conditional award remains null until project-specific eligible costs, requested incentive, approved award or countersigned grant agreement, and reimbursement documentation are available."
+        ]
+      },
+      "probabilityEvidence": {
+        "status": "evidence_not_found",
+        "probabilityDiscount": null,
+        "probabilityEvidenceType": "historical_awards_only",
+        "historicalAwardsCount": 34,
+        "historicalApplicationsCount": null,
+        "totalProgramBudgetCents": 960000000,
+        "expectedAwardCount": null,
+        "competitionScope": "statewide_broad",
+        "probabilityNotes": "Official current RFP sources provide budget, cap, eligibility requirements, scoring criteria, rolling monthly review, and award-process rules, but they do not publish an EM-008-2026 application count, expected award count, success rate, or administrator probability model. Efficiency Maine's public EV charging initiatives page and 2024 Level 2 award notices show related historical award records, including 34 Level 2 CFI projects with 255 Level 2 ports between July and December 2024, but those records do not include application denominators and are not enough to calculate an award probability for this competitive RFP. ([Efficiency Maine][1]) ([Efficiency Maine][2]) ([Efficiency Maine][3])"
+      },
+      "fallbackPriorSuggestion": {
+        "probabilityDiscount": null,
+        "basis": "A human-reviewed prior could be built from Efficiency Maine proposal-pipeline data, FOAA-obtained application counts, or validated application-to-award rates for comparable Efficiency Maine EVSE RFPs. Public evidence checked here supports only historical awards and scoring criteria, not a defensible automated probability.",
+        "shouldRetroFiUseWithoutHumanApproval": false
+      },
+      "expectedValueRecommendation": {
+        "estimateStatus": "suppressed",
+        "expectedValueCents": null,
+        "estimateConfidence": "low",
+        "includeInUserFacingTotalDefault": false,
+        "reasonCodes": [
+          "competitive_grant_no_success_rate",
+          "historical_awards_without_application_denominator",
+          "budget_without_expected_award_count",
+          "up_to_cap_not_expected_value",
+          "award_requires_project_specific_selection",
+          "funds_not_reserved_until_award",
+          "conditional_award_requires_approved_award_amount",
+          "conditional_award_requires_verified_eligible_costs",
+          "post_installation_reimbursement_review_required",
+          "human_reviewed_probability_required"
+        ]
+      },
+      "sourceUrlsChecked": [
+        "https://www.efficiencymaine.com/opportunities/",
+        "https://www.efficiencymaine.com/rfp-em-008-2026/",
+        "https://www.efficiencymaine.com/docs/RFP-EM-008-2026-Public-L2-EV-Chargers-EM-008-2026.pdf",
+        "https://www.efficiencymaine.com/docs/EM_008_2026_Questions_and_Answers_2026-07-01.pdf",
+        "https://www.efficiencymaine.com/docs/RFP-EM-008-2026_Webinar_Level_2_Public_Charging.pdf",
+        "https://www.efficiencymaine.com/host-site-interest-form-public-level-2-chargers/",
+        "https://www.efficiencymaine.com/at-work/electric-vehicle-supply-equipment-initiative/",
+        "https://www.efficiencymaine.com/awarded-contracts/",
+        "https://www.efficiencymaine.com/docs/EM-033-2024_Notice-of-Award.pdf",
+        "https://www.efficiencymaine.com/docs/EM-030-2024_Notice-of-Award.pdf",
+        "https://www.efficiencymaine.com/docs/EM-027-2024_Notice-of-Award.pdf",
+        "https://www.efficiencymaine.com/docs/EM_022_2024_Notice_of_Award.pdf"
+      ],
+      "evidenceText": "Efficiency Maine's current opportunities page lists Public Level 2 Electric Vehicle Chargers under current and upcoming RFPs/RFQs. The RFP page states that Efficiency Maine is offering $9.6 million through a competitive RFP and will reimburse awardees up to 80% of total eligible project costs, capped at $200,000 per site, with a minimum of four ports per site and a Maine location requirement. ([Efficiency Maine][4]) ([Efficiency Maine][1]) The RFP PDF states that proposals are accepted from 2026-03-03 through 2026-12-03 or until funding is exhausted, reviewed monthly, and awarded projects must be completed by 2027-06-30; it also provides 100-point scoring criteria and says funding is allocated to winning proposals, not reserved until the RFP closes. ([Efficiency Maine][2]) ([Efficiency Maine][2]) The Q&A confirms no per-port incentive cap and reiterates that funds are reserved only for awarded projects. ([Efficiency Maine][5]) The webinar reiterates the $9.6 million budget, competitive RFP status, 80%/$200,000-site cap, and that the final incentive is the lesser of the proposal request or actual costs. ([Efficiency Maine][6]) The target and requested repair schema were supplied in the uploaded prompt.",
+      "reasoningNotes": "Treat this as an active but competitive reimbursement opportunity, not a deterministic rebate. The source-backed conditional maximum is min(0.8 * verified eligible project cost, $200,000 per site) and, after selection, should also be limited by the requested incentive and approved/countersigned award amount. No public source checked provides an application denominator, success rate, current expected award count, or administrator probability model for EM-008-2026. The $9.6 million budget and $200,000 per-site cap imply only a theoretical upper bound of 48 fully capped sites, not an expected award count or award probability. Therefore expected value must remain null and excluded from user-facing totals unless RetroFi later adds a human-reviewed prior or a project-specific award decision.",
+      "sourceFile": "output_010_grant_ev_gaps_010_010.md",
+      "batchRange": "010-010",
+      "rawEvidenceText": "Efficiency Maine's current opportunities page lists Public Level 2 Electric Vehicle Chargers under current and upcoming RFPs/RFQs. The RFP page states that Efficiency Maine is offering $9.6 million through a competitive RFP and will reimburse awardees up to 80% of total eligible project costs, capped at $200,000 per site, with a minimum of four ports per site and a Maine location requirement. ([Efficiency Maine][4]) ([Efficiency Maine][1]) The RFP PDF states that proposals are accepted from 2026-03-03 through 2026-12-03 or until funding is exhausted, reviewed monthly, and awarded projects must be completed by 2027-06-30; it also provides 100-point scoring criteria and says funding is allocated to winning proposals, not reserved until the RFP closes. ([Efficiency Maine][2]) ([Efficiency Maine][2]) The Q&A confirms no per-port incentive cap and reiterates that funds are reserved only for awarded projects. ([Efficiency Maine][5]) The webinar reiterates the $9.6 million budget, competitive RFP status, 80%/$200,000-site cap, and that the final incentive is the lesser of the proposal request or actual costs. ([Efficiency Maine][6]) The target and requested repair schema were supplied in the uploaded prompt. "
+    }
+  ]
+}

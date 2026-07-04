@@ -1967,3 +1967,4 @@
 - Added a GPT Pro grant-estimation repair work packet with one source/formula research prompt for each grant-like v2 package and one realistic project-profile enrichment prompt for each sample test case.
 - Added a customer-safe approved ApplicationProfile view and `/api/application-profiles/approved` endpoint so the existing Prepare Application drawer only receives sanitized, admin-reviewed, non-reference-only profiles.
 - Added a generator for GPT Pro grant expected-value gap repair packets that turns the current test-case coverage gaps into import-compatible prompt/output files without committing the raw prompt artifacts.
+- Imported the grant expected-value gap repair outputs, marking unsupported competitive EV estimates as intentional suppressions and updating the grant/tax coverage report so reviewed suppressions no longer count as unresolved missing-input gaps.
