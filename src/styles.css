@@ -6989,6 +6989,157 @@ dd {
   width: 100%;
 }
 
+.scenario-comparison-scroll {
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.scenario-comparison-table {
+  background: #ffffff;
+  border: 1px solid #dfe7e1;
+  border-radius: 16px;
+  display: grid;
+  min-width: 920px;
+  overflow: hidden;
+}
+
+.scenario-comparison-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) repeat(3, minmax(190px, 1fr));
+}
+
+.scenario-comparison-row + .scenario-comparison-row {
+  border-top: 1px solid #e1e8e3;
+}
+
+.scenario-comparison-key,
+.scenario-comparison-cell {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+  padding: 18px 22px;
+}
+
+.scenario-comparison-key {
+  background: #fbfcfb;
+  border-right: 1px solid #e1e8e3;
+  color: #071b12;
+  gap: 14px;
+  font-weight: 800;
+}
+
+.scenario-comparison-title {
+  min-height: 132px;
+}
+
+.scenario-comparison-title h4 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.scenario-comparison-icon,
+.scenario-comparison-symbol {
+  align-items: center;
+  border: 2px solid #6f8b7d;
+  border-radius: 999px;
+  color: #0f7a4f;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 28px;
+  justify-content: center;
+  width: 28px;
+}
+
+.scenario-comparison-icon .metric-icon {
+  height: 18px;
+  width: 18px;
+}
+
+.scenario-comparison-cell {
+  border-left: 1px solid #edf2ef;
+  justify-content: center;
+  text-align: center;
+}
+
+.scenario-comparison-heading-cell {
+  align-items: stretch;
+  padding: 0;
+}
+
+.scenario-comparison-heading-cell.is-selected,
+.scenario-comparison-value.is-selected {
+  background: #f7fcf8;
+  box-shadow: inset 2px 0 0 #0f7a4f, inset -2px 0 0 #0f7a4f;
+}
+
+.scenario-comparison-header .scenario-comparison-heading-cell.is-selected {
+  box-shadow: inset 2px 2px 0 #0f7a4f, inset -2px 0 0 #0f7a4f;
+}
+
+.scenario-comparison-row:last-child .scenario-comparison-value.is-selected {
+  box-shadow: inset 2px 0 0 #0f7a4f, inset -2px -2px 0 #0f7a4f;
+}
+
+.scenario-comparison-heading-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #071b12;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  min-height: 132px;
+  padding: 22px;
+  text-align: left;
+  width: 100%;
+}
+
+.scenario-comparison-heading-copy {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.scenario-comparison-heading-copy strong {
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.scenario-comparison-heading-copy small {
+  color: #24352b;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.scenario-comparison-check {
+  align-items: center;
+  border: 2px solid #b8c8bf;
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.scenario-comparison-heading-cell.is-selected .scenario-comparison-check {
+  background: #0f7a4f;
+  border-color: #0f7a4f;
+}
+
+.scenario-comparison-value strong {
+  color: #071b12;
+  font-size: 19px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.scenario-comparison-value.is-selected strong {
+  color: #0f7a4f;
+}
+
 .estimate-scenario-detail-grid {
   display: grid;
   gap: 18px;

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) selected workspace scenario matrix
+
+- Replaced the selected retrofit Scenarios tab card/detail layout with a scenario comparison matrix.
+- Wired the matrix rows to available scenario, retrofit, opportunity, and impact values while showing `Unknown` when a scenario-specific value is not available.
+- Preserved scenario selection through selectable table headers and updated focused preview assertions for the new scenario workspace.
+
 ## 2026-07-04 - Codex (GPT-5) grant/tax production gating
 
 - Made the v2 runtime bridge prefer repaired effect-level grant/tax decisions over stale package-level statuses, separating suppressed policy decisions, quote needs, funding checks, and tax review gates.

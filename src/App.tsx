@@ -9791,6 +9791,131 @@ function RetrofitPreviewCardView({
   const taxBenefitsPeriodValue = financialPeriod === "monthly" ? monthlyTaxBenefitsValue : oneTimeTaxBenefits;
   const recurringSavingsPeriodValue = sumDefinedCents([operatingSavingsPeriodValue, incentiveSavingsPeriodValue, taxBenefitsPeriodValue]);
   const scenarioCards = retrofit.scenarios.slice(0, 3);
+  const scenarioImpactValue =
+    billDataLocked || displayedEnvironmentalImpact.overall.displayValue === "?"
+      ? "Unknown"
+      : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`;
+
+  function getScenarioOpportunityIds(scenario: RetrofitScenarioPreview) {
+    return scenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id] !== false);
+  }
+
+  function getScenarioIncludedOpportunityCount(scenario: RetrofitScenarioPreview) {
+    return getSelectedOpportunitiesForScenario(retrofit, scenario, selectedOpportunityIds).length;
+  }
+
+  function getScenarioExcludedOpportunityCount(scenario: RetrofitScenarioPreview) {
+    return new Set([
+      ...(scenario.deselectedOpportunityIds || []),
+      ...scenario.selectedOpportunityIds.filter((id) => selectedOpportunityIds[id] === false)
+    ]).size;
+  }
+
+  function getScenarioOneTimeSavingsCents(scenario: RetrofitScenarioPreview) {
+    if (billDataLocked) return null;
+    const selectedIds = getScenarioOpportunityIds(scenario);
+    if (!selectedIds.length) return 0;
+
+    const scenarioOpportunities = retrofit.opportunities.filter((opportunity) => selectedIds.includes(opportunity.id));
+    const oneTimeOpportunities = scenarioOpportunities.filter((opportunity) => opportunity.timing !== "recurring");
+    if (!oneTimeOpportunities.length) return 0;
+
+    const estimatedValues = oneTimeOpportunities.map((opportunity) => opportunity.estimatedValue);
+    const numericEstimatedValues = estimatedValues.filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+    if (numericEstimatedValues.length === estimatedValues.length) {
+      return numericEstimatedValues.reduce((sum, value) => sum + value, 0);
+    }
+
+    const allCurrentlyIncluded = oneTimeOpportunities.every(
+      (opportunity) => getOpportunityIncludedLabel(opportunity, true) === "Included in current estimate"
+    );
+    if (allCurrentlyIncluded && scenario.metrics.upfrontFinancialIncentive != null) {
+      return scenario.metrics.upfrontFinancialIncentive;
+    }
+
+    return null;
+  }
+
+  function getScenarioAnnualOperatingSavingsCents(scenario: RetrofitScenarioPreview) {
+    if (billDataLocked) return null;
+    return scenario.metrics.recurringOperationalSavingsAnnual ?? retrofit.metrics.recurringOperationalSavingsAnnual ?? null;
+  }
+
+  function getScenarioEffectiveCostCents(scenario: RetrofitScenarioPreview) {
+    const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
+    const taxBenefits = typeof retrofit.metrics.taxBenefits === "number" ? retrofit.metrics.taxBenefits : null;
+    if (projectCostValue == null || oneTimeSavings == null || taxBenefits == null) return null;
+    return Math.max(0, projectCostValue - oneTimeSavings - taxBenefits);
+  }
+
+  function getScenarioPaybackYears(scenario: RetrofitScenarioPreview) {
+    if (billDataLocked) return null;
+    const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
+    if (oneTimeSavings == null) return null;
+    const annualSavings = getScenarioAnnualOperatingSavingsCents(scenario);
+    const effectiveCost = getScenarioEffectiveCostCents(scenario);
+    if (effectiveCost == null || annualSavings == null || annualSavings <= 0) {
+      return scenario.metrics.paybackPeriodYears ?? null;
+    }
+    return effectiveCost / annualSavings;
+  }
+
+  function getScenarioRoiPercent(scenario: RetrofitScenarioPreview) {
+    if (billDataLocked) return null;
+    const oneTimeSavings = getScenarioOneTimeSavingsCents(scenario);
+    if (oneTimeSavings == null) return null;
+    const annualSavings = getScenarioAnnualOperatingSavingsCents(scenario);
+    const effectiveCost = getScenarioEffectiveCostCents(scenario);
+    if (effectiveCost == null || effectiveCost <= 0 || annualSavings == null) {
+      return scenario.metrics.roiPercent ?? null;
+    }
+    return (annualSavings / effectiveCost) * 100;
+  }
+
+  const scenarioComparisonRows = [
+    {
+      id: "one-time-savings",
+      label: "One-time savings",
+      icon: <MetricCostIcon />,
+      value: (scenario: RetrofitScenarioPreview) => formatEstimateCents(getScenarioOneTimeSavingsCents(scenario), "Unknown")
+    },
+    {
+      id: "annual-operating-savings",
+      label: "Annual operating savings",
+      icon: <MetricSavingsIcon />,
+      value: (scenario: RetrofitScenarioPreview) => formatEstimateCentsPerPeriod(getScenarioAnnualOperatingSavingsCents(scenario), "yr", "Unknown")
+    },
+    {
+      id: "payback-period",
+      label: "Payback period",
+      icon: <MetricPaybackIcon />,
+      value: (scenario: RetrofitScenarioPreview) => formatPayback(getScenarioPaybackYears(scenario), "Unknown")
+    },
+    {
+      id: "roi",
+      label: "ROI (average annual return)",
+      icon: <MetricImpactIcon />,
+      value: (scenario: RetrofitScenarioPreview) => formatEstimatePercent(getScenarioRoiPercent(scenario), "Unknown")
+    },
+    {
+      id: "co2e-avoided",
+      label: "CO2e avoided per year",
+      icon: <MetricImpactIcon />,
+      value: (_scenario: RetrofitScenarioPreview) => scenarioImpactValue
+    },
+    {
+      id: "included-opportunities",
+      label: "Included opportunities",
+      icon: "✓",
+      value: (scenario: RetrofitScenarioPreview) => `${getScenarioIncludedOpportunityCount(scenario)}`
+    },
+    {
+      id: "excluded-opportunities",
+      label: "Excluded opportunities",
+      icon: "−",
+      value: (scenario: RetrofitScenarioPreview) => `${getScenarioExcludedOpportunityCount(scenario)}`
+    }
+  ];
 
   return (
     <article className="estimate-workspace-shell">
@@ -10099,62 +10224,55 @@ function RetrofitPreviewCardView({
                 <h3>Scenario comparison</h3>
                 <p>Compare different combinations of opportunities and choose the one that fits your goals.</p>
               </div>
-              <div className="estimate-scenario-grid">
-                {scenarioCards.map((scenario, index) => {
-                  const selected = selectedScenario?.id === scenario.id;
-                  const included = getSelectedOpportunitiesForScenario(retrofit, scenario, selectedOpportunityIds);
-                  const excluded = (scenario.deselectedOpportunityIds || []).length;
-                  return (
-                    <button className={`estimate-scenario-card${selected ? " is-selected" : ""}`} key={scenario.id} onClick={() => onSelectScenario(scenario.id)} type="button">
-                      <div>
-                        <strong>{scenarioDisplayName(index)}</strong>
-                        {index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
-                        <span className="estimate-scenario-check" aria-hidden="true">{selected ? "✓" : ""}</span>
+              {scenarioCards.length ? (
+                <div className="scenario-comparison-scroll">
+                  <div className="scenario-comparison-table" role="table" aria-label="Scenario comparison">
+                    <div className="scenario-comparison-row scenario-comparison-header" role="row">
+                      <div className="scenario-comparison-key scenario-comparison-title" role="columnheader">
+                        <h4>Key outcomes</h4>
                       </div>
-                      <p>Opportunities<br /><b>{included.length} included</b> · {excluded} excluded</p>
-                      <hr />
-                      <small>Best for</small>
-                      <strong>{scenarioBestForLabel(index)}</strong>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="estimate-scenario-detail-grid">
-                <section className="estimate-recommended-scenario-card">
-                  <div className="estimate-card-title-row">
-                    <h3>Recommended scenario</h3>
-                    <span className="estimate-preview-pill">{scenarioDisplayName(Math.max(0, scenarioCards.findIndex((scenario) => scenario.id === selectedScenario?.id)))}</span>
-                  </div>
-                  <strong>Recommendation reason</strong>
-                  <p>{selectedScenario?.estimateNotes.join(" ") || "This scenario provides a strong balance of savings and payback while including high-impact opportunities."}</p>
-                  <ul>
-                    <li>Strong one-time savings with a solid payback period.</li>
-                    <li>Includes high-impact upgrades that improve efficiency and comfort.</li>
-                    <li>Qualifies for key rebates and incentives.</li>
-                  </ul>
-                </section>
-                <section className="estimate-selected-scenario-card">
-                  <div className="estimate-card-title-row">
-                    <h3>Selected scenario details</h3>
-                    <button className="secondary-button small-action-button" type="button">Edit scenario</button>
-                  </div>
-                  <div className="estimate-scenario-list-grid">
-                    <div>
-                      <h4>Included opportunities ({selectedScenarioOpportunities.length})</h4>
-                      {selectedScenarioOpportunities.length ? selectedScenarioOpportunities.map((opportunity) => (
-                        <span className="estimate-scenario-list-item" key={opportunity.id}>✓ {opportunity.name} ⓘ</span>
-                      )) : <p className="compact-empty">None selected.</p>}
+                      {scenarioCards.map((scenario, index) => {
+                        const selected = selectedScenario?.id === scenario.id;
+                        return (
+                          <div className={`scenario-comparison-cell scenario-comparison-heading-cell${selected ? " is-selected" : ""}`} role="columnheader" key={scenario.id}>
+                            <button
+                              aria-pressed={selected}
+                              className="scenario-comparison-heading-button"
+                              onClick={() => onSelectScenario(scenario.id)}
+                              type="button"
+                            >
+                              <span className="scenario-comparison-heading-copy">
+                                {index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
+                                <strong>{scenarioDisplayName(index)}</strong>
+                                <small>{scenarioBestForLabel(index)}</small>
+                              </span>
+                              <span className="scenario-comparison-check" aria-hidden="true">{selected ? "✓" : ""}</span>
+                            </button>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div>
-                      <h4>Excluded opportunities ({deselectedScenarioOpportunities.length})</h4>
-                      {deselectedScenarioOpportunities.length ? deselectedScenarioOpportunities.map((opportunity) => (
-                        <span className="estimate-scenario-list-item is-excluded" key={opportunity.id}>− {opportunity.name} ⓘ</span>
-                      )) : <p className="compact-empty">None excluded.</p>}
-                    </div>
+                    {scenarioComparisonRows.map((row) => (
+                      <div className="scenario-comparison-row" role="row" key={row.id}>
+                        <div className="scenario-comparison-key" role="rowheader">
+                          <span className="scenario-comparison-icon" aria-hidden="true">{row.icon}</span>
+                          <span>{row.label}</span>
+                        </div>
+                        {scenarioCards.map((scenario) => {
+                          const selected = selectedScenario?.id === scenario.id;
+                          return (
+                            <div className={`scenario-comparison-cell scenario-comparison-value${selected ? " is-selected" : ""}`} role="cell" key={`${row.id}:${scenario.id}`}>
+                              <strong>{row.value(scenario)}</strong>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
                   </div>
-                </section>
-              </div>
-              <p className="estimate-tab-note">ⓘ You can customize scenarios by including or excluding opportunities. Changes will update the comparison above.</p>
+                </div>
+              ) : (
+                <p className="compact-empty">No scenarios available yet.</p>
+              )}
             </section>
           ) : null}
 
