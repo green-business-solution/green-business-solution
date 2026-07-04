@@ -149,6 +149,7 @@ mkdir -p "${LAMBDA_PACKAGE_DIR}"
 cp package.json package-lock.json "${LAMBDA_PACKAGE_DIR}/"
 cp -R server "${LAMBDA_PACKAGE_DIR}/server"
 mkdir -p "${LAMBDA_PACKAGE_DIR}/data"
+mkdir -p "${LAMBDA_PACKAGE_DIR}/public"
 
 copy_data_file() {
   local file_path="$1"
@@ -173,6 +174,13 @@ copy_data_file data/tax_local_workflow_rules.json
 copy_data_file data/calculation_requirements.json optional
 copy_data_file data/project_cost_benchmarks.json optional
 copy_data_file data/savings_calculation_methods.json optional
+
+if [ -f public/sample_matching_test_cases.json ]; then
+  cp public/sample_matching_test_cases.json "${LAMBDA_PACKAGE_DIR}/public/"
+else
+  echo "Required deploy public fixture is missing: public/sample_matching_test_cases.json" >&2
+  exit 1
+fi
 
 (
   cd "${LAMBDA_PACKAGE_DIR}"

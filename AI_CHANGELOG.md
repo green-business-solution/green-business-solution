@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) dashboard test-case fixture deployment fix
+
+- Updated the production deploy package to include `public/sample_matching_test_cases.json` in the API Lambda bundle so the dashboard performance admin seed page can load existing sample test cases in production.
+
 ## 2026-07-04 - Codex (GPT-5) dashboard post-install performance data
 
 - Added a deterministic post-install dashboard performance dataset model and generator for sample test cases, including implemented retrofits, monthly performance, incentives, documents, certification records/requirements, next actions, and data-quality validation.
