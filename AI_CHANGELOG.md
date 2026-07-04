@@ -1971,3 +1971,6 @@
 - Added a computed-but-suppressed package audit that groups repeated test-case evaluations into unique package/effect targets and separates deterministic inclusion candidates from source-repair and product-policy suppressions.
 - Added an apply workflow for computed-suppressed repairs that imports GPT Pro source-review outputs, preserves unresolved program-change blockers, and promotes verified deterministic rebate/reimbursement effects into default user-facing totals.
 - Recoded the Grand Marais PUC and Princeton PUC residential EV charger v2 packages from stale Bright Energy Solutions $150-$500 assumptions to the source-backed 2026 SMMPA member-specific $15 connected Level 2 charger rebate rows, preserving Grand Marais rate-enrollment incentives as a separate gated workflow.
+# 2026-07-04
+
+- Added a blocked/suppressed package audit that groups repeated source/package-blocked and suppressed-without-amount test-case evaluations into unique package targets, separating formula/input audits, source-inaccessible archive candidates, quote workflows, tax/tariff gates, expected-value suppressions, and runtime verification gates.
