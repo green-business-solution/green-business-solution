@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_generated_test_fixtures_manifest.v1",
-  "updatedAt": "2026-07-04T08:02:35.272Z",
+  "updatedAt": "2026-07-04T09:13:03.379Z",
   "bucket": "gbs-retrofi-dev-work-448016109714-us-east-1",
   "prefix": "generated-test-fixtures",
   "fixtures": [
@@ -8,8 +8,8 @@
       "localPath": "public/sample_matching_test_cases.json",
       "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/public/sample_matching_test_cases.json",
       "description": "Generated public admin-preview matching test cases",
-      "sizeBytes": 65032827,
-      "sha256": "045e9e3f04e6e9aef92d19e0c2976c2da3098369b6ececb79b615ca2c1294995"
+      "sizeBytes": 65032637,
+      "sha256": "c54e5b905429c09dd84ec0b02020c97ecf6342cea0f5ba17064782fd63c28f2f"
     },
     {
       "localPath": "data/sample_user_profiles.json",

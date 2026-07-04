@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) grant production action audit
+
+- Added grant production action buckets to the grant/tax coverage report so unresolved packages are separated into form-input gates, funding refresh needs, non-grant workflows, zero-placeholder no-calculable values, and formula repair targets.
+- Normalized legacy grant/rebate `custom_quote_estimate` runtime packages to `needs_quote`, matching the product policy that quote-dependent estimates are form gates rather than source-data blockers.
+- Regenerated the ignored admin test-case fixture, uploaded it to the development S3 fixture bucket, and updated the fixture manifest checksum.
+
 ## 2026-07-04 - Codex (GPT-5) grant estimate form/funding TODOs
 
 - Clarified that quote, scope, bill, filing, and project-input-dependent grant statuses are production form gates rather than source-data blockers.

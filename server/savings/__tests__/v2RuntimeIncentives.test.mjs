@@ -193,6 +193,17 @@ describe("v2 runtime incentive bridge", () => {
     });
   });
 
+  it("treats grant and rebate custom quote packages as quote form gates", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [customQuoteRebatePackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("needs_quote");
+  });
+
   it("uses repaired tax metadata instead of stale non-monetary package status", () => {
     const bridge = buildV2RuntimeIncentiveBridge({
       packages: [nonMonetaryStatusTaxPackage()],
@@ -679,6 +690,28 @@ function productionSuppressedGrantPackage() {
     assumptions: [],
     source_evidence: [{ evidence_id: "grant_ev", source_type: "web_page", quote: "Up to $20,000", evidence_confidence: 0.9 }],
     confidence: { overall: 0.38, source_access: 0.9, availability: 0.9, calculation: 0.38, extraction: 0.9, reason_codes: ["needs_repair_review"] }
+  };
+}
+
+function customQuoteRebatePackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_custom_quote_rebate",
+    program_name: "Custom Quote Rebate",
+    calculation_status: "custom_quote_estimate",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_custom_quote_rebate",
+        label: "Custom quote rebate",
+        repair_metadata: {
+          included_in_user_facing_total_default: true,
+          cash_value_classification: "rebate",
+          value_model_kind: "custom_quote"
+        }
+      }
+    ]
   };
 }
 

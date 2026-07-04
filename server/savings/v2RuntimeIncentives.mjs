@@ -280,6 +280,9 @@ function legacyPackageBlockStatus(pkg, effectSummaries) {
   const hasRepairedGrantOrTaxDecision = effectSummaries.some(
     (effect) => effect.hasProductionDecision && isGrantTaxOrRepairedCashEffect(effect)
   );
+  if (pkg.calculation_status === "custom_quote_estimate" && effectSummaries.some(isGrantOrReimbursementEffect)) {
+    return "needs_quote";
+  }
   if (hasRepairedGrantOrTaxDecision || hasTaxMonetaryEffect) return null;
   return pkg.calculation_status;
 }

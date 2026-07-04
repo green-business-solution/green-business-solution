@@ -20,6 +20,8 @@ const packagePayload = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 const localTaxPayload = JSON.parse(fs.readFileSync(localTaxWorkflowPath, "utf8"));
 
 const TAX_EFFECT_TYPES = new Set(["tax_credit", "tax_exemption", "tax_abatement", "tax_rate_preference", "property_tax_valuation"]);
+const GRANT_CASH_CLASSIFICATIONS = new Set(["cash_grant", "reimbursement", "rebate"]);
+const NON_GRANT_CASH_CLASSIFICATIONS = new Set(["loan", "financing", "technical_assistance", "tax_credit"]);
 const BLOCKED_RUNTIME_STATUSES = new Set([
   "source_inaccessible_repair_failure",
   "unavailable_archived",
@@ -27,7 +29,8 @@ const BLOCKED_RUNTIME_STATUSES = new Set([
   "needs_repair_review",
   "custom_quote_estimate"
 ]);
-const INPUT_OR_EVIDENCE_STATUSES = new Set(["missing_inputs", "needs_quote", "needs_project_scope", "needs_funding_check"]);
+const FORM_INPUT_STATUSES = new Set(["missing_inputs", "needs_quote", "needs_project_scope", "custom_quote_estimate"]);
+const INPUT_OR_EVIDENCE_STATUSES = new Set([...FORM_INPUT_STATUSES, "needs_funding_check"]);
 const POLICY_SUPPRESSED_STATUSES = new Set(["not_user_facing_default", "human_review_required", "low_confidence", "suppressed_by_policy"]);
 
 const testCases = testCasePayload.testCases || [];
@@ -57,6 +60,7 @@ for (const testCase of testCases) {
     });
 
     for (const summary of preview.incentiveCalculationPackageSummaries || []) {
+      const effects = summary.effectSummaries || [];
       const row = {
         sampleUserId: testCase.sampleUserId,
         sampleName: testCase.name || testCase.sampleUserId,
@@ -70,13 +74,25 @@ for (const testCase of testCases) {
         confidence: summary.confidence,
         missingInputs: summary.missingInputs || [],
         defaultedInputs: summary.defaultedInputs || [],
-        effectTypes: [...new Set((summary.effectSummaries || []).map((effect) => effect.effectType).filter(Boolean))],
-        taxRelated: (summary.effectSummaries || []).some((effect) => TAX_EFFECT_TYPES.has(effect.effectType)),
-        grantOrIncentiveRelated: (summary.effectSummaries || []).some(isGrantOrIncentiveEffect),
-        hasPositiveComputedAmount: (summary.effectSummaries || []).some((effect) => Number(effect.amountCents || 0) > 0),
-        computedAmountCents: sum(summary.effectSummaries || [], (effect) => Number(effect.amountCents || 0)),
+        effectTypes: [...new Set(effects.map((effect) => effect.effectType).filter(Boolean))],
+        valueModelKinds: unique(effects.map((effect) => effect.valueModelKind)),
+        cashValueClassifications: unique(effects.map((effect) => effect.cashValueClassification)),
+        estimateStatuses: unique(effects.map((effect) => effect.estimateStatus)),
+        repairStatuses: unique(effects.map((effect) => effect.repairStatus)),
+        repairedCalculationStatuses: unique(effects.map((effect) => effect.repairedCalculationStatus)),
+        reasonCodes: unique(effects.flatMap((effect) => effect.reasonCodes || [])),
+        humanReviewReasons: unique(effects.flatMap((effect) => effect.humanReviewReasons || [])),
+        taxRelated: effects.some((effect) => TAX_EFFECT_TYPES.has(effect.effectType)),
+        grantOrIncentiveRelated: effects.some(isGrantOrIncentiveEffect),
+        grantEstimateRelated: effects.some(isGrantEstimateEffect),
+        nonGrantWorkflowRelated: effects.some(isNonGrantWorkflowEffect),
+        hasPositiveComputedAmount: effects.some((effect) => Number(effect.amountCents || 0) > 0),
+        computedAmountCents: sum(effects, (effect) => Number(effect.amountCents || 0)),
         includedInRuntimeTotals: summary.includedInRuntimeTotals === true
       };
+      const grantAction = classifyGrantProductionAction(row);
+      row.grantProductionAction = grantAction.action;
+      row.grantProductionReason = grantAction.reason;
       packageRows.push(row);
     }
   }
@@ -84,6 +100,7 @@ for (const testCase of testCases) {
 
 const localTaxRows = testCases.flatMap((testCase) => buildLocalTaxRows(testCase, localTaxWorkflows));
 const matchedTaxPackageOpportunityIds = new Set(packageRows.filter((row) => row.taxRelated).map((row) => row.opportunityId));
+const grantProductionRows = packageRows.filter((row) => row.grantOrIncentiveRelated && !row.taxRelated);
 
 const report = {
   schemaVersion: "retrofi_test_case_grant_tax_coverage_report.v1",
@@ -104,6 +121,7 @@ const report = {
     runtimeIncludedPackageCount: packageRows.filter((row) => row.includedInRuntimeTotals).length,
     computedButSuppressedPackageCount: packageRows.filter((row) => row.outcomeClass === "computed_but_suppressed").length,
     missingEvidenceOrInputPackageCount: packageRows.filter((row) => row.outcomeClass === "missing_evidence_or_inputs").length,
+    grantProductionActionCounts: countBy(grantProductionRows, (row) => row.grantProductionAction),
     taxOpportunityPackageCountInDatabase: packageTaxOpportunityIds.size,
     taxOpportunityPackageCountMatchedByTestCases: matchedTaxPackageOpportunityIds.size,
     localTaxWorkflowEvaluationCount: localTaxRows.length,
@@ -115,6 +133,7 @@ const report = {
       .flatMap((row) => row.missingInputs.map((input) => input.inputKey))
   ),
   grantAndIncentivePackageOutcomes: summarizeRows(packageRows.filter((row) => row.grantOrIncentiveRelated)),
+  grantProductionActionOutcomes: summarizeGrantProductionRows(grantProductionRows),
   taxOpportunityPackageOutcomes: summarizeRows(packageRows.filter((row) => row.taxRelated)),
   unmatchedTaxOpportunityPackages: [...packageTaxOpportunityIds]
     .filter((opportunityId) => !matchedTaxPackageOpportunityIds.has(opportunityId))
@@ -129,9 +148,22 @@ const report = {
     }),
   localTaxWorkflowOutcomes: summarizeLocalTaxRows(localTaxRows),
   sampleRows: {
-    missingEvidenceOrInputs: packageRows.filter((row) => row.outcomeClass === "missing_evidence_or_inputs").slice(0, 25),
-    computedButSuppressed: packageRows.filter((row) => row.outcomeClass === "computed_but_suppressed").slice(0, 25),
-    sourceOrPackageBlocked: packageRows.filter((row) => row.outcomeClass === "source_or_package_blocked").slice(0, 25),
+    missingEvidenceOrInputs: packageRows
+      .filter((row) => row.outcomeClass === "missing_evidence_or_inputs")
+      .slice(0, 25)
+      .map(compactPackageOutcomeRow),
+    computedButSuppressed: packageRows
+      .filter((row) => row.outcomeClass === "computed_but_suppressed")
+      .slice(0, 25)
+      .map(compactPackageOutcomeRow),
+    sourceOrPackageBlocked: packageRows
+      .filter((row) => row.outcomeClass === "source_or_package_blocked")
+      .slice(0, 25)
+      .map(compactPackageOutcomeRow),
+    grantProductionActions: grantProductionRows
+      .filter((row) => !["production_ready_included", "not_grant_estimation_target"].includes(row.grantProductionAction))
+      .map(compactGrantProductionRow)
+      .slice(0, 50),
     localTaxNeedsInputOrReview: localTaxRows.filter((row) => row.status !== "calculated").slice(0, 25)
   }
 };
@@ -167,9 +199,17 @@ function classifyPackageSummary(summary) {
 function isGrantOrIncentiveEffect(effect) {
   const cashClass = effect.cashValueClassification || "";
   if (effect.effectType === "grant_expected_value") return true;
-  if (["cash_grant", "reimbursement", "rebate"].includes(cashClass)) return true;
+  if (GRANT_CASH_CLASSIFICATIONS.has(cashClass)) return true;
   if (effect.effectType === "one_time_savings" || effect.effectType === "recurring_savings") return true;
   return false;
+}
+
+function isGrantEstimateEffect(effect) {
+  return effect.effectType === "grant_expected_value" || GRANT_CASH_CLASSIFICATIONS.has(effect.cashValueClassification || "");
+}
+
+function isNonGrantWorkflowEffect(effect) {
+  return NON_GRANT_CASH_CLASSIFICATIONS.has(effect.cashValueClassification || "") || effect.effectType === "financing_subsidy";
 }
 
 function buildLocalTaxRows(testCase, workflows) {
@@ -339,7 +379,19 @@ function summarizeRows(rows) {
     outcomeClassCounts: countBy(rows, (row) => row.outcomeClass),
     runtimeInclusionStatusCounts: countBy(rows, (row) => row.runtimeInclusionStatus),
     totalComputedAmountCents: sum(rows, (row) => row.computedAmountCents),
-    sampleRows: rows.slice(0, 50)
+    sampleRows: rows.slice(0, 50).map(compactPackageOutcomeRow)
+  };
+}
+
+function summarizeGrantProductionRows(rows) {
+  const unresolvedRows = rows.filter(
+    (row) => !["production_ready_included", "not_grant_estimation_target"].includes(row.grantProductionAction)
+  );
+  return {
+    count: rows.length,
+    actionCounts: countBy(rows, (row) => row.grantProductionAction),
+    unresolvedActionCounts: countBy(unresolvedRows, (row) => row.grantProductionAction),
+    sampleRowsByAction: groupSampleRows(unresolvedRows.map(compactGrantProductionRow), (row) => row.grantProductionAction, 12)
   };
 }
 
@@ -385,6 +437,14 @@ function buildMarkdownReport(data) {
     "",
     tableFromCounts(data.summary.localTaxWorkflowStatusCounts),
     "",
+    "## Grant Production Action Buckets",
+    "",
+    tableFromCounts(data.summary.grantProductionActionCounts),
+    "",
+    "## Unresolved Grant Production Samples",
+    "",
+    grantProductionSampleTable(data.sampleRows.grantProductionActions),
+    "",
     "## Top Missing Inputs",
     "",
     tableFromPairs(data.topMissingInputs, ["Input", "Count"]),
@@ -409,6 +469,11 @@ function buildMarkdownReport(data) {
       ? `- The current ${data.summary.testCaseCount} test cases exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
       : `- The current ${data.summary.testCaseCount} test cases now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
     "- Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.",
+    "- Grant/incentive rows classified as `form_input_required` are normal production form gates, not source-data blockers.",
+    "- Grant/incentive rows classified as `funding_refresh_required` need current budget/funding status automation rather than one-time formula repair.",
+    "- Grant/incentive rows classified as `zero_placeholder_no_calculable_value` should contribute $0 to customer-facing grant totals unless later source research finds a defensible formula or expected-value model.",
+    "- Grant/incentive rows classified as `non_grant_workflow` should be handled outside the grant estimator, such as financing, technical assistance, tariff, or non-monetary workflows.",
+    "- Grant/incentive rows classified as `archive_or_exclude` should be archived, hidden, or repaired only if an official source becomes available.",
     "- Packages classified as `computed_but_suppressed` have enough runtime inputs to produce an internal amount, but are held out because of low confidence, review flags, or default user-facing inclusion policy.",
     "- Packages classified as `source_or_package_blocked` need source/data repair or intentional archive/suppression decisions, not UI fields.",
     missingCount === 0
@@ -417,6 +482,103 @@ function buildMarkdownReport(data) {
   ];
 
   return `${lines.join("\n")}\n`;
+}
+
+function classifyGrantProductionAction(row) {
+  const decisionText = [
+    row.runtimeInclusionStatus,
+    row.calculationStatus,
+    row.sourceStatus,
+    ...(row.estimateStatuses || []),
+    ...(row.repairStatuses || []),
+    ...(row.repairedCalculationStatuses || []),
+    ...(row.reasonCodes || []),
+    ...(row.humanReviewReasons || [])
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  if (row.includedInRuntimeTotals) {
+    return {
+      action: "production_ready_included",
+      reason: "The package already contributes a supported runtime amount."
+    };
+  }
+
+  if (!row.grantEstimateRelated) {
+    return {
+      action: "not_grant_estimation_target",
+      reason: "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+    };
+  }
+
+  if (FORM_INPUT_STATUSES.has(row.runtimeInclusionStatus) || row.missingInputs.length > 0) {
+    return {
+      action: "form_input_required",
+      reason: "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "needs_funding_check" || decisionText.includes("needs_funding_check")) {
+    return {
+      action: "funding_refresh_required",
+      reason: "The estimate depends on current funding availability, waitlist, or while-funds-last status."
+    };
+  }
+
+  if (row.nonGrantWorkflowRelated || row.runtimeInclusionStatus === "non_monetary_workflow" || isClearlyNonGrantWorkflow(row)) {
+    return {
+      action: "non_grant_workflow",
+      reason: "The opportunity is better handled outside grant estimation."
+    };
+  }
+
+  if (
+    row.runtimeInclusionStatus === "source_inaccessible_repair_failure" ||
+    row.runtimeInclusionStatus === "unavailable_archived" ||
+    decisionText.includes("source_inaccessible") ||
+    decisionText.includes("program_closed") ||
+    decisionText.includes("unavailable_archived")
+  ) {
+    return {
+      action: "archive_or_exclude",
+      reason: "The source is inaccessible, unavailable, closed, or otherwise not reliable enough to show."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "no_calculable_value" || decisionText.includes("no_calculable_value")) {
+    return {
+      action: "zero_placeholder_no_calculable_value",
+      reason: "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "no_supported_effect_amount") {
+    return {
+      action: "grant_formula_repair_required",
+      reason: "The package is grant/rebate-related but has no supported monetary effect amount."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "human_review_required") {
+    return {
+      action: "grant_formula_repair_required",
+      reason: "The package still needs source-backed rule/probability repair or conversion into explicit form inputs."
+    };
+  }
+
+  if (["low_confidence", "suppressed_by_policy", "not_user_facing_default"].includes(row.runtimeInclusionStatus)) {
+    return {
+      action: "grant_formula_repair_required",
+      reason: "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+    };
+  }
+
+  return {
+    action: "grant_formula_repair_required",
+    reason: "The package needs explicit grant-estimator handling for its current runtime status."
+  };
 }
 
 function countBy(rows, keyFn) {
@@ -461,6 +623,91 @@ function tableFromPairs(rows, headers) {
   return table(headers, rows.map((row) => [row.value, row.count]));
 }
 
+function grantProductionSampleTable(rows) {
+  if (!rows.length) return "_None._";
+  return table(
+    ["Action", "Opportunity", "Program", "Runtime status", "Reason"],
+    dedupeGrantProductionRows(rows).slice(0, 25).map((row) => [
+      row.grantProductionAction,
+      row.opportunityId,
+      row.programName,
+      row.runtimeInclusionStatus,
+      row.grantProductionReason
+    ])
+  );
+}
+
+function compactGrantProductionRow(row) {
+  return {
+    sampleUserId: row.sampleUserId,
+    sampleName: row.sampleName,
+    retrofitTypeId: row.retrofitTypeId,
+    opportunityId: row.opportunityId,
+    programName: row.programName,
+    runtimeInclusionStatus: row.runtimeInclusionStatus,
+    outcomeClass: row.outcomeClass,
+    calculationStatus: row.calculationStatus,
+    sourceStatus: row.sourceStatus,
+    confidence: row.confidence,
+    effectTypes: row.effectTypes,
+    valueModelKinds: row.valueModelKinds,
+    cashValueClassifications: row.cashValueClassifications,
+    estimateStatuses: row.estimateStatuses,
+    repairStatuses: row.repairStatuses,
+    reasonCodes: row.reasonCodes,
+    humanReviewReasons: row.humanReviewReasons,
+    missingInputs: row.missingInputs,
+    defaultedInputKeys: (row.defaultedInputs || []).map((input) => input.inputKey).filter(Boolean),
+    computedAmountCents: row.computedAmountCents,
+    grantProductionAction: row.grantProductionAction,
+    grantProductionReason: row.grantProductionReason
+  };
+}
+
+function compactPackageOutcomeRow(row) {
+  return {
+    sampleUserId: row.sampleUserId,
+    sampleName: row.sampleName,
+    retrofitTypeId: row.retrofitTypeId,
+    opportunityId: row.opportunityId,
+    programName: row.programName,
+    runtimeInclusionStatus: row.runtimeInclusionStatus,
+    outcomeClass: row.outcomeClass,
+    calculationStatus: row.calculationStatus,
+    sourceStatus: row.sourceStatus,
+    confidence: row.confidence,
+    missingInputKeys: (row.missingInputs || []).map((input) => input.inputKey).filter(Boolean),
+    defaultedInputKeys: (row.defaultedInputs || []).map((input) => input.inputKey).filter(Boolean),
+    effectTypes: row.effectTypes,
+    valueModelKinds: row.valueModelKinds,
+    cashValueClassifications: row.cashValueClassifications,
+    estimateStatuses: row.estimateStatuses,
+    repairStatuses: row.repairStatuses,
+    taxRelated: row.taxRelated,
+    grantEstimateRelated: row.grantEstimateRelated,
+    computedAmountCents: row.computedAmountCents,
+    includedInRuntimeTotals: row.includedInRuntimeTotals,
+    grantProductionAction: row.grantProductionAction,
+    grantProductionReason: row.grantProductionReason
+  };
+}
+
+function isClearlyNonGrantWorkflow(row) {
+  return /\b(feed[-\s]?in|fit|tariff|rate|financ|loan|technical assistance|permit|interconnection|on[-\s]?bill)\b/i.test(
+    row.programName || ""
+  );
+}
+
+function dedupeGrantProductionRows(rows) {
+  const seen = new Set();
+  return rows.filter((row) => {
+    const key = `${row.grantProductionAction}|${row.opportunityId}|${row.runtimeInclusionStatus}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function table(headers, rows) {
   return [
     `| ${headers.join(" | ")} |`,
@@ -475,4 +722,14 @@ function sum(rows, valueFn) {
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))];
+}
+
+function groupSampleRows(rows, keyFn, limitPerGroup) {
+  const groups = {};
+  for (const row of rows) {
+    const key = keyFn(row) || "unknown";
+    groups[key] ||= [];
+    if (groups[key].length < limitPerGroup) groups[key].push(row);
+  }
+  return groups;
 }
