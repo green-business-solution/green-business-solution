@@ -1,23 +1,23 @@
 # Grant Form Input Field Audit
 
-Generated: 2026-07-04T20:58:10.037Z
+Generated: 2026-07-04T21:24:38.344Z
 
 ## Summary
 
 | Metric | Value |
 | --- | --- |
-| Form-input evaluations | 87 |
-| Unique opportunities | 24 |
+| Form-input evaluations | 95 |
+| Unique opportunities | 27 |
 | Rows without mapped fields | 0 |
 
 ## Collection Surfaces
 
 | Value | Count |
 | --- | --- |
-| Business/site intake form | 912 |
-| Program application or award status | 482 |
-| Project quote or invoice upload | 310 |
-| Utility bill upload | 31 |
+| Business/site intake form | 975 |
+| Program application or award status | 495 |
+| Project quote or invoice upload | 321 |
+| Utility bill upload | 37 |
 | Retrofit scope form | 14 |
 | Tax/accounting document upload | 12 |
 
@@ -25,15 +25,15 @@ Generated: 2026-07-04T20:58:10.037Z
 
 | Value | Count |
 | --- | --- |
-| implemented | 957 |
-| planned | 804 |
+| implemented | 1026 |
+| planned | 828 |
 
 ## Planned Surfaces
 
 | Value | Count |
 | --- | --- |
-| Program application or award status | 482 |
-| Project quote or invoice upload | 310 |
+| Program application or award status | 495 |
+| Project quote or invoice upload | 321 |
 | Tax/accounting document upload | 12 |
 
 ## Unique Opportunity Mapping
@@ -47,6 +47,7 @@ Generated: 2026-07-04T20:58:10.037Z
 | SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com | Comfortably CA | 1 | Business/site intake form | None |
 | SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program | Groceries, Restaurants and Food Storage Program | 3 | Business/site intake form | None |
 | SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging | GRID-Lodging | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload, Utility bill upload | Program application or award status, Project quote or invoice upload |
+| SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate | Heat Pump Water Heater Rebate | 6 | Business/site intake form, Program application or award status, Project quote or invoice upload, Utility bill upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations | Energy Efficiency Grant Program for Nonprofit Organizations | 4 | Business/site intake form, Program application or award status, Project quote or invoice upload, Utility bill upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives | New Construction Incentives | 3 | Business/site intake form, Program application or award status, Project quote or invoice upload, Retrofit scope form | Program application or award status, Project quote or invoice upload |
 | SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608 | GFO-25-608 - Electric Vehicle Hub, Outreach, Messaging, and Equipment (EV HOME) | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload | Program application or award status, Project quote or invoice upload |
@@ -56,7 +57,9 @@ Generated: 2026-07-04T20:58:10.037Z
 | SOURCE_DSIRE:dsire_program_id:22753 | City and County of Denver - Solar Rebate | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload, Tax/accounting document upload | Program application or award status, Project quote or invoice upload, Tax/accounting document upload |
 | SOURCE_DSIRE:dsire_program_id:5558 | City of Aspen and Pitkin County - Renewable Energy Mitigation Program Grants | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:3639 | OG&E - Commercial Energy Efficiency Rebate Programs | 8 | Business/site intake form, Project quote or invoice upload | Project quote or invoice upload |
+| SOURCE_DSIRE:dsire_program_id:22181 | Electric Vehicle Rebate Program | 1 | Business/site intake form | None |
 | SOURCE_DSIRE:dsire_program_id:21862 | Santee Cooper - Rooftop Solar Rebate Program | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload, Tax/accounting document upload, Utility bill upload | Program application or award status, Project quote or invoice upload, Tax/accounting document upload |
+| SOURCE_DSIRE:dsire_program_id:22647 | Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:3853 | PPL Electric Utilities - Commercial, Industrial and Agricultural Energy Efficiency Rebate Program | 1 | Business/site intake form, Program application or award status, Project quote or invoice upload, Retrofit scope form, Utility bill upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:22186 | MassEVIP Workplace and Fleet Charging Program | 3 | Business/site intake form, Program application or award status, Project quote or invoice upload | Program application or award status, Project quote or invoice upload |
 | SOURCE_DSIRE:dsire_program_id:22187 | MassEVIP Public Access Charging (PAC) Program | 2 | Business/site intake form, Program application or award status, Project quote or invoice upload, Utility bill upload | Program application or award status, Project quote or invoice upload |

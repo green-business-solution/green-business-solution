@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) incentive classification audit cleanup
+
+- Reclassified source-backed but user-input-gated rebate repairs as `needs_project_scope` runtime form gates instead of generic policy suppressions.
+- Renamed future unresolved cash-incentive repair reporting from the grant-specific `grant_formula_repair_required` bucket to `cash_incentive_runtime_repair_required`.
+- Added an incentive classification audit for all 984 v2 packages and regenerated grant/tax coverage plus form-input audit reports.
+- Uploaded ignored generated test fixtures to the development S3 bucket and refreshed the checksum manifest.
+
 ## 2026-07-04 - Codex (GPT-5) test recommendation precompute script
 
 - Added a reusable retrofit recommendation cache helper module so API reads/writes and offline precompute use the same fingerprint, S3 key, and runtime-state metadata.

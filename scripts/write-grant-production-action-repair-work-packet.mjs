@@ -13,6 +13,8 @@ const TAX_EFFECT_TYPES = new Set(["tax_credit", "tax_exemption", "tax_abatement"
 const GRANT_CASH_CLASSIFICATIONS = new Set(["cash_grant", "reimbursement", "rebate"]);
 const NON_GRANT_CASH_CLASSIFICATIONS = new Set(["loan", "financing", "technical_assistance", "tax_credit"]);
 const FORM_INPUT_STATUSES = new Set(["missing_inputs", "needs_quote", "needs_project_scope", "custom_quote_estimate"]);
+const CASH_INCENTIVE_RUNTIME_REPAIR_ACTION = "cash_incentive_runtime_repair_required";
+const LEGACY_GRANT_FORMULA_REPAIR_ACTION = "grant_formula_repair_required";
 
 const force = process.argv.includes("--force");
 const batchSize = batchSizeFromArgs();
@@ -23,7 +25,9 @@ function main() {
   const packagesByOpportunityId = new Map((packagePayload.packages || []).map((pkg) => [pkg.opportunity_id, pkg]));
 
   const rows = buildPackageRows(testCasePayload.testCases || []);
-  const actionRows = rows.filter((row) => row.grantProductionAction === "grant_formula_repair_required");
+  const actionRows = rows.filter((row) =>
+    [CASH_INCENTIVE_RUNTIME_REPAIR_ACTION, LEGACY_GRANT_FORMULA_REPAIR_ACTION].includes(row.grantProductionAction)
+  );
   const targets = buildTargets(actionRows, packagesByOpportunityId);
   const batches = chunk(targets, batchSize);
 
@@ -62,7 +66,7 @@ function main() {
       testCases: path.relative(REPO_ROOT, TEST_CASE_SOURCE),
       packages: path.relative(REPO_ROOT, PACKAGE_SOURCE)
     },
-    targetAction: "grant_formula_repair_required",
+    targetAction: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION,
     targetCount: targets.length,
     evaluationCount: actionRows.length,
     targetsPerPrompt: batchSize,
@@ -70,8 +74,8 @@ function main() {
     prompts: promptFiles
   };
 
-  writeJson(path.join(OUTPUT_DIR, "target_grant_formula_repair_required.json"), {
-    schemaVersion: "retrofi_grant_formula_repair_required_targets.v1",
+  writeJson(path.join(OUTPUT_DIR, "target_cash_incentive_runtime_repair_required.json"), {
+    schemaVersion: "retrofi_cash_incentive_runtime_repair_required_targets.v1",
     generatedAt: manifest.generatedAt,
     currentDate: CURRENT_DATE,
     targetCount: targets.length,
@@ -185,6 +189,9 @@ function classifyGrantProductionAction(row) {
 
   if (row.includedInRuntimeTotals) return { action: "production_ready_included", reason: "The package already contributes a supported runtime amount." };
   if (!row.grantEstimateRelated) return { action: "not_grant_estimation_target", reason: "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target." };
+  if (row.runtimeInclusionStatus === "legacy_rule_preferred") {
+    return { action: "legacy_rule_preferred", reason: "A legacy rule is intentionally preferred for this opportunity to avoid double counting." };
+  }
   if (FORM_INPUT_STATUSES.has(row.runtimeInclusionStatus) || row.missingInputs.length > 0) {
     return { action: "form_input_required", reason: "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating." };
   }
@@ -206,7 +213,7 @@ function classifyGrantProductionAction(row) {
   if (row.runtimeInclusionStatus === "no_calculable_value" || decisionText.includes("no_calculable_value")) {
     return { action: "zero_placeholder_no_calculable_value", reason: "No defensible formula or expected-value model exists, so the grant contribution should remain $0." };
   }
-  return { action: "grant_formula_repair_required", reason: "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate." };
+  return { action: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION, reason: "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate." };
 }
 
 function buildTargets(rows, packagesByOpportunityId) {
@@ -472,7 +479,7 @@ function buildReadme(manifest) {
 
 Generated: ${manifest.generatedAt}
 
-This packet targets the current \`grant_formula_repair_required\` opportunities from the test-case grant/tax coverage flow.
+This packet targets the current \`cash_incentive_runtime_repair_required\` opportunities from the test-case grant/tax coverage flow.
 
 - Target opportunities: ${manifest.targetCount}
 - Repeated test-case evaluations represented: ${manifest.evaluationCount}
@@ -481,7 +488,7 @@ This packet targets the current \`grant_formula_repair_required\` opportunities 
 
 Run each \`prompt_*.md\` in GPT Pro and paste the answer into the matching blank \`output_*.md\` file. Keep file names unchanged.
 
-Target list: \`target_grant_formula_repair_required.json\`
+Target list: \`target_cash_incentive_runtime_repair_required.json\`
 Manifest: \`target_manifest.json\`
 `;
 }

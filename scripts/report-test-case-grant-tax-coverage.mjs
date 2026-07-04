@@ -22,6 +22,7 @@ const localTaxPayload = JSON.parse(fs.readFileSync(localTaxWorkflowPath, "utf8")
 const TAX_EFFECT_TYPES = new Set(["tax_credit", "tax_exemption", "tax_abatement", "tax_rate_preference", "property_tax_valuation"]);
 const GRANT_CASH_CLASSIFICATIONS = new Set(["cash_grant", "reimbursement", "rebate"]);
 const NON_GRANT_CASH_CLASSIFICATIONS = new Set(["loan", "financing", "technical_assistance", "tax_credit"]);
+const CASH_INCENTIVE_RUNTIME_REPAIR_ACTION = "cash_incentive_runtime_repair_required";
 const BLOCKED_RUNTIME_STATUSES = new Set([
   "source_inaccessible_repair_failure",
   "unavailable_archived",
@@ -385,7 +386,7 @@ function summarizeRows(rows) {
 
 function summarizeGrantProductionRows(rows) {
   const unresolvedRows = rows.filter(
-    (row) => !["production_ready_included", "not_grant_estimation_target"].includes(row.grantProductionAction)
+    (row) => !["production_ready_included", "not_grant_estimation_target", "legacy_rule_preferred"].includes(row.grantProductionAction)
   );
   return {
     count: rows.length,
@@ -513,6 +514,13 @@ function classifyGrantProductionAction(row) {
     };
   }
 
+  if (row.runtimeInclusionStatus === "legacy_rule_preferred") {
+    return {
+      action: "legacy_rule_preferred",
+      reason: "A legacy rule is intentionally preferred for this opportunity to avoid double counting."
+    };
+  }
+
   if (FORM_INPUT_STATUSES.has(row.runtimeInclusionStatus) || row.missingInputs.length > 0) {
     return {
       action: "form_input_required",
@@ -556,27 +564,27 @@ function classifyGrantProductionAction(row) {
 
   if (row.runtimeInclusionStatus === "no_supported_effect_amount") {
     return {
-      action: "grant_formula_repair_required",
+      action: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION,
       reason: "The package is grant/rebate-related but has no supported monetary effect amount."
     };
   }
 
   if (row.runtimeInclusionStatus === "human_review_required") {
     return {
-      action: "grant_formula_repair_required",
+      action: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION,
       reason: "The package still needs source-backed rule/probability repair or conversion into explicit form inputs."
     };
   }
 
   if (["low_confidence", "suppressed_by_policy", "not_user_facing_default"].includes(row.runtimeInclusionStatus)) {
     return {
-      action: "grant_formula_repair_required",
+      action: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION,
       reason: "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
     };
   }
 
   return {
-    action: "grant_formula_repair_required",
+    action: CASH_INCENTIVE_RUNTIME_REPAIR_ACTION,
     reason: "The package needs explicit grant-estimator handling for its current runtime status."
   };
 }

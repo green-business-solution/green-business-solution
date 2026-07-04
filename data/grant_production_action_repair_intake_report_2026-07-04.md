@@ -1,6 +1,6 @@
 # Grant Production Action Repair Intake Report
 
-Generated: 2026-07-04T20:57:07.479Z
+Generated: 2026-07-04T21:18:38.417Z
 
 ## Validation
 
@@ -29,10 +29,9 @@ Generated: 2026-07-04T20:57:07.479Z
 | --- | ---: |
 | needs_quote | 7 |
 | needs_funding_check | 4 |
-| deterministic_estimate | 3 |
+| needs_project_scope | 4 |
 | zero_value | 3 |
 | human_review_required | 1 |
-| needs_project_scope | 1 |
 | non_grant_workflow | 1 |
 
 ## Probability Evidence

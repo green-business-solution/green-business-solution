@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_grant_production_action_repairs_gpt_pro.v1",
-  "generatedAt": "2026-07-04T20:57:07.479Z",
+  "generatedAt": "2026-07-04T21:18:38.417Z",
   "sourceWorkDir": "GPT Pro Work/grant-production-action-repair-2026-07-04",
   "sourceFiles": [
     "output_001_grant-production-action-repair-001-004.md",
@@ -26,10 +26,9 @@
       "needs_quote": 7,
       "needs_funding_check": 4,
       "human_review_required": 1,
-      "deterministic_estimate": 3,
+      "needs_project_scope": 4,
       "zero_value": 3,
-      "non_grant_workflow": 1,
-      "needs_project_scope": 1
+      "non_grant_workflow": 1
     },
     "sourceConfidenceCounts": {
       "high": 17,
@@ -1366,7 +1365,7 @@
         "https://www.siliconvalleypower.com/home/showpublisheddocument/75953/638881818060600000",
         "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
       ],
-      "normalizedEstimateStatus": "deterministic_estimate",
+      "normalizedEstimateStatus": "needs_project_scope",
       "normalizedIncludeDefault": true,
       "normalizedHumanReviewRequired": false,
       "normalizedReasonCodes": [
@@ -1380,7 +1379,7 @@
         "recommended_action_include_deterministic_estimate",
         "formula_status_needs_user_input",
         "probability_evidence_first_come_funding_unknown",
-        "estimate_status_deterministic_estimate"
+        "estimate_status_needs_project_scope"
       ],
       "conditionalAwardModel": {
         "status": "needs_user_input",
@@ -1497,7 +1496,7 @@
         ]
       },
       "estimateRecommendation": {
-        "estimateStatus": "deterministic_estimate",
+        "estimateStatus": "needs_project_scope",
         "includeInUserFacingTotalDefault": true,
         "includedAmountPolicy": "estimated_amount",
         "userFacingLabel": "Silicon Valley Power nonresidential heat pump water heater rebate",
@@ -1513,7 +1512,7 @@
           "recommended_action_include_deterministic_estimate",
           "formula_status_needs_user_input",
           "probability_evidence_first_come_funding_unknown",
-          "estimate_status_deterministic_estimate"
+          "estimate_status_needs_project_scope"
         ]
       }
     },
@@ -3964,7 +3963,7 @@
         "https://www.efficiencymaine.com/off-peak-charger-incentives/",
         "https://www.efficiencymaine.com/form/off-peak-charger-rebate-code-request/"
       ],
-      "normalizedEstimateStatus": "deterministic_estimate",
+      "normalizedEstimateStatus": "needs_project_scope",
       "normalizedIncludeDefault": true,
       "normalizedHumanReviewRequired": false,
       "normalizedReasonCodes": [
@@ -3977,7 +3976,7 @@
         "recommended_action_include_deterministic_estimate",
         "formula_status_needs_user_input",
         "probability_evidence_not_required",
-        "estimate_status_deterministic_estimate"
+        "estimate_status_needs_project_scope"
       ],
       "conditionalAwardModel": {
         "status": "needs_user_input",
@@ -4119,7 +4118,7 @@
         ]
       },
       "estimateRecommendation": {
-        "estimateStatus": "deterministic_estimate",
+        "estimateStatus": "needs_project_scope",
         "includeInUserFacingTotalDefault": true,
         "includedAmountPolicy": "estimated_amount",
         "userFacingLabel": "Efficiency Maine off-peak Level 2 charger incentive",
@@ -4134,7 +4133,7 @@
           "recommended_action_include_deterministic_estimate",
           "formula_status_needs_user_input",
           "probability_evidence_not_required",
-          "estimate_status_deterministic_estimate"
+          "estimate_status_needs_project_scope"
         ]
       }
     },
@@ -5001,7 +5000,7 @@
         "https://www.efficiencymaine.com/em-electric-vehicle-incentives/",
         "https://www.efficiencymaine.com/docs/EV_Rebate_Program_Manual.pdf"
       ],
-      "normalizedEstimateStatus": "deterministic_estimate",
+      "normalizedEstimateStatus": "needs_project_scope",
       "normalizedIncludeDefault": true,
       "normalizedHumanReviewRequired": false,
       "normalizedReasonCodes": [
@@ -5012,7 +5011,7 @@
         "recommended_action_include_deterministic_estimate",
         "formula_status_needs_user_input",
         "probability_evidence_not_required",
-        "estimate_status_deterministic_estimate"
+        "estimate_status_needs_project_scope"
       ],
       "conditionalAwardModel": {
         "status": "needs_user_input",
@@ -5115,7 +5114,7 @@
         ]
       },
       "estimateRecommendation": {
-        "estimateStatus": "deterministic_estimate",
+        "estimateStatus": "needs_project_scope",
         "includeInUserFacingTotalDefault": true,
         "includedAmountPolicy": "estimated_amount",
         "userFacingLabel": "Efficiency Maine off-peak charger incentive",
@@ -5128,7 +5127,7 @@
           "recommended_action_include_deterministic_estimate",
           "formula_status_needs_user_input",
           "probability_evidence_not_required",
-          "estimate_status_deterministic_estimate"
+          "estimate_status_needs_project_scope"
         ]
       }
     },

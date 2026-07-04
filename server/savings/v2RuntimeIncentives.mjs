@@ -271,10 +271,17 @@ function productionDecisionRuntimeStatus(effectSummaries, pkg) {
   if (decisionText.includes("zero_value") || decisionText.includes("no_calculable_value") || /\bnot_calculable\b/.test(decisionText)) {
     return "no_calculable_value";
   }
+  if (
+    decisionText.includes("needs_project_scope") ||
+    decisionText.includes("needs_project_inputs") ||
+    decisionText.includes("formula_status_needs_user_input") ||
+    repairedGrantOrTaxEffects.some((effect) => (effect.missingInputs || []).length > 0)
+  ) {
+    return "needs_project_scope";
+  }
   if (decisionText.includes("suppressed") || decisionText.includes("exclude_from_user_facing") || decisionText.includes("do_not_include")) {
     return "suppressed_by_policy";
   }
-  if (decisionText.includes("needs_project_scope") || decisionText.includes("needs_project_inputs")) return "needs_project_scope";
   if (repairedGrantOrTaxEffects.some((effect) => effect.effectType === "grant_expected_value" || isGrantOrReimbursementEffect(effect))) {
     return "suppressed_by_policy";
   }

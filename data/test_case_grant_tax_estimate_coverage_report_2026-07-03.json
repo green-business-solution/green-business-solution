@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T20:58:10.209Z",
+  "generatedAt": "2026-07-04T21:24:24.738Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -19,8 +19,9 @@
       "needs_quote": 87,
       "no_calculable_value": 50,
       "not_user_facing_default": 49,
-      "suppressed_by_policy": 16,
+      "suppressed_by_policy": 8,
       "non_monetary_workflow": 14,
+      "needs_project_scope": 8,
       "needs_funding_check": 13,
       "low_confidence": 1,
       "legacy_rule_preferred": 2,
@@ -28,9 +29,9 @@
     },
     "outcomeClassCounts": {
       "calculated_and_included": 293,
-      "missing_evidence_or_inputs": 100,
+      "missing_evidence_or_inputs": 108,
       "source_or_package_blocked": 50,
-      "suppressed_without_amount": 59,
+      "suppressed_without_amount": 51,
       "computed_but_suppressed": 13,
       "non_monetary_workflow": 14,
       "legacy_rule_preferred": 2
@@ -48,15 +49,16 @@
     },
     "runtimeIncludedPackageCount": 293,
     "computedButSuppressedPackageCount": 13,
-    "missingEvidenceOrInputPackageCount": 100,
+    "missingEvidenceOrInputPackageCount": 108,
     "grantProductionActionCounts": {
       "production_ready_included": 293,
-      "form_input_required": 87,
+      "form_input_required": 95,
       "zero_placeholder_no_calculable_value": 28,
       "not_grant_estimation_target": 48,
       "non_grant_workflow": 13,
-      "grant_formula_repair_required": 17,
-      "funding_refresh_required": 13
+      "funding_refresh_required": 13,
+      "cash_incentive_runtime_repair_required": 7,
+      "legacy_rule_preferred": 2
     },
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 3,
@@ -73,9 +75,9 @@
     "count": 499,
     "outcomeClassCounts": {
       "calculated_and_included": 293,
-      "missing_evidence_or_inputs": 100,
+      "missing_evidence_or_inputs": 108,
       "source_or_package_blocked": 35,
-      "suppressed_without_amount": 55,
+      "suppressed_without_amount": 47,
       "computed_but_suppressed": 11,
       "non_monetary_workflow": 3,
       "legacy_rule_preferred": 2
@@ -85,8 +87,9 @@
       "needs_quote": 87,
       "no_calculable_value": 35,
       "not_user_facing_default": 49,
-      "suppressed_by_policy": 16,
+      "suppressed_by_policy": 8,
       "non_monetary_workflow": 3,
+      "needs_project_scope": 8,
       "needs_funding_check": 13,
       "low_confidence": 1,
       "legacy_rule_preferred": 2
@@ -2555,19 +2558,20 @@
     "count": 499,
     "actionCounts": {
       "production_ready_included": 293,
-      "form_input_required": 87,
+      "form_input_required": 95,
       "zero_placeholder_no_calculable_value": 28,
       "not_grant_estimation_target": 48,
       "non_grant_workflow": 13,
-      "grant_formula_repair_required": 17,
-      "funding_refresh_required": 13
+      "funding_refresh_required": 13,
+      "cash_incentive_runtime_repair_required": 7,
+      "legacy_rule_preferred": 2
     },
     "unresolvedActionCounts": {
-      "form_input_required": 87,
+      "form_input_required": 95,
       "zero_placeholder_no_calculable_value": 28,
       "non_grant_workflow": 13,
-      "grant_formula_repair_required": 17,
-      "funding_refresh_required": 13
+      "funding_refresh_required": 13,
+      "cash_incentive_runtime_repair_required": 7
     },
     "sampleRowsByAction": {
       "form_input_required": [
@@ -6730,915 +6734,6 @@
           "grantProductionReason": "The opportunity is better handled outside grant estimation."
         }
       ],
-      "grant_formula_repair_required": [
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "low_flow_fixture_retrofit",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "battery_storage_system",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "heat_pump_water_heater",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "santa-clara-university-campus",
-          "sampleName": "santa-clara-university-campus",
-          "retrofitTypeId": "high_efficiency_gas_water_heater",
-          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
-          "programName": "Heat Pump Water Heater Rebate",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "suppressed_without_amount",
-          "calculationStatus": "calculable",
-          "sourceStatus": "verified_official_source",
-          "confidence": "high",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "fixed_tier_amount"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "deterministic_estimate"
-          ],
-          "repairStatuses": [
-            "deterministic_formula_repaired"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_high",
-            "estimate_confidence_high",
-            "value_model_fixed_tier_amount",
-            "official_fixed_tier_amount",
-            "per_unit_rebate",
-            "preapproval_required_before_installation",
-            "uef_rating_required",
-            "eligible_equipment_cost_cap",
-            "while_funds_last",
-            "grant_production_action_repair_applied",
-            "recommended_action_include_deterministic_estimate",
-            "formula_status_needs_user_input",
-            "probability_evidence_first_come_funding_unknown",
-            "estimate_status_deterministic_estimate"
-          ],
-          "humanReviewReasons": [],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "preapproval_status",
-            "existing_water_heater_fuel",
-            "hpwh_unit_count",
-            "uef_rating",
-            "svp_preapproval_status",
-            "installation_completion_date",
-            "svp_customer_type",
-            "invoice_submission_date"
-          ],
-          "computedAmountCents": 0,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "high_efficiency_hvac_replacement",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "air_sealing_weatherization",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "eligible_project_cost_cents",
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "insulation_upgrade",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "ground_source_geothermal_heat_pump",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "heat_pump_hvac_retrofit",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        },
-        {
-          "sampleUserId": "tapiz-mariposa-denver-household",
-          "sampleName": "tapiz-mariposa-denver-household",
-          "retrofitTypeId": "heat_pump_water_heater",
-          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
-          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
-          "runtimeInclusionStatus": "suppressed_by_policy",
-          "outcomeClass": "computed_but_suppressed",
-          "calculationStatus": "needs_repair_review",
-          "sourceStatus": "partially_verified",
-          "confidence": "medium",
-          "effectTypes": [
-            "one_time_savings"
-          ],
-          "valueModelKinds": [
-            "hybrid_rate_plus_cap"
-          ],
-          "cashValueClassifications": [
-            "rebate"
-          ],
-          "estimateStatuses": [
-            "human_review_required"
-          ],
-          "repairStatuses": [
-            "keep_suppressed_needs_more_research"
-          ],
-          "reasonCodes": [
-            "repair_status_calculation_package_found",
-            "calculation_status_calculable_with_missing_inputs",
-            "source_confidence_medium",
-            "estimate_confidence_medium",
-            "value_model_measure_catalog",
-            "computed_suppressed_source_repair_applied",
-            "research_status_keep_human_review",
-            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
-            "current_xcel_branded_summary_found_on_non_official_host",
-            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
-            "official_rebate_application_bot_or_not",
-            "timing_terms_conflict_six_months_vs_two_years",
-            "heat_pump_cooling_catalog_rows_still_require_source_review",
-            "do_not_include_default_until_official_current_rate_table_accessible",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required",
-            "value_model_hybrid_rate_plus_cap",
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
-          ],
-          "humanReviewReasons": [
-            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
-            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
-            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
-            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
-            "partial_official_rate_rows_found",
-            "current_complete_rate_table_not_verified",
-            "combo_bonus_not_general_measure_amount",
-            "timing_terms_conflict",
-            "needs_official_current_xcel_source",
-            "do_not_include_default_until_source_resolved",
-            "grant_production_action_repair_applied",
-            "recommended_action_keep_suppressed_needs_more_research",
-            "formula_status_not_calculable",
-            "probability_evidence_not_required",
-            "estimate_status_human_review_required"
-          ],
-          "missingInputs": [],
-          "defaultedInputKeys": [
-            "xcel_colorado_residential_service_type",
-            "selected_measure",
-            "heating_or_cooling_customer_category",
-            "equipment_tier_and_tonnage_where_applicable",
-            "invoice_and_installation_date",
-            "service_type",
-            "equipment_tier",
-            "tons_or_eligible_cost",
-            "official_current_xcel_rate_table_verified"
-          ],
-          "computedAmountCents": 60000,
-          "grantProductionAction": "grant_formula_repair_required",
-          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
-        }
-      ],
       "funding_refresh_required": [
         {
           "sampleUserId": "tapiz-mariposa-denver-household",
@@ -8699,6 +7794,647 @@
           "computedAmountCents": 0,
           "grantProductionAction": "funding_refresh_required",
           "grantProductionReason": "The estimate depends on current funding availability, waitlist, or while-funds-last status."
+        }
+      ],
+      "cash_incentive_runtime_repair_required": [
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "air_sealing_weatherization",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "eligible_project_cost_cents",
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "insulation_upgrade",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "heat_pump_water_heater",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
+        },
+        {
+          "sampleUserId": "tapiz-mariposa-denver-household",
+          "sampleName": "tapiz-mariposa-denver-household",
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+          "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+          "runtimeInclusionStatus": "suppressed_by_policy",
+          "outcomeClass": "computed_but_suppressed",
+          "calculationStatus": "needs_repair_review",
+          "sourceStatus": "partially_verified",
+          "confidence": "medium",
+          "effectTypes": [
+            "one_time_savings"
+          ],
+          "valueModelKinds": [
+            "hybrid_rate_plus_cap"
+          ],
+          "cashValueClassifications": [
+            "rebate"
+          ],
+          "estimateStatuses": [
+            "human_review_required"
+          ],
+          "repairStatuses": [
+            "keep_suppressed_needs_more_research"
+          ],
+          "reasonCodes": [
+            "repair_status_calculation_package_found",
+            "calculation_status_calculable_with_missing_inputs",
+            "source_confidence_medium",
+            "estimate_confidence_medium",
+            "value_model_measure_catalog",
+            "computed_suppressed_source_repair_applied",
+            "research_status_keep_human_review",
+            "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+            "current_xcel_branded_summary_found_on_non_official_host",
+            "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+            "official_rebate_application_bot_or_not",
+            "timing_terms_conflict_six_months_vs_two_years",
+            "heat_pump_cooling_catalog_rows_still_require_source_review",
+            "do_not_include_default_until_official_current_rate_table_accessible",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required",
+            "value_model_hybrid_rate_plus_cap",
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+          ],
+          "humanReviewReasons": [
+            "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+            "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+            "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+            "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion.",
+            "partial_official_rate_rows_found",
+            "current_complete_rate_table_not_verified",
+            "combo_bonus_not_general_measure_amount",
+            "timing_terms_conflict",
+            "needs_official_current_xcel_source",
+            "do_not_include_default_until_source_resolved",
+            "grant_production_action_repair_applied",
+            "recommended_action_keep_suppressed_needs_more_research",
+            "formula_status_not_calculable",
+            "probability_evidence_not_required",
+            "estimate_status_human_review_required"
+          ],
+          "missingInputs": [],
+          "defaultedInputKeys": [
+            "eligible_project_cost_cents",
+            "xcel_colorado_residential_service_type",
+            "selected_measure",
+            "heating_or_cooling_customer_category",
+            "equipment_tier_and_tonnage_where_applicable",
+            "invoice_and_installation_date",
+            "service_type",
+            "equipment_tier",
+            "tons_or_eligible_cost",
+            "official_current_xcel_rate_table_verified"
+          ],
+          "computedAmountCents": 60000,
+          "grantProductionAction": "cash_incentive_runtime_repair_required",
+          "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
         }
       ]
     }
@@ -11159,7 +10895,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11205,7 +10941,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11250,7 +10986,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11295,7 +11031,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11340,7 +11076,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11385,7 +11121,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {
@@ -11431,7 +11167,7 @@
         "grantEstimateRelated": true,
         "computedAmountCents": 60000,
         "includedInRuntimeTotals": false,
-        "grantProductionAction": "grant_formula_repair_required",
+        "grantProductionAction": "cash_incentive_runtime_repair_required",
         "grantProductionReason": "The package is grant/rebate-related but policy or confidence metadata still prevents a production estimate."
       },
       {

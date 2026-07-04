@@ -251,6 +251,22 @@ describe("v2 runtime incentive bridge", () => {
     });
   });
 
+  it("treats deterministic repaired rebates with user-gated inputs as project-scope form gates", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [productionActionDeterministicInputGatedRebatePackage()],
+      existingLegacyRules: [],
+      ctx: ctx()
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("needs_project_scope");
+    expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
+      estimateStatus: "deterministic_estimate",
+      hasProductionDecision: true,
+      runtimeEligibleForTotals: true
+    });
+  });
+
   it("uses repaired tax metadata instead of stale non-monetary package status", () => {
     const bridge = buildV2RuntimeIncentiveBridge({
       packages: [nonMonetaryStatusTaxPackage()],
@@ -819,6 +835,61 @@ function productionActionNonGrantWorkflowPackage() {
             reason_codes: ["non_grant_workflow", "outside_grant_estimator"]
           }
         }
+      }
+    ]
+  };
+}
+
+function productionActionDeterministicInputGatedRebatePackage() {
+  const pkg = includedFixedPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_grant_action_input_gated_rebate",
+    program_name: "Input Gated Rebate",
+    calculation_status: "calculable_with_missing_inputs",
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_grant_action_input_gated_rebate",
+        label: "Input gated rebate",
+        calculation: { method: "custom_quote", reason: "Formula requires project scope inputs." },
+        required_inputs: [
+          {
+            input_key: "existing_water_heater_fuel",
+            label: "Existing water heater fuel",
+            value_type: "text",
+            required_for: ["effect_grant_action_input_gated_rebate"],
+            source_precedence: ["retrofit_scope"],
+            missing_severity: "blocks_calculation"
+          }
+        ],
+        repair_metadata: {
+          included_in_user_facing_total_default: true,
+          cash_value_classification: "rebate",
+          value_model_kind: "fixed_tier_amount",
+          human_review_required: false,
+          repair_status: "deterministic_formula_repaired",
+          calculation_status: "calculable_with_missing_inputs",
+          grant_production_action_repair: {
+            estimate_status: "deterministic_estimate",
+            recommended_action: "include_deterministic_estimate",
+            reason_codes: [
+              "deterministic_estimate",
+              "formula_status_needs_user_input",
+              "recommended_action_include_deterministic_estimate"
+            ]
+          }
+        }
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "existing_water_heater_fuel",
+        label: "Existing water heater fuel",
+        value_type: "text",
+        required_for: ["effect_grant_action_input_gated_rebate"],
+        source_precedence: ["retrofit_scope"],
+        missing_severity: "blocks_calculation"
       }
     ]
   };

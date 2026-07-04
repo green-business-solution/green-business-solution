@@ -299,6 +299,7 @@ function normalizedEstimateStatusForRepair(repair) {
   if (action === "include_deterministic_estimate") {
     if (runtimeStatus === "needs_quote" || formulaStatus === "needs_quote_or_invoice") return "needs_quote";
     if (runtimeStatus === "needs_project_scope") return "needs_project_scope";
+    if (formulaStatus === "needs_user_input") return "needs_project_scope";
     return runtimeStatus || "deterministic_estimate";
   }
   return runtimeStatus || "human_review_required";

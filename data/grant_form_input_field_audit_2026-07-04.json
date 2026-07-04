@@ -1,28 +1,28 @@
 {
   "schemaVersion": "retrofi_grant_form_input_field_audit.v1",
-  "generatedAt": "2026-07-04T20:58:10.037Z",
+  "generatedAt": "2026-07-04T21:24:38.344Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json"
   },
   "summary": {
-    "formInputRequiredEvaluationCount": 87,
-    "uniqueOpportunityCount": 24,
+    "formInputRequiredEvaluationCount": 95,
+    "uniqueOpportunityCount": 27,
     "rowsWithoutMappedFields": 0,
     "collectionSurfaceCounts": {
       "Retrofit scope form": 14,
-      "Project quote or invoice upload": 310,
-      "Program application or award status": 482,
-      "Business/site intake form": 912,
-      "Utility bill upload": 31,
+      "Project quote or invoice upload": 321,
+      "Program application or award status": 495,
+      "Business/site intake form": 975,
+      "Utility bill upload": 37,
       "Tax/accounting document upload": 12
     },
     "implementationStatusCounts": {
-      "implemented": 957,
-      "planned": 804
+      "implemented": 1026,
+      "planned": 828
     },
     "plannedSurfaceCounts": {
-      "Project quote or invoice upload": 310,
-      "Program application or award status": 482,
+      "Project quote or invoice upload": 321,
+      "Program application or award status": 495,
       "Tax/accounting document upload": 12
     }
   },
@@ -113,6 +113,22 @@
       "programName": "GRID-Lodging",
       "runtimeInclusionStatus": "needs_quote",
       "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload",
+        "Utility bill upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
+      "programName": "Heat Pump Water Heater Rebate",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "evaluationCount": 6,
       "fieldSurfaces": [
         "Business/site intake form",
         "Program application or award status",
@@ -260,6 +276,16 @@
       ]
     },
     {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22181",
+      "programName": "Electric Vehicle Rebate Program",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form"
+      ],
+      "plannedSurfaces": []
+    },
+    {
       "opportunityId": "SOURCE_DSIRE:dsire_program_id:21862",
       "programName": "Santee Cooper - Rooftop Solar Rebate Program",
       "runtimeInclusionStatus": "needs_quote",
@@ -275,6 +301,21 @@
         "Program application or award status",
         "Project quote or invoice upload",
         "Tax/accounting document upload"
+      ]
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
+      "programName": "Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "evaluationCount": 1,
+      "fieldSurfaces": [
+        "Business/site intake form",
+        "Program application or award status",
+        "Project quote or invoice upload"
+      ],
+      "plannedSurfaces": [
+        "Program application or award status",
+        "Project quote or invoice upload"
       ]
     },
     {
@@ -6281,6 +6322,92 @@
     {
       "sampleUserId": "santa-clara-university-campus",
       "retrofitTypeId": "high_efficiency_hvac_replacement",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
+      "programName": "Heat Pump Water Heater Rebate",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "fields": [
+        {
+          "inputKey": "eligible_equipment_cost_cents",
+          "label": "Eligible equipment cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "svp_customer_type",
+          "label": "SVP customer type",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "invoice_submission_date",
+          "label": "Invoice and specification submission date",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "eligible_equipment_cost",
+          "label": "eligible equipment cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "existing_water_heater_fuel",
+          "label": "Existing water heater fuel",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "hpwh_unit_count",
+          "label": "Heat pump water heater unit count",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "installation_completion_date",
+          "label": "Installation completion date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "preapproval_status",
+          "label": "preapproval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_preapproval_status",
+          "label": "SVP written preapproval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "uef_rating",
+          "label": "Uniform Energy Factor rating",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "unit_count",
+          "label": "unit count",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "santa-clara-university-campus",
+      "retrofitTypeId": "high_efficiency_hvac_replacement",
       "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
       "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
       "runtimeInclusionStatus": "needs_quote",
@@ -6663,6 +6790,92 @@
     {
       "sampleUserId": "santa-clara-university-campus",
       "retrofitTypeId": "low_flow_fixture_retrofit",
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
+      "programName": "Heat Pump Water Heater Rebate",
+      "runtimeInclusionStatus": "needs_project_scope",
+      "fields": [
+        {
+          "inputKey": "eligible_equipment_cost_cents",
+          "label": "Eligible equipment cost",
+          "collectionSurfaceLabel": "Project quote or invoice upload",
+          "implementationStatus": "planned",
+          "uploadKind": "quote_or_invoice"
+        },
+        {
+          "inputKey": "svp_customer_type",
+          "label": "SVP customer type",
+          "collectionSurfaceLabel": "Utility bill upload",
+          "implementationStatus": "implemented",
+          "uploadKind": "utility_bill"
+        },
+        {
+          "inputKey": "invoice_submission_date",
+          "label": "Invoice and specification submission date",
+          "collectionSurfaceLabel": "Program application or award status",
+          "implementationStatus": "planned",
+          "uploadKind": "application_or_award_document"
+        },
+        {
+          "inputKey": "eligible_equipment_cost",
+          "label": "eligible equipment cost",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "existing_water_heater_fuel",
+          "label": "Existing water heater fuel",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "hpwh_unit_count",
+          "label": "Heat pump water heater unit count",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "installation_completion_date",
+          "label": "Installation completion date",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "preapproval_status",
+          "label": "preapproval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "svp_preapproval_status",
+          "label": "SVP written preapproval status",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "uef_rating",
+          "label": "Uniform Energy Factor rating",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        },
+        {
+          "inputKey": "unit_count",
+          "label": "unit count",
+          "collectionSurfaceLabel": "Business/site intake form",
+          "implementationStatus": "implemented",
+          "uploadKind": null
+        }
+      ]
+    },
+    {
+      "sampleUserId": "santa-clara-university-campus",
+      "retrofitTypeId": "low_flow_fixture_retrofit",
       "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
       "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
       "runtimeInclusionStatus": "needs_quote",
@@ -6838,367 +7051,6 @@
         {
           "inputKey": "svp_preapproval",
           "label": "SVP preapproval",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "santa-clara-university-campus",
-      "retrofitTypeId": "low_flow_fixture_retrofit",
-      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:new-construction-incentives",
-      "programName": "New Construction Incentives",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "tons",
-          "label": "Equipment cooling capacity in tons",
-          "collectionSurfaceLabel": "Retrofit scope form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_cost",
-          "label": "eligible cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eer",
-          "label": "Equipment EER or qualifying efficiency tier",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "incremental_cost_cents",
-          "label": "Incremental cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "proposed_equipment_or_lighting_cost_cents",
-          "label": "Proposed equipment or lighting cost",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "current_program_budget_remaining_cents",
-          "label": "Current program budget remaining",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "current_program_year_funding_confirmed",
-          "label": "Current SVP program-year funding confirmed",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "site_kwh_savings",
-          "label": "Modeled site kWh savings",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "percent_better_than_title24",
-          "label": "Percent better than Title 24",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "preapproval",
-          "label": "preapproval",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "svp_lighting_calculator_rebate_cents",
-          "label": "SVP lighting calculator rebate output",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "written_preapproval_obtained",
-          "label": "Written SVP preapproval obtained before installation",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "building_sqft",
-          "label": "Building square footage",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "chiller_tons_and_eer",
-          "label": "chiller tons and EER",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "energy_savings_percentage",
-          "label": "energy savings percentage",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "equipment_quantity_and_efficiency",
-          "label": "equipment quantity and efficiency",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "incremental_or_proposed_equipment_cost",
-          "label": "incremental or proposed equipment cost",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "lighting_calculator_outputs_if_applicable",
-          "label": "lighting calculator outputs if applicable",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "new_construction_addition_or_qualifying_major_renovation_status",
-          "label": "new construction, addition, or qualifying major renovation status",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "project_pathway",
-          "label": "New-construction incentive pathway",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "packaged_hvac_tons_and_efficiencies",
-          "label": "packaged HVAC tons and efficiencies",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "peak_kw_reduction",
-          "label": "Peak kW reduction",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "permit_timing",
-          "label": "permit timing",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "remaining_customer_program_year_cap_cents",
-          "label": "Remaining customer program-year cap",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "svp_served_nonresidential_project",
-          "label": "SVP-served nonresidential project",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "title_24_proposed_and_standard_energy_budgets",
-          "label": "Title 24 proposed and standard energy budgets",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "title_24_savings_or_calculator_output",
-          "label": "Title 24 savings or calculator output",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        }
-      ]
-    },
-    {
-      "sampleUserId": "santa-clara-university-campus",
-      "retrofitTypeId": "battery_storage_system",
-      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
-      "programName": "GFO-25-308 - Distributed Clean Hydrogen Production with Onsite End Use (H2ONSITE)",
-      "runtimeInclusionStatus": "needs_quote",
-      "fields": [
-        {
-          "inputKey": "award_decision",
-          "label": "Award Decision",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "colocated_production_storage_end_use",
-          "label": "Colocated Production Storage End Use",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_match_amount",
-          "label": "Eligible Match Amount",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "eligible_reimbursable_project_costs_cents",
-          "label": "Eligible Reimbursable Project Costs",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "hydrogen_production_capacity_metric_tons_per_day",
-          "label": "Hydrogen Production Capacity Metric Tons Per Day",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "renewable_energy_supply_strategy",
-          "label": "Renewable Energy Supply Strategy",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "water_source_not_for_human_consumption",
-          "label": "Water Source Not For Human Consumption",
-          "collectionSurfaceLabel": "Project quote or invoice upload",
-          "implementationStatus": "planned",
-          "uploadKind": "quote_or_invoice"
-        },
-        {
-          "inputKey": "application_award_status",
-          "label": "Application Award Status",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "approved_cec_award_cents",
-          "label": "Approved Cec Award",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "cec_funding_request_cents",
-          "label": "Cec Funding Request",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "eligible_match_amount_cents",
-          "label": "Eligible Match Amount",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "fully_executed_grant_agreement",
-          "label": "Fully Executed Grant Agreement",
-          "collectionSurfaceLabel": "Program application or award status",
-          "implementationStatus": "planned",
-          "uploadKind": "application_or_award_document"
-        },
-        {
-          "inputKey": "application_score_or_award_decision",
-          "label": "application score or award decision",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "award_probability",
-          "label": "award probability",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "cec_funding_request",
-          "label": "CEC funding request",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "eligible_project_budget",
-          "label": "eligible project budget",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "human_reviewed_probability_discount",
-          "label": "Human Reviewed Probability Discount",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "hydrogen_production_capacity_in_metric_tons_per_day",
-          "label": "hydrogen production capacity in metric tons per day",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "hydrogen_storage_scope",
-          "label": "hydrogen storage scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "onsite_hydrogen_end_use_scope",
-          "label": "Onsite Hydrogen End Use Scope",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "project_site_in_california",
-          "label": "Project Site In California",
-          "collectionSurfaceLabel": "Business/site intake form",
-          "implementationStatus": "implemented",
-          "uploadKind": null
-        },
-        {
-          "inputKey": "total_eligible_project_budget",
-          "label": "total eligible project budget",
           "collectionSurfaceLabel": "Business/site intake form",
           "implementationStatus": "implemented",
           "uploadKind": null
