@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) selected estimate workspace shell stabilization
+
+- Standardized the selected retrofit Estimate workspace shell so the progress stepper, retrofit header, tab bar, tab body, and action rail share one consistent layout across all tabs.
+- Made the right rail compact and action-only, tightened responsive grid behavior, added defensive text wrapping, and removed tab-switch scroll jumps from the selected workspace.
+- Updated focused preview tests for the exact six-tab set, compact Application Overview, action-only right rail, and revised unconfirmed-changes modal copy.
+
 ## 2026-07-04 - Codex (GPT-5) retrofit form gate
 
 - Added admin preview controls to hide or show seeded retrofit form details independently from bill data.

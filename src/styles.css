@@ -6323,7 +6323,10 @@ dd {
 .estimate-workspace-shell {
   display: grid;
   gap: 18px;
+  min-width: 0;
+  max-width: none;
   padding: 0 0 24px;
+  width: 100%;
 }
 
 .estimate-progress-stepper {
@@ -6389,14 +6392,14 @@ dd {
 }
 
 .estimate-workspace-layout {
-  align-items: stretch;
+  align-items: start;
   display: grid;
-  gap: 22px;
+  gap: 24px;
   grid-template-columns: minmax(0, 1fr) 300px;
+  min-width: 0;
 }
 
-.estimate-main-card,
-.estimate-right-rail {
+.estimate-main-card {
   background: #ffffff;
   border: 1px solid #dfe7e1;
   border-radius: 18px;
@@ -6415,6 +6418,7 @@ dd {
   display: grid;
   gap: 22px;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 0.92fr);
+  min-width: 0;
   padding: 24px 0 18px;
 }
 
@@ -6442,6 +6446,7 @@ dd {
   font-size: 26px;
   letter-spacing: -0.02em;
   line-height: 32px;
+  overflow-wrap: anywhere;
 }
 
 .estimate-header p,
@@ -6449,6 +6454,7 @@ dd {
   color: #43534b;
   font-size: 14px;
   line-height: 21px;
+  overflow-wrap: anywhere;
 }
 
 .estimate-recommendation-card {
@@ -6489,6 +6495,7 @@ dd {
   gap: 22px;
   padding: 0;
   position: static;
+  white-space: nowrap;
 }
 
 .estimate-tab.workspace-tab {
@@ -6516,7 +6523,8 @@ dd {
 .estimate-tab-panel {
   display: grid;
   gap: 18px;
-  padding-top: 22px;
+  min-width: 0;
+  padding-top: 24px;
 }
 
 .estimate-panel-title-row,
@@ -6550,10 +6558,11 @@ dd {
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  min-width: 0;
 }
 
 .estimate-financial-metric-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
 }
 
 .estimate-impact-metric-grid {
@@ -6570,6 +6579,7 @@ dd {
   grid-template-columns: auto minmax(0, 1fr);
   min-height: 98px;
   min-width: 0;
+  overflow: hidden;
   padding: 14px;
 }
 
@@ -6613,14 +6623,19 @@ dd {
   font-size: 13px;
   font-weight: 760;
   line-height: 18px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .estimate-metric-card strong {
   color: #071b12;
   display: block;
-  font-size: 22px;
-  line-height: 28px;
+  font-size: clamp(1.2rem, 1.45vw, 1.55rem);
+  line-height: 1.12;
   margin-top: 3px;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .estimate-metric-card small {
@@ -6697,6 +6712,7 @@ dd {
   border-radius: 16px;
   display: grid;
   gap: 12px;
+  min-width: 0;
   padding: 16px;
 }
 
@@ -6747,6 +6763,7 @@ dd {
   gap: 12px;
   grid-template-columns: auto minmax(0, 1fr) auto;
   min-height: 38px;
+  min-width: 0;
   padding: 8px 0;
 }
 
@@ -6759,12 +6776,15 @@ dd {
   font-size: 13px;
   justify-self: end;
   line-height: 18px;
+  min-width: 0;
+  overflow-wrap: anywhere;
   text-align: right;
 }
 
 .estimate-financing-strip {
   align-items: center;
   grid-template-columns: auto minmax(0, 1fr) auto;
+  min-width: 0;
 }
 
 .financial-toggle {
@@ -6823,6 +6843,7 @@ dd {
   background: #ffffff;
   border: 1px solid #e1e8e3;
   border-radius: 14px;
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -6835,6 +6856,7 @@ dd {
   display: grid;
   gap: 12px;
   grid-template-columns: auto minmax(0, 1fr) auto auto;
+  min-width: 0;
   padding: 12px 16px;
 }
 
@@ -6867,12 +6889,30 @@ dd {
   color: #071b12;
   font-size: 15px;
   line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.estimate-opportunity-row-meta {
+  color: #52635a;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 6px 10px;
+  line-height: 17px;
+  margin-top: 5px;
+  min-width: 0;
+}
+
+.estimate-opportunity-row-meta span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .estimate-opportunity-value {
   display: grid;
   gap: 2px;
   justify-items: end;
+  min-width: 0;
 }
 
 .estimate-opportunity-value small {
@@ -6881,6 +6921,8 @@ dd {
 
 .estimate-opportunity-value strong {
   color: #0f7a4f;
+  overflow-wrap: anywhere;
+  text-align: right;
 }
 
 .estimate-row-chevron {
@@ -6896,7 +6938,8 @@ dd {
   border-top: 1px solid #e1e8e3;
   display: grid;
   gap: 22px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  min-width: 0;
   padding: 14px 16px 16px;
 }
 
@@ -6921,6 +6964,7 @@ dd {
   display: grid;
   gap: 14px;
   min-height: 176px;
+  min-width: 0;
   padding: 18px;
   text-align: left;
 }
@@ -7004,6 +7048,7 @@ dd {
   align-items: center;
   grid-template-columns: auto minmax(0, 1fr) minmax(220px, 0.45fr);
   min-height: 132px;
+  overflow: hidden;
 }
 
 .estimate-impact-leaf {
@@ -7029,13 +7074,14 @@ dd {
 
 .estimate-impact-hero strong {
   color: #0f7a4f;
-  font-size: 54px;
-  line-height: 58px;
+  font-size: clamp(2.4rem, 4vw, 3.375rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 .estimate-impact-hero b {
   color: #071b12;
-  font-size: 20px;
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
   margin-left: 12px;
 }
 
@@ -7067,8 +7113,8 @@ dd {
 }
 
 .application-overview-card {
-  margin: 22px auto 24px;
-  max-width: 940px;
+  margin: 0;
+  max-width: none;
   width: 100%;
 }
 
@@ -7085,10 +7131,13 @@ dd {
 }
 
 .estimate-right-rail {
-  align-content: start;
-  display: grid;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  padding: 20px;
+  position: sticky;
+  top: 96px;
+  width: 300px;
 }
 
 .estimate-primary-action,
@@ -7113,6 +7162,7 @@ dd {
 
 .estimate-right-status-card {
   align-items: center;
+  background: #ffffff;
   border: 1px solid #e1e8e3;
   border-radius: 14px;
   display: grid;
@@ -7139,6 +7189,85 @@ dd {
   height: 30px;
   justify-content: center;
   width: 30px;
+}
+
+.estimate-overview-card p,
+.estimate-tab-panel span,
+.estimate-tab-panel strong,
+.estimate-tab-panel h3,
+.estimate-tab-panel h4,
+.estimate-opportunity-row,
+.estimate-opportunity-detail-grid,
+.estimate-scenario-card,
+.application-overview-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1180px) {
+  .estimate-workspace-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .estimate-right-rail {
+    position: static;
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .estimate-header,
+  .estimate-overview-lower-grid,
+  .estimate-scenario-detail-grid,
+  .estimate-impact-hero,
+  .estimate-financing-strip,
+  .application-overview-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .estimate-recommendation-card {
+    border-left: 0;
+    border-top: 1px solid #dfe7e1;
+    padding-left: 0;
+    padding-top: 18px;
+  }
+
+  .financial-inventory-grid,
+  .estimate-scenario-list-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .estimate-tabs.retrofit-workspace-tabs {
+    overflow-x: auto;
+  }
+
+  .estimate-metric-grid,
+  .estimate-impact-metric-grid,
+  .estimate-split-summary,
+  .estimate-opportunity-summary-grid,
+  .estimate-scenario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .estimate-split-summary > div + div {
+    border-left: 0;
+    border-top: 1px solid #e1e8e3;
+  }
+
+  .estimate-opportunity-row-header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .estimate-opportunity-value {
+    grid-column: 2 / span 2;
+    justify-items: start;
+  }
+
+  .estimate-opportunity-value strong {
+    text-align: left;
+  }
 }
 
 @media (max-width: 1099px) {

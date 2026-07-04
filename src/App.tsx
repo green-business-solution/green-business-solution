@@ -7857,8 +7857,7 @@ export function RetrofitRecommendationsPreview({
 
           {pendingTabRetrofitId && activeRetrofit ? (
             <UnconfirmedRetrofitModal
-              onAddToPlan={() => addRetrofitToPlan(activeRetrofit, pendingTabRetrofitId)}
-              onContinueEditing={() => setPendingTabRetrofitId(null)}
+              onConfirm={() => addRetrofitToPlan(activeRetrofit, pendingTabRetrofitId)}
               onDiscard={discardActiveDraftAndSwitch}
               retrofitName={activeRetrofit.name}
             />
@@ -9574,14 +9573,6 @@ function RetrofitPreviewCardView({
   const overviewApplicationProfile = readyApplicationProfile || applicationOverviewProfile;
   const overviewApplicationOpportunity = readyApplicationPrepOpportunity || applicationOverviewOpportunity;
   const overviewApplicationUnavailable = !overviewApplicationProfile && !overviewApplicationOpportunity;
-  const estimateRightRailStatus =
-    activeWorkspaceTab === "financials"
-      ? { title: "Estimate complete", subtitle: "Review and continue" }
-      : activeWorkspaceTab === "opportunities"
-        ? { title: "Opportunities saved", subtitle: "Auto-saved just now" }
-        : activeWorkspaceTab === "environmental"
-          ? { title: "Auto-saved just now", subtitle: "All changes saved" }
-          : { title: "Estimate step in progress", subtitle: "Auto-saved just now" };
   const actionBarPrimary =
     billDataLocked
       ? "Upload bills"
@@ -9651,11 +9642,6 @@ function RetrofitPreviewCardView({
 
   function openWorkspaceTab(tab: EstimateWorkspaceTab) {
     setActiveWorkspaceTab(tab);
-    if (typeof document !== "undefined") {
-      window.requestAnimationFrame(() => {
-        document.querySelector(".retrofit-workspace-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
   }
 
   function toggleSection(section: keyof typeof sectionIds) {
@@ -9971,6 +9957,12 @@ function RetrofitPreviewCardView({
                         <div>
                           <strong>{opportunity.name}</strong>
                           <span className="soft-badge">{capitalizeLabel(opportunity.type)}</span>
+                          <div className="estimate-opportunity-row-meta">
+                            <span>{capitalizeLabel(opportunity.timing)}</span>
+                            <span>{capitalizeLabel(opportunity.eligibilityStatus)}</span>
+                            <span>{opportunity.deadline || "Deadline unavailable"}</span>
+                            <span>{opportunity.sourceUrl ? "Source available" : "Source unavailable"}</span>
+                          </div>
                         </div>
                         <div className="estimate-opportunity-value">
                           <small>{opportunity.timing === "recurring" ? "Annual value" : "Initial value"}</small>
@@ -10146,7 +10138,7 @@ function RetrofitPreviewCardView({
                 <div className="application-overview-footer">
                   <span>ⓘ Application support and step-by-step guidance come later in the application workflow.</span>
                   {applicationOverviewIsReady && applicationOverviewOpportunity ? (
-                    <button className="secondary-button" onClick={() => setApplicationPrepOpportunity(applicationOverviewOpportunity)} type="button">View full application support ↗</button>
+                    <button className="secondary-button" onClick={() => setApplicationPrepOpportunity(applicationOverviewOpportunity)} type="button">View full application details ↗</button>
                   ) : (
                     <button className="secondary-button" disabled type="button">
                       {applicationOverviewReferenceOnly ? "Funding exhausted — reference only" : "Application support not available yet"}
@@ -10160,25 +10152,14 @@ function RetrofitPreviewCardView({
 
         <aside className="estimate-right-rail" aria-label="Estimate actions">
           <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
-          <button className="estimate-secondary-action" onClick={activeWorkspaceTab === "financials" ? onAddToPlan : undefined} type="button">
-            {activeWorkspaceTab === "financials" ? "Save estimate" : "Discard changes"}
-          </button>
+          <button className="estimate-secondary-action" type="button">Discard changes</button>
           <section className="estimate-right-status-card">
             <span className="estimate-status-check" aria-hidden="true">✓</span>
             <div>
-              <strong>{estimateRightRailStatus.title}</strong>
-              <p>{estimateRightRailStatus.subtitle}</p>
+              <strong>Estimate step in progress</strong>
+              <p>Auto-saved just now</p>
             </div>
           </section>
-          {activeWorkspaceTab === "financials" ? (
-            <section className="estimate-right-status-card">
-              <span className="estimate-status-document" aria-hidden="true">⇩</span>
-              <div>
-                <strong>Download estimate</strong>
-                <p>PDF summary</p>
-              </div>
-            </section>
-          ) : null}
         </aside>
       </div>
 
@@ -11238,26 +11219,23 @@ function listForClipboard(items: CustomerApplicationProfileRequirement[]) {
 }
 
 function UnconfirmedRetrofitModal({
-  onAddToPlan,
-  onContinueEditing,
+  onConfirm,
   onDiscard,
   retrofitName
 }: {
-  onAddToPlan: () => void;
-  onContinueEditing: () => void;
+  onConfirm: () => void;
   onDiscard: () => void;
   retrofitName: string;
 }) {
   return (
     <div className="modal-backdrop retrofit-financing-backdrop">
       <section className="unconfirmed-retrofit-modal">
-        <p className="eyebrow">Unconfirmed selections</p>
-        <h2>You have unconfirmed selections for {retrofitName}.</h2>
-        <p>Add this retrofit to your plan, discard changes, or continue editing.</p>
+        <p className="eyebrow">{retrofitName}</p>
+        <h2>You have unconfirmed changes</h2>
+        <p>You have changes that are not yet finalized for this retrofit. What would you like to do before moving forward?</p>
         <div className="retrofit-badge-row">
-          <button onClick={onAddToPlan} type="button">Add to plan</button>
+          <button onClick={onConfirm} type="button">Confirm and move to next step</button>
           <button className="secondary-button" onClick={onDiscard} type="button">Discard changes</button>
-          <button className="secondary-button" onClick={onContinueEditing} type="button">Continue editing</button>
         </div>
       </section>
     </div>
