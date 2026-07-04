@@ -9806,12 +9806,9 @@ function RetrofitPreviewCardView({
                 <p>{retrofit.description}</p>
               </div>
             </div>
-            <div className="estimate-recommendation-card">
-              <span className="estimate-recommendation-icon" aria-hidden="true">✹</span>
-              <div>
-                <strong>Why this is recommended</strong>
-                <p>{retrofit.whyRecommended[0] || `${retrofit.name} fits your current profile and can improve savings, comfort, or eligibility.`}</p>
-              </div>
+            <div className="estimate-header-actions" aria-label="Estimate actions">
+              <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
+              <button className="estimate-secondary-action" type="button">Discard changes</button>
             </div>
           </header>
 
@@ -10232,17 +10229,6 @@ function RetrofitPreviewCardView({
           ) : null}
         </section>
 
-        <aside className="estimate-right-rail" aria-label="Estimate actions">
-          <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
-          <button className="estimate-secondary-action" type="button">Discard changes</button>
-          <section className="estimate-right-status-card">
-            <span className="estimate-status-check" aria-hidden="true">✓</span>
-            <div>
-              <strong>Estimate step in progress</strong>
-              <p>Auto-saved just now</p>
-            </div>
-          </section>
-        </aside>
       </div>
 
       {applicationPrepOpportunity ? (

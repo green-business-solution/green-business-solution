@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) selected workspace header actions
+
+- Removed the selected workspace header recommendation callout and moved the confirm/discard actions into that header position.
+- Removed the redundant "Estimate step in progress" right-rail card so progress is represented only by the six-step top tracker.
+- Let the selected workspace main card use the width previously reserved for the right action rail.
+
 ## 2026-07-04 - Codex (GPT-5) selected estimate workspace shell stabilization
 
 - Standardized the selected retrofit Estimate workspace shell so the progress stepper, retrofit header, tab bar, tab body, and action rail share one consistent layout across all tabs.

@@ -6406,7 +6406,7 @@ dd {
   align-items: start;
   display: grid;
   gap: 24px;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr);
   min-width: 0;
 }
 
@@ -6428,7 +6428,7 @@ dd {
   align-items: center;
   display: grid;
   gap: 22px;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.92fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
   min-width: 0;
   padding: 24px 0 18px;
 }
@@ -6447,8 +6447,7 @@ dd {
 }
 
 .estimate-header h2,
-.estimate-header p,
-.estimate-recommendation-card p {
+.estimate-header p {
   margin: 0;
 }
 
@@ -6460,42 +6459,19 @@ dd {
   overflow-wrap: anywhere;
 }
 
-.estimate-header p,
-.estimate-recommendation-card p {
+.estimate-header p {
   color: #43534b;
   font-size: 14px;
   line-height: 21px;
   overflow-wrap: anywhere;
 }
 
-.estimate-recommendation-card {
-  align-items: start;
+.estimate-header-actions {
   border-left: 1px solid #dfe7e1;
   display: grid;
-  gap: 12px;
-  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
   min-width: 0;
   padding-left: 28px;
-}
-
-.estimate-recommendation-card strong {
-  color: #071b12;
-  display: block;
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 8px;
-}
-
-.estimate-recommendation-icon {
-  align-items: center;
-  background: #0f7a4f;
-  border-radius: 999px;
-  color: #ffffff;
-  display: inline-flex;
-  font-size: 13px;
-  height: 22px;
-  justify-content: center;
-  width: 22px;
 }
 
 .estimate-tabs.retrofit-workspace-tabs {
@@ -6676,8 +6652,7 @@ dd {
   border-left: 1px solid #e1e8e3;
 }
 
-.estimate-summary-check,
-.estimate-status-check {
+.estimate-summary-check {
   align-items: center;
   border: 2px solid #0f7a4f;
   border-radius: 999px;
@@ -7141,16 +7116,6 @@ dd {
   padding: 10px 12px;
 }
 
-.estimate-right-rail {
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: sticky;
-  top: 96px;
-  width: 300px;
-}
-
 .estimate-primary-action,
 .estimate-secondary-action {
   border-radius: 9px;
@@ -7171,37 +7136,6 @@ dd {
   color: #071b12;
 }
 
-.estimate-right-status-card {
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid #e1e8e3;
-  border-radius: 14px;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: auto minmax(0, 1fr);
-  padding: 18px;
-}
-
-.estimate-right-status-card strong,
-.estimate-right-status-card p {
-  margin: 0;
-}
-
-.estimate-right-status-card p {
-  color: #52635a;
-}
-
-.estimate-status-document {
-  align-items: center;
-  border: 1px solid #8ea2b3;
-  border-radius: 8px;
-  color: #1f3648;
-  display: inline-flex;
-  height: 30px;
-  justify-content: center;
-  width: 30px;
-}
-
 .estimate-overview-card p,
 .estimate-tab-panel span,
 .estimate-tab-panel strong,
@@ -7215,17 +7149,6 @@ dd {
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 1180px) {
-  .estimate-workspace-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .estimate-right-rail {
-    position: static;
-    width: 100%;
-  }
-}
-
 @media (max-width: 900px) {
   .estimate-header,
   .estimate-overview-lower-grid,
@@ -7236,7 +7159,7 @@ dd {
     grid-template-columns: 1fr;
   }
 
-  .estimate-recommendation-card {
+  .estimate-header-actions {
     border-left: 0;
     border-top: 1px solid #dfe7e1;
     padding-left: 0;
