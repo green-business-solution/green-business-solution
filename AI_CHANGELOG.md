@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) selected workspace opportunity and scenario polish
+
+- Removed redundant opportunity detail rows for empty requirements, source availability, selected state, length, and impact notes from the selected retrofit Opportunity tab.
+- Changed customer-facing opportunity eligibility copy from "Likely" to "Yes" while preserving the underlying match status.
+- Updated tax opportunity application-process copy and restyled the scenario matrix with a floating recommended ribbon and outlined selected column.
+
 ## 2026-07-04 - Codex (GPT-5) generated test fixture archival
 
 - Moved generated sample matching and profile fixtures to the private development S3 bucket with a checksum manifest.

@@ -6992,15 +6992,17 @@ dd {
 .scenario-comparison-scroll {
   overflow-x: auto;
   padding-bottom: 2px;
+  padding-top: 18px;
 }
 
 .scenario-comparison-table {
   background: #ffffff;
   border: 1px solid #dfe7e1;
-  border-radius: 16px;
+  border-radius: 22px;
   display: grid;
   min-width: 920px;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
 .scenario-comparison-row {
@@ -7058,26 +7060,67 @@ dd {
 .scenario-comparison-cell {
   border-left: 1px solid #edf2ef;
   justify-content: center;
+  position: relative;
   text-align: center;
+}
+
+.scenario-comparison-header {
+  min-height: 172px;
+  overflow: visible;
 }
 
 .scenario-comparison-heading-cell {
   align-items: stretch;
+  background: #ffffff;
   padding: 0;
+}
+
+.scenario-comparison-scenario {
+  color: #071b12;
+  overflow: visible;
 }
 
 .scenario-comparison-heading-cell.is-selected,
 .scenario-comparison-value.is-selected {
-  background: #f7fcf8;
-  box-shadow: inset 2px 0 0 #0f7a4f, inset -2px 0 0 #0f7a4f;
+  background: #ffffff;
+  box-shadow: none;
 }
 
-.scenario-comparison-header .scenario-comparison-heading-cell.is-selected {
-  box-shadow: inset 2px 2px 0 #0f7a4f, inset -2px 0 0 #0f7a4f;
+.scenario-comparison-scenario.is-selected::before {
+  border: 2px solid #0f7a4f;
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  bottom: -1px;
+  content: "";
+  left: -1px;
+  pointer-events: none;
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  z-index: 4;
 }
 
-.scenario-comparison-row:last-child .scenario-comparison-value.is-selected {
-  box-shadow: inset 2px 0 0 #0f7a4f, inset -2px -2px 0 #0f7a4f;
+.scenario-comparison-scenario.is-selected.is-recommended::before {
+  top: 48px;
+}
+
+.scenario-comparison-value.is-selected::before {
+  border-left: 2px solid #0f7a4f;
+  border-right: 2px solid #0f7a4f;
+  bottom: -1px;
+  content: "";
+  left: -1px;
+  pointer-events: none;
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  z-index: 4;
+}
+
+.scenario-comparison-row:last-child .scenario-comparison-value.is-selected::before {
+  border-bottom: 2px solid #0f7a4f;
+  border-radius: 0 0 7px 7px;
+  bottom: 0;
 }
 
 .scenario-comparison-heading-button {
@@ -7088,10 +7131,45 @@ dd {
   display: flex;
   gap: 14px;
   justify-content: space-between;
-  min-height: 132px;
+  min-height: 172px;
   padding: 22px;
+  position: relative;
   text-align: left;
   width: 100%;
+  z-index: 5;
+}
+
+.scenario-comparison-recommended-ribbon {
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #5b2cff;
+  border-radius: 9px;
+  color: #5b2cff;
+  display: flex;
+  font-size: 18px;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  left: 10px;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: -18px;
+  z-index: 10;
+}
+
+.scenario-comparison-recommended-ribbon::after {
+  background: #ffffff;
+  border-bottom: 2px solid #5b2cff;
+  border-right: 2px solid #5b2cff;
+  bottom: -8px;
+  content: "";
+  height: 12px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
 }
 
 .scenario-comparison-heading-copy {
@@ -7110,6 +7188,11 @@ dd {
   color: #24352b;
   font-size: 16px;
   line-height: 1.25;
+}
+
+.scenario-comparison-heading-cell.is-selected .scenario-comparison-heading-copy strong,
+.scenario-comparison-heading-cell.is-selected .scenario-comparison-heading-copy small {
+  color: #071b12;
 }
 
 .scenario-comparison-check {
@@ -7134,6 +7217,8 @@ dd {
   font-size: 19px;
   line-height: 1.2;
   overflow-wrap: anywhere;
+  position: relative;
+  z-index: 5;
 }
 
 .scenario-comparison-value.is-selected strong {

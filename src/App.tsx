@@ -10163,9 +10163,8 @@ function RetrofitPreviewCardView({
                           <span className="soft-badge">{capitalizeLabel(opportunity.type)}</span>
                           <div className="estimate-opportunity-row-meta">
                             <span>{capitalizeLabel(opportunity.timing)}</span>
-                            <span>{capitalizeLabel(opportunity.eligibilityStatus)}</span>
+                            <span>{opportunityEligibilitySummaryLabel(opportunity.eligibilityStatus)}</span>
                             <span>{opportunity.deadline || "Deadline unavailable"}</span>
-                            <span>{opportunity.sourceUrl ? "Source available" : "Source unavailable"}</span>
                           </div>
                         </div>
                         <div className="estimate-opportunity-value">
@@ -10182,24 +10181,20 @@ function RetrofitPreviewCardView({
                             <EstimateInfoRow label="Opportunity description" value={opportunity.description} />
                             <EstimateInfoRow label="Program type" value={capitalizeLabel(opportunity.type)} />
                             <EstimateInfoRow label="Timing" value={capitalizeLabel(opportunity.timing)} />
-                            <EstimateInfoRow label="Eligible" value={capitalizeLabel(opportunity.eligibilityStatus)} />
+                            <EstimateInfoRow label="Eligible" value={opportunityEligibleDisplayLabel(opportunity.eligibilityStatus)} />
                             <EstimateInfoRow label="Calculation formula" value={opportunity.valueRule || "No calculation formula stored"} />
                             <EstimateInfoRow label="Cap" value={opportunity.valueCap || "Needs source review"} />
                             <EstimateInfoRow label="Eligible cost basis" value={opportunity.eligibleCostBasis || "Needs source review"} />
                           </div>
                           <div>
                             <EstimateInfoRow label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
-                            <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ") || "No additional requirements stored"} />
+                            {opportunity.requiredInfo.length ? <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ")} /> : null}
                             <EstimateInfoRow label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
-                            <EstimateInfoRow label="Length" value={opportunity.length || "Source unavailable"} />
                             <EstimateInfoRow label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
                             <EstimateInfoRow label="Deadline" value={opportunity.deadline || "Source unavailable"} />
-                            <EstimateInfoRow label="Impact note" value={opportunity.whySelected || opportunityImpactSupportedLabel(displayedEnvironmentalImpact)} />
                           </div>
                           <div>
                             <EstimateInfoRow label="Certification boost" value={opportunity.certificationBoost || "Needs review"} />
-                            <EstimateInfoRow label="Selected" value={selected ? "Yes" : "No"} />
-                            <EstimateInfoRow label="Source" value={opportunity.sourceUrl ? "Available" : "Source unavailable"} />
                             {appReady ? (
                               <button className="secondary-button small-action-button" onClick={() => setApplicationPrepOpportunity(opportunity)} type="button">Prepare application</button>
                             ) : appReference ? (
@@ -10233,8 +10228,18 @@ function RetrofitPreviewCardView({
                       </div>
                       {scenarioCards.map((scenario, index) => {
                         const selected = selectedScenario?.id === scenario.id;
+                        const isRecommended = index === 0;
                         return (
-                          <div className={`scenario-comparison-cell scenario-comparison-heading-cell${selected ? " is-selected" : ""}`} role="columnheader" key={scenario.id}>
+                          <div
+                            className={`scenario-comparison-cell scenario-comparison-heading-cell scenario-comparison-scenario${selected ? " is-selected" : ""}${isRecommended ? " is-recommended" : ""}`}
+                            role="columnheader"
+                            key={scenario.id}
+                          >
+                            {isRecommended ? (
+                              <span className="scenario-comparison-recommended-ribbon">
+                                Recommended
+                              </span>
+                            ) : null}
                             <button
                               aria-pressed={selected}
                               className="scenario-comparison-heading-button"
@@ -10242,7 +10247,6 @@ function RetrofitPreviewCardView({
                               type="button"
                             >
                               <span className="scenario-comparison-heading-copy">
-                                {index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
                                 <strong>{scenarioDisplayName(index)}</strong>
                                 <small>{scenarioBestForLabel(index)}</small>
                               </span>
@@ -11740,6 +11744,18 @@ function opportunityEligibilityStatus(status: string): RetrofitOpportunityPrevie
   return "unknown";
 }
 
+function opportunityEligibleDisplayLabel(status: RetrofitOpportunityPreview["eligibilityStatus"]) {
+  if (status === "confirmed" || status === "likely") return "Yes";
+  if (status === "needs review") return "Needs review";
+  return "Unknown";
+}
+
+function opportunityEligibilitySummaryLabel(status: RetrofitOpportunityPreview["eligibilityStatus"]) {
+  if (status === "confirmed" || status === "likely") return "Eligible";
+  if (status === "needs review") return "Eligibility needs review";
+  return "Eligibility unknown";
+}
+
 function opportunityNeedsUtilityTerritoryConfirmation(
   opportunity: SampleMatchResult,
   payload: PortalRetrofitRecommendationsResponse | null
@@ -11844,6 +11860,10 @@ function assumptionUnit(label: string) {
 }
 
 function opportunityApplicationProcess(opportunity: SampleMatchResult) {
+  const programType = normalizeOpportunityType(opportunity.sourceSummary?.programType);
+  if (programType.includes("tax")) return "Tax filing / accountant review";
+  if (opportunity.blockers.length > 0) return "Longer review expected";
+  if (opportunity.unresolvedRequirements.length > 2) return "Moderate review timeline";
   if (opportunity.applicationUrl) {
     const firstRequirement = opportunity.unresolvedRequirements[0];
     return firstRequirement
