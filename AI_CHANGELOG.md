@@ -6,6 +6,10 @@
 - Normalized legacy grant/rebate `custom_quote_estimate` runtime packages to `needs_quote`, matching the product policy that quote-dependent estimates are form gates rather than source-data blockers.
 - Regenerated the ignored admin test-case fixture, uploaded it to the development S3 fixture bucket, and updated the fixture manifest checksum.
 
+## 2026-07-04 - Codex (GPT-5) opportunity requirements TODO
+
+- Added a product TODO to create regression coverage proving the selected retrofit Opportunities tab never shows unresolved `Requires` rows for deterministically matched opportunities.
+
 ## 2026-07-04 - Codex (GPT-5) grant estimate form/funding TODOs
 
 - Clarified that quote, scope, bill, filing, and project-input-dependent grant statuses are production form gates rather than source-data blockers.

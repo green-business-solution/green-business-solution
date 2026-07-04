@@ -12,6 +12,7 @@ This document captures product, data-quality, and verification work that should 
 - Treat the historical GPT Pro repair `confidence` field as `source_confidence` unless and until it is explicitly migrated. It should not be mixed with deterministic `match_confidence`.
 - Compare GPT Pro repairs against Codex-imported or Codex-inferred data. When GPT Pro finds errors, Codex should record why the deterministic parser failed and write updated extraction strategies so future repair can be automated.
 - Preserve debugging detail about why data failed or why a record needed repair. This detail is mainly for admin/debugging and GPT Pro repair prompts, not for the first-pass user portal experience.
+- TODO: Add regression test cases proving the customer-facing selected retrofit Opportunities tab never shows a `Requires` row for matched opportunities. Deterministic matching should either collect the needed user/project facts before recommendation, suppress/gate the opportunity until those facts exist, or fail the publish gate; a visible `Requires` row in the decision workspace means the matching contract is leaking unresolved validation into the user flow.
 
 ## Grant And Incentive Estimates
 
