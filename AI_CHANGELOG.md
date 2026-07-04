@@ -1981,6 +1981,7 @@
 - Recoded the Grand Marais PUC and Princeton PUC residential EV charger v2 packages from stale Bright Energy Solutions $150-$500 assumptions to the source-backed 2026 SMMPA member-specific $15 connected Level 2 charger rebate rows, preserving Grand Marais rate-enrollment incentives as a separate gated workflow.
 # 2026-07-04
 
+- Removed the Process onboarding note width cap and shifted it farther left so it stays on one line inside the modal.
 - Shifted the Process onboarding note left and kept it on one line while preserving space for the Next button.
 - Constrained the Process onboarding note to the left side of the modal so it no longer overlaps the Next button.
 - Tightened the Process onboarding modal spacing and note typography so the note fits inside the modal.
