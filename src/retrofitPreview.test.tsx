@@ -1194,6 +1194,12 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Grants");
     expect(source).toContain("Financing benefit");
     expect(source).toContain("You cover");
+    expect(workspaceSource).toContain("EstimateOneTimeCostWaterfallChart");
+    expect(workspaceSource).toContain("EstimatePaybackTimelineChart");
+    expect(workspaceSource).toContain("EstimateCumulativeCashFlowChart");
+    expect(source).toContain("One-time cost waterfall");
+    expect(source).toContain("Payback timeline");
+    expect(source).toContain("Cumulative cash flow over 10 years");
     expect(workspaceSource).toContain("Total opportunities");
     expect(workspaceSource).toContain("Across incentives and rebates");
     expect(workspaceSource).toContain("Application process");

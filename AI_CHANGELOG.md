@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) financial projection charts
+
+- Added one-time cost waterfall, payback timeline, and 10-year cumulative cash-flow charts to the selected retrofit Financials tab.
+- Wired the charts to existing project cost, one-time benefit, annual savings, effective cost, and payback values while preserving unknown states when required inputs are unavailable.
+
 ## 2026-07-04 - Codex (GPT-5) remove possible grant savings bucket
 
 - Removed the legacy possible-grant savings bucket from admin/test-case savings outputs and UI displays; modeled grants now flow through normal one-time incentive savings when included.

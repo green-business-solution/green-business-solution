@@ -11641,6 +11641,458 @@ function EstimateProjectFundingChart({
   );
 }
 
+type OneTimeCostWaterfallInput = {
+  projectCostCents: number | null;
+  upfrontIncentiveCents: number | null;
+  selectedRebatesCents: number | null;
+  oneTimeTaxBenefitsCents: number | null;
+  effectiveCostCents: number | null;
+};
+
+type CashFlowChartInput = {
+  initialInvestmentCents: number | null;
+  annualCashFlowCents: number | null;
+  paybackYears: number | null;
+};
+
+function formatFinancialChartCurrency(value: number | null | undefined, fallback = "Unknown") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  return formatEstimateCents(value, fallback);
+}
+
+function formatFinancialChartSignedCurrency(value: number | null | undefined, fallback = "Unknown") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  if (value === 0) return "$0";
+  return `${value < 0 ? "-" : ""}${formatEstimateCents(Math.abs(value), fallback)}`;
+}
+
+function formatFinancialChartCompactCurrency(value: number | null | undefined, fallback = "Unknown") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  const dollars = value / 100;
+  const absDollars = Math.abs(dollars);
+  const sign = dollars < 0 ? "-" : "";
+  if (absDollars >= 1_000_000) {
+    const compact = absDollars / 1_000_000;
+    return `${sign}$${compact.toFixed(compact >= 10 || compact % 1 === 0 ? 0 : 1)}M`;
+  }
+  if (absDollars >= 1_000) {
+    const compact = absDollars / 1_000;
+    return `${sign}$${compact.toFixed(compact >= 10 || compact % 1 === 0 ? 0 : 1)}K`;
+  }
+  return formatFinancialChartSignedCurrency(value, fallback);
+}
+
+function formatFinancialChartNegativeAxis(value: number) {
+  if (value < 0) return `(${formatFinancialChartCompactCurrency(Math.abs(value))})`;
+  return formatFinancialChartCompactCurrency(value);
+}
+
+function financialChartNiceMax(value: number) {
+  const dollars = Math.max(1, value / 100);
+  const magnitude = 10 ** Math.floor(Math.log10(dollars));
+  const normalized = dollars / magnitude;
+  const nice = normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+  return nice * magnitude * 100;
+}
+
+function splitFinancialChartText(value: string, maxLength: number) {
+  return value.split(" ").reduce<string[]>((lines, word) => {
+    const current = lines[lines.length - 1] || "";
+    if (`${current} ${word}`.trim().length > maxLength) return [...lines, word];
+    return [...lines.slice(0, -1), `${current} ${word}`.trim()];
+  }, [""]);
+}
+
+function EstimateChartUnknownState({ children }: { children: ReactNode }) {
+  return (
+    <div className="estimate-financial-chart-unknown">
+      <strong>Unknown</strong>
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function EstimateOneTimeCostWaterfallChart({
+  projectCostCents,
+  upfrontIncentiveCents,
+  selectedRebatesCents,
+  oneTimeTaxBenefitsCents,
+  effectiveCostCents
+}: OneTimeCostWaterfallInput) {
+  const width = 960;
+  const height = 430;
+  const plot = { left: 76, right: 36, top: 40, bottom: 120 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const reductions = [
+    {
+      id: "upfront-incentive",
+      label: "Upfront financial incentive",
+      description: "Instant savings at time of purchase",
+      valueCents: upfrontIncentiveCents
+    },
+    {
+      id: "selected-rebates",
+      label: "Selected rebates / grants",
+      description: "Rebates and grants you qualify for",
+      valueCents: selectedRebatesCents
+    },
+    {
+      id: "one-time-tax-benefits",
+      label: "One-time tax benefits",
+      description: "Tax credits and deductions",
+      valueCents: oneTimeTaxBenefitsCents
+    }
+  ];
+  const allReductionsKnown = reductions.every((step) => step.valueCents != null);
+  const computedEffectiveCost =
+    projectCostCents != null && allReductionsKnown
+      ? Math.max(0, projectCostCents - reductions.reduce((sum, step) => sum + (step.valueCents || 0), 0))
+      : null;
+  const finalCostCents = effectiveCostCents ?? computedEffectiveCost;
+  const valuesForScale = [
+    projectCostCents,
+    finalCostCents,
+    ...reductions.map((step) => step.valueCents)
+  ].filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+  const maxCents = valuesForScale.length ? financialChartNiceMax(Math.max(...valuesForScale, projectCostCents || 0)) : null;
+  const yForValue = (value: number) => {
+    if (!maxCents || maxCents <= 0) return plot.top + plotHeight;
+    return plot.top + (1 - value / maxCents) * plotHeight;
+  };
+  const xPositions = [0, 1, 2, 3, 4].map((index) => plot.left + index * (plotWidth / 4));
+  const barWidth = 92;
+  const tickValues = maxCents == null ? [] : Array.from({ length: 6 }, (_, index) => Math.round((maxCents / 5) * index));
+
+  let runningCents = projectCostCents ?? 0;
+  const reductionBars = reductions.map((step, index) => {
+    const startCents = runningCents;
+    const valueCents = nonNegativeCents(step.valueCents);
+    const endCents = valueCents == null ? runningCents : Math.max(0, runningCents - valueCents);
+    runningCents = endCents;
+    return {
+      ...step,
+      x: xPositions[index + 1],
+      startCents,
+      endCents,
+      valueCents
+    };
+  });
+
+  return (
+    <section className="estimate-financial-visual-card" aria-labelledby="one-time-cost-waterfall-title">
+      <header className="estimate-financial-chart-header">
+        <span className="estimate-project-funding-icon" aria-hidden="true"><MetricCostIcon /></span>
+        <div>
+          <h3 id="one-time-cost-waterfall-title">One-time cost waterfall</h3>
+          <p>How one-time benefits reduce the upfront project cost.</p>
+        </div>
+        <aside>
+          <small>You save</small>
+          <strong>{projectCostCents != null && finalCostCents != null ? formatFinancialChartCurrency(projectCostCents - finalCostCents) : "Unknown"}</strong>
+          <span>
+            {projectCostCents != null && finalCostCents != null && projectCostCents > 0
+              ? `${formatProjectFundingPercent(((projectCostCents - finalCostCents) / projectCostCents) * 100)} lower cost`
+              : "Cost reduction unknown"}
+          </span>
+        </aside>
+      </header>
+
+      {projectCostCents == null || maxCents == null ? (
+        <EstimateChartUnknownState>Project cost is needed before the waterfall can be drawn.</EstimateChartUnknownState>
+      ) : (
+        <div className="estimate-financial-chart-scroll">
+          <svg className="estimate-financial-waterfall-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="One-time cost waterfall chart">
+            {tickValues.map((tick) => {
+              const y = yForValue(tick);
+              return (
+                <g key={`waterfall-tick:${tick}`}>
+                  <line className="estimate-financial-grid-line" x1={plot.left} x2={width - plot.right} y1={y} y2={y} />
+                  <text className="estimate-financial-axis-label" x={plot.left - 12} y={y + 4} textAnchor="end">
+                    {formatFinancialChartCompactCurrency(tick)}
+                  </text>
+                </g>
+              );
+            })}
+            <line className="estimate-financial-axis-line" x1={plot.left} x2={width - plot.right} y1={yForValue(0)} y2={yForValue(0)} />
+            <text className="estimate-financial-axis-title" x="18" y={plot.top + plotHeight / 2} transform={`rotate(-90 18 ${plot.top + plotHeight / 2})`}>
+              Dollars (USD)
+            </text>
+
+            <rect
+              className="estimate-waterfall-bar is-total"
+              height={yForValue(0) - yForValue(projectCostCents)}
+              rx="3"
+              width={barWidth}
+              x={xPositions[0] - barWidth / 2}
+              y={yForValue(projectCostCents)}
+            />
+            <text className="estimate-waterfall-value is-total" x={xPositions[0]} y={yForValue(projectCostCents) - 12} textAnchor="middle">
+              {formatFinancialChartCurrency(projectCostCents)}
+            </text>
+
+            {reductionBars.map((step, index) => {
+              const currentY = yForValue(step.startCents);
+              const nextY = yForValue(step.endCents);
+              const previousRight = (index === 0 ? xPositions[0] : reductionBars[index - 1].x) + barWidth / 2;
+              const currentLeft = step.x - barWidth / 2;
+              return (
+                <g key={step.id}>
+                  <line className="estimate-waterfall-connector" x1={previousRight} x2={currentLeft} y1={currentY} y2={currentY} />
+                  {step.valueCents == null ? (
+                    <text className="estimate-waterfall-value" x={step.x} y={currentY - 12} textAnchor="middle">Unknown</text>
+                  ) : (
+                    <>
+                      <rect
+                        className="estimate-waterfall-bar is-reduction"
+                        height={Math.max(4, Math.abs(nextY - currentY))}
+                        rx="3"
+                        width={barWidth}
+                        x={currentLeft}
+                        y={Math.min(currentY, nextY)}
+                      />
+                      <text className="estimate-waterfall-value is-reduction" x={step.x} y={Math.max(currentY, nextY) + 22} textAnchor="middle">
+                        {formatFinancialChartSignedCurrency(-step.valueCents)}
+                      </text>
+                    </>
+                  )}
+                </g>
+              );
+            })}
+
+            <line className="estimate-waterfall-connector" x1={reductionBars[2].x + barWidth / 2} x2={xPositions[4] - barWidth / 2} y1={yForValue(runningCents)} y2={yForValue(runningCents)} />
+            {finalCostCents == null ? (
+              <text className="estimate-waterfall-value is-final" x={xPositions[4]} y={yForValue(runningCents) - 12} textAnchor="middle">Unknown</text>
+            ) : (
+              <>
+                <rect
+                  className="estimate-waterfall-bar is-final"
+                  height={yForValue(0) - yForValue(finalCostCents)}
+                  rx="3"
+                  width={barWidth}
+                  x={xPositions[4] - barWidth / 2}
+                  y={yForValue(finalCostCents)}
+                />
+                <text className="estimate-waterfall-value is-final" x={xPositions[4]} y={yForValue(finalCostCents) - 12} textAnchor="middle">
+                  {formatFinancialChartCurrency(finalCostCents)}
+                </text>
+              </>
+            )}
+
+            {[
+              { label: "Project cost", description: "Total cost before any benefits" },
+              ...reductions.map((step) => ({ label: step.label, description: step.description })),
+              { label: "Effective project cost after one-time benefits", description: "Your out-of-pocket cost after one-time benefits" }
+            ].map((step, index) => (
+              <text className={`estimate-waterfall-label${index === 4 ? " is-final" : ""}`} key={`waterfall-label:${step.label}`} x={xPositions[index]} y={height - 74} textAnchor="middle">
+                {splitFinancialChartText(step.label, 22).map((line, lineIndex) => (
+                  <tspan key={`${step.label}:line:${lineIndex}`} x={xPositions[index]} dy={lineIndex === 0 ? 0 : 16}>{line}</tspan>
+                ))}
+                {splitFinancialChartText(step.description, 24).map((line, lineIndex) => (
+                  <tspan className="estimate-waterfall-description" key={`${step.label}:description:${lineIndex}`} x={xPositions[index]} dy={lineIndex === 0 ? 26 : 15}>{line}</tspan>
+                ))}
+              </text>
+            ))}
+          </svg>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function cashFlowValueAtYear(initialInvestmentCents: number, annualCashFlowCents: number, year: number) {
+  return -initialInvestmentCents + annualCashFlowCents * year;
+}
+
+function normalizedPaybackYears(input: CashFlowChartInput) {
+  if (typeof input.paybackYears === "number" && Number.isFinite(input.paybackYears) && input.paybackYears >= 0) return input.paybackYears;
+  if (input.initialInvestmentCents == null || input.annualCashFlowCents == null || input.annualCashFlowCents <= 0) return null;
+  return input.initialInvestmentCents / input.annualCashFlowCents;
+}
+
+function EstimatePaybackTimelineChart({ initialInvestmentCents, annualCashFlowCents, paybackYears }: CashFlowChartInput) {
+  const width = 960;
+  const height = 390;
+  const plot = { left: 92, right: 42, top: 52, bottom: 58 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const payback = normalizedPaybackYears({ initialInvestmentCents, annualCashFlowCents, paybackYears });
+  const canPlot = initialInvestmentCents != null && annualCashFlowCents != null && annualCashFlowCents > 0;
+  const endYear = Math.max(5, Math.ceil((payback ?? 4) + 1));
+  const pointYears = Array.from(new Set([0, 1, 3, ...(payback != null && payback <= endYear ? [payback] : []), endYear])).sort((a, b) => a - b);
+  const values = canPlot ? pointYears.map((year) => cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year)) : [];
+  const minValue = values.length ? Math.min(...values, 0) : -1;
+  const maxValue = values.length ? Math.max(...values, 0) : 1;
+  const padding = Math.max((maxValue - minValue) * 0.12, 10000);
+  const yMin = minValue - padding;
+  const yMax = maxValue + padding;
+  const xForYear = (year: number) => plot.left + (year / endYear) * plotWidth;
+  const yForValue = (value: number) => plot.top + ((yMax - value) / (yMax - yMin)) * plotHeight;
+  const zeroY = yForValue(0);
+  const points = canPlot ? pointYears.map((year) => ({ year, value: cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year), x: xForYear(year), y: yForValue(cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year)) })) : [];
+  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+  const paybackX = payback == null ? null : xForYear(Math.min(payback, endYear));
+
+  return (
+    <section className="estimate-financial-visual-card" aria-labelledby="payback-timeline-title">
+      <header className="estimate-financial-chart-header">
+        <span className="estimate-project-funding-icon" aria-hidden="true"><MetricPaybackIcon /></span>
+        <div>
+          <h3 id="payback-timeline-title">Payback timeline</h3>
+          <p>Cumulative cash flow over time.</p>
+        </div>
+        <aside>
+          <small>{payback == null ? "Payback unknown" : "Payback achieved"}</small>
+          <strong>{payback == null ? "Unknown" : formatPayback(payback)}</strong>
+          <span>{payback == null ? "Needs cost and annual savings" : `Positive cash flow from Year ${Math.ceil(payback)}`}</span>
+        </aside>
+      </header>
+
+      {!canPlot ? (
+        <EstimateChartUnknownState>Annual cash-flow and effective cost are needed before payback can be plotted.</EstimateChartUnknownState>
+      ) : (
+        <div className="estimate-financial-chart-scroll">
+          <svg className="estimate-payback-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Payback timeline chart">
+            <rect className="estimate-payback-positive-zone" x={plot.left} y={plot.top} width={plotWidth} height={Math.max(0, zeroY - plot.top)} />
+            <rect className="estimate-payback-negative-zone" x={plot.left} y={zeroY} width={plotWidth} height={Math.max(0, plot.top + plotHeight - zeroY)} />
+            <line className="estimate-financial-axis-line is-zero" x1={plot.left} x2={width - plot.right} y1={zeroY} y2={zeroY} />
+            <line className="estimate-financial-axis-line" x1={plot.left} x2={plot.left} y1={plot.top} y2={plot.top + plotHeight} />
+            <line className="estimate-financial-axis-line" x1={plot.left} x2={width - plot.right} y1={plot.top + plotHeight} y2={plot.top + plotHeight} />
+            <text className="estimate-payback-zone-label is-positive" x={plot.left - 12} y={zeroY - 120} textAnchor="end">Net positive</text>
+            <text className="estimate-payback-zone-label is-negative" x={plot.left - 12} y={zeroY + 120} textAnchor="end">Net negative</text>
+            <text className="estimate-financial-axis-label" x={plot.left - 12} y={zeroY + 5} textAnchor="end">$0</text>
+            {points.map((point) => (
+              <line className="estimate-payback-point-guide" key={`payback-guide:${point.year}`} x1={point.x} x2={point.x} y1={point.y} y2={plot.top + plotHeight} />
+            ))}
+            <path className="estimate-cashflow-line" d={linePath} />
+            {points.map((point) => (
+              <circle className="estimate-cashflow-point" cx={point.x} cy={point.y} key={`payback-point:${point.year}`} r={6} />
+            ))}
+            {payback != null && paybackX != null ? (
+              <>
+                <line className="estimate-payback-marker-line" x1={paybackX} x2={paybackX} y1={zeroY} y2={plot.top + plotHeight} />
+                <circle className="estimate-payback-marker" cx={paybackX} cy={zeroY} r={10} />
+                <g className="estimate-payback-callout" transform={`translate(${Math.min(paybackX + 16, width - 310)} ${Math.max(plot.top + 22, zeroY - 118)})`}>
+                  <rect height="70" rx="10" width="250" />
+                  <text x="18" y="30">Payback: {formatPayback(payback)}</text>
+                  <text className="estimate-payback-callout-subtitle" x="18" y="54">Investment recovered</text>
+                </g>
+              </>
+            ) : null}
+            {[0, 1, 3, endYear].map((year) => (
+              <text className="estimate-financial-x-label" key={`payback-x:${year}`} x={xForYear(year)} y={height - 16} textAnchor="middle">
+                {year === 0 ? "Today" : `Year ${year}`}
+              </text>
+            ))}
+          </svg>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function EstimateCumulativeCashFlowChart({ initialInvestmentCents, annualCashFlowCents, paybackYears }: CashFlowChartInput) {
+  const width = 960;
+  const height = 430;
+  const plot = { left: 96, right: 34, top: 38, bottom: 70 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const canPlot = initialInvestmentCents != null && annualCashFlowCents != null && annualCashFlowCents > 0;
+  const payback = normalizedPaybackYears({ initialInvestmentCents, annualCashFlowCents, paybackYears });
+  const years = Array.from({ length: 11 }, (_, index) => index);
+  const values = canPlot ? years.map((year) => cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year)) : [];
+  const minValue = values.length ? Math.min(...values, 0) : -1;
+  const maxValue = values.length ? Math.max(...values, 0) : 1;
+  const padding = Math.max((maxValue - minValue) * 0.12, 10000);
+  const yMin = minValue - padding;
+  const yMax = maxValue + padding;
+  const xForYear = (year: number) => plot.left + (year / 10) * plotWidth;
+  const yForValue = (value: number) => plot.top + ((yMax - value) / (yMax - yMin)) * plotHeight;
+  const zeroY = yForValue(0);
+  const points = canPlot ? years.map((year) => ({ year, value: cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year), x: xForYear(year), y: yForValue(cashFlowValueAtYear(initialInvestmentCents, annualCashFlowCents, year)) })) : [];
+  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+  const areaPath = points.length ? `${linePath} L ${points[points.length - 1].x} ${zeroY} L ${points[0].x} ${zeroY} Z` : "";
+  const tickValues = Array.from({ length: 5 }, (_, index) => yMin + ((yMax - yMin) / 4) * index);
+  const yearTenValue = values.length ? values[values.length - 1] : null;
+  const paybackX = payback == null ? null : xForYear(Math.min(payback, 10));
+
+  return (
+    <section className="estimate-financial-visual-card" aria-labelledby="cumulative-cashflow-title">
+      <header className="estimate-financial-chart-header">
+        <span className="estimate-project-funding-icon" aria-hidden="true"><MetricSavingsIcon /></span>
+        <div>
+          <h3 id="cumulative-cashflow-title">Cumulative cash flow over 10 years</h3>
+          <p>Total cumulative cash flow (USD).</p>
+        </div>
+        <aside>
+          <small>10-year total</small>
+          <strong>{formatFinancialChartCurrency(yearTenValue)}</strong>
+          <span>Cumulative cash flow</span>
+        </aside>
+      </header>
+
+      {!canPlot ? (
+        <EstimateChartUnknownState>Annual cash-flow and effective cost are needed before the 10-year forecast can be plotted.</EstimateChartUnknownState>
+      ) : (
+        <div className="estimate-financial-chart-scroll">
+          <svg className="estimate-cumulative-cashflow-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Cumulative cash flow over ten years chart">
+            <defs>
+              <linearGradient id="cashFlowPositiveGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#98d4a8" stopOpacity="0.42" />
+                <stop offset="100%" stopColor="#f7fbf8" stopOpacity="0.06" />
+              </linearGradient>
+              <linearGradient id="cashFlowNegativeGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#fff6f4" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#f7b4a7" stopOpacity="0.32" />
+              </linearGradient>
+            </defs>
+            {tickValues.map((tick) => {
+              const y = yForValue(tick);
+              return (
+                <g key={`cashflow-y:${tick}`}>
+                  <line className="estimate-financial-grid-line" x1={plot.left} x2={width - plot.right} y1={y} y2={y} />
+                  <text className={`estimate-financial-axis-label${tick < 0 ? " is-negative" : ""}`} x={plot.left - 12} y={y + 5} textAnchor="end">
+                    {formatFinancialChartNegativeAxis(Math.round(tick))}
+                  </text>
+                </g>
+              );
+            })}
+            <rect className="estimate-cashflow-negative-area" x={plot.left} y={zeroY} width={plotWidth} height={Math.max(0, plot.top + plotHeight - zeroY)} />
+            <path className="estimate-cashflow-area" d={areaPath} />
+            <line className="estimate-financial-axis-line is-zero" x1={plot.left} x2={width - plot.right} y1={zeroY} y2={zeroY} />
+            <line className="estimate-financial-axis-line" x1={plot.left} x2={plot.left} y1={plot.top} y2={plot.top + plotHeight} />
+            <line className="estimate-financial-axis-line" x1={plot.left} x2={width - plot.right} y1={plot.top + plotHeight} y2={plot.top + plotHeight} />
+            <text className="estimate-financial-axis-title" x="22" y={plot.top + plotHeight / 2} transform={`rotate(-90 22 ${plot.top + plotHeight / 2})`}>
+              Cumulative Cash Flow (USD)
+            </text>
+            <path className="estimate-cashflow-line" d={linePath} />
+            {points.map((point) => (
+              <circle className="estimate-cashflow-point" cx={point.x} cy={point.y} key={`cashflow-point:${point.year}`} r={5} />
+            ))}
+            {payback != null && payback <= 10 && paybackX != null ? (
+              <>
+                <line className="estimate-payback-marker-line" x1={paybackX} x2={paybackX} y1={zeroY} y2={plot.top + plotHeight} />
+                <circle className="estimate-payback-marker" cx={paybackX} cy={zeroY} r={9} />
+                <g className="estimate-payback-callout" transform={`translate(${Math.max(plot.left + 12, Math.min(paybackX - 115, width - 270))} ${Math.max(plot.top + 24, zeroY - 88)})`}>
+                  <rect height="58" rx="9" width="230" />
+                  <text x="18" y="35">Pays back in {formatPayback(payback)}</text>
+                </g>
+              </>
+            ) : null}
+            {years.map((year) => (
+              <text className="estimate-financial-x-label" key={`cashflow-x:${year}`} x={xForYear(year)} y={height - 22} textAnchor="middle">{year}</text>
+            ))}
+            <g className="estimate-cashflow-legend" transform={`translate(${width - 260} 20)`}>
+              <line x1="0" x2="36" y1="0" y2="0" />
+              <text x="48" y="5">Cumulative cash flow</text>
+            </g>
+          </svg>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function RetrofitPreviewCardView({
   credential,
   initialWorkspaceTab = "overview",
@@ -11906,7 +12358,7 @@ function RetrofitPreviewCardView({
   const oneTimeTaxBenefits = typeof retrofit.metrics.taxBenefits === "number" ? retrofit.metrics.taxBenefits : null;
   const projectCostValue = billDataLocked ? null : retrofit.metrics.estimatedUpfrontProjectCost ?? null;
   const netCostBeforeTaxValue = billDataLocked ? null : displayedNetCostBeforeTaxBenefits;
-  const effectiveProjectCostValue = billDataLocked ? null : retrofit.metrics.effectiveCostAfterOneTimeBenefits;
+  const effectiveProjectCostValue = billDataLocked ? null : retrofit.metrics.effectiveCostAfterOneTimeBenefits ?? null;
   const annualOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsAnnual;
   const monthlyOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsMonthly ?? centsPerMonth(annualOperatingSavingsValue);
   const annualIncentiveSavingsValue = billDataLocked
@@ -11953,6 +12405,24 @@ function RetrofitPreviewCardView({
     { id: "financing-benefit", label: "Financing benefit", amountCents: null, tone: "financing" },
     { id: "you-cover", label: "You cover", amountCents: billDataLocked ? null : userCoveredFundingCents, tone: "user" }
   ];
+  const unknownRecurringOpportunityValue = selectedIncludedOpportunities.some(
+    (opportunity) =>
+      (opportunity.timing === "recurring" || opportunity.timing === "both") &&
+      opportunity.estimatedValue == null
+  );
+  const annualCashFlowValue =
+    billDataLocked || annualOperatingSavingsValue == null || unknownRecurringOpportunityValue
+      ? null
+      : annualOperatingSavingsValue + (annualIncentiveSavingsValue || 0);
+  const initialCashFlowInvestmentValue = billDataLocked ? null : effectiveProjectCostValue ?? userCoveredFundingCents;
+  const selectedPaybackYears =
+    billDataLocked
+      ? null
+      : typeof retrofit.metrics.paybackPeriodYears === "number" && Number.isFinite(retrofit.metrics.paybackPeriodYears)
+        ? retrofit.metrics.paybackPeriodYears
+        : initialCashFlowInvestmentValue != null && annualCashFlowValue != null && annualCashFlowValue > 0
+          ? initialCashFlowInvestmentValue / annualCashFlowValue
+          : null;
   const selectedScenarioLabel = selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Balanced";
   const overviewApplicationProfile = readyApplicationProfile || applicationOverviewProfile;
   const overviewApplicationOpportunity = readyApplicationPrepOpportunity || applicationOverviewOpportunity;
@@ -12437,6 +12907,23 @@ function RetrofitPreviewCardView({
               </section>
 
               <EstimateProjectFundingChart segments={projectFundingSegments} totalCostCents={projectCostValue} />
+              <EstimateOneTimeCostWaterfallChart
+                effectiveCostCents={effectiveProjectCostValue}
+                oneTimeTaxBenefitsCents={billDataLocked ? null : taxCreditFundingCents}
+                projectCostCents={projectCostValue}
+                selectedRebatesCents={billDataLocked ? null : knownRebateGrantCents}
+                upfrontIncentiveCents={billDataLocked || displayedUpfrontFinancialIncentive == null ? null : upfrontFundingRemainder}
+              />
+              <EstimatePaybackTimelineChart
+                annualCashFlowCents={annualCashFlowValue}
+                initialInvestmentCents={initialCashFlowInvestmentValue}
+                paybackYears={selectedPaybackYears}
+              />
+              <EstimateCumulativeCashFlowChart
+                annualCashFlowCents={annualCashFlowValue}
+                initialInvestmentCents={initialCashFlowInvestmentValue}
+                paybackYears={selectedPaybackYears}
+              />
             </section>
           ) : null}
 

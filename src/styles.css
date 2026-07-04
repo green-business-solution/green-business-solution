@@ -7965,6 +7965,7 @@ dd {
 .financial-inventory-card h3,
 .financial-breakdown-card h3,
 .estimate-project-funding-card h3,
+.estimate-financial-visual-card h3,
 .application-overview-card h3 {
   color: #071b12;
   font-size: 18px;
@@ -8127,6 +8128,7 @@ dd {
 .financial-inventory-card,
 .financial-breakdown-card,
 .estimate-project-funding-card,
+.estimate-financial-visual-card,
 .application-overview-card,
 .estimate-impact-hero,
 .estimate-financing-strip,
@@ -8393,6 +8395,259 @@ dd {
   font-size: 14px;
   line-height: 20px;
   margin-top: 6px;
+}
+
+.estimate-financial-visual-card {
+  gap: 22px;
+  overflow: hidden;
+  padding: 22px;
+}
+
+.estimate-financial-chart-header {
+  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: auto minmax(0, 1fr) minmax(190px, auto);
+}
+
+.estimate-financial-chart-header p {
+  color: #52635a;
+  font-size: 16px;
+  line-height: 23px;
+  margin-top: 4px;
+}
+
+.estimate-financial-chart-header aside {
+  align-items: center;
+  background: #f7fbf8;
+  border: 1px solid #c8e0cf;
+  border-radius: 12px;
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  min-width: 0;
+  padding: 12px 16px;
+}
+
+.estimate-financial-chart-header aside small {
+  color: #52635a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.estimate-financial-chart-header aside strong {
+  color: #0f7a4f;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.estimate-financial-chart-header aside span {
+  color: #52635a;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.estimate-financial-chart-scroll {
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.estimate-financial-waterfall-chart,
+.estimate-payback-chart,
+.estimate-cumulative-cashflow-chart {
+  display: block;
+  min-width: 760px;
+  width: 100%;
+}
+
+.estimate-financial-chart-unknown {
+  align-items: center;
+  background: #f7fbf8;
+  border: 1px dashed #c8d8cf;
+  border-radius: 14px;
+  color: #52635a;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  min-height: 220px;
+  padding: 24px;
+  text-align: center;
+}
+
+.estimate-financial-chart-unknown strong {
+  color: #071b12;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.estimate-financial-chart-unknown span {
+  max-width: 420px;
+}
+
+.estimate-financial-grid-line {
+  stroke: #e3ebe6;
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.estimate-financial-axis-line {
+  stroke: #cbd6d0;
+  stroke-width: 1.5;
+}
+
+.estimate-financial-axis-line.is-zero {
+  stroke: #6f7f76;
+  stroke-width: 1.6;
+}
+
+.estimate-financial-axis-label,
+.estimate-financial-x-label,
+.estimate-financial-axis-title {
+  fill: #32433a;
+  font-size: 13px;
+}
+
+.estimate-financial-axis-label.is-negative {
+  fill: #b12f2f;
+}
+
+.estimate-financial-axis-title {
+  font-weight: 700;
+}
+
+.estimate-waterfall-bar.is-total,
+.estimate-waterfall-bar.is-final {
+  fill: #0f7a4f;
+}
+
+.estimate-waterfall-bar.is-reduction {
+  fill: #91d2a1;
+}
+
+.estimate-waterfall-connector {
+  stroke: #0f7a4f;
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.estimate-waterfall-value {
+  fill: #0f7a4f;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.estimate-waterfall-value.is-total,
+.estimate-waterfall-value.is-final {
+  fill: #071b12;
+}
+
+.estimate-waterfall-label {
+  fill: #071b12;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.estimate-waterfall-label.is-final {
+  fill: #0f7a4f;
+}
+
+.estimate-waterfall-description {
+  fill: #52635a;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.estimate-payback-positive-zone {
+  fill: #eaf6ed;
+  opacity: 0.45;
+}
+
+.estimate-payback-negative-zone,
+.estimate-cashflow-negative-area {
+  fill: #fde9e5;
+  opacity: 0.48;
+}
+
+.estimate-payback-zone-label {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.estimate-payback-zone-label.is-positive {
+  fill: #0f7a4f;
+}
+
+.estimate-payback-zone-label.is-negative {
+  fill: #d23d3d;
+}
+
+.estimate-payback-point-guide {
+  stroke: #cbd6d0;
+  stroke-dasharray: 4 6;
+  stroke-width: 1;
+}
+
+.estimate-cashflow-area {
+  fill: url(#cashFlowPositiveGradient);
+}
+
+.estimate-cashflow-line {
+  fill: none;
+  stroke: #0f7a4f;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.estimate-cashflow-point {
+  fill: #0f7a4f;
+  stroke: #0f7a4f;
+  stroke-width: 2;
+}
+
+.estimate-payback-marker-line {
+  stroke: #0f7a4f;
+  stroke-dasharray: 5 6;
+  stroke-width: 1.5;
+}
+
+.estimate-payback-marker {
+  fill: #ffffff;
+  stroke: #0f7a4f;
+  stroke-width: 4;
+}
+
+.estimate-payback-callout rect {
+  fill: #ffffff;
+  stroke: #0f7a4f;
+  stroke-width: 1.5;
+}
+
+.estimate-payback-callout text {
+  fill: #0f7a4f;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.estimate-payback-callout-subtitle {
+  fill: #52635a !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.estimate-cashflow-legend line {
+  stroke: #0f7a4f;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.estimate-cashflow-legend text {
+  fill: #32433a;
+  font-size: 13px;
 }
 
 .estimate-opportunity-summary-grid {
@@ -9263,13 +9518,22 @@ dd {
     padding: 18px;
   }
 
-  .estimate-project-funding-header {
+  .estimate-financial-visual-card {
+    padding: 18px;
+  }
+
+  .estimate-project-funding-header,
+  .estimate-financial-chart-header {
     grid-template-columns: 1fr;
   }
 
   .estimate-project-funding-icon {
     height: 56px;
     width: 56px;
+  }
+
+  .estimate-financial-chart-header aside {
+    justify-items: start;
   }
 
   .estimate-project-funding-bar {
