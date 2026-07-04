@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) grant production quality GPT Pro packets
+
+- Added a repeatable GPT Pro work-packet generator for production-quality grant estimation repair.
+- Split the next GPT Pro work into three separate packet families: grant package formula/input repair, realistic test-profile project facts, and historical award/probability research.
+- Kept generated raw prompt/output folders under the ignored `GPT Pro Work/` tree while committing the generator for reproducibility.
+
 ## 2026-07-03 - Codex (GPT-5) retrofit readiness circles
 
 - Added the three-circle retrofit readiness row to every retrofit picker card, with per-card bills/questions/estimate completion state and neutral label text.
