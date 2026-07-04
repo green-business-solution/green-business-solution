@@ -11552,6 +11552,102 @@ function EstimateImpactProjectionChart() {
   );
 }
 
+type ProjectFundingSegmentTone = "utility" | "tax" | "grant" | "financing" | "user";
+
+type ProjectFundingSegment = {
+  id: string;
+  label: string;
+  amountCents: number | null;
+  tone: ProjectFundingSegmentTone;
+};
+
+function nonNegativeCents(value: number | null | undefined) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  return Math.max(0, value);
+}
+
+function opportunityFundingTone(opportunity: RetrofitOpportunityPreview): Exclude<ProjectFundingSegmentTone, "financing" | "user"> {
+  const fundingText = `${opportunity.type} ${opportunity.name} ${opportunity.description}`.toLowerCase();
+  if (opportunity.timing === "tax_time" || fundingText.includes("tax")) return "tax";
+  if (fundingText.includes("grant")) return "grant";
+  return "utility";
+}
+
+function formatProjectFundingPercent(value: number | null) {
+  if (value == null || !Number.isFinite(value)) return "Unknown";
+  return `${value.toFixed(value < 10 && value % 1 !== 0 ? 1 : 0)}%`;
+}
+
+function EstimateProjectFundingChart({
+  segments,
+  totalCostCents
+}: {
+  segments: ProjectFundingSegment[];
+  totalCostCents: number | null;
+}) {
+  const knownTotal = segments.reduce((sum, segment) => sum + (segment.amountCents || 0), 0);
+  const denominator =
+    totalCostCents != null && totalCostCents > 0
+      ? Math.max(totalCostCents, knownTotal)
+      : knownTotal > 0
+        ? knownTotal
+        : null;
+  const chartSegments = denominator == null ? [] : segments.filter((segment) => (segment.amountCents || 0) > 0);
+
+  return (
+    <section className="estimate-project-funding-card" aria-labelledby="project-funding-title">
+      <header className="estimate-project-funding-header">
+        <span className="estimate-project-funding-icon" aria-hidden="true"><MetricCostIcon /></span>
+        <div>
+          <h3 id="project-funding-title">How your project is funded</h3>
+          <p>Total project cost: {formatEstimateCents(totalCostCents, "Unknown")}</p>
+        </div>
+      </header>
+
+      <div className="estimate-project-funding-bar" aria-label="Project funding mix">
+        {chartSegments.length ? (
+          chartSegments.map((segment) => {
+            const percent = denominator ? ((segment.amountCents || 0) / denominator) * 100 : null;
+            return (
+              <div
+                className={`estimate-project-funding-segment is-${segment.tone}`}
+                key={segment.id}
+                style={{ "--funding-width": `${Math.max(percent || 0, 3)}%` } as CSSProperties}
+              >
+                <strong>{formatProjectFundingPercent(percent)}</strong>
+                <span>{formatEstimateCents(segment.amountCents, "Unknown")}</span>
+              </div>
+            );
+          })
+        ) : (
+          <div className="estimate-project-funding-empty">Unknown</div>
+        )}
+      </div>
+
+      <div className="estimate-project-funding-legend">
+        {segments.map((segment) => {
+          const percent = denominator && segment.amountCents != null ? (segment.amountCents / denominator) * 100 : null;
+          const amountLabel =
+            segment.amountCents == null
+              ? "Unknown"
+              : denominator == null
+                ? formatEstimateCents(segment.amountCents, "$0")
+                : `${formatProjectFundingPercent(percent)} (${formatEstimateCents(segment.amountCents, "$0")})`;
+          return (
+            <div className="estimate-project-funding-legend-item" key={segment.id}>
+              <span className={`estimate-project-funding-swatch is-${segment.tone}`} aria-hidden="true" />
+              <div>
+                <strong>{segment.label}</strong>
+                <small>{amountLabel}</small>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function RetrofitPreviewCardView({
   credential,
   initialWorkspaceTab = "overview",
@@ -11815,7 +11911,7 @@ function RetrofitPreviewCardView({
       : sumDefinedCents(selectedScenarioOpportunities.map((opportunity) => opportunity.estimatedValue));
   const upfrontSavingsValue = billDataLocked ? null : displayedUpfrontFinancialIncentive ?? selectedOpportunitiesTotalValue;
   const oneTimeTaxBenefits = typeof retrofit.metrics.taxBenefits === "number" ? retrofit.metrics.taxBenefits : null;
-  const projectCostValue = billDataLocked ? null : retrofit.metrics.estimatedUpfrontProjectCost;
+  const projectCostValue = billDataLocked ? null : retrofit.metrics.estimatedUpfrontProjectCost ?? null;
   const netCostBeforeTaxValue = billDataLocked ? null : displayedNetCostBeforeTaxBenefits;
   const effectiveProjectCostValue = billDataLocked ? null : retrofit.metrics.effectiveCostAfterOneTimeBenefits;
   const annualOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsAnnual;
@@ -11831,6 +11927,39 @@ function RetrofitPreviewCardView({
         );
   const monthlyIncentiveSavingsValue = centsPerMonth(annualIncentiveSavingsValue);
   const monthlyTaxBenefitsValue = centsPerMonth(oneTimeTaxBenefits);
+  const oneTimeOpportunityFunding = selectedIncludedOpportunities.reduce(
+    (totals, opportunity) => {
+      if (opportunity.timing === "recurring") return totals;
+      const value = nonNegativeCents(opportunity.estimatedValue);
+      if (value == null) return totals;
+      const tone = opportunityFundingTone(opportunity);
+      return { ...totals, [tone]: totals[tone] + value };
+    },
+    { utility: 0, grant: 0, tax: 0 }
+  );
+  const knownRebateGrantCents = oneTimeOpportunityFunding.utility + oneTimeOpportunityFunding.grant;
+  const upfrontFundingRemainder =
+    displayedUpfrontFinancialIncentive != null
+      ? Math.max(0, displayedUpfrontFinancialIncentive - knownRebateGrantCents)
+      : 0;
+  const utilityRebateFundingCents = oneTimeOpportunityFunding.utility + upfrontFundingRemainder;
+  const grantFundingCents = oneTimeOpportunityFunding.grant;
+  const taxCreditFundingCents = oneTimeTaxBenefits ?? oneTimeOpportunityFunding.tax;
+  const knownProjectFundingCents =
+    utilityRebateFundingCents +
+    grantFundingCents +
+    (taxCreditFundingCents || 0);
+  const userCoveredFundingCents =
+    projectCostValue != null
+      ? Math.max(0, projectCostValue - knownProjectFundingCents)
+      : null;
+  const projectFundingSegments: ProjectFundingSegment[] = [
+    { id: "utility-rebates", label: "Utility rebates", amountCents: billDataLocked ? null : utilityRebateFundingCents, tone: "utility" },
+    { id: "tax-credits", label: "Tax credits", amountCents: billDataLocked ? null : taxCreditFundingCents, tone: "tax" },
+    { id: "grants", label: "Grants", amountCents: billDataLocked ? null : grantFundingCents, tone: "grant" },
+    { id: "financing-benefit", label: "Financing benefit", amountCents: null, tone: "financing" },
+    { id: "you-cover", label: "You cover", amountCents: billDataLocked ? null : userCoveredFundingCents, tone: "user" }
+  ];
   const selectedScenarioLabel = selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Balanced";
   const overviewApplicationProfile = readyApplicationProfile || applicationOverviewProfile;
   const overviewApplicationOpportunity = readyApplicationPrepOpportunity || applicationOverviewOpportunity;
@@ -12313,6 +12442,8 @@ function RetrofitPreviewCardView({
                   </div>
                 ) : null}
               </section>
+
+              <EstimateProjectFundingChart segments={projectFundingSegments} totalCostCents={projectCostValue} />
             </section>
           ) : null}
 

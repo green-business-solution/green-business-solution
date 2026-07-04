@@ -1188,6 +1188,13 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("financialPeriod === \"monthly\" ? \"mo\" : \"yr\"");
     expect(workspaceSource).toContain("Financial inventory");
     expect(workspaceSource).toContain("Calculation breakdown");
+    expect(workspaceSource).toContain("EstimateProjectFundingChart");
+    expect(source).toContain("How your project is funded");
+    expect(source).toContain("Utility rebates");
+    expect(source).toContain("Tax credits");
+    expect(source).toContain("Grants");
+    expect(source).toContain("Financing benefit");
+    expect(source).toContain("You cover");
     expect(workspaceSource).toContain("Total opportunities");
     expect(workspaceSource).toContain("Across incentives and rebates");
     expect(workspaceSource).toContain("Application process");

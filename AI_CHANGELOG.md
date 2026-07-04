@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) financial funding mix chart
+
+- Added a selected-retrofit Financials funding mix chart that separates utility rebates, tax credits, grants, financing benefit, and the residual user-covered project cost.
+- Kept unknown financing and locked bill-data states conservative so the preview does not imply calculations that are not available yet.
+
 ## 2026-07-04 - Codex (GPT-5) Xcel cash incentive form-gated repair
 
 - Imported the focused GPT Pro repair for DSIRE 1581 Xcel Energy Colorado residential rebates and preserved the parsed output as a tracked data artifact.
