@@ -9861,14 +9861,14 @@ function RetrofitPreviewCardView({
                   <span className="estimate-summary-check" aria-hidden="true">✓</span>
                   <div>
                     <strong>Selected opportunities</strong>
-                    <p><b>{selectedCount}</b> Included in this scenario</p>
+                    <p><b>{selectedCount}</b></p>
                   </div>
                 </div>
                 <div>
                   <span className="estimate-summary-check is-document" aria-hidden="true">▤</span>
                   <div>
                     <strong>Current scenario</strong>
-                    <p><b>{selectedScenarioLabel}</b> Best mix of savings and payback</p>
+                    <p><b>{selectedScenarioLabel}</b></p>
                   </div>
                 </div>
               </section>

@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) selected workspace summary copy
+
+- Removed the extra "Included in this scenario" and "Best mix of savings and payback" helper copy from the selected retrofit overview summary row.
+
 ## 2026-07-04 - Codex (GPT-5) grant production quality intake
 
 - Added a repeatable importer for the completed production-quality grant GPT Pro packages.
