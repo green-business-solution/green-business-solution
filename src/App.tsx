@@ -5918,7 +5918,9 @@ const PROCESS_ONBOARDING_LINES = [
   { id: "title", text: "The Process" },
   { id: "step1", text: "Step 1: Upload your bills" },
   { id: "step2", text: "Step 2: Choose a retrofit and answer a few questions" },
-  { id: "step3", text: "Step 3: Get your opportunities, metrics, and next steps" },
+  { id: "step3", text: "Step 3: Get your opportunities, metrics, and more" },
+  { id: "step4", text: "Step 4: Receive automated application support" },
+  { id: "step5", text: "Step 5: View your dashboard" },
   {
     id: "note",
     text: "Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use."
@@ -7547,13 +7549,15 @@ function ProcessOnboardingModal({
   const step1 = visibleProcessStepText(displayedLines.step1 || "", "Step 1: ");
   const step2 = visibleProcessStepText(displayedLines.step2 || "", "Step 2: ");
   const step3 = visibleProcessStepText(displayedLines.step3 || "", "Step 3: ");
+  const step4 = visibleProcessStepText(displayedLines.step4 || "", "Step 4: ");
+  const step5 = visibleProcessStepText(displayedLines.step5 || "", "Step 5: ");
   const note = displayedLines.note || "";
   const activeLineId = PROCESS_ONBOARDING_LINES.find((line) => displayedLines[line.id] !== line.text)?.id;
 
   return (
     <div className="process-onboarding-backdrop" data-testid="process-onboarding-modal">
       <div className="sr-only" aria-live="off">
-        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and next steps. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
+        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and more. Step 4: Receive automated application support. Step 5: View your dashboard. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
       </div>
       <section
         aria-labelledby="process-onboarding-title"
@@ -7582,17 +7586,29 @@ function ProcessOnboardingModal({
                 number="2"
                 text={step2}
               />
-              <ProcessStep
-                active={shouldAnimateText && activeLineId === "step3"}
-                accent="Get"
-                number="3"
-                text={step3}
-              />
-            </div>
-            <div className="process-note">
-              <ProcessAccentText text={note} accent="Note:" />
-              <TypewriterCaret show={shouldAnimateText && activeLineId === "note"} />
-            </div>
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step3"}
+              accent="Get"
+              number="3"
+              text={step3}
+            />
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step4"}
+              accent="Receive"
+              number="4"
+              text={step4}
+            />
+            <ProcessStep
+              active={shouldAnimateText && activeLineId === "step5"}
+              accent="View"
+              number="5"
+              text={step5}
+            />
+          </div>
+          <div className="process-note">
+            <ProcessAccentText text={note} accent="Note:" />
+            <TypewriterCaret show={shouldAnimateText && activeLineId === "note"} />
+          </div>
           </div>
           <div className="process-modal-footer">
             <button className="process-next-button" onClick={completeOnboarding} ref={nextButtonRef} type="button">
@@ -7612,7 +7628,9 @@ function ProcessOnboardingModal({
           <div className="process-step-list">
             <ProcessStep number="1" text="Upload your bills" accent="Upload" />
             <ProcessStep number="2" text="Choose a retrofit and answer a few questions" accent="Choose" />
-            <ProcessStep number="3" text="Get your opportunities, metrics, and next steps" accent="Get" />
+            <ProcessStep number="3" text="Get your opportunities, metrics, and more" accent="Get" />
+            <ProcessStep number="4" text="Receive automated application support" accent="Receive" />
+            <ProcessStep number="5" text="View your dashboard" accent="View" />
           </div>
           </div>
         </section>

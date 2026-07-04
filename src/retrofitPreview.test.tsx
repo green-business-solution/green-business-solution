@@ -489,7 +489,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("retrofi.intakeJustCompleted");
     expect(source).toContain("Step 1: Upload your bills");
     expect(source).toContain("Step 2: Choose a retrofit and answer a few questions");
-    expect(source).toContain("Step 3: Get your opportunities, metrics, and next steps");
+    expect(source).toContain("Step 3: Get your opportunities, metrics, and more");
+    expect(source).toContain("Step 4: Receive automated application support");
+    expect(source).toContain("Step 5: View your dashboard");
     expect(source).toContain("Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.");
     expect(source).toContain("process-editor-content");
     expect(source).toContain("process-editor-title");
